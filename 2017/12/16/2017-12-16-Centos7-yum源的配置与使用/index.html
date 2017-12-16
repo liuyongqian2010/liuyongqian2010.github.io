@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>2017_12_16 Centos7 yum源的配置与使用 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.yum简介 yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了">
+<meta name="keywords" content="Yum源配置使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2017_12_16 Centos7 yum源的配置与使用">
+<meta property="og:url" content="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="1.yum简介 yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-16T12:37:07.511Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2017_12_16 Centos7 yum源的配置与使用">
+<meta name="twitter:description" content="1.yum简介 yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！我知道你会来，所以我等···</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2017-12-16-Centos7-yum源的配置与使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" class="article-date">
+  <time datetime="2017-12-16T10:54:34.000Z" itemprop="datePublished">2017-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2017_12_16 Centos7 yum源的配置与使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<hr>
+<p></p><h5>1.yum简介</h5><p></p>
+<p>yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了。<br><br>yum 主要功能是更方便的添加/删除/更新RPM 包，自动解决包的倚赖性问题，便于管理大量系统的更新问题。<br><br>yum 可以同时配置多个资源库(Repository)，简洁的配置文件（/etc/yum.conf），自动解决增加或删除rpm 包时遇到的依赖性问题，保持与RPM 数据库的一致性。</p><br><h5>2.yum安装</h5><br>CentOS 默认已经安装了yum，不需要另外安装，这里为了实验目的，先将yum 卸载再重新安装。<br><h6>2.1查看系统默认安装</h6><br><code>rpm -qa|grep yum</code><br><br><h6>2.2卸载yum</h6><br><code>rpm -e yum-fastestmirror-1.1.16-14.el5.centos.1 yum-metadata-parser-1.1.2-3.el5.centos yum-3.2.22-33.el5.centos</code><br><br><h6>2.3重新安装yum</h6><br>这里我们挂载系统安装光盘进行安装<br><br>– 在mnt下<code>mkdir /mnt/cdrom</code><br><br>– 挂载系统安装光盘<code>mount -t auto /dev/cdrom /mnt/cdrom</code><br><br>– yum基础安装<br><br><code>rpm -ivh yum-3.2.22-33.el5.centos.noarch.rpm yum-fastestmirror-1.1.16-14.el5.centos.1.noarch.rpm yum-metadata-parser-1.1.2-3.el5.centos.i386.rpm</code> <br><br>– 查看版本<code>yum -v</code><br><br><h6>2.4yum源配置</h6><br><p>–配置yum本地源<code>vi /etc/yum.repos.d/CentOs-Media.repo</code></p>
+
+<pre><code># CentOS-Media.repo
+#
+# This repo is used to mount the default locations for a CDROM / DVD on
+#  CentOS-5.  You can use this repo and yum to install items directly off the
+#  DVD ISO that we release.
+#
+# To use this repo, put in your DVD and use it with the other repos too:
+#  yum --enablerepo=c5-media [command]
+#  
+# or for ONLY the media repo, do this:
+#
+#  yum --disablerepo=\* --enablerepo=c5-media [command]     
+[c5-media]
+name=CentOS-$releasever - Media
+baseurl=file:///media/CentOS/
+        file:///mnt/cdrom/
+        file:///media/cdrecorder/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
+</code></pre><p></p><p>–在baseurl中修改第2个路径为/mnt/cdrom（即为光盘挂载点）将enabled=0改为1<br><br>–禁用默认的yum 网络源<code>mv CentOs-Base.repo CentOs-Base.repo.bak</code><br><br>–运行yum命令<code>yum install postgresql</code></p><p></p>
+<h6>2.5我们就用系统默认的yum源，速度也还是可以的！</h6>
+
+
+<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html" target="_blank" rel="noopener">CentOS yum 源的配置与使用</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjb9bvc8x0002e0wv9rpjszh9" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/16/Python3-5连接MySQl数据库/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Python3.5连接MySQl数据库</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/">2017_12_16 Centos7 yum源的配置与使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/16/Python3-5连接MySQl数据库/">Python3.5连接MySQl数据库</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/">2017_12_16一台PC机同时安装Python2与python3</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/16/Github-Hexo博客更换主题/">Github+Hexo博客更换主题</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/">2017_12_15 Git+NodeJS+Hexo创建个人博客</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
