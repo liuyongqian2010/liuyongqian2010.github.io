@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Python3.5连接MySQl数据库 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PyMySQL是在Pyhton3.x版本中用于连接MySQL数据库的一个库，Python2中则使用mysqldb库 使用pip3 install PyMySQl进行安装PyMySQL库数据库连接连接数据库前，请先确认以下事项：   已经创建了数据库 TESTDB  在TESTDB数据库中您已经创建了表 t_table  t_table表字段为 FIRST_NAME, LAST_NAME, AGE,">
+<meta name="keywords" content="Python连接MySQl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python3.5连接MySQl数据库">
+<meta property="og:url" content="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="PyMySQL是在Pyhton3.x版本中用于连接MySQL数据库的一个库，Python2中则使用mysqldb库 使用pip3 install PyMySQl进行安装PyMySQL库数据库连接连接数据库前，请先确认以下事项：   已经创建了数据库 TESTDB  在TESTDB数据库中您已经创建了表 t_table  t_table表字段为 FIRST_NAME, LAST_NAME, AGE,">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-16T10:47:28.484Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python3.5连接MySQl数据库">
+<meta name="twitter:description" content="PyMySQL是在Pyhton3.x版本中用于连接MySQL数据库的一个库，Python2中则使用mysqldb库 使用pip3 install PyMySQl进行安装PyMySQL库数据库连接连接数据库前，请先确认以下事项：   已经创建了数据库 TESTDB  在TESTDB数据库中您已经创建了表 t_table  t_table表字段为 FIRST_NAME, LAST_NAME, AGE,">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！我知道你会来，所以我等···</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Python3-5连接MySQl数据库" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/16/Python3-5连接MySQl数据库/" class="article-date">
+  <time datetime="2017-12-16T09:32:45.000Z" itemprop="datePublished">2017-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python3.5连接MySQl数据库
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>PyMySQL是在Pyhton3.x版本中用于连接MySQL数据库的一个库，Python2中则使用mysqldb库</em></p>
+<p>使用<code>pip3 install PyMySQl</code>进行安装PyMySQL库</p><br><h5>数据库连接</h5><br><p>连接数据库前，请先确认以下事项：</p>
+
+<ul>
+<li><p>已经创建了数据库 TESTDB</p>
+</li>
+<li><p>在TESTDB数据库中您已经创建了表 t_table</p>
+</li>
+<li><p>t_table表字段为 FIRST_NAME, LAST_NAME, AGE, SEX 和 INCOME</p>
+</li>
+<li><p>连接数据库testdb使用的用户名为 “testuser” ，密码为 “test123”，你可以自己设定或者直接使用root用户名及其密码</p>
+</li>
+<li>mysql数据库用户授权请使用grant命令</li>
+</ul>
+<p>以下示例是连接MySQL数据库中的TESTDB数据库：</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用 cursor() 方法创建一个游标对象 cursor
+cursor = db.cursor()
+# 使用 execute()  方法执行 SQL 查询 
+cursor.execute(&quot;SELECT VERSION()&quot;)
+# 使用 fetchone() 方法获取单条数据.
+data = cursor.fetchone()
+print (&quot;Database version : %s &quot; % data)
+# 关闭数据库连接
+db.close()
+</code></pre><p></p><h5>操作实例</h5><p></p>
+<h6>创建数据库表</h6>
+
+<p>如果数据库连接存在，可以使用execute()方法为数据库创建表，如下所示创建表t_table</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用 cursor() 方法创建一个游标对象 cursor
+cursor = db.cursor()
+# 使用 execute() 方法执行 SQL，如果表存在则删除
+cursor.execute(&quot;DROP TABLE IF EXISTS t_table&quot;)
+# 使用预处理语句创建表
+sql = &quot;&quot;&quot;CREATE TABLE t_table(
+         FIRST_NAME  CHAR(20) NOT NULL,
+         LAST_NAME  CHAR(20),
+         AGE INT,  
+         SEX CHAR(1),
+         INCOME FLOAT )&quot;&quot;&quot;
+cursor.execute(sql)
+# 关闭数据库连接
+db.close()
+</code></pre><h6>数据库插入操作</h6>
+
+<p>以下示例使用执行SQL insert 语句 向表t_table中插入一条记录：</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 插入语句
+sql = &quot;&quot;&quot;INSERT INTO t_table(FIRST_NAME,
+         LAST_NAME, AGE, SEX, INCOME)
+         VALUES (&apos;Mac&apos;, &apos;Mohan&apos;, 20, &apos;M&apos;, 2000)&quot;&quot;&quot;
+try:
+   # 执行sql语句
+   cursor.execute(sql)
+   # 提交到数据库执行
+   db.commit()
+except:
+   # 如果发生错误则回滚
+   db.rollback()
+# 关闭数据库连接
+db.close()
+</code></pre><h6>数据库查询操作</h6>
+
+<p>Python查询MySQL使用fetchone()方法获取单条记录，使用fetchall()方法获取多条记录</p>
+<ul>
+<li>fetchone()：该方法获取下一个查询结果集，结果集是一个对象</li>
+<li>fetchall():该方法接收全部返回结果集</li>
+<li>fetchnum(n):</li>
+<li><p>rowcount:这是一个只读属性，并返回执行execute()方法后影响的行数</p>
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 查询语句
+sql = &quot;SELECT * FROM t_table \
+       WHERE INCOME &gt; &apos;%d&apos;&quot; % (1000)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 获取所有记录列表
+   results = cursor.fetchall()
+   for row in results:
+      fname = row[0]
+      lname = row[1]
+      age = row[2]
+      sex = row[3]
+      income = row[4]
+       # 打印结果
+      print (&quot;fname=%s,lname=%s,age=%d,sex=%s,income=%d&quot; % \(fname, lname, age, sex, income ))
+except:
+   print (&quot;Error: unable to fecth data&quot;)
+# 关闭数据库连接
+db.close()
+</code></pre></li>
+</ul>
+<ul>
+<li>以上脚本执行结果如下：<br>  fname=Mac, lname=Mohan, age=20, sex=M, income=2000<h6>数据库更新操作</h6>
+
+</li>
+</ul>
+<p>更新操作用于更新数据表的的数据，以下实例将t_table表中的SEX字段全部修改为’M’,AGE字段递增1</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 更新语句
+sql = &quot;UPDATE EMPLOYEE SET AGE = AGE + 1
+                          WHERE SEX = &apos;%c&apos;&quot; % (&apos;M&apos;)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 提交到数据库执行
+   db.commit()
+except:
+   # 发生错误时回滚
+   db.rollback()
+# 关闭数据库连接
+db.close()
+</code></pre><h6>删除操作</h6>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 删除语句
+sql = &quot;DELETE FROM t_table WHERE AGE &gt; &apos;%d&apos;&quot; % (20)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 提交修改
+   db.commit()
+except:
+   # 发生错误时回滚
+   db.rollback()
+# 关闭连接
+db.close()
+</code></pre><p></p><h6>执行事务</h6><p></p>
+<p>事务机制可以确保数据一致性。<br><br>事务应该具有4个属性：原子性、一致性、隔离性、持久性,这四个属性通常称为ACID特性。<br><br>- 原子性（atomicity）。一个事务是一个不可分割的工作单位，事务中包括的诸操作要么都做，要么都不做<br><br>- 一致性（consistency）。事务必须是使数据库从一个一致性状态变到另一个一致性状态。一致性与原子性是密切相关的<br><br>- 隔离性（isolation）。一个事务的执行不能被其他事务干扰。即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰<br><br>- 持久性（durability）。持续性也称永久性（permanence），指一个事务一旦提交，它对数据库中数据的改变就应该是永久性的。接下来的其他操作或故障不应该对其有任何影响。<br><br>Python DB API 2.0 的事务提供了两个方法 commit 或 rollback<br></p>
+
+<pre><code># SQL删除记录语句
+sql = &quot;DELETE FROM EMPLOYEE WHERE AGE &gt; &apos;%d&apos;&quot; % (20)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 向数据库提交
+   db.commit()
+except:
+   # 发生错误时回滚
+   db.rollback()
+</code></pre><p>对于支持事务的数据库， 在Python数据库编程中，当游标建立之时，就自动开始了一个隐形的数据库事务。<br><br>commit()方法游标的所有更新操作，rollback（）方法回滚当前游标的所有操作。每一个方法都开始了一个新的事务。</p>
+
+<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/lhuan/p/6160023.html" target="_blank" rel="noopener">Python3.5  MySQL 数据库连接</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/" data-id="cjb981eo20005okwvw3gvjr2m" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">2017_12_16一台PC机同时安装Python2与python3</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/16/Python3-5连接MySQl数据库/">Python3.5连接MySQl数据库</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/">2017_12_16一台PC机同时安装Python2与python3</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/16/Github-Hexo博客更换主题/">Github+Hexo博客更换主题</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/">2017_12_15 Git+NodeJS+Hexo创建个人博客</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/15/2017-12-15验证博客是否正常？/">2017_12_15验证博客是否正常？</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
