@@ -69,6 +69,82 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-CentOS7安装Redis3-2遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/" class="article-date">
+  <time datetime="2017-12-17T00:55:52.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/">CentOS7安装Redis3.2遇到的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<hr>
+<p>###到<a href="https://redis.io/" target="_blank" rel="noopener">redis官网</a>下载安装包，如”redis-3.2.8.tar.gz”；将下载的安装包放到 /opt下，分别使用：</p>
+<ul>
+<li>tar -zvxf redis-3.2.8.tar.gz 解压安装包</li>
+<li>cd redis-3.2.8 进入安装包</li>
+<li>make 编译<br><h6>出现错误:</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">make[3]: gcc：命令未找到</span><br><span class="line">make[3]: *** [net.o] 错误 127</span><br><span class="line">make[3]: 离开目录“/opt/redis-3.2.8/deps/hiredis”</span><br><span class="line">make[2]: *** [hiredis] 错误 2</span><br><span class="line">make[2]: 离开目录“/opt/redis-3.2.8/deps”</span><br><span class="line">make[1]: [persist-settings] 错误 2 (忽略)</span><br><span class="line">    CC adlist.o</span><br><span class="line">/bin/sh: cc: 未找到命令</span><br><span class="line">make[1]: *** [adlist.o] 错误 127</span><br><span class="line">make[1]: 离开目录“/opt/redis-3.2.8/src”</span><br><span class="line">make: *** [all] 错误 2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><h6>解决方法：安装gcc</h6><p></p>
+<ul>
+<li>yum -y install gcc automake autoconf libtool make 安装</li>
+<li>make 运行<br><h6>出现错误：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">make[1]: 进入目录“/opt/redis-3.2.8/src”</span><br><span class="line">    CC adlist.o</span><br><span class="line">In file included from adlist.c:34:0:</span><br><span class="line">zmalloc.h:50:31: **致命错误**：jemalloc/jemalloc.h：没有那个文件或目录</span><br><span class="line"> #include &lt;jemalloc/jemalloc.h&gt;</span><br><span class="line">                               ^</span><br><span class="line">编译中断。</span><br><span class="line">make[1]: *** [adlist.o] 错误 1</span><br><span class="line">make[1]: 离开目录“/opt/redis-3.2.8/src”</span><br><span class="line">make: *** [all] 错误 2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><h6>解决方法：make改为make MALLOC=libc</h6><p></p>
+<ul>
+<li>make MALLOC=libc</li>
+<li>make test 运行<br><h6>出现错误：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">make[1]: 进入目录“/opt/redis-3.2.8/src”</span><br><span class="line">You need tcl 8.5 or newer in order to run the Redis test</span><br><span class="line">make[1]: *** [test] 错误 1</span><br><span class="line">make[1]: 离开目录“/opt/redis-3.2.8/src”</span><br><span class="line">make: *** [test] 错误 2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><h6>解决方法：升级tcl版本</h6><p></p>
+<ul>
+<li>yum install -y wget 安装wget</li>
+<li>wget <a href="http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz" target="_blank" rel="noopener">http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz</a>  </li>
+<li>sudo tar xzvf tcl8.6.1-src.tar.gz  -C /usr/local/  </li>
+<li>cd  /usr/local/tcl8.6.1/unix/  </li>
+<li>sudo ./configure  </li>
+<li>sudo make  </li>
+<li>sudo make install</li>
+<li>重新解压redis安装包并运行make进行编译</li>
+<li>进入src目录，./redis-server，如果出现虚线盒子界面表示运行成功</li>
+<li>可另起一个界面，运行 ./redis-cli来启动客户端</li>
+<li>可运行ps -ef|grep redis检测redis进程</li>
+<li>可运行netstat -Intp|grep 6379检测端口</li>
+<li>到此安装就结束了，我运用的远程控制软件是”SSH Secure Shell Client”</li>
+</ul>
+<p><em>小白参考大神佳作<a href="http://www.jianshu.com/p/cc403be7f80d" target="_blank" rel="noopener">centos7 安装redis 3.2.8 踩的那些坑</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjba3pwm30004zcwvx2acpept" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-2017-12-16-Centos7-yum源的配置与使用" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" class="article-date">
@@ -125,7 +201,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjb9evep500012kwv9pfds1s0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjba3pwlz0003zcwvcyhcfrgi" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a></li></ul>
@@ -343,7 +419,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/" data-id="cjb9evepx00092kwvi5f9vjim" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/" data-id="cjba3pwmj0009zcwvbp8k7tht" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a></li></ul>
@@ -406,7 +482,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" data-id="cjb9evepa00022kwv4yl5fw2l" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" data-id="cjba3pwm80005zcwvw4y4iq4i" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python2-3共存/">python2/3共存</a></li></ul>
@@ -470,7 +546,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjb9evepr00062kwv03yjrq7c" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjba3pwme0008zcwvl0ylt6ph" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/更换主题/">更换主题</a></li></ul>
@@ -571,7 +647,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/" data-id="cjb9evepk00042kwvrvo951af" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/" data-id="cjba3pwl80000zcwvxtmq73rp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/创建github博客/">创建github博客</a></li></ul>
@@ -620,7 +696,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/2017-12-15验证博客是否正常？/" data-id="cjb9eveot00002kwv79a12fk6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/2017-12-15验证博客是否正常？/" data-id="cjba3pwln0001zcwvxqzb1nu8" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -657,7 +733,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjb9evepo00052kwvg9ilv00w" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjba3pwmo000bzcwvmpbp4tzx" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -702,7 +778,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjb9eveq1000a2kwvii5mbour" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjba3pwmt000dzcwv7gbhmfrq" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -725,7 +801,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -735,7 +811,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a>
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a>
     </div>
   </div>
 
@@ -744,7 +820,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">9</span></li></ul>
     </div>
   </div>
 
@@ -755,6 +831,10 @@ limit: 20
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/">CentOS7安装Redis3.2遇到的问题</a>
+          </li>
         
           <li>
             <a href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/">2017_12_16 Centos7 yum源的配置与使用</a>
@@ -770,10 +850,6 @@ limit: 20
         
           <li>
             <a href="/2017/12/16/Github-Hexo博客更换主题/">Github+Hexo博客更换主题</a>
-          </li>
-        
-          <li>
-            <a href="/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/">2017_12_15 Git+NodeJS+Hexo创建个人博客</a>
           </li>
         
       </ul>

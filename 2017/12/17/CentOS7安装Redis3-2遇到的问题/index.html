@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>CentOS7安装Redis3.2遇到的问题 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="###到redis官网下载安装包，如”redis-3.2.8.tar.gz”；将下载的安装包放到 /opt下，分别使用：  tar -zvxf redis-3.2.8.tar.gz 解压安装包 cd redis-3.2.8 进入安装包 make 编译出现错误:1234567891011make[3]: gcc：命令未找到make[3]: *** [net.o] 错误 127make[3]: 离">
+<meta name="keywords" content="CentOS7安装Redis3.2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS7安装Redis3.2遇到的问题">
+<meta property="og:url" content="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="###到redis官网下载安装包，如”redis-3.2.8.tar.gz”；将下载的安装包放到 /opt下，分别使用：  tar -zvxf redis-3.2.8.tar.gz 解压安装包 cd redis-3.2.8 进入安装包 make 编译出现错误:1234567891011make[3]: gcc：命令未找到make[3]: *** [net.o] 错误 127make[3]: 离">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-17T01:35:41.618Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CentOS7安装Redis3.2遇到的问题">
+<meta name="twitter:description" content="###到redis官网下载安装包，如”redis-3.2.8.tar.gz”；将下载的安装包放到 /opt下，分别使用：  tar -zvxf redis-3.2.8.tar.gz 解压安装包 cd redis-3.2.8 进入安装包 make 编译出现错误:1234567891011make[3]: gcc：命令未找到make[3]: *** [net.o] 错误 127make[3]: 离">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！我知道你会来，所以我等···</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CentOS7安装Redis3-2遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/" class="article-date">
+  <time datetime="2017-12-17T00:55:52.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CentOS7安装Redis3.2遇到的问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<hr>
+<p>###到<a href="https://redis.io/" target="_blank" rel="noopener">redis官网</a>下载安装包，如”redis-3.2.8.tar.gz”；将下载的安装包放到 /opt下，分别使用：</p>
+<ul>
+<li>tar -zvxf redis-3.2.8.tar.gz 解压安装包</li>
+<li>cd redis-3.2.8 进入安装包</li>
+<li>make 编译<br><h6>出现错误:</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">make[3]: gcc：命令未找到</span><br><span class="line">make[3]: *** [net.o] 错误 127</span><br><span class="line">make[3]: 离开目录“/opt/redis-3.2.8/deps/hiredis”</span><br><span class="line">make[2]: *** [hiredis] 错误 2</span><br><span class="line">make[2]: 离开目录“/opt/redis-3.2.8/deps”</span><br><span class="line">make[1]: [persist-settings] 错误 2 (忽略)</span><br><span class="line">    CC adlist.o</span><br><span class="line">/bin/sh: cc: 未找到命令</span><br><span class="line">make[1]: *** [adlist.o] 错误 127</span><br><span class="line">make[1]: 离开目录“/opt/redis-3.2.8/src”</span><br><span class="line">make: *** [all] 错误 2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><h6>解决方法：安装gcc</h6><p></p>
+<ul>
+<li>yum -y install gcc automake autoconf libtool make 安装</li>
+<li>make 运行<br><h6>出现错误：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">make[1]: 进入目录“/opt/redis-3.2.8/src”</span><br><span class="line">    CC adlist.o</span><br><span class="line">In file included from adlist.c:34:0:</span><br><span class="line">zmalloc.h:50:31: **致命错误**：jemalloc/jemalloc.h：没有那个文件或目录</span><br><span class="line"> #include &lt;jemalloc/jemalloc.h&gt;</span><br><span class="line">                               ^</span><br><span class="line">编译中断。</span><br><span class="line">make[1]: *** [adlist.o] 错误 1</span><br><span class="line">make[1]: 离开目录“/opt/redis-3.2.8/src”</span><br><span class="line">make: *** [all] 错误 2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><h6>解决方法：make改为make MALLOC=libc</h6><p></p>
+<ul>
+<li>make MALLOC=libc</li>
+<li>make test 运行<br><h6>出现错误：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">make[1]: 进入目录“/opt/redis-3.2.8/src”</span><br><span class="line">You need tcl 8.5 or newer in order to run the Redis test</span><br><span class="line">make[1]: *** [test] 错误 1</span><br><span class="line">make[1]: 离开目录“/opt/redis-3.2.8/src”</span><br><span class="line">make: *** [test] 错误 2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><h6>解决方法：升级tcl版本</h6><p></p>
+<ul>
+<li>yum install -y wget 安装wget</li>
+<li>wget <a href="http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz" target="_blank" rel="noopener">http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz</a>  </li>
+<li>sudo tar xzvf tcl8.6.1-src.tar.gz  -C /usr/local/  </li>
+<li>cd  /usr/local/tcl8.6.1/unix/  </li>
+<li>sudo ./configure  </li>
+<li>sudo make  </li>
+<li>sudo make install</li>
+<li>重新解压redis安装包并运行make进行编译</li>
+<li>进入src目录，./redis-server，如果出现虚线盒子界面表示运行成功</li>
+<li>可另起一个界面，运行 ./redis-cli来启动客户端</li>
+<li>可运行ps -ef|grep redis检测redis进程</li>
+<li>可运行netstat -Intp|grep 6379检测端口</li>
+<li>到此安装就结束了，我运用的远程控制软件是”SSH Secure Shell Client”</li>
+</ul>
+<p><em>小白参考大神佳作<a href="http://www.jianshu.com/p/cc403be7f80d" target="_blank" rel="noopener">centos7 安装redis 3.2.8 踩的那些坑</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjba3pwm30004zcwvx2acpept" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">2017_12_16 Centos7 yum源的配置与使用</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">9</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/">CentOS7安装Redis3.2遇到的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/">2017_12_16 Centos7 yum源的配置与使用</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/16/Python3-5连接MySQl数据库/">Python3.5连接MySQl数据库</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/">2017_12_16一台PC机同时安装Python2与python3</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/16/Github-Hexo博客更换主题/">Github+Hexo博客更换主题</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
