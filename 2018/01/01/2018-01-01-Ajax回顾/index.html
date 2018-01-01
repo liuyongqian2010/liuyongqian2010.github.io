@@ -5,18 +5,20 @@
   
 
   
-  <title>Tag: python2/3共存 | LiuYongQian</title>
+  <title>2018_01_01 Ajax回顾 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="永远相信美好的事情将要发生！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LiuYongQian">
-<meta property="og:url" content="http://yoursite.com/tags/python2-3共存/index.html">
+  <meta name="description" content="Ajax回顾   简介Asynchronous Javascript And XML，异步的JavaScript和XML。通过在后台与服务器进行少量数据交换，AJAX可以使网页实现异步更新。即在不重新加载整个网页的情况下，对网页的某部分进行更新。以封装一个请求为例  function ajax(url,funSucc,funFail){     //1.创建ajax对象     var xhr=n">
+<meta name="keywords" content="Web前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2018_01_01 Ajax回顾">
+<meta property="og:url" content="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="永远相信美好的事情将要发生！">
+<meta property="og:description" content="Ajax回顾   简介Asynchronous Javascript And XML，异步的JavaScript和XML。通过在后台与服务器进行少量数据交换，AJAX可以使网页实现异步更新。即在不重新加载整个网页的情况下，对网页的某部分进行更新。以封装一个请求为例  function ajax(url,funSucc,funFail){     //1.创建ajax对象     var xhr=n">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-01T08:08:17.523Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LiuYongQian">
-<meta name="twitter:description" content="永远相信美好的事情将要发生！">
+<meta name="twitter:title" content="2018_01_01 Ajax回顾">
+<meta name="twitter:description" content="Ajax回顾   简介Asynchronous Javascript And XML，异步的JavaScript和XML。通过在后台与服务器进行少量数据交换，AJAX可以使网页实现异步更新。即在不重新加载整个网页的情况下，对网页的某部分进行更新。以封装一个请求为例  function ajax(url,funSucc,funFail){     //1.创建ajax对象     var xhr=n">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -67,40 +69,102 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" class="archive-article-date">
-  <time datetime="2017-12-16T07:17:27.000Z" itemprop="datePublished">Dec 16</time>
+        <section id="main"><article id="post-2018-01-01-Ajax回顾" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/01/2018-01-01-Ajax回顾/" class="article-date">
+  <time datetime="2018-01-01T07:28:10.000Z" itemprop="datePublished">2018-01-01</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/">2017_12_16一台PC机同时安装Python2与python3</a>
+    <h1 class="article-title" itemprop="name">
+      2018_01_01 Ajax回顾
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Ajax回顾</p>
+<hr>
+<hr>
+<h4>简介</h4><br>Asynchronous Javascript And XML，异步的JavaScript和XML。通过在后台与服务器进行少量数据交换，AJAX可以使网页实现异步更新。即在不重新加载整个网页的情况下，对网页的某部分进行更新。<br><h4>以封装一个请求为例</h4>
 
+<pre><code>function ajax(url,funSucc,funFail){
+    //1.创建ajax对象
+    var xhr=new XMLHttpRequest()
+    ////兼容IE6，IE5
+    if(window.XMLHttpRequest){
+        var xhr=new XMLHttpRequest()
+    }else{
+        var xhr=new ActiveXObject(&quot;Microsoft.XMLHttp&quot;)    
+    }
+    //2.连接服务器，open(请求类型,文件路径,是否异步)
+    //如果是post请求，则需要手动设置请求消息头，如下
+    xhr.open(&apos;post&apos;,url,true);
+    xhr.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+    //如果是get请求，如下
+    xhr.open(&apos;get&apos;,url,true)
+    //3.发送请求，send方法内传递的是提交参数，没有可为null
+    xhr.send(null)
+    //4.接收数据，为Ajax对象的onreadystatechange事件设定响应函数
+    xhr.onreadystatechange=function(){
+        //readyState 请求状态:
+            0尚未初始化
+            1正在发送请求
+            2请求完成
+            3请求成功，正在接受数据
+            4接收数据成功
+        if(xhr.readyState==4){
+            //status 服务器返回的http请求响应值常用的有：
+                200表示请求成功
+                202请求被接受但处理未完成
+                400错误的请求
+                404资源未找到
+                500内部服务器错误
+
+            if(xhr.status==200){
+                //responseText 服务器返回的文本
+                funSucc(xhr.responseText)
+            }else{
+                //statusText 服务器返回的请求响应文本
+                funFail(xhr.statusText)
+            }
+        }
+    }
+}
+</code></pre><p><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/" data-id="cjbvxchbs0008f0wvm0yvj18x" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/30/进程与线程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">进程与线程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         

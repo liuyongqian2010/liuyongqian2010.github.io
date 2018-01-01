@@ -69,6 +69,93 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-2018-01-01-Ajax回顾" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/01/2018-01-01-Ajax回顾/" class="article-date">
+  <time datetime="2018-01-01T07:28:10.000Z" itemprop="datePublished">2018-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/01/2018-01-01-Ajax回顾/">2018_01_01 Ajax回顾</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Ajax回顾</p>
+<hr>
+<hr>
+<h4>简介</h4><br>Asynchronous Javascript And XML，异步的JavaScript和XML。通过在后台与服务器进行少量数据交换，AJAX可以使网页实现异步更新。即在不重新加载整个网页的情况下，对网页的某部分进行更新。<br><h4>以封装一个请求为例</h4>
+
+<pre><code>function ajax(url,funSucc,funFail){
+    //1.创建ajax对象
+    var xhr=new XMLHttpRequest()
+    ////兼容IE6，IE5
+    if(window.XMLHttpRequest){
+        var xhr=new XMLHttpRequest()
+    }else{
+        var xhr=new ActiveXObject(&quot;Microsoft.XMLHttp&quot;)    
+    }
+    //2.连接服务器，open(请求类型,文件路径,是否异步)
+    //如果是post请求，则需要手动设置请求消息头，如下
+    xhr.open(&apos;post&apos;,url,true);
+    xhr.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+    //如果是get请求，如下
+    xhr.open(&apos;get&apos;,url,true)
+    //3.发送请求，send方法内传递的是提交参数，没有可为null
+    xhr.send(null)
+    //4.接收数据，为Ajax对象的onreadystatechange事件设定响应函数
+    xhr.onreadystatechange=function(){
+        //readyState 请求状态:
+            0尚未初始化
+            1正在发送请求
+            2请求完成
+            3请求成功，正在接受数据
+            4接收数据成功
+        if(xhr.readyState==4){
+            //status 服务器返回的http请求响应值常用的有：
+                200表示请求成功
+                202请求被接受但处理未完成
+                400错误的请求
+                404资源未找到
+                500内部服务器错误
+
+            if(xhr.status==200){
+                //responseText 服务器返回的文本
+                funSucc(xhr.responseText)
+            }else{
+                //statusText 服务器返回的请求响应文本
+                funFail(xhr.statusText)
+            }
+        }
+    }
+}
+</code></pre><p><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/" data-id="cjbvxchbs0008f0wvm0yvj18x" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-进程与线程" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/30/进程与线程/" class="article-date">
@@ -116,7 +203,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjbtera3m000fqwwvo5y3p7rn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjbvxchcc000hf0wv4cpf80pu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/零散知识点/">零散知识点</a></li></ul>
@@ -328,7 +415,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/2017-12-18-Django连接MySQL/" data-id="cjbtera2o0004qwwvewwjf60x" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/18/2017-12-18-Django连接MySQL/" data-id="cjbvxcham0000f0wvmuy00e96" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a></li></ul>
@@ -404,7 +491,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjbtera3a0009qwwvjxdpzkmh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjbvxchc0000bf0wvua6mmwo6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a></li></ul>
@@ -472,7 +559,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjbtera2a0001qwwv5llr0c3g" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjbvxchbn0005f0wv01ty60ea" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a></li></ul>
@@ -690,7 +777,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/" data-id="cjbtera2w0008qwwv3byr2bhh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/" data-id="cjbvxchc3000df0wvk0vs8ftv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a></li></ul>
@@ -753,7 +840,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" data-id="cjbtera2k0003qwwvwqzknz97" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" data-id="cjbvxchb60003f0wvlhvj9eqq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python2-3共存/">python2/3共存</a></li></ul>
@@ -817,7 +904,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjbtera2s0005qwwvf7l60i2u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjbvxchbw0009f0wvrj1wpcfp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/更换主题/">更换主题</a></li></ul>
@@ -918,7 +1005,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/" data-id="cjbtera1z0000qwwvb1zlx6jp" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/" data-id="cjbvxchax0001f0wvt5pys2xw" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/创建github博客/">创建github博客</a></li></ul>
@@ -967,44 +1054,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/2017-12-15验证博客是否正常？/" data-id="cjbtera3s000hqwwvymv593ce" class="article-share-link">Teilen</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-起点" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/15/起点/" class="article-date">
-  <time datetime="2017-12-15T08:26:00.000Z" itemprop="datePublished">2017-12-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/15/起点/">起点</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
-</blockquote>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjbtera3i000dqwwv3blemz3q" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/2017-12-15验证博客是否正常？/" data-id="cjbvxchba0004f0wvbgku9i4c" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1032,7 +1082,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1042,7 +1092,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Django连接MySQL/" style="font-size: 10px;">Django连接MySQL</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Django连接MySQL/" style="font-size: 10px;">Django连接MySQL</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Web前端/" style="font-size: 10px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
     </div>
   </div>
 
@@ -1051,7 +1101,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1062,6 +1112,10 @@ limit: 20
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/01/01/2018-01-01-Ajax回顾/">2018_01_01 Ajax回顾</a>
+          </li>
         
           <li>
             <a href="/2017/12/30/进程与线程/">进程与线程</a>
@@ -1079,10 +1133,6 @@ limit: 20
             <a href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/">2017_12_16 Centos7 yum源的配置与使用</a>
           </li>
         
-          <li>
-            <a href="/2017/12/16/Python3-5连接MySQl数据库/">Python3.5连接MySQl数据库</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -1095,7 +1145,7 @@ limit: 20
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 刘永前<br>
+      &copy; 2018 刘永前<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
