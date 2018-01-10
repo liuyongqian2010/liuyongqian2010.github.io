@@ -5,20 +5,20 @@
   
 
   
-  <title>2017_12_16 Centos7 yum源的配置与使用 | LiuYongQian</title>
+  <title>python学习日志1 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.yum简介 yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了">
-<meta name="keywords" content="Yum源配置使用">
+  <meta name="description" content="变量、数据类型、运算符、分支   变量  是一个数据存储空间的表示，无需关键字，不需要声明； 命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写； print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’">
+<meta name="keywords" content="Python学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2017_12_16 Centos7 yum源的配置与使用">
-<meta property="og:url" content="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/index.html">
+<meta property="og:title" content="python学习日志1">
+<meta property="og:url" content="http://yoursite.com/2018/01/10/python学习日志1/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="1.yum简介 yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了">
+<meta property="og:description" content="变量、数据类型、运算符、分支   变量  是一个数据存储空间的表示，无需关键字，不需要声明； 命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写； print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-16T12:37:07.511Z">
+<meta property="og:updated_time" content="2018-01-10T10:20:26.989Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2017_12_16 Centos7 yum源的配置与使用">
-<meta name="twitter:description" content="1.yum简介 yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了">
+<meta name="twitter:title" content="python学习日志1">
+<meta name="twitter:description" content="变量、数据类型、运算符、分支   变量  是一个数据存储空间的表示，无需关键字，不需要声明； 命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写； print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -69,10 +69,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-2017-12-16-Centos7-yum源的配置与使用" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-python学习日志1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" class="article-date">
-  <time datetime="2017-12-16T10:54:34.000Z" itemprop="datePublished">2017-12-16</time>
+    <a href="/2018/01/10/python学习日志1/" class="article-date">
+  <time datetime="2018-01-10T09:09:48.000Z" itemprop="datePublished">2018-01-10</time>
 </a>
     
   </div>
@@ -83,7 +83,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      2017_12_16 Centos7 yum源的配置与使用
+      python学习日志1
     </h1>
   
 
@@ -91,44 +91,59 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
+        <p></p><h5>变量、数据类型、运算符、分支</h5><p></p>
 <hr>
-<p></p><h5>1.yum简介</h5><p></p>
-<p>yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了。<br><br>yum 主要功能是更方便的添加/删除/更新RPM 包，自动解决包的倚赖性问题，便于管理大量系统的更新问题。<br><br>yum 可以同时配置多个资源库(Repository)，简洁的配置文件（/etc/yum.conf），自动解决增加或删除rpm 包时遇到的依赖性问题，保持与RPM 数据库的一致性。</p><br><h5>2.yum安装</h5><br>CentOS 默认已经安装了yum，不需要另外安装，这里为了实验目的，先将yum 卸载再重新安装。<br><h6>2.1查看系统默认安装</h6><br><code>rpm -qa|grep yum</code><br><br><h6>2.2卸载yum</h6><br><code>rpm -e yum-fastestmirror-1.1.16-14.el5.centos.1 yum-metadata-parser-1.1.2-3.el5.centos yum-3.2.22-33.el5.centos</code><br><br><h6>2.3重新安装yum</h6><br>这里我们挂载系统安装光盘进行安装<br><br>– 在mnt下<code>mkdir /mnt/cdrom</code><br><br>– 挂载系统安装光盘<code>mount -t auto /dev/cdrom /mnt/cdrom</code><br><br>– yum基础安装<br><br><code>rpm -ivh yum-3.2.22-33.el5.centos.noarch.rpm yum-fastestmirror-1.1.16-14.el5.centos.1.noarch.rpm yum-metadata-parser-1.1.2-3.el5.centos.i386.rpm</code> <br><br>– 查看版本<code>yum -v</code><br><br><h6>2.4yum源配置</h6><br><p>–配置yum本地源<code>vi /etc/yum.repos.d/CentOs-Media.repo</code></p>
-
-<pre><code># CentOS-Media.repo
-#
-# This repo is used to mount the default locations for a CDROM / DVD on
-#  CentOS-5.  You can use this repo and yum to install items directly off the
-#  DVD ISO that we release.
-#
-# To use this repo, put in your DVD and use it with the other repos too:
-#  yum --enablerepo=c5-media [command]
-#  
-# or for ONLY the media repo, do this:
-#
-#  yum --disablerepo=\* --enablerepo=c5-media [command]     
-[c5-media]
-name=CentOS-$releasever - Media
-baseurl=file:///media/CentOS/
-        file:///mnt/cdrom/
-        file:///media/cdrecorder/
-gpgcheck=1
-enabled=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
-</code></pre><p></p><p>–在baseurl中修改第2个路径为/mnt/cdrom（即为光盘挂载点）将enabled=0改为1<br><br>–禁用默认的yum 网络源<code>mv CentOs-Base.repo CentOs-Base.repo.bak</code><br><br>–运行yum命令<code>yum install postgresql</code></p><p></p>
-<h6>2.5我们就用系统默认的yum源，速度也还是可以的！</h6>
-
-
-<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html" target="_blank" rel="noopener">CentOS yum 源的配置与使用</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+<hr>
+<p></p><h6>变量</h6><p></p>
+<ul>
+<li>是一个数据存储空间的表示，无需关键字，不需要声明；</li>
+<li>命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写；</li>
+<li>print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’</li>
+<li>del删除单个或多个对象的引用<pre><code>x=1
+x,y,z=1,2,3  
+print(x)
+del x,y            #删除单个或者多个对象的引用
+print(&quot;===========================================&quot;)
+name=input(&quot;Please input NAME：&quot;)  #input() 键盘录入 类型：str
+print(&quot;NAME:%s&quot; %name)
+age=int(input(&quot;Please input AGE：&quot;)) #int() 将str转换成int
+print(&quot;AGE:%d&quot; %age)
+work=input(&quot;Please input limit：&quot;)
+print(&quot;WORK:%s&quot; %work)
+</code></pre><h6>数据类型</h6></li>
+<li>数字Number：int,float,bool,复数<br></li>
+<li>字符串：String<br><pre><code>x=1 #int
+y=1.2 #float
+z=&quot;张三&quot; #字符串
+</code></pre><h6>运算符</h6></li>
+<li>算术运算符：+ - <em> /(得到小数), %(取余), //(只得到商，取整),*</em> 幂(返回x的y次幂)</li>
+<li>关系运算符：&gt; &lt; &gt;= == &lt;= !=  最终的返回bool</li>
+<li>逻辑运算符：and or not  &amp;&amp;  || !</li>
+<li>成员运算符: in( x 在 y 序列中返回 True) not in( x 不在 y 序列中返回 True)</li>
+<li>小练习：请用户输入一个四位数字：求此数字各个位之和<pre><code>value=int(input(&quot;Please input a 4-bit value:&quot;))
+qian=value//1000
+bai=value%1000//100
+shi=value%100//10
+ge=value%10
+sum=qian+bai+shi+ge
+print(sum)
+</code></pre><h6>分支结构</h6><pre><code>score=int(input(&quot;Please input score:&quot;))
+if(score&gt;=90):
+    print(&quot;Excellent!&quot;)
+elif(score&gt;=60):
+    print(&quot;Medium!&quot;)
+else:
+    print(&quot;Flunk!&quot;)
+</code></pre></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjc8x1fuq0004mswvkh37ng4a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/10/python学习日志1/" data-id="cjc8x1fvk000hmswvrwpg3y0m" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -136,19 +151,10 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
     
 <nav id="article-nav">
   
-    <a href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          CentOS7安装Redis3.2遇到的问题
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/12/16/Python3-5连接MySQl数据库/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/01/01/2018-01-01-Ajax回顾/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Python3.5连接MySQl数据库</div>
+      <div class="article-nav-title">2018_01_01 Ajax回顾</div>
     </a>
   
 </nav>
