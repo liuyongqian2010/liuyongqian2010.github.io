@@ -128,7 +128,7 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 .outer {
-  max-width: 1320px;
+  max-width: 1220px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -143,8 +143,8 @@ body {
 .inner {
   display: inline;
   float: left;
-  width: 98.46153846153847%;
-  margin: 0 0.769230769230769%;
+  width: 98.33333333333333%;
+  margin: 0 0.833333333333333%;
 }
 .left,
 .alignleft {
@@ -183,8 +183,8 @@ body {
   #main {
     display: inline;
     float: left;
-    width: 75.38461538461539%;
-    margin: 0 0.769230769230769%;
+    width: 73.33333333333333%;
+    margin: 0 0.833333333333333%;
   }
 }
 .article-date,
@@ -1295,8 +1295,8 @@ pre .javascript .function {
   #sidebar {
     display: inline;
     float: left;
-    width: 21.53846153846154%;
-    margin: 0 0.769230769230769%;
+    width: 23.333333333333332%;
+    margin: 0 0.833333333333333%;
   }
 }
 .widget-wrap {
