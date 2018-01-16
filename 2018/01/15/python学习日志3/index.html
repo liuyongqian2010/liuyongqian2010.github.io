@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>python学习日志3 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="循环（while、for）   while循环  1.输出1-100的奇数和、偶数和 n=1;sum_even=0;sum_odd=0 while n&amp;lt;=100:        #判断条件     if n%2!=0:       #循环体         sum_odd+=n     else:         sum_even+=n     n+=1             #迭代部分，">
+<meta name="keywords" content="Python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python学习日志3">
+<meta property="og:url" content="http://yoursite.com/2018/01/15/python学习日志3/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="循环（while、for）   while循环  1.输出1-100的奇数和、偶数和 n=1;sum_even=0;sum_odd=0 while n&amp;lt;=100:        #判断条件     if n%2!=0:       #循环体         sum_odd+=n     else:         sum_even+=n     n+=1             #迭代部分，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-16T01:00:18.325Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python学习日志3">
+<meta name="twitter:description" content="循环（while、for）   while循环  1.输出1-100的奇数和、偶数和 n=1;sum_even=0;sum_odd=0 while n&amp;lt;=100:        #判断条件     if n%2!=0:       #循环体         sum_odd+=n     else:         sum_even+=n     n+=1             #迭代部分，">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！我知道你会来，所以我等···</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python学习日志3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/15/python学习日志3/" class="article-date">
+  <time datetime="2018-01-15T11:15:27.000Z" itemprop="datePublished">2018-01-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python学习日志3
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p></p><h5>循环（while、for）</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>while循环</h6><p></p>
+<ul>
+<li><p>1.输出1-100的奇数和、偶数和</p>
+<pre><code>n=1;sum_even=0;sum_odd=0
+while n&lt;=100:        #判断条件
+    if n%2!=0:       #循环体
+        sum_odd+=n
+    else:
+        sum_even+=n
+    n+=1             #迭代部分，递增
+print(&apos;输出1-100的奇数和为%s&apos;%sum_odd)   #result:输出1-100的奇数和为2500
+print(&apos;输出1-100的偶数和为%s&apos;%sum_even)  #result:输出1-100的偶数和为2550
+</code></pre></li>
+<li><p>2.请用户输入数字，求和，数字直到0退出循环</p>
+<pre><code>n=int(input(&quot;请输入一个整数:&quot;));sum=0
+while n&gt;0:
+    sum+=n
+    n-=1             #迭代部分，递减
+print(sum)
+</code></pre></li>
+<li><p>3.输出1-20中3的倍数、5的倍数及3和5的公倍数</p>
+<pre><code>i=1
+while(i&lt;=20):
+    if(i%3==0 and i%5==0):
+        print(&apos;这个数是3和5的倍数：%s&apos;%i)
+    elif(i%3==0):
+        print(&apos;这个数是3的倍数：%s&apos;%i)
+    elif(i%5==0):
+        print(&apos;这个数是5的倍数：%s&apos;%i)
+    i+=1
+else:               #当循环正常执行结束后，执行else的语句块
+    print(&quot;循环结束，判断完毕！&quot;)
+</code></pre></li>
+</ul>
+<p></p><h6>for循环</h6><p></p>
+<ul>
+<li><p>range()函数,会生成有序数列</p>
+<pre><code>range(7)            #从0到7,不包含7,等同于range(0,7),举例：
+m=[]    定义一个空列表
+for i in range(7):
+    m.append(i)        #遍历i并且存入列表中
+print(m)               #result:[0, 1, 2, 3, 4, 5, 6]
+
+range(2,7)          #从2到7，不包括7，举例：
+m=[]    #定义一个空列表
+for i in range(2,7):
+    m.append(i)        #遍历并且存入列表中
+print(m)               #result:[2, 3, 4, 5, 6]
+
+range(2,7,2)        #从2到7，不包括7,步长为2；步长可为负数,举例：
+m=[]    #定义一个空列表
+for i in range(2,7,2):
+    m.append(i)        #遍历并且存入列表中
+print(m)               #result:[2, 4, 6]
+</code></pre></li>
+<li><p>打印一个三角形</p>
+<pre><code>for i in range(0,6):
+    print((&apos;*&apos;*(2*i+1)).center(20,&apos; &apos;))
+else:                  #当循环正常执行结束后，执行else的语句块
+    print(&apos;打印完毕！&apos;)
+#result：
+         *          
+        ***         
+       *****        
+      *******       
+     *********      
+    ***********     
+打印完毕！
+</code></pre></li>
+</ul>
+<p></p><h6>嵌套循环</h6><p></p>
+<ul>
+<li><p>1.输出5行5个*</p>
+<pre><code>for i in range(5):
+    n=0;
+    while n&lt;5:
+        print(&apos;*&apos;,end=&apos;&apos;)
+        n+=1
+    print()
+#result：
+    *****
+    *****
+    *****
+    *****
+    *****
+</code></pre></li>
+<li><p>2.输出一个直角三角形</p>
+<pre><code>for i in range(5):
+    for j in range(i):
+        print(&apos;*&apos;,end=&apos;&apos;)
+    print()
+#result:
+    *
+    **
+    ***
+    ****
+</code></pre></li>
+<li><p>3.输出九九乘法表</p>
+<pre><code>for i in range(1,10):
+    for j in range(1,i+1):
+        print(&apos;%s*%s=%s&apos;%(j,i,i*j),end=&quot;\t&quot;)
+    print()
+#result:
+1*1=1    
+1*2=2    2*2=4    
+1*3=3    2*3=6     3*3=9    
+1*4=4    2*4=8     3*4=12    4*4=16    
+1*5=5    2*5=10    3*5=15    4*5=20    5*5=25    
+1*6=6    2*6=12    3*6=18    4*6=24    5*6=30    6*6=36    
+1*7=7    2*7=14    3*7=21    4*7=28    5*7=35    6*7=42    7*7=49    
+1*8=8    2*8=16    3*8=24    4*8=32    5*8=40    6*8=48    7*8=56    8*8=64    
+1*9=9    2*9=18    3*9=27    4*9=36    5*9=45    6*9=54    7*9=63    8*9=72    9*9=81
+</code></pre></li>
+</ul>
+<p></p><h6>break、continue</h6><p></p>
+<ul>
+<li><p>1.请用户输入0-100间的成绩,统计各区间的人数，若数值不在范围内提示重新输入，若输入正确提示是否继续</p>
+<pre><code>a,b,c=0,0,0                             #初始化各个区间的人数
+while(True):
+    score=int(input(&apos;请输入成绩：&apos;))
+    if score&gt;=90 and score&lt;=100:        #区间：[90,100]
+        a+=1
+    elif score&gt;=60 and score&lt;90:        #区间：[60,90)
+        b+=1
+    elif score&gt;0 and score&lt;60:          #区间：(0,60)
+        c+=1
+    else:
+        print(&apos;Error,请重新输入！&apos;)
+        continue;               #结束本次循环，进入下一次循环，即接着重新输入成绩
+    print(&apos;是否继续，y/n&apos;)
+    inp=input(&apos;是否继续：&apos;)
+    if inp==&apos;n&apos;:
+        break;                  #结束并跳出循环，成绩录入结束，也不会执行else语句块了
+else:
+    print(&apos;成绩录入完成！&apos;)
+print(&apos;晋级线{0} 合格线{1} 不及格{2}&apos;.format(a,b,c))
+</code></pre></li>
+<li><p>2.统计3个班级中，每个班级中3个学生中的成绩大于80的人数</p>
+<pre><code>count=0;
+for i in range(1,4):
+    print(&apos;第{0}个班级的学生成绩&apos;.format(i))
+    for j in range(1,4):
+        print(&apos;第{0}个学生的成绩:&apos;.format(j))
+        score=int(input())
+        if score&gt;80:
+            count+=1
+        elif score&lt;0:
+            print(&apos;Error，停止本班录入!&apos;)
+            break;         #结束内层循环，开始执行外层代码：结束本班学生成绩的录入，进入下一个班级
+print(&apos;大于80的人数为%s&apos;%count)
+==============================================================================================
+count=0;
+for i in range(1,4):
+    print(&apos;第{0}个班级的学生成绩&apos;.format(i))
+    for j in range(1,4):
+        print(&apos;第{0}个学生的成绩:&apos;.format(j))
+        score=int(input())
+        if score&lt;=80:
+            continue;       #结束本次循环，继续下一次循环：继续下一个学生的成绩输入，不管哪个班
+        count+=1
+print(&apos;大于80的人数为%s&apos;%count)
+</code></pre></li>
+</ul>
+<p></p><h6>小练习</h6><p></p>
+<ul>
+<li><p>1.输出菱形</p>
+<pre><code>for i in range(1,8,2):                #1,3,5,7
+    print((&apos;*&apos;*i).center(15,&apos; &apos;))
+for i in range(5,0,-2):               #5,3,1
+    print((&apos;*&apos;*i).center(15,&apos; &apos;))
+#result:
+       *       
+      ***      
+     *****     
+    *******    
+     *****     
+      ***      
+       *    
+</code></pre></li>
+<li><p>2.输出1-30内的所有质数</p>
+<pre><code>#除了1和本身外，不能被小于本身的数整除，就是素数；除了1，从2开始
+num=[];      #定义一个列表，将来存放质数
+i=2
+for i in range(2,31):
+   j=2
+   for j in range(2,i):
+      if(i%j==0):    #被小于本身的数整除，中断内层循环，进入下一个外层循环
+         break；
+   else:
+      num.append(i)
+print(num)           #result:[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+</code></pre></li>
+<li><p>3.输出斐波那切序列：1,1,2,3,5,8,13,21…</p>
+<pre><code>#斐波那契数列:第0项是0，第1项是第一个1。从第三项开始，每一项都等于前两项之和
+i,j=0,1
+while i&lt;10:
+    print(i,end=&apos;&apos;)
+    i,j=j,i+j 
+#这里i,j=j,i+j右边的表达式会在赋值变动之前执行，即先执行右边。
+#比如第一次循环得到j=1,i+j=0+1 然后再执行赋值i,j=1,0+1,执行完这条后i=1,j=1
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/15/python学习日志3/" data-id="cjcgxqnmw000l9gwvdtz7f0gl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/12/python学习日志2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">python学习日志2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Django连接MySQL/" style="font-size: 10px;">Django连接MySQL</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Web前端/" style="font-size: 10px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/01/15/python学习日志3/">python学习日志3</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/12/python学习日志2/">python学习日志2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/10/python学习日志1/">python学习日志1</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/01/2018-01-01-Ajax回顾/">2018_01_01 Ajax回顾</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/30/进程与线程/">进程与线程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+      Email:<a>liuyongqian51@163.com</a><br />
+      QQ:<a>272501447</a>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
