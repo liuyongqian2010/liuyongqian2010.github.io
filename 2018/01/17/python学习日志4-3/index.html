@@ -7,18 +7,18 @@
   
   <title>python学习日志4-3 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="通讯录管理系统   字典形式  print(&amp;quot;=======通讯录管理系统=======&amp;quot;) print(&amp;quot;1.增加姓名和手机&amp;quot;) print(&amp;quot;2.删除姓名&amp;quot;) print(&amp;quot;3.修改手机&amp;quot;) print(&amp;quot;4.查询所有用户&amp;quot;) print(&amp;quot;5.根据姓名查找手机号&amp;quot;) pri">
+  <meta name="description" content="通讯录管理系统   字典形式      print(&amp;quot;=======通讯录管理系统=======&amp;quot;)     print(&amp;quot;1.增加姓名和手机&amp;quot;)     print(&amp;quot;2.删除姓名&amp;quot;)     print(&amp;quot;3.修改手机&amp;quot;)     print(&amp;quot;4.查询所有用户&amp;quot;)     print(&amp;quo">
 <meta name="keywords" content="Python学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python学习日志4-3">
 <meta property="og:url" content="http://yoursite.com/2018/01/17/python学习日志4-3/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="通讯录管理系统   字典形式  print(&amp;quot;=======通讯录管理系统=======&amp;quot;) print(&amp;quot;1.增加姓名和手机&amp;quot;) print(&amp;quot;2.删除姓名&amp;quot;) print(&amp;quot;3.修改手机&amp;quot;) print(&amp;quot;4.查询所有用户&amp;quot;) print(&amp;quot;5.根据姓名查找手机号&amp;quot;) pri">
+<meta property="og:description" content="通讯录管理系统   字典形式      print(&amp;quot;=======通讯录管理系统=======&amp;quot;)     print(&amp;quot;1.增加姓名和手机&amp;quot;)     print(&amp;quot;2.删除姓名&amp;quot;)     print(&amp;quot;3.修改手机&amp;quot;)     print(&amp;quot;4.查询所有用户&amp;quot;)     print(&amp;quo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-18T01:11:25.530Z">
+<meta property="og:updated_time" content="2018-01-18T04:20:12.964Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python学习日志4-3">
-<meta name="twitter:description" content="通讯录管理系统   字典形式  print(&amp;quot;=======通讯录管理系统=======&amp;quot;) print(&amp;quot;1.增加姓名和手机&amp;quot;) print(&amp;quot;2.删除姓名&amp;quot;) print(&amp;quot;3.修改手机&amp;quot;) print(&amp;quot;4.查询所有用户&amp;quot;) print(&amp;quot;5.根据姓名查找手机号&amp;quot;) pri">
+<meta name="twitter:description" content="通讯录管理系统   字典形式      print(&amp;quot;=======通讯录管理系统=======&amp;quot;)     print(&amp;quot;1.增加姓名和手机&amp;quot;)     print(&amp;quot;2.删除姓名&amp;quot;)     print(&amp;quot;3.修改手机&amp;quot;)     print(&amp;quot;4.查询所有用户&amp;quot;)     print(&amp;quo">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -59,9 +59,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -100,26 +100,25 @@
 <hr>
 <h6>字典形式</h6>
 
-<pre><code>print(&quot;=======通讯录管理系统=======&quot;)
-print(&quot;1.增加姓名和手机&quot;)
-print(&quot;2.删除姓名&quot;)
-print(&quot;3.修改手机&quot;)
-print(&quot;4.查询所有用户&quot;)
-print(&quot;5.根据姓名查找手机号&quot;)
-print(&quot;6.退出&quot;)
-print(&quot;============================&quot;)
-add_list={}
-while True:
+<pre><code>    print(&quot;=======通讯录管理系统=======&quot;)
+    print(&quot;1.增加姓名和手机&quot;)
+    print(&quot;2.删除姓名&quot;)
+    print(&quot;3.修改手机&quot;)
+    print(&quot;4.查询所有用户&quot;)
+    print(&quot;5.根据姓名查找手机号&quot;)
+    print(&quot;6.退出&quot;)
+    print(&quot;============================&quot;)
+    add_list={}
+    while True:
     input_val=int(input(&apos;请输入操作项：&apos;))
     if input_val in range(1,7):
         if input_val==1:
             names=input(&apos;请输入姓名：&apos;)
             phones=input(&apos;请输入电话：&apos;)
-            add_list[&apos;name&apos;]=names
             if phones.isdigit() and len(phones)==11:
-                add_list[&apos;phone&apos;] =int(phones)
+                add_list[names] =int(phones)
             else:
-                print(&apos;请正确输入电话号码！&apos;)
+                print(&apos;请正确输入电话！&apos;)
                 continue
             print(&apos;姓名和电话：&apos;,add_list)
             sign=input(&apos;是否继续：y/n&apos;)
@@ -131,7 +130,7 @@ while True:
             print(add_list)
             sign=input(&apos;是否删除姓名：y/n&apos;)
             if sign==&apos;y&apos;:
-                del add_list[&apos;name&apos;]
+                del add_list
                 print(&apos;已删除！&apos;)
                 sign=input(&apos;是否退出y/n&apos;)
                 if sign==&apos;y&apos;:
@@ -141,32 +140,24 @@ while True:
             else:
                 print(&apos;未进行删除！&apos;)
         elif input_val==3:
-            phones=input(&apos;请输入需要修改的电话：&apos;)
-            phones_s=input(&apos;请输入修改后的电话：&apos;)
-            if phones.isdigit() and len(phones)==11:
-                add_list[&apos;phone&apos;]=int(phones)
-                if phones.isdigit():
-                    if phones!=phones_s:
-                        add_list[&apos;phone&apos;]=phones_s
-                        print(&apos;已成功修改电话：&apos;,phones_s)
-                    else:
-                        print(&apos;请重新输入电话！&apos;)
-                else:
-                    print(&apos;修改失败！&apos;)
-                    sign=input(&apos;是否退出y/n&apos;)
-                    if sign==&apos;y&apos;:
-                        break
-                    else:
-                        continue
+            phones=input(&apos;请输入需要修改的手机：&apos;)
+            phones_s=input(&apos;请输入修改后的手机：&apos;)
+            if phones in str(add_list.values()):
+                add_list[names]=phones_s
+                print(&apos;已成功修改手机：&apos;,phones_s)
             else:
-                print(&apos;请正确输入电话！&apos;)
-                continue
+                print(&apos;修改失败！&apos;)
+                sign = input(&apos;是否退出y/n&apos;)
+                if sign == &apos;y&apos;:
+                    break
+                else:
+                    continue
         elif input_val==4:
-            print(&apos;所有用户：&apos;,add_list[&apos;name&apos;])
+            print(&apos;所有用户：&apos;,list(add_list.keys()))
         elif input_val==5:
             names_reac=input(&apos;请输入姓名：&apos;)
-            if names_reac in add_list.values():
-                print(names_reac,&apos;的电话为&apos;,add_list[&apos;phone&apos;])
+            if names_reac in list(add_list.keys()):
+                print(names_reac,&apos;的手机为&apos;,add_list[names_reac])
                 sign=input(&apos;是否继续y/n&apos;)
                 if sign==&apos;n&apos;:
                     break
@@ -250,7 +241,7 @@ print(&quot;谢谢使用！&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/python学习日志4-3/" data-id="cjcjvumig000q78wv08dmt77e" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/01/17/python学习日志4-3/" data-id="cjcjznozj000qfswvpcwyj8j1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -263,7 +254,7 @@ print(&quot;谢谢使用！&quot;)
   
   
     <a href="/2018/01/17/python学习日志4-2/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Viejo</strong>
+      <strong class="article-nav-caption">Älter</strong>
       <div class="article-nav-title">python学习日志4-2</div>
     </a>
   
@@ -293,7 +284,7 @@ print(&quot;谢谢使用！&quot;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nube de Tags</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Django连接MySQL/" style="font-size: 10px;">Django连接MySQL</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Web前端/" style="font-size: 10px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
     </div>
@@ -302,7 +293,7 @@ print(&quot;谢谢使用！&quot;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
@@ -312,7 +303,7 @@ print(&quot;谢谢使用！&quot;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
@@ -363,7 +354,7 @@ print(&quot;谢谢使用！&quot;)
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 刘永前<br>
-      Construido por <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
