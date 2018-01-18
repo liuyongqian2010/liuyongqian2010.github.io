@@ -27,6 +27,7 @@
     <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
   
   <link rel="stylesheet" href="/css/style.css">
+  
 </head>
 
 <body>
@@ -41,7 +42,7 @@
       </h1>
       
         <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">永远相信美好的事情将要发生！我知道你会来，所以我等···</a>
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
         </h2>
       
     </div>
@@ -58,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -68,6 +69,515 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-python学习日志4-3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/17/python学习日志4-3/" class="article-date">
+  <time datetime="2018-01-17T13:39:40.000Z" itemprop="datePublished">2018-01-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/17/python学习日志4-3/">python学习日志4-3</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>通讯录管理系统</h5><p></p>
+<hr>
+<hr>
+<h6>字典形式</h6>
+
+<pre><code>print(&quot;=======通讯录管理系统=======&quot;)
+print(&quot;1.增加姓名和手机&quot;)
+print(&quot;2.删除姓名&quot;)
+print(&quot;3.修改手机&quot;)
+print(&quot;4.查询所有用户&quot;)
+print(&quot;5.根据姓名查找手机号&quot;)
+print(&quot;6.退出&quot;)
+print(&quot;============================&quot;)
+add_list={}
+while True:
+    input_val=int(input(&apos;请输入操作项：&apos;))
+    if input_val in range(1,7):
+        if input_val==1:
+            names=input(&apos;请输入姓名：&apos;)
+            phones=input(&apos;请输入电话：&apos;)
+            add_list[&apos;name&apos;]=names
+            if phones.isdigit() and len(phones)==11:
+                add_list[&apos;phone&apos;] =int(phones)
+            else:
+                print(&apos;请正确输入电话号码！&apos;)
+                continue
+            print(&apos;姓名和电话：&apos;,add_list)
+            sign=input(&apos;是否继续：y/n&apos;)
+            if sign==&apos;n&apos;:
+                break
+            else:
+                continue
+        elif input_val==2:
+            print(add_list)
+            sign=input(&apos;是否删除姓名：y/n&apos;)
+            if sign==&apos;y&apos;:
+                del add_list[&apos;name&apos;]
+                print(&apos;已删除！&apos;)
+                sign=input(&apos;是否退出y/n&apos;)
+                if sign==&apos;y&apos;:
+                    break
+                else:
+                    continue
+            else:
+                print(&apos;未进行删除！&apos;)
+        elif input_val==3:
+            phones=input(&apos;请输入需要修改的电话：&apos;)
+            phones_s=input(&apos;请输入修改后的电话：&apos;)
+            if phones.isdigit() and len(phones)==11:
+                add_list[&apos;phone&apos;]=int(phones)
+                if phones.isdigit():
+                    if phones!=phones_s:
+                        add_list[&apos;phone&apos;]=phones_s
+                        print(&apos;已成功修改电话：&apos;,phones_s)
+                    else:
+                        print(&apos;请重新输入电话！&apos;)
+                else:
+                    print(&apos;修改失败！&apos;)
+                    sign=input(&apos;是否退出y/n&apos;)
+                    if sign==&apos;y&apos;:
+                        break
+                    else:
+                        continue
+            else:
+                print(&apos;请正确输入电话！&apos;)
+                continue
+        elif input_val==4:
+            print(&apos;所有用户：&apos;,add_list[&apos;name&apos;])
+        elif input_val==5:
+            names_reac=input(&apos;请输入姓名：&apos;)
+            if names_reac in add_list.values():
+                print(names_reac,&apos;的电话为&apos;,add_list[&apos;phone&apos;])
+                sign=input(&apos;是否继续y/n&apos;)
+                if sign==&apos;n&apos;:
+                    break
+                else:
+                    continue
+            else:
+                print(&apos;未查询到该人！&apos;)
+        else:
+            break
+    else:
+        print(&quot;输入有误！&quot;)
+print(&quot;谢谢使用！&quot;)
+</code></pre><h6>列表形式</h6>
+
+<pre><code>print(&quot;=======通讯录管理系统=======&quot;)
+print(&quot;1.增加姓名和手机&quot;)
+print(&quot;2.删除姓名&quot;)
+print(&quot;3.修改手机&quot;)
+print(&quot;4.查询所有用户&quot;)
+print(&quot;5.根据姓名查找手机号&quot;)
+print(&quot;6.退出&quot;)
+print(&quot;============================&quot;)
+name_list=[]
+phone_list=[]
+while True:
+    input_val=int(input(&apos;请输入操作项：&apos;))
+    if input_val in range(1,7):
+        if input_val==1:
+            name_list.append(input(&apos;请输入姓名：&apos;))
+            phone_list.append(input(&apos;请输入电话：&apos;))
+            print(&apos;姓名和电话：&apos;,name_list,phone_list)
+            sign=input(&apos;是否继续：y/n&apos;)
+            if sign==&apos;n&apos;:
+                break
+            else:
+                continue
+        elif input_val==2:
+            print(name_list)
+            sign=input(&apos;是否删除姓名：y/n&apos;)
+            if sign==&apos;y&apos;:
+                del name_list[:]
+                print(&apos;已删除！&apos;)
+                sign=input(&quot;是否退出y/n&quot;)
+                if sign==&apos;y&apos;:
+                    break
+                else:
+                    continue
+            else:
+                print(&apos;未进行删除！&apos;)
+        elif input_val==3:
+            phone=(input(&apos;请输入需要修改的手机：&apos;))
+            if phone not in phone_list:
+                print(&apos;请重新输入电话！&apos;)
+            else:
+                phone_list[(phone_list).index(phone)]=(input(&apos;请输入修改后的手机：&apos;))
+                print(&apos;已成功修改手机!&apos;)
+            sign = input(&quot;是否退出y / n&quot;)
+            if sign == &apos;y&apos;:
+                break
+            else:
+                continue
+        elif input_val==4:
+            print(&apos;所有用户：&apos;,name_list[:])
+        elif input_val==5:
+            names_reac=input(&apos;请输入姓名：&apos;)
+            if names_reac in name_list[:]:
+                print(names_reac,&apos;的手机为&apos;,phone_list[name_list.index(names_reac)])
+                sign=input(&apos;是否继续y/n&apos;)
+                if sign==&apos;n&apos;:
+                    break
+                else:
+                    continue
+            else:
+                print(&apos;未查询到该人！&apos;)
+        else:
+            break
+    else:
+        print(&quot;输入有误！&quot;)
+print(&quot;谢谢使用！&quot;)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/17/python学习日志4-3/" data-id="cjcju4tx3000qtcwvfcasf2lf" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-python学习日志4-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/17/python学习日志4-2/" class="article-date">
+  <time datetime="2018-01-17T10:03:43.000Z" itemprop="datePublished">2018-01-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/17/python学习日志4-2/">python学习日志4-2</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>元组、字典</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>元组</h6><p></p>
+<ul>
+<li><p>定义：元组与列表类似，但是元组的元素不能编辑;元组中只包括一个元素时，需要在元素后加逗号,否则括号会被当作运算符使用</p>
+<pre><code>t1=(2018,&apos;New&apos;,True,[1,2])
+print(len(t1))        #result:4
+</code></pre></li>
+<li><p>访问，使用切片</p>
+<pre><code>t3=(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;)
+print(t3[:])             #result:(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;)
+print(t3[0:3])           #result:(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;)
+print(t3[::-1])          #result:(&apos;e&apos;, &apos;d&apos;, &apos;c&apos;, &apos;b&apos;, &apos;a&apos;)
+print(t3[0:4:2])         #result:(&apos;a&apos;, &apos;c&apos;)
+</code></pre></li>
+<li><p>运算符 + * in not in</p>
+<pre><code>t4=(1,2,3)
+t5=(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)
+t6=t4+t5                 #新的元组
+print(t6)                #result:(1, 2, 3, &apos;a&apos;, &apos;b&apos;, &apos;c&apos;)
+print(t6[2:4]*2)         #result:(3, &apos;a&apos;, 3, &apos;a&apos;)
+print(&apos;a&apos; in t6)         #result:True
+print(&apos;a&apos; not in t6)     #result:False
+</code></pre></li>
+<li><p>内置函数</p>
+<pre><code>#len()
+t1=(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;)
+print(len(t1))           #result:5
+
+#max()、min()
+t1=(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;)
+print(max(t1))           #result:e
+print(min(t1))           #result:a
+
+#tuple()将其他类型转换成元组
+list=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+print(tuple(list))       #result:(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;, &apos;e&apos;)
+</code></pre></li>
+</ul>
+<p></p><h6>字典</h6><p></p>
+<ul>
+<li><p>定义：另一种可变容器模型，且可存放任意类型对象，键值对形式，以逗号分隔，键必须是唯一的</p>
+<pre><code>d={&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:&apos;26&apos;,&apos;birth&apos;:12.22}
+</code></pre></li>
+<li><p>增删改查</p>
+<pre><code>#增加
+d={&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:&apos;26&apos;,&apos;birth&apos;:12.22}
+d[&apos;job&apos;]=&apos;Engineer&apos;
+print(d)          #result:{&apos;name&apos;: &apos;Liu&apos;, &apos;job&apos;: &apos;Engineer&apos;, &apos;age&apos;: &apos;26&apos;, &apos;birth&apos;: 12.22}
+
+#删除
+del d[&apos;birth&apos;]    #del d[&quot;已存d在的键&quot;]
+print(d)          #result:{&apos;name&apos;: &apos;Liu&apos;, &apos;job&apos;: &apos;Engineer&apos;, &apos;age&apos;: &apos;26&apos;}
+
+#修改
+d[&apos;age&apos;]=&apos;108&apos;    #d[&quot;已存d在的键&quot;]
+print(d)          #result:{&apos;name&apos;: &apos;Liu&apos;, &apos;job&apos;: &apos;Engineer&apos;, &apos;age&apos;: &apos;108&apos;}
+
+#查询
+d={&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:&apos;26&apos;,&apos;birth&apos;:12.22}
+print(d[&apos;name&apos;])                    #result:Liu
+print(d.get(&apos;name&apos;))                #result:Liu
+print(d.get(&apos;job&apos;,&apos;Not find&apos;))      #result:Not find
+</code></pre></li>
+<li><p>函数</p>
+<pre><code>#len()
+d={&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:&apos;26&apos;,&apos;birth&apos;:12.22}
+print(len(d))           #result:3
+
+#keys()获取键
+for k in d.keys():
+    print(k,end=&quot;\t&quot;)   #result:name   age    birth
+
+#values()获取值    
+for v in d.values():
+    print(v,end=&quot;\t&quot;)   #result:Liu    26    12.22
+
+#items()获取每个键值对的元组
+d={&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:&apos;26&apos;,&apos;birth&apos;:12.22}
+for k,v in d.items():
+    print(k,v,end=&quot;\t&quot;) #result:name Liu   age 26    birth 12.22
+</code></pre></li>
+</ul>
+<p></p><h6>小练习</h6><p></p>
+<ul>
+<li><p>动态给字典输入5个学生的姓名和手机号</p>
+<pre><code>d={}                    #定义一个空字典
+for i in range(5):
+    m=input(&apos;请输入姓名：&apos;)
+    n=input(&apos;请输入电话：&apos;)
+    d[m]=n              #关联键、值
+print(d)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/17/python学习日志4-2/" data-id="cjcju4tx1000ptcwvfebypvba" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-python学习日志4-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/16/python学习日志4-1/" class="article-date">
+  <time datetime="2018-01-16T01:28:02.000Z" itemprop="datePublished">2018-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/16/python学习日志4-1/">python学习日志4-1</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>列表</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>列表的定义</h6><p></p>
+<ul>
+<li><p>列表的数据项不需要具有相同的类型，逗号分隔，方括号括起来</p>
+<pre><code>list1=[&apos;News&apos;,&apos;Git&apos;,2018,1.15,False]
+print(list1[2])             #result:2018
+
+list=[[&apos;a&apos;,&apos;b&apos;],[&apos;A&apos;,&apos;B&apos;],[&apos;a&apos;,&apos;B&apos;]] 
+print(list[1][1])           #二维列表  #result:B
+</code></pre></li>
+</ul>
+<p></p><h6>列表的切片</h6><p></p>
+<ul>
+<li><p>列表也可以使用切片，使用方法与字符串一致</p>
+<pre><code>print(list1[:])  #所有       #result:[&apos;News&apos;, &apos;Git&apos;, 2018, 1.15, False]
+print(list1[1:2])           #result:[&apos;Git&apos;]
+print(list1[1:4:2])         #result:[&apos;Git&apos;, 1.15]
+print(list1[-1])            #result:False
+print(list1[-1:-5:-1])      #result:[False, 1.15, 2018, &apos;Git&apos;]
+print(list1[::-1])             #result:[False, 1.15, 2018, &apos;Git&apos;, &apos;News&apos;]
+</code></pre></li>
+</ul>
+<p></p><h6>列表的编辑</h6><p></p>
+<ul>
+<li><p>增加</p>
+<pre><code>list2=[&apos;Happy&apos;,&apos;New&apos;,&apos;Year&apos;]
+list2.append(&apos;2018&apos;)          #增加到列表尾部
+print(list2)      #result:[&apos;Happy&apos;, &apos;New&apos;, &apos;Year&apos;, &apos;2018&apos;]
+list2.insert(3,&apos;2018&apos;)        #插入到列表相应下标位置,超出范围则在尾部添加
+print(list2)      #result:[&apos;Happy&apos;, &apos;New&apos;, &apos;Year&apos;, &apos;2018&apos;]
+
+list3=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list4=[&apos;李桑&apos;,&apos;雷军&apos;,&apos;马云&apos;] #两个列表可以进行相加 
+print(list3+list4)            #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;, &apos;李桑&apos;, &apos;雷军&apos;, &apos;马云&apos;]
+print(list3)                  #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;]
+
+list3.extend(list4)           #列表1.extend(列表2)，是把列表2迭代后追加到列表1，extend()没有返回值
+print(list3)                  #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;, &apos;李桑&apos;, &apos;雷军&apos;, &apos;马云&apos;]
+</code></pre></li>
+<li><p>修改</p>
+<pre><code>list5=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list5[1]=&apos;大米&apos;
+print(list5)                  #result:[&apos;百度&apos;, &apos;大米&apos;, &apos;阿里&apos;]
+</code></pre></li>
+<li><p>删除</p>
+<pre><code>list6=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+del list6[1]                  #del
+print(list6)                  #result:[&apos;百度&apos;, &apos;阿里&apos;]
+
+list7=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list7.pop()                   #默认删除最后一个,也可以指定删除的下标，返回删除值
+print(list7)                  #result:[&apos;百度&apos;, &apos;小米&apos;]
+
+list8=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list8.remove(&apos;小米&apos;)          #删除括号中的内容，但只删除一次
+print(list8)                  #result:[&apos;百度&apos;, &apos;阿里&apos;]
+</code></pre></li>
+<li><p>查询</p>
+<pre><code>list9=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+print(list9.index(&apos;c&apos;))       #返回查找到的下标  #result:2
+print(&apos;a&apos; in list9)            #返回bool值       #result:True
+print(&apos;a&apos; not in list9)        #返回bool值       #result:False
+</code></pre></li>
+</ul>
+<p></p><h6>列表的函数</h6><p></p>
+<ul>
+<li><p>len() 列表元素个数</p>
+<pre><code>list1=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+print(len(list1))           #result:5
+</code></pre></li>
+<li><p>max()、min() 返回列表元素最大值、最小值;字母以ASCII为依据</p>
+<pre><code>print(max(list1))           #result:e
+print(min(list1))           #result:a
+</code></pre></li>
+<li><p>list()将元组转换成列表</p>
+<pre><code>a=(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)             #定义一个元组
+print(list(a))              #result:[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]
+</code></pre></li>
+<li><p>append()增加到列表尾部</p>
+</li>
+<li>insert(index,obj)插入到列表相应下标位置,超出范围则在尾部添加</li>
+<li>extend()列表1.extend(列表2)，是把列表2迭代后追加到列表1</li>
+<li>pop()默认删除最后一个,也可以指定删除的下标，返回删除值</li>
+<li>remove()删除括号中的内容，但只删除一次</li>
+<li><p>reverse()反向列表中的元素</p>
+<pre><code>list2=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+list2.reverse()
+print(list2)                  #result:[&apos;e&apos;, &apos;d&apos;, &apos;c&apos;, &apos;b&apos;, &apos;a&apos;]
+</code></pre></li>
+<li><p>sort([func])排序，默认升序</p>
+<pre><code>list3=[5,6,4,2,9]
+list3.sort()
+print(list3)                  #result:[2, 4, 5, 6, 9]
+</code></pre></li>
+<li><p>clear() 清空列表</p>
+<pre><code>list4=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+list4.clear()
+print(list4)                  #result:[]
+</code></pre></li>
+<li><p>copy()复制列表，在内存中又开辟了一个空间；通过等号复制副本，在内存中指向原来的地址</p>
+<pre><code>list5=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]
+list6=list5.copy()
+print(list6)                  #result:[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]
+</code></pre></li>
+<li><p>eval()将元组、字典、列表类型的字符串转为元组、字典、列表,可以把list,tuple,dict和string相互转化</p>
+<pre><code>a=&quot;[[1,2], [3,4], [5,6]]&quot;        #字符串转换成列表
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;list&apos;&gt;
+print(m)                        #result:[[1, 2], [3, 4], [5, 6]]
+
+a=&quot;{&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:&apos;25&apos;}&quot;   #字符串转换成字典
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;dict&apos;&gt;
+print(m)                        #result:{&apos;name&apos;: &apos;Liu&apos;, &apos;age&apos;: &apos;25&apos;}
+
+a=&quot;(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)&quot;               #字符串转换成元组
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;tuple&apos;&gt;
+print(m)                        #result:(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;)
+</code></pre></li>
+</ul>
+<p></p><h6>小练习</h6><p></p>
+<ul>
+<li><p>定义一个列表，让用户动态输入5个值,遍历输出列表的值</p>
+<pre><code>nums=[]
+for i in range(5):
+    nums.append(input(&apos;请输入：&apos;))
+else:
+    print(&apos;输入完毕！&apos;)
+print(nums)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/16/python学习日志4-1/" data-id="cjcju4tww000mtcwv722g712r" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-python学习日志3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -87,10 +597,13 @@
     </h1>
   
 
+
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
+	  
+	  
         <p></p><h5>循环（while、for）</h5><p></p>
 <hr>
 <hr>
@@ -134,7 +647,7 @@ else:               #当循环正常执行结束后，执行else的语句块
 <pre><code>range(7)            #从0到7,不包含7,等同于range(0,7),举例：
 m=[]    定义一个空列表
 for i in range(7):
-    m.append(i)        #遍历i并且存入列表中
+    m.append(i)        #遍历并且存入列表中
 print(m)               #result:[0, 1, 2, 3, 4, 5, 6]
 
 range(2,7)          #从2到7，不包括7，举例：
@@ -300,7 +813,7 @@ while i&lt;10:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/15/python学习日志3/" data-id="cjcgxqnmw000l9gwvdtz7f0gl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/15/python学习日志3/" data-id="cjcju4twt000ltcwve8dtpk89" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -332,10 +845,13 @@ while i&lt;10:
     </h1>
   
 
+
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
+	  
+	  
         <p></p><h5>字符串的定义、切片、格式化、函数</h5><p></p>
 <hr>
 <hr>
@@ -508,7 +1024,7 @@ print(&apos;d&apos; not in str2)       #result:False
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/12/python学习日志2/" data-id="cjcgxqnms000j9gwvyqckacsk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/12/python学习日志2/" data-id="cjcju4twq000jtcwvr9lfaty8" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -540,10 +1056,13 @@ print(&apos;d&apos; not in str2)       #result:False
     </h1>
   
 
+
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
+	  
+	  
         <p></p><h5>变量、数据类型、运算符、分支</h5><p></p>
 <hr>
 <hr>
@@ -593,7 +1112,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/10/python学习日志1/" data-id="cjcgxqnmn000h9gwvxnod26nc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/10/python学习日志1/" data-id="cjcju4twn000htcwvub1tatrn" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -625,10 +1144,13 @@ else:
     </h1>
   
 
+
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
+	  
+	  
         <p>Ajax回顾</p>
 <hr>
 <hr>
@@ -682,7 +1204,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/" data-id="cjcgxqnlt00089gwvxfim1oa8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/" data-id="cjcju4tvy0008tcwvrrmikrff" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -714,10 +1236,13 @@ else:
     </h1>
   
 
+
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
+	  
+	  
         <p>进程与线程</p>
 <hr>
 <hr>
@@ -743,7 +1268,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjcgxqnn6000p9gwv0nxq2u5g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjcju4tx9000utcwvh9ya5vzx" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/零散知识点/">零散知识点</a></li></ul>
@@ -775,10 +1300,13 @@ else:
     </h1>
   
 
+
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
+	  
+	  
         <hr>
 <hr>
 <p> </p><h5>1.创建数据库</h5><br><em>请先确保已安装pymsql，命令：<code>pip3 install pymysql</code></em><p></p>
@@ -957,7 +1485,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/2017-12-18-Django连接MySQL/" data-id="cjcgxqnlm00059gwvcl3ba865" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/18/2017-12-18-Django连接MySQL/" data-id="cjcju4tvu0005tcwvqeqci1ik" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a></li></ul>
@@ -989,29 +1517,32 @@ urlpatterns = [
     </h1>
   
 
+
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
+	  
+	  
         <hr>
 <hr>
 <p>###到<a href="https://redis.io/" target="_blank" rel="noopener">redis官网</a>下载安装包，如”redis-3.2.8.tar.gz”；将下载的安装包放到 /opt下，分别使用：</p>
 <ul>
 <li>tar -zvxf redis-3.2.8.tar.gz 解压安装包</li>
 <li>cd redis-3.2.8 进入安装包</li>
-<li>make 编译<br><h6>出现错误:</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">make[3]: gcc：命令未找到</span><br><span class="line">make[3]: *** [net.o] 错误 127</span><br><span class="line">make[3]: 离开目录“/opt/redis-3.2.8/deps/hiredis”</span><br><span class="line">make[2]: *** [hiredis] 错误 2</span><br><span class="line">make[2]: 离开目录“/opt/redis-3.2.8/deps”</span><br><span class="line">make[1]: [persist-settings] 错误 2 (忽略)</span><br><span class="line">    CC adlist.o</span><br><span class="line">/bin/sh: cc: 未找到命令</span><br><span class="line">make[1]: *** [adlist.o] 错误 127</span><br><span class="line">make[1]: 离开目录“/opt/redis-3.2.8/src”</span><br><span class="line">make: *** [all] 错误 2</span><br></pre></td></tr></table></figure>
+<li>make 编译<br><h6>出现错误:</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: gcc：命令未找到</span><br><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: *** [net.<span class="keyword">o</span>] 错误 <span class="number">127</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/deps/hiredis”</span><br><span class="line"><span class="keyword">make</span>[<span class="number">2</span>]: *** [hiredis] 错误 <span class="number">2</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">2</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/deps”</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: [persist-settings] 错误 <span class="number">2</span> (忽略)</span><br><span class="line">    CC adlist.<span class="keyword">o</span></span><br><span class="line">/bin/<span class="keyword">sh</span>: <span class="keyword">cc</span>: 未找到命令</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [adlist.<span class="keyword">o</span>] 错误 <span class="number">127</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [<span class="keyword">all</span>] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p></p><h6>解决方法：安装gcc</h6><p></p>
 <ul>
 <li>yum -y install gcc automake autoconf libtool make 安装</li>
-<li>make 运行<br><h6>出现错误：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">make[1]: 进入目录“/opt/redis-3.2.8/src”</span><br><span class="line">    CC adlist.o</span><br><span class="line">In file included from adlist.c:34:0:</span><br><span class="line">zmalloc.h:50:31: **致命错误**：jemalloc/jemalloc.h：没有那个文件或目录</span><br><span class="line"> #include &lt;jemalloc/jemalloc.h&gt;</span><br><span class="line">                               ^</span><br><span class="line">编译中断。</span><br><span class="line">make[1]: *** [adlist.o] 错误 1</span><br><span class="line">make[1]: 离开目录“/opt/redis-3.2.8/src”</span><br><span class="line">make: *** [all] 错误 2</span><br></pre></td></tr></table></figure>
+<li>make 运行<br><h6>出现错误：</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 进入目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line">    CC adlist.<span class="keyword">o</span></span><br><span class="line">In <span class="keyword">file</span> included from adlist.<span class="keyword">c</span>:<span class="number">34</span>:<span class="number">0</span>:</span><br><span class="line">zmalloc.h:<span class="number">50</span>:<span class="number">31</span>: **致命错误**：jemalloc/jemalloc.h：没有那个文件或目录</span><br><span class="line"> #include &lt;jemalloc/jemalloc.h&gt;</span><br><span class="line">                               ^</span><br><span class="line">编译中断。</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [adlist.<span class="keyword">o</span>] 错误 <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [<span class="keyword">all</span>] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p></p><h6>解决方法：make改为make MALLOC=libc</h6><p></p>
 <ul>
 <li>make MALLOC=libc</li>
-<li>make test 运行<br><h6>出现错误：</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">make[1]: 进入目录“/opt/redis-3.2.8/src”</span><br><span class="line">You need tcl 8.5 or newer in order to run the Redis test</span><br><span class="line">make[1]: *** [test] 错误 1</span><br><span class="line">make[1]: 离开目录“/opt/redis-3.2.8/src”</span><br><span class="line">make: *** [test] 错误 2</span><br></pre></td></tr></table></figure>
+<li>make test 运行<br><h6>出现错误：</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 进入目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line">You need <span class="keyword">tcl</span> <span class="number">8.5</span> <span class="built_in">or</span> newer in order <span class="keyword">to</span> run the Redis test</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [test] 错误 <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [test] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p></p><h6>解决方法：升级tcl版本</h6><p></p>
@@ -1035,365 +1566,10 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjcgxqnlz00099gwvjoff7hh5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjcju4tw20009tcwv4ommss1r" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-2017-12-16-Centos7-yum源的配置与使用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" class="article-date">
-  <time datetime="2017-12-16T10:54:34.000Z" itemprop="datePublished">2017-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/">2017_12_16 Centos7 yum源的配置与使用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<hr>
-<p></p><h5>1.yum简介</h5><p></p>
-<p>yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了。<br><br>yum 主要功能是更方便的添加/删除/更新RPM 包，自动解决包的倚赖性问题，便于管理大量系统的更新问题。<br><br>yum 可以同时配置多个资源库(Repository)，简洁的配置文件（/etc/yum.conf），自动解决增加或删除rpm 包时遇到的依赖性问题，保持与RPM 数据库的一致性。</p><br><h5>2.yum安装</h5><br>CentOS 默认已经安装了yum，不需要另外安装，这里为了实验目的，先将yum 卸载再重新安装。<br><h6>2.1查看系统默认安装</h6><br><code>rpm -qa|grep yum</code><br><br><h6>2.2卸载yum</h6><br><code>rpm -e yum-fastestmirror-1.1.16-14.el5.centos.1 yum-metadata-parser-1.1.2-3.el5.centos yum-3.2.22-33.el5.centos</code><br><br><h6>2.3重新安装yum</h6><br>这里我们挂载系统安装光盘进行安装<br><br>– 在mnt下<code>mkdir /mnt/cdrom</code><br><br>– 挂载系统安装光盘<code>mount -t auto /dev/cdrom /mnt/cdrom</code><br><br>– yum基础安装<br><br><code>rpm -ivh yum-3.2.22-33.el5.centos.noarch.rpm yum-fastestmirror-1.1.16-14.el5.centos.1.noarch.rpm yum-metadata-parser-1.1.2-3.el5.centos.i386.rpm</code> <br><br>– 查看版本<code>yum -v</code><br><br><h6>2.4yum源配置</h6><br><p>–配置yum本地源<code>vi /etc/yum.repos.d/CentOs-Media.repo</code></p>
-
-<pre><code># CentOS-Media.repo
-#
-# This repo is used to mount the default locations for a CDROM / DVD on
-#  CentOS-5.  You can use this repo and yum to install items directly off the
-#  DVD ISO that we release.
-#
-# To use this repo, put in your DVD and use it with the other repos too:
-#  yum --enablerepo=c5-media [command]
-#  
-# or for ONLY the media repo, do this:
-#
-#  yum --disablerepo=\* --enablerepo=c5-media [command]     
-[c5-media]
-name=CentOS-$releasever - Media
-baseurl=file:///media/CentOS/
-        file:///mnt/cdrom/
-        file:///media/cdrecorder/
-gpgcheck=1
-enabled=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
-</code></pre><p></p><p>–在baseurl中修改第2个路径为/mnt/cdrom（即为光盘挂载点）将enabled=0改为1<br><br>–禁用默认的yum 网络源<code>mv CentOs-Base.repo CentOs-Base.repo.bak</code><br><br>–运行yum命令<code>yum install postgresql</code></p><p></p>
-<h6>2.5我们就用系统默认的yum源，速度也还是可以的！</h6>
-
-
-<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html" target="_blank" rel="noopener">CentOS yum 源的配置与使用</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjcgxqnld00039gwvbnq8cqz3" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Python3-5连接MySQl数据库" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/16/Python3-5连接MySQl数据库/" class="article-date">
-  <time datetime="2017-12-16T09:32:45.000Z" itemprop="datePublished">2017-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/16/Python3-5连接MySQl数据库/">Python3.5连接MySQl数据库</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>PyMySQL是在Pyhton3.x版本中用于连接MySQL数据库的一个库，Python2中则使用mysqldb库</em></p>
-<p>使用<code>pip3 install PyMySQl</code>进行安装PyMySQL库</p><br><h5>数据库连接</h5><br><p>连接数据库前，请先确认以下事项：</p>
-
-<ul>
-<li><p>已经创建了数据库 TESTDB</p>
-</li>
-<li><p>在TESTDB数据库中您已经创建了表 t_table</p>
-</li>
-<li><p>t_table表字段为 FIRST_NAME, LAST_NAME, AGE, SEX 和 INCOME</p>
-</li>
-<li><p>连接数据库testdb使用的用户名为 “testuser” ，密码为 “test123”，你可以自己设定或者直接使用root用户名及其密码</p>
-</li>
-<li>mysql数据库用户授权请使用grant命令</li>
-</ul>
-<p>以下示例是连接MySQL数据库中的TESTDB数据库：</p>
-
-<pre><code>#!/usr/bin/python3
-
-import pymysql
-# 打开数据库连接
-db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
-# 使用 cursor() 方法创建一个游标对象 cursor
-cursor = db.cursor()
-# 使用 execute()  方法执行 SQL 查询 
-cursor.execute(&quot;SELECT VERSION()&quot;)
-# 使用 fetchone() 方法获取单条数据.
-data = cursor.fetchone()
-print (&quot;Database version : %s &quot; % data)
-# 关闭数据库连接
-db.close()
-</code></pre><p></p><h5>操作实例</h5><p></p>
-<h6>创建数据库表</h6>
-
-<p>如果数据库连接存在，可以使用execute()方法为数据库创建表，如下所示创建表t_table</p>
-
-<pre><code>#!/usr/bin/python3
-
-import pymysql
-# 打开数据库连接
-db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
-# 使用 cursor() 方法创建一个游标对象 cursor
-cursor = db.cursor()
-# 使用 execute() 方法执行 SQL，如果表存在则删除
-cursor.execute(&quot;DROP TABLE IF EXISTS t_table&quot;)
-# 使用预处理语句创建表
-sql = &quot;&quot;&quot;CREATE TABLE t_table(
-         FIRST_NAME  CHAR(20) NOT NULL,
-         LAST_NAME  CHAR(20),
-         AGE INT,  
-         SEX CHAR(1),
-         INCOME FLOAT )&quot;&quot;&quot;
-cursor.execute(sql)
-# 关闭数据库连接
-db.close()
-</code></pre><h6>数据库插入操作</h6>
-
-<p>以下示例使用执行SQL insert 语句 向表t_table中插入一条记录：</p>
-
-<pre><code>#!/usr/bin/python3
-
-import pymysql
-# 打开数据库连接
-db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
-# 使用cursor()方法获取操作游标 
-cursor = db.cursor()
-# SQL 插入语句
-sql = &quot;&quot;&quot;INSERT INTO t_table(FIRST_NAME,
-         LAST_NAME, AGE, SEX, INCOME)
-         VALUES (&apos;Mac&apos;, &apos;Mohan&apos;, 20, &apos;M&apos;, 2000)&quot;&quot;&quot;
-try:
-   # 执行sql语句
-   cursor.execute(sql)
-   # 提交到数据库执行
-   db.commit()
-except:
-   # 如果发生错误则回滚
-   db.rollback()
-# 关闭数据库连接
-db.close()
-</code></pre><h6>数据库查询操作</h6>
-
-<p>Python查询MySQL使用fetchone()方法获取单条记录，使用fetchall()方法获取多条记录</p>
-<ul>
-<li>fetchone()：该方法获取下一个查询结果集，结果集是一个对象</li>
-<li>fetchall():该方法接收全部返回结果集</li>
-<li>fetchnum(n):</li>
-<li><p>rowcount:这是一个只读属性，并返回执行execute()方法后影响的行数</p>
-<pre><code>#!/usr/bin/python3
-
-import pymysql
-# 打开数据库连接
-db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
-# 使用cursor()方法获取操作游标 
-cursor = db.cursor()
-# SQL 查询语句
-sql = &quot;SELECT * FROM t_table \
-       WHERE INCOME &gt; &apos;%d&apos;&quot; % (1000)
-try:
-   # 执行SQL语句
-   cursor.execute(sql)
-   # 获取所有记录列表
-   results = cursor.fetchall()
-   for row in results:
-      fname = row[0]
-      lname = row[1]
-      age = row[2]
-      sex = row[3]
-      income = row[4]
-       # 打印结果
-      print (&quot;fname=%s,lname=%s,age=%d,sex=%s,income=%d&quot; % \(fname, lname, age, sex, income ))
-except:
-   print (&quot;Error: unable to fecth data&quot;)
-# 关闭数据库连接
-db.close()
-</code></pre></li>
-</ul>
-<ul>
-<li>以上脚本执行结果如下：<br>  fname=Mac, lname=Mohan, age=20, sex=M, income=2000<h6>数据库更新操作</h6>
-
-</li>
-</ul>
-<p>更新操作用于更新数据表的的数据，以下实例将t_table表中的SEX字段全部修改为’M’,AGE字段递增1</p>
-
-<pre><code>#!/usr/bin/python3
-
-import pymysql
-# 打开数据库连接
-db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
-# 使用cursor()方法获取操作游标 
-cursor = db.cursor()
-# SQL 更新语句
-sql = &quot;UPDATE EMPLOYEE SET AGE = AGE + 1
-                          WHERE SEX = &apos;%c&apos;&quot; % (&apos;M&apos;)
-try:
-   # 执行SQL语句
-   cursor.execute(sql)
-   # 提交到数据库执行
-   db.commit()
-except:
-   # 发生错误时回滚
-   db.rollback()
-# 关闭数据库连接
-db.close()
-</code></pre><h6>删除操作</h6>
-
-<pre><code>#!/usr/bin/python3
-
-import pymysql
-# 打开数据库连接
-db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
-# 使用cursor()方法获取操作游标 
-cursor = db.cursor()
-# SQL 删除语句
-sql = &quot;DELETE FROM t_table WHERE AGE &gt; &apos;%d&apos;&quot; % (20)
-try:
-   # 执行SQL语句
-   cursor.execute(sql)
-   # 提交修改
-   db.commit()
-except:
-   # 发生错误时回滚
-   db.rollback()
-# 关闭连接
-db.close()
-</code></pre><p></p><h6>执行事务</h6><p></p>
-<p>事务机制可以确保数据一致性。<br><br>事务应该具有4个属性：原子性、一致性、隔离性、持久性,这四个属性通常称为ACID特性。<br><br>- 原子性（atomicity）。一个事务是一个不可分割的工作单位，事务中包括的诸操作要么都做，要么都不做<br><br>- 一致性（consistency）。事务必须是使数据库从一个一致性状态变到另一个一致性状态。一致性与原子性是密切相关的<br><br>- 隔离性（isolation）。一个事务的执行不能被其他事务干扰。即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰<br><br>- 持久性（durability）。持续性也称永久性（permanence），指一个事务一旦提交，它对数据库中数据的改变就应该是永久性的。接下来的其他操作或故障不应该对其有任何影响。<br><br>Python DB API 2.0 的事务提供了两个方法 commit 或 rollback<br></p>
-
-<pre><code># SQL删除记录语句
-sql = &quot;DELETE FROM EMPLOYEE WHERE AGE &gt; &apos;%d&apos;&quot; % (20)
-try:
-   # 执行SQL语句
-   cursor.execute(sql)
-   # 向数据库提交
-   db.commit()
-except:
-   # 发生错误时回滚
-   db.rollback()
-</code></pre><p>对于支持事务的数据库， 在Python数据库编程中，当游标建立之时，就自动开始了一个隐形的数据库事务。<br><br>commit()方法游标的所有更新操作，rollback（）方法回滚当前游标的所有操作。每一个方法都开始了一个新的事务。</p>
-
-<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/lhuan/p/6160023.html" target="_blank" rel="noopener">Python3.5  MySQL 数据库连接</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/" data-id="cjcgxqnma000d9gwviypz6472" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-2017-12-16一台PC机同时安装Python2与python3" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" class="article-date">
-  <time datetime="2017-12-16T07:17:27.000Z" itemprop="datePublished">2017-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/">2017_12_16一台PC机同时安装Python2与python3</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><em>由于平时学习中需要两种版本不时的替换，索性通过网上查找资料自己配置安装了两个版本，以下是小白整理的一些步骤。</em></p>
-<p></p><h4>Python2安装</h4><p></p>
-<ul>
-<li>1.1到<a href="https://www.python.org/" target="_blank" rel="noopener">Python官网</a>下载Python2安装文件，如：python-2.7.12.amd64.exe</li>
-<li>1.2点击”python-2.7.12.amd64”进行安装后将该安装目录下的python.exe文件重新命名为python2.exe</li>
-<li>1.3在电脑–属性–高级系统设置–高级–环境变量–系统变量–Path–编辑中添加环境变量，如”C:\Python27”，即python2的安装目录</li>
-<li>1.4在Dos窗口中输入<code>python2</code>如出现python2的版本信息即表明安装成功</li>
-<li>1.5到<a href="https://pypi.python.org/pypi/setuptools" target="_blank" rel="noopener">Pip官网</a>下载名称类似”setuptools-28.7.0.zip”的pip依赖包，在cmd中cd到该依赖包解压后的目录下，输入<code>python2 setup.py install</code></li>
-<li>1.6到<a href="https://pypi.python.org/pypi/pip" target="_blank" rel="noopener">Pip官网</a>下载名称类似”pip-8.1.2.tar”的文件并解压，在cmd中cd到该文件解压后的目录下，再次输入<code>python2 setup.py install</code></li>
-<li>1.7在cmd中输入<code>pip2</code>,如果出现”Usage”字样说明安装成功</li>
-<li>1.8测试使用：在cmd中输入<code>pip2 install selenium</code>,如果窗口命令哗哗的下滚，说明可以了；也可下载python其他包，用cmd进入到其解压后的目录下，输入<code>python2 setup.py install</code></li>
-</ul>
-<p></p><h4>Python3安装</h4><p></p>
-<ul>
-<li>1.1到<a href="https://www.python.org/" target="_blank" rel="noopener">Python官网</a>下载Python3安装文件，如：python-3.5.0-amd64.exe</li>
-<li>1.2点击”python-3.5.0-amd64.exe”进行安装后将该安装目录下的python.exe文件重新命名为python2.exe</li>
-<li>1.3在电脑–属性–高级系统设置–高级–环境变量–系统变量–Path–编辑中添加环境变量，如”C:\Python35”，即python3的安装目录</li>
-<li>1.4在Dos窗口中输入<code>python</code>如出现python3.5的版本信息即表明安装成功；由于未修改python3安装目录下的python.exe文件名，此处python就是python3</li>
-<li>1.5在cmd中输入<code>pip3</code>,如果出现”Usage”字样说明自动安装成功；python3自带pip，无需手动安装</li>
-<li>1.6测试使用：在cmd中输入<code>pip3 install selenium</code>,如果窗口命令哗哗的下滚，说明可以了；也可下载python其他包，用cmd进入到其解压后的目录下，输入<code>python setup.py install</code></li>
-</ul>
-<ul>
-<li>该文参考大神的佳作<a href="http://blog.csdn.net/u014285884/article/details/70239511" target="_blank" rel="noopener">在同一台电脑上同时安装Python2和Python3</a></li>
-<li><em>若文中内容有误，希望大家指正，谢谢!</em></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" data-id="cjcgxqnli00049gwvp239powv" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python2-3共存/">python2/3共存</a></li></ul>
 
     </footer>
   </div>
@@ -1408,7 +1584,7 @@ except:
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1422,7 +1598,7 @@ except:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1439,9 +1615,9 @@ except:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/">2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/">2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1449,9 +1625,21 @@ except:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/01/17/python学习日志4-3/">python学习日志4-3</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/17/python学习日志4-2/">python学习日志4-2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/16/python学习日志4-1/">python学习日志4-1</a>
+          </li>
         
           <li>
             <a href="/2018/01/15/python学习日志3/">python学习日志3</a>
@@ -1459,18 +1647,6 @@ except:
         
           <li>
             <a href="/2018/01/12/python学习日志2/">python学习日志2</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/10/python学习日志1/">python学习日志1</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/01/2018-01-01-Ajax回顾/">2018_01_01 Ajax回顾</a>
-          </li>
-        
-          <li>
-            <a href="/2017/12/30/进程与线程/">进程与线程</a>
           </li>
         
       </ul>
@@ -1488,7 +1664,11 @@ except:
   </div>
 
   
+  
+
 </aside>
+
+
         
       </div>
       <footer id="footer">
@@ -1499,7 +1679,10 @@ except:
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
+
 </footer>
+
+
     </div>
     <nav id="mobile-nav">
   
