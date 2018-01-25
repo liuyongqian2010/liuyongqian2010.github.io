@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,70 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-进程与线程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/30/进程与线程/" class="article-date">
+  <time datetime="2017-12-30T13:28:24.000Z" itemprop="datePublished">2017-12-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/30/进程与线程/">进程与线程</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p>进程与线程</p>
+<hr>
+<hr>
+<p><em>在刚开始学习性能工具LR时，常听到进程与线程；但不得具体是什么意思，或者比较抽象；然后在网络上找到了比较形象的解释</em></p>
+<ol>
+<li>计算机的核心是CPU，它承担了所有的计算任务。它就像一座工厂，时刻在运行。</li>
+<li>假定工厂的电力有限，一次只能供给一个车间使用。也就是说，一个车间开工的时候，其他车间都必须停工。背后的含义就是，单个CPU一次只能运行一个任务。</li>
+<li>进程就好比工厂的车间，它代表CPU所能处理的单个任务。任一时刻，CPU总是运行一个进程，其他进程处于非运行状态。</li>
+<li>一个车间里，可以有很多工人。他们协同完成一个任务。</li>
+<li>线程就好比车间里的工人。一个进程可以包括多个线程。</li>
+<li>车间的空间是工人们共享的，比如许多房间是每个工人都可以进出的。这象征一个进程的内存空间是共享的，每个线程都可以使用这些共享内存。</li>
+<li>可是，每间房间的大小不同，有些房间最多只能容纳一个人，比如厕所。里面有人的时候，其他人就不能进去了。这代表一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。</li>
+<li>一个防止他人进入的简单方法，就是门口加一把锁。先到的人锁上门，后到的人看到上锁，就在门口排队，等锁打开再进去。这就叫”互斥锁”（Mutual exclusion，缩写 Mutex），防止多个线程同时读写某一块内存区域。</li>
+<li>还有些房间，可以同时容纳n个人，比如厨房。也就是说，如果人数大于n，多出来的人只能在外面等着。这好比某些内存区域，只能供给固定数目的线程使用。</li>
+<li>这时的解决方法，就是在门口挂n把钥匙。进去的人就取一把钥匙，出来时再把钥匙挂回原处。后到的人发现钥匙架空了，就知道必须在门口排队等着了。这种做法叫做”信号量”（Semaphore），用来保证多个线程不会互相冲突。<br><br>不难看出，mutex是semaphore的一种特殊情况（n=1时）。也就是说，完全可以用后者替代前者。但是，因为mutex较为简单，且效率高，所以在必须保证资源独占的情况下，还是采用这种设计。</li>
+</ol>
+<hr>
+<ul>
+<li>操作系统的设计，因此可以归结为三点：<br><br>（1）以多进程形式，允许多个任务同时运行；<br><br>（2）以多线程形式，允许单个任务分成不同的部分运行；<br><br>（3）提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源。</li>
+</ul>
+<p><em>小白参考大神佳作<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">进程与线程的一个简单解释</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjcugxnz7000ybowvqy7kxq6k" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/零散知识点/">零散知识点</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-2017-12-18-Django连接MySQL" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -273,7 +337,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/2017-12-18-Django连接MySQL/" data-id="cjcmnw1bq0004ncwvyhrguw45" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/18/2017-12-18-Django连接MySQL/" data-id="cjcugxnxj0005bowvj3w93o9t" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a></li></ul>
@@ -354,7 +418,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjcmnw1bq0006ncwvsow95m3u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjcugxnxn0006bowv7516n4tw" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a></li></ul>
@@ -427,7 +491,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjcmnw1bb0002ncwvp1edoxb9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjcugxnx70002bowv0e417swv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a></li></ul>
@@ -650,7 +714,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/" data-id="cjcmnw1c6000cncwvpvadf4t4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/" data-id="cjcugxny7000ebowvqcip64t3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a></li></ul>
@@ -718,7 +782,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" data-id="cjcmnw1bq0005ncwvc1htnpt4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" data-id="cjcugxnyi000kbowvx9y3uoii" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python2-3共存/">python2/3共存</a></li></ul>
@@ -787,7 +851,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjcmnw1c60009ncwvvq8bwhe3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjcugxnxs0009bowvpch28iwr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/更换主题/">更换主题</a></li></ul>
@@ -893,7 +957,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/" data-id="cjcmnw1bb0001ncwvd8cmwogx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/" data-id="cjcugxnx30001bowv89rwqnls" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/创建github博客/">创建github博客</a></li></ul>
@@ -947,7 +1011,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/2017-12-15验证博客是否正常？/" data-id="cjcmnw1af0000ncwvxpsbc8u5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/15/2017-12-15验证博客是否正常？/" data-id="cjcugxnwt0000bowv3cnt7du1" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -989,57 +1053,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjcmnw1d1000rncwv7hc0y9n9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/14/hello-world/" class="article-date">
-  <time datetime="2017-12-14T15:15:06.308Z" itemprop="datePublished">2017-12-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/14/hello-world/">Hello World</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjcmnw1cm000kncwv5b0fuigb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjcugxnzb0010bowv190amii8" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1055,7 +1069,7 @@ limit: 20
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1069,7 +1083,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1086,9 +1100,9 @@ limit: 20
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1096,12 +1110,16 @@ limit: 20
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/01/19/python学习日志6-1/">python学习日志6</a>
+            <a href="/2018/01/22/python学习日志6-2/">python学习日志6-2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/19/python学习日志6-1/">python学习日志6-1</a>
           </li>
         
           <li>
@@ -1116,10 +1134,6 @@ limit: 20
             <a href="/2018/01/17/python学习日志4-2/">python学习日志4-2</a>
           </li>
         
-          <li>
-            <a href="/2018/01/16/python学习日志4-1/">python学习日志4-1</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -1129,8 +1143,9 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">About</h3>
     <div class="widget">
-      Email:<a>liuyongqian51@163.com</a><br />
-      QQ:<a>272501447</a>
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
     </div>
   </div>
 

@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,74 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-python学习日志6-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/22/python学习日志6-2/" class="article-date">
+  <time datetime="2018-01-22T09:23:16.000Z" itemprop="datePublished">2018-01-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/22/python学习日志6-2/">python学习日志6-2</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>类与对象</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>定义</h6><p></p>
+<ul>
+<li><p>在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合</p>
+<pre><code>class Student:
+    &apos;&apos;&apos;
+    学生类             #文档说明，可通过类名.__doc__访问
+    &apos;&apos;&apos;
+    #类的成员：特性  行为
+    pass              #保证语义的完整
+</code></pre></li>
+<li><p>类名规范：首字母大写，以大写字母分割单词，不使用下划线;不允许使用数字、关键字、除下划线以外的特殊字符开头<br><br>属性名规范：使用名词，首字母小写，以大写字母分割单词<br><br>方法名规范：使用谓词（动词+对象），首字母小写，以大写字母分割单词<br></p>
+<pre><code>class Student:
+    def __init__(self,name,age):    
+    #__init__()这个方法会在创建对象时完成初始化，并把类的属性绑上去
+        self.name=name           #创建对象属性
+        self.age=age
+    def showName(self):
+        print(&apos;我叫{}!&apos;.format(self.name))        
+m=Student(&apos;张三&apos;,27)
+m.showName()
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/22/python学习日志6-2/" data-id="cjcugxnz3000vbowv2bst5ufh" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-python学习日志6-1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -84,7 +152,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/19/python学习日志6-1/">python学习日志6</a>
+      <a class="article-title" href="/2018/01/19/python学习日志6-1/">python学习日志6-1</a>
     </h1>
   
 
@@ -98,7 +166,8 @@
         <p></p><h5>函数</h5><p></p>
 <hr>
 <hr>
-<p></p><h6>定义</h6><p></p>
+<h6>定义</h6>
+
 <ul>
 <li>高复用、低耦合</li>
 <li><p>语法</p>
@@ -127,15 +196,153 @@ b=[&apos;刘邦&apos;,&apos;刘秀&apos;]
 print(&apos;调用前&apos;,b)      #result:调用前 [&apos;刘邦&apos;, &apos;刘秀&apos;]
 fun(b)
 print(&apos;调用后&apos;,b)      #result:调用后 [&apos;刘备&apos;, &apos;刘禅&apos;]
-#可变类型：变量赋值b=[1,2,3]后再次赋值b=[2]=5则是将b的第三个元素值更改，本身b没有动，只是其内部的一部分值被修改了
-#可变类型：引用传递(实质是值传递，传递可变类型)，如fun(a)，则是将b真正的传过去，修改后fun外部的b也会受影响
+#可变类型：变量赋值b=[1,2,3]后再次赋值b[2]=5则是将b的第三个元素值更改，本身b没有动，只是其内部的一部分值被修改了
+#可变类型：引用传递(实质是值传递，传递可变类型-可以改变内容，但不可以改变原地址)，如fun(b)，则是将b真正的传过去，修改后fun外部的b也会受影响
+
+def fun(b):
+    b=[&apos;刘备&apos;,&apos;刘禅&apos;]
+    print(&apos;函数内部b为&apos;,b)
+b=[&apos;刘邦&apos;,&apos;刘秀&apos;]
+print(&apos;调用前&apos;,b)      #result:调用前 [&apos;刘邦&apos;, &apos;刘秀&apos;]
+fun(b)                   #result:函数内部b为 [&apos;刘备&apos;, &apos;刘禅&apos;]
+print(&apos;调用后&apos;,b)      #result:调用后 [&apos;刘邦&apos;, &apos;刘秀&apos;]
+#相当于不可变类型
+</code></pre></li>
+</ul>
+<h6>参数类型</h6>
+
+<ul>
+<li>在Python中定义函数,可用必选参数、默认参数、可变参数、关键字参数、命名关键字参数；除了可变参数无法和命名关键字参数组合使用外，其他均可组合使用；参数定义的顺序必须是：必选参数、默认参数、可变参数/命名关键字参数和关键字参数</li>
+<li><p>必选参数（形参与实参的个数、类型、顺序一一对应）</p>
+<pre><code>def fun1(a,b):              #形参：定义方法
+    &apos;&apos;&apos;
+    :param a:               第一个加数
+    :param b:               第二个加数
+    :return:                和
+    &apos;&apos;&apos;
+    return a+b
+h=fun1(33,66)               #实参：调用方法
+print(fun1.__doc__)         #调看文档
+print(h)                    #result:99
+</code></pre></li>
+<li><p>默认参数（缺省参数）须写在后面，可以不指定参数名，但是顺序要正确，否则需要指定参数名</p>
+<pre><code>def fun2(a,b=3):
+    return a+b
+h=fun2(4)
+print(h)                    #result:7
+</code></pre></li>
+<li><p>可变参数（不定长参数）该参数允许传入0个或者任意个参数，这些参数在函数调用时组装为一个tuple</p>
+<pre><code>def getSum(*nums):
+    sum=0
+    for i in nums:
+        sum+=i
+    return sum
+m=[1,2,3,4,5]
+n=(1,2,3,4,5)
+print(getSum())                  #result:0
+print(getSum(1,2,3,4,5,6,7))     #result:28
+print(getSum(*m))                #result:15
+print(getSum(*n))                #result:15
+</code></pre></li>
+<li><p>命名关键字参数  该参数允许传入0个或者任意个参数，这些参数在函数内部自动组装为一个dict;一旦以name=value的的传参数的形式存在，之后都要以这种形式存在，但不要求顺序</p>
+<pre><code>def show(name,age,score=90):
+    print(&apos;姓名{} 年龄{} 成绩{}&apos;.format(name,age,score))
+show(name=&apos;Liu&apos;,age=27,score=135)      #result:姓名Liu 年龄27 成绩135
+</code></pre></li>
+<li><p>关键字参数 该参数允许传入0个或者任意个参数，这些参数在函数内部自动组装为一个dic</p>
+<pre><code>def student(name,age,**hobby):
+    print(&apos;姓名{} 年龄{} 爱好{}&apos;.format(name,age,hobby))
+dic={&apos;一&apos;:111,&apos;二&apos;:222,&apos;三&apos;:333}
+student(&apos;Liu&apos;,30,hobby=&apos;Footboll&apos;)     #result:姓名Liu 年龄30 爱好{&apos;hobby&apos;: &apos;Footboll&apos;}
+student(&apos;Liu&apos;,30,**dic)                #result:姓名Liu 年龄30 爱好{&apos;三&apos;: 333, &apos;二&apos;: 222, &apos;一&apos;: 111}
+</code></pre></li>
+<li><p>组合参数 包括若干种参数</p>
+<pre><code>def fun1(a,b,c=9,*args,**kw):
+    print(&apos;a=&apos;,a,&apos;b=&apos;,b,&apos;c=&apos;,c,&apos;args=&apos;,args,&apos;kw=&apos;,kw)
+#*args是可变参数，会这个分割args 逐个对应形参列表
+#**kw只能对应到形参列表的**kw
+m=(1,2,3,4,5)
+n={&apos;一&apos;:111,&apos;二&apos;:222}
+fun1(&apos;A&apos;,&apos;B&apos;)                      #result:a= A b= B c= 9 args= () kw= {}
+fun1(*m)                           #result:a= 1 b= 2 c= 3 args= (4, 5) kw= {}
+fun1(*m,**n)                       #result:a= 1 b= 2 c= 3 args= (4, 5) kw= {&apos;二&apos;: 222, &apos;一&apos;: 111}
+</code></pre></li>
+</ul>
+<h6>变量作用域</h6>
+
+<ul>
+<li><p>当全局和局部同名时，优先局部变量</p>
+<pre><code>a=10           #全局变量
+def changeNum():
+    global a
+    a=5        #局部变量
+    print(&apos;函数内部a为&apos;,a)
+print(&apos;调用前a为&apos;,a)              #result:10
+changeNum()                      #result:5
+print(&apos;调用后a为&apos;,a)              #result:5
+</code></pre></li>
+</ul>
+<h6>匿名函数（lambda）</h6>
+
+<pre><code>sum=lambda a,b:a+b               #定义函数
+s=sum(3,9)                       #执行函数
+print(s)                         #result:12
+
+def add(a,b,fun):
+    &apos;&apos;&apos;
+    :param a:
+    :param b:
+    :param fun:    传递过来的函数
+    :return:
+    &apos;&apos;&apos;
+    print(fun(a,b))              #委托
+add(11,22,lambda a,b:a+b)        #result:33
+</code></pre><p></p><h6>内置函数</h6><p></p>
+<ul>
+<li><p>filter()通过表达式返回true时保留符合条件的信息</p>
+<pre><code>foo=[2,18,9,22,17,24,8,12,27]
+result=filter(lambda x:x%3==0,foo)
+print(list(result))              #result:[18, 9, 24, 12, 27]
+</code></pre></li>
+<li><p>map()函数接收两个参数，一个是函数，一个是序列，该函数将序列的每个元素传入函数中执行，并把结果作为新的list返回</p>
+<pre><code>foo=[2,18,9,22,17,24,8,12,27]
+result=map(lambda x:x%3==0,foo)
+print(list(result))          #result:[False, True, True, False, False]
+</code></pre></li>
+<li><p>reduce()对于序列内所有元素进行累计操作，先对序列中的第1、2个数据进行操作，得到的结果再与第三个数据运算，最后得到一个结果；python内置了求和函数sum(),一般用reduce()</p>
+</li>
+</ul>
+<pre><code>import functools            #reduce()函数现在放置在了functools模块里了
+foo=[1,2,3,4,5,6,7]
+m=functools.reduce(lambda a,b:a+b,foo)
+print(m)                     #result:28
+
+foo=[1,2,3,4,5,6,7]
+m=functools.reduce(lambda a,b:a+b,foo,100)    #可以接受第三个参数
+print(m)                     #result:128
+
+foo=[1,2,3,4,5,6,7]
+print(sum(foo))             #result:28
+</code></pre><ul>
+<li><p>sorted()排序函数，排序时不影响原数据，产生新的排序数据  </p>
+<pre><code>ol=[1,3,9,5,2,4]
+ul=sorted(ol,reverse=False)
+print(ul)            #result:[1, 2, 3, 4, 5, 9]
+
+ol=[1,3,9,5,2,4]
+ul=sorted(ol,reverse=True)
+print(ul)            #result:[9, 5, 4, 3, 2, 1]
+
+ol=[(&apos;Abot&apos;,98),(&apos;Tom&apos;,57),(&apos;Honey&apos;,77)]
+ul=sorted(ol,key=lambda s:s[1],reverse=True)  #key,依据什么来进行排序
+print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (&apos;Tom&apos;, 57)]
 </code></pre></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/python学习日志6-1/" data-id="cjcmnw1g3001dncwvikigacbj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/19/python学习日志6-1/" data-id="cjcugxnyz000tbowvmjdw10oi" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -294,7 +501,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/python学习日志5/" data-id="cjcmnw1fn001cncwvjia9p1jt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/19/python学习日志5/" data-id="cjcugxnyt000qbowv1avvqu95" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -479,7 +686,7 @@ print(&quot;谢谢使用！&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/python学习日志4-3/" data-id="cjcmnw1d1000qncwvxqez8uv4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/17/python学习日志4-3/" data-id="cjcugxnyv000rbowvx3cfv3ms" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -642,7 +849,7 @@ print(d)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/python学习日志4-2/" data-id="cjcmnw1d1000nncwvxn4tktzo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/17/python学习日志4-2/" data-id="cjcugxnyp000nbowve5ynf6gm" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -819,7 +1026,7 @@ print(nums)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/16/python学习日志4-1/" data-id="cjcmnw1d1000mncwvvp1x4u5z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/16/python学习日志4-1/" data-id="cjcugxnyf000ibowv1o65mhkc" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1067,7 +1274,7 @@ while i&lt;10:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/15/python学习日志3/" data-id="cjcmnw1cm000incwv4vzytvzt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/15/python学习日志3/" data-id="cjcugxnyn000mbowv64lhvkns" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1278,7 +1485,7 @@ print(&apos;d&apos; not in str2)       #result:False
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/12/python学习日志2/" data-id="cjcmnw1cm000gncwvvpnf2s7o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/12/python学习日志2/" data-id="cjcugxnyc000gbowvk7l4glhu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1366,7 +1573,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/10/python学习日志1/" data-id="cjcmnw1cm000encwv4lhht79u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/10/python学习日志1/" data-id="cjcugxny1000cbowveu49qmox" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1458,74 +1665,10 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/" data-id="cjcmnw1c6000ancwv4kx6txhy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/" data-id="cjcugxnxg0004bowvcgahgocv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-进程与线程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/30/进程与线程/" class="article-date">
-  <time datetime="2017-12-30T13:28:24.000Z" itemprop="datePublished">2017-12-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/30/进程与线程/">进程与线程</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p>进程与线程</p>
-<hr>
-<hr>
-<p><em>在刚开始学习性能工具LR时，常听到进程与线程；但不得具体是什么意思，或者比较抽象；然后在网络上找到了比较形象的解释</em></p>
-<ol>
-<li>计算机的核心是CPU，它承担了所有的计算任务。它就像一座工厂，时刻在运行。</li>
-<li>假定工厂的电力有限，一次只能供给一个车间使用。也就是说，一个车间开工的时候，其他车间都必须停工。背后的含义就是，单个CPU一次只能运行一个任务。</li>
-<li>进程就好比工厂的车间，它代表CPU所能处理的单个任务。任一时刻，CPU总是运行一个进程，其他进程处于非运行状态。</li>
-<li>一个车间里，可以有很多工人。他们协同完成一个任务。</li>
-<li>线程就好比车间里的工人。一个进程可以包括多个线程。</li>
-<li>车间的空间是工人们共享的，比如许多房间是每个工人都可以进出的。这象征一个进程的内存空间是共享的，每个线程都可以使用这些共享内存。</li>
-<li>可是，每间房间的大小不同，有些房间最多只能容纳一个人，比如厕所。里面有人的时候，其他人就不能进去了。这代表一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。</li>
-<li>一个防止他人进入的简单方法，就是门口加一把锁。先到的人锁上门，后到的人看到上锁，就在门口排队，等锁打开再进去。这就叫”互斥锁”（Mutual exclusion，缩写 Mutex），防止多个线程同时读写某一块内存区域。</li>
-<li>还有些房间，可以同时容纳n个人，比如厨房。也就是说，如果人数大于n，多出来的人只能在外面等着。这好比某些内存区域，只能供给固定数目的线程使用。</li>
-<li>这时的解决方法，就是在门口挂n把钥匙。进去的人就取一把钥匙，出来时再把钥匙挂回原处。后到的人发现钥匙架空了，就知道必须在门口排队等着了。这种做法叫做”信号量”（Semaphore），用来保证多个线程不会互相冲突。<br><br>不难看出，mutex是semaphore的一种特殊情况（n=1时）。也就是说，完全可以用后者替代前者。但是，因为mutex较为简单，且效率高，所以在必须保证资源独占的情况下，还是采用这种设计。</li>
-</ol>
-<hr>
-<ul>
-<li>操作系统的设计，因此可以归结为三点：<br><br>（1）以多进程形式，允许多个任务同时运行；<br><br>（2）以多线程形式，允许单个任务分成不同的部分运行；<br><br>（3）提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源。</li>
-</ul>
-<p><em>小白参考大神佳作<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">进程与线程的一个简单解释</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjcmnw1d1000tncwv225vrk0h" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/零散知识点/">零散知识点</a></li></ul>
 
     </footer>
   </div>
@@ -1540,7 +1683,7 @@ else:
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1554,7 +1697,7 @@ else:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1571,9 +1714,9 @@ else:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1581,12 +1724,16 @@ else:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/01/19/python学习日志6-1/">python学习日志6</a>
+            <a href="/2018/01/22/python学习日志6-2/">python学习日志6-2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/19/python学习日志6-1/">python学习日志6-1</a>
           </li>
         
           <li>
@@ -1601,10 +1748,6 @@ else:
             <a href="/2018/01/17/python学习日志4-2/">python学习日志4-2</a>
           </li>
         
-          <li>
-            <a href="/2018/01/16/python学习日志4-1/">python学习日志4-1</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -1614,8 +1757,9 @@ else:
   <div class="widget-wrap">
     <h3 class="widget-title">About</h3>
     <div class="widget">
-      Email:<a>liuyongqian51@163.com</a><br />
-      QQ:<a>272501447</a>
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
     </div>
   </div>
 

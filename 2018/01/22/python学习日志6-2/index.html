@@ -5,18 +5,20 @@
   
 
   
-  <title>Tag: 零散知识点 | LiuYongQian</title>
+  <title>python学习日志6-2 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="永远相信美好的事情将要发生！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LiuYongQian">
-<meta property="og:url" content="http://yoursite.com/tags/零散知识点/index.html">
+  <meta name="description" content="类与对象   定义  在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合 class Student:     &amp;apos;&amp;apos;&amp;apos;     学生类             #文档说明，可通过类名.__doc__访问     &amp;apos">
+<meta name="keywords" content="Python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python学习日志6-2">
+<meta property="og:url" content="http://yoursite.com/2018/01/22/python学习日志6-2/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="永远相信美好的事情将要发生！">
+<meta property="og:description" content="类与对象   定义  在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合 class Student:     &amp;apos;&amp;apos;&amp;apos;     学生类             #文档说明，可通过类名.__doc__访问     &amp;apos">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-25T12:11:51.450Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LiuYongQian">
-<meta name="twitter:description" content="永远相信美好的事情将要发生！">
+<meta name="twitter:title" content="python学习日志6-2">
+<meta name="twitter:description" content="类与对象   定义  在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合 class Student:     &amp;apos;&amp;apos;&amp;apos;     学生类             #文档说明，可通过类名.__doc__访问     &amp;apos">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -68,39 +70,82 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/30/进程与线程/" class="archive-article-date">
-  <time datetime="2017-12-30T13:28:24.000Z" itemprop="datePublished">12-30</time>
+        <section id="main"><article id="post-python学习日志6-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/22/python学习日志6-2/" class="article-date">
+  <time datetime="2018-01-22T09:23:16.000Z" itemprop="datePublished">2018-01-22</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/30/进程与线程/">进程与线程</a>
+    <h1 class="article-title" itemprop="name">
+      python学习日志6-2
     </h1>
   
 
-    </header>
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>类与对象</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>定义</h6><p></p>
+<ul>
+<li><p>在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合</p>
+<pre><code>class Student:
+    &apos;&apos;&apos;
+    学生类             #文档说明，可通过类名.__doc__访问
+    &apos;&apos;&apos;
+    #类的成员：特性  行为
+    pass              #保证语义的完整
+</code></pre></li>
+<li><p>类名规范：首字母大写，以大写字母分割单词，不使用下划线;不允许使用数字、关键字、除下划线以外的特殊字符开头<br><br>属性名规范：使用名词，首字母小写，以大写字母分割单词<br><br>方法名规范：使用谓词（动词+对象），首字母小写，以大写字母分割单词<br></p>
+<pre><code>class Student:
+    def __init__(self,name,age):    
+    #__init__()这个方法会在创建对象时完成初始化，并把类的属性绑上去
+        self.name=name           #创建对象属性
+        self.age=age
+    def showName(self):
+        print(&apos;我叫{}!&apos;.format(self.name))        
+m=Student(&apos;张三&apos;,27)
+m.showName()
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/22/python学习日志6-2/" data-id="cjcugxnz3000vbowv2bst5ufh" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/19/python学习日志6-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">python学习日志6-1</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
 
 
 </section>
