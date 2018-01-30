@@ -70,6 +70,94 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-python学习日志1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/10/python学习日志1/" class="article-date">
+  <time datetime="2018-01-10T09:09:48.000Z" itemprop="datePublished">2018-01-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/10/python学习日志1/">python学习日志1</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>变量、数据类型、运算符、分支</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>变量</h6><p></p>
+<ul>
+<li>是一个数据存储空间的表示，无需关键字，不需要声明；</li>
+<li>命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写；</li>
+<li>print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’</li>
+<li>del删除单个或多个对象的引用<pre><code>x=1
+x,y,z=1,2,3  
+print(x)
+del x,y            #删除单个或者多个对象的引用
+print(&quot;===========================================&quot;)
+name=input(&quot;Please input NAME：&quot;)  #input() 键盘录入 类型：str
+print(&quot;NAME:%s&quot; %name)
+age=int(input(&quot;Please input AGE：&quot;)) #int() 将str转换成int
+print(&quot;AGE:%d&quot; %age)
+work=input(&quot;Please input limit：&quot;)
+print(&quot;WORK:%s&quot; %work)
+</code></pre><h6>数据类型</h6></li>
+<li>数字Number：int,float,bool,复数<br></li>
+<li>字符串：String<br><pre><code>x=1 #int
+y=1.2 #float
+z=&quot;张三&quot; #字符串
+</code></pre><h6>运算符</h6></li>
+<li>算术运算符：+ - <em> /(得到小数), %(取余), //(只得到商，取整),*</em> 幂(返回x的y次幂)</li>
+<li>关系运算符：&gt; &lt; &gt;= == &lt;= !=  最终的返回bool</li>
+<li>逻辑运算符：and or not  &amp;&amp;  || !</li>
+<li>成员运算符: in( x 在 y 序列中返回 True) not in( x 不在 y 序列中返回 True)</li>
+<li>小练习：请用户输入一个四位数字：求此数字各个位之和<pre><code>value=int(input(&quot;Please input a 4-bit value:&quot;))
+qian=value//1000
+bai=value%1000//100
+shi=value%100//10
+ge=value%10
+sum=qian+bai+shi+ge
+print(sum)
+</code></pre><h6>分支结构</h6><pre><code>score=int(input(&quot;Please input score:&quot;))
+if(score&gt;=90):
+    print(&quot;Excellent!&quot;)
+elif(score&gt;=60):
+    print(&quot;Medium!&quot;)
+else:
+    print(&quot;Flunk!&quot;)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/10/python学习日志1/" data-id="cjd1nethu000hrcwvg1og9crw" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-2018-01-01-Ajax回顾" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/01/2018-01-01-Ajax回顾/" class="article-date">
@@ -148,7 +236,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/" data-id="cjcyjxdcu000290wv42ylga3a" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/" data-id="cjd1neth70008rcwvafr01r00" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -212,7 +300,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjcyjxdew001190wvxcqyt6ls" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjd1netkv001mrcwva0i5tibq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/零散知识点/">零散知识点</a></li></ul>
@@ -429,7 +517,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/2017-12-18-Django连接MySQL/" data-id="cjcyjxddb000690wv5cn0jzzq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/18/2017-12-18-Django连接MySQL/" data-id="cjd1neth20005rcwvdt3g4cu9" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a></li></ul>
@@ -510,7 +598,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjcyjxddg000990wv4cut7dpj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjd1netgz0004rcwvdov10rfh" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a></li></ul>
@@ -583,7 +671,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjcyjxdco000190wvzwliz6gc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cjd1netgo0001rcwvv2h67lli" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a></li></ul>
@@ -806,7 +894,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/" data-id="cjcyjxddw000e90wv230nanmj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Python3-5连接MySQl数据库/" data-id="cjd1nethg000brcwv9qp7ac31" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a></li></ul>
@@ -874,7 +962,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" data-id="cjcyjxdd8000590wv8s2ukmh1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/2017-12-16一台PC机同时安装Python2与python3/" data-id="cjd1nethb0009rcwvwoloz8jt" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python2-3共存/">python2/3共存</a></li></ul>
@@ -943,7 +1031,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjcyjxddk000a90wveoiuq0i4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjd1nethj000drcwvoqdagw6l" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/更换主题/">更换主题</a></li></ul>
@@ -1049,63 +1137,11 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/" data-id="cjcyjxdd2000490wvi7rcv5na" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/2017-12-15-Git-NodeJS-Hexo创建个人博客/" data-id="cjd1netgd0000rcwvuzqkrt8o" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/创建github博客/">创建github博客</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-2017-12-15验证博客是否正常？" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/15/2017-12-15验证博客是否正常？/" class="article-date">
-  <time datetime="2017-12-15T09:02:08.000Z" itemprop="datePublished">2017-12-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/15/2017-12-15验证博客是否正常？/">2017_12_15验证博客是否正常？</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <blockquote><p>一艘货轮卸货后返航,在浩渺的大海上,突然遭遇巨大风暴,老船长果断下令:“打开所有货舱,立刻往里面灌水。”  　　</p>
-</blockquote>
-<blockquote><p>水手们担忧:“往船里灌水是险上加险,这不是自找死路吗?” 船长镇定地说:“大家见过根深干粗的树被暴风刮倒过吗?被刮倒的是没有根基的小树。”  　</p>
-</blockquote>
-<blockquote><p>水手们半信半疑地照着做了。虽然暴风巨浪依旧那么猛烈,但随着货舱里的水位越来越高,货轮渐渐地平稳了。　</p>
-</blockquote>
-<blockquote><p>船长告诉那些松了一口气的水手:“一只空木桶,是很容易被风打翻的,如果装满水负重了,风是吹不倒的。船在负重的时候,是最安全的;空船时,才是最危险的时候。”  </p>
-</blockquote>
-<blockquote><p>人何尝不是呢?那些胸怀大志的人,沉重的责任感时刻压在心头,砥砺着人生的坚稳脚步,从岁月和历史的风雨中坚定地走了出来。而那些得过且过的空耗时光的人,像一个没有盛水的空水桶,往往一场人生的风雨便把他们彻底地打翻了。 </p>
-</blockquote>
-<blockquote><p>给我们自己加满“水”,使我们负重,这样才不会被打翻。</p>
-</blockquote>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/2017-12-15验证博客是否正常？/" data-id="cjcyjxdcd000090wvdvhsiv91" class="article-share-link">Teilen</a>
-      
-      
     </footer>
   </div>
   
@@ -1152,7 +1188,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1163,6 +1199,10 @@ limit: 20
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/01/29/python学习日志6-4/">python学习日志6-4</a>
+          </li>
         
           <li>
             <a href="/2018/01/28/python学习日志6-3/">python学习日志6-3</a>
@@ -1178,10 +1218,6 @@ limit: 20
         
           <li>
             <a href="/2018/01/19/python学习日志5/">python学习日志5</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/17/python学习日志4-3/">python学习日志4-3</a>
           </li>
         
       </ul>
