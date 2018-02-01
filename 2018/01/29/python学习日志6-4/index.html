@@ -7,17 +7,18 @@
   
   <title>python学习日志6-4 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="永远相信美好的事情将要发生！">
+  <meta name="description" content="DVD管理系统  class dvd:     def __init__(self,name,price,status):         self.name=name         self.price=price         self.status=status     def __str__(self):         stat=&amp;apos;已借出&amp;apos;         if">
+<meta name="keywords" content="Python学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python学习日志6-4">
 <meta property="og:url" content="http://yoursite.com/2018/01/29/python学习日志6-4/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="永远相信美好的事情将要发生！">
+<meta property="og:description" content="DVD管理系统  class dvd:     def __init__(self,name,price,status):         self.name=name         self.price=price         self.status=status     def __str__(self):         stat=&amp;apos;已借出&amp;apos;         if">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-29T09:50:37.529Z">
+<meta property="og:updated_time" content="2018-01-31T12:38:55.868Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python学习日志6-4">
-<meta name="twitter:description" content="永远相信美好的事情将要发生！">
+<meta name="twitter:description" content="DVD管理系统  class dvd:     def __init__(self,name,price,status):         self.name=name         self.price=price         self.status=status     def __str__(self):         stat=&amp;apos;已借出&amp;apos;         if">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -94,18 +95,123 @@
       
 	  
 	  
-        
+        <h5>DVD管理系统</h5>
+
+<pre><code>class dvd:
+    def __init__(self,name,price,status):
+        self.name=name
+        self.price=price
+        self.status=status
+    def __str__(self):
+        stat=&apos;已借出&apos;
+        if self.status==1:
+            stat=&apos;未借出&apos;
+        return &apos;名称：《%s》  单价：%d  状态：%s&apos;%(self.name,self.price,stat)
+class DvdManage:
+    dvds=[]  #存储  多个dvds，每个元素都是一个DVD
+    def init(self):
+        self.dvds.append(dvd(&apos;光辉岁月&apos;,10,0))
+        self.dvds.append(dvd(&apos;大海日出&apos;,12,1))
+        self.dvds.append(dvd(&apos;你好小明&apos;,20,1))
+    def Menu(self):
+        self.init()
+        while(True):
+            print(&apos;1.查询所有DVD&apos;)
+            print(&apos;2.增加DVD&apos;)
+            print(&apos;3.借出DVD&apos;)
+            print(&apos;4.归还DVD&apos;)
+            print(&apos;5.退出&apos;)
+            choose=int(input(&apos;请选择操作项:&apos;))
+            if choose==1:
+                self.showAlldvd()
+            elif choose==2:
+                self.insertDvd()
+            elif choose==3:
+                self.lend()
+            elif choose==4:
+                self.backDvd()
+            elif choose==5:
+                print(&apos;5.谢谢使用！&apos;)
+                break
+    def showAlldvd(self):
+        for d in self.dvds:
+            print(str(d))
+    def insertDvd(self):
+        name = input(&apos;请输入DVD的名称:&apos;)
+        ret=self.checkDvd(name)
+        if ret!=None:
+            print(&apos;DVD已存在!&apos;)
+        else:
+            price=int(input(&apos;请输入价格:&apos;))
+            new_dvd=dvd(name,price,1)
+            self.dvds.append(new_dvd)
+            print(&apos;存放成功!&apos;)
+    def lend(self):
+        name = input(&apos;请输入DVD的名称:&apos;)
+        ret = self.checkDvd(name)
+        if ret != None:
+            if ret.status==0:
+                print(&apos;DVD已借出!&apos;)
+            else:
+                days=int(input(&apos;请输入借出天数:&apos;))
+                ret.status=0
+                print(&apos;借出%d天，应收%d&apos;%(days,ret.price*days))
+        else:
+            print(&apos;DVD不存在!&apos;)
+    def backDvd(self):
+        name=input(&apos;请输入DVD的名称:&apos;)
+        ret=self.checkDvd(name)
+        if ret==None:
+            print(&apos;DVD不存在!&apos;)
+        else:
+            if ret.status==1:
+                print(&apos;DVD未借出!&apos;)
+            else:
+                days=int(input(&apos;请输入借出天数:&apos;))
+                y_money=ret.price * days
+                print(&apos;借出%d天，应收%d&apos; % (days, ret.price * days))
+                money=0
+                while True:
+                    money=int(input(&apos;实收:&apos;))
+                    if money&lt;y_money:
+                        print(&apos;不够啊!&apos;)
+                    else:
+                        break
+                if money&gt;=y_money:
+                    print(&apos;找零:%d&apos;%(money-y_money))
+                ret.status=1
+                print(&apos;归还成功!&apos;)
+    def checkDvd(self,name):
+        for d in self.dvds:
+            if d.name==name:
+                return d       #返回当前对象---内存地址
+        else:
+            return None
+manager=DvdManage()
+manager.Menu()
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/29/python学习日志6-4/" data-id="cjd1netiv0010rcwvzav4f82a" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/29/python学习日志6-4/" data-id="cjd4ifw25000yq4wvuvua6p9i" class="article-share-link">Teilen</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/01/31/python学习日志6-5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          python学习日志6-5
+        
+      </div>
+    </a>
   
   
     <a href="/2018/01/28/python学习日志6-3/" id="article-nav-older" class="article-nav-link-wrap">
@@ -131,7 +237,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -150,7 +256,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -163,6 +269,14 @@
       <ul>
         
           <li>
+            <a href="/2018/02/01/python学习日志6-6/">python学习日志6-6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/31/python学习日志6-5/">python学习日志6-5</a>
+          </li>
+        
+          <li>
             <a href="/2018/01/29/python学习日志6-4/">python学习日志6-4</a>
           </li>
         
@@ -172,14 +286,6 @@
         
           <li>
             <a href="/2018/01/22/python学习日志6-2/">python学习日志6-2</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/19/python学习日志6-1/">python学习日志6-1</a>
-          </li>
-        
-          <li>
-            <a href="/2018/01/19/python学习日志5/">python学习日志5</a>
           </li>
         
       </ul>

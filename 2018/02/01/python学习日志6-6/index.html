@@ -5,20 +5,20 @@
   
 
   
-  <title>python学习日志1 | LiuYongQian</title>
+  <title>python学习日志6-6 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="变量、数据类型、运算符、分支   变量  是一个数据存储空间的表示，无需关键字，不需要声明； 命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写； print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’">
+  <meta name="description" content="工厂类   工厂类、单例模式   通过专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类 并且重写父类方法 class  Operation:     def __init__(self,numA,numB):         self.numA=numA         self.numB=numB     def getResult(self):         print">
 <meta name="keywords" content="Python学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python学习日志1">
-<meta property="og:url" content="http://yoursite.com/2018/01/10/python学习日志1/index.html">
+<meta property="og:title" content="python学习日志6-6">
+<meta property="og:url" content="http://yoursite.com/2018/02/01/python学习日志6-6/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="变量、数据类型、运算符、分支   变量  是一个数据存储空间的表示，无需关键字，不需要声明； 命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写； print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’">
+<meta property="og:description" content="工厂类   工厂类、单例模式   通过专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类 并且重写父类方法 class  Operation:     def __init__(self,numA,numB):         self.numA=numA         self.numB=numB     def getResult(self):         print">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-10T10:20:26.989Z">
+<meta property="og:updated_time" content="2018-02-01T13:01:07.514Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python学习日志1">
-<meta name="twitter:description" content="变量、数据类型、运算符、分支   变量  是一个数据存储空间的表示，无需关键字，不需要声明； 命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写； print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’">
+<meta name="twitter:title" content="python学习日志6-6">
+<meta name="twitter:description" content="工厂类   工厂类、单例模式   通过专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类 并且重写父类方法 class  Operation:     def __init__(self,numA,numB):         self.numA=numA         self.numB=numB     def getResult(self):         print">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -70,10 +70,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-python学习日志1" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-python学习日志6-6" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/10/python学习日志1/" class="article-date">
-  <time datetime="2018-01-10T09:09:48.000Z" itemprop="datePublished">2018-01-10</time>
+    <a href="/2018/02/01/python学习日志6-6/" class="article-date">
+  <time datetime="2018-02-01T07:33:58.000Z" itemprop="datePublished">2018-02-01</time>
 </a>
     
   </div>
@@ -84,7 +84,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      python学习日志1
+      python学习日志6-6
     </h1>
   
 
@@ -95,56 +95,151 @@
       
 	  
 	  
-        <p></p><h5>变量、数据类型、运算符、分支</h5><p></p>
+        <p></p><h5>工厂类</h5><p></p>
 <hr>
 <hr>
-<p></p><h6>变量</h6><p></p>
+<h6>工厂类、单例模式</h6>
+
 <ul>
-<li>是一个数据存储空间的表示，无需关键字，不需要声明；</li>
-<li>命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写；</li>
-<li>print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’</li>
-<li>del删除单个或多个对象的引用<pre><code>x=1
-x,y,z=1,2,3  
-print(x)
-del x,y            #删除单个或者多个对象的引用
-print(&quot;===========================================&quot;)
-name=input(&quot;Please input NAME：&quot;)  #input() 键盘录入 类型：str
-print(&quot;NAME:%s&quot; %name)
-age=int(input(&quot;Please input AGE：&quot;)) #int() 将str转换成int
-print(&quot;AGE:%d&quot; %age)
-work=input(&quot;Please input limit：&quot;)
-print(&quot;WORK:%s&quot; %work)
-</code></pre><h6>数据类型</h6></li>
-<li>数字Number：int,float,bool,复数<br></li>
-<li>字符串：String<br><pre><code>x=1 #int
-y=1.2 #float
-z=&quot;张三&quot; #字符串
-</code></pre><h6>运算符</h6></li>
-<li>算术运算符：+ - <em> /(得到小数), %(取余), //(只得到商，取整),*</em> 幂(返回x的y次幂)</li>
-<li>关系运算符：&gt; &lt; &gt;= == &lt;= !=  最终的返回bool</li>
-<li>逻辑运算符：and or not  &amp;&amp;  || !</li>
-<li>成员运算符: in( x 在 y 序列中返回 True) not in( x 不在 y 序列中返回 True)</li>
-<li>小练习：请用户输入一个四位数字：求此数字各个位之和<pre><code>value=int(input(&quot;Please input a 4-bit value:&quot;))
-qian=value//1000
-bai=value%1000//100
-shi=value%100//10
-ge=value%10
-sum=qian+bai+shi+ge
-print(sum)
-</code></pre><h6>分支结构</h6><pre><code>score=int(input(&quot;Please input score:&quot;))
-if(score&gt;=90):
-    print(&quot;Excellent!&quot;)
-elif(score&gt;=60):
-    print(&quot;Medium!&quot;)
-else:
-    print(&quot;Flunk!&quot;)
+<li><p>通过专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类 并且重写父类方法</p>
+<pre><code>class  Operation:
+    def __init__(self,numA,numB):
+        self.numA=numA
+        self.numB=numB
+    def getResult(self):
+        print(&apos;计算2个操作数的运算结果&apos;)
+
+class Add(Operation):
+    def __init__(self,numA,numB):
+        super(Add, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA+self.numB
+class Minus(Operation):
+    def __init__(self,numA,numB):
+        super(Minus, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA-self.numB
+
+class Factory:            #根据不同的参数，创建不同的对象的函数
+    def create_class(self,ope,numA,numB):
+        if ope == &apos;+&apos;:
+            q = Add(numA, numB)
+        elif ope == &apos;-&apos;:
+            q = Minus(numA, numB)
+        else:
+            print(&apos;输入错误！&apos;)
+        return q
+
+if __name__==&apos;__main__&apos;:
+    factory=Factory()             #创建一个工厂对象
+    numA=int(input(&apos;请输入第一个数:&apos;))
+    numB=int(input(&apos;请输入第二个数:&apos;))
+    ope=input(&apos;请输入运算符:&apos;)
+    q=factory.create_class(ope,numA,numB)  #代表一个计算器
+    print(&apos;计算结果:&apos;,q.getResult())
+</code></pre></li>
+</ul>
+<h6>单例模式</h6>
+
+<ul>
+<li><p>该模式的主要目的是确保某一个类只有一个实例存在</p>
+<pre><code>class singleton:
+    __instance=None
+    def __new__(cls, *args, **kwargs):   #单例模式，一个对象
+        if cls.__instance==None:
+            cls.__instance=object.__new__(cls)
+            return cls.__instance
+        else:
+            return cls.__instance
+s1=singleton()
+s2=singleton()
+print(id(s1),id(s2))       #result:2489344543992   2489344543992
+</code></pre></li>
+</ul>
+<h6>isinstance()函数</h6>
+
+<ul>
+<li><p>判断是否是继承关系，判断变量的数据类型</p>
+<pre><code>class Pet:
+    def look(self):
+        print(&apos;给宠物看病...&apos;)
+class cat(Pet):
+    def look(self):
+        print(&apos;给猫咪吃药、打针...&apos;)
+kitty=cat()
+print(isinstance(kitty,cat))      #result:True
+print(isinstance(kitty,Pet))      #result:True
+
+a=&apos;Liu&apos;
+print(isinstance(a,str))          #result:True
+</code></pre></li>
+</ul>
+<h6>getattribute\setsttr\hasattr</h6>
+
+<pre><code>class  Operation:
+    numC=333
+    def __init__(self,numA,numB):
+        self.numA=numA
+        self.numB=numB
+    def getResult(self):
+        print(&apos;计算2个操作数的运算结果&apos;)
+q=Operation(3,6)
+print(Operation.numC)                 #result:333
+print(q.__getattribute__(&apos;numC&apos;))     #result:333
+
+q.__setattr__(&apos;numD&apos;,666)
+print(q.__getattribute__(&apos;numD&apos;))     #result:666
+
+setattr(Operation,&apos;numE&apos;,999)
+print(q.numE)                         #result:999
+
+print(hasattr(q,&apos;numC&apos;))              #result:True
+</code></pre><p></p><h6>操作对象的形态</h6><p></p>
+<ul>
+<li><p>给类动态添加方法</p>
+<pre><code>class Student:
+    def __init__(self,name):
+        self.name=name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+def ride(name):
+    print(&apos;%s在骑马...&apos;%name)
+stu1=Student(&apos;刘备&apos;)
+stu1.look()               #result:刘备在看书...
+
+stu1.ride=ride            #给实例添加一个方法
+stu1.ride(stu1.name)      #result:刘备在骑马...
+</code></pre></li>
+<li><p>为了达到限制的目的，Python允许在定义class的时候，定义一个特殊的__slots__变量，来限制该class实例能添加的属性</p>
+<pre><code>class Student:
+    __slots__=(&apos;name&apos;)   #限制该class实例能添加的属性
+    def __init__(self,name):
+        self.name = name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+stu=Student(&apos;刘禅&apos;)
+stu.look()
+stu.age=25
+print(stu.age)       #AttributeError: &apos;Student&apos; object has no attribute &apos;age&apos;
+</code></pre></li>
+<li><p>__call__,通过callable()函数，可以判断一个对象是否是“可调用”对象</p>
+<pre><code>class Student:
+    def __init__(self,name):
+        self.name = name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+    def __call__(self, *args, **kwargs):
+        #print(&apos;AAAAAAAAAAAAA&apos;)
+stu=Student(&apos;刘禅&apos;)
+stu.look()
+print(callable(stu))         #result:True
 </code></pre></li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/10/python学习日志1/" data-id="cjd4ifw19000fq4wvvhy5cbbd" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/01/python学习日志6-6/" data-id="cjd4ifw2k0015q4wv23bg2t8z" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -155,19 +250,10 @@ else:
     
 <nav id="article-nav">
   
-    <a href="/2018/01/12/python学习日志2/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
-      <div class="article-nav-title">
-        
-          python学习日志2
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/01/01/2018-01-01-Ajax回顾/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/01/31/python学习日志6-5/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Älter</strong>
-      <div class="article-nav-title">2018_01_01 Ajax回顾</div>
+      <div class="article-nav-title">python学习日志6-5</div>
     </a>
   
 </nav>
