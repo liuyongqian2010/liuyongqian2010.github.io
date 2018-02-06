@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -70,9 +70,50 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-python学习日志6-9" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-python学习日志6-10" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/02/02/python学习日志6-9/" class="article-date">
+    <a href="/2018/02/05/python学习日志6-10/" class="article-date">
+  <time datetime="2018-02-05T14:52:41.000Z" itemprop="datePublished">2018-02-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/05/python学习日志6-10/">python学习日志6-10</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/05/python学习日志6-10/" data-id="cjdbjdpd3000g3swvcz7152b8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-随机数Random" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/02/随机数Random/" class="article-date">
   <time datetime="2018-02-02T11:11:33.000Z" itemprop="datePublished">2018-02-02</time>
 </a>
     
@@ -84,7 +125,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/02/python学习日志6-9/">python学习日志6-9</a>
+      <a class="article-title" href="/2018/02/02/随机数Random/">随机数Random</a>
     </h1>
   
 
@@ -95,13 +136,76 @@
       
 	  
 	  
-        
+        <p></p><h5>Random随机数</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>常用函数</h6><p></p>
+<ul>
+<li><p>random() 用于生成一个0到1的随机浮点数</p>
+<pre><code>print(random.random())                  #result:0.3319445476632338
+</code></pre></li>
+<li><p>uniform(x,y) 用于生成指定该范围内的随机浮点数，两个参数其中一个是上限，一个是下限，可以不考虑先后顺序</p>
+<pre><code>print(random.uniform(1,9))              #result:6.238616035651107
+</code></pre></li>
+<li><p>randint(x,y) 用于生成一个指定范围内的整数，两个参数其中x为下限，y为上限</p>
+<pre><code>print(random.randint(1,9))              #result:8
+</code></pre></li>
+<li><p>randrange(start,stop,step) 从指定范围内，按指定基数递增的集合中，获取一个随机数</p>
+<pre><code>print(random.randrange(1,9,2))          #相当于从[1,3,5,7]序列中获取一个随机数
+</code></pre></li>
+<li><p>choice() 从序列中获取一个随机元素</p>
+<pre><code>print(random.choice(&apos;LiuYongqian&apos;))     #result:Y
+</code></pre></li>
+<li><p>shuffle() 用于将一个列表中的元素打乱</p>
+<pre><code>m=[&apos;Liu&apos;,&apos;Yong&apos;,&apos;Qian&apos;]
+random.shuffle(m)
+print(m)                                #result:[&apos;Yong&apos;, &apos;Liu&apos;, &apos;Qian&apos;]
+</code></pre></li>
+<li><p>sample() 从指定序列中随机获取指定长度的片断，该函数不会修改原有序列</p>
+<pre><code>m=[0,1,2,3,4,5,6,7,8,9]
+n=random.sample(m,5)
+print(n)                                #result:[2, 8, 5, 1, 3]
+</code></pre></li>
+</ul>
+<p></p><h6>双色球</h6><p></p>
+<ul>
+<li><p>运用sample()函数实现</p>
+<pre><code>import random
+list1,list2=range(1,34),range(1,17)
+blue=random.sample(list1,6)
+blue.sort()
+red=random.sample(list2,1)
+
+ball=blue+red
+print(ball)                             #result:[3, 5, 9, 11, 31, 32, 10]
+</code></pre></li>
+<li><p>运用递归实现</p>
+<pre><code>import random
+list1,list2=range(1,34),range(1,17)
+ball=[]
+def getBlueNum():
+    m=random.choice(list1)
+    if m not in ball:
+        ball.append(m)
+    else:
+        getBlueNum()
+
+for i in range(6):
+    getBlueNum()
+rednum=random.sample(list2,1)
+ball.append(rednum)
+print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
+</code></pre></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/python学习日志6-9/" data-id="cjd8akp920016sswvr4rrnu5m" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/随机数Random/" data-id="cjdbjdpee001l3swv74jgaiq4" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
     </footer>
   </div>
   
@@ -111,9 +215,9 @@
 
 
   
-    <article id="post-python学习日志6-8" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-日志Logging" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/02/02/python学习日志6-8/" class="article-date">
+    <a href="/2018/02/02/日志Logging/" class="article-date">
   <time datetime="2018-02-02T11:11:21.000Z" itemprop="datePublished">2018-02-02</time>
 </a>
     
@@ -125,7 +229,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/02/python学习日志6-8/">python学习日志6-8</a>
+      <a class="article-title" href="/2018/02/02/日志Logging/">日志Logging</a>
     </h1>
   
 
@@ -136,13 +240,159 @@
       
 	  
 	  
-        
+        <p></p><h5>日志Logging</h5><p></p>
+<hr>
+<hr>
+<h6>基础知识</h6>
+
+<ul>
+<li>Python的logging模块提供了记录程序运行情况的日志功能，logging模块主要可以根据自定义日志信息，在程序运行的时候将日志打印在终端及记录日志到文件中。默认情况下，logging打印日志级别为warning,而debug、info在warning级别之下，故而不打印<br></li>
+<li>日志级别，由低到高<ul>
+<li>debug() 调试级别，一般用于记录程序运行的详细信息</li>
+<li>info()事件级别，一般用于记录程序的运行过程</li>
+<li>warnning() 警告级别，，一般用于记录程序出现潜在错误的情形</li>
+<li>error() 错误级别，一般用于记录程序出现错误，但不影响整体运行</li>
+<li>critical() 严重错误级别 ， 出现该错误已经影响到整体运行</li>
+</ul>
+</li>
+<li>logging模块的四大组件<ul>
+<li>Logger：提供日志接口，供应用代码使用。logger最长用的操作有两类：配置和发送日志消息。可以通过logging.getLogger(name)获取logger对象，如果不指定name则返回root对象，多次使用相同的name调用getLogger方法返回同一个logger对象</li>
+<li>Handler：将日志记录（log record）发送到合适的目的地（destination），比如文件，socket等。一个logger对象可以通过addHandler方法添加0到多个handler，每个handler又可以定义不同日志级别，以实现日志分级过滤显示</li>
+<li>Filter：提供一种优雅的方式决定一个日志记录是否发送到handler</li>
+<li>Formatter：指定日志记录输出的具体格式。formatter的构造方法需要两个参数：消息的格式字符串和日期字符串，这两个参数都是可选的</li>
+</ul>
+</li>
+<li>logging的配置方法<ul>
+<li>通过代码进行完整配置，主要是通过getLogger方法实现</li>
+<li>通过代码进行简单配置，主要是通过basicConfig方法实现</li>
+<li>通过配置文件，主要是通过logging.config.fileConfig(filepath)</li>
+</ul>
+</li>
+<li><p>logging用法浅析（getLogger方法）</p>
+<ul>
+<li>1.初始化 logger = logging.getLogger(“endlesscode”)，getLogger()方法后面最好加上所要日志记录的模块名字，后面的日志格式中的%(name)s 对应的是这里的模块名字</li>
+<li>2.设置级别 logger.setLevel(logging.DEBUG),Logging中有NOTSET &lt; DEBUG &lt; INFO &lt; WARNING &lt; ERROR &lt; CRITICAL这几种级别，日志会记录设置级别以上的日志</li>
+<li>3.Handler，常用的是StreamHandler和FileHandler，windows下你可以简单理解为一个是console和文件日志，一个打印在CMD窗口上，一个记录在一个文件上</li>
+<li>4.formatter，定义了最终log信息的顺序,结构和内容，比如这样的格式 ‘[%(asctime)s] [%(levelname)s] %(message)s’, ‘%Y-%m-%d %H:%M:%S’。详细说明：<ul>
+<li>%(name)s Logger的名字</li>
+<li>%(levelname)s 文本形式的日志级别</li>
+<li>%(message)s 用户输出的消息</li>
+<li>%(asctime)s 字符串形式的当前时间。默认格式是 “2018-02-05 16:49:45,896”。逗号后面的是毫秒</li>
+<li>%(levelno)s 数字形式的日志级别</li>
+<li>%(pathname)s 调用日志输出函数的模块的完整路径名，可能没有</li>
+<li>%(filename)s 调用日志输出函数的模块的文件名</li>
+<li>%(module)s  调用日志输出函数的模块名</li>
+<li>%(funcName)s 调用日志输出函数的函数名</li>
+<li>%(lineno)d 调用日志输出函数的语句所在的代码行</li>
+<li>%(created)f 当前时间，用UNIX标准的表示时间的浮点数表示</li>
+<li>%(relativeCreated)d 输出日志信息时的，自Logger创建以来的毫秒数</li>
+<li>%(thread)d 线程ID。可能没有</li>
+<li>%(threadName)s 线程名。可能没有</li>
+<li>%(process)d 进程ID。可能没有</li>
+</ul>
+</li>
+<li>5.记录 使用object.debug(message)来记录日志</li>
+<li><p>写一个实例，在窗口上只打出error以上级别的日志，但是在日志中打出debug以上的信息，代码如下：</p>
+<pre><code>import logging,sys    
+#获取logger实例，如果参数为空则返回root logger
+logger=logging.getLogger(&apos;practic&apos;)
+logger.setLevel(logging.DEBUG)          #指定日志的最低输出级别，默认为WARN级别
+#指定logger输出格式
+formatter=logging.Formatter(&apos;%(asctime)s - %(name)s - %(levelname)-8s - %(message)s&apos;)
+#建立一个filehandler来把日志记录在文件里，级别为debug以上
+file=logging.FileHandler(&apos;test.log&apos;)
+file.setLevel(logging.DEBUG)            #通过setLevel设置日志级别
+file.setFormatter(formatter)            #通过setFormatter指定输出格式
+#建立一个streamhandler来把日志打在窗口上，级别为error以上
+console=logging.StreamHandler(sys.stdout)
+console.setLevel(logging.ERROR)
+console.formatter=formatter             #也可以直接给formatter赋值
+#将相应的handler添加在logger对象中，
+logger.addHandler(file)
+logger.addHandler(console)
+#开始打印日志
+logger.debug(&apos;debug信息&apos;)
+logger.info(&apos;info信息&apos;)
+logger.warning(&apos;warning信息&apos;)
+logger.error(&apos;error信息&apos;)
+logger.critical(&apos;critical信息&apos;)
+</code></pre></li>
+</ul>
+</li>
+<li><p>logging用法浅析（basicConfig方法）</p>
+<ul>
+<li><p>basicConfig()提供了非常便捷的方式来配置logging模块并马上开始使用</p>
+<pre><code>import logging,sys
+logging.basicConfig(level=logging.DEBUG,            #定义输出到文件的日志级别
+                    format=&apos;%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s %(message)s&apos;,#定义输出格式
+                    datefmt=&apos;%a,%d %b %Y %H:%M:%S&apos;) #时间格式
+&apos;&apos;&apos;
+logging.basicConfig(level=logging.DEBUG,            #定义输出到文件的日志级别
+                    format=&apos;%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s %(message)s&apos;,#定义输出格式
+                    datefmt=&apos;%a,%d %b %Y %H:%M:%S&apos;, #时间格式
+                    filename=&apos;test.log&apos;,            #日志文档名
+                    filemode=&apos;a&apos;)                   #写入模式，a为追加，w为覆盖
+&apos;&apos;&apos;
+logging.debug(&apos;debug信息&apos;)
+logging.info(&apos;info信息&apos;)
+logging.warning(&apos;warning信息&apos;)
+logging.error(&apos;error信息&apos;)
+logging.critical(&apos;critical信息&apos;)
+</code></pre></li>
+</ul>
+</li>
+<li><p>logging用法浅析（通过文件配置logging）</p>
+<ul>
+<li>该方法可以参考大神佳作<a href="http://blog.csdn.net/langb2014/article/details/53397164" target="_blank" rel="noopener">python的logging日志模块(一)</a></li>
+</ul>
+</li>
+</ul>
+<h6>自定义封装，优化getLogger方法</h6>
+
+<pre><code>import logging,os
+class Logger:
+    def __init__(self, path,clevel = logging.DEBUG,Flevel = logging.DEBUG):
+        self.logger = logging.getLogger(path)
+        self.logger.setLevel(logging.DEBUG)
+        fmt = logging.Formatter(&apos;[%(asctime)s] [%(levelname)s] %(message)s&apos;, &apos;%Y-%m-%d %H:%M:%S&apos;)
+        #设置CMD日志
+        sh = logging.StreamHandler()
+        sh.setFormatter(fmt)
+        sh.setLevel(clevel)
+        #设置文件日志
+        fh = logging.FileHandler(path)
+        fh.setFormatter(fmt)
+        fh.setLevel(Flevel)
+        self.logger.addHandler(sh)
+        self.logger.addHandler(fh)
+    def debug(self,message):
+        self.logger.debug(message)
+    def info(self,message):
+        self.logger.info(message)
+    def war(self,message):
+        self.logger.warn(message)
+    def error(self,message):
+        self.logger.error(message)
+    def cri(self,message):
+        self.logger.critical(message)
+if __name__ ==&apos;__main__&apos;:
+    logyyx=Logger(&apos;test.log&apos;,logging.ERROR,logging.DEBUG)
+    logyyx.debug(&apos;一个debug信息&apos;)
+    logyyx.info(&apos;一个info信息&apos;)
+    logyyx.war(&apos;一个warning信息&apos;)
+    logyyx.error(&apos;一个error信息&apos;)
+    logyyx.cri(&apos;一个致命critical信息&apos;)
+#每次使用的时候只要实例化一个对象就可以了
+logobj = Logger(&apos;008&apos;,logging.ERROR,logging.DEBUG)
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/python学习日志6-8/" data-id="cjd8akp9b001bsswvdfm0ik78" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/日志Logging/" data-id="cjdbjdpdz00183swvm7rekt1z" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
     </footer>
   </div>
   
@@ -152,9 +402,9 @@
 
 
   
-    <article id="post-python学习日志6-7" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-迭代器、生成器、异常" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/02/01/python学习日志6-7/" class="article-date">
+    <a href="/2018/02/01/迭代器、生成器、异常/" class="article-date">
   <time datetime="2018-02-01T13:05:40.000Z" itemprop="datePublished">2018-02-01</time>
 </a>
     
@@ -166,7 +416,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/01/python学习日志6-7/">python学习日志6-7</a>
+      <a class="article-title" href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
     </h1>
   
 
@@ -222,8 +472,7 @@ def Fibo(max):
     return L           #返回一个数列
 for i in Fibo(5):
     print(i)           #result:1  1  2  3  5
-#第三个版本，返回数列能满足复用性的需求，但是运行时占用的内存会随着参数max的增大而增大，如果要控制内存占用，最好不要用
-#List来保存中间结果，而是通过iterable对象来迭代
+#第三个版本，返回数列能满足复用性的需求，但是运行时占用的内存会随着参数max的增大而增大，如果要控制内存占用，最好不要用List来保存中间结果，而是通过iterable对象来迭代
 
 class Fibo(object):
     def __init__(self,max):
@@ -239,7 +488,7 @@ class Fibo(object):
             return r
         raise StopIteration()
 f=Fibo(5)
-for i in Fibo(5):
+for i in f:
     print(i)            #result:1  1  2  3  5
 </code></pre></li>
 <li><p>生成器（generator）<br>生成器是一种特殊的迭代器，不需要写__iter__()和__next__()方法，只需要一个关键字yield<br>任何生成器都是以一种懒加载的模式生成值</p>
@@ -250,8 +499,8 @@ def Fibo(max):
         yield b         #使用yield返回值
         a,b=b,a+b
         n+=1
-    f = Fibo(5)
-for i in Fibo(5):
+f = Fibo(5)
+for i in f:
     print(i)            # result:1  1  2  3  5
 </code></pre></li>
 </ul>
@@ -261,11 +510,10 @@ for i in Fibo(5):
 <pre><code>#运行时异常
 a=100
 c=0
-try:
+try:                            #有可能发生异常的代码
     b=int(input(&apos;请输入除数:&apos;))
     c=a/b
-    print(c)
-    #有可能发生异常的代码
+    print(c)   
 except ZeroDivisionError as m:  #Exception（异常类型1，异常类型2），常见的有ZeroDivisionError、ValueError
     print(m)                    #捕获并处理异常   #result:如果除数为0，则抛出division by zero
 except ValueError as n:
@@ -299,7 +547,7 @@ except SexException as m:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/01/python学习日志6-7/" data-id="cjd8akp950018sswvk9msu5s2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/01/迭代器、生成器、异常/" data-id="cjdbjdpdz001d3swv4q2hp32e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -313,9 +561,9 @@ except SexException as m:
 
 
   
-    <article id="post-python学习日志6-6" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-工厂类、单例、其他" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/02/01/python学习日志6-6/" class="article-date">
+    <a href="/2018/02/01/工厂类、单例、其他/" class="article-date">
   <time datetime="2018-02-01T07:33:58.000Z" itemprop="datePublished">2018-02-01</time>
 </a>
     
@@ -327,7 +575,7 @@ except SexException as m:
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/01/python学习日志6-6/">python学习日志6-6</a>
+      <a class="article-title" href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
     </h1>
   
 
@@ -494,7 +742,7 @@ print(callable(stu))         #result:True
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/01/python学习日志6-6/" data-id="cjd8akp8x0013sswvueth6hz3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/01/工厂类、单例、其他/" data-id="cjdbjdpdj000z3swvlmryjas6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -508,9 +756,9 @@ print(callable(stu))         #result:True
 
 
   
-    <article id="post-python学习日志6-5" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-计算器" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/31/python学习日志6-5/" class="article-date">
+    <a href="/2018/01/31/计算器/" class="article-date">
   <time datetime="2018-01-31T09:38:33.000Z" itemprop="datePublished">2018-01-31</time>
 </a>
     
@@ -522,7 +770,7 @@ print(callable(stu))         #result:True
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/31/python学习日志6-5/">python学习日志6-5</a>
+      <a class="article-title" href="/2018/01/31/计算器/">计算器</a>
     </h1>
   
 
@@ -533,7 +781,7 @@ print(callable(stu))         #result:True
       
 	  
 	  
-        <h5>计算机</h5>
+        <h5>计算器</h5>
 
 <pre><code>class  Operation:
     def __init__(self,numA,numB):
@@ -582,7 +830,7 @@ if __name__==&apos;__main__&apos;:             #程序从这里启动
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/31/python学习日志6-5/" data-id="cjd8akp8r0010sswv2rvz786q" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/31/计算器/" data-id="cjdbjdpdz00143swvzzde6vb8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -596,9 +844,9 @@ if __name__==&apos;__main__&apos;:             #程序从这里启动
 
 
   
-    <article id="post-python学习日志6-4" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-DVD管理系统" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/29/python学习日志6-4/" class="article-date">
+    <a href="/2018/01/29/DVD管理系统/" class="article-date">
   <time datetime="2018-01-29T09:50:37.000Z" itemprop="datePublished">2018-01-29</time>
 </a>
     
@@ -610,7 +858,7 @@ if __name__==&apos;__main__&apos;:             #程序从这里启动
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/29/python学习日志6-4/">python学习日志6-4</a>
+      <a class="article-title" href="/2018/01/29/DVD管理系统/">DVD管理系统</a>
     </h1>
   
 
@@ -719,7 +967,7 @@ manager.Menu()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/29/python学习日志6-4/" data-id="cjd8akp8l000wsswvwroagjrn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjdbjdpco00093swvxfu9zi8t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -733,9 +981,9 @@ manager.Menu()
 
 
   
-    <article id="post-python学习日志6-3" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-封装、继承、多态" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/28/python学习日志6-3/" class="article-date">
+    <a href="/2018/01/28/封装、继承、多态/" class="article-date">
   <time datetime="2018-01-28T08:40:03.000Z" itemprop="datePublished">2018-01-28</time>
 </a>
     
@@ -747,7 +995,7 @@ manager.Menu()
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/28/python学习日志6-3/">python学习日志6-3</a>
+      <a class="article-title" href="/2018/01/28/封装、继承、多态/">封装、继承、多态</a>
     </h1>
   
 
@@ -863,7 +1111,7 @@ doctor.jiuzhen(xiaoming)    #result:兽医出诊，给宠物看病..   给人类
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/28/python学习日志6-3/" data-id="cjd8akp8t0012sswv8j7vrefn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjdbjdpdj000r3swvg5r8ty1o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -877,9 +1125,9 @@ doctor.jiuzhen(xiaoming)    #result:兽医出诊，给宠物看病..   给人类
 
 
   
-    <article id="post-python学习日志6-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-类与对象" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/22/python学习日志6-2/" class="article-date">
+    <a href="/2018/01/22/类与对象/" class="article-date">
   <time datetime="2018-01-22T09:23:16.000Z" itemprop="datePublished">2018-01-22</time>
 </a>
     
@@ -891,7 +1139,7 @@ doctor.jiuzhen(xiaoming)    #result:兽医出诊，给宠物看病..   给人类
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/22/python学习日志6-2/">python学习日志6-2</a>
+      <a class="article-title" href="/2018/01/22/类与对象/">类与对象</a>
     </h1>
   
 
@@ -1105,7 +1353,7 @@ print(id(n))                  #result:1832993647864
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/22/python学习日志6-2/" data-id="cjd8akp8o000ysswv3a57c9yo" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjdbjdpdz00113swvx24ocvpv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1119,9 +1367,9 @@ print(id(n))                  #result:1832993647864
 
 
   
-    <article id="post-python学习日志6-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-函数" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/19/python学习日志6-1/" class="article-date">
+    <a href="/2018/01/19/函数/" class="article-date">
   <time datetime="2018-01-19T13:47:47.000Z" itemprop="datePublished">2018-01-19</time>
 </a>
     
@@ -1133,7 +1381,7 @@ print(id(n))                  #result:1832993647864
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/19/python学习日志6-1/">python学习日志6-1</a>
+      <a class="article-title" href="/2018/01/19/函数/">函数</a>
     </h1>
   
 
@@ -1323,166 +1571,7 @@ print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/python学习日志6-1/" data-id="cjd8akp8i000usswvx2b0yalo" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-python学习日志5" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/19/python学习日志5/" class="article-date">
-  <time datetime="2018-01-19T12:24:25.000Z" itemprop="datePublished">2018-01-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/19/python学习日志5/">python学习日志5</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>集合</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>定义</h6><p></p>
-<ul>
-<li><p>集合是一个无序不重复元素的集；如果要创建空集合，须用set()</p>
-<pre><code>#第一种方法
-s=set()                 #空集合,如果只有一个值，需要加逗号，如s=set(&apos;liu&apos;,)
-s1={&apos;name&apos;,2018.01,28,False,(12,22)}
-
-#第二种方法
-s2=set({&apos;name&apos;,2018.01,28,False,(12,22)})
-s2=set([&apos;name&apos;,2018.01,28,False,(12,22)])
-s2=set((&apos;name&apos;,2018.01,28,False,(12,22)))
-
-#注意
-s2=set({&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:23})
-print(type(s2))         #result:&lt;class &apos;set&apos;&gt;
-print(s2)               #result:{&apos;name&apos;, &apos;age&apos;}
-</code></pre></li>
-</ul>
-<p></p><h6>增删改查</h6><p></p>
-<ul>
-<li><p>add()增加</p>
-<pre><code>s3={1,2,3,4,5}
-s4={4,5,6,7,8}
-s3.add(999)
-print(s3)               #result:{1, 2, 3, 4, 5, 999}
-</code></pre></li>
-<li><p>remove()删除</p>
-<pre><code>s3.remove(1)
-print(s3)               #result:{2, 3, 4, 5}
-</code></pre></li>
-<li><p>pop()随机返回并删除一个值,没有参数</p>
-<pre><code>s3.pop()
-print(s3)               #result:{2, 3, 4, 5}
-</code></pre></li>
-<li><p>clear()清空</p>
-<pre><code>s3.clear()
-print(s3)               #result:set()
-</code></pre></li>
-</ul>
-<p></p><h6>并、交、差、对称差集</h6><p></p>
-<ul>
-<li><p>并集</p>
-<pre><code>print(s3|s4)            #result:{1, 2, 3, 4, 5, 6, 7, 8}
-</code></pre></li>
-<li><p>交集</p>
-<pre><code>print(s3&amp;s4)            #result:{4, 5}
-</code></pre></li>
-<li><p>差</p>
-<pre><code>print(s3-s4)            #result:{1, 2, 3}
-</code></pre></li>
-<li><p>对称差集</p>
-<pre><code>print(s3^s4)            #result:{1, 2, 3, 6, 7, 8}
-</code></pre></li>
-<li><p>update()将字符串或集合中的数据联合</p>
-<pre><code>s3.update(s4)
-print(s3)               #result:{1, 2, 3, 4, 5, 6, 7, 8}
-</code></pre><p></p><h6>遍历</h6><p></p>
-<pre><code>s5=set((&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;))
-for i in s5:
-    print(i,end=&apos;&apos;)     #result:eacdb
-</code></pre></li>
-</ul>
-<p></p><h6>小练习</h6><p></p>
-<ul>
-<li><p>通讯录管理系统</p>
-<pre><code>print(&quot;=======通讯录管理系统=======&quot;)
-print(&quot;1.增加姓名和手机&quot;)
-print(&quot;2.删除姓名&quot;)
-print(&quot;3.修改手机&quot;)
-print(&quot;4.查询所有用户&quot;)
-print(&quot;5.根据姓名查找手机号&quot;)
-print(&quot;6.退出&quot;)
-print(&quot;============================&quot;)
-User={}
-while True:
-    i=int(input(&apos;请输入操作项：&apos;))
-    if i==1:
-        name=input(&apos;请输入姓名：&apos;)
-        phone=input(&apos;请输入手机：&apos;)
-        User[name]=phone
-    elif i==2:
-        name=input(&apos;请输入要删除的姓名：&apos;)
-        if name in User:
-            del User[name]
-            print(&apos;删除成功！&apos;)
-        else:
-            print(&apos;姓名不存在！&apos;)
-    elif i==3:
-        name = input(&apos;请输入要修改的姓名：&apos;)
-        if name in User:
-            new_phone=input(&quot;请输入修改后的手机号：&quot;)
-            User[name]=new_phone
-            print(&apos;修改成功！&apos;)
-        else:
-            print(&apos;姓名不存在！&apos;)
-    elif i==4:
-        if User is None:
-            print(&apos;通讯录无记录！&apos;)
-        else:
-            for k,v in User.items():
-                print(k,v)
-    elif i==5:
-        name = input(&apos;请输入要查询的姓名：&apos;)
-        if name in User:
-            print(name,&apos;的手机号为&apos;,User[name])
-        else:
-            print(&apos;姓名不存在！&apos;)
-    elif i==6:
-         break
-    else:
-         print(&apos;请重新输入操作项！&apos;)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/python学习日志5/" data-id="cjd8akp8g000ssswvj2e7ey8f" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjdbjdpd3000k3swv1fycw4lq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1500,7 +1589,7 @@ while True:
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1514,7 +1603,7 @@ while True:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1531,9 +1620,9 @@ while True:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1541,28 +1630,28 @@ while True:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/02/02/python学习日志6-9/">python学习日志6-9</a>
+            <a href="/2018/02/05/python学习日志6-10/">python学习日志6-10</a>
           </li>
         
           <li>
-            <a href="/2018/02/02/python学习日志6-8/">python学习日志6-8</a>
+            <a href="/2018/02/02/随机数Random/">随机数Random</a>
           </li>
         
           <li>
-            <a href="/2018/02/01/python学习日志6-7/">python学习日志6-7</a>
+            <a href="/2018/02/02/日志Logging/">日志Logging</a>
           </li>
         
           <li>
-            <a href="/2018/02/01/python学习日志6-6/">python学习日志6-6</a>
+            <a href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
           </li>
         
           <li>
-            <a href="/2018/01/31/python学习日志6-5/">python学习日志6-5</a>
+            <a href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
           </li>
         
       </ul>

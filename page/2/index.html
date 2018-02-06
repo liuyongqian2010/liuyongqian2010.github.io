@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -70,9 +70,168 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-python学习日志4-3" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-集合" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/17/python学习日志4-3/" class="article-date">
+    <a href="/2018/01/19/集合/" class="article-date">
+  <time datetime="2018-01-19T12:24:25.000Z" itemprop="datePublished">2018-01-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/19/集合/">集合</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>集合</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>定义</h6><p></p>
+<ul>
+<li><p>集合是一个无序不重复元素的集；如果要创建空集合，须用set()</p>
+<pre><code>#第一种方法
+s=set()                 #空集合,如果只有一个值，需要加逗号，如s=set(&apos;liu&apos;,)
+s1={&apos;name&apos;,2018.01,28,False,(12,22)}
+
+#第二种方法
+s2=set({&apos;name&apos;,2018.01,28,False,(12,22)})
+s2=set([&apos;name&apos;,2018.01,28,False,(12,22)])
+s2=set((&apos;name&apos;,2018.01,28,False,(12,22)))
+
+#注意
+s2=set({&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:23})
+print(type(s2))         #result:&lt;class &apos;set&apos;&gt;
+print(s2)               #result:{&apos;name&apos;, &apos;age&apos;}
+</code></pre></li>
+</ul>
+<p></p><h6>增删改查</h6><p></p>
+<ul>
+<li><p>add()增加</p>
+<pre><code>s3={1,2,3,4,5}
+s4={4,5,6,7,8}
+s3.add(999)
+print(s3)               #result:{1, 2, 3, 4, 5, 999}
+</code></pre></li>
+<li><p>remove()删除</p>
+<pre><code>s3.remove(1)
+print(s3)               #result:{2, 3, 4, 5}
+</code></pre></li>
+<li><p>pop()随机返回并删除一个值,没有参数</p>
+<pre><code>s3.pop()
+print(s3)               #result:{2, 3, 4, 5}
+</code></pre></li>
+<li><p>clear()清空</p>
+<pre><code>s3.clear()
+print(s3)               #result:set()
+</code></pre></li>
+</ul>
+<p></p><h6>并、交、差、对称差集</h6><p></p>
+<ul>
+<li><p>并集</p>
+<pre><code>print(s3|s4)            #result:{1, 2, 3, 4, 5, 6, 7, 8}
+</code></pre></li>
+<li><p>交集</p>
+<pre><code>print(s3&amp;s4)            #result:{4, 5}
+</code></pre></li>
+<li><p>差</p>
+<pre><code>print(s3-s4)            #result:{1, 2, 3}
+</code></pre></li>
+<li><p>对称差集</p>
+<pre><code>print(s3^s4)            #result:{1, 2, 3, 6, 7, 8}
+</code></pre></li>
+<li><p>update()将字符串或集合中的数据联合</p>
+<pre><code>s3.update(s4)
+print(s3)               #result:{1, 2, 3, 4, 5, 6, 7, 8}
+</code></pre><p></p><h6>遍历</h6><p></p>
+<pre><code>s5=set((&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;))
+for i in s5:
+    print(i,end=&apos;&apos;)     #result:eacdb
+</code></pre></li>
+</ul>
+<p></p><h6>小练习</h6><p></p>
+<ul>
+<li><p>通讯录管理系统</p>
+<pre><code>print(&quot;=======通讯录管理系统=======&quot;)
+print(&quot;1.增加姓名和手机&quot;)
+print(&quot;2.删除姓名&quot;)
+print(&quot;3.修改手机&quot;)
+print(&quot;4.查询所有用户&quot;)
+print(&quot;5.根据姓名查找手机号&quot;)
+print(&quot;6.退出&quot;)
+print(&quot;============================&quot;)
+User={}
+while True:
+    i=int(input(&apos;请输入操作项：&apos;))
+    if i==1:
+        name=input(&apos;请输入姓名：&apos;)
+        phone=input(&apos;请输入手机：&apos;)
+        User[name]=phone
+    elif i==2:
+        name=input(&apos;请输入要删除的姓名：&apos;)
+        if name in User:
+            del User[name]
+            print(&apos;删除成功！&apos;)
+        else:
+            print(&apos;姓名不存在！&apos;)
+    elif i==3:
+        name = input(&apos;请输入要修改的姓名：&apos;)
+        if name in User:
+            new_phone=input(&quot;请输入修改后的手机号：&quot;)
+            User[name]=new_phone
+            print(&apos;修改成功！&apos;)
+        else:
+            print(&apos;姓名不存在！&apos;)
+    elif i==4:
+        if User is None:
+            print(&apos;通讯录无记录！&apos;)
+        else:
+            for k,v in User.items():
+                print(k,v)
+    elif i==5:
+        name = input(&apos;请输入要查询的姓名：&apos;)
+        if name in User:
+            print(name,&apos;的手机号为&apos;,User[name])
+        else:
+            print(&apos;姓名不存在！&apos;)
+    elif i==6:
+         break
+    else:
+         print(&apos;请重新输入操作项！&apos;)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjdbjdpee001i3swv2mpzaj2g" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-通讯录管理系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/17/通讯录管理系统/" class="article-date">
   <time datetime="2018-01-17T13:39:40.000Z" itemprop="datePublished">2018-01-17</time>
 </a>
     
@@ -84,7 +243,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/17/python学习日志4-3/">python学习日志4-3</a>
+      <a class="article-title" href="/2018/01/17/通讯录管理系统/">通讯录管理系统</a>
     </h1>
   
 
@@ -241,7 +400,7 @@ print(&quot;谢谢使用！&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/python学习日志4-3/" data-id="cjd8akp8d000qsswvky78xzwy" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjdbjdpdz001b3swv7zkieefn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -255,9 +414,9 @@ print(&quot;谢谢使用！&quot;)
 
 
   
-    <article id="post-python学习日志4-2" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-元组、字典" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/17/python学习日志4-2/" class="article-date">
+    <a href="/2018/01/17/元组、字典/" class="article-date">
   <time datetime="2018-01-17T10:03:43.000Z" itemprop="datePublished">2018-01-17</time>
 </a>
     
@@ -269,7 +428,7 @@ print(&quot;谢谢使用！&quot;)
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/17/python学习日志4-2/">python学习日志4-2</a>
+      <a class="article-title" href="/2018/01/17/元组、字典/">元组、字典</a>
     </h1>
   
 
@@ -404,7 +563,7 @@ print(d)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/python学习日志4-2/" data-id="cjd8akp87000msswvelz7h2i1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjdbjdpd3000i3swv19ztppx9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -418,9 +577,9 @@ print(d)
 
 
   
-    <article id="post-python学习日志4-1" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-列表" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/16/python学习日志4-1/" class="article-date">
+    <a href="/2018/01/16/列表/" class="article-date">
   <time datetime="2018-01-16T01:28:02.000Z" itemprop="datePublished">2018-01-16</time>
 </a>
     
@@ -432,7 +591,7 @@ print(d)
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/16/python学习日志4-1/">python学习日志4-1</a>
+      <a class="article-title" href="/2018/01/16/列表/">列表</a>
     </h1>
   
 
@@ -581,7 +740,7 @@ print(nums)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/16/python学习日志4-1/" data-id="cjd8akp8a000psswv1rsqcmlw" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjdbjdpdj000u3swvi7ivx4m4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -595,9 +754,9 @@ print(nums)
 
 
   
-    <article id="post-python学习日志3" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-循环（while、for）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/15/python学习日志3/" class="article-date">
+    <a href="/2018/01/15/循环（while、for）/" class="article-date">
   <time datetime="2018-01-15T11:15:27.000Z" itemprop="datePublished">2018-01-15</time>
 </a>
     
@@ -609,7 +768,7 @@ print(nums)
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/15/python学习日志3/">python学习日志3</a>
+      <a class="article-title" href="/2018/01/15/循环（while、for）/">循环（while、for）</a>
     </h1>
   
 
@@ -829,7 +988,7 @@ while i&lt;10:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/15/python学习日志3/" data-id="cjd8akp84000lsswvfmq9oo93" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjdbjdpdj000w3swv48oph949" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -843,9 +1002,9 @@ while i&lt;10:
 
 
   
-    <article id="post-python学习日志2" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-字符串的定义、切片、格式化、函数" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/12/python学习日志2/" class="article-date">
+    <a href="/2018/01/12/字符串的定义、切片、格式化、函数/" class="article-date">
   <time datetime="2018-01-12T10:53:24.000Z" itemprop="datePublished">2018-01-12</time>
 </a>
     
@@ -857,7 +1016,7 @@ while i&lt;10:
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/12/python学习日志2/">python学习日志2</a>
+      <a class="article-title" href="/2018/01/12/字符串的定义、切片、格式化、函数/">字符串的定义、切片、格式化、函数</a>
     </h1>
   
 
@@ -1040,7 +1199,7 @@ print(&apos;d&apos; not in str2)       #result:False
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/12/python学习日志2/" data-id="cjd8akp7w000hsswv0zwie4wk" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjdbjdpd3000q3swv4fo4te09" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1054,9 +1213,9 @@ print(&apos;d&apos; not in str2)       #result:False
 
 
   
-    <article id="post-python学习日志1" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-变量、数据类型、运算符、分支" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/10/python学习日志1/" class="article-date">
+    <a href="/2018/01/10/变量、数据类型、运算符、分支/" class="article-date">
   <time datetime="2018-01-10T09:09:48.000Z" itemprop="datePublished">2018-01-10</time>
 </a>
     
@@ -1068,7 +1227,7 @@ print(&apos;d&apos; not in str2)       #result:False
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/10/python学习日志1/">python学习日志1</a>
+      <a class="article-title" href="/2018/01/10/变量、数据类型、运算符、分支/">变量、数据类型、运算符、分支</a>
     </h1>
   
 
@@ -1128,7 +1287,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/10/python学习日志1/" data-id="cjd8akp80000jsswvdy9brlw0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjdbjdpd3000n3swv1d97cjve" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1220,7 +1379,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/" data-id="cjd8akp7j000bsswvvelxv0wz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/01/2018-01-01-Ajax回顾/" data-id="cjdbjdpco000a3swv9hw4g9vy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1284,7 +1443,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjd8akp9k001gsswvpspwmzik" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjdbjdpee001g3swvzx0b28s7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/零散知识点/">零散知识点</a></li></ul>
@@ -1501,91 +1660,10 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/2017-12-18-Django连接MySQL/" data-id="cjd8akp7f0009sswvz4mmouki" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/18/2017-12-18-Django连接MySQL/" data-id="cjdbjdpc800043swvxgzepp03" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-CentOS7安装Redis3-2遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/" class="article-date">
-  <time datetime="2017-12-17T00:55:52.000Z" itemprop="datePublished">2017-12-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/">CentOS7安装Redis3.2遇到的问题</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <hr>
-<hr>
-<p>###到<a href="https://redis.io/" target="_blank" rel="noopener">redis官网</a>下载安装包，如”redis-3.2.8.tar.gz”；将下载的安装包放到 /opt下，分别使用：</p>
-<ul>
-<li>tar -zvxf redis-3.2.8.tar.gz 解压安装包</li>
-<li>cd redis-3.2.8 进入安装包</li>
-<li>make 编译<br><h6>出现错误:</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: gcc：命令未找到</span><br><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: *** [net.<span class="keyword">o</span>] 错误 <span class="number">127</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/deps/hiredis”</span><br><span class="line"><span class="keyword">make</span>[<span class="number">2</span>]: *** [hiredis] 错误 <span class="number">2</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">2</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/deps”</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: [persist-settings] 错误 <span class="number">2</span> (忽略)</span><br><span class="line">    CC adlist.<span class="keyword">o</span></span><br><span class="line">/bin/<span class="keyword">sh</span>: <span class="keyword">cc</span>: 未找到命令</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [adlist.<span class="keyword">o</span>] 错误 <span class="number">127</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [<span class="keyword">all</span>] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p></p><h6>解决方法：安装gcc</h6><p></p>
-<ul>
-<li>yum -y install gcc automake autoconf libtool make 安装</li>
-<li>make 运行<br><h6>出现错误：</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 进入目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line">    CC adlist.<span class="keyword">o</span></span><br><span class="line">In <span class="keyword">file</span> included from adlist.<span class="keyword">c</span>:<span class="number">34</span>:<span class="number">0</span>:</span><br><span class="line">zmalloc.h:<span class="number">50</span>:<span class="number">31</span>: **致命错误**：jemalloc/jemalloc.h：没有那个文件或目录</span><br><span class="line"> #include &lt;jemalloc/jemalloc.h&gt;</span><br><span class="line">                               ^</span><br><span class="line">编译中断。</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [adlist.<span class="keyword">o</span>] 错误 <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [<span class="keyword">all</span>] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p></p><h6>解决方法：make改为make MALLOC=libc</h6><p></p>
-<ul>
-<li>make MALLOC=libc</li>
-<li>make test 运行<br><h6>出现错误：</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 进入目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line">You need <span class="keyword">tcl</span> <span class="number">8.5</span> <span class="built_in">or</span> newer in order <span class="keyword">to</span> run the Redis test</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [test] 错误 <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [test] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p></p><h6>解决方法：升级tcl版本</h6><p></p>
-<ul>
-<li>yum install -y wget 安装wget</li>
-<li>wget <a href="http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz" target="_blank" rel="noopener">http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz</a>  </li>
-<li>sudo tar xzvf tcl8.6.1-src.tar.gz  -C /usr/local/  </li>
-<li>cd  /usr/local/tcl8.6.1/unix/  </li>
-<li>sudo ./configure  </li>
-<li>sudo make  </li>
-<li>sudo make install</li>
-<li>重新解压redis安装包并运行make进行编译</li>
-<li>进入src目录，./redis-server，如果出现虚线盒子界面表示运行成功</li>
-<li>可另起一个界面，运行 ./redis-cli来启动客户端</li>
-<li>可运行ps -ef|grep redis检测redis进程</li>
-<li>可运行netstat -Intp|grep 6379检测端口</li>
-<li>到此安装就结束了，我运用的远程控制软件是”SSH Secure Shell Client”</li>
-</ul>
-<p><em>小白参考大神佳作<a href="http://www.jianshu.com/p/cc403be7f80d" target="_blank" rel="noopener">centos7 安装redis 3.2.8 踩的那些坑</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjd8akp770005sswvkd62iv10" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a></li></ul>
 
     </footer>
   </div>
@@ -1600,7 +1678,7 @@ urlpatterns = [
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1614,7 +1692,7 @@ urlpatterns = [
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1631,9 +1709,9 @@ urlpatterns = [
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1641,28 +1719,28 @@ urlpatterns = [
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/02/02/python学习日志6-9/">python学习日志6-9</a>
+            <a href="/2018/02/05/python学习日志6-10/">python学习日志6-10</a>
           </li>
         
           <li>
-            <a href="/2018/02/02/python学习日志6-8/">python学习日志6-8</a>
+            <a href="/2018/02/02/随机数Random/">随机数Random</a>
           </li>
         
           <li>
-            <a href="/2018/02/01/python学习日志6-7/">python学习日志6-7</a>
+            <a href="/2018/02/02/日志Logging/">日志Logging</a>
           </li>
         
           <li>
-            <a href="/2018/02/01/python学习日志6-6/">python学习日志6-6</a>
+            <a href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
           </li>
         
           <li>
-            <a href="/2018/01/31/python学习日志6-5/">python学习日志6-5</a>
+            <a href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
           </li>
         
       </ul>

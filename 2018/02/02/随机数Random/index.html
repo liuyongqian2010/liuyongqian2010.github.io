@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>随机数Random | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Random随机数   常用函数  random() 用于生成一个0到1的随机浮点数 print(random.random())                  #result:0.3319445476632338  uniform(x,y) 用于生成指定该范围内的随机浮点数，两个参数其中一个是上限，一个是下限，可以不考虑先后顺序 print(random.uniform(1,9))">
+<meta name="keywords" content="Python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="随机数Random">
+<meta property="og:url" content="http://yoursite.com/2018/02/02/随机数Random/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="Random随机数   常用函数  random() 用于生成一个0到1的随机浮点数 print(random.random())                  #result:0.3319445476632338  uniform(x,y) 用于生成指定该范围内的随机浮点数，两个参数其中一个是上限，一个是下限，可以不考虑先后顺序 print(random.uniform(1,9))">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-06T10:26:45.811Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="随机数Random">
+<meta name="twitter:description" content="Random随机数   常用函数  random() 用于生成一个0到1的随机浮点数 print(random.random())                  #result:0.3319445476632338  uniform(x,y) 用于生成指定该范围内的随机浮点数，两个参数其中一个是上限，一个是下限，可以不考虑先后顺序 print(random.uniform(1,9))">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-随机数Random" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/02/随机数Random/" class="article-date">
+  <time datetime="2018-02-02T11:11:33.000Z" itemprop="datePublished">2018-02-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      随机数Random
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Random随机数</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>常用函数</h6><p></p>
+<ul>
+<li><p>random() 用于生成一个0到1的随机浮点数</p>
+<pre><code>print(random.random())                  #result:0.3319445476632338
+</code></pre></li>
+<li><p>uniform(x,y) 用于生成指定该范围内的随机浮点数，两个参数其中一个是上限，一个是下限，可以不考虑先后顺序</p>
+<pre><code>print(random.uniform(1,9))              #result:6.238616035651107
+</code></pre></li>
+<li><p>randint(x,y) 用于生成一个指定范围内的整数，两个参数其中x为下限，y为上限</p>
+<pre><code>print(random.randint(1,9))              #result:8
+</code></pre></li>
+<li><p>randrange(start,stop,step) 从指定范围内，按指定基数递增的集合中，获取一个随机数</p>
+<pre><code>print(random.randrange(1,9,2))          #相当于从[1,3,5,7]序列中获取一个随机数
+</code></pre></li>
+<li><p>choice() 从序列中获取一个随机元素</p>
+<pre><code>print(random.choice(&apos;LiuYongqian&apos;))     #result:Y
+</code></pre></li>
+<li><p>shuffle() 用于将一个列表中的元素打乱</p>
+<pre><code>m=[&apos;Liu&apos;,&apos;Yong&apos;,&apos;Qian&apos;]
+random.shuffle(m)
+print(m)                                #result:[&apos;Yong&apos;, &apos;Liu&apos;, &apos;Qian&apos;]
+</code></pre></li>
+<li><p>sample() 从指定序列中随机获取指定长度的片断，该函数不会修改原有序列</p>
+<pre><code>m=[0,1,2,3,4,5,6,7,8,9]
+n=random.sample(m,5)
+print(n)                                #result:[2, 8, 5, 1, 3]
+</code></pre></li>
+</ul>
+<p></p><h6>双色球</h6><p></p>
+<ul>
+<li><p>运用sample()函数实现</p>
+<pre><code>import random
+list1,list2=range(1,34),range(1,17)
+blue=random.sample(list1,6)
+blue.sort()
+red=random.sample(list2,1)
+
+ball=blue+red
+print(ball)                             #result:[3, 5, 9, 11, 31, 32, 10]
+</code></pre></li>
+<li><p>运用递归实现</p>
+<pre><code>import random
+list1,list2=range(1,34),range(1,17)
+ball=[]
+def getBlueNum():
+    m=random.choice(list1)
+    if m not in ball:
+        ball.append(m)
+    else:
+        getBlueNum()
+
+for i in range(6):
+    getBlueNum()
+rednum=random.sample(list2,1)
+ball.append(rednum)
+print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/02/随机数Random/" data-id="cjdbjdpee001l3swv74jgaiq4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/05/python学习日志6-10/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          python学习日志6-10
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/02/日志Logging/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">日志Logging</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Django连接MySQL/" style="font-size: 10px;">Django连接MySQL</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Web前端/" style="font-size: 10px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/02/05/python学习日志6-10/">python学习日志6-10</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/02/随机数Random/">随机数Random</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/02/日志Logging/">日志Logging</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

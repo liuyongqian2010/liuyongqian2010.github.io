@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>列表 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="列表   列表的定义  列表的数据项不需要具有相同的类型，逗号分隔，方括号括起来 list1=[&amp;apos;News&amp;apos;,&amp;apos;Git&amp;apos;,2018,1.15,False] print(list1[2])             #result:2018  list=[[&amp;apos;a&amp;apos;,&amp;apos;b&amp;apos;],[&amp;apos;A&amp;apos;,&amp;apos;B&amp;a">
+<meta name="keywords" content="Python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="列表">
+<meta property="og:url" content="http://yoursite.com/2018/01/16/列表/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="列表   列表的定义  列表的数据项不需要具有相同的类型，逗号分隔，方括号括起来 list1=[&amp;apos;News&amp;apos;,&amp;apos;Git&amp;apos;,2018,1.15,False] print(list1[2])             #result:2018  list=[[&amp;apos;a&amp;apos;,&amp;apos;b&amp;apos;],[&amp;apos;A&amp;apos;,&amp;apos;B&amp;a">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-06T09:30:36.963Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="列表">
+<meta name="twitter:description" content="列表   列表的定义  列表的数据项不需要具有相同的类型，逗号分隔，方括号括起来 list1=[&amp;apos;News&amp;apos;,&amp;apos;Git&amp;apos;,2018,1.15,False] print(list1[2])             #result:2018  list=[[&amp;apos;a&amp;apos;,&amp;apos;b&amp;apos;],[&amp;apos;A&amp;apos;,&amp;apos;B&amp;a">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-列表" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/16/列表/" class="article-date">
+  <time datetime="2018-01-16T01:28:02.000Z" itemprop="datePublished">2018-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      列表
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>列表</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>列表的定义</h6><p></p>
+<ul>
+<li><p>列表的数据项不需要具有相同的类型，逗号分隔，方括号括起来</p>
+<pre><code>list1=[&apos;News&apos;,&apos;Git&apos;,2018,1.15,False]
+print(list1[2])             #result:2018
+
+list=[[&apos;a&apos;,&apos;b&apos;],[&apos;A&apos;,&apos;B&apos;],[&apos;a&apos;,&apos;B&apos;]] 
+print(list[1][1])           #二维列表  #result:B
+</code></pre></li>
+</ul>
+<p></p><h6>列表的切片</h6><p></p>
+<ul>
+<li><p>列表也可以使用切片，使用方法与字符串一致</p>
+<pre><code>print(list1[:])  #所有       #result:[&apos;News&apos;, &apos;Git&apos;, 2018, 1.15, False]
+print(list1[1:2])           #result:[&apos;Git&apos;]
+print(list1[1:4:2])         #result:[&apos;Git&apos;, 1.15]
+print(list1[-1])            #result:False
+print(list1[-1:-5:-1])      #result:[False, 1.15, 2018, &apos;Git&apos;]
+print(list1[::-1])             #result:[False, 1.15, 2018, &apos;Git&apos;, &apos;News&apos;]
+</code></pre></li>
+</ul>
+<p></p><h6>列表的编辑</h6><p></p>
+<ul>
+<li><p>增加</p>
+<pre><code>list2=[&apos;Happy&apos;,&apos;New&apos;,&apos;Year&apos;]
+list2.append(&apos;2018&apos;)          #增加到列表尾部
+print(list2)      #result:[&apos;Happy&apos;, &apos;New&apos;, &apos;Year&apos;, &apos;2018&apos;]
+list2.insert(3,&apos;2018&apos;)        #插入到列表相应下标位置,超出范围则在尾部添加
+print(list2)      #result:[&apos;Happy&apos;, &apos;New&apos;, &apos;Year&apos;, &apos;2018&apos;]
+
+list3=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list4=[&apos;李桑&apos;,&apos;雷军&apos;,&apos;马云&apos;] #两个列表可以进行相加 
+print(list3+list4)            #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;, &apos;李桑&apos;, &apos;雷军&apos;, &apos;马云&apos;]
+print(list3)                  #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;]
+
+list3.extend(list4)           #列表1.extend(列表2)，是把列表2迭代后追加到列表1，extend()没有返回值
+print(list3)                  #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;, &apos;李桑&apos;, &apos;雷军&apos;, &apos;马云&apos;]
+</code></pre></li>
+<li><p>修改</p>
+<pre><code>list5=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list5[1]=&apos;大米&apos;
+print(list5)                  #result:[&apos;百度&apos;, &apos;大米&apos;, &apos;阿里&apos;]
+</code></pre></li>
+<li><p>删除</p>
+<pre><code>list6=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+del list6[1]                  #del
+print(list6)                  #result:[&apos;百度&apos;, &apos;阿里&apos;]
+
+list7=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list7.pop()                   #默认删除最后一个,也可以指定删除的下标，返回删除值
+print(list7)                  #result:[&apos;百度&apos;, &apos;小米&apos;]
+
+list8=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list8.remove(&apos;小米&apos;)          #删除括号中的内容，但只删除一次
+print(list8)                  #result:[&apos;百度&apos;, &apos;阿里&apos;]
+</code></pre></li>
+<li><p>查询</p>
+<pre><code>list9=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+print(list9.index(&apos;c&apos;))       #返回查找到的下标  #result:2
+print(&apos;a&apos; in list9)            #返回bool值       #result:True
+print(&apos;a&apos; not in list9)        #返回bool值       #result:False
+</code></pre></li>
+</ul>
+<p></p><h6>列表的函数</h6><p></p>
+<ul>
+<li><p>len() 列表元素个数</p>
+<pre><code>list1=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+print(len(list1))           #result:5
+</code></pre></li>
+<li><p>max()、min() 返回列表元素最大值、最小值;字母以ASCII为依据</p>
+<pre><code>print(max(list1))           #result:e
+print(min(list1))           #result:a
+</code></pre></li>
+<li><p>list()将元组转换成列表</p>
+<pre><code>a=(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)             #定义一个元组
+print(list(a))              #result:[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]
+</code></pre></li>
+<li><p>append()增加到列表尾部</p>
+</li>
+<li>insert(index,obj)插入到列表相应下标位置,超出范围则在尾部添加</li>
+<li>extend()列表1.extend(列表2)，是把列表2迭代后追加到列表1</li>
+<li>pop()默认删除最后一个,也可以指定删除的下标，返回删除值</li>
+<li>remove()删除括号中的内容，但只删除一次</li>
+<li><p>reverse()反向列表中的元素</p>
+<pre><code>list2=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+list2.reverse()
+print(list2)                  #result:[&apos;e&apos;, &apos;d&apos;, &apos;c&apos;, &apos;b&apos;, &apos;a&apos;]
+</code></pre></li>
+<li><p>sort([func])排序，默认升序</p>
+<pre><code>list3=[5,6,4,2,9]
+list3.sort()
+print(list3)                  #result:[2, 4, 5, 6, 9]
+</code></pre></li>
+<li><p>clear() 清空列表</p>
+<pre><code>list4=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+list4.clear()
+print(list4)                  #result:[]
+</code></pre></li>
+<li><p>copy()复制列表，在内存中又开辟了一个空间；通过等号复制副本，在内存中指向原来的地址</p>
+<pre><code>list5=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]
+list6=list5.copy()
+print(list6)                  #result:[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]
+</code></pre></li>
+<li><p>eval()将元组、字典、列表类型的字符串转为元组、字典、列表,可以把list,tuple,dict和string相互转化</p>
+<pre><code>a=&quot;[[1,2], [3,4], [5,6]]&quot;        #字符串转换成列表
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;list&apos;&gt;
+print(m)                        #result:[[1, 2], [3, 4], [5, 6]]
+
+a=&quot;{&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:&apos;25&apos;}&quot;   #字符串转换成字典
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;dict&apos;&gt;
+print(m)                        #result:{&apos;name&apos;: &apos;Liu&apos;, &apos;age&apos;: &apos;25&apos;}
+
+a=&quot;(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)&quot;               #字符串转换成元组
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;tuple&apos;&gt;
+print(m)                        #result:(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;)
+</code></pre></li>
+</ul>
+<p></p><h6>小练习</h6><p></p>
+<ul>
+<li><p>定义一个列表，让用户动态输入5个值,遍历输出列表的值</p>
+<pre><code>nums=[]
+for i in range(5):
+    nums.append(input(&apos;请输入：&apos;))
+else:
+    print(&apos;输入完毕！&apos;)
+print(nums)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjdbjdpdj000u3swvi7ivx4m4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/17/元组、字典/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          元组、字典
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/15/循环（while、for）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">循环（while、for）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Django连接MySQL/" style="font-size: 10px;">Django连接MySQL</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Web前端/" style="font-size: 10px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/02/05/python学习日志6-10/">python学习日志6-10</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/02/随机数Random/">随机数Random</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/02/日志Logging/">日志Logging</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

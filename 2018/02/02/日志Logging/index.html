@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>日志Logging | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="日志Logging   基础知识   Python的logging模块提供了记录程序运行情况的日志功能，logging模块主要可以根据自定义日志信息，在程序运行的时候将日志打印在终端及记录日志到文件中。默认情况下，logging打印日志级别为warning,而debug、info在warning级别之下，故而不打印 日志级别，由低到高 debug() 调试级别，一般用于记录程序运行的详细信息 in">
+<meta name="keywords" content="Python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="日志Logging">
+<meta property="og:url" content="http://yoursite.com/2018/02/02/日志Logging/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="日志Logging   基础知识   Python的logging模块提供了记录程序运行情况的日志功能，logging模块主要可以根据自定义日志信息，在程序运行的时候将日志打印在终端及记录日志到文件中。默认情况下，logging打印日志级别为warning,而debug、info在warning级别之下，故而不打印 日志级别，由低到高 debug() 调试级别，一般用于记录程序运行的详细信息 in">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-06T09:48:07.821Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="日志Logging">
+<meta name="twitter:description" content="日志Logging   基础知识   Python的logging模块提供了记录程序运行情况的日志功能，logging模块主要可以根据自定义日志信息，在程序运行的时候将日志打印在终端及记录日志到文件中。默认情况下，logging打印日志级别为warning,而debug、info在warning级别之下，故而不打印 日志级别，由低到高 debug() 调试级别，一般用于记录程序运行的详细信息 in">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-日志Logging" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/02/日志Logging/" class="article-date">
+  <time datetime="2018-02-02T11:11:21.000Z" itemprop="datePublished">2018-02-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      日志Logging
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>日志Logging</h5><p></p>
+<hr>
+<hr>
+<h6>基础知识</h6>
+
+<ul>
+<li>Python的logging模块提供了记录程序运行情况的日志功能，logging模块主要可以根据自定义日志信息，在程序运行的时候将日志打印在终端及记录日志到文件中。默认情况下，logging打印日志级别为warning,而debug、info在warning级别之下，故而不打印<br></li>
+<li>日志级别，由低到高<ul>
+<li>debug() 调试级别，一般用于记录程序运行的详细信息</li>
+<li>info()事件级别，一般用于记录程序的运行过程</li>
+<li>warnning() 警告级别，，一般用于记录程序出现潜在错误的情形</li>
+<li>error() 错误级别，一般用于记录程序出现错误，但不影响整体运行</li>
+<li>critical() 严重错误级别 ， 出现该错误已经影响到整体运行</li>
+</ul>
+</li>
+<li>logging模块的四大组件<ul>
+<li>Logger：提供日志接口，供应用代码使用。logger最长用的操作有两类：配置和发送日志消息。可以通过logging.getLogger(name)获取logger对象，如果不指定name则返回root对象，多次使用相同的name调用getLogger方法返回同一个logger对象</li>
+<li>Handler：将日志记录（log record）发送到合适的目的地（destination），比如文件，socket等。一个logger对象可以通过addHandler方法添加0到多个handler，每个handler又可以定义不同日志级别，以实现日志分级过滤显示</li>
+<li>Filter：提供一种优雅的方式决定一个日志记录是否发送到handler</li>
+<li>Formatter：指定日志记录输出的具体格式。formatter的构造方法需要两个参数：消息的格式字符串和日期字符串，这两个参数都是可选的</li>
+</ul>
+</li>
+<li>logging的配置方法<ul>
+<li>通过代码进行完整配置，主要是通过getLogger方法实现</li>
+<li>通过代码进行简单配置，主要是通过basicConfig方法实现</li>
+<li>通过配置文件，主要是通过logging.config.fileConfig(filepath)</li>
+</ul>
+</li>
+<li><p>logging用法浅析（getLogger方法）</p>
+<ul>
+<li>1.初始化 logger = logging.getLogger(“endlesscode”)，getLogger()方法后面最好加上所要日志记录的模块名字，后面的日志格式中的%(name)s 对应的是这里的模块名字</li>
+<li>2.设置级别 logger.setLevel(logging.DEBUG),Logging中有NOTSET &lt; DEBUG &lt; INFO &lt; WARNING &lt; ERROR &lt; CRITICAL这几种级别，日志会记录设置级别以上的日志</li>
+<li>3.Handler，常用的是StreamHandler和FileHandler，windows下你可以简单理解为一个是console和文件日志，一个打印在CMD窗口上，一个记录在一个文件上</li>
+<li>4.formatter，定义了最终log信息的顺序,结构和内容，比如这样的格式 ‘[%(asctime)s] [%(levelname)s] %(message)s’, ‘%Y-%m-%d %H:%M:%S’。详细说明：<ul>
+<li>%(name)s Logger的名字</li>
+<li>%(levelname)s 文本形式的日志级别</li>
+<li>%(message)s 用户输出的消息</li>
+<li>%(asctime)s 字符串形式的当前时间。默认格式是 “2018-02-05 16:49:45,896”。逗号后面的是毫秒</li>
+<li>%(levelno)s 数字形式的日志级别</li>
+<li>%(pathname)s 调用日志输出函数的模块的完整路径名，可能没有</li>
+<li>%(filename)s 调用日志输出函数的模块的文件名</li>
+<li>%(module)s  调用日志输出函数的模块名</li>
+<li>%(funcName)s 调用日志输出函数的函数名</li>
+<li>%(lineno)d 调用日志输出函数的语句所在的代码行</li>
+<li>%(created)f 当前时间，用UNIX标准的表示时间的浮点数表示</li>
+<li>%(relativeCreated)d 输出日志信息时的，自Logger创建以来的毫秒数</li>
+<li>%(thread)d 线程ID。可能没有</li>
+<li>%(threadName)s 线程名。可能没有</li>
+<li>%(process)d 进程ID。可能没有</li>
+</ul>
+</li>
+<li>5.记录 使用object.debug(message)来记录日志</li>
+<li><p>写一个实例，在窗口上只打出error以上级别的日志，但是在日志中打出debug以上的信息，代码如下：</p>
+<pre><code>import logging,sys    
+#获取logger实例，如果参数为空则返回root logger
+logger=logging.getLogger(&apos;practic&apos;)
+logger.setLevel(logging.DEBUG)          #指定日志的最低输出级别，默认为WARN级别
+#指定logger输出格式
+formatter=logging.Formatter(&apos;%(asctime)s - %(name)s - %(levelname)-8s - %(message)s&apos;)
+#建立一个filehandler来把日志记录在文件里，级别为debug以上
+file=logging.FileHandler(&apos;test.log&apos;)
+file.setLevel(logging.DEBUG)            #通过setLevel设置日志级别
+file.setFormatter(formatter)            #通过setFormatter指定输出格式
+#建立一个streamhandler来把日志打在窗口上，级别为error以上
+console=logging.StreamHandler(sys.stdout)
+console.setLevel(logging.ERROR)
+console.formatter=formatter             #也可以直接给formatter赋值
+#将相应的handler添加在logger对象中，
+logger.addHandler(file)
+logger.addHandler(console)
+#开始打印日志
+logger.debug(&apos;debug信息&apos;)
+logger.info(&apos;info信息&apos;)
+logger.warning(&apos;warning信息&apos;)
+logger.error(&apos;error信息&apos;)
+logger.critical(&apos;critical信息&apos;)
+</code></pre></li>
+</ul>
+</li>
+<li><p>logging用法浅析（basicConfig方法）</p>
+<ul>
+<li><p>basicConfig()提供了非常便捷的方式来配置logging模块并马上开始使用</p>
+<pre><code>import logging,sys
+logging.basicConfig(level=logging.DEBUG,            #定义输出到文件的日志级别
+                    format=&apos;%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s %(message)s&apos;,#定义输出格式
+                    datefmt=&apos;%a,%d %b %Y %H:%M:%S&apos;) #时间格式
+&apos;&apos;&apos;
+logging.basicConfig(level=logging.DEBUG,            #定义输出到文件的日志级别
+                    format=&apos;%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s %(message)s&apos;,#定义输出格式
+                    datefmt=&apos;%a,%d %b %Y %H:%M:%S&apos;, #时间格式
+                    filename=&apos;test.log&apos;,            #日志文档名
+                    filemode=&apos;a&apos;)                   #写入模式，a为追加，w为覆盖
+&apos;&apos;&apos;
+logging.debug(&apos;debug信息&apos;)
+logging.info(&apos;info信息&apos;)
+logging.warning(&apos;warning信息&apos;)
+logging.error(&apos;error信息&apos;)
+logging.critical(&apos;critical信息&apos;)
+</code></pre></li>
+</ul>
+</li>
+<li><p>logging用法浅析（通过文件配置logging）</p>
+<ul>
+<li>该方法可以参考大神佳作<a href="http://blog.csdn.net/langb2014/article/details/53397164" target="_blank" rel="noopener">python的logging日志模块(一)</a></li>
+</ul>
+</li>
+</ul>
+<h6>自定义封装，优化getLogger方法</h6>
+
+<pre><code>import logging,os
+class Logger:
+    def __init__(self, path,clevel = logging.DEBUG,Flevel = logging.DEBUG):
+        self.logger = logging.getLogger(path)
+        self.logger.setLevel(logging.DEBUG)
+        fmt = logging.Formatter(&apos;[%(asctime)s] [%(levelname)s] %(message)s&apos;, &apos;%Y-%m-%d %H:%M:%S&apos;)
+        #设置CMD日志
+        sh = logging.StreamHandler()
+        sh.setFormatter(fmt)
+        sh.setLevel(clevel)
+        #设置文件日志
+        fh = logging.FileHandler(path)
+        fh.setFormatter(fmt)
+        fh.setLevel(Flevel)
+        self.logger.addHandler(sh)
+        self.logger.addHandler(fh)
+    def debug(self,message):
+        self.logger.debug(message)
+    def info(self,message):
+        self.logger.info(message)
+    def war(self,message):
+        self.logger.warn(message)
+    def error(self,message):
+        self.logger.error(message)
+    def cri(self,message):
+        self.logger.critical(message)
+if __name__ ==&apos;__main__&apos;:
+    logyyx=Logger(&apos;test.log&apos;,logging.ERROR,logging.DEBUG)
+    logyyx.debug(&apos;一个debug信息&apos;)
+    logyyx.info(&apos;一个info信息&apos;)
+    logyyx.war(&apos;一个warning信息&apos;)
+    logyyx.error(&apos;一个error信息&apos;)
+    logyyx.cri(&apos;一个致命critical信息&apos;)
+#每次使用的时候只要实例化一个对象就可以了
+logobj = Logger(&apos;008&apos;,logging.ERROR,logging.DEBUG)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/02/日志Logging/" data-id="cjdbjdpdz00183swvm7rekt1z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/02/随机数Random/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          随机数Random
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/01/迭代器、生成器、异常/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">迭代器、生成器、异常</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Django连接MySQL/" style="font-size: 10px;">Django连接MySQL</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Web前端/" style="font-size: 10px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/02/05/python学习日志6-10/">python学习日志6-10</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/02/随机数Random/">随机数Random</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/02/日志Logging/">日志Logging</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

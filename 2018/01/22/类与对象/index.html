@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>类与对象 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="类与对象   基础定义  在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合 class Student:     &amp;apos;&amp;apos;&amp;apos;     学生类             #文档说明，可通过类名.__doc__访问     &amp;ap">
+<meta name="keywords" content="Python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="类与对象">
+<meta property="og:url" content="http://yoursite.com/2018/01/22/类与对象/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="类与对象   基础定义  在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合 class Student:     &amp;apos;&amp;apos;&amp;apos;     学生类             #文档说明，可通过类名.__doc__访问     &amp;ap">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-06T09:32:41.401Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="类与对象">
+<meta name="twitter:description" content="类与对象   基础定义  在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合 class Student:     &amp;apos;&amp;apos;&amp;apos;     学生类             #文档说明，可通过类名.__doc__访问     &amp;ap">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-类与对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/22/类与对象/" class="article-date">
+  <time datetime="2018-01-22T09:23:16.000Z" itemprop="datePublished">2018-01-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      类与对象
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>类与对象</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>基础定义</h6><p></p>
+<ul>
+<li><p>在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合</p>
+<pre><code>class Student:
+    &apos;&apos;&apos;
+    学生类             #文档说明，可通过类名.__doc__访问
+    &apos;&apos;&apos;
+    #类的成员：特性  行为
+    pass              #保证语义的完整
+</code></pre></li>
+<li><p>类名规范：首字母大写，以大写字母分割单词，不使用下划线;不允许使用数字、关键字、除下划线以外的特殊字符开头<br><br>属性名规范：使用名词，首字母小写，以大写字母分割单词<br><br>方法名规范：使用谓词（动词+对象），首字母小写，以大写字母分割单词<br></p>
+<pre><code>class Student:
+    def __init__(self,name,age):    
+    #__init__()这个方法会在创建对象时完成初始化，并把类的属性绑上去
+        self.name=name           #创建对象属性
+        self.age=age
+    def showName(self):   #self对象的载体
+        print(&apos;我叫{}!&apos;.format(self.name))        
+m=Student(&apos;张三&apos;,27)
+m.showName()
+</code></pre></li>
+<li><p>属性分归属：对象属性、类属性<br>对象属性有两种创建方式</p>
+<pre><code>#第一种方式，初始化时添加对象属性
+class Student:
+    def __init__(self,name,age):    
+        self.name=name           #创建对象属性
+        self.age=age
+    def showName(self):   
+        print(&apos;我叫{}!&apos;.format(self.name))        
+m=Student(&apos;张三&apos;,27)
+m.showName()
+
+#第二种方式，赋值的形式
+class Student:
+    def showName(self):
+        print(&apos;我叫{}!&apos;.format(self.name))
+n=Student()
+n.name=&apos;李四&apos;                    #对象名.属性 
+n.showName()
+</code></pre></li>
+<li><p>类属性的创建、修改</p>
+<pre><code>#类属性，属于类的成员，对象共有的,类属性也可以如下创建
+class Student:
+    ablity=&apos;study&apos;             #在类里直接写：attr=value
+#类属性修改方式：类名.类属性=xxx  或者 实例对象.__class__类属性=xxx
+</code></pre><p>  <em>关于类属性与对象属性的区别可参考<a href="http://python.jobbole.com/85100/" target="_blank" rel="noopener">关于Python类属性与实例属性的讨论</a></em></p>
+</li>
+<li><p>__new__()<br>定义一个类时，如果使用__init__函数来设置类具有的属性，实际上最先执行__new__函数，通过该函数，返回一个类的实例，故而init函数才有self参数</p>
+<pre><code>class Student:
+    def __new__(cls, *args, **kwargs):
+        return object.__new__(cls)
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+    def showName(self):
+        print(&apos;我叫{}!&apos;.format(self.name))
+m=Student(&apos;张三&apos;,27)
+m.showName()
+</code></pre></li>
+<li><p>对象属性的公有、私有<br>如果有一些属性不想给外部权限来访问或者修改，可以在属性或者方法的名字前加双下划线，声明为私有属性；私有属性只能在当前类中使用</p>
+<pre><code>#如只给外部访问的权限，不给修改的权限，可以在类里定义一个返回属性的函数
+class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age         #在属性名字前加双下划线，声明为私有属性
+    def get_Age(self):
+        return self.__age
+m=Student(&apos;刘桑&apos;,25)
+print(m.get_Age())              #result:25
+&apos;&apos;&apos;
+#给与外部访问与修改权限，但修改值应按照设计的范围来
+class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age         #在属性名字前加双下划线，声明为私有属性
+    def get_Age(self):
+        return self.__age
+    def set_Age(self,age):
+        if age&lt;0 or age&gt;100:
+            self.__age=18   #给一个默认值
+        else:
+            self.__age=age
+m=Student(&apos;刘桑&apos;,25)
+m.set_Age(100)
+print(m.get_Age())              #result:100
+</code></pre></li>
+<li><p>注解@property的使用<br>它的作用是将一个函数作为类的一个属性来访问，或者把一个getter方法变成属性，@属性名.setter把setter方法变成属性赋值</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    #先定义两个函数，函数名为属性名，第一个函数返回属性值，第二个函数修改属性值
+    @property               #在第一个函数头上写@property
+    def age(self):
+        return self.__age
+    @age.setter             #在第二个函数头上写@属性名.setter
+    def age(self,value):
+        if value&lt;0 or value&gt;100:
+            self.__age=18   #给一个默认值
+        else:
+            self.__age=value
+m=Student(&apos;刘桑&apos;,25)
+m.age=100
+print(m.age)              #result:100
+</code></pre></li>
+<li><p>对象方法的公有、私有<br>私有方法在方法前加双下划线；私有方法只能在当前类中使用</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    def __showInfo(self):    #私有方法在方法前加双下划线
+        return &apos;My name is&apos;+self.name
+m=Student(&apos;刘桑&apos;,100)
+print(m.__showInfo())       #result:AttributeError
+</code></pre></li>
+<li><p>类方法、静态方法<br>类方法，在方法前添加@classmethod装饰器，可通过类、对象调用<br>静态方法，在方法前添加@staticmethod，参数没有要求，与类、对象没有关系，但可通过类、对象调用</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+    def instance_method(self):   #实例方法
+        print(&apos;实例方法&apos;)
+    @classmethod
+    def class_method(cls):       #类方法：第一个参数会自动接收类对象，一般用cls
+        print(&apos;类方法&apos;)
+    @staticmethod
+    def static_method():         #静态方法，参数没有要求
+        print(&apos;静态方法&apos;)
+m=Student(&apos;刘桑&apos;,100)
+Student.class_method()           #通过类名调用类方法
+m.class_method()                 #通过实例调用类方法
+
+Student.static_method()          #通过类名调用静态方法
+m.static_method()                #通过实例调用静态方法
+</code></pre></li>
+<li><p>__str__()<br>这个方法告诉python在打印一个对象时,具体显示什么内容</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    def __str__(self):    #可以重写
+        return &apos;My name is&apos;+self.name
+m=Student(&apos;刘桑&apos;,100)
+print(m)                  #result:My name is刘桑
+</code></pre></li>
+<li><p>__del__()<br>自动销毁，当对象没有引用或者程序结束的时候，程序自动调用该方法</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    def __str__(self):    #可以重写
+        return &apos;My name is&apos;+self.name
+    def __del__(self):
+        print(self.name+&apos;被销毁！&apos;)
+m=Student(&apos;刘桑&apos;,100)
+                          #result:刘桑被销毁！
+
+#也可以直接使用del m
+</code></pre></li>
+<li><p>__dir__()<br>用来展示一个类、对象的属性和方法</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+m=Student(&apos;刘桑&apos;,100)
+print(m.__dir__())
+</code></pre></li>
+<li><p>getrefcount()可返回一个对象有多少个引用，返回2，从2开始</p>
+<pre><code>import sys
+class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age        
+m=Student(&apos;刘桑&apos;,25)
+mm=m
+print(sys.getrefcount(m))      #result:3
+</code></pre></li>
+<li><p>_类名__属性名,通过该方式可访问私有属性，一般不建议</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+m=Student(&apos;刘桑&apos;,25)
+print(m._Student__age)
+</code></pre></li>
+<li><p>id()<br>对一个对象的引用调用id()函数，可得到该对象的标识符dentity，该标识符是一个int，它保证在该对象的生命周期内是唯一恒定的，具有不重叠生命周期的两个对象具有不同的id值</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+m=Student(&apos;刘桑&apos;,25)
+n=Student(&apos;宮某&apos;,25)
+print(id(m))                  #result:1832993645624
+print(id(n))                  #result:1832993647864
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjdbjdpdz00113swvx24ocvpv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/28/封装、继承、多态/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          封装、继承、多态
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/19/函数/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">函数</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Django连接MySQL/" style="font-size: 10px;">Django连接MySQL</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Web前端/" style="font-size: 10px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/02/05/python学习日志6-10/">python学习日志6-10</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/02/随机数Random/">随机数Random</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/02/日志Logging/">日志Logging</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

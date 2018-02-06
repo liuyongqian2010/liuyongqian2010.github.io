@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>DVD管理系统 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DVD管理系统  class dvd:     def __init__(self,name,price,status):         self.name=name         self.price=price         self.status=status     def __str__(self):         stat=&amp;apos;已借出&amp;apos;         if">
+<meta name="keywords" content="Python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DVD管理系统">
+<meta property="og:url" content="http://yoursite.com/2018/01/29/DVD管理系统/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="DVD管理系统  class dvd:     def __init__(self,name,price,status):         self.name=name         self.price=price         self.status=status     def __str__(self):         stat=&amp;apos;已借出&amp;apos;         if">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-06T09:33:18.876Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DVD管理系统">
+<meta name="twitter:description" content="DVD管理系统  class dvd:     def __init__(self,name,price,status):         self.name=name         self.price=price         self.status=status     def __str__(self):         stat=&amp;apos;已借出&amp;apos;         if">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-DVD管理系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/29/DVD管理系统/" class="article-date">
+  <time datetime="2018-01-29T09:50:37.000Z" itemprop="datePublished">2018-01-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      DVD管理系统
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <h5>DVD管理系统</h5>
+
+<pre><code>class dvd:
+    def __init__(self,name,price,status):
+        self.name=name
+        self.price=price
+        self.status=status
+    def __str__(self):
+        stat=&apos;已借出&apos;
+        if self.status==1:
+            stat=&apos;未借出&apos;
+        return &apos;名称：《%s》  单价：%d  状态：%s&apos;%(self.name,self.price,stat)
+class DvdManage:
+    dvds=[]  #存储  多个dvds，每个元素都是一个DVD
+    def init(self):
+        self.dvds.append(dvd(&apos;光辉岁月&apos;,10,0))
+        self.dvds.append(dvd(&apos;大海日出&apos;,12,1))
+        self.dvds.append(dvd(&apos;你好小明&apos;,20,1))
+    def Menu(self):
+        self.init()
+        while(True):
+            print(&apos;1.查询所有DVD&apos;)
+            print(&apos;2.增加DVD&apos;)
+            print(&apos;3.借出DVD&apos;)
+            print(&apos;4.归还DVD&apos;)
+            print(&apos;5.退出&apos;)
+            choose=int(input(&apos;请选择操作项:&apos;))
+            if choose==1:
+                self.showAlldvd()
+            elif choose==2:
+                self.insertDvd()
+            elif choose==3:
+                self.lend()
+            elif choose==4:
+                self.backDvd()
+            elif choose==5:
+                print(&apos;5.谢谢使用！&apos;)
+                break
+    def showAlldvd(self):
+        for d in self.dvds:
+            print(str(d))
+    def insertDvd(self):
+        name = input(&apos;请输入DVD的名称:&apos;)
+        ret=self.checkDvd(name)
+        if ret!=None:
+            print(&apos;DVD已存在!&apos;)
+        else:
+            price=int(input(&apos;请输入价格:&apos;))
+            new_dvd=dvd(name,price,1)
+            self.dvds.append(new_dvd)
+            print(&apos;存放成功!&apos;)
+    def lend(self):
+        name = input(&apos;请输入DVD的名称:&apos;)
+        ret = self.checkDvd(name)
+        if ret != None:
+            if ret.status==0:
+                print(&apos;DVD已借出!&apos;)
+            else:
+                days=int(input(&apos;请输入借出天数:&apos;))
+                ret.status=0
+                print(&apos;借出%d天，应收%d&apos;%(days,ret.price*days))
+        else:
+            print(&apos;DVD不存在!&apos;)
+    def backDvd(self):
+        name=input(&apos;请输入DVD的名称:&apos;)
+        ret=self.checkDvd(name)
+        if ret==None:
+            print(&apos;DVD不存在!&apos;)
+        else:
+            if ret.status==1:
+                print(&apos;DVD未借出!&apos;)
+            else:
+                days=int(input(&apos;请输入借出天数:&apos;))
+                y_money=ret.price * days
+                print(&apos;借出%d天，应收%d&apos; % (days, ret.price * days))
+                money=0
+                while True:
+                    money=int(input(&apos;实收:&apos;))
+                    if money&lt;y_money:
+                        print(&apos;不够啊!&apos;)
+                    else:
+                        break
+                if money&gt;=y_money:
+                    print(&apos;找零:%d&apos;%(money-y_money))
+                ret.status=1
+                print(&apos;归还成功!&apos;)
+    def checkDvd(self,name):
+        for d in self.dvds:
+            if d.name==name:
+                return d       #返回当前对象---内存地址
+        else:
+            return None
+manager=DvdManage()
+manager.Menu()
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjdbjdpco00093swvxfu9zi8t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/31/计算器/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          计算器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/28/封装、继承、多态/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">封装、继承、多态</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django连接MySQL/">Django连接MySQL</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python连接MySQl/">Python连接MySQl</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Django连接MySQL/" style="font-size: 10px;">Django连接MySQL</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Python连接MySQl/" style="font-size: 10px;">Python连接MySQl</a> <a href="/tags/Web前端/" style="font-size: 10px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/02/05/python学习日志6-10/">python学习日志6-10</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/02/随机数Random/">随机数Random</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/02/日志Logging/">日志Logging</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
