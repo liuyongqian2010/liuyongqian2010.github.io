@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>CSS全析 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="CSS基础、样式、新增   定义  CSS是层叠样式表，即多重样式定义被层叠在一起成为一个整体，在页面设置中是标准的布局语言，用来控制元素的尺寸、颜色和排版用来将“页面结构代码”和“网页格式风格代码”分离开。从而使页面设计者可以对页面的布局进行更多地控制  选择器  通用选择器*{color:red} 分组选择器h1,h2,h3,h4,p{color:red} 后代(派生)选择器p span{co">
+<meta name="keywords" content="Web前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS全析">
+<meta property="og:url" content="http://yoursite.com/2018/02/21/CSS全析/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="CSS基础、样式、新增   定义  CSS是层叠样式表，即多重样式定义被层叠在一起成为一个整体，在页面设置中是标准的布局语言，用来控制元素的尺寸、颜色和排版用来将“页面结构代码”和“网页格式风格代码”分离开。从而使页面设计者可以对页面的布局进行更多地控制  选择器  通用选择器*{color:red} 分组选择器h1,h2,h3,h4,p{color:red} 后代(派生)选择器p span{co">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-24T10:51:05.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS全析">
+<meta name="twitter:description" content="CSS基础、样式、新增   定义  CSS是层叠样式表，即多重样式定义被层叠在一起成为一个整体，在页面设置中是标准的布局语言，用来控制元素的尺寸、颜色和排版用来将“页面结构代码”和“网页格式风格代码”分离开。从而使页面设计者可以对页面的布局进行更多地控制  选择器  通用选择器*{color:red} 分组选择器h1,h2,h3,h4,p{color:red} 后代(派生)选择器p span{co">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CSS全析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/21/CSS全析/" class="article-date">
+  <time datetime="2018-02-21T03:49:56.000Z" itemprop="datePublished">2018-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CSS全析
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>CSS基础、样式、新增</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>定义</h6><p></p>
+<ul>
+<li>CSS是层叠样式表，即多重样式定义被层叠在一起成为一个整体，在页面设置中是标准的布局语言，用来控制元素的尺寸、颜色和排版<br>用来将“页面结构代码”和“网页格式风格代码”分离开。从而使页面设计者可以对页面的布局进行更多地控制</li>
+</ul>
+<p></p><h6>选择器</h6><p></p>
+<ul>
+<li>通用选择器<code>*{color:red}</code></li>
+<li>分组选择器<code>h1,h2,h3,h4,p{color:red}</code></li>
+<li>后代(派生)选择器<code>p span{color:red}</code> 只针对p标签中的span标签有用</li>
+<li>子选择器<code>p&gt;span{border:1px solid red}</code>    只针对p标签中的第一级span标签有用</li>
+<li>兄弟选择器<code>h1+p {color:red}</code> h1标签后的第一个p标签有用，并且需要时同级且同一个父级</li>
+<li>标签选择器，p、span、div等，如p{color：#fff}</li>
+<li>类选择器，如 .Liu{color：#f9f9f9}</li>
+<li>ID选择器，如 #Liu{color：blue}</li>
+<li>优先级：ID选择符、类选择符、HTML标记选择器。可用!important提升样式表的优先权，如： .p{clolor:#ff0000!important}</li>
+</ul>
+<p></p><h6>引入</h6><p></p>
+<ul>
+<li>内联，<code>&lt;p style=&quot;color:red&quot;&gt;&lt;/p&gt;</code></li>
+<li>内部，将CSS代码添加到头部的style标签中</li>
+<li>外部，也是头部<code>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css  href=&quot;css文件路径&quot;&gt;</code></li>
+</ul>
+<p></p><h6>样式</h6><p></p>
+<ul>
+<li><p>超链接样式</p>
+<pre><code>未被访问前样式a:link{color:black} 
+已访问过的样式a:visited{color:green}
+鼠标悬停时样式a:hover{ }
+按下鼠标时样式a:active{ }
+
+鼠标样式cursor:default默认\pointer小手\crosshair十字
+</code></pre></li>
+<li><p>表格样式</p>
+<pre><code>border-style:所有边框样式
+border-width：所有边框宽度
+border-color：所有边框颜色
+border：可把其余属性写在一起
+</code></pre></li>
+<li><p>表单样式</p>
+<pre><code>background: black;
+color:white;
+border-radius: 8px;/*边框倒角*/      
+outline: none;/*外边框消失*/       
+height: 20px
+</code></pre></li>
+<li><p>文字样式</p>
+<pre><code>font-style:inherit继承  italic斜体  normal正常  oblique偏斜体
+font-weight:像素  bold粗体  bolder特粗  lighter细体  normal正常
+font-size:数值   medium   large
+font-family：&quot;字体样式&quot;
+
+#可以写成这样的
+font：italic bold 24px &quot;幼圆&quot;
+</code></pre></li>
+<li><p>文本样式</p>
+<pre><code>text-align:left\center\right
+text-decoration:underline下划线 line-through删除线 overline顶划线
+text-indent:缩进20px
+line-height:行高25px
+letter-spacing:字间距10px
+text-shadow:水平阴影 垂直阴影 模糊距离 阴影颜色(10px 10px 5px #ccc)
+</code></pre></li>
+<li><p>图片样式</p>
+<pre><code>1.定义图片边框
+border-style:none无 solid实线 dashed虚线 dotted点划线  double双线
+border-color：边框颜色
+border-width：边框宽度
+
+2.定义图片大小
+width：宽度
+height：高度
+max-width：最大宽度值
+
+3.定义对齐方式
+text-align：横向对齐left center right
+vertical-align：纵向对齐top middle bottom
+</code></pre></li>
+<li><p>背景样式</p>
+<pre><code>1.设置页面背景图
+background-image：url(&quot;路径&quot;)
+
+2.设置背景图重复样式
+background-repeat：repeat-x   repeat-y  no-repeat
+
+3.定义背景图片位置
+background-position：center  水平居中
+                     center  center   水平并垂直居中
+                     top   left   图片在页面顶端且局左
+                     center  left  图片在左侧水平居中
+                     bottom  left  图片在页面左下角
+                     x  y   由X轴和Y轴坐标来确定
+
+4.固定背景图片
+background-attachment：scroll  背景图片随对象内容滚动
+                       fixed   背景图片不随对象内容移动
+
+5.设置背景颜色
+background-color：颜色参数
+</code></pre></li>
+</ul>
+<p></p><h6>盒子模型</h6><p></p>
+<ul>
+<li>content（内容）：可以是文字、图片等元素</li>
+<li>padding（空白）：也成内边距，补白，用来设置盒子模型的内容与边框之间的距离</li>
+<li>border（边框），即盒子本身，该属性可设置内容边框线的粗细、颜色和样式等</li>
+<li>margin（边界），也称外边距，用来设置内容与内容之间的距离</li>
+</ul>
+<p></p><h6>元素定位</h6><p></p>
+<ul>
+<li>在CSS中，可以通过position、float、z-index等定位元素进行定位<ul>
+<li>position<code>{position:relative|absolute|static|fixed}</code><ul>
+<li>relative相对定位:相对于原来的位置，保留原有空间</li>
+<li>absolute绝对定位:脱离文档流,选取其最近的父级定位元素定位，当父元素的position为static时，该元素将以body坐标原点进行定位;一般情况下绝对定位配合相对定位</li>
+<li>static所有元素定位的默认值</li>
+<li>fixed该参数固定的对象是可视窗口而并非body或父级元素</li>
+</ul>
+</li>
+<li>相对定位<ul>
+<li>通过某个元素的上下左右移动来对其进行相对地定位,是相对于原来位置的定位，但仍占据原来位置,因此，移动元素会造成覆盖其他框</li>
+</ul>
+</li>
+<li>绝对定位<ul>
+<li>通过某个元素的上下左右移动来对其进行定位,默认依据父级的坐标原点进行定位,如果父级position属性为默认值，且top、left、bottom、right4个值均未设置，则是参照浏览器的左上角</li>
+</ul>
+</li>
+<li>float<ul>
+<li>{ float:left|right|none } 水平方向定位</li>
+<li>{ clear:left|right|both }  清除浮动</li>
+</ul>
+</li>
+<li>z-index<ul>
+<li>CSS中可以处理元素的高度、宽度、深度三个维度，深度的处理就是z-index</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>块元素、内联元素</h6><p></p>
+<ul>
+<li>块元素<ul>
+<li>display:block总是在新行上开始，行高以及顶底边距可以控制</li>
+<li>display:inline和其他元素都在一行上，行高及顶和底边距不可改变</li>
+<li>display:inline-block和其他元素都在一行上，元素的高度、宽度、行高以及顶和底边距都可设置</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>新增</h6><p></p>
+<ul>
+<li>文字阴影<br>text-shadow:X轴 Y轴 模糊距离 颜色（如果不需要阴影模糊效果，可以blur值设置为0）</li>
+<li>文字描边<br>text-stroke:宽度值 颜色值</li>
+<li>文本溢出<br>overflow：hidden；overflow-X:hidden</li>
+<li>渐变<br>默认从上到下：background:linear-gradient(red,blue); <br>从左往右：background:linear-gradient(to right,red,blue)</li>
+<li><p>动画<br><br>第一步：定义动画，</p>
+<pre><code>@keyframes 动画名{
+ 0%{left：0px}
+ 100%{left：100px}
+}
+</code></pre><p>第二步：调用动画，<br>animation：动画名 持续时间 播放方式 播放次数；（animation: c  5s linear infinite;）</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/21/CSS全析/" data-id="cje52sxyw0009hwwvjbj6bqew" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/23/Js基础、函数、循环/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Js基础、函数、循环
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/21/表格、表单/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">表格、表单</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/02/26/模块、包、枚举/">模块、包、枚举</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/24/闭包、装饰、冒泡/">闭包、装饰、冒泡</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/23/Js对象/">Js对象</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/23/Js数组、正则/">Js数组、正则</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/23/Js基础、函数、循环/">Js基础、函数、循环</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
