@@ -7,17 +7,18 @@
   
   <title>Js对象 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="永远相信美好的事情将要发生！">
+  <meta name="description" content="JS对象   内置对象  内置对象就是ECMAScript标准中已经定义好的，由浏览器厂商已经实现的标准对象！内置对象中封装了专门的数据和操作数据常用的API JavaScript中内置对象列表：String、Boolean、Number、Array、Date、RegExp、Math、Error、Function、Object、Global  String对象  String对象用于处理文本字符串">
+<meta name="keywords" content="Web前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Js对象">
 <meta property="og:url" content="http://yoursite.com/2018/02/23/Js对象/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="永远相信美好的事情将要发生！">
+<meta property="og:description" content="JS对象   内置对象  内置对象就是ECMAScript标准中已经定义好的，由浏览器厂商已经实现的标准对象！内置对象中封装了专门的数据和操作数据常用的API JavaScript中内置对象列表：String、Boolean、Number、Array、Date、RegExp、Math、Error、Function、Object、Global  String对象  String对象用于处理文本字符串">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-23T12:38:06.374Z">
+<meta property="og:updated_time" content="2018-02-27T09:25:58.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Js对象">
-<meta name="twitter:description" content="永远相信美好的事情将要发生！">
+<meta name="twitter:description" content="JS对象   内置对象  内置对象就是ECMAScript标准中已经定义好的，由浏览器厂商已经实现的标准对象！内置对象中封装了专门的数据和操作数据常用的API JavaScript中内置对象列表：String、Boolean、Number、Array、Date、RegExp、Math、Error、Function、Object、Global  String对象  String对象用于处理文本字符串">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -94,13 +95,158 @@
       
 	  
 	  
-        
+        <p></p><h5>JS对象</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>内置对象</h6><p></p>
+<ul>
+<li>内置对象就是ECMAScript标准中已经定义好的，由浏览器厂商已经实现的标准对象！内置对象中封装了专门的数据和操作数据常用的API</li>
+<li>JavaScript中内置对象列表：String、Boolean、Number、Array、Date、RegExp、Math、Error、Function、Object、Global</li>
+</ul>
+<p></p><h6>String对象</h6><p></p>
+<ul>
+<li><p>String对象用于处理文本字符串,JavaScript中字符串的内容都是不可变的</p>
+<pre><code>创建原始类型字符串变量：
+var ename = &apos;Tom&apos;;
+创建引用类型字符串对象：
+var stuName = new String(&apos;Hello World&apos;)
+</code></pre></li>
+<li><p>String对象的所用方法，返回的都是一个全新的对象，而不是修改原始字符串内容</p>
+<pre><code>toLowerCase()方法返回字符串的小写;
+toUpperCase()方法返回字符串的大写;
+charAt()方法用于获取指定下标的字符;
+charCodeAt()方法用于获取指定下标的字符的Unicode码;
+indexOf()返回第一次出现指定子串的下标;
+lastIndexOf()返回最后一次出现指定子串的下标;
+slice(start,[end])返回从start到end-1范围内的子串;
+substring(start,[end])返回从start到end-1范围内的子串;
+split()使用指定分隔符对字符串进行拆分，返回数组
+concat()用于拼接两个或多个字符串
+replace()方法用于在字符串中用一些字符替换特定的字符，或替换一个与正则表达式匹配的子串
+match()方法可在字符串内检索指定的值，或找到一个或多个与正则表达式匹配的子串
+search()方法用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。
+返回第一个与regexp相匹配的子串的起始位置；如果没有找到任何匹配的子串，则返回-1
+
+var str=&quot;老鹰来了&quot;
+var s=&quot;&quot;                          //编码
+function fn1(){
+    for(var i=0;i&lt;str.length;i++){
+            s+=str.charCodeAt(i);
+    }
+    console.log(s)
+}
+fn1()
+function fn2(){                      //解码
+    for(var i=0;i&lt;s.length;i+=5){
+        var n=s.slice(i,i+5);
+        var num=Number(n);
+        var s1=String.fromCharCode(num);
+        console.log(s1)
+    }
+}
+fn2()
+</code></pre></li>
+</ul>
+<p></p><h6>Math对象</h6><p></p>
+<ul>
+<li>Math对象是ECMAScript提供的一个全局对象，它主要封装了一些常用的数学函数和常数<br>Math对象没有构造函数，无法创建它的实例；调用其属性和方法时，直接使用Math对象名即可</li>
+<li><p>Math对象具有如下成员属性：</p>
+<pre><code>E  返回算术常量e，即自然对数的底数（约等于2.718）
+PI 返回圆周率（约等于3.14159）
+</code></pre></li>
+<li><p>Math对象具有如下方法：</p>
+<pre><code>abs(x)   返回数的绝对值
+ceil(x)  对数进行上舍入
+floor(x) 对数进行下舍入
+max(x,y) 返回x和y中的最高值
+min(x,y) 返回x和y中的最低值
+pow(x,y) 返回x的y次幂
+round(x) 把数四舍五入为最接近的整数
+sqrt(x)  返回数的平方根
+</code></pre></li>
+<li><p>随机数</p>
+<pre><code>console.log(Math.random())//0-1之间的随机数，不包括1
+console.log(Math.random()*100)//0-99随机整数
+console.log(Math.random()*90+10)//10-99之间的随机整数
+</code></pre></li>
+</ul>
+<p></p><h6>Date对象</h6><p></p>
+<ul>
+<li><p>Date对象用于对时期和时间进行存储和计算</p>
+<pre><code>var date=new Date()
+date.getDate()            //日期
+date.getMonth()           //月份0-11
+date.getMinutes()        //分钟
+date.getSeconds()        //秒
+date.getMilliseconds()    //毫秒
+date.getHours()            //小时
+
+date.toString()                //返回Date对象的字符串形式
+date.toLocaleString()        //基于本地时间格式，返回Date对象的字符串形式
+date.toLocaleTimeString()    //基于本地时间格式返回Date对象“时间”部分（时分秒）的字符串形式
+date.toGMTString()            //基于GMT时间格式，返回Date对象的字符串形式
+date.toUTCString()            //基于UTC时间格式，返回Date对象的字符串形式
+</code></pre></li>
+</ul>
+<p></p><h6>Number对象</h6><p></p>
+<ul>
+<li><p>Number对象表示数值数据和数字常数，主要用于对数字进行指定格式的输出</p>
+<pre><code>//构造新的Number对象----引用类型的变量
+var num1 = new Number(5);         //[Number:5]
+var num2 = new Number(“5”)        //[Number:5]
+var num3 = new Number(“hello”)    //[Number:NaN]
+//将数据转换为Number数据类型-----值类型的变量
+var num4 = Number(“123”);         //123
+</code></pre></li>
+</ul>
+<p></p><h6>Error对象</h6><p></p>
+<ul>
+<li><p>六种错误对象：</p>
+<pre><code>1、Error：  广泛意义上的错误
+2、SyntaxError： 语法错误      var x = 10; x+++;
+3、ReferenceError:  引用错误     var userName = &apos;tom&apos;;  console.log(uName);
+4、TypeError:  类型错误     console.abc();
+5、EvalError:  eval()函数执行错误    
+6、RangeError：范围错误     var n = 123.456;    console.log( n.toFixed(20) );
+7、URIError:  URI解析错误
+</code></pre></li>
+<li><p>try/catch<br><br>ECMAScript中使用try…catch…finally…结构来执行异常处理功能，捕捉由系统生成或程序创建并抛出的Error对象，对错误情形加以处理。它的基本语法如下：</p>
+<pre><code>try{
+     //此处是主业务功能代码
+     //主业务功能代码中肯能产生并抛出错误
+}catch(error){
+     //此处是负责错误处理的代码
+}[finally{
+     //此处是出口语句，不论错误发生与否都要执行
+}]
+</code></pre></li>
+</ul>
+<p></p><h6>Function对象</h6><p></p>
+<ul>
+<li><p>在JavaScript中，函数也是以对象的形式存在的。每个函数都是一个Function对象实例</p>
+<pre><code>function add(){
+}
+console.log(typeof add);      //function 
+//函数名，本质也是一个变量名，是指向某个Function对象的引用
+</code></pre></li>
+</ul>
+<p></p><h6>arguments对象</h6><p></p>
+<ul>
+<li>每个函数对象都有一个arguments属性；此属性只能在函数执行体内使用<br>arguments属性中保存着当前函数接受到的所有实际参数，故可以使用arguments属性处理可变数量的参数</li>
+<li><p>arguments对象具有如下属性：</p>
+<pre><code>length：返回实际传入的参数的个数
+callee：返回当前函数的引用
+</code></pre></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cje556p2c000ir8wvqxiixqkq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cje8h1d2k000lxswvev67r2dy" class="article-share-link">Teilen</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
     </footer>
   </div>
   
@@ -140,7 +286,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -150,7 +296,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/MySQL学习/" style="font-size: 13.33px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/自动化测试/" style="font-size: 10px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
     </div>
   </div>
 
@@ -159,7 +305,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -172,23 +318,23 @@
       <ul>
         
           <li>
-            <a href="/2018/02/26/模块、包、枚举/">模块、包、枚举</a>
+            <a href="/2018/03/01/Selenium01/">selenium01</a>
           </li>
         
           <li>
-            <a href="/2018/02/24/闭包、装饰、冒泡/">闭包、装饰、冒泡</a>
+            <a href="/2018/02/28/LR基础/">LR基础</a>
           </li>
         
           <li>
-            <a href="/2018/02/23/Js对象/">Js对象</a>
+            <a href="/2018/02/28/初识MySQL/">初识MySQL</a>
           </li>
         
           <li>
-            <a href="/2018/02/23/Js数组、正则/">Js数组、正则</a>
+            <a href="/2018/02/27/BOM/">BOM</a>
           </li>
         
           <li>
-            <a href="/2018/02/23/Js基础、函数、循环/">Js基础、函数、循环</a>
+            <a href="/2018/02/27/HTML DOM/">HTML DOM</a>
           </li>
         
       </ul>

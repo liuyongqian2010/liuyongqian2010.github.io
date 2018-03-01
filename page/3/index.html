@@ -70,6 +70,1186 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-计算器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/31/计算器/" class="article-date">
+  <time datetime="2018-01-31T09:38:33.000Z" itemprop="datePublished">2018-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/31/计算器/">计算器</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <h5>计算器</h5>
+
+<pre><code>class  Operation:
+    def __init__(self,numA,numB):
+        self.numA=numA
+        self.numB=numB
+    def getResult(self):
+        print(&apos;计算2个操作数的运算结果&apos;)
+
+class Add(Operation):
+    def __init__(self,numA,numB):
+        super(Add, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA+self.numB
+class Minus(Operation):
+    def __init__(self,numA,numB):
+        super(Minus, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA-self.numB
+class Multiply(Operation):
+    def __init__(self,numA,numB):
+        super(Multiply, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA*self.numB
+class Devide(Operation):
+    def __init__(self,numA,numB):
+        super(Devide, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA//self.numB
+if __name__==&apos;__main__&apos;:             #程序从这里启动
+    numA=int(input(&apos;请输入第一个数:&apos;))
+    numB=int(input(&apos;请输入第二个数:&apos;))
+    ope=input(&apos;请输入运算符:&apos;)
+    q=None      #未赋值的变量，代表一个计算器，类似一个对象
+    if ope==&apos;+&apos;:
+        q=Add(numA,numB)
+    elif ope==&apos;-&apos;:
+        q=Minus(numA,numB)
+    elif ope==&apos;*&apos;:
+        q=Multiply(numA,numB)
+    elif ope==&apos;/&apos;:
+        q=Devide(numA,numB)
+    else:
+        print(&apos;输入错误！&apos;)
+    print(&apos;计算结果:&apos;,q.getResult())
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/31/计算器/" data-id="cje8h1d4z0025xswve9qy8tlc" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-DVD管理系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/29/DVD管理系统/" class="article-date">
+  <time datetime="2018-01-29T09:50:37.000Z" itemprop="datePublished">2018-01-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/29/DVD管理系统/">DVD管理系统</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <h5>DVD管理系统</h5>
+
+<pre><code>class dvd:
+    def __init__(self,name,price,status):
+        self.name=name
+        self.price=price
+        self.status=status
+    def __str__(self):
+        stat=&apos;已借出&apos;
+        if self.status==1:
+            stat=&apos;未借出&apos;
+        return &apos;名称：《%s》  单价：%d  状态：%s&apos;%(self.name,self.price,stat)
+class DvdManage:
+    dvds=[]  #存储  多个dvds，每个元素都是一个DVD
+    def init(self):
+        self.dvds.append(dvd(&apos;光辉岁月&apos;,10,0))
+        self.dvds.append(dvd(&apos;大海日出&apos;,12,1))
+        self.dvds.append(dvd(&apos;你好小明&apos;,20,1))
+    def Menu(self):
+        self.init()
+        while(True):
+            print(&apos;1.查询所有DVD&apos;)
+            print(&apos;2.增加DVD&apos;)
+            print(&apos;3.借出DVD&apos;)
+            print(&apos;4.归还DVD&apos;)
+            print(&apos;5.退出&apos;)
+            choose=int(input(&apos;请选择操作项:&apos;))
+            if choose==1:
+                self.showAlldvd()
+            elif choose==2:
+                self.insertDvd()
+            elif choose==3:
+                self.lend()
+            elif choose==4:
+                self.backDvd()
+            elif choose==5:
+                print(&apos;5.谢谢使用！&apos;)
+                break
+    def showAlldvd(self):
+        for d in self.dvds:
+            print(str(d))
+    def insertDvd(self):
+        name = input(&apos;请输入DVD的名称:&apos;)
+        ret=self.checkDvd(name)
+        if ret!=None:
+            print(&apos;DVD已存在!&apos;)
+        else:
+            price=int(input(&apos;请输入价格:&apos;))
+            new_dvd=dvd(name,price,1)
+            self.dvds.append(new_dvd)
+            print(&apos;存放成功!&apos;)
+    def lend(self):
+        name = input(&apos;请输入DVD的名称:&apos;)
+        ret = self.checkDvd(name)
+        if ret != None:
+            if ret.status==0:
+                print(&apos;DVD已借出!&apos;)
+            else:
+                days=int(input(&apos;请输入借出天数:&apos;))
+                ret.status=0
+                print(&apos;借出%d天，应收%d&apos;%(days,ret.price*days))
+        else:
+            print(&apos;DVD不存在!&apos;)
+    def backDvd(self):
+        name=input(&apos;请输入DVD的名称:&apos;)
+        ret=self.checkDvd(name)
+        if ret==None:
+            print(&apos;DVD不存在!&apos;)
+        else:
+            if ret.status==1:
+                print(&apos;DVD未借出!&apos;)
+            else:
+                days=int(input(&apos;请输入借出天数:&apos;))
+                y_money=ret.price * days
+                print(&apos;借出%d天，应收%d&apos; % (days, ret.price * days))
+                money=0
+                while True:
+                    money=int(input(&apos;实收:&apos;))
+                    if money&lt;y_money:
+                        print(&apos;不够啊!&apos;)
+                    else:
+                        break
+                if money&gt;=y_money:
+                    print(&apos;找零:%d&apos;%(money-y_money))
+                ret.status=1
+                print(&apos;归还成功!&apos;)
+    def checkDvd(self,name):
+        for d in self.dvds:
+            if d.name==name:
+                return d       #返回当前对象---内存地址
+        else:
+            return None
+manager=DvdManage()
+manager.Menu()
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cje8h1d34000zxswv6njmfjgl" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-封装、继承、多态" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/28/封装、继承、多态/" class="article-date">
+  <time datetime="2018-01-28T08:40:03.000Z" itemprop="datePublished">2018-01-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/28/封装、继承、多态/">封装、继承、多态</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>封装、继承、多态</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>封装</h6><p></p>
+<ul>
+<li><p>隐藏内部实现，提供外部接口<br>两个步骤：属性私有化——set\get函数写方法</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    @property
+    def age(self):
+        return self.__age
+    @age.setter
+    def age(self,value):
+        if value&lt;0 or value&gt;100:
+            self.__age=18
+        else:
+            self.__age=value
+m=Student(&apos;刘桑&apos;,25)
+m.age=100
+print(m.age)              #result:100
+</code></pre></li>
+</ul>
+<p></p><h6>继承</h6><p></p>
+<ul>
+<li><p>继承：子类继承父类，子类可以使用父类的属性和方法，简化代码<br>子类继承父类，父类派生子类（父类又叫基类，子类又叫派生类）<br>继承指出两个类符合“A是B”的关系</p>
+<pre><code>class Vehicle:         #交通工具类
+    def __init__(self,name):
+        self.name=name
+        print(&apos;交通工具被初始化！&apos;)
+    def run(self):
+        print(&apos;交通工具在行驶...&apos;)
+    def show(self):
+        print(&apos;车的名字是%s&apos;%self.name)
+class Truck(Vehicle):    #卡车，属性：载重
+    #当子类继承父类时，子类的构造方法应该包含父类和子类共有的属性，如name
+    #在子类的初始化方法中，将父类的属性传递给父类，子类的属性赋值给子类
+    #在子类的初始化方法中，调用父类的属性有四种方法：
+    # 1，父类名.属性 2，self.属性 3，父类名.__init__(self,属性) 4，super(子类名,self).__init__(属性)
+    def __init__(self,name,weight):
+        #Vehicle.name=name                 #1，父类名.属性
+        #self.name=name                    #2，self.属性
+        #Vehicle.__init__(self,name)       #3，父类名.__init__(self,属性)
+        super(Truck,self).__init__(name)   #4，super(子类名,self).__init__(属性)
+        self.weight=weight
+        print(&apos;卡车被初始化！&apos;)
+    def run(self):        #卡车，重写行驶方法
+        #super().show() #调用父类方法
+        #Vehicle.show(self)
+        super(Truck,self).show()
+        print(&apos;%s卡车载重%d吨在行驶...&apos;%(self.name,self.weight))
+class Train(Vehicle):     #火车，属性：车厢个数
+    def __init__(self,name,nums):
+        self.nums=nums
+    def run(self):        #火车，重写行驶方法
+        print(&apos;火车在轨道行驶...&apos;)
+
+t=Truck(&apos;解放&apos;,25)
+t.run()
+</code></pre></li>
+<li><p>三代继承：子类初始化方法需祖父、父类及自己的属性，可以调用父类的初始化方法传参，可以重写父类的方法，构造的顺序依然先构造祖父类，再构造父类，最后构造自己</p>
+</li>
+<li><p>多继承：一个类同时继承多个父类，class(A,B),当AB均有相同方法，而子类又重写时，调用子类的方法；如果子类没有方法，则调用优先继承的类</p>
+<h6>多态</h6></li>
+<li>封装可以隐藏实现细节，使得代码模块化；继承可以扩展已存在的代码模块（类）；它们的目的都是为了——代码重用。而多态则是为了实现另一个目的——接口重用！多态的作用，就是为了类在继承和派生的时候，保证使用“家谱”中任一类的实例的某一属性时的正确调用</li>
+<li><p>多态就是多种表现形态的意思。它是一种机制、一种能力，而非某个关键字。它在类的继承中得以实现，在类的方法调用中得以体现。多态意味着变量并不知道引用的对象是什么，根据引用对象的不同表现不同的行为方式</p>
+<pre><code>class Pet:
+    def look(self):
+        print(&apos;给宠物看病...&apos;)
+class cat(Pet):
+    def look(self):
+        print(&apos;给猫咪吃药、打针...&apos;)
+class dog(Pet):
+    def look(self):
+        print(&apos;给小狗打针、输液...&apos;)
+class bird(Pet):
+    def look(self):
+        print(&apos;给小鸟输液、疗养...&apos;)
+class Doctor:
+    def jiuzhen(self,Pet):        #传参的时候达到了多态
+        print(&apos;兽医出诊，给宠物看病...&apos;)
+        Pet.look()
+class person:
+    def look(self):
+        print(&apos;给人类看病...&apos;)
+
+longmao=cat()
+dahu=dog()
+yingwu=bird()
+xiaoming=person()
+#longmao.look()
+#dahu.look()
+#yingwu.look()
+doctor=Doctor()
+doctor.jiuzhen(longmao)     #result:兽医出诊，给宠物看病..   给猫咪吃药、打针...
+doctor.jiuzhen(dahu)        #result:兽医出诊，给宠物看病..   给小狗打针、输液...
+doctor.jiuzhen(yingwu)      #result:兽医出诊，给宠物看病..   给小鸟输液、疗养...
+doctor.jiuzhen(xiaoming)    #result:兽医出诊，给宠物看病..   给人类看病...
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cje8h1d3x001hxswvltdv9ej8" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-类与对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/22/类与对象/" class="article-date">
+  <time datetime="2018-01-22T09:23:16.000Z" itemprop="datePublished">2018-01-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/22/类与对象/">类与对象</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>类与对象</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>基础定义</h6><p></p>
+<ul>
+<li><p>在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合</p>
+<pre><code>class Student:
+    &apos;&apos;&apos;
+    学生类             #文档说明，可通过类名.__doc__访问
+    &apos;&apos;&apos;
+    #类的成员：特性  行为
+    pass              #保证语义的完整
+</code></pre></li>
+<li><p>类名规范：首字母大写，以大写字母分割单词，不使用下划线;不允许使用数字、关键字、除下划线以外的特殊字符开头<br><br>属性名规范：使用名词，首字母小写，以大写字母分割单词<br><br>方法名规范：使用谓词（动词+对象），首字母小写，以大写字母分割单词<br></p>
+<pre><code>class Student:
+    def __init__(self,name,age):    
+    #__init__()这个方法会在创建对象时完成初始化，并把类的属性绑上去
+        self.name=name           #创建对象属性
+        self.age=age
+    def showName(self):   #self对象的载体
+        print(&apos;我叫{}!&apos;.format(self.name))        
+m=Student(&apos;张三&apos;,27)
+m.showName()
+</code></pre></li>
+<li><p>属性分归属：对象属性、类属性<br>对象属性有两种创建方式</p>
+<pre><code>#第一种方式，初始化时添加对象属性
+class Student:
+    def __init__(self,name,age):    
+        self.name=name           #创建对象属性
+        self.age=age
+    def showName(self):   
+        print(&apos;我叫{}!&apos;.format(self.name))        
+m=Student(&apos;张三&apos;,27)
+m.showName()
+
+#第二种方式，赋值的形式
+class Student:
+    def showName(self):
+        print(&apos;我叫{}!&apos;.format(self.name))
+n=Student()
+n.name=&apos;李四&apos;                    #对象名.属性 
+n.showName()
+</code></pre></li>
+<li><p>类属性的创建、修改</p>
+<pre><code>#类属性，属于类的成员，对象共有的,类属性也可以如下创建
+class Student:
+    ablity=&apos;study&apos;             #在类里直接写：attr=value
+#类属性修改方式：类名.类属性=xxx  或者 实例对象.__class__类属性=xxx
+</code></pre><p>  <em>关于类属性与对象属性的区别可参考<a href="http://python.jobbole.com/85100/" target="_blank" rel="noopener">关于Python类属性与实例属性的讨论</a></em></p>
+</li>
+<li><p>__new__()<br>定义一个类时，如果使用__init__函数来设置类具有的属性，实际上最先执行__new__函数，通过该函数，返回一个类的实例，故而init函数才有self参数</p>
+<pre><code>class Student:
+    def __new__(cls, *args, **kwargs):
+        return object.__new__(cls)
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+    def showName(self):
+        print(&apos;我叫{}!&apos;.format(self.name))
+m=Student(&apos;张三&apos;,27)
+m.showName()
+</code></pre></li>
+<li><p>对象属性的公有、私有<br>如果有一些属性不想给外部权限来访问或者修改，可以在属性或者方法的名字前加双下划线，声明为私有属性；私有属性只能在当前类中使用</p>
+<pre><code>#如只给外部访问的权限，不给修改的权限，可以在类里定义一个返回属性的函数
+class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age         #在属性名字前加双下划线，声明为私有属性
+    def get_Age(self):
+        return self.__age
+m=Student(&apos;刘桑&apos;,25)
+print(m.get_Age())              #result:25
+&apos;&apos;&apos;
+#给与外部访问与修改权限，但修改值应按照设计的范围来
+class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age         #在属性名字前加双下划线，声明为私有属性
+    def get_Age(self):
+        return self.__age
+    def set_Age(self,age):
+        if age&lt;0 or age&gt;100:
+            self.__age=18   #给一个默认值
+        else:
+            self.__age=age
+m=Student(&apos;刘桑&apos;,25)
+m.set_Age(100)
+print(m.get_Age())              #result:100
+</code></pre></li>
+<li><p>注解@property的使用<br>它的作用是将一个函数作为类的一个属性来访问，或者把一个getter方法变成属性，@属性名.setter把setter方法变成属性赋值</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    #先定义两个函数，函数名为属性名，第一个函数返回属性值，第二个函数修改属性值
+    @property               #在第一个函数头上写@property
+    def age(self):
+        return self.__age
+    @age.setter             #在第二个函数头上写@属性名.setter
+    def age(self,value):
+        if value&lt;0 or value&gt;100:
+            self.__age=18   #给一个默认值
+        else:
+            self.__age=value
+m=Student(&apos;刘桑&apos;,25)
+m.age=100
+print(m.age)              #result:100
+</code></pre></li>
+<li><p>对象方法的公有、私有<br>私有方法在方法前加双下划线；私有方法只能在当前类中使用</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    def __showInfo(self):    #私有方法在方法前加双下划线
+        return &apos;My name is&apos;+self.name
+m=Student(&apos;刘桑&apos;,100)
+print(m.__showInfo())       #result:AttributeError
+</code></pre></li>
+<li><p>类方法、静态方法<br>类方法，在方法前添加@classmethod装饰器，可通过类、对象调用<br>静态方法，在方法前添加@staticmethod，参数没有要求，与类、对象没有关系，但可通过类、对象调用</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+    def instance_method(self):   #实例方法
+        print(&apos;实例方法&apos;)
+    @classmethod
+    def class_method(cls):       #类方法：第一个参数会自动接收类对象，一般用cls
+        print(&apos;类方法&apos;)
+    @staticmethod
+    def static_method():         #静态方法，参数没有要求
+        print(&apos;静态方法&apos;)
+m=Student(&apos;刘桑&apos;,100)
+Student.class_method()           #通过类名调用类方法
+m.class_method()                 #通过实例调用类方法
+
+Student.static_method()          #通过类名调用静态方法
+m.static_method()                #通过实例调用静态方法
+</code></pre></li>
+<li><p>__str__()<br>这个方法告诉python在打印一个对象时,具体显示什么内容</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    def __str__(self):    #可以重写
+        return &apos;My name is&apos;+self.name
+m=Student(&apos;刘桑&apos;,100)
+print(m)                  #result:My name is刘桑
+</code></pre></li>
+<li><p>__del__()<br>自动销毁，当对象没有引用或者程序结束的时候，程序自动调用该方法</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    def __str__(self):    #可以重写
+        return &apos;My name is&apos;+self.name
+    def __del__(self):
+        print(self.name+&apos;被销毁！&apos;)
+m=Student(&apos;刘桑&apos;,100)
+                          #result:刘桑被销毁！
+
+#也可以直接使用del m
+</code></pre></li>
+<li><p>__dir__()<br>用来展示一个类、对象的属性和方法</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+m=Student(&apos;刘桑&apos;,100)
+print(m.__dir__())
+</code></pre></li>
+<li><p>getrefcount()可返回一个对象有多少个引用，返回2，从2开始</p>
+<pre><code>import sys
+class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age        
+m=Student(&apos;刘桑&apos;,25)
+mm=m
+print(sys.getrefcount(m))      #result:3
+</code></pre></li>
+<li><p>_类名__属性名,通过该方式可访问私有属性，一般不建议</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+m=Student(&apos;刘桑&apos;,25)
+print(m._Student__age)
+</code></pre></li>
+<li><p>id()<br>对一个对象的引用调用id()函数，可得到该对象的标识符dentity，该标识符是一个int，它保证在该对象的生命周期内是唯一恒定的，具有不重叠生命周期的两个对象具有不同的id值</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+m=Student(&apos;刘桑&apos;,25)
+n=Student(&apos;宮某&apos;,25)
+print(id(m))                  #result:1832993645624
+print(id(n))                  #result:1832993647864
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cje8h1d520027xswvp7sjv0tr" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/19/函数/" class="article-date">
+  <time datetime="2018-01-19T13:47:47.000Z" itemprop="datePublished">2018-01-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/19/函数/">函数</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>函数</h5><p></p>
+<hr>
+<hr>
+<h6>定义</h6>
+
+<ul>
+<li>高复用、低耦合</li>
+<li><p>语法</p>
+<pre><code>def add(a,b):        #def 函数名(参数列表):
+                     #函数体
+    return a+b       #可以返回多个值，返回的多个值组成元组；返回值加上中括号，返回列表      
+ret=add(1,2)
+print(&apos;返回值&apos;,ret)           #result:返回值 3
+</code></pre></li>
+<li><p>可更改与不可更改对象</p>
+<pre><code>def fun(a):
+    a=10
+    print(&apos;函数内部a为&apos;,a)
+a=5
+print(&apos;调用前&apos;,a)      #result:调用前 5
+fun(a)                #result:函数内部a为 10
+print(&apos;调用后&apos;,a)      #result:调用后 5
+#在python中，string,tuples,numbers是不可更改的对象，list,dict则是可以修改的对象
+#不可变类型：变量赋值a=5后再次赋值a=10，这里实际是新生成一个int值对象10，再让a指向它，而5被丢弃，不是改变a的值；相当于新生成了a
+#不可变类型：值传递（复制副本），如fun(a),传递的只是a的值，没有影响a对象本身；如在fun(a)内部修改a的值，只是修改另一个复制的对象，不会影响a本身
+
+def fun(b):
+    b[0]=&apos;刘备&apos;
+    b[1]=&apos;刘禅&apos;
+b=[&apos;刘邦&apos;,&apos;刘秀&apos;]
+print(&apos;调用前&apos;,b)      #result:调用前 [&apos;刘邦&apos;, &apos;刘秀&apos;]
+fun(b)
+print(&apos;调用后&apos;,b)      #result:调用后 [&apos;刘备&apos;, &apos;刘禅&apos;]
+#可变类型：变量赋值b=[1,2,3]后再次赋值b[2]=5则是将b的第三个元素值更改，本身b没有动，只是其内部的一部分值被修改了
+#可变类型：引用传递(实质是值传递，传递可变类型-可以改变内容，但不可以改变原地址)，如fun(b)，则是将b真正的传过去，修改后fun外部的b也会受影响
+
+def fun(b):
+    b=[&apos;刘备&apos;,&apos;刘禅&apos;]
+    print(&apos;函数内部b为&apos;,b)
+b=[&apos;刘邦&apos;,&apos;刘秀&apos;]
+print(&apos;调用前&apos;,b)      #result:调用前 [&apos;刘邦&apos;, &apos;刘秀&apos;]
+fun(b)                   #result:函数内部b为 [&apos;刘备&apos;, &apos;刘禅&apos;]
+print(&apos;调用后&apos;,b)      #result:调用后 [&apos;刘邦&apos;, &apos;刘秀&apos;]
+#相当于不可变类型
+</code></pre></li>
+</ul>
+<h6>参数类型</h6>
+
+<ul>
+<li>在Python中定义函数,可用必选参数、默认参数、可变参数、关键字参数、命名关键字参数；除了可变参数无法和命名关键字参数组合使用外，其他均可组合使用；参数定义的顺序必须是：必选参数、默认参数、可变参数/命名关键字参数和关键字参数</li>
+<li><p>必选参数（形参与实参的个数、类型、顺序一一对应）</p>
+<pre><code>def fun1(a,b):              #形参：定义方法
+    &apos;&apos;&apos;
+    :param a:               第一个加数
+    :param b:               第二个加数
+    :return:                和
+    &apos;&apos;&apos;
+    return a+b
+h=fun1(33,66)               #实参：调用方法
+print(fun1.__doc__)         #调看文档
+print(h)                    #result:99
+</code></pre></li>
+<li><p>默认参数（缺省参数）须写在后面，可以不指定参数名，但是顺序要正确，否则需要指定参数名</p>
+<pre><code>def fun2(a,b=3):
+    return a+b
+h=fun2(4)
+print(h)                    #result:7
+</code></pre></li>
+<li><p>可变参数（不定长参数）该参数允许传入0个或者任意个参数，这些参数在函数调用时组装为一个tuple</p>
+<pre><code>def getSum(*nums):
+    sum=0
+    for i in nums:
+        sum+=i
+    return sum
+m=[1,2,3,4,5]
+n=(1,2,3,4,5)
+print(getSum())                  #result:0
+print(getSum(1,2,3,4,5,6,7))     #result:28
+print(getSum(*m))                #result:15
+print(getSum(*n))                #result:15
+</code></pre></li>
+<li><p>命名关键字参数  该参数允许传入0个或者任意个参数，这些参数在函数内部自动组装为一个dict;一旦以name=value的的传参数的形式存在，之后都要以这种形式存在，但不要求顺序</p>
+<pre><code>def show(name,age,score=90):
+    print(&apos;姓名{} 年龄{} 成绩{}&apos;.format(name,age,score))
+show(name=&apos;Liu&apos;,age=27,score=135)      #result:姓名Liu 年龄27 成绩135
+</code></pre></li>
+<li><p>关键字参数 该参数允许传入0个或者任意个参数，这些参数在函数内部自动组装为一个dic</p>
+<pre><code>def student(name,age,**hobby):
+    print(&apos;姓名{} 年龄{} 爱好{}&apos;.format(name,age,hobby))
+dic={&apos;一&apos;:111,&apos;二&apos;:222,&apos;三&apos;:333}
+student(&apos;Liu&apos;,30,hobby=&apos;Footboll&apos;)     #result:姓名Liu 年龄30 爱好{&apos;hobby&apos;: &apos;Footboll&apos;}
+student(&apos;Liu&apos;,30,**dic)                #result:姓名Liu 年龄30 爱好{&apos;三&apos;: 333, &apos;二&apos;: 222, &apos;一&apos;: 111}
+</code></pre></li>
+<li><p>组合参数 包括若干种参数</p>
+<pre><code>def fun1(a,b,c=9,*args,**kw):
+    print(&apos;a=&apos;,a,&apos;b=&apos;,b,&apos;c=&apos;,c,&apos;args=&apos;,args,&apos;kw=&apos;,kw)
+#*args是可变参数，会这个分割args 逐个对应形参列表
+#**kw只能对应到形参列表的**kw
+m=(1,2,3,4,5)
+n={&apos;一&apos;:111,&apos;二&apos;:222}
+fun1(&apos;A&apos;,&apos;B&apos;)                      #result:a= A b= B c= 9 args= () kw= {}
+fun1(*m)                           #result:a= 1 b= 2 c= 3 args= (4, 5) kw= {}
+fun1(*m,**n)                       #result:a= 1 b= 2 c= 3 args= (4, 5) kw= {&apos;二&apos;: 222, &apos;一&apos;: 111}
+</code></pre></li>
+</ul>
+<h6>变量作用域</h6>
+
+<ul>
+<li><p>当全局和局部同名时，优先局部变量</p>
+<pre><code>a=10           #全局变量
+def changeNum():
+    global a
+    a=5        #局部变量
+    print(&apos;函数内部a为&apos;,a)
+print(&apos;调用前a为&apos;,a)              #result:10
+changeNum()                      #result:5
+print(&apos;调用后a为&apos;,a)              #result:5
+</code></pre></li>
+</ul>
+<h6>匿名函数（lambda）</h6>
+
+<pre><code>sum=lambda a,b:a+b               #定义函数
+s=sum(3,9)                       #执行函数
+print(s)                         #result:12
+
+def add(a,b,fun):
+    &apos;&apos;&apos;
+    :param a:
+    :param b:
+    :param fun:        传递过来的函数
+    :return:
+    &apos;&apos;&apos;
+    print(fun(a,b))              #委托
+add(11,22,lambda a,b:a+b)        #result:33
+
+m=int(input(&apos;请输入一个操作数：&apos;))
+n=int(input(&apos;请输入一个操作数：&apos;))
+fun1=input(&apos;请输入一个函数：&apos;)     #lambda a,b:a+b
+fun1=eval(fun1)                  #eval函数将字符串当成有效Python表达式来求值，并返回计算结果
+print(fun1(n,m))
+</code></pre><p></p><h6>内置函数</h6><p></p>
+<ul>
+<li><p>filter()通过表达式返回true时保留符合条件的信息</p>
+<pre><code>#filter(函数,列表、元组、字典、可迭代的)
+foo=[2,18,9,22,17,24,8,12,27]
+result=filter(lambda x:x%3==0,foo)
+print(list(result))              #result:[18, 9, 24, 12, 27]
+</code></pre></li>
+<li><p>map()函数接收两个参数，一个是函数，一个是序列，该函数将序列的每个元素传入函数中执行，并把结果作为新的list返回</p>
+<pre><code>foo=[1,2,3,4,5]
+result=map(lambda x:x+4,foo)
+print(list(result))              #result:[5, 6, 7, 8, 9]
+</code></pre></li>
+<li><p>reduce()对于序列内所有元素进行累计操作，先对序列中的第1、2个数据进行操作，得到的结果再与第三个数据运算，最后得到一个结果；python内置了求和函数sum(),一般用reduce()</p>
+</li>
+</ul>
+<pre><code>import functools            #reduce()函数现在放置在了functools模块里了
+foo=[1,2,3,4,5,6,7]
+m=functools.reduce(lambda a,b:a+b,foo)
+print(m)                    #result:28
+
+foo=[1,2,3,4,5,6,7]
+m=functools.reduce(lambda a,b:a+b,foo,100)    #可以接受第三个参数
+print(m)                    #result:128
+
+foo=[1,2,3,4,5,6,7]
+print(sum(foo))             #result:28
+</code></pre><ul>
+<li><p>sorted()排序函数，排序时不影响原数据，产生新的排序数据  </p>
+<pre><code>ol=[1,3,9,5,2,4]
+ul=sorted(ol,reverse=False)
+print(ul)            #result:[1, 2, 3, 4, 5, 9]
+
+ol=[1,3,9,5,2,4]
+ul=sorted(ol,reverse=True)
+print(ul)            #result:[9, 5, 4, 3, 2, 1]
+
+ol=[(&apos;Abot&apos;,98),(&apos;Tom&apos;,57),(&apos;Honey&apos;,77)]
+ul=sorted(ol,key=lambda s:s[1],reverse=True)  #key,依据什么来进行排序
+print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (&apos;Tom&apos;, 57)]
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cje8h1d370012xswvejtptuob" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-集合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/19/集合/" class="article-date">
+  <time datetime="2018-01-19T12:24:25.000Z" itemprop="datePublished">2018-01-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/19/集合/">集合</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>集合</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>定义</h6><p></p>
+<ul>
+<li><p>集合是一个无序不重复元素的集；如果要创建空集合，须用set()</p>
+<pre><code>#第一种方法
+s=set()                 #空集合,如果只有一个值，需要加逗号，如s=set(&apos;liu&apos;,)
+s1={&apos;name&apos;,2018.01,28,False,(12,22)}
+
+#第二种方法
+s2=set({&apos;name&apos;,2018.01,28,False,(12,22)})
+s2=set([&apos;name&apos;,2018.01,28,False,(12,22)])
+s2=set((&apos;name&apos;,2018.01,28,False,(12,22)))
+
+#注意
+s2=set({&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:23})
+print(type(s2))         #result:&lt;class &apos;set&apos;&gt;
+print(s2)               #result:{&apos;name&apos;, &apos;age&apos;}
+</code></pre></li>
+</ul>
+<p></p><h6>增删改查</h6><p></p>
+<ul>
+<li><p>add()增加</p>
+<pre><code>s3={1,2,3,4,5}
+s4={4,5,6,7,8}
+s3.add(999)
+print(s3)               #result:{1, 2, 3, 4, 5, 999}
+</code></pre></li>
+<li><p>remove()删除</p>
+<pre><code>s3.remove(1)
+print(s3)               #result:{2, 3, 4, 5}
+</code></pre></li>
+<li><p>pop()随机返回并删除一个值,没有参数</p>
+<pre><code>s3.pop()
+print(s3)               #result:{2, 3, 4, 5}
+</code></pre></li>
+<li><p>clear()清空</p>
+<pre><code>s3.clear()
+print(s3)               #result:set()
+</code></pre></li>
+</ul>
+<p></p><h6>并、交、差、对称差集</h6><p></p>
+<ul>
+<li><p>并集</p>
+<pre><code>print(s3|s4)            #result:{1, 2, 3, 4, 5, 6, 7, 8}
+</code></pre></li>
+<li><p>交集</p>
+<pre><code>print(s3&amp;s4)            #result:{4, 5}
+</code></pre></li>
+<li><p>差</p>
+<pre><code>print(s3-s4)            #result:{1, 2, 3}
+</code></pre></li>
+<li><p>对称差集</p>
+<pre><code>print(s3^s4)            #result:{1, 2, 3, 6, 7, 8}
+</code></pre></li>
+<li><p>update()将字符串或集合中的数据联合</p>
+<pre><code>s3.update(s4)
+print(s3)               #result:{1, 2, 3, 4, 5, 6, 7, 8}
+</code></pre><p></p><h6>遍历</h6><p></p>
+<pre><code>s5=set((&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;))
+for i in s5:
+    print(i,end=&apos;&apos;)     #result:eacdb
+</code></pre></li>
+</ul>
+<p></p><h6>小练习</h6><p></p>
+<ul>
+<li><p>通讯录管理系统</p>
+<pre><code>print(&quot;=======通讯录管理系统=======&quot;)
+print(&quot;1.增加姓名和手机&quot;)
+print(&quot;2.删除姓名&quot;)
+print(&quot;3.修改手机&quot;)
+print(&quot;4.查询所有用户&quot;)
+print(&quot;5.根据姓名查找手机号&quot;)
+print(&quot;6.退出&quot;)
+print(&quot;============================&quot;)
+User={}
+while True:
+    i=int(input(&apos;请输入操作项：&apos;))
+    if i==1:
+        name=input(&apos;请输入姓名：&apos;)
+        phone=input(&apos;请输入手机：&apos;)
+        User[name]=phone
+    elif i==2:
+        name=input(&apos;请输入要删除的姓名：&apos;)
+        if name in User:
+            del User[name]
+            print(&apos;删除成功！&apos;)
+        else:
+            print(&apos;姓名不存在！&apos;)
+    elif i==3:
+        name = input(&apos;请输入要修改的姓名：&apos;)
+        if name in User:
+            new_phone=input(&quot;请输入修改后的手机号：&quot;)
+            User[name]=new_phone
+            print(&apos;修改成功！&apos;)
+        else:
+            print(&apos;姓名不存在！&apos;)
+    elif i==4:
+        if User is None:
+            print(&apos;通讯录无记录！&apos;)
+        else:
+            for k,v in User.items():
+                print(k,v)
+    elif i==5:
+        name = input(&apos;请输入要查询的姓名：&apos;)
+        if name in User:
+            print(name,&apos;的手机号为&apos;,User[name])
+        else:
+            print(&apos;姓名不存在！&apos;)
+    elif i==6:
+         break
+    else:
+         print(&apos;请重新输入操作项！&apos;)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cje8h1d5f002fxswvzsvpnvbs" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-通讯录管理系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/17/通讯录管理系统/" class="article-date">
+  <time datetime="2018-01-17T13:39:40.000Z" itemprop="datePublished">2018-01-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/17/通讯录管理系统/">通讯录管理系统</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>通讯录管理系统</h5><p></p>
+<hr>
+<hr>
+<h6>字典形式</h6>
+
+<pre><code>    print(&quot;=======通讯录管理系统=======&quot;)
+    print(&quot;1.增加姓名和手机&quot;)
+    print(&quot;2.删除姓名&quot;)
+    print(&quot;3.修改手机&quot;)
+    print(&quot;4.查询所有用户&quot;)
+    print(&quot;5.根据姓名查找手机号&quot;)
+    print(&quot;6.退出&quot;)
+    print(&quot;============================&quot;)
+    add_list={}
+    while True:
+    input_val=int(input(&apos;请输入操作项：&apos;))
+    if input_val in range(1,7):
+        if input_val==1:
+            names=input(&apos;请输入姓名：&apos;)
+            phones=input(&apos;请输入电话：&apos;)
+            if phones.isdigit() and len(phones)==11:
+                add_list[names] =int(phones)
+            else:
+                print(&apos;请正确输入电话！&apos;)
+                continue
+            print(&apos;姓名和电话：&apos;,add_list)
+            sign=input(&apos;是否继续：y/n&apos;)
+            if sign==&apos;n&apos;:
+                break
+            else:
+                continue
+        elif input_val==2:
+            print(add_list)
+            sign=input(&apos;是否删除姓名：y/n&apos;)
+            if sign==&apos;y&apos;:
+                del add_list
+                print(&apos;已删除！&apos;)
+                sign=input(&apos;是否退出y/n&apos;)
+                if sign==&apos;y&apos;:
+                    break
+                else:
+                    continue
+            else:
+                print(&apos;未进行删除！&apos;)
+        elif input_val==3:
+            phones=input(&apos;请输入需要修改的手机：&apos;)
+            phones_s=input(&apos;请输入修改后的手机：&apos;)
+            if phones in str(add_list.values()):
+                add_list[names]=phones_s
+                print(&apos;已成功修改手机：&apos;,phones_s)
+            else:
+                print(&apos;修改失败！&apos;)
+                sign = input(&apos;是否退出y/n&apos;)
+                if sign == &apos;y&apos;:
+                    break
+                else:
+                    continue
+        elif input_val==4:
+            print(&apos;所有用户：&apos;,list(add_list.keys()))
+        elif input_val==5:
+            names_reac=input(&apos;请输入姓名：&apos;)
+            if names_reac in list(add_list.keys()):
+                print(names_reac,&apos;的手机为&apos;,add_list[names_reac])
+                sign=input(&apos;是否继续y/n&apos;)
+                if sign==&apos;n&apos;:
+                    break
+                else:
+                    continue
+            else:
+                print(&apos;未查询到该人！&apos;)
+        else:
+            break
+    else:
+        print(&quot;输入有误！&quot;)
+print(&quot;谢谢使用！&quot;)
+</code></pre><h6>列表形式</h6>
+
+<pre><code>print(&quot;=======通讯录管理系统=======&quot;)
+print(&quot;1.增加姓名和手机&quot;)
+print(&quot;2.删除姓名&quot;)
+print(&quot;3.修改手机&quot;)
+print(&quot;4.查询所有用户&quot;)
+print(&quot;5.根据姓名查找手机号&quot;)
+print(&quot;6.退出&quot;)
+print(&quot;============================&quot;)
+name_list=[]
+phone_list=[]
+while True:
+    input_val=int(input(&apos;请输入操作项：&apos;))
+    if input_val in range(1,7):
+        if input_val==1:
+            name_list.append(input(&apos;请输入姓名：&apos;))
+            phone_list.append(input(&apos;请输入电话：&apos;))
+            print(&apos;姓名和电话：&apos;,name_list,phone_list)
+            sign=input(&apos;是否继续：y/n&apos;)
+            if sign==&apos;n&apos;:
+                break
+            else:
+                continue
+        elif input_val==2:
+            print(name_list)
+            sign=input(&apos;是否删除姓名：y/n&apos;)
+            if sign==&apos;y&apos;:
+                del name_list[:]
+                print(&apos;已删除！&apos;)
+                sign=input(&quot;是否退出y/n&quot;)
+                if sign==&apos;y&apos;:
+                    break
+                else:
+                    continue
+            else:
+                print(&apos;未进行删除！&apos;)
+        elif input_val==3:
+            phone=(input(&apos;请输入需要修改的手机：&apos;))
+            if phone not in phone_list:
+                print(&apos;请重新输入电话！&apos;)
+            else:
+                phone_list[(phone_list).index(phone)]=(input(&apos;请输入修改后的手机：&apos;))
+                print(&apos;已成功修改手机!&apos;)
+            sign = input(&quot;是否退出y / n&quot;)
+            if sign == &apos;y&apos;:
+                break
+            else:
+                continue
+        elif input_val==4:
+            print(&apos;所有用户：&apos;,name_list[:])
+        elif input_val==5:
+            names_reac=input(&apos;请输入姓名：&apos;)
+            if names_reac in name_list[:]:
+                print(names_reac,&apos;的手机为&apos;,phone_list[name_list.index(names_reac)])
+                sign=input(&apos;是否继续y/n&apos;)
+                if sign==&apos;n&apos;:
+                    break
+                else:
+                    continue
+            else:
+                print(&apos;未查询到该人！&apos;)
+        else:
+            break
+    else:
+        print(&quot;输入有误！&quot;)
+print(&quot;谢谢使用！&quot;)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cje8h1d5a002cxswvx3a8xe8x" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-元组、字典" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/17/元组、字典/" class="article-date">
@@ -219,7 +1399,7 @@ print(d)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cje556p2c000sr8wv1scehul9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cje8h1d31000xxswva2pwkub2" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -396,7 +1576,7 @@ print(nums)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cje556p2s000wr8wvdgzy80dl" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cje8h1d3a0013xswvs56cl8sx" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -644,836 +1824,10 @@ while i&lt;10:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cje556p37001ar8wvlbo4bz4d" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cje8h1d44001mxswvkjx58nfq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-字符串的定义、切片、格式化、函数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/12/字符串的定义、切片、格式化、函数/" class="article-date">
-  <time datetime="2018-01-12T10:53:24.000Z" itemprop="datePublished">2018-01-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/12/字符串的定义、切片、格式化、函数/">字符串的定义、切片、格式化、函数</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>字符串的定义、切片、格式化、函数</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>定义</h6><p></p>
-<ul>
-<li><p>单引号、双引号都可以定义字符串，三引号允许一个字符串跨多行</p>
-<pre><code>name1=&apos;Honey&apos;  #单引号
-name2=&quot;Tom&quot;    #双引号
-html=&apos;&apos;&apos;       #三引号
-&lt;html&gt;
-&lt;head&gt;&lt;/head&gt;
-&lt;body&gt;
-    &lt;p&gt;你好，2018！&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-&apos;&apos;&apos;
-</code></pre></li>
-</ul>
-<p></p><h6>切片</h6><p></p>
-<ul>
-<li><p>可以使用中括号和下标来获取单个字符或截取字符串，格式为[]、[ : ]、[ : : ]</p>
-<pre><code>str1=&apos;liuyongqian2018@163.com&apos; #先定义一个字符串
-#正序
-a=str1[0] #获取单个字符，取第一个字符      #result:l
-b=str1[len(str1)-1] #取最后一个字符，也可以写成 b=str1[-1],python特有         #result:m
-c=str1[1:5]#获取字符串，取下标为1、2、3、4的字符，不包括最后一位5      #result:iuyo
-d=str1[:]#取所有     #result:liuyongqian2018@163.com
-e=str1[1:]#取从下标为1到最后一个字符     #result:iuyongqian2018@163.com
-f=str1[:5]#取下标为0到4的字符，不包括5         #result:liuy
-g=str1[-5:]#取从-5到结尾的字符     #result:3.com
-h=str1[-5:-2]#取从-5到-3的字符，不包括-2         #result:3.c
-#逆序
-i=str1[ : : ]#取所有，最后一个参数为步长，默认为1     #result:liuyongqian2018@163.com
-j=str1[-1:-7:-2]#取-1到-6的字符，步长为2         #result:mc3
-k=str1[-1: :-3]#取-1到结尾的字符，步长为3         #result:m.11nqoi
-l=str1[-1: :-1]#倒序     #result:moc.361@8102naiqgnoyuil
-m=str1[ : :-1]#倒序         #result:moc.361@8102naiqgnoyuil
-</code></pre></li>
-</ul>
-<p></p><h6>格式化</h6><p></p>
-<ul>
-<li>第一种，%s 字符，%d 整数，%f 浮点型，%.2f 保留2位小数且四舍五入</li>
-<li><p>第二种，.format()格式化,如果以name开头，其后的变量均需以键值的形式出现</p>
-<pre><code>x=&apos;name:{0} age:{1}&apos;.format(&apos;Tom&apos;,33)     #result: name:Tom age:33
-y=&apos;name:{name} age:{age}&apos;.format(name=&quot;Tom&quot;,age=25)      #result: name:Tom age:25
-z1=&apos;name={0}&apos;.format(&quot;Tom&quot;)      #result: name=Tom
-z2=&apos;name={{0}}&apos;.format(&quot;Tom&quot;)       #result: name={0}
-z3=&apos;name={{{0}}}&apos;.format(&quot;Tom&quot;)           #result: name={Tom}
-</code></pre></li>
-<li><p>小练习：以上述两种方式输出结果</p>
-<pre><code>name=input(&quot;请输入NAME：&quot;) #字符型
-print(&quot;NAME:%s&quot; %name)
-age=int(input(&quot;请输入AGE：&quot;))#整型
-print(&quot;AGE:%d&quot; %age)
-work=float(input(&quot;请输入LIMIT：&quot;))#浮点型
-print(&quot;WORK:%f&quot;%work)
-print(&quot;===========================================&quot;)
-print(&quot;NAME:%s AGE:%d WORK:%.2f&quot;%(name,age,work))
-print(&quot;NAME:{0} AGE:{0}&quot;.format(name,age))
-</code></pre></li>
-</ul>
-<p></p><h6>函数</h6><p></p>
-<ul>
-<li><p>len()字符串的长度</p>
-<pre><code>str3=&quot;aabcd efghi jklmn&quot; #先定义一个字符
-print(&apos;str3的长度为{0}&apos;.format(len(str3)))        #result：str3的长度为17
-</code></pre></li>
-<li><p>count(str,start,end)返回指定范围内字符出现数量，范围不包括end</p>
-<pre><code>print(&quot;str3中a出现次数为{0}&quot;.format(str3.count(&apos;a&apos;,0,2)))     #result：str3中a出现次数为2
-</code></pre></li>
-<li><p>capitalize()将字符串的第一个字符转换为大写</p>
-<pre><code>print(str3.capitalize())     #result：Aabcd efghi jklmn
-</code></pre></li>
-<li><p>title()将字符串中每一个单词首字母大写</p>
-<pre><code>print(str3.title())     #result：Aabcd Efghi Jklmn
-</code></pre></li>
-<li><p>find()返回找到的字符串的下标，没有找到则返回-1</p>
-<pre><code>print(&apos;d在str3中的下标为{0}&apos;.format(str3.find(&apos;d&apos;,1)))#表示第一次出现字符d的下标，        #result：d在str3中的下标为4
-</code></pre></li>
-<li><p>rfind(str,start,end)从右边开始找,指定一个范围</p>
-<pre><code>print(&apos;d在str3中的下标为{0}&apos;.format(str3.rfind(&apos;d&apos;,-18,-1)))        #result：d在str3中的下标为4
-</code></pre></li>
-<li><p>index()找下标，没有找到则抛出异常</p>
-<pre><code>print(&apos;d在str3中的下标为{}&apos;.format(str3.index(&apos;d&apos;)))         #result：d在str3中的下标为4
-</code></pre></li>
-<li><p>rindex()从右边开始找，可以指定范围</p>
-<pre><code>print(&apos;d在str3中的下标为{}&apos;.format(str3.index(&apos;d&apos;,-18,-1)))    #result：d在str3中的下标为4
-</code></pre></li>
-<li><p>replace()替换,但是原字符不会改变</p>
-<pre><code>print(&quot;替换str3中的a为{}&quot;.format(str3.replace(&apos;a&apos;,&apos;A&apos;)))        #result:替换str3中的a:AAbcd efghi jklmn
-</code></pre></li>
-<li><p>split(str,num)如果括号内什么都不写，就是将通过\t和空格进行拆分，可设置拆分次数</p>
-<pre><code>print(&quot;str3默认拆分结果为{0}&quot;.format(str3.split()))         #result:str3默认拆分结果为[&apos;aabcd&apos;, &apos;efghi&apos;, &apos;jklmn&apos;]
-</code></pre></li>
-<li><p>startswith(str,start,end)检查是否以str开头，可指定检查范围，返回bool值</p>
-<pre><code>print(str3.startswith(&apos;aa&apos;))    #result:True
-</code></pre></li>
-<li><p>endswith()检查是否以str开头，返回bool值</p>
-<pre><code>print(str3.endswith(&apos;mn&apos;))        #result:True
-</code></pre></li>
-<li><p>lower()忽略大小写的地方，全部转为小写</p>
-<pre><code>print(str3.lower())        #result:aabcd efghi jklmn
-</code></pre></li>
-<li><p>upper()忽略大小写的地方，全部转为大写</p>
-<pre><code>print(str3.upper())        #result:AABCD EFGHI JKLMN
-</code></pre></li>
-<li><p>ljust(num,str),center(num,str),rjust(num,str)字符串输出时怎样对齐，字符串本来长度是5，把它变成长度为10，可用字符填充</p>
-<pre><code>str4=&apos;abcde&apos;#先定义一个字符串，以ljust()为例
-print(str4.ljust(10,&apos;*&apos;))        #result:abcde*****
-</code></pre></li>
-<li><p>lstrip(),strip(),rstrip()去除空格</p>
-<pre><code>str5=&apos;   abcde&apos;#先定义一个字符串，以lstrip()为例
-print(str4.lstrip())        #result:abcde
-</code></pre></li>
-<li><p>partition(str)以此字符串为节点拆分,返回头、分割符、尾三部分</p>
-<pre><code>str6=&apos;hello python-world&apos;#先定义一个字符串
-print(str6.partition(&quot;-&quot;))        #result:(&apos;hello python&apos;, &apos;-&apos;, &apos;world&apos;)
-</code></pre></li>
-<li><p>splitlines(bool keepends)按照换行符进行拆分，如果字符串中有”\n” 结果里是否去掉换行符(‘\r’, ‘\r\n’, \n’)，默认为 False，不包含换行符;如果为True，则保留换行符</p>
-<pre><code>str7=&apos;你好\npython-world&apos;#先定义一个字符串
-print(str7.splitlines())    #result：[&apos;你好&apos;, &apos;python-world&apos;]
-print(str7.splitlines(True))    #result：[&apos;你好\n&apos;, &apos;python-world&apos;]
-</code></pre></li>
-<li><p>isalpha()判断字符串是否全是字母/文字,即非特殊字符，返回bool值</p>
-<pre><code>str8=&apos;你好Pythonworld&apos;#先定义一个字符串
-print(str8.isalpha())        #result：True
-</code></pre></li>
-<li><p>isdigit()判断字符串是否是数字，返回bool值</p>
-<pre><code>print(str8.isdigit())        #result：False
-</code></pre></li>
-<li><p>isalnum()判断是否是数字和字母/文字，返回bool值</p>
-<pre><code>print(str8.isalnum())        #result：True
-</code></pre></li>
-<li><p>join(sequence)将列表组成新的字符串,sequence为要拼接列表的连接项</p>
-<pre><code>str9=(&apos;P&apos;,&apos;y&apos;,&apos;t&apos;,&apos;h&apos;,&apos;o&apos;,&apos;n&apos;)
-str10=&apos;-&apos;
-print(str10.join(str9))        #result:P-y-t-h-o-n
-</code></pre></li>
-<li><p>小练习：验证邮箱是否合法，要求：@在.的前边，如果合法获取用户名部分</p>
-<pre><code>email=input(&quot;请输入邮箱：&quot;)
-a=email.find(&apos;@&apos;) 
-b=email.find(&apos;.&apos;)
-if(a&lt;b and a!=0):
-    print(&quot;该邮箱合法！&quot;)
-    print(&quot;用户名部分：{}&quot;.format(email[:a]))
-else:
-    print(&quot;该邮箱不合法！&quot;)
-</code></pre></li>
-</ul>
-<p></p><h6>其他</h6><p></p>
-<ul>
-<li><p>str()将非字符型转换成字符型</p>
-<pre><code>a=123465
-b=str(aa)
-print(type(b))         #result：&lt;class &apos;str&apos;&gt;
-</code></pre></li>
-<li><p>in:判断是否字符串中存在某字符，返回bool值</p>
-</li>
-<li><p>not in：判断是否不在此字符串中，返回bool值</p>
-<pre><code>str2=&apos;abcdef&apos; #先定义一个字符
-print(&apos;d&apos; in str2)       #result:True
-print(&apos;d&apos; not in str2)       #result:False
-</code></pre></li>
-<li><p>r/R 原样输出字符串，取消特殊性</p>
-<pre><code>print(r&quot;\t代表一个制表符   \n表示换行符&quot;)
-</code></pre></li>
-</ul>
-<p><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cje556p2s0010r8wvn1de542m" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-变量、数据类型、运算符、分支" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/10/变量、数据类型、运算符、分支/" class="article-date">
-  <time datetime="2018-01-10T09:09:48.000Z" itemprop="datePublished">2018-01-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/10/变量、数据类型、运算符、分支/">变量、数据类型、运算符、分支</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>变量、数据类型、运算符、分支</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>变量</h6><p></p>
-<ul>
-<li>是一个数据存储空间的表示，无需关键字，不需要声明；</li>
-<li>命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写；</li>
-<li>print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’</li>
-<li>del删除单个或多个对象的引用<pre><code>x=1
-x,y,z=1,2,3  
-print(x)
-del x,y            #删除单个或者多个对象的引用
-print(&quot;===========================================&quot;)
-name=input(&quot;Please input NAME：&quot;)  #input() 键盘录入 类型：str
-print(&quot;NAME:%s&quot; %name)
-age=int(input(&quot;Please input AGE：&quot;)) #int() 将str转换成int
-print(&quot;AGE:%d&quot; %age)
-work=input(&quot;Please input limit：&quot;)
-print(&quot;WORK:%s&quot; %work)
-</code></pre><h6>数据类型</h6></li>
-<li>数字Number：int,float,bool,复数<br></li>
-<li>字符串：String<br><pre><code>x=1 #int
-y=1.2 #float
-z=&quot;张三&quot; #字符串
-</code></pre><h6>运算符</h6></li>
-<li>算术运算符：+ - <em> /(得到小数), %(取余), //(只得到商，取整),*</em> 幂(返回x的y次幂)</li>
-<li>关系运算符：&gt; &lt; &gt;= == &lt;= !=  最终的返回bool</li>
-<li>逻辑运算符：and or not  &amp;&amp;  || !</li>
-<li>成员运算符: in( x 在 y 序列中返回 True) not in( x 不在 y 序列中返回 True)</li>
-<li>小练习：请用户输入一个四位数字：求此数字各个位之和<pre><code>value=int(input(&quot;Please input a 4-bit value:&quot;))
-qian=value//1000
-bai=value%1000//100
-shi=value%100//10
-ge=value%10
-sum=qian+bai+shi+ge
-print(sum)
-</code></pre><h6>分支结构</h6><pre><code>score=int(input(&quot;Please input score:&quot;))
-if(score&gt;=90):
-    print(&quot;Excellent!&quot;)
-elif(score&gt;=60):
-    print(&quot;Medium!&quot;)
-else:
-    print(&quot;Flunk!&quot;)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cje556p2s000xr8wvbvkazb6q" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Ajax回顾" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/01/Ajax回顾/" class="article-date">
-  <time datetime="2018-01-01T07:28:10.000Z" itemprop="datePublished">2018-01-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/01/Ajax回顾/">Ajax回顾</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p>Ajax回顾</p>
-<hr>
-<hr>
-<h4>简介</h4><br>Asynchronous Javascript And XML，异步的JavaScript和XML。通过在后台与服务器进行少量数据交换，AJAX可以使网页实现异步更新。即在不重新加载整个网页的情况下，对网页的某部分进行更新。<br><h4>以封装一个请求为例</h4>
-
-<pre><code>function ajax(url,funSucc,funFail){
-    //1.创建ajax对象
-    var xhr=new XMLHttpRequest()
-    ////兼容IE6，IE5
-    if(window.XMLHttpRequest){
-        var xhr=new XMLHttpRequest()
-    }else{
-        var xhr=new ActiveXObject(&quot;Microsoft.XMLHttp&quot;)    
-    }
-    //2.连接服务器，open(请求类型,文件路径,是否异步)
-    //如果是post请求，则需要手动设置请求消息头，如下
-    xhr.open(&apos;post&apos;,url,true);
-    xhr.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
-    //如果是get请求，如下
-    xhr.open(&apos;get&apos;,url,true)
-    //3.发送请求，send方法内传递的是提交参数，没有可为null
-    xhr.send(null)
-    //4.接收数据，为Ajax对象的onreadystatechange事件设定响应函数
-    xhr.onreadystatechange=function(){
-        //readyState 请求状态:
-            0尚未初始化
-            1正在发送请求
-            2请求完成
-            3请求成功，正在接受数据
-            4接收数据成功
-        if(xhr.readyState==4){
-            //status 服务器返回的http请求响应值常用的有：
-                200表示请求成功
-                202请求被接受但处理未完成
-                400错误的请求
-                404资源未找到
-                500内部服务器错误
-
-            if(xhr.status==200){
-                //responseText 服务器返回的文本
-                funSucc(xhr.responseText)
-            }else{
-                //statusText 服务器返回的请求响应文本
-                funFail(xhr.statusText)
-            }
-        }
-    }
-}
-</code></pre><p><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cje556p1h0005r8wvz1qm30cp" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-进程与线程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/30/进程与线程/" class="article-date">
-  <time datetime="2017-12-30T13:28:24.000Z" itemprop="datePublished">2017-12-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/30/进程与线程/">进程与线程</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p>进程与线程</p>
-<hr>
-<hr>
-<p><em>在刚开始学习性能工具LR时，常听到进程与线程；但不得具体是什么意思，或者比较抽象；然后在网络上找到了比较形象的解释</em></p>
-<ol>
-<li>计算机的核心是CPU，它承担了所有的计算任务。它就像一座工厂，时刻在运行。</li>
-<li>假定工厂的电力有限，一次只能供给一个车间使用。也就是说，一个车间开工的时候，其他车间都必须停工。背后的含义就是，单个CPU一次只能运行一个任务。</li>
-<li>进程就好比工厂的车间，它代表CPU所能处理的单个任务。任一时刻，CPU总是运行一个进程，其他进程处于非运行状态。</li>
-<li>一个车间里，可以有很多工人。他们协同完成一个任务。</li>
-<li>线程就好比车间里的工人。一个进程可以包括多个线程。</li>
-<li>车间的空间是工人们共享的，比如许多房间是每个工人都可以进出的。这象征一个进程的内存空间是共享的，每个线程都可以使用这些共享内存。</li>
-<li>可是，每间房间的大小不同，有些房间最多只能容纳一个人，比如厕所。里面有人的时候，其他人就不能进去了。这代表一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。</li>
-<li>一个防止他人进入的简单方法，就是门口加一把锁。先到的人锁上门，后到的人看到上锁，就在门口排队，等锁打开再进去。这就叫”互斥锁”（Mutual exclusion，缩写 Mutex），防止多个线程同时读写某一块内存区域。</li>
-<li>还有些房间，可以同时容纳n个人，比如厨房。也就是说，如果人数大于n，多出来的人只能在外面等着。这好比某些内存区域，只能供给固定数目的线程使用。</li>
-<li>这时的解决方法，就是在门口挂n把钥匙。进去的人就取一把钥匙，出来时再把钥匙挂回原处。后到的人发现钥匙架空了，就知道必须在门口排队等着了。这种做法叫做”信号量”（Semaphore），用来保证多个线程不会互相冲突。<br><br>不难看出，mutex是semaphore的一种特殊情况（n=1时）。也就是说，完全可以用后者替代前者。但是，因为mutex较为简单，且效率高，所以在必须保证资源独占的情况下，还是采用这种设计。</li>
-</ol>
-<hr>
-<ul>
-<li>操作系统的设计，因此可以归结为三点：<br><br>（1）以多进程形式，允许多个任务同时运行；<br><br>（2）以多线程形式，允许单个任务分成不同的部分运行；<br><br>（3）提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源。</li>
-</ul>
-<p><em>小白参考大神佳作<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">进程与线程的一个简单解释</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cje556p3n001sr8wvkglh481o" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/零散知识点/">零散知识点</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Django连接MySQL" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/18/Django连接MySQL/" class="article-date">
-  <time datetime="2017-12-18T13:33:37.000Z" itemprop="datePublished">2017-12-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/18/Django连接MySQL/">Django连接MySQL</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <hr>
-<hr>
-<p> </p><h5>1.创建数据库</h5><br><em>请先确保已安装pymsql，命令：<code>pip3 install pymysql</code></em><p></p>
-<p><em>文章中，执行项目类的命令均可在powershell窗口中进行</em></p>
-<ul>
-<li>通过root用户密码登录，比如密码为123456，命令：<code>mysql -u root -p 123456</code></li>
-<li>创建名为“store”的数据库，命令：<code>create database store</code></li>
-<li>给数据库“store”添加用户名liu，密码为liu，命令：<code>grant all on store.* liu@localhost identified by &#39;liu&#39;</code>；此步骤也可以省略</li>
-</ul>
-<p></p><h5>2.新建store app模块</h5><p></p>
-<ul>
-<li>在项目文件夹D:/test/mysite下新建名字为“store”的app模块，命令：<code>python manage.py startapp store</code></li>
-<li>新建后可在pycharm上查看目录结构，在dos中也可查看，命令：<code>tree  store /f</code></li>
-<li><p>在pycharm中的/mysite/setting.py文件中配置store，如下所示：</p>
-<pre><code>INSTALLED_APPS = [
-    &apos;django.contrib.admin&apos;,
-    &apos;django.contrib.auth&apos;,
-    &apos;django.contrib.contenttypes&apos;,
-    &apos;django.contrib.sessions&apos;,
-    &apos;django.contrib.messages&apos;,
-    &apos;django.contrib.staticfiles&apos;,
-    &apos;testapp&apos;,
-    &apos;store&apos;, #添加store app
-]
-</code></pre></li>
-</ul>
-<p></p><h5>3.配置数据库信息与生成表</h5><p></p>
-<ul>
-<li><p>在pycharm中的/mysite/setting.py文件中配置数据库连接信息，如下所示：</p>
-<pre><code># Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    &apos;default&apos;: {
-        &apos;ENGINE&apos;: &apos;django.db.backends.mysql&apos;,
-        &apos;NAME&apos;: &apos;store&apos;, #数据库名称
-        &apos;USER&apos;: &apos;yuan&apos;, #连接用户名
-        &apos;PASSWORD&apos;: &apos;yuan&apos;,#连接密码
-        &apos;HOST&apos;: &apos;localhost&apos;,
-        &apos;PORT&apos;: &apos;3306&apos;
-    }
-}
-</code></pre></li>
-<li><p>在pycharm中的store/__init__.py文件中配置如下信息：</p>
-<pre><code>import pymysql
-pymysql.install_as_MySQLdb()
-</code></pre></li>
-<li><p>在项目文件夹D:/test/mysite下生成数据表，命令：<code>python manage.py migrate</code></p>
-</li>
-<li>可登录数据库store查看自动生成的Django自带app数据库表，命令：<code>use store;</code>，<code>show tables;</code></li>
-</ul>
-<p></p><h5>4.实现查询功能</h5><br>需求：<br><br>商店：name , address <br><br>增 ： 添加 商店信息<br><br>查 ： 显示所有 <br><br>删 ： 删除商店信息<p></p>
-<p></p><h6>4.1编辑model.py</h6><p></p>
-<ul>
-<li><p>在store/model.py中定义实体，对应数据库表，如下所示：</p>
-<pre><code>from django.db import models
-
-# Create your models here.
-# 这里注意:需要继承 models.Model ，不然没办法生成表的哈
-class StoreInfo（models.Model）:
-    name = models.CharField(max_length=20, default=&apos;&apos;) #name属性，字段
-    address = models.CharField(max_length=50, default=&quot;China&quot;) #address属性，字段
-
-    #此方法在print对象的时候，可以打印字符串，类似java中的toString()方法
-    def __str__(self):
-        return self.name + self.address
-</code></pre></li>
-<li><p>在项目文件夹D:/test/mysite下生成数据表，命令：<code>python manage.py makemigrations</code>、<code>python manage.py migrate</code>应用到数据库</p>
-</li>
-<li>在dos窗口中可查看所有表，命令：<code>use store;</code>、<code>show tables;</code></li>
-<li>在dos窗口中可查看storeinfo表结构，命令：<code>show columns from store_storeinfo;</code></li>
-<li><p>在项目文件夹D:/test/mysite下输入命令<code>python manage.py shell</code>打开Terminal添加如下数据：</p>
-<pre><code>In [1]: from store.models import StoreInfo #1.引入刚才创建的 Model
-
-In [2]: store_list=StoreInfo.objects.all() #2.查询操作
-
-In [3]: print(store_list) #3.打印查询结果
-&lt;QuerySet []&gt;
-
-In [4]: create=StoreInfo.objects.create(name=&apos;LMP&apos;,address=&quot;ShangHai&quot;) #4.添加数据操作
-
-In [5]: print(create)#5.打印添加后的返回值
-LMPShangHai
-</code></pre></li>
-</ul>
-<p></p><h6>4.2编辑views.py</h6><p></p>
-<ul>
-<li><p>需要显示所有信息，则需要在store/views.py中定义如下：</p>
-<pre><code>from django.http import HttpResponse
-from django.shortcuts import render
-
-from store.models import StoreInfo
-
-# Create your views here.
-
-# 查下store全部信息 
-def select_store_list(request):
-    store_list = StoreInfo.objects.all() #查询所有的信息
-    print(type(store_list), store_list)  #打印结果类型与结果值
-    return render(request, &quot;store_list.html&quot;, {&quot;content&quot;: store_list}) #返回界面
-</code></pre></li>
-<li><p>上面需要将查询结果在store_list.html中进行填充，如下所示：</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Store&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;table border=&quot;1&quot;&gt;
-    &lt;thead&gt;
-    &lt;tr&gt;
-        &lt;th&gt;名称&lt;/th&gt;
-        &lt;th&gt;地址&lt;/th&gt;
-        &lt;th&gt;操作&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-    #这里是模板语言，for循环，最后需要 endfor
-    {% for foo in content %}
-		        <tr>
-		            <td>{{ foo.name }}</td>
-		            <td>{{ foo.address }}</td>
-		            <td></td>
-		        </tr>
-		    {% endfor %}
-    &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre></li>
-<li><p>在store app下即store/下新建templates文件夹存放store_list.html文件</p>
-</li>
-<li><p>在pycharm中的/mysite/setting.py文件中配置templates,如下所示：</p>
-<pre><code>TEMPLATES = [
-    {
-        &apos;BACKEND&apos;: &apos;django.template.backends.django.DjangoTemplates&apos;,
-        &apos;DIRS&apos;: [
-            BASE_DIR + &quot;/store/templates&quot;, #在这里进行配置，默认是空的list
-        ],
-        &apos;APP_DIRS&apos;: True,
-        &apos;OPTIONS&apos;: {
-            &apos;context_processors&apos;: [
-                &apos;django.template.context_processors.debug&apos;,
-                &apos;django.template.context_processors.request&apos;,
-                &apos;django.contrib.auth.context_processors.auth&apos;,
-                &apos;django.contrib.messages.context_processors.messages&apos;,
-            ],
-        },
-    },
-]
-</code></pre></li>
-<li><p>在store app下即store/下新建url.py文件，如下所示：</p>
-<pre><code>from django.conf.urls import url
-
-from store import views
-
-urlpatterns = [
-    url(r&apos;^list$&apos;, views.select_store_list),
-]
-</code></pre></li>
-<li><p>在pycharm中的/mysite/urls.py文件中配置store app urls，如下所示：（此方法无效的话，按照在store app中路径设置方法）</p>
-<pre><code>urlpatterns = [
-    url(r&apos;^admin/&apos;, admin.site.urls),
-    url(r&apos;^test/&apos;, include(&apos;testapp.urls&apos;)),
-    url(r&apos;^store/&apos;, include(&apos;store.urls&apos;)), # store的urls
-]
-</code></pre></li>
-<li><p>在项目文件夹D:/test/mysite下输入命令<code>python manage.py runserver 8080</code></p>
-</li>
-</ul>
-<p><em>小白参考大神佳作<a href="http://blog.csdn.net/LABLENET/article/details/53321260" target="_blank" rel="noopener">Django-Mysql结合 基本配置操作并实现查询功能</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cje556p1w000cr8wvqif5eq3v" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-CentOS7安装Redis3-2遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/" class="article-date">
-  <time datetime="2017-12-17T00:55:52.000Z" itemprop="datePublished">2017-12-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/">CentOS7安装Redis3.2遇到的问题</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <hr>
-<hr>
-<p>###到<a href="https://redis.io/" target="_blank" rel="noopener">redis官网</a>下载安装包，如”redis-3.2.8.tar.gz”；将下载的安装包放到 /opt下，分别使用：</p>
-<ul>
-<li>tar -zvxf redis-3.2.8.tar.gz 解压安装包</li>
-<li>cd redis-3.2.8 进入安装包</li>
-<li>make 编译<br><h6>出现错误:</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: gcc：命令未找到</span><br><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: *** [net.<span class="keyword">o</span>] 错误 <span class="number">127</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/deps/hiredis”</span><br><span class="line"><span class="keyword">make</span>[<span class="number">2</span>]: *** [hiredis] 错误 <span class="number">2</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">2</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/deps”</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: [persist-settings] 错误 <span class="number">2</span> (忽略)</span><br><span class="line">    CC adlist.<span class="keyword">o</span></span><br><span class="line">/bin/<span class="keyword">sh</span>: <span class="keyword">cc</span>: 未找到命令</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [adlist.<span class="keyword">o</span>] 错误 <span class="number">127</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [<span class="keyword">all</span>] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p></p><h6>解决方法：安装gcc</h6><p></p>
-<ul>
-<li>yum -y install gcc automake autoconf libtool make 安装</li>
-<li>make 运行<br><h6>出现错误：</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 进入目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line">    CC adlist.<span class="keyword">o</span></span><br><span class="line">In <span class="keyword">file</span> included from adlist.<span class="keyword">c</span>:<span class="number">34</span>:<span class="number">0</span>:</span><br><span class="line">zmalloc.h:<span class="number">50</span>:<span class="number">31</span>: **致命错误**：jemalloc/jemalloc.h：没有那个文件或目录</span><br><span class="line"> #include &lt;jemalloc/jemalloc.h&gt;</span><br><span class="line">                               ^</span><br><span class="line">编译中断。</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [adlist.<span class="keyword">o</span>] 错误 <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [<span class="keyword">all</span>] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p></p><h6>解决方法：make改为make MALLOC=libc</h6><p></p>
-<ul>
-<li>make MALLOC=libc</li>
-<li>make test 运行<br><h6>出现错误：</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 进入目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line">You need <span class="keyword">tcl</span> <span class="number">8.5</span> <span class="built_in">or</span> newer in order <span class="keyword">to</span> run the Redis test</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [test] 错误 <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [test] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p></p><h6>解决方法：升级tcl版本</h6><p></p>
-<ul>
-<li>yum install -y wget 安装wget</li>
-<li>wget <a href="http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz" target="_blank" rel="noopener">http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz</a>  </li>
-<li>sudo tar xzvf tcl8.6.1-src.tar.gz  -C /usr/local/  </li>
-<li>cd  /usr/local/tcl8.6.1/unix/  </li>
-<li>sudo ./configure  </li>
-<li>sudo make  </li>
-<li>sudo make install</li>
-<li>重新解压redis安装包并运行make进行编译</li>
-<li>进入src目录，./redis-server，如果出现虚线盒子界面表示运行成功</li>
-<li>可另起一个界面，运行 ./redis-cli来启动客户端</li>
-<li>可运行ps -ef|grep redis检测redis进程</li>
-<li>可运行netstat -Intp|grep 6379检测端口</li>
-<li>到此安装就结束了，我运用的远程控制软件是”SSH Secure Shell Client”</li>
-</ul>
-<p><em>小白参考大神佳作<a href="http://www.jianshu.com/p/cc403be7f80d" target="_blank" rel="noopener">centos7 安装redis 3.2.8 踩的那些坑</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cje556p1h0009r8wv2wd68s1h" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-2017-12-16-Centos7-yum源的配置与使用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" class="article-date">
-  <time datetime="2017-12-16T10:54:34.000Z" itemprop="datePublished">2017-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/">2017_12_16 Centos7 yum源的配置与使用</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <hr>
-<hr>
-<p></p><h5>1.yum简介</h5><p></p>
-<p>yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了。<br><br>yum 主要功能是更方便的添加/删除/更新RPM 包，自动解决包的倚赖性问题，便于管理大量系统的更新问题。<br><br>yum 可以同时配置多个资源库(Repository)，简洁的配置文件（/etc/yum.conf），自动解决增加或删除rpm 包时遇到的依赖性问题，保持与RPM 数据库的一致性。</p><br><h5>2.yum安装</h5><br>CentOS 默认已经安装了yum，不需要另外安装，这里为了实验目的，先将yum 卸载再重新安装。<br><h6>2.1查看系统默认安装</h6><br><code>rpm -qa|grep yum</code><br><br><h6>2.2卸载yum</h6><br><code>rpm -e yum-fastestmirror-1.1.16-14.el5.centos.1 yum-metadata-parser-1.1.2-3.el5.centos yum-3.2.22-33.el5.centos</code><br><br><h6>2.3重新安装yum</h6><br>这里我们挂载系统安装光盘进行安装<br><br>– 在mnt下<code>mkdir /mnt/cdrom</code><br><br>– 挂载系统安装光盘<code>mount -t auto /dev/cdrom /mnt/cdrom</code><br><br>– yum基础安装<br><br><code>rpm -ivh yum-3.2.22-33.el5.centos.noarch.rpm yum-fastestmirror-1.1.16-14.el5.centos.1.noarch.rpm yum-metadata-parser-1.1.2-3.el5.centos.i386.rpm</code> <br><br>– 查看版本<code>yum -v</code><br><br><h6>2.4yum源配置</h6><br><p>–配置yum本地源<code>vi /etc/yum.repos.d/CentOs-Media.repo</code></p>
-
-<pre><code># CentOS-Media.repo
-#
-# This repo is used to mount the default locations for a CDROM / DVD on
-#  CentOS-5.  You can use this repo and yum to install items directly off the
-#  DVD ISO that we release.
-#
-# To use this repo, put in your DVD and use it with the other repos too:
-#  yum --enablerepo=c5-media [command]
-#  
-# or for ONLY the media repo, do this:
-#
-#  yum --disablerepo=\* --enablerepo=c5-media [command]     
-[c5-media]
-name=CentOS-$releasever - Media
-baseurl=file:///media/CentOS/
-        file:///mnt/cdrom/
-        file:///media/cdrecorder/
-gpgcheck=1
-enabled=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
-</code></pre><p></p><p>–在baseurl中修改第2个路径为/mnt/cdrom（即为光盘挂载点）将enabled=0改为1<br><br>–禁用默认的yum 网络源<code>mv CentOs-Base.repo CentOs-Base.repo.bak</code><br><br>–运行yum命令<code>yum install postgresql</code></p><p></p>
-<h6>2.5我们就用系统默认的yum源，速度也还是可以的！</h6>
-
-
-<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html" target="_blank" rel="noopener">CentOS yum 源的配置与使用</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/2017-12-16-Centos7-yum源的配置与使用/" data-id="cje556p1h0004r8wvv91twtzm" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a></li></ul>
 
     </footer>
   </div>
@@ -1488,7 +1842,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; zurück</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; zurück</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1502,7 +1856,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL/">MySQL</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1512,7 +1866,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/MySQL学习/" style="font-size: 13.33px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/自动化测试/" style="font-size: 10px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
     </div>
   </div>
 
@@ -1521,7 +1875,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1534,23 +1888,23 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
       <ul>
         
           <li>
-            <a href="/2018/02/26/模块、包、枚举/">模块、包、枚举</a>
+            <a href="/2018/03/01/Selenium01/">selenium01</a>
           </li>
         
           <li>
-            <a href="/2018/02/24/闭包、装饰、冒泡/">闭包、装饰、冒泡</a>
+            <a href="/2018/02/28/LR基础/">LR基础</a>
           </li>
         
           <li>
-            <a href="/2018/02/23/Js对象/">Js对象</a>
+            <a href="/2018/02/28/初识MySQL/">初识MySQL</a>
           </li>
         
           <li>
-            <a href="/2018/02/23/Js数组、正则/">Js数组、正则</a>
+            <a href="/2018/02/27/BOM/">BOM</a>
           </li>
         
           <li>
-            <a href="/2018/02/23/Js基础、函数、循环/">Js基础、函数、循环</a>
+            <a href="/2018/02/27/HTML DOM/">HTML DOM</a>
           </li>
         
       </ul>

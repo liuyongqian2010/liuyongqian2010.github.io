@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>初识DOM与BOM | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="DOM与BOM   DHTML  动态HTML,是一种将目前已有的网页技术、语言标准整合运用，制作出能在下载后仍然能实时变换页面元素效果的网页设计概念 DHTML的功能:动态改变页面元素；与用户进行交互DHTML对象模型包括DOM和BOM DOM：Document Object Model，文档对象模型，用来操作文档 定义了访问和操作HTML文档的标准方法 通过对DOM树的操作，实现对HTML文档">
+<meta name="keywords" content="Web前端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识DOM与BOM">
+<meta property="og:url" content="http://yoursite.com/2018/02/27/初识DOM与BOM/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="DOM与BOM   DHTML  动态HTML,是一种将目前已有的网页技术、语言标准整合运用，制作出能在下载后仍然能实时变换页面元素效果的网页设计概念 DHTML的功能:动态改变页面元素；与用户进行交互DHTML对象模型包括DOM和BOM DOM：Document Object Model，文档对象模型，用来操作文档 定义了访问和操作HTML文档的标准方法 通过对DOM树的操作，实现对HTML文档">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-28T15:11:35.490Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初识DOM与BOM">
+<meta name="twitter:description" content="DOM与BOM   DHTML  动态HTML,是一种将目前已有的网页技术、语言标准整合运用，制作出能在下载后仍然能实时变换页面元素效果的网页设计概念 DHTML的功能:动态改变页面元素；与用户进行交互DHTML对象模型包括DOM和BOM DOM：Document Object Model，文档对象模型，用来操作文档 定义了访问和操作HTML文档的标准方法 通过对DOM树的操作，实现对HTML文档">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-初识DOM与BOM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/初识DOM与BOM/" class="article-date">
+  <time datetime="2018-02-27T09:34:33.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      初识DOM与BOM
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>DOM与BOM</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>DHTML</h6><p></p>
+<ul>
+<li>动态HTML,是一种将目前已有的网页技术、语言标准整合运用，制作出能在下载后仍然能实时变换页面元素效果的网页设计概念</li>
+<li>DHTML的功能:动态改变页面元素；与用户进行交互<br>DHTML对象模型包括DOM和BOM</li>
+<li>DOM：Document Object Model，文档对象模型，用来操作文档<ul>
+<li>定义了访问和操作HTML文档的标准方法</li>
+<li>通过对DOM树的操作，实现对HTML文档内容的操作</li>
+</ul>
+</li>
+<li>BOM：Browser Object Model，浏览器对象模型，用来访问和操做浏览器窗口，使JavaScript有能力与浏览器“对话”<ul>
+<li>通过使用BOM，可移动窗口，更改状态文本，执行其它与页面内容发生直接联系的操作</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>DOM</h6><p></p>
+<ul>
+<li>W3C DOM标准被分为3个不同的部分：<ul>
+<li>核心DOM 针对任何结构化文档的标准模型</li>
+<li>XML DOM 针对XML文档的标准模型</li>
+<li>HTML DOM针对HTML文档的标准模型（下面说这个）</li>
+</ul>
+</li>
+<li>document对象<ul>
+<li>文档中的所有节点组成了一个文档树，document对象是一颗文档树的根</li>
+<li>浏览器内置的JS解释器会为载入的每个HTML文档创建一个对应的document对象</li>
+<li>通过使用document对象，可以从脚本中对HTML页面中的所有元素进行访问</li>
+</ul>
+</li>
+<li><p>DOM节点树</p>
+<ul>
+<li>文档中的元素、属性、文本、注释等都被看作一个节点</li>
+<li><p>上下层节点：</p>
+<pre><code>parentNode  获取父节点
+childNodes  获取子节点集合
+firstChild  获取第一个子节点
+lastChild   获取最后一个子节点
+</code></pre></li>
+<li><p>平行层节点</p>
+<pre><code>previousSibling  获取上一个兄弟节点
+nextSibling      获取下一个兄弟节点
+</code></pre></li>
+<li>节点名称、类型、值<ul>
+<li>nodeName、nodeType、nodeValue</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>元素节点属性</p>
+<ul>
+<li>innerHTML 读取或设置元素节点中的HTML内容</li>
+<li>textContent 用于读取或设置元素节点中的文本内容</li>
+<li><p>attributes 返回节点的属性集合，即一个类数组对象</p>
+<ul>
+<li><p>读取属性</p>
+<pre><code>（1）element.attributes[下标].value
+（2）element.attributes[&apos;属性名&apos;].value
+（3）element.getAttributeNode(&apos;属性名&apos;).value
+（4）element.getAttribute(&apos;属性名&apos;)
+</code></pre></li>
+<li><p>设置属性</p>
+<pre><code>（1）element.setAttribute(name,value);
+（2）element.setAttributeNode(attrNode)
+</code></pre></li>
+<li><p>移除属性</p>
+<pre><code>（1）element.removeAttribute(&apos;属性名&apos;);
+（2）element.removeAttributeNode(attrNode)
+</code></pre></li>
+<li><p>判断属性</p>
+<pre><code>element.hasAttribute(&apos;属性名&apos;);//true或false
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>动态创建DIV</p>
+<pre><code>&lt;body&gt;
+    &lt;button onclick=&quot;createDiv()&quot;&gt;创建DIV&lt;/button&gt;
+    &lt;h1 style=&quot;clear:both&quot;&gt;&lt;/h1&gt;
+    &lt;script&gt;
+        function createDiv(){
+            var div=document.createElement(&apos;div&apos;)
+            div.setAttribute(&apos;style&apos;,&apos;width:100px;height:100px;background:&apos;+roundColor()+&apos;;margin:20px;float:left&apos;)
+            document.body.appendChild(div)
+            div.onclick=removeDiv
+        }
+        function roundColor(){
+            var str=&apos;1234657890abcdef;
+            var s=&apos;#&apos;;
+            for (var i=0; i&lt;6; i++)
+            {
+                var n=parseInt(Math.random()*str.length)
+                s+=str.charAt(n)
+            }
+            return s;
+        }
+        function removeDiv(){
+            document.body.removeChild(this);
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cje8h1d3d0015xswvvw6cnbl6" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/27/HTML DOM/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          HTML DOM
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/27/匿名函数、封装继承/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">匿名函数、封装继承</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/MySQL学习/" style="font-size: 13.33px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/自动化测试/" style="font-size: 10px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/01/Selenium01/">selenium01</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/28/LR基础/">LR基础</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/28/初识MySQL/">初识MySQL</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/BOM/">BOM</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/HTML DOM/">HTML DOM</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

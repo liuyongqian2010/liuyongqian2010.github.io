@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>初识MySQL | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="初识MySQL   基础  数据库就是“数据”的“仓库”,包含表、关系以及操作对象,数据存放在表中 MySQL的优势：运行速度快、使用成本低、可移植性强、适用用户广 安装目录下主要文件夹 bin：客户端程序和服务器 data：临时数据存放，日志文件，数据库 include:导入，需要里面这些文件，包含（头）文件 lib:组件 share:错误消息文件  DOS下运行mysql net start">
+<meta name="keywords" content="MySQL学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识MySQL">
+<meta property="og:url" content="http://yoursite.com/2018/02/28/初识MySQL/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="初识MySQL   基础  数据库就是“数据”的“仓库”,包含表、关系以及操作对象,数据存放在表中 MySQL的优势：运行速度快、使用成本低、可移植性强、适用用户广 安装目录下主要文件夹 bin：客户端程序和服务器 data：临时数据存放，日志文件，数据库 include:导入，需要里面这些文件，包含（头）文件 lib:组件 share:错误消息文件  DOS下运行mysql net start">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-01T09:09:56.002Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初识MySQL">
+<meta name="twitter:description" content="初识MySQL   基础  数据库就是“数据”的“仓库”,包含表、关系以及操作对象,数据存放在表中 MySQL的优势：运行速度快、使用成本低、可移植性强、适用用户广 安装目录下主要文件夹 bin：客户端程序和服务器 data：临时数据存放，日志文件，数据库 include:导入，需要里面这些文件，包含（头）文件 lib:组件 share:错误消息文件  DOS下运行mysql net start">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-初识MySQL" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/28/初识MySQL/" class="article-date">
+  <time datetime="2018-02-28T10:08:48.000Z" itemprop="datePublished">2018-02-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      初识MySQL
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>初识MySQL</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>基础</h6><p></p>
+<ul>
+<li>数据库就是“数据”的“仓库”,包含表、关系以及操作对象,数据存放在表中</li>
+<li>MySQL的优势：运行速度快、使用成本低、可移植性强、适用用户广</li>
+<li><p>安装目录下主要文件夹</p>
+<pre><code>bin：客户端程序和服务器
+data：临时数据存放，日志文件，数据库
+include:导入，需要里面这些文件，包含（头）文件
+lib:组件
+share:错误消息文件
+</code></pre></li>
+<li><p>DOS下运行mysql</p>
+<pre><code>net start mysql
+mysql -h服务器主机地址（本地可省略） -u用户名 -p密码
+create database 数据库名;         #创建数据库
+show databases;                  #查看数据库
+use数据库;                         #选择数据库
+drop database 数据库名;              #删除数据库
+
+create table if not exists 表名(
+    studentNo INT(4) NOT NULL COMMENT&apos;学号&apos; PRIMARY KEY,
+    ...
+)comment=&apos;表名&apos;
+show tables;                    #查看表是否存在
+desc 表名;                     #查看表定义
+drop table if exists 表名;      #删除表
+</code></pre></li>
+<li>SQL结构化查询语言<ul>
+<li>DML(数据操作语言)用来操作数据库中所包含的数据，命令：insert、update、delete</li>
+<li>DDL（数据定义语言）用来创建和删除数据库对象等操作，命令：create、drop、alert</li>
+<li>DQL（数据查询语言）用来对数据库中的数据进行查询，命令：select</li>
+<li>DCL（数据控制语言）用来控制数据库组件的存取许可、存取权限等，命令：grant、commit、rollback</li>
+</ul>
+</li>
+<li>SQL中的运算符<ul>
+<li>算术运算符，用来进行列间或者变量之间的比较和数学运算<ul>
+<li>+加、-减、*乘、/除、%取余</li>
+</ul>
+</li>
+<li>赋值运算符，把一个数或者变量或者表达式赋值给另一个变量，如Name=’刘桑’<ul>
+<li>=赋值</li>
+</ul>
+</li>
+<li>逻辑运算符<ul>
+<li>and 当且仅当两个布尔表达式都为true时，返回true</li>
+<li>or 当且仅当两个布尔表达式都为false时，返回false</li>
+<li>not布尔表达式的值取反</li>
+</ul>
+</li>
+<li>比较运算符<ul>
+<li>=等于、&gt;大于、&lt;小于、&lt;&gt;不等于、&gt;=大于等于、&lt;=小于等于、!=不等于（非SQL-92标准）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据类型<ul>
+<li>数值<ul>
+<li>INT，标准整数，4字节</li>
+<li>FLOAT，单精度浮点数，4字节</li>
+<li>DECIMAL，字符串形式的浮点数，Decimal(M,D),M为存储数，D为小数位</li>
+<li>unsigned属性，标识为无符号数，就是数值不能增加符号，比如不能增加负号</li>
+<li>zerofill属性，宽度不足以0填充</li>
+</ul>
+</li>
+<li>字符串<ul>
+<li>CHAR(M)，定长字符串，长度为M字节</li>
+<li>VARCHAR(M)，可变字符串，节省存储空间</li>
+</ul>
+</li>
+<li>日期<ul>
+<li>DATETIME，YY-MM-DD hh:mm:ss</li>
+<li>TIMESTAMP，YYYYMMDDHHMMSS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>字段的约束及属性</p>
+<ul>
+<li>非空约束NOT NULL，字段不允许为空</li>
+<li>默认约束DEFAULT，赋予某字段默认值</li>
+<li>唯一约束UNIQUE KEY(UK)，设置字段的值是唯一的，允许为空，但只能有一个空值</li>
+<li>主键约束PRIMARY KEY(PK)，设置该字段为表的主键，可唯一标识该表记录</li>
+<li>外键约束FOREIGN KEY(FK)，用于在两表之间建立关系，需要指定引用主表的哪一个字段</li>
+<li>自动增长AUTO_INCREMENT，设置该列为自增字段，默认每条自增1，通常用于设置主键</li>
+</ul>
+</li>
+<li><p>修改表</p>
+<pre><code>alter table 表名 rename to 新表名         #修改表名
+alter table 表名 add 新字段 字段类型       #添加字段
+alter table 表名 change 原字段名 新字段名 字段类型     #修改字段
+alter table 表名 drop 字段名              #删除字段
+</code></pre></li>
+<li><p>添加主外键</p>
+<pre><code>alter table 表名 add constraint 主键名 primary key 表名(主键字段)
+#主键名可以随意，比如pk_studentNo
+
+alert table 表名 add constraint 外键名 foreign key (外键字段) references 主表名(主键名)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cje8h1d3g0017xswv8sqhbeyu" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/28/LR基础/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          LR基础
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/27/BOM/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">BOM</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/MySQL学习/" style="font-size: 13.33px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/自动化测试/" style="font-size: 10px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/01/Selenium01/">selenium01</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/28/LR基础/">LR基础</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/28/初识MySQL/">初识MySQL</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/BOM/">BOM</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/HTML DOM/">HTML DOM</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
