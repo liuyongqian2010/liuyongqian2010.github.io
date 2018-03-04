@@ -5,20 +5,20 @@
   
 
   
-  <title>集合 | LiuYongQian</title>
+  <title>Jmeter基础 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="集合   定义  集合是一个无序不重复元素的集；如果要创建空集合，须用set() #第一种方法 s=set()                 #空集合,如果只有一个值，需要加逗号，如s=set(&amp;apos;liu&amp;apos;,) s1={&amp;apos;name&amp;apos;,2018.01,28,False,(12,22)}  #第二种方法 s2=set({&amp;apos;name&amp;apos;,2018">
-<meta name="keywords" content="Python学习">
+  <meta name="description" content="Jmeter基础   Jmeter简介  Apache Jmeter是Apache组织的开放源代码项目，是一个纯Java桌面应用，用于分析不同压力条件下的总体性能情况，也可以使用Jmeter提供的图形化界面分析性能指标或者在高负载情况下测试服务器、脚本、对象 Jmeter与LR的主要区别在于Jmeter不提供IP欺骗技术 Jmeter安装配置 安装配置好jdk后，解压apache-jmeter-4">
+<meta name="keywords" content="性能测试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="集合">
-<meta property="og:url" content="http://yoursite.com/2018/01/19/集合/index.html">
+<meta property="og:title" content="Jmeter基础">
+<meta property="og:url" content="http://yoursite.com/2018/02/28/Jmeter基础/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="集合   定义  集合是一个无序不重复元素的集；如果要创建空集合，须用set() #第一种方法 s=set()                 #空集合,如果只有一个值，需要加逗号，如s=set(&amp;apos;liu&amp;apos;,) s1={&amp;apos;name&amp;apos;,2018.01,28,False,(12,22)}  #第二种方法 s2=set({&amp;apos;name&amp;apos;,2018">
+<meta property="og:description" content="Jmeter基础   Jmeter简介  Apache Jmeter是Apache组织的开放源代码项目，是一个纯Java桌面应用，用于分析不同压力条件下的总体性能情况，也可以使用Jmeter提供的图形化界面分析性能指标或者在高负载情况下测试服务器、脚本、对象 Jmeter与LR的主要区别在于Jmeter不提供IP欺骗技术 Jmeter安装配置 安装配置好jdk后，解压apache-jmeter-4">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-06T09:31:44.226Z">
+<meta property="og:updated_time" content="2018-03-04T12:39:52.234Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="集合">
-<meta name="twitter:description" content="集合   定义  集合是一个无序不重复元素的集；如果要创建空集合，须用set() #第一种方法 s=set()                 #空集合,如果只有一个值，需要加逗号，如s=set(&amp;apos;liu&amp;apos;,) s1={&amp;apos;name&amp;apos;,2018.01,28,False,(12,22)}  #第二种方法 s2=set({&amp;apos;name&amp;apos;,2018">
+<meta name="twitter:title" content="Jmeter基础">
+<meta name="twitter:description" content="Jmeter基础   Jmeter简介  Apache Jmeter是Apache组织的开放源代码项目，是一个纯Java桌面应用，用于分析不同压力条件下的总体性能情况，也可以使用Jmeter提供的图形化界面分析性能指标或者在高负载情况下测试服务器、脚本、对象 Jmeter与LR的主要区别在于Jmeter不提供IP欺骗技术 Jmeter安装配置 安装配置好jdk后，解压apache-jmeter-4">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -70,10 +70,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-集合" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Jmeter基础" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/19/集合/" class="article-date">
-  <time datetime="2018-01-19T12:24:25.000Z" itemprop="datePublished">2018-01-19</time>
+    <a href="/2018/02/28/Jmeter基础/" class="article-date">
+  <time datetime="2018-02-28T15:10:23.000Z" itemprop="datePublished">2018-02-28</time>
 </a>
     
   </div>
@@ -84,7 +84,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      集合
+      Jmeter基础
     </h1>
   
 
@@ -95,130 +95,95 @@
       
 	  
 	  
-        <p></p><h5>集合</h5><p></p>
+        <p></p><h5>Jmeter基础</h5><p></p>
 <hr>
 <hr>
-<p></p><h6>定义</h6><p></p>
+<p></p><h6>Jmeter简介</h6><p></p>
 <ul>
-<li><p>集合是一个无序不重复元素的集；如果要创建空集合，须用set()</p>
-<pre><code>#第一种方法
-s=set()                 #空集合,如果只有一个值，需要加逗号，如s=set(&apos;liu&apos;,)
-s1={&apos;name&apos;,2018.01,28,False,(12,22)}
-
-#第二种方法
-s2=set({&apos;name&apos;,2018.01,28,False,(12,22)})
-s2=set([&apos;name&apos;,2018.01,28,False,(12,22)])
-s2=set((&apos;name&apos;,2018.01,28,False,(12,22)))
-
-#注意
-s2=set({&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:23})
-print(type(s2))         #result:&lt;class &apos;set&apos;&gt;
-print(s2)               #result:{&apos;name&apos;, &apos;age&apos;}
-</code></pre></li>
+<li>Apache Jmeter是Apache组织的开放源代码项目，是一个纯Java桌面应用，用于分析不同压力条件下的总体性能情况，也可以使用Jmeter提供的图形化界面分析性能指标或者在高负载情况下测试服务器、脚本、对象</li>
+<li>Jmeter与LR的主要区别在于Jmeter不提供IP欺骗技术</li>
+<li>Jmeter安装配置<ul>
+<li>安装配置好jdk后，解压apache-jmeter-4.0，运行bin目录下的ApacheJMeter.jar</li>
 </ul>
-<p></p><h6>增删改查</h6><p></p>
-<ul>
-<li><p>add()增加</p>
-<pre><code>s3={1,2,3,4,5}
-s4={4,5,6,7,8}
-s3.add(999)
-print(s3)               #result:{1, 2, 3, 4, 5, 999}
-</code></pre></li>
-<li><p>remove()删除</p>
-<pre><code>s3.remove(1)
-print(s3)               #result:{2, 3, 4, 5}
-</code></pre></li>
-<li><p>pop()随机返回并删除一个值,没有参数</p>
-<pre><code>s3.pop()
-print(s3)               #result:{2, 3, 4, 5}
-</code></pre></li>
-<li><p>clear()清空</p>
-<pre><code>s3.clear()
-print(s3)               #result:set()
-</code></pre></li>
+</li>
+<li>Jmeter文件目录介绍<ul>
+<li>bin可执行文件目录<ul>
+<li>jmeter.bat windows的启动文件</li>
+<li>jmeter.sh linux的启动文件</li>
+<li>jmeter.properties 系统配置文件</li>
+<li>jmeter-server.bat Windows分布式测试要用到的服务器配置</li>
+<li>jmeter-server linux分布式测试要用到的服务器配置</li>
 </ul>
-<p></p><h6>并、交、差、对称差集</h6><p></p>
-<ul>
-<li><p>并集</p>
-<pre><code>print(s3|s4)            #result:{1, 2, 3, 4, 5, 6, 7, 8}
-</code></pre></li>
-<li><p>交集</p>
-<pre><code>print(s3&amp;s4)            #result:{4, 5}
-</code></pre></li>
-<li><p>差</p>
-<pre><code>print(s3-s4)            #result:{1, 2, 3}
-</code></pre></li>
-<li><p>对称差集</p>
-<pre><code>print(s3^s4)            #result:{1, 2, 3, 6, 7, 8}
-</code></pre></li>
-<li><p>update()将字符串或集合中的数据联合</p>
-<pre><code>s3.update(s4)
-print(s3)               #result:{1, 2, 3, 4, 5, 6, 7, 8}
-</code></pre><p></p><h6>遍历</h6><p></p>
-<pre><code>s5=set((&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;))
-for i in s5:
-    print(i,end=&apos;&apos;)     #result:eacdb
-</code></pre></li>
+</li>
+<li>docs接口文档目录</li>
+<li>lib所用到的插件目录</li>
+<li>License Jmeter证书目录</li>
+<li>printable_docs用户使用手册</li>
 </ul>
-<p></p><h6>小练习</h6><p></p>
+</li>
+<li>功能概要<ul>
+<li>Jmeter工具组成部分<ul>
+<li>资源生成器：用于生成测试过程中服务器、负载机的资源代码（VuGen）</li>
+<li>用户运行器：根据脚本要求模拟指定的用户行为（Controller）</li>
+<li>报表生成器：根据测试中实时的数据生成报表，提供可视化的数据显示形式（Analysis）</li>
+<li>负载发生器：用于产生负载，通常以多线程、多进程的方式模拟用户行为（Load Generater）</li>
+<li>测试计划：相当于lr的一个测试场景</li>
+</ul>
+</li>
+<li>Threads(Users)线程  用户<ul>
+<li>a.setup thread group,可用于执行预测试操作，类似lr的init()</li>
+<li>b.teardown thread group，可用于执行测试后动作，类似lr的end()</li>
+<li>c.Thread group，这个就是通常运行的线程，类似lr的action()</li>
+</ul>
+</li>
+<li>线程组的8类可执行文件<ul>
+<li>配置元件（cinfig element）用于提供对静态数据配置的支持</li>
+<li>定时器（Timer）类似于lr中的思考时间</li>
+<li>前置处理器（per processors）用于在实际的请求发出前对即将发出的请求进行特殊处理</li>
+<li>后置处理器（post processors）类似于lr中的关联概念</li>
+<li>断言（assertions）用于检查测试中得到的相应数据是否符合预期</li>
+<li>监听器（listener）用来对测试结果数据进行处理和可视化展示的一系列元件，这个监听器可不是用来监听系统资源的元件</li>
+<li>取样器（sample）是性能测试中向服务器发送请求，记录相应信息，记录响应时间的最小单元</li>
+<li>逻辑控制器（logic controller）包括两类元件，一类是用于控制测试计划中sampler节点发送请求的逻辑顺序控制器，常用的有if控制器、循环控制器等，另一类是用来组织可控制sampler节点的，如事务控制器，吞吐量控制器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>脚本录制</h6><p></p>
 <ul>
-<li><p>通讯录管理系统</p>
-<pre><code>print(&quot;=======通讯录管理系统=======&quot;)
-print(&quot;1.增加姓名和手机&quot;)
-print(&quot;2.删除姓名&quot;)
-print(&quot;3.修改手机&quot;)
-print(&quot;4.查询所有用户&quot;)
-print(&quot;5.根据姓名查找手机号&quot;)
-print(&quot;6.退出&quot;)
-print(&quot;============================&quot;)
-User={}
-while True:
-    i=int(input(&apos;请输入操作项：&apos;))
-    if i==1:
-        name=input(&apos;请输入姓名：&apos;)
-        phone=input(&apos;请输入手机：&apos;)
-        User[name]=phone
-    elif i==2:
-        name=input(&apos;请输入要删除的姓名：&apos;)
-        if name in User:
-            del User[name]
-            print(&apos;删除成功！&apos;)
-        else:
-            print(&apos;姓名不存在！&apos;)
-    elif i==3:
-        name = input(&apos;请输入要修改的姓名：&apos;)
-        if name in User:
-            new_phone=input(&quot;请输入修改后的手机号：&quot;)
-            User[name]=new_phone
-            print(&apos;修改成功！&apos;)
-        else:
-            print(&apos;姓名不存在！&apos;)
-    elif i==4:
-        if User is None:
-            print(&apos;通讯录无记录！&apos;)
-        else:
-            for k,v in User.items():
-                print(k,v)
-    elif i==5:
-        name = input(&apos;请输入要查询的姓名：&apos;)
-        if name in User:
-            print(name,&apos;的手机号为&apos;,User[name])
-        else:
-            print(&apos;姓名不存在！&apos;)
-    elif i==6:
-         break
-    else:
-         print(&apos;请重新输入操作项！&apos;)
-</code></pre></li>
+<li>Badboy脚本录制完成后，导出为Export to jmeter</li>
+<li>Badboy检查点设置</li>
+<li>Badboy参数化</li>
+</ul>
+<p></p><h6>元件作用域、执行顺序</h6><p></p>
+<ul>
+<li>元件作用域<ul>
+<li>8类可被执行的元件（测试计划与线程组不属于可执行元件），这些元件中，取样器是典型的不与其他元件发生交互作用的元件，逻辑控制器只对其子节点的取样器有效，而其他元件需要与取样器等元件交互</li>
+<li>在Jmeter中，元件的作用域是靠测试计划的树型结构中元件的父子关系来确定的，作用域的原则是：<ul>
+<li>a，取样器元件不和其他元件相互作用，因此不存在作用域的问题</li>
+<li>b，逻辑控制器元件只对其子节点中的取样器和逻辑控制器作用</li>
+<li>c，除取样器和逻辑控制器元件外，其他6类元件，如果是某个取样器的子节点，则该元件对其父子节点起作用，如果其父节点不是取样器，则其作用域是该元件父节点下的其他所有后代节点（包括子节点，子节点的子节点等）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>元件执行顺序<ul>
+<li>配置元件–前置处理程序–定时器–取样器–后置处理程序–断言–监听器<ul>
+<li>注意：前置处理器、后置处理器和断言等元件功能对取样器作用，因此，如果在他们的作用域内没有任何取样器，则不会被执行；如果在同一作用域内有多个同一类型的元件，则这些元件按照他们在测试计划中的上下顺序依次执行</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjecvedb5002mqowvkmk0kbvj" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjecved86000nqowv4yc2nbzr" class="article-share-link">Compartir</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
 
     </footer>
   </div>
@@ -226,19 +191,19 @@ while True:
     
 <nav id="article-nav">
   
-    <a href="/2018/01/19/函数/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/01/Selenium01/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Nuevo</strong>
       <div class="article-nav-title">
         
-          函数
+          selenium01
         
       </div>
     </a>
   
   
-    <a href="/2018/01/17/通讯录管理系统/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/02/28/初识MySQL/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Viejo</strong>
-      <div class="article-nav-title">通讯录管理系统</div>
+      <div class="article-nav-title">初识MySQL</div>
     </a>
   
 </nav>

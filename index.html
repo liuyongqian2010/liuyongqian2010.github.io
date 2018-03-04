@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,184 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-DML和DQL" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/02/DML和DQL/" class="article-date">
+  <time datetime="2018-03-02T08:50:44.000Z" itemprop="datePublished">2018-03-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/02/DML和DQL/">DML和DQL</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>DML和DQL</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>DML</h6><p></p>
+<ul>
+<li><p>存储引擎</p>
+<ul>
+<li><p>存储引擎的类型：MyISAM、InnoDB、Memory、CSV等9种</p>
+<ul>
+<li>默认InnoDB，支持事务处理、数据行锁定、外键约束，表空间较大</li>
+<li>MyISAM，支持全文索引，表空间较小，以查询访问为主</li>
+<li>查看当前默认存储引擎<code>show variables like &#39;storage_engine%&#39;</code></li>
+<li>可以在配置文件my.ini中修改存储引擎<code>default-storage-engine=?</code></li>
+<li><p>设置表的存储引擎</p>
+<pre><code>create table 表名(
+    省略代码
+)engine=存储引擎
+</code></pre></li>
+</ul>
+</li>
+<li>MyISAM类型表文件<ul>
+<li>*.frm：表结构定义文件</li>
+<li>*.MYD：数据文件</li>
+<li>*.MYI：索引文件</li>
+</ul>
+</li>
+<li>InnoDB类型表文件<ul>
+<li>*.frm：表结构定义文件</li>
+<li>ibdata1文件</li>
+</ul>
+</li>
+<li>存储位置，可查my.ini中的<code>datadir</code></li>
+</ul>
+</li>
+<li><p>DML语句</p>
+<ul>
+<li><p>插入单条数据记录</p>
+<pre><code>insert into 表名(字段1,字段2,字段3...) values(值1,值2,值3...)
+#如果插入所有字段可省略字段名，如果是部分数据，字段名与值需要一一对应
+</code></pre></li>
+<li><p>插入多条数据记录</p>
+<pre><code>insert into 表名(字段1,字段2,字段3...) values(值1,值2,...),(值3,值4,...),(值5,值6,...)
+</code></pre></li>
+<li><p>将查询结果插入新表</p>
+<pre><code>create table 新表(        #自动创建一个新表
+    select 字段1,字段2 from 表名
+)
+</code></pre></li>
+<li><p>更新数据记录</p>
+<pre><code>update 表名 set 字段1=值1,字段2=值2,... where 条件
+</code></pre></li>
+<li><p>删除数据记录</p>
+<pre><code>delete from 表名 where 条件
+truncate table 表名   #该语句删除后将重置自增列，表结构及其字段、约束、索引保持不变，执行速度比delete语句快
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>DQL</h6><p></p>
+<ul>
+<li><p>什么是查询<br>查询产生一个虚拟表，看到的是表形式显示的结果，但结果并不真正存储，每次执行查询只是从数据表中提取数据，并按照表的形式显示出来</p>
+<pre><code>SELECT    &lt;列名|表达式|函数|常量&gt; 
+FROM      &lt;表名&gt; 
+[WHERE    &lt;查询条件表达式&gt;] 
+[ORDER BY &lt;排序的列名&gt;[ASC或DESC]]
+
+select studentNo as &apos;学生编号&apos;,studentName as &apos;学生姓名&apos;
+from student 
+where sex=&apos;男&apos; and gradeID=1 
+order by studentNo desc
+</code></pre></li>
+<li><p>聚合函数</p>
+<pre><code>avg() 返回某字段的平均值
+count()返回某字段的行数
+max()返回某字段的最大值
+min()返回某字段的最小值
+sum()返回某字段的和
+
+select avg(studentResult) from result
+</code></pre></li>
+<li><p>字符串函数</p>
+<pre><code>字符串连接concat(str1,str2,...)
+select CONCAT(&apos;Liu&apos;,&apos;Yong&apos;,&apos;qian&apos;,2018)  #result:LiuYongqian2018
+
+字符串替换insert(str,start,length,newstr)
+select INSERT(&apos;ABCDEFGHIJK&apos;,3,5,&apos;9&apos;)     #result:AB9HIJK
+
+将字符串转为小写lower(str)
+select lower(&apos;LIUYONGQIAN&apos;)                #result:liuyongqian
+
+将字符串转为大写upper(str)
+select upper(&apos;liuyongqian&apos;)                #result:LIUYONGQIAN
+
+字符串截取substring(str,start,length)
+select SUBSTRING(&apos;LiuYongqian&apos;,4,4)      #result:Yong
+</code></pre></li>
+<li><p>时间日期函数</p>
+<pre><code>curdate()获取当前日期
+select curdate()      #result:2018-01-01
+
+curtime() 获取当前时间
+select curtime()      #result:12:12:12
+
+now()获取当前日期和时间
+select now()          #result:2018-03-01 12:44:24
+
+week(date) 返回日期date为一年中的第几周
+select week(now())    #result:2
+
+year(date)返回日期date的年份
+select year(now())     #result:2018
+
+hour(time)返回时间time的小时值
+select hour(now())     #result:19
+
+minute(time)返回时间time的分钟值
+select minute(now())   #result:48
+
+datediff(date1,date2)返回参数之间相隔的天数
+select datediff(now(),&apos;2008-8-8&apos;)  #result:3493
+
+adddate(date，n)计算日期date加上n天后的日期
+select adddate(now(),5)  #result:2018-03-30 19:48:44
+</code></pre></li>
+<li><p>数学函数</p>
+<pre><code>ceil(x)返回大于或等于数值x的最小整数 
+select ceil(2.3)      #result:3
+
+floor(x)返回小于或等于数值x的最大整数
+select floor(2.3)     #result:2
+
+rand()返回0-1之间的随机数
+select rand()         #result:0.8155794216465013
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjecved78000dqowvknkpz9yu" class="article-share-link">Compartir</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-Selenium01" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -99,7 +277,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/Selenium01/" data-id="cje8h1d4d001sxswvh208vdgd" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/01/Selenium01/" data-id="cjecved8j000zqowv5dvp9ffz" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -113,9 +291,9 @@
 
 
   
-    <article id="post-LR基础" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Jmeter基础" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/02/28/LR基础/" class="article-date">
+    <a href="/2018/02/28/Jmeter基础/" class="article-date">
   <time datetime="2018-02-28T15:10:23.000Z" itemprop="datePublished">2018-02-28</time>
 </a>
     
@@ -127,7 +305,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/28/LR基础/">LR基础</a>
+      <a class="article-title" href="/2018/02/28/Jmeter基础/">Jmeter基础</a>
     </h1>
   
 
@@ -138,11 +316,92 @@
       
 	  
 	  
-        
+        <p></p><h5>Jmeter基础</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>Jmeter简介</h6><p></p>
+<ul>
+<li>Apache Jmeter是Apache组织的开放源代码项目，是一个纯Java桌面应用，用于分析不同压力条件下的总体性能情况，也可以使用Jmeter提供的图形化界面分析性能指标或者在高负载情况下测试服务器、脚本、对象</li>
+<li>Jmeter与LR的主要区别在于Jmeter不提供IP欺骗技术</li>
+<li>Jmeter安装配置<ul>
+<li>安装配置好jdk后，解压apache-jmeter-4.0，运行bin目录下的ApacheJMeter.jar</li>
+</ul>
+</li>
+<li>Jmeter文件目录介绍<ul>
+<li>bin可执行文件目录<ul>
+<li>jmeter.bat windows的启动文件</li>
+<li>jmeter.sh linux的启动文件</li>
+<li>jmeter.properties 系统配置文件</li>
+<li>jmeter-server.bat Windows分布式测试要用到的服务器配置</li>
+<li>jmeter-server linux分布式测试要用到的服务器配置</li>
+</ul>
+</li>
+<li>docs接口文档目录</li>
+<li>lib所用到的插件目录</li>
+<li>License Jmeter证书目录</li>
+<li>printable_docs用户使用手册</li>
+</ul>
+</li>
+<li>功能概要<ul>
+<li>Jmeter工具组成部分<ul>
+<li>资源生成器：用于生成测试过程中服务器、负载机的资源代码（VuGen）</li>
+<li>用户运行器：根据脚本要求模拟指定的用户行为（Controller）</li>
+<li>报表生成器：根据测试中实时的数据生成报表，提供可视化的数据显示形式（Analysis）</li>
+<li>负载发生器：用于产生负载，通常以多线程、多进程的方式模拟用户行为（Load Generater）</li>
+<li>测试计划：相当于lr的一个测试场景</li>
+</ul>
+</li>
+<li>Threads(Users)线程  用户<ul>
+<li>a.setup thread group,可用于执行预测试操作，类似lr的init()</li>
+<li>b.teardown thread group，可用于执行测试后动作，类似lr的end()</li>
+<li>c.Thread group，这个就是通常运行的线程，类似lr的action()</li>
+</ul>
+</li>
+<li>线程组的8类可执行文件<ul>
+<li>配置元件（cinfig element）用于提供对静态数据配置的支持</li>
+<li>定时器（Timer）类似于lr中的思考时间</li>
+<li>前置处理器（per processors）用于在实际的请求发出前对即将发出的请求进行特殊处理</li>
+<li>后置处理器（post processors）类似于lr中的关联概念</li>
+<li>断言（assertions）用于检查测试中得到的相应数据是否符合预期</li>
+<li>监听器（listener）用来对测试结果数据进行处理和可视化展示的一系列元件，这个监听器可不是用来监听系统资源的元件</li>
+<li>取样器（sample）是性能测试中向服务器发送请求，记录相应信息，记录响应时间的最小单元</li>
+<li>逻辑控制器（logic controller）包括两类元件，一类是用于控制测试计划中sampler节点发送请求的逻辑顺序控制器，常用的有if控制器、循环控制器等，另一类是用来组织可控制sampler节点的，如事务控制器，吞吐量控制器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>脚本录制</h6><p></p>
+<ul>
+<li>Badboy脚本录制完成后，导出为Export to jmeter</li>
+<li>Badboy检查点设置</li>
+<li>Badboy参数化</li>
+</ul>
+<p></p><h6>元件作用域、执行顺序</h6><p></p>
+<ul>
+<li>元件作用域<ul>
+<li>8类可被执行的元件（测试计划与线程组不属于可执行元件），这些元件中，取样器是典型的不与其他元件发生交互作用的元件，逻辑控制器只对其子节点的取样器有效，而其他元件需要与取样器等元件交互</li>
+<li>在Jmeter中，元件的作用域是靠测试计划的树型结构中元件的父子关系来确定的，作用域的原则是：<ul>
+<li>a，取样器元件不和其他元件相互作用，因此不存在作用域的问题</li>
+<li>b，逻辑控制器元件只对其子节点中的取样器和逻辑控制器作用</li>
+<li>c，除取样器和逻辑控制器元件外，其他6类元件，如果是某个取样器的子节点，则该元件对其父子节点起作用，如果其父节点不是取样器，则其作用域是该元件父节点下的其他所有后代节点（包括子节点，子节点的子节点等）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>元件执行顺序<ul>
+<li>配置元件–前置处理程序–定时器–取样器–后置处理程序–断言–监听器<ul>
+<li>注意：前置处理器、后置处理器和断言等元件功能对取样器作用，因此，如果在他们的作用域内没有任何取样器，则不会被执行；如果在同一作用域内有多个同一类型的元件，则这些元件按照他们在测试计划中的上下顺序依次执行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/LR基础/" data-id="cje8h1d2q000qxswv8rod20nh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjecved86000nqowv4yc2nbzr" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -287,7 +546,7 @@ alert table 表名 add constraint 外键名 foreign key (外键字段) reference
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cje8h1d3g0017xswv8sqhbeyu" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjecved8z001eqowv5p3arpd3" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -411,7 +670,7 @@ clearInterval取消由setInterval()设置的timeout
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cje8h1d1s0009xswvorde3ygz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjecved6s0005qowvse6vqw6n" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -530,7 +789,7 @@ div.appendChild(img)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cje8h1d2d000gxswv4oijf3vy" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjecved7o000lqowv8g3gbtx7" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -678,7 +937,7 @@ nextSibling      获取下一个兄弟节点
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cje8h1d3d0015xswvvw6cnbl6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjecved8z001bqowv5so400mk" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -829,7 +1088,7 @@ a()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cje8h1d3j001axswviofn1826" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjecved9f001gqowviwvcr4kq" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -968,7 +1227,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cje8h1d4j001xxswvoa23eubi" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjecvedaa0025qowv6popt0dq" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1165,196 +1424,10 @@ print(guodi())
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cje8h1d5i002hxswvbvdn5uqv" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjecvedaq002iqowv6xod1x5i" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Js对象" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/23/Js对象/" class="article-date">
-  <time datetime="2018-02-23T12:38:06.000Z" itemprop="datePublished">2018-02-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/Js对象/">Js对象</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>JS对象</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>内置对象</h6><p></p>
-<ul>
-<li>内置对象就是ECMAScript标准中已经定义好的，由浏览器厂商已经实现的标准对象！内置对象中封装了专门的数据和操作数据常用的API</li>
-<li>JavaScript中内置对象列表：String、Boolean、Number、Array、Date、RegExp、Math、Error、Function、Object、Global</li>
-</ul>
-<p></p><h6>String对象</h6><p></p>
-<ul>
-<li><p>String对象用于处理文本字符串,JavaScript中字符串的内容都是不可变的</p>
-<pre><code>创建原始类型字符串变量：
-var ename = &apos;Tom&apos;;
-创建引用类型字符串对象：
-var stuName = new String(&apos;Hello World&apos;)
-</code></pre></li>
-<li><p>String对象的所用方法，返回的都是一个全新的对象，而不是修改原始字符串内容</p>
-<pre><code>toLowerCase()方法返回字符串的小写;
-toUpperCase()方法返回字符串的大写;
-charAt()方法用于获取指定下标的字符;
-charCodeAt()方法用于获取指定下标的字符的Unicode码;
-indexOf()返回第一次出现指定子串的下标;
-lastIndexOf()返回最后一次出现指定子串的下标;
-slice(start,[end])返回从start到end-1范围内的子串;
-substring(start,[end])返回从start到end-1范围内的子串;
-split()使用指定分隔符对字符串进行拆分，返回数组
-concat()用于拼接两个或多个字符串
-replace()方法用于在字符串中用一些字符替换特定的字符，或替换一个与正则表达式匹配的子串
-match()方法可在字符串内检索指定的值，或找到一个或多个与正则表达式匹配的子串
-search()方法用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。
-返回第一个与regexp相匹配的子串的起始位置；如果没有找到任何匹配的子串，则返回-1
-
-var str=&quot;老鹰来了&quot;
-var s=&quot;&quot;                          //编码
-function fn1(){
-    for(var i=0;i&lt;str.length;i++){
-            s+=str.charCodeAt(i);
-    }
-    console.log(s)
-}
-fn1()
-function fn2(){                      //解码
-    for(var i=0;i&lt;s.length;i+=5){
-        var n=s.slice(i,i+5);
-        var num=Number(n);
-        var s1=String.fromCharCode(num);
-        console.log(s1)
-    }
-}
-fn2()
-</code></pre></li>
-</ul>
-<p></p><h6>Math对象</h6><p></p>
-<ul>
-<li>Math对象是ECMAScript提供的一个全局对象，它主要封装了一些常用的数学函数和常数<br>Math对象没有构造函数，无法创建它的实例；调用其属性和方法时，直接使用Math对象名即可</li>
-<li><p>Math对象具有如下成员属性：</p>
-<pre><code>E  返回算术常量e，即自然对数的底数（约等于2.718）
-PI 返回圆周率（约等于3.14159）
-</code></pre></li>
-<li><p>Math对象具有如下方法：</p>
-<pre><code>abs(x)   返回数的绝对值
-ceil(x)  对数进行上舍入
-floor(x) 对数进行下舍入
-max(x,y) 返回x和y中的最高值
-min(x,y) 返回x和y中的最低值
-pow(x,y) 返回x的y次幂
-round(x) 把数四舍五入为最接近的整数
-sqrt(x)  返回数的平方根
-</code></pre></li>
-<li><p>随机数</p>
-<pre><code>console.log(Math.random())//0-1之间的随机数，不包括1
-console.log(Math.random()*100)//0-99随机整数
-console.log(Math.random()*90+10)//10-99之间的随机整数
-</code></pre></li>
-</ul>
-<p></p><h6>Date对象</h6><p></p>
-<ul>
-<li><p>Date对象用于对时期和时间进行存储和计算</p>
-<pre><code>var date=new Date()
-date.getDate()            //日期
-date.getMonth()           //月份0-11
-date.getMinutes()        //分钟
-date.getSeconds()        //秒
-date.getMilliseconds()    //毫秒
-date.getHours()            //小时
-
-date.toString()                //返回Date对象的字符串形式
-date.toLocaleString()        //基于本地时间格式，返回Date对象的字符串形式
-date.toLocaleTimeString()    //基于本地时间格式返回Date对象“时间”部分（时分秒）的字符串形式
-date.toGMTString()            //基于GMT时间格式，返回Date对象的字符串形式
-date.toUTCString()            //基于UTC时间格式，返回Date对象的字符串形式
-</code></pre></li>
-</ul>
-<p></p><h6>Number对象</h6><p></p>
-<ul>
-<li><p>Number对象表示数值数据和数字常数，主要用于对数字进行指定格式的输出</p>
-<pre><code>//构造新的Number对象----引用类型的变量
-var num1 = new Number(5);         //[Number:5]
-var num2 = new Number(“5”)        //[Number:5]
-var num3 = new Number(“hello”)    //[Number:NaN]
-//将数据转换为Number数据类型-----值类型的变量
-var num4 = Number(“123”);         //123
-</code></pre></li>
-</ul>
-<p></p><h6>Error对象</h6><p></p>
-<ul>
-<li><p>六种错误对象：</p>
-<pre><code>1、Error：  广泛意义上的错误
-2、SyntaxError： 语法错误      var x = 10; x+++;
-3、ReferenceError:  引用错误     var userName = &apos;tom&apos;;  console.log(uName);
-4、TypeError:  类型错误     console.abc();
-5、EvalError:  eval()函数执行错误    
-6、RangeError：范围错误     var n = 123.456;    console.log( n.toFixed(20) );
-7、URIError:  URI解析错误
-</code></pre></li>
-<li><p>try/catch<br><br>ECMAScript中使用try…catch…finally…结构来执行异常处理功能，捕捉由系统生成或程序创建并抛出的Error对象，对错误情形加以处理。它的基本语法如下：</p>
-<pre><code>try{
-     //此处是主业务功能代码
-     //主业务功能代码中肯能产生并抛出错误
-}catch(error){
-     //此处是负责错误处理的代码
-}[finally{
-     //此处是出口语句，不论错误发生与否都要执行
-}]
-</code></pre></li>
-</ul>
-<p></p><h6>Function对象</h6><p></p>
-<ul>
-<li><p>在JavaScript中，函数也是以对象的形式存在的。每个函数都是一个Function对象实例</p>
-<pre><code>function add(){
-}
-console.log(typeof add);      //function 
-//函数名，本质也是一个变量名，是指向某个Function对象的引用
-</code></pre></li>
-</ul>
-<p></p><h6>arguments对象</h6><p></p>
-<ul>
-<li>每个函数对象都有一个arguments属性；此属性只能在函数执行体内使用<br>arguments属性中保存着当前函数接受到的所有实际参数，故可以使用arguments属性处理可变数量的参数</li>
-<li><p>arguments对象具有如下属性：</p>
-<pre><code>length：返回实际传入的参数的个数
-callee：返回当前函数的引用
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cje8h1d2k000lxswvev67r2dy" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
 
     </footer>
   </div>
@@ -1369,7 +1442,7 @@ callee：返回当前函数的引用
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Siguiente &raquo;</a>
   </nav>
 
 </section>
@@ -1383,7 +1456,7 @@ callee：返回当前函数的引用
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1391,7 +1464,7 @@ callee：返回当前函数的引用
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nube de Tags</h3>
     <div class="widget tagcloud">
       <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/MySQL学习/" style="font-size: 13.33px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/自动化测试/" style="font-size: 10px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
     </div>
@@ -1400,9 +1473,9 @@ callee：返回当前函数的引用
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archivos</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1410,16 +1483,20 @@ callee：返回当前函数的引用
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Posts recientes</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/02/DML和DQL/">DML和DQL</a>
+          </li>
         
           <li>
             <a href="/2018/03/01/Selenium01/">selenium01</a>
           </li>
         
           <li>
-            <a href="/2018/02/28/LR基础/">LR基础</a>
+            <a href="/2018/02/28/Jmeter基础/">Jmeter基础</a>
           </li>
         
           <li>
@@ -1428,10 +1505,6 @@ callee：返回当前函数的引用
         
           <li>
             <a href="/2018/02/27/BOM/">BOM</a>
-          </li>
-        
-          <li>
-            <a href="/2018/02/27/HTML DOM/">HTML DOM</a>
           </li>
         
       </ul>
@@ -1462,7 +1535,7 @@ callee：返回当前函数的引用
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Construido por <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
