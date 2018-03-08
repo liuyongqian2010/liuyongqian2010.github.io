@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>单元测试框架 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="单元测试框架   简介  单元测试（unit testing）是指对软件中的最小可测试单元进行检查和验证，单元就是人为规定的最小的被测功能模块 单元测试框架提供了一种统一的编程模型，可以将测试定义为一些简单的类，这些类中的方法可以调用希望测试的应用程序代码。 不同编程语言有不同的单元测试框架，如Java 的Junit, TestNg, c#的 Nunit,Python的unittest,Pyuni">
+<meta name="keywords" content="自动化测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单元测试框架">
+<meta property="og:url" content="http://yoursite.com/2018/03/04/单元测试框架/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="单元测试框架   简介  单元测试（unit testing）是指对软件中的最小可测试单元进行检查和验证，单元就是人为规定的最小的被测功能模块 单元测试框架提供了一种统一的编程模型，可以将测试定义为一些简单的类，这些类中的方法可以调用希望测试的应用程序代码。 不同编程语言有不同的单元测试框架，如Java 的Junit, TestNg, c#的 Nunit,Python的unittest,Pyuni">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-06T13:01:32.265Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="单元测试框架">
+<meta name="twitter:description" content="单元测试框架   简介  单元测试（unit testing）是指对软件中的最小可测试单元进行检查和验证，单元就是人为规定的最小的被测功能模块 单元测试框架提供了一种统一的编程模型，可以将测试定义为一些简单的类，这些类中的方法可以调用希望测试的应用程序代码。 不同编程语言有不同的单元测试框架，如Java 的Junit, TestNg, c#的 Nunit,Python的unittest,Pyuni">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-单元测试框架" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/04/单元测试框架/" class="article-date">
+  <time datetime="2018-03-04T14:12:42.000Z" itemprop="datePublished">2018-03-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      单元测试框架
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>单元测试框架</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>单元测试（unit testing）是指对软件中的最小可测试单元进行检查和验证，单元就是人为规定的最小的被测功能模块</li>
+<li>单元测试框架提供了一种统一的编程模型，可以将测试定义为一些简单的类，这些类中的方法可以调用希望测试的应用程序代码。</li>
+<li>不同编程语言有不同的单元测试框架，如Java 的Junit, TestNg, c#的 Nunit,Python的unittest,Pyunit,testtools, subunit….</li>
+</ul>
+<p></p><h6>unittest</h6><p></p>
+<ul>
+<li>unittest单元测试框架不仅适用于单元测试，还适用WEB自动化测试用例的开发与执行，该测试框架可组织执行测试用例，并且提供了丰富的断言方法，判断测试用例是否通过，最终生成测试结果</li>
+<li>unittest核心要素<ul>
+<li>TestCase<br>一个TestCase的实例就是一个测试用例。什么是测试用例呢？就是一个完整的测试流程，包括测试前准备环境的搭建(setUp)，执行测试代码(run)，以及测试后环境的还原(tearDown)。单元测试(unit test)的本质也就在这里，一个测试用例是一个完整的测试单元，通过运行这个测试单元，可以对某一个问题进行验证</li>
+<li>TestSuite<br>而多个测试用例集合在一起，就是TestSuite，而且TestSuite也可以嵌套TestSuite。 TestLoader是用来加载TestCase到TestSuite中的，其中有几个loadTestsFrom__()方法，就是从各个地方寻找TestCase，创建它们的实例，然后add到TestSuite中，再返回一个TestSuite实例</li>
+<li>TextTestRunner<br>TextTestRunner是来执行测试用例的，其中的run(test)会执行TestSuite/TestCase中的run(result)方法。测试的结果会保存到TextTestResult实例中，包括运行了多少测试用例，成功了多少，失败了多少等信息</li>
+<li>Fixture<br>对一个测试用例环境的搭建和销毁，是一个fixture</li>
+</ul>
+</li>
+<li><p>unittest案例</p>
+<pre><code>#cal.py #加减法运算方法的实现
+class Math:
+    def __init__(self,a,b):
+        self.a=int(a)
+        self.b=int(b)
+    def add(self):
+        return self.a+self.b
+    def sub(self):
+        return self.a-self.b
+#startend.py #SetUp与TearDown管理
+import unittest
+class StartEnd(unittest.TestCase):
+    def setUp(self):
+        print(&apos;开始测试！&apos;)
+    def tearDown(self):
+        print(&apos;测试结束！&apos;)
+#test_add.py #加法测试用例
+from cal import *
+from startend import *
+class Test_add(StartEnd):
+    def test_add(self):
+        j=Math(6,9)
+        self.assertEqual(j.add(),15)
+    def test_add1(self):
+        k=Math(5,7)
+        self.assertEqual(k.add(),12)
+#test_sub.py #减法测试用例
+from cal import *
+from startend import *
+class Test_sub(StartEnd):
+    def test_sub(self):
+        j=Math(6,9)
+        self.assertEqual(j.sub(),-3)
+    def test_sub1(self):
+        k=Math(5,7)
+        self.assertEqual(k.sub(),-2)
+#runtest.py #用例执行管理
+import unittest
+dir=&apos;./&apos;
+discovery=unittest.defaultTestLoader.discover(dir,pattern=&apos;test*.py&apos;)
+if __name__==&apos;__main__&apos;:
+    runner=unittest.TextTestRunner()
+    runner.run(discovery)
+</code></pre></li>
+<li><p>断言<br>断言内容是自动化脚本的重要内容，正确设置断言以后才能帮助我们判断测试用例执行结果</p>
+<pre><code>assertEqual(a, b) 判断a==b
+assertNotEqual(a, b) 判断a！=b
+assertTrue(x) bool(x) is True
+assertFalse(x) bool(x) is False
+assertIs(a, b) a is b
+assertIsNot(a, b) a is not b
+assertIsNone(x) x is None
+assertIsNotNone(x) x is not None
+assertIn(a, b) a in b
+assertNotIn(a, b) a not in b
+assertIsInstance(a, b) isinstance(a, b)
+assertNotIsInstance(a, b) not isinstance(a, b)
+</code></pre></li>
+<li><p>跳过测试和预期失败</p>
+<pre><code>unittest.skip() 直接跳过测试
+unittest.skipIf() 条件为真，跳过测试
+unittest.skipUnless 条件为假，跳过测试
+unittest.expectedFailure 预期设置失败
+
+import unittest
+class test1(unittest.TestCase):
+    def setUp(self):
+        print(&apos;测试开始!&apos;)
+    def test_b(self):
+        print(&apos;test_b&apos;)
+    @unittest.skipIf(3&lt;4,&apos;skip test_c&apos;)
+    def test_c(self):
+        print(&apos;test_c&apos;)
+    def tearDown(self):
+        print(&apos;测试结束!&apos;)
+@unittest.skip(&apos;skip test2&apos;)
+class test2(unittest.TestCase):
+    def setUp(self):
+        print(&apos;测试开始！&apos;)
+    def test_d(self):
+        print(&apos;test_d&apos;)
+    def test_a(self):
+        print(&apos;test_a&apos;)
+    def tearDown(self):
+        print(&apos;测试结束!&apos;)
+if __name__==&apos;__main__&apos;:
+    unittest.main()
+</code></pre></li>
+</ul>
+<p></p><h6>编写Web测试用例</h6><p></p>
+<ul>
+<li><p>案例：百度搜索关键词：“Selenium自学网” 并打开课程页面</p>
+<pre><code>#test_baidu.py
+from selenium import webdriver
+import unittest
+from time import sleep
+class TestBaidu(unittest.TestCase):
+    def setUp(self):
+        self.driver=webdriver.Firefox()
+        #self.driver.implicitly_wait(10)
+        self.driver.get(&apos;http://www.baidu.com/&apos;)
+    def test_baidu(self):
+        driver=self.driver
+        driver.find_element_by_id(&apos;kw&apos;).clear()
+        driver.find_element_by_id(&apos;kw&apos;).send_keys(&apos;selenium自学网&apos;)
+        driver.find_element_by_id(&apos;su&apos;).click()
+        sleep(3)
+        title=driver.title
+        self.assertEqual(title,&apos;selenium自学网_百度搜索&apos;)
+        driver.find_element_by_partial_link_text(&apos;Selenium自动化&apos;).click()
+        sleep(5)
+    def tearDown(self):
+        self.driver.quit()
+if __name__==&apos;__main__&apos;:
+    unittest.main()
+#runtest.py
+import unittest
+#from HTMLTestRunner import HTMLTestRunner
+from BSTestRunner import BSTestRunner
+import time
+
+test_dir=&apos;./test_case&apos;          #定义测试用例路径
+discovery=unittest.defaultTestLoader.discover(test_dir,pattern=&apos;test*.py&apos;)
+
+if __name__==&apos;__main__&apos;:
+    report_dir=&apos;./test_report&apos;  #存放报告的文件夹
+    now=time.strftime(&apos;%Y-%m-%d %H_%M_%S&apos;)       #报告命名时间格式化
+    report_name=report_dir+&apos;/&apos;+now+&apos;result.html&apos; #报告文件完整路径
+    #打开文件在报告文件中写入测试结果
+    with open(report_name,&apos;wb&apos;) as f:
+        #runer=HTMLTestRunner(stream=f,title=&apos;Test Report&apos;,description=&apos;Test case result&apos;)
+        runner=BSTestRunner(stream=f,title=&apos;Test Report&apos;,description=&apos;Test case result&apos;)
+        runner.run(discovery)
+    f.close()
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjeiqe628001j1kwv13ebmqsx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/05/发送邮件/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          发送邮件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/02/DML和DQL/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">DML和DQL</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 12.5px;">Github博客</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/08/httpwatch/">httpwatch</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/08/20180308002/">20180308002</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/08/Page Object/">Page Object</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/07/整合测试报告发送/">整合测试报告发送</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/06/高级查询/">高级查询</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

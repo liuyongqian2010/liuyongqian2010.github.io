@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,775 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-httpwatch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/08/httpwatch/" class="article-date">
+  <time datetime="2018-03-08T05:49:23.000Z" itemprop="datePublished">2018-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/httpwatch/">httpwatch</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>httpwatch</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>HttpWatch是一个可用于录制HTTP请求信息的工具，由Simtec Limited公司开发，其官网为：Http://www.httpwatch.com，HttpWatch只支持IE和Firefox，也就是说只有当你用IE或Firefox访问网页时，它才会进行录制，不像Sniffer和Omnipeek那样监控所有数据，但对于网站分析来说，已经是不可多得的利器了</li>
+<li>HttpWatch有两部分组成： <ul>
+<li>1、一个是嵌入到IE或Firefox中用于收集、查看、保存HTTP信息的插件 </li>
+<li>2、一个是独立运行的日志查看器，叫做HttpWatch Studio</li>
+</ul>
+</li>
+<li></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjeiqe61d00161kwvxd40a22k" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-20180308002" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/08/20180308002/" class="article-date">
+  <time datetime="2018-03-08T05:48:02.000Z" itemprop="datePublished">2018-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/20180308002/">20180308002</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/08/20180308002/" data-id="cjeiqe60200051kwvfi9cohjl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Page Object" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/08/Page Object/" class="article-date">
+  <time datetime="2018-03-08T03:30:46.000Z" itemprop="datePublished">2018-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/Page Object/">Page Object</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Page Object</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>By元素定位</h6><p></p>
+<ul>
+<li><p>已经将By方法封装</p>
+<pre><code>from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+driver=webdriver.Firefox()
+driver.get(&apos;http://www.baidu.com&apos;)
+driver.find_element(By.ID,&apos;kw&apos;).clear()
+driver.find_element(By.NAME,&apos;wd&apos;).send_keys(&apos;selenium&apos;)
+driver.find_element(By.CLASS_NAME,&apos;s_ip&apos;).send_keys(&apos;study&apos;)
+driver.find_element(By.CSS_SELECTOR,&apos;#kw&apos;).send_keys(&apos;Python&apos;)
+driver.find_element(By.TAG_NAME,&apos;input&apos;)....
+driver.find_element(By.LINK_TEXT,&apos;退出&apos;)...
+driver.find_element(By.PARTIAL_LINK_TEXT,&apos;退&apos;)...
+driver.find_element(By.XPATH,&apos;.//[@id=&quot;Title&quot;]&apos;)...
+</code></pre></li>
+</ul>
+<p></p><h6>Page Object</h6><p></p>
+<ul>
+<li><p>Page Object是Selenium自动化测试项目开发实践的最佳设计模式之一，通过对界面元素和功能模块的封装减少冗余代码，同时在后期维护中，若元素定位或功能模块发生变化，只需要调整页面元素或功能模块封装的代码，提高测试用例的可维护性</p>
+<pre><code>#basepage.py
+from time import sleep
+class Page:                         #页面基础类
+    def __init__(self,driver):      #初始化
+        self.driver=driver
+        self.base_url=&apos;http://localhost&apos;
+        self.timeout=10
+    def _open(self,url):            #打开不同的子页面
+        url_=self.base_url+url
+        print(&apos;Test page is %s&apos;%url_)
+        self.driver.maximize_window()
+        self.driver.get(url_)
+        sleep(3)
+        assert self.driver.current_url==url_,&apos;Did not land on %s&apos;%url_
+    def open(self):
+        self._open(self.url)
+    def find_element(self,*location): #元素定位方法封装
+        return self.driver.find_element(*location)
+
+#loginpage.py
+from basepage import *
+from selenium.webdriver.common.by import By
+class LoginPage(Page):
+    &apos;&apos;&apos;首页登录页面&apos;&apos;&apos;
+    url=&apos;/&apos;
+    username_loc=(By.NAME,&apos;username&apos;)         #定位器
+    password_loc=(By.NAME,&apos;password&apos;)
+    submit_loc=(By.NAME,&apos;Submit&apos;)
+    def type_username(self,username):         #用户名输入框元素
+        self.find_element(*self.username_loc).clear()
+        self.find_element(*self.username_loc).send_keys(username)
+    def type_password(self,password):         #密码输入框元素
+        self.find_element(*self.password_loc).send_keys(password)
+    def type_submit(self):                    #登录按钮元素
+        self.find_element(*self.submit_loc).click()
+
+def test_user_login(driver,username,password):#登录功能模块封装
+    &apos;&apos;&apos;测试用户名密码是否可以登录&apos;&apos;&apos;
+    login_page=LoginPage(driver)
+    login_page.open()
+    login_page.type_username(username)
+    login_page.type_password(password)
+    login_page.type_submit()
+
+# test_login.py
+from loginpage import *
+from selenium import webdriver
+driver=webdriver.Firefox()
+username=&apos;51zxw&apos;
+password=&apos;123456&apos;
+
+test_user_login(driver,username,password)
+sleep(3)
+driver.quit()
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjeiqe61d000w1kwv8xeas5gn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-整合测试报告发送" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/07/整合测试报告发送/" class="article-date">
+  <time datetime="2018-03-07T01:13:05.000Z" itemprop="datePublished">2018-03-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/07/整合测试报告发送/">整合测试报告发送</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>整合测试报告发送</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>将生成的最新测试报告发送到指定邮箱</h6><p></p>
+<ul>
+<li>文件路径如下：<ul>
+<li>文件夹test_baidu<ul>
+<li>文件夹test_case<ul>
+<li>test_baidu.py</li>
+</ul>
+</li>
+<li>文件夹test_report</li>
+<li>文件send_test_email.py</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>send_test_email.py</p>
+<pre><code>import unittest,time,smtplib,os
+from BSTestRunner import BSTestRunner
+from email.mime.text import MIMEText
+from email.header import Header
+
+def latest_report(report_dir):      #获取最新生成的测试报告
+    lists=os.listdir(report_dir)
+    lists.sort(key=lambda fn:os.path.getatime(report_dir+&apos;\\&apos;+fn))
+    file=os.path.join(report_dir,lists[-1])
+    return file
+def send_mail(latest_report):       #发送邮件
+    f=open(latest_report,&apos;rb&apos;)
+    mail_content=f.read()
+    f.close()
+
+    smtpserver=&apos;smtp.163.com&apos;
+    user=&apos;www_liuyongqian@163.com&apos;
+    password=&apos;39a39b39c&apos;
+
+    sender=&apos;www_liuyongqian@163.com&apos;
+    receives=[&apos;272501447@qq.com&apos;,&apos;liuyongqian51@163.com&apos;]
+
+    subject=&apos;Web 自动化测试结果&apos;
+
+    msg=MIMEText(mail_content,&apos;html&apos;,&apos;utf-8&apos;)     #邮件正文
+    msg[&apos;Subject&apos;]=Header(subject,&apos;utf-8&apos;)
+    msg[&apos;From&apos;]=sender
+    msg[&apos;To&apos;]=&apos;,&apos;.join(receives)
+
+    smtp=smtplib.SMTP_SSL(smtpserver,465)
+    smtp.helo(smtpserver)
+    smtp.ehlo(smtpserver)
+    smtp.login(user,password)
+
+    print(&apos;Start send eamil...&apos;)
+    smtp.sendmail(sender,receives,msg.as_string())
+    smtp.quit()
+    print(&apos;Send email end...&apos;)
+
+if __name__==&apos;__main__&apos;:
+    test_dir=&apos;./test_case&apos;
+    report_dir=&apos;./test_report&apos;
+    discovery=unittest.defaultTestLoader.discover(test_dir,pattern=&apos;test*.py&apos;)
+    now=time.strftime(&apos;%Y-%m-%d %H_%M_%S&apos;)
+    report_name=report_dir+&apos;/&apos;+now+&apos;result.html&apos;
+
+    with open(report_name,&apos;wb&apos;) as f:
+        runner=BSTestRunner(stream=f,title=&apos;Test Report&apos;,description=&apos;baidu search&apos;)
+        runner.run(discovery)
+    f.close()
+
+    latest_report=latest_report(report_dir)  #获取最新测试报告
+    send_mail(latest_report)                 #发送邮件报告
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjeiqe62o00231kwvbvmtwbyh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-高级查询" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/06/高级查询/" class="article-date">
+  <time datetime="2018-03-06T12:16:05.000Z" itemprop="datePublished">2018-03-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/06/高级查询/">高级查询</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>高级查询</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>其他查询</h6><p></p>
+<ul>
+<li><p>IN，NOT IN（可返回多条记录）</p>
+<pre><code>#查询学号为009最低分的课程名
+select kcm from kcb
+where kch in(
+    select kch from cjb
+    where cj in(
+        select MIN(cj) from cjb
+        where xh=&apos;009&apos;
+    )and xh=&apos;009&apos;
+)
+</code></pre></li>
+<li><p>LIMIT m,n<br>m表示从m+1条开始取值，n表示条数（在语句末尾取记录）</p>
+</li>
+<li><p>IS NULL，IS NOT NULL</p>
+<pre><code>select kch from cjb 
+where cj is not nul
+</code></pre></li>
+</ul>
+<p></p><h6>分组查询</h6><p></p>
+<ul>
+<li><p>GROUP BY … HAVING…</p>
+<pre><code>#统计每个班级人数且人数在30人以上的
+select bj as &apos;班级&apos;,count(*) as &apos;人数&apos;
+from xsb
+group by bj
+having count(*)&gt;30 
+</code></pre></li>
+<li><p>在SELECT语句中，WHERE、GROUP BY、HAVING子句的执行次序如下：</p>
+<pre><code>* 1、WHERE子句从数据源中去掉不符合其搜索条件的数据
+* 2、GROUP BY子句搜集数据行到各个组中
+* 3、HAVING子句去掉不符合其组搜索条件的各组数据行
+</code></pre></li>
+</ul>
+<p></p><h6>多表查询</h6><p></p>
+<ul>
+<li><p>等值连接（先连接后判断）</p>
+<pre><code>#查询张三的数据库的成绩
+select xm,kcm,cj
+from xsb,kcb,cjb
+where xsb.xh=cjb.xh and kcb.kch=cjb.kch
+#主表1.主键=从表.外键，主表2.主键=从表.外键
+and xm=&apos;张三&apos; and kcm=&apos;数据库&apos;
+</code></pre></li>
+<li>注：查询显示字段或者其他条件中字段在几张表内有重复，需要在字段前加上表名，表名.字段名</li>
+<li><p>内连接（先判断再连接）</p>
+<pre><code>#查询不是北京、上海的学生的QTP成绩
+select kcm,cj,jg
+from xsb inner join cjb on xsb.xh=cjb.xh
+inner join kcb on kcb.kch=cjb.kch
+and jg not in(&apos;北京&apos;,&apos;上海&apos;)
+and kcm=&apos;QTP&apos;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjeiqe63z00341kwvvxmv6ml4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-发送邮件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/05/发送邮件/" class="article-date">
+  <time datetime="2018-03-05T02:06:34.000Z" itemprop="datePublished">2018-03-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/05/发送邮件/">发送邮件</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>发送邮件</h5><p></p>
+<hr>
+<hr>
+<h6>python里的smtplib</h6>
+
+<ul>
+<li>SMTP(Simple Mail Transfer Protocol)<ul>
+<li>即简单邮件传输协议。它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP 协议属于TCP/IP协议簇，它帮助每台计算机在发送或中转信件时找到下一个目的地。SMTP 服务器就是遵循 SMTP 协议的发送邮件服务器</li>
+</ul>
+</li>
+<li>SMTP 认证<ul>
+<li>简单地说就是要求必须在提供了账户名和密码之后才可以登录 SMTP 服务器，这就使得那些垃圾邮件的散播者无可乘之机</li>
+</ul>
+</li>
+<li>smtplib模块<ul>
+<li>Python内置对SMTP的支持，可以发送纯文本邮件、HTML邮件以及带附件的邮件</li>
+<li>Python对SMTP支持有smtplib和email两个模块，email负责构造邮件，smtplib负责发送邮件</li>
+<li>使用前需要开启SMTP服务</li>
+</ul>
+</li>
+</ul>
+<h6>使用163邮箱来结合smtp模块发送邮件</h6>
+
+<pre><code>import smtplib                         #发送邮件模块
+from email.mime.text import MIMEText   #定义邮件内容
+from email.header import Header        #定义邮件标题
+
+smtpserver=&apos;smtp.163.com&apos;              #发送邮箱服务器
+user=&apos;www_liuyongqian@163.com&apos;         #发送邮箱用户的账号和授权密码
+password=&apos;*********&apos;
+
+sender=&apos;www_liuyongqian@163.com&apos;       #发送邮箱
+receive=&apos;272501447@qq.com&apos;             #接收邮箱
+
+content=&apos;&lt;html&gt;&lt;h1 style=&quot;color:red&quot;&gt;这个就是我，不一样的模样&lt;/h1&gt;&lt;/html&gt;&apos;
+subject=&apos;Web 自动化测试报告&apos;
+msg=MIMEText(content,&apos;html&apos;,&apos;utf-8&apos;)   #发送邮件内容
+#MIMEText三个参数：第一个为文本内容，第二个设置文本格式，第三个设置编码
+msg[&apos;Subject&apos;]=Header(subject,&apos;utf-8&apos;) #发送邮件标题
+msg[&apos;From&apos;]=sender                     #发送人
+msg[&apos;To&apos;]=receive                      #收件人
+
+smtp=smtplib.SMTP_SSL(smtpserver,465)  #SSL协议端口要是用465
+smtp.helo(smtpserver)                  #helo向服务器标识用户身份
+smtp.ehlo(smtpserver)                  #服务器返回结果确认
+smtp.login(user,password)              #登录邮箱服务器的账号和授权密码
+
+print(&apos;Start send eamil...&apos;)
+smtp.sendmail(sender,receive,msg.as_string())
+#sendmail的三个参数：邮件发送者地址，邮件接收地址可为列表，发送消息
+smtp.quit()
+print(&apos;Send email end...&apos;)
+</code></pre><h6>发送带附件的邮件</h6>
+
+<pre><code>import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart   #用于传输附件
+
+smtpserver=&apos;smtp.163.com&apos;
+user=&apos;www_liuyongqian@163.com&apos;
+password=&apos;39a39b39c&apos;
+
+sender=&apos;www_liuyongqian@163.com&apos;
+receives=[&apos;272501447@qq.com&apos;,&apos;liuyongqian51@163.com&apos;]
+
+subject=&apos;web自动化测试报告0308&apos;
+content=&apos;&lt;html&gt;&lt;p&gt;这个里面写测试结果内容！&lt;/p&gt;&lt;/html&gt;&apos;
+
+send_file=open(r&apos;E:\selenium prt\test.jpg&apos;,&apos;rb&apos;).read()  #构造附件内容
+att=MIMEText(send_file,&apos;base64&apos;,&apos;utf-8&apos;)
+att[&apos;Content-Type&apos;]=&apos;application/octet-stream&apos;
+att[&apos;Content-Disposition&apos;]=&apos;attachment;filename=&quot;test.jpg&quot;&apos;
+
+msgRoot=MIMEMultipart()                             #构建发送与接收信息
+msgRoot.attach(MIMEText(content,&apos;html&apos;,&apos;utf-8&apos;))
+msgRoot[&apos;Subject&apos;]=subject
+msgRoot[&apos;From&apos;]=sender
+msgRoot[&apos;To&apos;]=&apos;,&apos;.join(receives)
+msgRoot.attach(att)
+
+smtp=smtplib.SMTP_SSL(smtpserver,465)
+smtp.helo(smtpserver)
+smtp.ehlo(smtpserver)
+smtp.login(user,password)
+print(&apos;Start send email...&apos;)
+smtp.sendmail(sender,receives,msgRoot.as_string())
+smtp.quit()
+print(&apos;End send email...&apos;)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjeiqe628001m1kwv57yjpbry" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-单元测试框架" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/04/单元测试框架/" class="article-date">
+  <time datetime="2018-03-04T14:12:42.000Z" itemprop="datePublished">2018-03-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/04/单元测试框架/">单元测试框架</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>单元测试框架</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>单元测试（unit testing）是指对软件中的最小可测试单元进行检查和验证，单元就是人为规定的最小的被测功能模块</li>
+<li>单元测试框架提供了一种统一的编程模型，可以将测试定义为一些简单的类，这些类中的方法可以调用希望测试的应用程序代码。</li>
+<li>不同编程语言有不同的单元测试框架，如Java 的Junit, TestNg, c#的 Nunit,Python的unittest,Pyunit,testtools, subunit….</li>
+</ul>
+<p></p><h6>unittest</h6><p></p>
+<ul>
+<li>unittest单元测试框架不仅适用于单元测试，还适用WEB自动化测试用例的开发与执行，该测试框架可组织执行测试用例，并且提供了丰富的断言方法，判断测试用例是否通过，最终生成测试结果</li>
+<li>unittest核心要素<ul>
+<li>TestCase<br>一个TestCase的实例就是一个测试用例。什么是测试用例呢？就是一个完整的测试流程，包括测试前准备环境的搭建(setUp)，执行测试代码(run)，以及测试后环境的还原(tearDown)。单元测试(unit test)的本质也就在这里，一个测试用例是一个完整的测试单元，通过运行这个测试单元，可以对某一个问题进行验证</li>
+<li>TestSuite<br>而多个测试用例集合在一起，就是TestSuite，而且TestSuite也可以嵌套TestSuite。 TestLoader是用来加载TestCase到TestSuite中的，其中有几个loadTestsFrom__()方法，就是从各个地方寻找TestCase，创建它们的实例，然后add到TestSuite中，再返回一个TestSuite实例</li>
+<li>TextTestRunner<br>TextTestRunner是来执行测试用例的，其中的run(test)会执行TestSuite/TestCase中的run(result)方法。测试的结果会保存到TextTestResult实例中，包括运行了多少测试用例，成功了多少，失败了多少等信息</li>
+<li>Fixture<br>对一个测试用例环境的搭建和销毁，是一个fixture</li>
+</ul>
+</li>
+<li><p>unittest案例</p>
+<pre><code>#cal.py #加减法运算方法的实现
+class Math:
+    def __init__(self,a,b):
+        self.a=int(a)
+        self.b=int(b)
+    def add(self):
+        return self.a+self.b
+    def sub(self):
+        return self.a-self.b
+#startend.py #SetUp与TearDown管理
+import unittest
+class StartEnd(unittest.TestCase):
+    def setUp(self):
+        print(&apos;开始测试！&apos;)
+    def tearDown(self):
+        print(&apos;测试结束！&apos;)
+#test_add.py #加法测试用例
+from cal import *
+from startend import *
+class Test_add(StartEnd):
+    def test_add(self):
+        j=Math(6,9)
+        self.assertEqual(j.add(),15)
+    def test_add1(self):
+        k=Math(5,7)
+        self.assertEqual(k.add(),12)
+#test_sub.py #减法测试用例
+from cal import *
+from startend import *
+class Test_sub(StartEnd):
+    def test_sub(self):
+        j=Math(6,9)
+        self.assertEqual(j.sub(),-3)
+    def test_sub1(self):
+        k=Math(5,7)
+        self.assertEqual(k.sub(),-2)
+#runtest.py #用例执行管理
+import unittest
+dir=&apos;./&apos;
+discovery=unittest.defaultTestLoader.discover(dir,pattern=&apos;test*.py&apos;)
+if __name__==&apos;__main__&apos;:
+    runner=unittest.TextTestRunner()
+    runner.run(discovery)
+</code></pre></li>
+<li><p>断言<br>断言内容是自动化脚本的重要内容，正确设置断言以后才能帮助我们判断测试用例执行结果</p>
+<pre><code>assertEqual(a, b) 判断a==b
+assertNotEqual(a, b) 判断a！=b
+assertTrue(x) bool(x) is True
+assertFalse(x) bool(x) is False
+assertIs(a, b) a is b
+assertIsNot(a, b) a is not b
+assertIsNone(x) x is None
+assertIsNotNone(x) x is not None
+assertIn(a, b) a in b
+assertNotIn(a, b) a not in b
+assertIsInstance(a, b) isinstance(a, b)
+assertNotIsInstance(a, b) not isinstance(a, b)
+</code></pre></li>
+<li><p>跳过测试和预期失败</p>
+<pre><code>unittest.skip() 直接跳过测试
+unittest.skipIf() 条件为真，跳过测试
+unittest.skipUnless 条件为假，跳过测试
+unittest.expectedFailure 预期设置失败
+
+import unittest
+class test1(unittest.TestCase):
+    def setUp(self):
+        print(&apos;测试开始!&apos;)
+    def test_b(self):
+        print(&apos;test_b&apos;)
+    @unittest.skipIf(3&lt;4,&apos;skip test_c&apos;)
+    def test_c(self):
+        print(&apos;test_c&apos;)
+    def tearDown(self):
+        print(&apos;测试结束!&apos;)
+@unittest.skip(&apos;skip test2&apos;)
+class test2(unittest.TestCase):
+    def setUp(self):
+        print(&apos;测试开始！&apos;)
+    def test_d(self):
+        print(&apos;test_d&apos;)
+    def test_a(self):
+        print(&apos;test_a&apos;)
+    def tearDown(self):
+        print(&apos;测试结束!&apos;)
+if __name__==&apos;__main__&apos;:
+    unittest.main()
+</code></pre></li>
+</ul>
+<p></p><h6>编写Web测试用例</h6><p></p>
+<ul>
+<li><p>案例：百度搜索关键词：“Selenium自学网” 并打开课程页面</p>
+<pre><code>#test_baidu.py
+from selenium import webdriver
+import unittest
+from time import sleep
+class TestBaidu(unittest.TestCase):
+    def setUp(self):
+        self.driver=webdriver.Firefox()
+        #self.driver.implicitly_wait(10)
+        self.driver.get(&apos;http://www.baidu.com/&apos;)
+    def test_baidu(self):
+        driver=self.driver
+        driver.find_element_by_id(&apos;kw&apos;).clear()
+        driver.find_element_by_id(&apos;kw&apos;).send_keys(&apos;selenium自学网&apos;)
+        driver.find_element_by_id(&apos;su&apos;).click()
+        sleep(3)
+        title=driver.title
+        self.assertEqual(title,&apos;selenium自学网_百度搜索&apos;)
+        driver.find_element_by_partial_link_text(&apos;Selenium自动化&apos;).click()
+        sleep(5)
+    def tearDown(self):
+        self.driver.quit()
+if __name__==&apos;__main__&apos;:
+    unittest.main()
+#runtest.py
+import unittest
+#from HTMLTestRunner import HTMLTestRunner
+from BSTestRunner import BSTestRunner
+import time
+
+test_dir=&apos;./test_case&apos;          #定义测试用例路径
+discovery=unittest.defaultTestLoader.discover(test_dir,pattern=&apos;test*.py&apos;)
+
+if __name__==&apos;__main__&apos;:
+    report_dir=&apos;./test_report&apos;  #存放报告的文件夹
+    now=time.strftime(&apos;%Y-%m-%d %H_%M_%S&apos;)       #报告命名时间格式化
+    report_name=report_dir+&apos;/&apos;+now+&apos;result.html&apos; #报告文件完整路径
+    #打开文件在报告文件中写入测试结果
+    with open(report_name,&apos;wb&apos;) as f:
+        #runer=HTMLTestRunner(stream=f,title=&apos;Test Report&apos;,description=&apos;Test case result&apos;)
+        runner=BSTestRunner(stream=f,title=&apos;Test Report&apos;,description=&apos;Test case result&apos;)
+        runner.run(discovery)
+    f.close()
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjeiqe628001j1kwv13ebmqsx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-DML和DQL" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -234,7 +1003,7 @@ select rand()         #result:0.8155794216465013
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjecved78000dqowvknkpz9yu" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjeiqe60i000f1kwv5csl6f33" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -248,9 +1017,9 @@ select rand()         #result:0.8155794216465013
 
 
   
-    <article id="post-Selenium01" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-自动化测试模型" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/03/01/Selenium01/" class="article-date">
+    <a href="/2018/03/01/自动化测试模型/" class="article-date">
   <time datetime="2018-02-28T23:44:01.000Z" itemprop="datePublished">2018-03-01</time>
 </a>
     
@@ -262,7 +1031,7 @@ select rand()         #result:0.8155794216465013
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/01/Selenium01/">selenium01</a>
+      <a class="article-title" href="/2018/03/01/自动化测试模型/">自动化测试模型</a>
     </h1>
   
 
@@ -273,11 +1042,72 @@ select rand()         #result:0.8155794216465013
       
 	  
 	  
-        
+        <p></p><h5>自动化测试模型</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>概述</h6><p></p>
+<ul>
+<li>自动化测试模型可以看作自动化测试框架与工具设计的思想。自动化测试不仅仅是单纯写写脚本运行就可以了，还需要考虑到如何使脚本运行效率提高，代码复用、参数化等问题</li>
+<li>自动化测试模型分为四大类：线性模型，模块化驱动测试、数据驱动、关键词驱动</li>
+</ul>
+<p></p><h6>线性模型</h6><p></p>
+<ul>
+<li>线性脚本中每个脚本都相互独立，且不会产生其他依赖与调用，其实就是简单模拟用户某个操作流程的脚本</li>
+</ul>
+<p></p><h6>模块化驱动测试</h6><p></p>
+<ul>
+<li>线性模型虽然每个用例都可以拿出来独立运行，但是用例之间重复代码很多，开发、维护成本高。其实把重复的操作代码封装为独立的公共模块，当用例执行时需要用到这部分，直接调用即可，这就是模块驱动的方式。比如登录系统、退出登录、截图函数等等</li>
+</ul>
+<p></p><h6>数据驱动测试</h6><p></p>
+<ul>
+<li>模块驱动的模型虽然解决了脚本的重复问题，但是需要测试不同数据的用例时，模块驱动的方式就不很适合了。数据驱动就是数据的改变从而驱动自动化测试的执行，最终引起测试结果的改变</li>
+<li><p>装载数据的方式可以是列表、字典或是外部文件（txt、csv、xml、excel），目的就是实现数据和脚本的分离</p>
+<pre><code>#文件名：login.py
+#coding:utf-8
+from selenium import webdriver
+from time import sleep
+class Login():
+    def user_login(self,driver,username,password):
+        driver.find_element_by_name(&apos;username&apos;).clear()
+        driver.find_element_by_name(&apos;username&apos;).send_keys(username)
+        driver.find_element_by_name(&apos;password&apos;).clear()
+        driver.find_element_by_name(&apos;password&apos;).send_keys(password)
+        driver.find_element_by_name(&apos;Submit&apos;).click()
+    def user_logout(self,driver):
+        driver.find_element_by_link_text(&apos;退出&apos;).click()
+        sleep(2)
+        driver.switch_to_alert().accept()
+
+    #模块化与参数化
+    from login import *
+    from time import sleep
+    from selenium import webdriver
+
+    driver=webdriver.Firefox()
+    driver.get(&apos;http://localhost&apos;)
+
+    Login().user_login(driver,&apos;51zxw&apos;,&apos;123456&apos;)
+    sleep(5)
+    Login().user_logout(driver)
+    sleep(5)
+
+    Login().user_login(driver,&apos;52zxw&apos;,&apos;123456&apos;)
+    sleep(5)
+    Login().user_logout(driver)
+    sleep(2)
+
+    driver.quit()
+</code></pre></li>
+</ul>
+<p></p><h6>关键字驱动测试</h6><p></p>
+<ul>
+<li>通过关键字的改变引起测试结果的改变叫关键字驱动测试。 selenium IDE也是一种传统的关键字驱动的自动化工具，Robot Framework 是一个功能更强大的关键字驱动测试框架</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/Selenium01/" data-id="cjecved8j000zqowv5dvp9ffz" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjeiqe633002d1kwv1ttfxx4d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -401,1033 +1231,10 @@ select rand()         #result:0.8155794216465013
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjecved86000nqowv4yc2nbzr" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjeiqe61d00141kwvclfuy4ov" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-初识MySQL" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/28/初识MySQL/" class="article-date">
-  <time datetime="2018-02-28T10:08:48.000Z" itemprop="datePublished">2018-02-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/28/初识MySQL/">初识MySQL</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>初识MySQL</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>基础</h6><p></p>
-<ul>
-<li>数据库就是“数据”的“仓库”,包含表、关系以及操作对象,数据存放在表中</li>
-<li>MySQL的优势：运行速度快、使用成本低、可移植性强、适用用户广</li>
-<li><p>安装目录下主要文件夹</p>
-<pre><code>bin：客户端程序和服务器
-data：临时数据存放，日志文件，数据库
-include:导入，需要里面这些文件，包含（头）文件
-lib:组件
-share:错误消息文件
-</code></pre></li>
-<li><p>DOS下运行mysql</p>
-<pre><code>net start mysql
-mysql -h服务器主机地址（本地可省略） -u用户名 -p密码
-create database 数据库名;         #创建数据库
-show databases;                  #查看数据库
-use数据库;                         #选择数据库
-drop database 数据库名;              #删除数据库
-
-create table if not exists 表名(
-    studentNo INT(4) NOT NULL COMMENT&apos;学号&apos; PRIMARY KEY,
-    ...
-)comment=&apos;表名&apos;
-show tables;                    #查看表是否存在
-desc 表名;                     #查看表定义
-drop table if exists 表名;      #删除表
-</code></pre></li>
-<li>SQL结构化查询语言<ul>
-<li>DML(数据操作语言)用来操作数据库中所包含的数据，命令：insert、update、delete</li>
-<li>DDL（数据定义语言）用来创建和删除数据库对象等操作，命令：create、drop、alert</li>
-<li>DQL（数据查询语言）用来对数据库中的数据进行查询，命令：select</li>
-<li>DCL（数据控制语言）用来控制数据库组件的存取许可、存取权限等，命令：grant、commit、rollback</li>
-</ul>
-</li>
-<li>SQL中的运算符<ul>
-<li>算术运算符，用来进行列间或者变量之间的比较和数学运算<ul>
-<li>+加、-减、*乘、/除、%取余</li>
-</ul>
-</li>
-<li>赋值运算符，把一个数或者变量或者表达式赋值给另一个变量，如Name=’刘桑’<ul>
-<li>=赋值</li>
-</ul>
-</li>
-<li>逻辑运算符<ul>
-<li>and 当且仅当两个布尔表达式都为true时，返回true</li>
-<li>or 当且仅当两个布尔表达式都为false时，返回false</li>
-<li>not布尔表达式的值取反</li>
-</ul>
-</li>
-<li>比较运算符<ul>
-<li>=等于、&gt;大于、&lt;小于、&lt;&gt;不等于、&gt;=大于等于、&lt;=小于等于、!=不等于（非SQL-92标准）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>数据类型<ul>
-<li>数值<ul>
-<li>INT，标准整数，4字节</li>
-<li>FLOAT，单精度浮点数，4字节</li>
-<li>DECIMAL，字符串形式的浮点数，Decimal(M,D),M为存储数，D为小数位</li>
-<li>unsigned属性，标识为无符号数，就是数值不能增加符号，比如不能增加负号</li>
-<li>zerofill属性，宽度不足以0填充</li>
-</ul>
-</li>
-<li>字符串<ul>
-<li>CHAR(M)，定长字符串，长度为M字节</li>
-<li>VARCHAR(M)，可变字符串，节省存储空间</li>
-</ul>
-</li>
-<li>日期<ul>
-<li>DATETIME，YY-MM-DD hh:mm:ss</li>
-<li>TIMESTAMP，YYYYMMDDHHMMSS</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>字段的约束及属性</p>
-<ul>
-<li>非空约束NOT NULL，字段不允许为空</li>
-<li>默认约束DEFAULT，赋予某字段默认值</li>
-<li>唯一约束UNIQUE KEY(UK)，设置字段的值是唯一的，允许为空，但只能有一个空值</li>
-<li>主键约束PRIMARY KEY(PK)，设置该字段为表的主键，可唯一标识该表记录</li>
-<li>外键约束FOREIGN KEY(FK)，用于在两表之间建立关系，需要指定引用主表的哪一个字段</li>
-<li>自动增长AUTO_INCREMENT，设置该列为自增字段，默认每条自增1，通常用于设置主键</li>
-</ul>
-</li>
-<li><p>修改表</p>
-<pre><code>alter table 表名 rename to 新表名         #修改表名
-alter table 表名 add 新字段 字段类型       #添加字段
-alter table 表名 change 原字段名 新字段名 字段类型     #修改字段
-alter table 表名 drop 字段名              #删除字段
-</code></pre></li>
-<li><p>添加主外键</p>
-<pre><code>alter table 表名 add constraint 主键名 primary key 表名(主键字段)
-#主键名可以随意，比如pk_studentNo
-
-alert table 表名 add constraint 外键名 foreign key (外键字段) references 主表名(主键名)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjecved8z001eqowv5p3arpd3" class="article-share-link">Compartir</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-BOM" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/27/BOM/" class="article-date">
-  <time datetime="2018-02-27T09:35:34.000Z" itemprop="datePublished">2018-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/27/BOM/">BOM</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>BOM</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>Window对象</h6><p></p>
-<ul>
-<li>window对象是BOM的根对象，其它对象其实都是window对象的属性，window对象的属性和方法都可以省略“window.”</li>
-<li><p>window对象常用属性</p>
-<pre><code>pageXOffset  设置或返回当前页面相对于窗口显示区左上角的x位置
-pageYOffset  设置或返回当前页面相对于窗口显示区左上角的y位置
-</code></pre></li>
-<li><p>window对象常用方法</p>
-<pre><code>alert() 显示带有一段消息和一个确认按钮的警告框
-confirm()显示带有一段消息以及确认和取消按钮的对话框
-prompt()显示可提示用户输入的对话框
-close()关闭浏览器窗口
-open()打开一个新的浏览器窗口或查找一个已命名的窗口
-setInterval 按照指定的周期（以毫秒计）来调用函数或计算表达式
-clearInterval取消由setInterval()设置的timeout
-
-&lt;h1&gt;
-    当前时间：&lt;span id=&quot;date&quot;&gt;&lt;/span&gt;
-&lt;/h1&gt;
-&lt;button onclick=&quot;fn1()&quot;&gt;开始时钟&lt;/button&gt;
-&lt;button onclick=&quot;fn2()&quot;&gt;停止时钟&lt;/button&gt;
-&lt;script&gt;
-    var setid                                      //动态显示时间
-    function fn1(){
-        var span=document.getElementById(&quot;date&quot;)
-        var date=new Date()
-        span.innerHTML=date
-        clearInterval(setid)
-        setid=setInterval(function(){
-            var date=new Date()
-            span.innerHTML=date
-        },1000)
-    }
-    function fn2(){
-        clearInterval(setid)
-    }
-&lt;/script&gt;
-</code></pre></li>
-</ul>
-<p></p><h6>Window常用子对象</h6><p></p>
-<ul>
-<li>navigator对象<ul>
-<li>navigator对象包含浏览器的信息，常用于获取客户端浏览器和操作系统信息</li>
-</ul>
-</li>
-<li>location对象<ul>
-<li>location对象包含有关当前URL的信息，常用于获取和改变当前浏览的网址</li>
-</ul>
-</li>
-<li>history对象<ul>
-<li>history对象包含用户（在浏览器窗口中）访问过的URL的历史记录</li>
-</ul>
-</li>
-<li>Screen对象<ul>
-<li>Screen对象包含有关客户端显示屏幕的信息，用于获取屏幕的分辨率和色彩</li>
-</ul>
-</li>
-<li><pre><code>&lt;script&gt;
-    //navigator对象
-    console.log(navigator)
-    for(var i in navigator){
-    console.log(i+&apos;:&apos;+navigator[i])
-    }
-    console.log(navigator.platform)//返回运行浏览器的系统操作平台
-
-    //location对象，包含当前有关URL信息
-    console.log(location.href)//返回完整的URL
-
-    //history对象，访问URL历史记录
-    //forward()   back()  go()
-    console.log(history.length)  //返回浏览器历史列表中的URL数量
-
-    //screen对象，包含客户端显示屏幕的信息
-    console.log(screen.availHeight)//返回显示屏幕的高度（除Windows任务栏之外）
-    console.log(screen.availWidth)//返回显示屏幕的宽度（除Windows任务栏之外）
-&lt;/script&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjecved6s0005qowvse6vqw6n" class="article-share-link">Compartir</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-HTML DOM" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/27/HTML DOM/" class="article-date">
-  <time datetime="2018-02-27T09:35:14.000Z" itemprop="datePublished">2018-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/27/HTML DOM/">HTML DOM</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>HTML DOM</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>标准DOM与HTML DOM</h6><p></p>
-<ul>
-<li>标准DOM提供了统一的操作接口<ul>
-<li>createElement</li>
-<li>appendChild</li>
-<li>setAttribute</li>
-<li>…</li>
-</ul>
-</li>
-<li>HTML DOM提供了封装好的各种对象<ul>
-<li>Image</li>
-<li>Select</li>
-<li>Option…</li>
-</ul>
-</li>
-<li><p>标准DOM的实现方式</p>
-<pre><code>var newNode = document.createElement(&apos;img&apos;);
-</code></pre></li>
-<li><p>HTML DOM的实现方式</p>
-<pre><code>var newNode = new Image();
-</code></pre></li>
-<li>标准DOM操作适合于：<ul>
-<li>操作节点，创建，删除，查找等</li>
-</ul>
-</li>
-<li>HTML DOM操作适合于：<ul>
-<li>操作属性，如读取或者修改属性的值</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>常用HTML DOM对象</h6><p></p>
-<ul>
-<li><p>Image对象</p>
-<ul>
-<li>Image对象代表嵌入的图像</li>
-<li>img标签每出现一次，一个Image对象就会被创建</li>
-<li>也可以使用new Image()创建一个新的对象</li>
-<li><p>常用属性：src,height,width</p>
-<pre><code>var div=document.createElement(&apos;div&apos;)
-document.body.appendChild(div)
-var img=new Image()
-img.src=&quot;001.jpg&quot;
-div.appendChild(img)
-</code></pre></li>
-</ul>
-</li>
-<li><p>Table对象</p>
-<pre><code>var arr=[
- [&apos;tom1&apos;,&apos;23&apos;,&apos;python&apos;],
- [&apos;tom2&apos;,&apos;23&apos;,&apos;python&apos;],
- [&apos;tom3&apos;,&apos;23&apos;,&apos;python&apos;],
- [&apos;tom4&apos;,&apos;23&apos;,&apos;python&apos;]
- ]
- var table=document.createElement(&apos;table&apos;)
- table.width=300
- table.border=1
- document.body.appendChild(table)
- for (var i in arr )
- {
-     var tr=table.insertRow()
-     for(var j in arr[i]){
-        var td=tr.insertCell()
-        td.innerHTML=arr[i][j]
-     }
- }
- console.log(table.rows)//属性rows，返回表格的行
- table.insertRow(4)//在表格第五行创建一行
- table.deleteRow(4)//删除第五行
-
- console.log(table.rows[0].cells)//属性cells,获取所在行所有单元格
- console.log(table.rows[0].rowIndex)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjecved7o000lqowv8g3gbtx7" class="article-share-link">Compartir</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-初识DOM与BOM" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/27/初识DOM与BOM/" class="article-date">
-  <time datetime="2018-02-27T09:34:33.000Z" itemprop="datePublished">2018-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/27/初识DOM与BOM/">初识DOM与BOM</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>DOM与BOM</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>DHTML</h6><p></p>
-<ul>
-<li>动态HTML,是一种将目前已有的网页技术、语言标准整合运用，制作出能在下载后仍然能实时变换页面元素效果的网页设计概念</li>
-<li>DHTML的功能:动态改变页面元素；与用户进行交互<br>DHTML对象模型包括DOM和BOM</li>
-<li>DOM：Document Object Model，文档对象模型，用来操作文档<ul>
-<li>定义了访问和操作HTML文档的标准方法</li>
-<li>通过对DOM树的操作，实现对HTML文档内容的操作</li>
-</ul>
-</li>
-<li>BOM：Browser Object Model，浏览器对象模型，用来访问和操做浏览器窗口，使JavaScript有能力与浏览器“对话”<ul>
-<li>通过使用BOM，可移动窗口，更改状态文本，执行其它与页面内容发生直接联系的操作</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>DOM</h6><p></p>
-<ul>
-<li>W3C DOM标准被分为3个不同的部分：<ul>
-<li>核心DOM 针对任何结构化文档的标准模型</li>
-<li>XML DOM 针对XML文档的标准模型</li>
-<li>HTML DOM针对HTML文档的标准模型（下面说这个）</li>
-</ul>
-</li>
-<li>document对象<ul>
-<li>文档中的所有节点组成了一个文档树，document对象是一颗文档树的根</li>
-<li>浏览器内置的JS解释器会为载入的每个HTML文档创建一个对应的document对象</li>
-<li>通过使用document对象，可以从脚本中对HTML页面中的所有元素进行访问</li>
-</ul>
-</li>
-<li><p>DOM节点树</p>
-<ul>
-<li>文档中的元素、属性、文本、注释等都被看作一个节点</li>
-<li><p>上下层节点：</p>
-<pre><code>parentNode  获取父节点
-childNodes  获取子节点集合
-firstChild  获取第一个子节点
-lastChild   获取最后一个子节点
-</code></pre></li>
-<li><p>平行层节点</p>
-<pre><code>previousSibling  获取上一个兄弟节点
-nextSibling      获取下一个兄弟节点
-</code></pre></li>
-<li>节点名称、类型、值<ul>
-<li>nodeName、nodeType、nodeValue</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>元素节点属性</p>
-<ul>
-<li>innerHTML 读取或设置元素节点中的HTML内容</li>
-<li>textContent 用于读取或设置元素节点中的文本内容</li>
-<li><p>attributes 返回节点的属性集合，即一个类数组对象</p>
-<ul>
-<li><p>读取属性</p>
-<pre><code>（1）element.attributes[下标].value
-（2）element.attributes[&apos;属性名&apos;].value
-（3）element.getAttributeNode(&apos;属性名&apos;).value
-（4）element.getAttribute(&apos;属性名&apos;)
-</code></pre></li>
-<li><p>设置属性</p>
-<pre><code>（1）element.setAttribute(name,value);
-（2）element.setAttributeNode(attrNode)
-</code></pre></li>
-<li><p>移除属性</p>
-<pre><code>（1）element.removeAttribute(&apos;属性名&apos;);
-（2）element.removeAttributeNode(attrNode)
-</code></pre></li>
-<li><p>判断属性</p>
-<pre><code>element.hasAttribute(&apos;属性名&apos;);//true或false
-</code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>动态创建DIV</p>
-<pre><code>&lt;body&gt;
-    &lt;button onclick=&quot;createDiv()&quot;&gt;创建DIV&lt;/button&gt;
-    &lt;h1 style=&quot;clear:both&quot;&gt;&lt;/h1&gt;
-    &lt;script&gt;
-        function createDiv(){
-            var div=document.createElement(&apos;div&apos;)
-            div.setAttribute(&apos;style&apos;,&apos;width:100px;height:100px;background:&apos;+roundColor()+&apos;;margin:20px;float:left&apos;)
-            document.body.appendChild(div)
-            div.onclick=removeDiv
-        }
-        function roundColor(){
-            var str=&apos;1234657890abcdef;
-            var s=&apos;#&apos;;
-            for (var i=0; i&lt;6; i++)
-            {
-                var n=parseInt(Math.random()*str.length)
-                s+=str.charAt(n)
-            }
-            return s;
-        }
-        function removeDiv(){
-            document.body.removeChild(this);
-        }
-    &lt;/script&gt;
-&lt;/body&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjecved8z001bqowv5so400mk" class="article-share-link">Compartir</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-匿名函数、封装继承" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/27/匿名函数、封装继承/" class="article-date">
-  <time datetime="2018-02-27T04:21:32.000Z" itemprop="datePublished">2018-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/27/匿名函数、封装继承/">匿名函数、封装继承</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>匿名函数、封装继承</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>匿名函数</h6><p></p>
-<ul>
-<li><p>JavaScript中创建函数的三种方式</p>
-<pre><code>//使用function关键字声明命名函数
-function functionName{
-    functionBody;
-}
-//使用直接量方式命名函数
-var functionName = function(){
-    functionBody;
-}
-//使用Function对象构造方法创建函数
-var functionName = new Function(arg1,arg2,functionBody)
-</code></pre></li>
-<li><p>匿名函数，就是定义时未直接指定名称的函数，仅在调用时，才临时创建函数对象和作用域链对象，调用完，立刻释放；所以，匿名函数比非匿名函数更节省内存空间</p>
-<pre><code>function(num1,num2){
-    console.log(num1+num2);
-}
-
-var fn1=function(){
-    console.log(&quot;sad&quot;)
-}();                //隐式匿名函数；匿名函数只能调用一次，调用完立即释放
-fn1()                //sad
-fn1()                //fn1 is not a function
-
-function a(fn){
-    var num=fn()
-    console.log(num)
-}
-a(function(){          //回调函数，将一个函数作为另一个函数的参数
-    return 10+3
-})                  //13
-</code></pre></li>
-</ul>
-<p></p><h6>闭包</h6><p></p>
-<ul>
-<li><p>函数套函数，该函数能使用函数外定义的变量</p>
-<pre><code>function a(){
-    function b(){
-        console.log(1)  //闭包；函数套函数；就是一种访问局部变量的特殊方式
-    }
-    b()
-}
-a()
-</code></pre></li>
-<li><p>闭包的主要作用是：</p>
-<ul>
-<li>1.提供可共享的局部变量</li>
-<li>2.保护共享的局部变量。提供专门的读写变量的函数</li>
-<li>3.避免全局污染</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>封装继承</h6><p></p>
-<ul>
-<li>封装：把相关的信息（无论数据或方法）存储在对象中<br>继承：从其它对象获得属性和方法<br>多态：能以多种不同的形式运行函数或方法<br>原型：在JavaScript中，函数本身也是一个包含了方法和属性的对象，每个函数都有一个prototype属性，该属性引用的是原型对象；原型对象是保存共享属性值和共享方法的对象</li>
-<li>JavaScript中主要通过原型实现继承，通过原型实现继承主要有以下两中方式：<ul>
-<li>1.修改构造函数的原型，为该构造函数创建的对象指定统一的父级对象<br>语法：构造函数.prototype = 父级对象；</li>
-<li>2.单独修改一个对象的原型，而不影响其它对象的原型<br>语法：Object.setPrototypeOf(子对象,父级对象)</li>
-</ul>
-</li>
-<li><p>说明</p>
-<pre><code>&lt;script&gt;
-    function emp(ename,age){                //工厂函数
-        this.ename=ename;                   //谁调用this，this就指向谁;运用在函数中,this为当前对象
-        this.age=age;
-        console.log(this);
-    }
-    //为原型添加属性，子对象自动继承原型（父对象）所有的属性和方法
-    emp.prototype.jineng=&quot;我们都会HTML&quot;      //prototype是构造函数的方法，扩展共享属性值
-    var obj1=new emp(&apos;Tom&apos;,&apos;30&apos;)            //实例化对象
-    obj1.job=function(){                    //自有属性/方法
-        console.log(&apos;JAVA&apos;)
-    }
-    obj1.job()                              //JAVA
-    var obj2=new emp(&apos;Array&apos;,&apos;28&apos;)
-    obj2.work=function(){
-        console.log(&apos;Python&apos;)
-    }
-    Object.setPrototypeOf(obj2,obj1)        //修改单个对象的原型,前子后父
-    obj2.job()                              //JAVA
-    obj2.work()                             //Python
-    console.log(obj1.jineng)                //我们都会HTML
-    console.log(obj2.jineng)                //我们都会HTML
-
-    function a(){
-        this.ename=&quot;Tom&quot;
-    }
-    function b(){
-        this.age=&quot;29&quot;
-    }
-    b.prototype=new a()            //修改原型父对象,只有函数名能调用prototype
-    var obj=new b()
-    console.log(obj.age)        //29
-    console.log(obj.ename)      //Tom
-
-    var heihei={age:25}            //直接量创建对象
-    var obj={name:123};
-    Object.setPrototypeOf(obj,heihei)
-    //console.log(obj)             //打印出来是undefined,其原型是Object
-    console.log(Object.getPrototypeOf(obj))     //获取原型
-    console.log(heihei.isPrototypeOf(obj))      //isPrototypeOf()方法用于判定一个prototype对象是否存在于另一个对象的原型链中
-&lt;/script&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjecved9f001gqowviwvcr4kq" class="article-share-link">Compartir</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-模块、包、枚举" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/26/模块、包、枚举/" class="article-date">
-  <time datetime="2018-02-26T10:56:37.000Z" itemprop="datePublished">2018-02-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/26/模块、包、枚举/">模块、包、枚举</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>模块、包、枚举</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>模块</h6><p></p>
-<ul>
-<li>Python 模块(Module)，是一个 Python文件，以.py 结尾，包含了Python对象定义和Python语句</li>
-<li><p>1.使用 python 标准库中模块</p>
-<pre><code>import datetime                 #引入 python 标准库中的 sys.py 模块；这是引入某一模块的方法
-print(datetime.datetime.now())  #显示当前时间
-print(datetime.datetime.now()+datetime.timedelta(3))  #显示当前时间+3天
-</code></pre></li>
-<li><p>2.import语句,想使用 Python 源文件，只需在另一个源文件里执行 import 语句</p>
-<pre><code>先定义一个名为test1.py的模块
-#!/usr/bin/env python      #这行注释可以让这个文件直接在Unix/Linux/Mac上运行
-#__author__:LiuYongqian
-&apos; a test module &apos;          #表示模块的文档注释，任何模块代码的第一个字符串都被视为模块的文档注释
-def print_mes(x):
-    print(&apos;Hello:&apos;,x)
-def add(x,y):
-    print(x+y)
-
-在test2.py中引入test1模块
-#!/usr/bin/env python
-#__author__:LiuYongqian
-import test1             #导入模块，下面可以调用模块里的函数了
-test1.print_mes(&apos;2018&apos;)  #result: Hello: 2018
-test1.add(3,6)           #result:9
-</code></pre></li>
-<li><p>3.from … import语句，from语句让你从模块中导入一个指定的部分到当前命名空间</p>
-<pre><code>from test1 import print_mes
-print_mes(&apos;2018&apos;)        #result:Hello: 2018
-</code></pre></li>
-</ul>
-<p></p><h6>包</h6><p></p>
-<ul>
-<li>目录只有包含一个叫做__init__.py 的文件才会被认作是一个包，主要是为了避免一些滥俗的名字（比如叫做 string）不小心的影响搜索路径中的有效模块</li>
-</ul>
-<p></p><h6>枚举</h6><p></p>
-<ul>
-<li>枚举类型可以看作是一种标签或是一系列常量的集合，通常用于表示某些特定的有限集合，例如星期、月份、状态等</li>
-<li><p>为何要用枚举</p>
-<pre><code>当我们需要定义常量时，一个办法是用大写变量通过整数来定义，例如星期：
-MON,TUE,WED,THI,FRI,STA,SUN=1,2,3,4,5,6,7
-这样定义的好处是简单，缺点是类型是整型，仍然是变量，更好的办法是为这样的枚举类型定义一个class类型，每个常量都是class的一个唯一实例。Python提供了Enum类来实现这个功能：
-from enum import Enum
-Week=Enum(&apos;Week&apos;,(&apos;Mon&apos;,&apos;Tue&apos;,&apos;Wed&apos;,&apos;Thi&apos;,&apos;Fri&apos;,&apos;Sta&apos;,&apos;Sun&apos;))
-这样我们就获得了Week类型的枚举类，可以直接使用Week.Mon来引用一个常量，或者枚举它的所有成员：
-print(Week[&apos;Wed&apos;])       #通过成员的名称来获取成员   #result:Week.Wed
-print(Week(3))           #通过成员的值来获取成员     #result:Week.Wed
-mem=Week.Wed             #通过成员，来获取它的名称和值
-print(mem.name)          #result:Wed
-print(mem.value)         #result:3
-for name,member in Week.__members__.items():  #值重复的成员也遍历出来，要用枚举的一个特殊属性__members__
-    print(name,&apos;=&gt;&apos;,member,&apos;-&apos;,member.value)  #value属性是自动赋给成员的int常量，默认从1开始计数
-#result:
-Mon =&gt; Week.Mon - 1         
-......
-Sun =&gt; Week.Sun - 7
-</code></pre></li>
-<li><p>如果需要更加精确的控制枚举类型，可以从Enum派生出自定义类</p>
-<pre><code>from enum import Enum,unique
-@unique              #该装饰器可以帮助我们检查保证没有重复值。
-class Week(Enum):    #用于定义枚举的class和定义类的class是有区别的
-    Mon = 1
-    Tue = 2
-    Wed = 3
-    Thu = 4
-    Fri = 5
-    Sat = 6
-    sun = 7
-print(Week[&apos;Thu&apos;])           #result:Week.Thu
-print(Week(4))               #result:Week.Thu
-for week in Week:
-    print(week)
-#result:
-Week.Mon
-......
-Week.sun
-</code></pre></li>
-<li><p>小练习：把Student的gender属性改造为枚举类型，可以避免使用字符串</p>
-<pre><code>from enum import Enum,unique
-class Gender(Enum):
-    Female=0
-    Male=1
-class Student():
-    def __init__(self,name,gender):
-        self.name=name
-        self.gender=gender
-mm=Student(&apos;LiuYongqian&apos;,Gender.Male)
-if mm.gender==Gender.Male:
-    print(&apos;信息正确!&apos;)
-else:
-    print(&apos;信息错误！&apos;)
-#result: 信息正确!
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjecvedaa0025qowv6popt0dq" class="article-share-link">Compartir</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-闭包、装饰、冒泡" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/24/闭包、装饰、冒泡/" class="article-date">
-  <time datetime="2018-02-24T07:19:11.000Z" itemprop="datePublished">2018-02-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/24/闭包、装饰、冒泡/">闭包、装饰、冒泡</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>闭包、装饰、冒泡</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>冒泡</h6><p></p>
-<ul>
-<li><p>执行机制：两两相比，外侧循环n-1,控制比较多少轮;内侧循环n-1-i，控制每轮比较多少次</p>
-<pre><code>m=[3,4,5,1,2,6]            #升序
-for i in range(len(m)-1):
-    for j in range(len(m)-1-i):
-        if m[j]&gt;m[j+1]:
-            m[j],m[j+1]=m[j+1],m[j]
-            &apos;&apos;&apos;
-            n=m[j]
-            m[j]=m[j+1]
-            m[j+1]=n
-            &apos;&apos;&apos;
-&apos;&apos;&apos;
-for i in range(len(m)):     #插入数据不改变排列顺序
-    if m[i]&gt;3:
-        m.insert(i,7)
-        break
-&apos;&apos;&apos;        
-print(m)                    #result:[1, 2, 3, 4, 5, 6]
-</code></pre></li>
-</ul>
-<p></p><h6>闭包</h6><p></p>
-<ul>
-<li>如果在一个内部函数里，对在外部作用域（但不是在全局作用域）的变量进行引用，那么内部函数就被认为是闭包（closure）。一个闭包就是你调用了一个函数A，这个函数A返回了一个函数B给你。这个返回的函数B就叫做闭包</li>
-<li><p>构成闭包的三个条件：</p>
-<ul>
-<li>1.必须有一个内嵌函数</li>
-<li>2.内嵌函数必须引用一个定义在闭合范围外的变量，内部函数引用外部变量但非全局变量</li>
-<li><p>3.外部函数必须返回内嵌函数</p>
-<pre><code>def A():
-    num = 10
-    def B():
-        nonlocal num        # nonlocal 声明变量位置是闭包
-        num = num + 5
-        return 39
-    return B                #函数名后边加小括号的是立即调用，不带小括号的是引用，还没有执行
-A()
-print(A)                    #result:&lt;function A at 0x000001D42CA47F28&gt;
-print(A().__name__)         #result:B
-print(A()())                #result:39
-
-def funcx(x):
-    def funcy(y):
-        return x*y
-    return funcy
-m=funcx(3)
-n1=m(9)
-n2=m(6)
-print(n1)                    #result:27
-print(n2)                    #result:18
-
-def test(a,b,fun):
-    return fun(a,b)
-func=input(&apos;请输入一个函数：&apos;) #lambda a,b:a+b
-m=test(3,9,eval(func))       #eval函数将字符串当成有效python表达式来求值，并返回计算结果
-print(m)                     #result:12
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>装饰器</h6><p></p>
-<ul>
-<li><p>装饰器函数传入被装饰函数，返回内层函数，就是闭包函数，它起到装饰给定函数的作用</p>
-<pre><code>def outter(fun):             #成为装饰器必须有一个参数
-    def inner():
-        print(&apos;I Like You!&apos;)
-        fun()                #有这个，被装饰的函数才会执行
-    return inner
-
-@outter
-def index():
-    print(&apos;I Hate You!&apos;)
-index()                      #result:I Like You!     I Hate You!
-
-def coat(fun):
-    print(&apos;穿上衣服&apos;)
-    return fun
-def bag(fun):
-    print(&apos;带着书包&apos;)
-    return fun
-def bybus(fun):
-    print(&apos;坐着校车&apos;)
-    return fun
-@bybus
-@bag                          #靠近函数的装饰器最先执行，从下往上执行
-@coat                         #student函数和print打包作为参数传给装饰器bag，以此类推
-def student():
-    print(&apos;学生去上课！&apos;)
-student()                     #result:穿上衣服 带着书包 坐着校车 学生去上课！
-
-#火锅店
-def yangrou(fun):
-    sum=30+fun()
-    print(&apos;肥羊肉&apos;)
-    return sum
-def zhangliao(fun):
-    print(&apos;芝麻酱&apos;)
-    return 5+fun
-
-@zhangliao
-@yangrou
-def guodi():
-    print(&apos;微辣底料&apos;)
-    return 12
-print(guodi)
-
-#火锅店变形
-import types
-def yangrou(fun):
-    sum=0
-    if type(fun)==types.FunctionType:
-        sum=30+fun()
-    else:
-        sum=30+fun
-    print(&apos;肥羊肉&apos;)
-    return sum
-def zhangliao(fun):
-    sum = 0
-    if type(fun) == types.FunctionType:
-        sum =5 + fun()
-    else:
-        sum =5 + fun
-    print(&apos;芝麻酱&apos;)
-    return sum
-@zhangliao
-@yangrou
-def guodi():
-    print(&apos;微辣底料&apos;)
-    return 12
-print(guodi)
-
-#火锅店变形
-def yangrou(fun):
-    def caidan1():
-        print(&apos;肥羊肉&apos;)
-        return 30+fun()
-    return caidan1
-def zhangliao(fun):
-    def caidan3():
-        print(&apos;芝麻酱&apos;)
-        return 5+fun()
-    return caidan3
-@zhangliao
-@yangrou
-def guodi():
-    print(&apos;微辣底料&apos;)
-    return 12
-print(guodi())
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjecvedaq002iqowv6xod1x5i" class="article-share-link">Compartir</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1442,7 +1249,7 @@ print(guodi())
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Siguiente &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1456,7 +1263,7 @@ print(guodi())
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创建github博客/">创建github博客</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/更换主题/">更换主题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1464,18 +1271,18 @@ print(guodi())
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nube de Tags</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/MySQL学习/" style="font-size: 13.33px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/创建github博客/" style="font-size: 10px;">创建github博客</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/更换主题/" style="font-size: 10px;">更换主题</a> <a href="/tags/自动化测试/" style="font-size: 10px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 12.5px;">Github博客</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1483,28 +1290,28 @@ print(guodi())
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/03/02/DML和DQL/">DML和DQL</a>
+            <a href="/2018/03/08/httpwatch/">httpwatch</a>
           </li>
         
           <li>
-            <a href="/2018/03/01/Selenium01/">selenium01</a>
+            <a href="/2018/03/08/20180308002/">20180308002</a>
           </li>
         
           <li>
-            <a href="/2018/02/28/Jmeter基础/">Jmeter基础</a>
+            <a href="/2018/03/08/Page Object/">Page Object</a>
           </li>
         
           <li>
-            <a href="/2018/02/28/初识MySQL/">初识MySQL</a>
+            <a href="/2018/03/07/整合测试报告发送/">整合测试报告发送</a>
           </li>
         
           <li>
-            <a href="/2018/02/27/BOM/">BOM</a>
+            <a href="/2018/03/06/高级查询/">高级查询</a>
           </li>
         
       </ul>
@@ -1535,7 +1342,7 @@ print(guodi())
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 刘永前<br>
-      Construido por <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Page Object | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Page Object   By元素定位  已经将By方法封装 from selenium import webdriver from selenium.webdriver.common.by import By  driver=webdriver.Firefox() driver.get(&amp;apos;http://www.baidu.com&amp;apos;) driver.find_element(">
+<meta name="keywords" content="自动化测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Page Object">
+<meta property="og:url" content="http://yoursite.com/2018/03/08/Page Object/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="Page Object   By元素定位  已经将By方法封装 from selenium import webdriver from selenium.webdriver.common.by import By  driver=webdriver.Firefox() driver.get(&amp;apos;http://www.baidu.com&amp;apos;) driver.find_element(">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-08T10:19:50.295Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Page Object">
+<meta name="twitter:description" content="Page Object   By元素定位  已经将By方法封装 from selenium import webdriver from selenium.webdriver.common.by import By  driver=webdriver.Firefox() driver.get(&amp;apos;http://www.baidu.com&amp;apos;) driver.find_element(">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Page Object" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/08/Page Object/" class="article-date">
+  <time datetime="2018-03-08T03:30:46.000Z" itemprop="datePublished">2018-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Page Object
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Page Object</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>By元素定位</h6><p></p>
+<ul>
+<li><p>已经将By方法封装</p>
+<pre><code>from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+driver=webdriver.Firefox()
+driver.get(&apos;http://www.baidu.com&apos;)
+driver.find_element(By.ID,&apos;kw&apos;).clear()
+driver.find_element(By.NAME,&apos;wd&apos;).send_keys(&apos;selenium&apos;)
+driver.find_element(By.CLASS_NAME,&apos;s_ip&apos;).send_keys(&apos;study&apos;)
+driver.find_element(By.CSS_SELECTOR,&apos;#kw&apos;).send_keys(&apos;Python&apos;)
+driver.find_element(By.TAG_NAME,&apos;input&apos;)....
+driver.find_element(By.LINK_TEXT,&apos;退出&apos;)...
+driver.find_element(By.PARTIAL_LINK_TEXT,&apos;退&apos;)...
+driver.find_element(By.XPATH,&apos;.//[@id=&quot;Title&quot;]&apos;)...
+</code></pre></li>
+</ul>
+<p></p><h6>Page Object</h6><p></p>
+<ul>
+<li><p>Page Object是Selenium自动化测试项目开发实践的最佳设计模式之一，通过对界面元素和功能模块的封装减少冗余代码，同时在后期维护中，若元素定位或功能模块发生变化，只需要调整页面元素或功能模块封装的代码，提高测试用例的可维护性</p>
+<pre><code>#basepage.py
+from time import sleep
+class Page:                         #页面基础类
+    def __init__(self,driver):      #初始化
+        self.driver=driver
+        self.base_url=&apos;http://localhost&apos;
+        self.timeout=10
+    def _open(self,url):            #打开不同的子页面
+        url_=self.base_url+url
+        print(&apos;Test page is %s&apos;%url_)
+        self.driver.maximize_window()
+        self.driver.get(url_)
+        sleep(3)
+        assert self.driver.current_url==url_,&apos;Did not land on %s&apos;%url_
+    def open(self):
+        self._open(self.url)
+    def find_element(self,*location): #元素定位方法封装
+        return self.driver.find_element(*location)
+
+#loginpage.py
+from basepage import *
+from selenium.webdriver.common.by import By
+class LoginPage(Page):
+    &apos;&apos;&apos;首页登录页面&apos;&apos;&apos;
+    url=&apos;/&apos;
+    username_loc=(By.NAME,&apos;username&apos;)         #定位器
+    password_loc=(By.NAME,&apos;password&apos;)
+    submit_loc=(By.NAME,&apos;Submit&apos;)
+    def type_username(self,username):         #用户名输入框元素
+        self.find_element(*self.username_loc).clear()
+        self.find_element(*self.username_loc).send_keys(username)
+    def type_password(self,password):         #密码输入框元素
+        self.find_element(*self.password_loc).send_keys(password)
+    def type_submit(self):                    #登录按钮元素
+        self.find_element(*self.submit_loc).click()
+
+def test_user_login(driver,username,password):#登录功能模块封装
+    &apos;&apos;&apos;测试用户名密码是否可以登录&apos;&apos;&apos;
+    login_page=LoginPage(driver)
+    login_page.open()
+    login_page.type_username(username)
+    login_page.type_password(password)
+    login_page.type_submit()
+
+# test_login.py
+from loginpage import *
+from selenium import webdriver
+driver=webdriver.Firefox()
+username=&apos;51zxw&apos;
+password=&apos;123456&apos;
+
+test_user_login(driver,username,password)
+sleep(3)
+driver.quit()
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjeiqe61d000w1kwv8xeas5gn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/08/20180308002/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          20180308002
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/07/整合测试报告发送/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">整合测试报告发送</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 12.5px;">Github博客</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/08/httpwatch/">httpwatch</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/08/20180308002/">20180308002</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/08/Page Object/">Page Object</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/07/整合测试报告发送/">整合测试报告发送</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/06/高级查询/">高级查询</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
