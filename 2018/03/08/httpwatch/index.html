@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="LiuYongQian">
 <meta property="og:description" content="httpwatch   简介  HttpWatch是一个可用于录制HTTP请求信息的工具，由Simtec Limited公司开发，其官网为：Http://www.httpwatch.com，HttpWatch只支持IE和Firefox，也就是说只有当你用IE或Firefox访问网页时，它才会进行录制，不像Sniffer和Omnipeek那样监控所有数据，但对于网站分析来说，已经是不可多得的利器了">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-08T13:23:48.283Z">
+<meta property="og:updated_time" content="2018-03-11T03:00:42.869Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="httpwatch">
 <meta name="twitter:description" content="httpwatch   简介  HttpWatch是一个可用于录制HTTP请求信息的工具，由Simtec Limited公司开发，其官网为：Http://www.httpwatch.com，HttpWatch只支持IE和Firefox，也就是说只有当你用IE或Firefox访问网页时，它才会进行录制，不像Sniffer和Omnipeek那样监控所有数据，但对于网站分析来说，已经是不可多得的利器了">
@@ -61,7 +61,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -101,18 +101,61 @@
 <p></p><h6>简介</h6><p></p>
 <ul>
 <li>HttpWatch是一个可用于录制HTTP请求信息的工具，由Simtec Limited公司开发，其官网为：Http://www.httpwatch.com，HttpWatch只支持IE和Firefox，也就是说只有当你用IE或Firefox访问网页时，它才会进行录制，不像Sniffer和Omnipeek那样监控所有数据，但对于网站分析来说，已经是不可多得的利器了</li>
+<li>HttpWatch是功能强大的网页数据分析工具，集成在IE工具栏，主要功能有网页摘要、cookies管理、缓存管理、消息头发送/接收，字符查询、POST数据、目录管理功能和报告输出。HttpWatch是一款能够收集并显示深层信息的软件，它不用代理服务器或一些复杂的网络监控工具，能够在显示网页的同时显示网页请求和回应的日志信息，甚至可以显示浏览器缓存和IE之间的交换信息，集成在IE工具栏</li>
 <li>HttpWatch有两部分组成： <ul>
 <li>1、一个是嵌入到IE或Firefox中用于收集、查看、保存HTTP信息的插件 </li>
 <li>2、一个是独立运行的日志查看器，叫做HttpWatch Studio</li>
 </ul>
 </li>
-<li></li>
+</ul>
+<p></p><h6>Time Chart</h6><p></p>
+<ul>
+<li>显示了一次请求应答过程中每个时间片段所花费的时间。一次完整的请求应答过程需要经历的时间片段如下：<br>Blocked-&gt;DNS Lookup-&gt;Connect    -&gt;Send -&gt;Wait    -&gt;Receive</li>
+<li>各时间片段含义如下：<ul>
+<li>Blocked（阻塞）：阻塞的时间主要包括预处理时间（如缓存查找）和网络排队等待时间，导致阻塞最主要原因是下载页面中的图片</li>
+<li>DNS Lookup（域名解释）：域名解释时间主要是将主机名（如www.google.com）转化为相应的IP地址（216.239.59.99）的时间，在访问URL地址时，地址本身不能被直接访问，需要将它对应为相应的IP地址才能访问</li>
+<li>Connect（连接）：连接时间是指与web服务器（或代理服务器）建立起TCP连接需要的时间，一个安全的HTTPS连接应该包含SSL握手的过程，让系统处于一种保持连接的状态，可以节约重复创建TCP连接的时间</li>
+<li>Send（发送）：发送时间是指从客户端发送HTTP请求到服务器所花费的时间，并且发送数据大小会影响发送的时间，如上传文件花费的时间就比较长</li>
+<li>Wait（等待）：等待时间是指服务器响应请求的时间，这个值包括网络延迟和服务器处理请求所花费的时间</li>
+<li>Receive（接收）：接收时间是指服务器返回数据到客户端所花费的时间，这个时间受所返回消息内容大小、网络带宽和HTTP压缩比的影响</li>
+<li>Cache Read（读cache）：读缓存时间是指从浏览器缓存中读取内容的时间</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>Headers</h6><p></p>
+<ul>
+<li><p>Headers Sent的内容如下：</p>
+<ul>
+<li>(Request-Line)：包括HTTP提交请求方法、HTTP版本和URL子路径</li>
+<li>Accept：可接受的文件类型，<em>/</em>表示所有</li>
+<li>Accept-Encoding：可接受的纯文本之外的内容编码的类型</li>
+<li>Accept-Language：可接受的返回数据的语言种类</li>
+<li>Connection：指定该次请求回应结束后，如何处理连接</li>
+<li>Cache-Control：指定请求和响应遵循的缓存机制</li>
+<li>Location：用于重定向接收者到一个新URL地址</li>
+<li>Host：请求连接的主机名</li>
+<li>User-Agent：客户端标识浏览器类型</li>
+</ul>
+</li>
+<li><p>Headers Received的内容如下：</p>
+<ul>
+<li>(Status-Line)：包括HTTP请求的状态码和HTTP版本信息</li>
+<li>Connection：指定该次请求回应结束后，如何处理连接</li>
+<li>Content-Language：内容数据的语言种类</li>
+<li>Content-Length：传输的内容长度</li>
+<li>Content-Type：内容数据的类型（Mini Type）</li>
+<li>Date：发送HTTP消息的日期</li>
+<li>Server：一种标明Web服务器软件及其版本号的</li>
+<li>X-Cache：表明你的http request是由proxy server回的</li>
+<li>Last-Modified：服务器上保存内容的最后修订时间</li>
+</ul>
+</li>
 </ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjeiqe61d00161kwvxd40a22k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjeo07rxn001t3wwvfwmf7h8b" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
@@ -123,9 +166,18 @@
     
 <nav id="article-nav">
   
+    <a href="/2018/03/09/事务视图索引备份/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          事务视图索引备份
+        
+      </div>
+    </a>
+  
   
     <a href="/2018/03/08/20180308002/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Älter</strong>
       <div class="article-nav-title">20180308002</div>
     </a>
   
@@ -147,7 +199,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -157,16 +209,16 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 12.5px;">Github博客</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 13.33px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 10px;">Git学习</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 16.67px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 18.33px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/安全测试/" style="font-size: 13.33px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.67px;">抓包工具</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -174,28 +226,28 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/03/08/httpwatch/">httpwatch</a>
+            <a href="/2018/03/12/Fiddler学习01/">Fiddler学习01</a>
           </li>
         
           <li>
-            <a href="/2018/03/08/20180308002/">20180308002</a>
+            <a href="/2018/03/12/爬虫学习/">爬虫学习</a>
           </li>
         
           <li>
-            <a href="/2018/03/08/Page Object/">Page Object</a>
+            <a href="/2018/03/11/Git入门/">Git入门</a>
           </li>
         
           <li>
-            <a href="/2018/03/07/整合测试报告发送/">整合测试报告发送</a>
+            <a href="/2018/03/11/python之Excel操作/">python之Excel操作</a>
           </li>
         
           <li>
-            <a href="/2018/03/06/高级查询/">高级查询</a>
+            <a href="/2018/03/11/Python之OS操作/">Python之OS操作</a>
           </li>
         
       </ul>

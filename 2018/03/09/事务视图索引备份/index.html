@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>事务视图索引备份 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="事务视图索引备份   事务  事务是一个不可分割的工作逻辑单元  begin;   #开始事务（指定事务从此处开始，后续的SQL语句都是一个整体） update bank set currentMoney=currentMoney-1000  where customerName=&amp;apos;张三&amp;apos;; update bank set currentMoney=currentMoney+1">
+<meta name="keywords" content="MySQL学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事务视图索引备份">
+<meta property="og:url" content="http://yoursite.com/2018/03/09/事务视图索引备份/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="事务视图索引备份   事务  事务是一个不可分割的工作逻辑单元  begin;   #开始事务（指定事务从此处开始，后续的SQL语句都是一个整体） update bank set currentMoney=currentMoney-1000  where customerName=&amp;apos;张三&amp;apos;; update bank set currentMoney=currentMoney+1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-10T08:08:16.615Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="事务视图索引备份">
+<meta name="twitter:description" content="事务视图索引备份   事务  事务是一个不可分割的工作逻辑单元  begin;   #开始事务（指定事务从此处开始，后续的SQL语句都是一个整体） update bank set currentMoney=currentMoney-1000  where customerName=&amp;apos;张三&amp;apos;; update bank set currentMoney=currentMoney+1">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-事务视图索引备份" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/09/事务视图索引备份/" class="article-date">
+  <time datetime="2018-03-09T10:10:58.000Z" itemprop="datePublished">2018-03-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      事务视图索引备份
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>事务视图索引备份</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>事务</h6><p></p>
+<ul>
+<li><p>事务是一个不可分割的工作逻辑单元 </p>
+<pre><code>begin;   #开始事务（指定事务从此处开始，后续的SQL语句都是一个整体）
+update bank set currentMoney=currentMoney-1000 
+where customerName=&apos;张三&apos;;
+update bank set currentMoney=currentMoney+1000 
+where customerName=&apos;李四&apos;;
+commit;  #提交事务，事务结束
+
+begin;
+update bank set currentMoney=currentMoney-1000 
+where customerName=&apos;张三&apos;;
+update bank set currentMoney=currentMoney+1000 
+where customerName=&apos;李四&apos;;
+rollback;  #回滚事务，数据恢复到原始状态
+
+#转账过程就是一个整体它需要两条UPDATE语句来完成，
+这两条语句是一个整体如果其中任一条出现错误，
+则整个转账业务也应取消，
+两个账户中的余额应恢复到原来的数据，
+从而确保转账前和转账后的余额不变，即都是1001元
+</code></pre></li>
+<li><p>事务必须具备以下四个属性，简称ACID 属性</p>
+<ul>
+<li>原子性（Atomicity）<ul>
+<li>事务是一个完整的操作，事务的各步操作是不可分的(原子的)，要么都执行，要么都不执行</li>
+</ul>
+</li>
+<li>一致性（Consistency）<ul>
+<li>当事务完成时，数据必须处于一致状态</li>
+</ul>
+</li>
+<li>隔离性（Isolation）<ul>
+<li>并发事务之间彼此隔离、独立，它不应以任何方式依赖于或影响其他事务</li>
+</ul>
+</li>
+<li>持久性（Durability）<ul>
+<li>事务完成后,它对数据库的修改被永久保持</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>事务关闭<ul>
+<li>默认情况下，每条单独的SQL语句视为一个事务，默认开启，即autocommit=1</li>
+<li>关闭开启自动提交状态 set autocommit=0|1,0为关闭自动提交</li>
+<li>关闭自动提交后，从下一条SQL语句开始则开启新事务，需使用commit或者rollback语句结束该事</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>视图</h6><p></p>
+<ul>
+<li>视图是一张虚拟表<ul>
+<li>表示一张表的部分数据或多张表的综合数据</li>
+<li>其结构和数据是建立在对表的查询基础上</li>
+</ul>
+</li>
+<li>视图中不存放数据<ul>
+<li>数据存放在视图所引用的原始表中</li>
+</ul>
+</li>
+<li>一个原始表，根据不同用户的不同需求，可以创建不同的视图</li>
+<li><p>对视图数据进行添加、更新和删除操作直接影响所引用表中的数据</p>
+<pre><code>#删除视图
+drop view if exists view_name;
+#创建视图
+create view view_name(
+    select ......
+)
+#查看视图
+select ... from view_name;
+</code></pre></li>
+</ul>
+<p></p><h6>索引</h6><p></p>
+<ul>
+<li>索引是一种有效组合数据的方式，为快速查找到指定记录</li>
+<li>作用<ul>
+<li>大大提高数据库的检索速度</li>
+<li>改善数据库性能</li>
+</ul>
+</li>
+<li><p>一般用的最多的就是主键索引和唯一索引</p>
+<ul>
+<li>一个主键将自动创建主键索引</li>
+<li><p>索引列数据不重复UNIQUE</p>
+<pre><code>create [UNIQUE] index index_stuName 
+on student(studentName)
+
+drop index index_name on table_name
+#删除表时，该表的所有索引同时会被删除
+
+show index from table_name   #查看索引
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>备份</h6><p></p>
+<ul>
+<li><p>mysqldump是DOS系统下的命令，<br>在使用时无须进入mysql命令行，否则将无法执行</p>
+<pre><code>mysqldump -uroot -p123456 mybank bank &gt;D:\Python\0309.sql
+#备份
+mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
+#还原
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjeo07rx3001j3wwvxukhlkjh" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/10/基本安全测试/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          基本安全测试
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/08/httpwatch/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">httpwatch</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 13.33px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 10px;">Git学习</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 16.67px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 18.33px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/安全测试/" style="font-size: 13.33px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.67px;">抓包工具</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/12/Fiddler学习01/">Fiddler学习01</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/12/爬虫学习/">爬虫学习</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/11/Git入门/">Git入门</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/11/python之Excel操作/">python之Excel操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/11/Python之OS操作/">Python之OS操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

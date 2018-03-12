@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Python之IO操作 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Python之IO操作   简介   读写文件是最常见的IO操作。Python内置了读写文件的函数，用法和C是兼容的 读写文件就是请求操作系统打开一个文件对象（通常称为文件描述符），然后通过操作系统提供的接口从这个文件对象中读取数据（读文件），或者把数据写入这个文件对象（写文件）  常用mode  r:以读方式打开文件（默认） r+:打开一个文件用于读写,文件指针将会放在文件的开头 rb+:以二进">
+<meta name="keywords" content="Python学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python之IO操作">
+<meta property="og:url" content="http://yoursite.com/2018/03/11/Python之IO操作/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="Python之IO操作   简介   读写文件是最常见的IO操作。Python内置了读写文件的函数，用法和C是兼容的 读写文件就是请求操作系统打开一个文件对象（通常称为文件描述符），然后通过操作系统提供的接口从这个文件对象中读取数据（读文件），或者把数据写入这个文件对象（写文件）  常用mode  r:以读方式打开文件（默认） r+:打开一个文件用于读写,文件指针将会放在文件的开头 rb+:以二进">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-12T04:00:43.072Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python之IO操作">
+<meta name="twitter:description" content="Python之IO操作   简介   读写文件是最常见的IO操作。Python内置了读写文件的函数，用法和C是兼容的 读写文件就是请求操作系统打开一个文件对象（通常称为文件描述符），然后通过操作系统提供的接口从这个文件对象中读取数据（读文件），或者把数据写入这个文件对象（写文件）  常用mode  r:以读方式打开文件（默认） r+:打开一个文件用于读写,文件指针将会放在文件的开头 rb+:以二进">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Python之IO操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/11/Python之IO操作/" class="article-date">
+  <time datetime="2018-03-11T00:28:56.000Z" itemprop="datePublished">2018-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python之IO操作
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Python之IO操作</h5><p></p>
+<hr>
+<hr>
+<h6>简介</h6>
+
+<ul>
+<li>读写文件是最常见的IO操作。Python内置了读写文件的函数，用法和C是兼容的</li>
+<li>读写文件就是请求操作系统打开一个文件对象（通常称为文件描述符），然后通过操作系统提供的接口从这个文件对象中读取数据（读文件），或者把数据写入这个文件对象（写文件）</li>
+</ul>
+<h6>常用mode</h6>
+
+<pre><code>r:以读方式打开文件（默认）
+r+:打开一个文件用于读写,文件指针将会放在文件的开头
+rb+:以二进制格式打开一个文件用于读写。文件指针将会放在文件的开头
+w:以写方式打开文件，可向文件中写入信息。如果文件存在，会清空文件，再写入新内容
+w+:打开一个文件用于读写,如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件
+wb+:以二进制格式打开一个文件用于读写。如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件
+a:以追加模式打开文件，如果文件不存在就先创建
+a+:打开一个文件用于读写。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写
+ab+:以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写
+</code></pre><p></p><h6>read()</h6><p></p>
+<ul>
+<li><p>为了读取一个文件的内容，调用 f.read(size), 这将读取一定数目的数据, 然后作为字符串或字节对象返回。size 是一个可选的数字类型的参数。 当 size 被忽略了或者为负, 那么该文件的所有内容都将被读取并且返回</p>
+<pre><code>f=open(r&apos;E:\test1.txt&apos;,&apos;r&apos;,encoding=&apos;gbk&apos;)
+#以读的模式打开一个文件对象，使用内置的open()函数，传入文件名和标示符
+a=f.read()
+#调用read()方法可一次读取文件的全部内容，Python把内容读到内存，用一个str对象表示
+print(a)
+f.close()
+#调用close()方法关闭文件。文件使用完毕后须关闭，因为文件对象会占用操作系统的资源，且操作系统同一时间能打开的文件数量有限
+#由于文件读写时都有可能产生IOError，一旦出错，后面的f.close()就不会调用。所以为了保证无论是否出错都能正确地关闭文件,可使用with语句来自动帮我们调用close()方法
+#上述写法可用下边写法替换
+with open(r&apos;E:\test1.txt&apos;,&apos;r&apos;,encoding=&apos;gbk&apos;) as f:
+    print(f.read())
+</code></pre></li>
+</ul>
+<p></p><h6>readline()、readlines()</h6><p></p>
+<ul>
+<li>f.readline() 会从文件中读取单独的一行。换行符为 ‘\n’。f.readline() 如果返回一个空字符串, 说明已经已经读取到最后一行</li>
+<li><p>f.readlines() 将返回该文件中包含的所有行。如果设置可选参数 sizehint, 则读取指定长度的字节, 并且将这些字节按行分割</p>
+<pre><code>with open(r&apos;E:\test1.txt&apos;,&apos;r&apos;,encoding=&apos;gbk&apos;) as f:
+    a=f.readlines()
+    print(a)
+</code></pre></li>
+</ul>
+<p></p><h6>tell()</h6><p></p>
+<ul>
+<li>f.tell() 返回文件对象当前所处的位置, 它是从文件开头开始算起的字节数</li>
+</ul>
+<p></p><h6>seek()</h6><p></p>
+<ul>
+<li>如果要改变文件当前的位置, 可以使用 f.seek(offset, from_what) 函数<ul>
+<li>Offset变量表示要移动的字节数。From变量指定开始移动字节的参考位置。 如果from被设为0，这意味着将文件的开头作为移动字节的参考位置。如果设为1，则使用当前的位置作为参考位置。如果它被设为2，那么该文件的末尾将作为参考位置。例如：<ul>
+<li>seek(x,0) ： 从起始位置即文件首行首字符开始移动 x 个字符</li>
+<li>seek(x,1) ： 表示从当前位置往后移动x个字符</li>
+<li>seek(-x,2)： 表示从文件的结尾往前移动x个字符</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>write()</h6><p></p>
+<ul>
+<li><p>f.write(string) 将 string 写入到文件中, 然后返回写入的字符数</p>
+<pre><code>with open(r&apos;E:\test2.txt&apos;,&apos;w+&apos;) as f:
+    a=f.write(&apos;追加内容&apos;)
+    print(a)          #result:4
+    f.seek(0,0)       #将光标移到文件首
+    b=f.read()        #读取文件内容
+    print(b)
+</code></pre></li>
+</ul>
+<p></p><h6>file-like Object</h6><p></p>
+<ul>
+<li>像open()函数返回的这种有个read()方法的对象，在Python中统称为file-like Object。除了file外，还可以是内存的字节流，网络流，自定义流等等。file-like Object不要求从特定类继承，只要写个read()方法就行。StringIO就是在内存中创建的file-like Object，常用作临时缓冲</li>
+<li><p>二进制文件</p>
+<ul>
+<li><p>前面讲的默认都是读取文本文件，并且是UTF-8编码的文本文件。要读取二进制文件，比如图片、视频等等，用’rb’模式打开文件即可</p>
+<pre><code>f = open(&apos;E:\test.jpg&apos;, &apos;rb&apos;)
+f.read()
+f.close()
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/guqing/p/6084009.html" target="_blank" rel="noopener">Python—-文件的IO操作</a></em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjeo07rxj001r3wwvj0tsg8y9" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/11/Python之OS操作/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Python之OS操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/10/XSS注入/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">XSS注入</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 13.33px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 10px;">Git学习</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 16.67px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 18.33px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/安全测试/" style="font-size: 13.33px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.67px;">抓包工具</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/12/Fiddler学习01/">Fiddler学习01</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/12/爬虫学习/">爬虫学习</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/11/Git入门/">Git入门</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/11/python之Excel操作/">python之Excel操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/11/Python之OS操作/">Python之OS操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
