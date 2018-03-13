@@ -5,18 +5,20 @@
   
 
   
-  <title>Tag: 抓包工具 | LiuYongQian</title>
+  <title>Git高级 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="永远相信美好的事情将要发生！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LiuYongQian">
-<meta property="og:url" content="http://yoursite.com/tags/抓包工具/index.html">
+  <meta name="description" content="Git高级   分支管理  Git会串成一条时间线，这条时间线就是分支， 默认就是masterHEAD并不是指向提交，而是指向master，指向最新版本 v1  ==&amp;gt;  v2  ==&amp;gt; v3                  |                  master                   |                   HEAD 如果创建了新的分支，h">
+<meta name="keywords" content="Git学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git高级">
+<meta property="og:url" content="http://yoursite.com/2018/03/13/Git高级/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="永远相信美好的事情将要发生！">
+<meta property="og:description" content="Git高级   分支管理  Git会串成一条时间线，这条时间线就是分支， 默认就是masterHEAD并不是指向提交，而是指向master，指向最新版本 v1  ==&amp;gt;  v2  ==&amp;gt; v3                  |                  master                   |                   HEAD 如果创建了新的分支，h">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-13T09:24:16.443Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LiuYongQian">
-<meta name="twitter:description" content="永远相信美好的事情将要发生！">
+<meta name="twitter:title" content="Git高级">
+<meta name="twitter:description" content="Git高级   分支管理  Git会串成一条时间线，这条时间线就是分支， 默认就是masterHEAD并不是指向提交，而是指向master，指向最新版本 v1  ==&amp;gt;  v2  ==&amp;gt; v3                  |                  master                   |                   HEAD 如果创建了新的分支，h">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -68,58 +70,157 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/03/12/Fiddler学习01/" class="archive-article-date">
-  <time datetime="2018-03-12T04:02:33.000Z" itemprop="datePublished">03-12</time>
+        <section id="main"><article id="post-Git高级" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/13/Git高级/" class="article-date">
+  <time datetime="2018-03-13T02:21:05.000Z" itemprop="datePublished">2018-03-13</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/12/Fiddler学习01/">Fiddler学习01</a>
+    <h1 class="article-title" itemprop="name">
+      Git高级
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/03/08/httpwatch/" class="archive-article-date">
-  <time datetime="2018-03-08T05:49:23.000Z" itemprop="datePublished">03-08</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/03/08/httpwatch/">httpwatch</a>
-    </h1>
-  
 
-    </header>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Git高级</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>分支管理</h6><p></p>
+<ul>
+<li><p>Git会串成一条时间线，这条时间线就是分支， 默认就是master<br>HEAD并不是指向提交，而是指向master，指向最新版本</p>
+<pre><code>v1  ==&gt;  v2  ==&gt; v3
+                 |
+                 master
+                  |
+                  HEAD
+如果创建了新的分支，head将指向新的分支，如下
+                        master
+                          |
+v1  ==&gt;  v2  ==&gt; v3  ==&gt; v4
+                          |
+                        dev
+                          |
+                        HEAD
+</code></pre></li>
+<li><p>基本命令</p>
+<ul>
+<li>查看分支：git branch（*表示你当前所处的branch是哪个）</li>
+<li>创建分支：git branch 分支名</li>
+<li>切换分支： git checkout 分支名</li>
+<li>创建并切换分支：git checkout -b 分支名</li>
+<li>合并分支：git merge 分支名 （需要切换到主分支或者依附分支再执行该命令）</li>
+<li>删除分支： git branch -d 分支名</li>
+<li>分支合并图：git log –graph  –pretty=oneline  –abbrev-commit</li>
+</ul>
+</li>
+<li><p>解决冲突</p>
+<ul>
+<li><p>先在feature1 分支:  a.txt中新增并提交‘AND simple’；<br>后在master 分支:  a.txt 中新增提交‘&amp; simple’ <br>在master和分支上分别对a.txt做了不同修改之后，合并分支出现以下错误：</p>
+<pre><code>git merge feature1
+Auto-merging a.txt
+CONFLICT (content): Merge conflict in a.txt
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre></li>
+<li><p>当Git无法自动合并分支时，就必须首先解决冲突，再提交，最后merge</p>
+</li>
+</ul>
+</li>
+<li><p>分支管理策略：</p>
+<ul>
+<li>1）master分支： 代码是稳定的，平时不能在上面干活的，仅仅是用来发布新版本用</li>
+<li>2）其他分支：是不稳定的，bug、feature可以创建新的分支进行开发，最后再合并到master即可</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>标签管理</h6><p></p>
+<ul>
+<li>标签（tag），是版本库的一个快照；发布一个新版本时，通常先在版本库中打一个标签，无论在将来什么时候，取某个标签的版本即可</li>
+<li><p>基本命令</p>
+<pre><code>git tag &lt;tagname&gt;创建标签
+git tag查看所有标签
+git tag -a &lt;tagname&gt; -m &lt;desc&gt;创建带有说明的标签
+git show &lt;tagname&gt;查看标签的说明
+git tag -d &lt;tagname&gt;删除标签
+
+git push origin &lt;tagname&gt;推送一个本地标签
+git push origin --tags推送全部未推送的本地标签
+
+#如果tag已经推送到远程，要删除远程标签分2步：
+1）删除本地tag:  git tag -d 本地标签名
+2）git push origin :refs/tags/本地标签名
+</code></pre></li>
+</ul>
+<p></p><h6>多人协作</h6><p></p>
+<ul>
+<li>开源项目肯定都是很多人参与到社区中，通过协作完成</li>
+<li>多人协作常用操作<ul>
+<li>克隆远程仓库：git clone xxxxxxx</li>
+<li>查看远程信息：git remove (-v)</li>
+<li>创建自己的分支：git branch xxxxxx</li>
+<li>推送分支：git push origin <branch-name></branch-name></li>
+<li>创建Pull Request</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>其他操作</h6><p></p>
+<ul>
+<li><p>git颜色设置</p>
+<pre><code>Git控制台颜色设置
+git config --global color.diff auto
+git config --global color.status auto
+git config --global color.branch auto
+
+颜色设置关闭
+git config --global color.status false
+</code></pre></li>
+<li><p>忽略某些特殊文件不提交</p>
+<ul>
+<li>1）只需要在git项目的根目录下创建一个.gitignore</li>
+<li>2) 把需要提交的文件或者目录名称写到.gitignore</li>
+<li>3）如果你真正想提交的文件已经被包含在.gitignore里面了，那么就需要使用-f进行强制提交</li>
+</ul>
+</li>
+<li></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjepgcrgs000r3cwvx5s95xju" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/12/Fiddler学习01/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Fiddler学习01</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
 
 
 </section>

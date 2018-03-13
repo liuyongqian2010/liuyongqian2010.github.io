@@ -70,6 +70,143 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-DVD管理系统" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/29/DVD管理系统/" class="article-date">
+  <time datetime="2018-01-29T09:50:37.000Z" itemprop="datePublished">2018-01-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/29/DVD管理系统/">DVD管理系统</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <h5>DVD管理系统</h5>
+
+<pre><code>class dvd:
+    def __init__(self,name,price,status):
+        self.name=name
+        self.price=price
+        self.status=status
+    def __str__(self):
+        stat=&apos;已借出&apos;
+        if self.status==1:
+            stat=&apos;未借出&apos;
+        return &apos;名称：《%s》  单价：%d  状态：%s&apos;%(self.name,self.price,stat)
+class DvdManage:
+    dvds=[]  #存储  多个dvds，每个元素都是一个DVD
+    def init(self):
+        self.dvds.append(dvd(&apos;光辉岁月&apos;,10,0))
+        self.dvds.append(dvd(&apos;大海日出&apos;,12,1))
+        self.dvds.append(dvd(&apos;你好小明&apos;,20,1))
+    def Menu(self):
+        self.init()
+        while(True):
+            print(&apos;1.查询所有DVD&apos;)
+            print(&apos;2.增加DVD&apos;)
+            print(&apos;3.借出DVD&apos;)
+            print(&apos;4.归还DVD&apos;)
+            print(&apos;5.退出&apos;)
+            choose=int(input(&apos;请选择操作项:&apos;))
+            if choose==1:
+                self.showAlldvd()
+            elif choose==2:
+                self.insertDvd()
+            elif choose==3:
+                self.lend()
+            elif choose==4:
+                self.backDvd()
+            elif choose==5:
+                print(&apos;5.谢谢使用！&apos;)
+                break
+    def showAlldvd(self):
+        for d in self.dvds:
+            print(str(d))
+    def insertDvd(self):
+        name = input(&apos;请输入DVD的名称:&apos;)
+        ret=self.checkDvd(name)
+        if ret!=None:
+            print(&apos;DVD已存在!&apos;)
+        else:
+            price=int(input(&apos;请输入价格:&apos;))
+            new_dvd=dvd(name,price,1)
+            self.dvds.append(new_dvd)
+            print(&apos;存放成功!&apos;)
+    def lend(self):
+        name = input(&apos;请输入DVD的名称:&apos;)
+        ret = self.checkDvd(name)
+        if ret != None:
+            if ret.status==0:
+                print(&apos;DVD已借出!&apos;)
+            else:
+                days=int(input(&apos;请输入借出天数:&apos;))
+                ret.status=0
+                print(&apos;借出%d天，应收%d&apos;%(days,ret.price*days))
+        else:
+            print(&apos;DVD不存在!&apos;)
+    def backDvd(self):
+        name=input(&apos;请输入DVD的名称:&apos;)
+        ret=self.checkDvd(name)
+        if ret==None:
+            print(&apos;DVD不存在!&apos;)
+        else:
+            if ret.status==1:
+                print(&apos;DVD未借出!&apos;)
+            else:
+                days=int(input(&apos;请输入借出天数:&apos;))
+                y_money=ret.price * days
+                print(&apos;借出%d天，应收%d&apos; % (days, ret.price * days))
+                money=0
+                while True:
+                    money=int(input(&apos;实收:&apos;))
+                    if money&lt;y_money:
+                        print(&apos;不够啊!&apos;)
+                    else:
+                        break
+                if money&gt;=y_money:
+                    print(&apos;找零:%d&apos;%(money-y_money))
+                ret.status=1
+                print(&apos;归还成功!&apos;)
+    def checkDvd(self,name):
+        for d in self.dvds:
+            if d.name==name:
+                return d       #返回当前对象---内存地址
+        else:
+            return None
+manager=DvdManage()
+manager.Menu()
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjepgcrgb000h3cwve5064ktg" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-封装、继承、多态" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/28/封装、继承、多态/" class="article-date">
@@ -200,7 +337,7 @@ doctor.jiuzhen(xiaoming)    #result:兽医出诊，给宠物看病..   给人类
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjeo07ryn002e3wwvq7w8w8yc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjepgcrje002k3cwvsgl6mio6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -442,7 +579,7 @@ print(id(n))                  #result:1832993647864
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjeo07s0e003d3wwvnpgighv2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjepgcrkc00353cwvsno57pw7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -667,7 +804,7 @@ print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjeo07rx9001m3wwvfu32q8ek" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjepgcrig001v3cwv8t4ym48r" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -826,7 +963,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjeo07s2k003q3wwvkhp2jk3k" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjepgcrlg003r3cwv9p8s5km3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1011,7 +1148,7 @@ print(&quot;谢谢使用！&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjeo07s0h003f3wwvkvyiefho" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjepgcrl4003l3cwvez91bu27" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1174,7 +1311,7 @@ print(d)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjeo07ryh002a3wwvne6awf47" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjepgcria001q3cwv6k0dg1bu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1351,7 +1488,7 @@ print(nums)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjeo07rxs001w3wwvy6nxrcak" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjepgcrik001y3cwv4b1udcm0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1599,7 +1736,7 @@ while i&lt;10:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjeo07ryz002k3wwvhxmz18jl" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjepgcrjl002p3cwvruivlbzj" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1810,95 +1947,7 @@ print(&apos;d&apos; not in str2)       #result:False
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjeo07rys002g3wwv0ldcj92f" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-变量、数据类型、运算符、分支" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/10/变量、数据类型、运算符、分支/" class="article-date">
-  <time datetime="2018-01-10T09:09:48.000Z" itemprop="datePublished">2018-01-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/10/变量、数据类型、运算符、分支/">变量、数据类型、运算符、分支</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>变量、数据类型、运算符、分支</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>变量</h6><p></p>
-<ul>
-<li>是一个数据存储空间的表示，无需关键字，不需要声明；</li>
-<li>命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写；</li>
-<li>print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’</li>
-<li>del删除单个或多个对象的引用<pre><code>x=1
-x,y,z=1,2,3  
-print(x)
-del x,y            #删除单个或者多个对象的引用
-print(&quot;===========================================&quot;)
-name=input(&quot;Please input NAME：&quot;)  #input() 键盘录入 类型：str
-print(&quot;NAME:%s&quot; %name)
-age=int(input(&quot;Please input AGE：&quot;)) #int() 将str转换成int
-print(&quot;AGE:%d&quot; %age)
-work=input(&quot;Please input limit：&quot;)
-print(&quot;WORK:%s&quot; %work)
-</code></pre><h6>数据类型</h6></li>
-<li>数字Number：int,float,bool,复数<br></li>
-<li>字符串：String<br><pre><code>x=1 #int
-y=1.2 #float
-z=&quot;张三&quot; #字符串
-</code></pre><h6>运算符</h6></li>
-<li>算术运算符：+ - <em> /(得到小数), %(取余), //(只得到商，取整),*</em> 幂(返回x的y次幂)</li>
-<li>关系运算符：&gt; &lt; &gt;= == &lt;= !=  最终的返回bool</li>
-<li>逻辑运算符：and or not  &amp;&amp;  || !</li>
-<li>成员运算符: in( x 在 y 序列中返回 True) not in( x 不在 y 序列中返回 True)</li>
-<li>小练习：请用户输入一个四位数字：求此数字各个位之和<pre><code>value=int(input(&quot;Please input a 4-bit value:&quot;))
-qian=value//1000
-bai=value%1000//100
-shi=value%100//10
-ge=value%10
-sum=qian+bai+shi+ge
-print(sum)
-</code></pre><h6>分支结构</h6><pre><code>score=int(input(&quot;Please input score:&quot;))
-if(score&gt;=90):
-    print(&quot;Excellent!&quot;)
-elif(score&gt;=60):
-    print(&quot;Medium!&quot;)
-else:
-    print(&quot;Flunk!&quot;)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjeo07rye00283wwvawuyir9d" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjepgcrj7002f3cwvilbqcnl2" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1930,7 +1979,7 @@ else:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1940,7 +1989,7 @@ else:
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 13.33px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 10px;">Git学习</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 16.67px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 18.33px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/安全测试/" style="font-size: 13.33px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.67px;">抓包工具</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 13.33px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.67px;">Git学习</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 16.67px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 18.33px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/安全测试/" style="font-size: 13.33px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.67px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 10px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
     </div>
   </div>
 
@@ -1949,7 +1998,7 @@ else:
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1962,11 +2011,15 @@ else:
       <ul>
         
           <li>
+            <a href="/2018/03/13/Git高级/">Git高级</a>
+          </li>
+        
+          <li>
             <a href="/2018/03/12/Fiddler学习01/">Fiddler学习01</a>
           </li>
         
           <li>
-            <a href="/2018/03/12/爬虫学习/">爬虫学习</a>
+            <a href="/2018/03/12/爬虫学习01/">爬虫学习01</a>
           </li>
         
           <li>
@@ -1975,10 +2028,6 @@ else:
         
           <li>
             <a href="/2018/03/11/python之Excel操作/">python之Excel操作</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/11/Python之OS操作/">Python之OS操作</a>
           </li>
         
       </ul>

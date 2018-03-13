@@ -7,18 +7,18 @@
   
   <title>Git入门 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="永远相信美好的事情将要发生！">
+  <meta name="description" content="Git入门   简介  git是一款免费、开源的分布式版本控制系统，用于敏捷高效的处理任何或大或小的项目github是一个面向开源及私有软件项目的托管平台，因为只支持git作为唯一的版本库格式进行托管，故名github Git和SVN的对比： 1）Git是分布式的，SVN是集中式 2）Git可离线完成大部分操作，SVN则必须与中央服务器进行网络交互 3）Git有着优雅的分支和合并功能 4）Git有">
 <meta name="keywords" content="Git学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git入门">
 <meta property="og:url" content="http://yoursite.com/2018/03/11/Git入门/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="永远相信美好的事情将要发生！">
+<meta property="og:description" content="Git入门   简介  git是一款免费、开源的分布式版本控制系统，用于敏捷高效的处理任何或大或小的项目github是一个面向开源及私有软件项目的托管平台，因为只支持git作为唯一的版本库格式进行托管，故名github Git和SVN的对比： 1）Git是分布式的，SVN是集中式 2）Git可离线完成大部分操作，SVN则必须与中央服务器进行网络交互 3）Git有着优雅的分支和合并功能 4）Git有">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-11T10:10:42.300Z">
+<meta property="og:updated_time" content="2018-03-13T02:20:03.662Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git入门">
-<meta name="twitter:description" content="永远相信美好的事情将要发生！">
+<meta name="twitter:description" content="Git入门   简介  git是一款免费、开源的分布式版本控制系统，用于敏捷高效的处理任何或大或小的项目github是一个面向开源及私有软件项目的托管平台，因为只支持git作为唯一的版本库格式进行托管，故名github Git和SVN的对比： 1）Git是分布式的，SVN是集中式 2）Git可离线完成大部分操作，SVN则必须与中央服务器进行网络交互 3）Git有着优雅的分支和合并功能 4）Git有">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -95,11 +95,135 @@
       
 	  
 	  
-        
+        <p></p><h5>Git入门</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>git是一款免费、开源的分布式版本控制系统，用于敏捷高效的处理任何或大或小的项目<br>github是一个面向开源及私有软件项目的托管平台，因为只支持git作为唯一的版本库格式进行托管，故名github</li>
+<li>Git和SVN的对比：<ul>
+<li>1）Git是分布式的，SVN是集中式</li>
+<li>2）Git可离线完成大部分操作，SVN则必须与中央服务器进行网络交互</li>
+<li>3）Git有着优雅的分支和合并功能</li>
+<li>4）Git有着更强的撤销修改和修改版本历史的能力</li>
+<li>5）Git速度更快，效率更好</li>
+</ul>
+</li>
+<li>git的三个区<ul>
+<li>工作区：编辑代码的地方</li>
+<li>暂存区：工作区与历史提交中间的缓存，代表的是要提交的工作状态</li>
+<li>历史仓库：commit指向的</li>
+</ul>
+</li>
+<li>Git管理的是修改，而不是文件</li>
+</ul>
+<p></p><h6>基本配置</h6><p></p>
+<ul>
+<li><p>目前git for window的版本是2.16.2</p>
+<pre><code>which -a git 查看git的安装位置
+git version     查看git的版本
+
+添加user.name和user.email
+git config --global user.name fyuan925
+git config --global user.email fyuan925@gmail.com
+
+添加一个新的user.name
+git config --global --add user.name kgc
+
+得到属性的值
+git config user.name
+git config --get user.name
+
+得到全局所有属性的值
+git config --list --global
+
+删除一个属性，并且是指定属性名进行删除
+git config --global --unset user.name kgc
+
+当只有一个属性值的时候，可以在删除时不指定值
+git config --global --unset user.name
+</code></pre></li>
+<li><p>关联github</p>
+<ul>
+<li><p>本地生成SSH KEYS</p>
+<pre><code>先生成ssh，命令如下：
+ssh-keygen -t rsa -C &apos;kgc@gmail.com&apos;
+进入ssh目录后将该目录下文件id_rsa.pub中的内容拷贝
+</code></pre></li>
+<li><p>在github上设置SSH公钥</p>
+<pre><code>进入github主页，点击右上角的setting，选择SSH and GPG keys;
+新建一个ssh key，将公钥粘贴后点击Add SSH key
+输入GitHub的密码进行验证，点击Confirm password
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>本地库连接远程库</h6><p></p>
+<ul>
+<li><p>第一种方式：先有本地仓库，后有远程仓库</p>
+<pre><code>在本地仓库中执行以下命令，同步信息
+git remote add origin git@github.com:fangyuan925/kgc_git.git
+git push -u origin master
+第一次使用-u，后面不再使用
+</code></pre></li>
+<li><p>第二种方式：先有远程仓库，再clone到本地（最常见的，一般都是先在GitHub上创建仓库，可以选择初始化选项，然后开发人员再clone到本地）</p>
+<pre><code>git clone xxxxxx
+git push -u origin master
+第一次使用-u，后面不再使用
+</code></pre></li>
+</ul>
+<p></p><h6>基本命令</h6><p></p>
+<ul>
+<li><p>在本地新建仓库</p>
+<pre><code>git init      新建文件夹后用此命令初始化仓库
+vi readme.txt 添加一个readme.txt
+git status  查看当前版本库的状态
+git add filename    使用git add命令告诉git，把该文件添加到仓库
+git commit -m &apos;comment&apos;  使用git commit命令告诉git，把文件提交到仓库,可设置注释内容
+
+git add     可以反复添加多个
+git diff filename     查看修改的内容
+git log      可以查看所有的提交历史记录
+git log filename     仅查看指定文件名的提交历史记录
+git log --pretty=oneline filename
+d085ee8434392d2cf88b48592f29fbeefb0818f7  此为commit id（版本号） SHA-1 Hash计算出来一个16进制的值
+</code></pre></li>
+<li><p>版本回退</p>
+<pre><code>前提：知道当前版本是哪个， HEAD表示当前版本
+回退到上一个版本： HEAD^   一个^就表示前一个版本， 如果N个前版本可以用HEAD~N
+
+回退命令：git reset --hard HEAD^
+回退之后你后悔了又想回到后退之前的那个版本： git reset --hard xxxxxxxxx
+xxxxxxxxx  前面可以通过 git log filename
+
+3commit   &lt;== HEAD
+2commit
+1commit
+
+执行了git reset --hard HEAD^之后
+3commit   
+2commit  &lt;== HEAD
+1commit
+
+git reset：版本穿梭， 可以使用git log查看提交历史，以便确定回退/穿梭到哪个版本     
+git reflog：查看命令历史，以便确定要回到未来/过去的哪个版本
+</code></pre></li>
+<li><p>撤销修改</p>
+<pre><code>没有提交到暂存区时，其实就在工作区： git checkout – filename
+已经提交到暂存区了： 分两步：1）git reset HEAD file 2）git checkout -- filename
+</code></pre></li>
+<li><p>删除文件</p>
+<pre><code>手误删除，如何恢复： git checkout -- filename
+真删除版本库的文件： 
+    1) git rm filename
+    2) git commit -m &apos;xxx&apos;
+</code></pre></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjeo07ru0000g3wwvp9y45aa0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjepgcrgv000u3cwvpzqb51em" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -110,11 +234,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/03/12/爬虫学习/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/03/12/爬虫学习01/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Neuer</strong>
       <div class="article-nav-title">
         
-          爬虫学习
+          爬虫学习01
         
       </div>
     </a>
@@ -143,7 +267,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CentOS7安装Redis3-2/">CentOS7安装Redis3.2</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">22</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Yum源配置使用/">Yum源配置使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python2-3共存/">python2/3共存</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -153,7 +277,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 13.33px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 10px;">Git学习</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 16.67px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 18.33px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/安全测试/" style="font-size: 13.33px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.67px;">抓包工具</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+      <a href="/tags/CentOS7安装Redis3-2/" style="font-size: 10px;">CentOS7安装Redis3.2</a> <a href="/tags/Github博客/" style="font-size: 13.33px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.67px;">Git学习</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/MySQL学习/" style="font-size: 16.67px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 18.33px;">Web前端</a> <a href="/tags/Yum源配置使用/" style="font-size: 10px;">Yum源配置使用</a> <a href="/tags/python2-3共存/" style="font-size: 10px;">python2/3共存</a> <a href="/tags/安全测试/" style="font-size: 13.33px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.67px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 10px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 15px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
     </div>
   </div>
 
@@ -162,7 +286,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">20</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -175,11 +299,15 @@
       <ul>
         
           <li>
+            <a href="/2018/03/13/Git高级/">Git高级</a>
+          </li>
+        
+          <li>
             <a href="/2018/03/12/Fiddler学习01/">Fiddler学习01</a>
           </li>
         
           <li>
-            <a href="/2018/03/12/爬虫学习/">爬虫学习</a>
+            <a href="/2018/03/12/爬虫学习01/">爬虫学习01</a>
           </li>
         
           <li>
@@ -188,10 +316,6 @@
         
           <li>
             <a href="/2018/03/11/python之Excel操作/">python之Excel操作</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/11/Python之OS操作/">Python之OS操作</a>
           </li>
         
       </ul>
