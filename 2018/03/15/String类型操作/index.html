@@ -5,18 +5,20 @@
   
 
   
-  <title>Archiv: 2017/12 | LiuYongQian</title>
+  <title>String类型操作 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="永远相信美好的事情将要发生！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LiuYongQian">
-<meta property="og:url" content="http://yoursite.com/archives/2017/12/page/2/index.html">
+  <meta name="description" content="String类型操作   01  1.set key value设置指定key的值 set myname liuyongqian set age 108  2.get key获取指定key的值 get myname  3.getset key_name value用于设置指定key的值，并返回key的旧值，当key 没有旧值返回 nil getset myname lailai     #resu">
+<meta name="keywords" content="Redis数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="String类型操作">
+<meta property="og:url" content="http://yoursite.com/2018/03/15/String类型操作/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="永远相信美好的事情将要发生！">
+<meta property="og:description" content="String类型操作   01  1.set key value设置指定key的值 set myname liuyongqian set age 108  2.get key获取指定key的值 get myname  3.getset key_name value用于设置指定key的值，并返回key的旧值，当key 没有旧值返回 nil getset myname lailai     #resu">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-15T16:11:24.278Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LiuYongQian">
-<meta name="twitter:description" content="永远相信美好的事情将要发生！">
+<meta name="twitter:title" content="String类型操作">
+<meta name="twitter:description" content="String类型操作   01  1.set key value设置指定key的值 set myname liuyongqian set age 108  2.get key获取指定key的值 get myname  3.getset key_name value用于设置指定key的值，并返回key的旧值，当key 没有旧值返回 nil getset myname lailai     #resu">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -68,45 +70,151 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/14/hello-world/" class="archive-article-date">
-  <time datetime="2017-12-14T15:15:06.308Z" itemprop="datePublished">12-14</time>
+        <section id="main"><article id="post-String类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/15/String类型操作/" class="article-date">
+  <time datetime="2018-03-15T10:49:02.000Z" itemprop="datePublished">2018-03-15</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/14/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      String类型操作
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-
-  <nav id="page-nav">
+      </header>
     
-    <a class="extend prev" rel="prev" href="/archives/2017/12/">&laquo; zurück</a><a class="page-number" href="/archives/2017/12/">1</a><span class="page-number current">2</span>
-  </nav>
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>String类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.set key value设置指定key的值</p>
+<pre><code>set myname liuyongqian
+set age 108
+</code></pre></li>
+<li><p>2.get key获取指定key的值</p>
+<pre><code>get myname
+</code></pre></li>
+<li><p>3.getset key_name value用于设置指定key的值，并返回key的旧值，当key 没有旧值返回 nil</p>
+<pre><code>getset myname lailai     #result:&apos;liuyongqian&apos;
+</code></pre></li>
+<li><p>4.getrange key_name start end获取存储在指定key中字符串的子字符串</p>
+<pre><code>set myname liuyongqian
+getrange myname 0,2      #result:&apos;liu&apos;
+</code></pre></li>
+</ul>
+<p>5.setrange key_name offset value用指定的字符串覆盖给定 key 所储存的字符串值，覆盖的位置从偏移量offset开始</p>
+<pre><code>setrange job 5 manager
+get job               #result:code-manager
+</code></pre><ul>
+<li><p>14.strlen key_name 用于获取指定 key 所储存的字符串值的长度。当 key 储存的不是字符串值时，返回一个错误</p>
+<pre><code>strlen job             #result:12
+</code></pre></li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li><p>6.mset key1 value1 key2 value2 …用于同时设置一个或多个 key-value 对</p>
+<pre><code>mset k1 hello k2 world     #result:OK
+</code></pre></li>
+<li><p>13.setnx key_name value在指定的key不存在时，为key设置指定的值；若key存在，则设置失败，覆盖也失败</p>
+<pre><code>exists job            #result:0
+setnx job code-farmer #result:1
+</code></pre></li>
+<li><p>7.msetnx key1 value1 key2 value2 …用于所有给定 key 都不存在时，同时设置一个或多个 key-value 对,若某个键已存在，则设置失败</p>
+</li>
+<li><p>8.mget key1 key2 … 返回所有(一个或多个)给定 key 的值。 如果给定的 key 里面，有某个 key 不存在，那么这个 key 返回特殊值 nil </p>
+<pre><code>mget myname age         #result:&apos;lailai&apos;&apos;108&apos;
+</code></pre></li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li><p>9.getbit keyname offset对key所储存的字符串值，获取指定偏移量上的位(bit),当偏移量offset比字符串值的长度大，或者key不存在时，返回0 </p>
+<pre><code>set mynum a  #&apos;a&apos;的ASCII码是 97,转换为二进制是：1100001。offset的学名叫做“偏移” 。
+             #二进制中的每一位就是offset值，比如在这里ffset 1等于&apos;1&apos; ,offset2等于&apos;1&apos;,offset 7 等于&apos;1&apos; ，offset是从左往右计数的
+getbit mynum 2           #result:1
+</code></pre></li>
+<li><p>10.setbit key_name offset value 用于对key所储存的字符串值，设置或清除指定偏移量上的位(bit)</p>
+<pre><code>#将mynum的值a变成b，也就是将01100001变成01100010（b的ASCII码是98），
+#即将&apos;a&apos;中的offset 6从0变成1，将offset 7从1变成0
+setbit mynum 6 1
+setbit mynum 7 0
+get mynum            #result:&apos;b&apos;
+</code></pre></li>
+</ul>
+<p></p><h6>04</h6><p></p>
+<ul>
+<li><p>11.setex key_name timeout value为指定的key设置值及其过期时间，单位为秒。如果 key 已经存在，将会替换旧的值</p>
+<pre><code>setex mymemory 8 loveyou         #待8秒后mymemory的值为空
+</code></pre></li>
+<li><p>12.psetex key_name timeout value以毫秒为单位设置 key 的生存时间</p>
+</li>
+</ul>
+<p></p><h6>05</h6><p></p>
+<ul>
+<li><p>15.incr key_name将key中储存的数字值增一<br>如果key不存在，那么 key的值会先被初始化 0，然后再执行incr操作<br>如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误</p>
+<pre><code>set page 108
+incr page
+get page          #result:109
+</code></pre></li>
+<li><p>16.incrby key_name value将key中储存的数字加上指定的增量值</p>
+<pre><code>set rank 110
+incrby rank 50
+get rank          #result:160
+</code></pre></li>
+<li><p>17.incrbyfloat key_name value为key中所储存的值加上指定的浮点数增量值</p>
+<pre><code>set price 3.14
+incrbyfloat price 0.01
+get price         #result:3.15
+</code></pre></li>
+<li><p>18.decr key_name将key中储存的数字值减一</p>
+</li>
+<li>19.decrby key_name value将key所储存的值减去指定的减量值</li>
+<li><p>20.append key_name new_value 用于为指定的key追加值<br><br>如果 key 已经存在并且是一个字符串，append命令将value追加到 key 原来的值的末尾<br>如果key不存在，append就简单地将给定key设为 value ，就像执行set key value 一样</p>
+<pre><code>exists myname       #result:0
+append myname  liu
+append myname  yongqian
+get myname          #result:liuyongqian
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjespu0my001na0wvj22at6jj" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/15/MongoDB基本概念/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">MongoDB基本概念</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
 
 </section>
         
