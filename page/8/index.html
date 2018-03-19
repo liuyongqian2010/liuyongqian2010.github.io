@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="永远相信美好的事情将要发生！">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LiuYongQian">
+<meta property="og:url" content="http://yoursite.com/page/8/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="永远相信美好的事情将要发生！">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LiuYongQian">
+<meta name="twitter:description" content="永远相信美好的事情将要发生！">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Github-Hexo博客更换主题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/16/Github-Hexo博客更换主题/" class="article-date">
+  <time datetime="2017-12-16T06:21:52.000Z" itemprop="datePublished">2017-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/16/Github-Hexo博客更换主题/">Github+Hexo博客更换主题</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h4>1.挑选主题</h4><p></p>
+<ul>
+<li>1.1在<a href="https://hexo.io/themes/" target="_blank" rel="noopener">Themes|Hexo</a>中挑选自己中意的主题，记住名字，比如“Again”</li>
+</ul>
+<ul>
+<li>1.2在gitbash中cd到博客所在文件夹的位置如”cd /e/github/myblog”,继续输入”<a href="https://github.com/lyyourc/hexo-theme-again&quot;可克隆最新的Again主题到你的博客文件夹里面" target="_blank" rel="noopener">https://github.com/lyyourc/hexo-theme-again&quot;可克隆最新的Again主题到你的博客文件夹里面</a></li>
+<li>1.3克隆之后可在你的博客文件中的themes下看到刚刚下载的Again主题</li>
+</ul>
+<p></p><h4>2.安装主题</h4><p></p>
+<ul>
+<li>2.1修改站点配置文件（你的博客最底层目录下的_config.yml），用任一编辑器打开找到“theme”选项，将原先的主题名称删除改为Again即可，注意theme的冒号与Again之间有空格</li>
+<li><p>2.1.1这里可以按照Again的官方指导教程，配置一下Site模块中的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">title: LiuYongQian</span><br><span class="line">subtitle: 我知道你会来，所以我等···</span><br><span class="line">description: 永远相信美好的事情将要发生！</span><br><span class="line">author: 刘永前</span><br><span class="line">language: zh-Hans</span><br><span class="line">timezone: Asia/Shanghai</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.2在gitbash中输入”hexo s –debug”启动hexo服务器进行本地测试一下，在浏览器打开“<a href="http://localhost:4000/”" target="_blank" rel="noopener">http://localhost:4000/”</a></p>
+</li>
+<li>2.3修改主题配置文件（你的博客目录下的themes/Again下的_config.yml）,找到scheme关键字，保证只有一个scheme前面没有#号，说明这个scheme选中</li>
+</ul>
+<p></p><h4>3.发布主题</h4><p></p>
+<ul>
+<li>在gitbash中依次输入”hexo clean” “hexo generate” “hexo deploy”，字幕滚动完后，新博客就可以访问了</li>
+</ul>
+<p></p><h4>4.寻找大神</h4><p></p>
+<ul>
+<li>菜鸟的我参考过这位大神的佳作：<a href="http://www.jianshu.com/p/469e985288b3?from=jiantop.com" target="_blank" rel="noopener">GITHUB+HEXO博客轻松更换主题外观</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjeyazapd000f1kwvud2a9v7x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github博客/">Github博客</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Git-NodeJS-Hexo创建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/15/Git-NodeJS-Hexo创建个人博客/" class="article-date">
+  <time datetime="2017-12-15T13:51:31.000Z" itemprop="datePublished">2017-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/15/Git-NodeJS-Hexo创建个人博客/">Git+NodeJS+Hexo创建个人博客</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p>##1.Git篇</p>
+<ul>
+<li>Windows环境下，安装（Git-2.15.1.2-64-bit.exe）后可打开gitbash运用”git version”查看版本</li>
+</ul>
+<p>##2.NodeJS篇</p>
+<ul>
+<li>Windows环境下，安装（node-v8.9.3-x64.msi）并配置环境变量后，在win-dos窗口中运用”node -v”查看版本</li>
+</ul>
+<p>##3.Hexo篇（接下来均在gitbash中完成</p>
+<ul>
+<li><p>3.1手动创建一个将来存放blog的文件夹，在gitbash中cd到该文件夹下运用”npm i -g hexo”安装hexo后使用”hexo -v”查看版本；</p>
+</li>
+<li><p>3.2运用”hexo init”初始化文件夹</p>
+</li>
+</ul>
+<p>##4.关联github</p>
+<ul>
+<li><p>4.1在github网页端创建自己的账号后new一个repository，name如liuyongqian2010.github.io，记得勾选initialize；</p>
+</li>
+<li><p>4.2回到gitbash中，配置github账户信息，两条命令：git config –blobal user.name “liuyongqian2010” ,git config –global user.email “1029853206@qq.com”</p>
+</li>
+<li><p>4.3在gitbash中创建SSH，输入”ssh-keygen -t rsa -C “1029853206@qq.com”生成ssh，输入”cd ~/.ssh”，”cat id_rsa.pub”后复制出现的一堆码</p>
+</li>
+<li><p>4.4在github网页端，你的头像下setting中的SSH and GPG keys一栏添加一个New SSH key后在gitbash中输入”ssh -T git@github.com”验证是否添加成功</p>
+</li>
+</ul>
+<p>##5.本地验证</p>
+<ul>
+<li><p>5.1先在gitbash中运用”npm i hexo-server”安装hexo的服务器</p>
+</li>
+<li><p>5.2使用随便一个编辑器修改blog文件夹下的”_config.yml”文件中的”deploy”模块中的”repo”为你在github上的库地址如”<a href="https://github.com/liuyongqian2010/liuyongqian2010.github.io" target="_blank" rel="noopener">https://github.com/liuyongqian2010/liuyongqian2010.github.io</a>“</p>
+</li>
+<li><p>5.3在gitbash中cd到blog目录下，分别执行以下三条命令：”hexo clean””hexo generate””hexo server”后打开浏览器输入”<a href="http://localhost:4000&quot;可见hexo默认主题页面" target="_blank" rel="noopener">http://localhost:4000&quot;可见hexo默认主题页面</a></p>
+</li>
+</ul>
+<p>##6.上传github</p>
+<ul>
+<li><p>6.1为了将以后所写文章部署到github服务器上让别人看到请在gtibash中输入”npm install hexo-deployer-git –save”</p>
+</li>
+<li><p>6.2在gitbash中依次执行那三条命令后在浏览器中输入”<a href="https://liuyongqian2010.github.io/&quot;可见自己的博客了" target="_blank" rel="noopener">https://liuyongqian2010.github.io/&quot;可见自己的博客了</a></p>
+</li>
+</ul>
+<p>##7.添加RSS</p>
+<ul>
+<li><p>7.1在gitbash中输入”npm i hexo-generator-feed”安装rss插件</p>
+</li>
+<li><p>7.2在blog文件夹下的_config.yml中找到Extension添加如下内容：<br>  Extensions<br>  plugin:<br>   -hexo-generator-feed<br>  Feed Atom<br>  feed:</p>
+<pre><code>type: atom
+path: atom.xml
+limit: 20
+</code></pre></li>
+</ul>
+<p>##8.写文章了</p>
+<ul>
+<li>在gitbash中运用”hexo new ‘文章名’”后可在source/_posts路径下看到你创建的内容了，可下载Markdown进行内容编辑，之后执行那三条命令……</li>
+</ul>
+<p>##9.遇到障碍</p>
+<ul>
+<li><p>9.1在window10上运行Markdown可能会总弹出“HTML渲染错误”，下载安装（awesomium_v1.6.6_sdk_win.exe）后重启Markdown即可</p>
+</li>
+<li><p>9.2详细内容可参见：<a href="https://www.cnblogs.com/visugar/p/6821777.html" target="_blank" rel="noopener">hexo从零开始到搭建完整</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="cjeyazapl000h1kwvnd7ct0vf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github博客/">Github博客</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-验证博客是否正常？" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/15/验证博客是否正常？/" class="article-date">
+  <time datetime="2017-12-15T09:02:08.000Z" itemprop="datePublished">2017-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/15/验证博客是否正常？/">验证博客是否正常？</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <blockquote><p>一艘货轮卸货后返航,在浩渺的大海上,突然遭遇巨大风暴,老船长果断下令:“打开所有货舱,立刻往里面灌水。”  　　</p>
+</blockquote>
+<blockquote><p>水手们担忧:“往船里灌水是险上加险,这不是自找死路吗?” 船长镇定地说:“大家见过根深干粗的树被暴风刮倒过吗?被刮倒的是没有根基的小树。”  　</p>
+</blockquote>
+<blockquote><p>水手们半信半疑地照着做了。虽然暴风巨浪依旧那么猛烈,但随着货舱里的水位越来越高,货轮渐渐地平稳了。　</p>
+</blockquote>
+<blockquote><p>船长告诉那些松了一口气的水手:“一只空木桶,是很容易被风打翻的,如果装满水负重了,风是吹不倒的。船在负重的时候,是最安全的;空船时,才是最危险的时候。”  </p>
+</blockquote>
+<blockquote><p>人何尝不是呢?那些胸怀大志的人,沉重的责任感时刻压在心头,砥砺着人生的坚稳脚步,从岁月和历史的风雨中坚定地走了出来。而那些得过且过的空耗时光的人,像一个没有盛水的空水桶,往往一场人生的风雨便把他们彻底地打翻了。 </p>
+</blockquote>
+<blockquote><p>给我们自己加满“水”,使我们负重,这样才不会被打翻。</p>
+</blockquote>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/15/验证博客是否正常？/" data-id="cjeyazax000491kwvae2mf8a8" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github博客/">Github博客</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-起点" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/15/起点/" class="article-date">
+  <time datetime="2017-12-15T08:26:00.000Z" itemprop="datePublished">2017-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/15/起点/">起点</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
+</blockquote>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjeyazaw3003s1kwvlmsip9qt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/14/hello-world/" class="article-date">
+  <time datetime="2017-12-14T15:15:06.308Z" itemprop="datePublished">2017-12-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/14/hello-world/">Hello World</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjeyazasl00221kwv70bu0amx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 10px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/19/Python之socket/">Python之socket</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/16/Zset类型操作/">Zset类型操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/16/Set类型操作/">Set类型操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/16/List类型操作/">List类型操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

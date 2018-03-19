@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hash类型操作 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Hash类型操作   01  1.hdel key_name filed_name用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略 hset myhash name liuyongqian hdel myhash name         #result:被成功删除字段的数量  2.hexists key_name filed_name用于查看哈希表的指定字段是否存在 hexi">
+<meta name="keywords" content="Redis数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hash类型操作">
+<meta property="og:url" content="http://yoursite.com/2018/03/16/Hash类型操作/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="Hash类型操作   01  1.hdel key_name filed_name用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略 hset myhash name liuyongqian hdel myhash name         #result:被成功删除字段的数量  2.hexists key_name filed_name用于查看哈希表的指定字段是否存在 hexi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-16T10:57:20.380Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hash类型操作">
+<meta name="twitter:description" content="Hash类型操作   01  1.hdel key_name filed_name用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略 hset myhash name liuyongqian hdel myhash name         #result:被成功删除字段的数量  2.hexists key_name filed_name用于查看哈希表的指定字段是否存在 hexi">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Hash类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/Hash类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:21:20.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hash类型操作
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Hash类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.hdel key_name filed_name用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略</p>
+<pre><code>hset myhash name liuyongqian
+hdel myhash name         #result:被成功删除字段的数量
+</code></pre></li>
+<li><p>2.hexists key_name filed_name用于查看哈希表的指定字段是否存在</p>
+<pre><code>hexists myhash name      #result:如果哈希表含有给定字段，返回 1 ;
+                    如果哈希表不含有给定字段，或 key 不存在，返回 0
+</code></pre></li>
+<li><p>3.hget key_name field_name用于返回哈希表中指定字段的值</p>
+<pre><code>hget myhash name         #result:返回给定字段的值。如果给定的字段或 key 不存在时，返回 nil 
+</code></pre></li>
+<li><p>4.hgetall key_name用于返回哈希表中，所有的字段和值</p>
+<pre><code>hgetall myhash          #resutl:在返回值里，紧跟每个字段名(field name)之后是字段的值(value)
+</code></pre></li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li><p>5.hincrby key_name field_name value 用于为哈希表中的字段值加上指定增量值<br>如果哈希表的 key 不存在，一个新的哈希表被创建并执行hincrby命令<br>如果指定的字段不存在，那么在执行命令前，字段的值被初始化为 0</p>
+<pre><code>hset myhash age 108
+hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
+</code></pre></li>
+<li><p>6.hincrbyfloat key_name field_name value用于为哈希表中的字段值加上指定浮点数增量值</p>
+<pre><code>hincrbyfloat myhash age 1.5  #result:返回命令执行后的字段值
+</code></pre></li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li><p>7.hkeys key_name用于获取哈希表中的所有域（field）</p>
+<pre><code>hkeys myhash             #result:包含哈希表中所有域（field）列表。 当 key 不存在时，返回一个空列表
+</code></pre></li>
+<li><p>8.hvals key_name返回哈希表所有域(field)的值</p>
+<pre><code>hvals myinfo          #result:一个包含哈希表中所有域(field)值的列表
+</code></pre></li>
+<li><p>9.hlen key_name用于获取哈希表中字段的数量</p>
+<pre><code>hlen myhash   #result:哈希表中字段的数量  
+</code></pre></li>
+</ul>
+<p></p><h6>04</h6>    <p></p>
+<ul>
+<li><p>10.hmget key_name field1 field2 …用于返回哈希表中，一个或多个给定字段的值</p>
+<pre><code>hmget myhash name age
+</code></pre></li>
+<li><p>11.hmset key_name field1 value1 field2 value2 …用于同时将多个 field-value (字段-值)对设置到哈希表中,<br>此命令会覆盖哈希表中已存在的字段</p>
+<pre><code>hmset myinfo name liuyongqian age 108 work engineer
+</code></pre></li>
+<li><p>12.hset key_name field_name用于为哈希表中的字段赋值<br>如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作<br>如果字段已经存在于哈希表中，旧值将被覆盖</p>
+<pre><code>hset myonfo age 54
+</code></pre></li>
+<li><p>13.hsetnx key_name field value用于为哈希表中不存在的的字段赋值 <br>如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作<br>如果字段已经存在于哈希表中，操作无效<br>如果 key 不存在，一个新哈希表被创建并执行 HSETNX 命令</p>
+<pre><code>hsetnx myinfo limit  no
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjeyazaq1000p1kwvia1l3fzk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/16/List类型操作/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          List类型操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/15/String类型操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">String类型操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 10px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/19/Python之socket/">Python之socket</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/16/Zset类型操作/">Zset类型操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/16/Set类型操作/">Set类型操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/16/List类型操作/">List类型操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

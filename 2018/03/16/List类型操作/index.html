@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>List类型操作 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="List类型操作   01  lpush key_name value1 value2…将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行lpush操作 lpush mylist hello world  lpushx key_name value1 value2…将一个值插入到已存在的列表头部，列表不存在时操作无效  rpush key_name value1 val">
+<meta name="keywords" content="Redis数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="List类型操作">
+<meta property="og:url" content="http://yoursite.com/2018/03/16/List类型操作/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="List类型操作   01  lpush key_name value1 value2…将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行lpush操作 lpush mylist hello world  lpushx key_name value1 value2…将一个值插入到已存在的列表头部，列表不存在时操作无效  rpush key_name value1 val">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-16T15:57:01.154Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="List类型操作">
+<meta name="twitter:description" content="List类型操作   01  lpush key_name value1 value2…将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行lpush操作 lpush mylist hello world  lpushx key_name value1 value2…将一个值插入到已存在的列表头部，列表不存在时操作无效  rpush key_name value1 val">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-List类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/List类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:21:37.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      List类型操作
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>List类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>lpush key_name value1 value2…将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行lpush操作</p>
+<pre><code>lpush mylist hello world
+</code></pre></li>
+<li><p>lpushx key_name value1 value2…将一个值插入到已存在的列表头部，列表不存在时操作无效</p>
+</li>
+<li>rpush key_name value1 value2…用于将一个或多个值插入到列表的尾部(最右边)</li>
+<li>rpushx key_name value1 value2…用于将一个值插入到已存在的列表尾部(最右边)。如果列表不存在，操作无效</li>
+<li>lpop key移出并获取列表的第一个元素</li>
+<li>rpop key移出并获取列表的最后一个元素</li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li>lrange key_name start stop将一个值插入到已存在的列表头部，列表不存在时操作无效</li>
+<li><p>lrem key_name count value根据参数 COUNT 的值，移除列表中与参数 VALUE 相等的元素</p>
+<ul>
+<li><p>count的值可以是以下几种：</p>
+<ul>
+<li>count &gt; 0 : 从表头开始向表尾搜索，移除与value相等的元素，数量为value</li>
+<li>count &lt; 0 : 从表尾开始向表头搜索，移除与value相等的元素，数量为value的绝对值</li>
+<li><p>count = 0 : 移除表中所有与value相等的值</p>
+<pre><code>lrem mylist -2 hell0
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>rpoplpush用于移除列表的最后一个元素，并将该元素添加到另一个列表并返回</p>
+</li>
+<li><p>brpoplpush list1 another_list timeout从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
+<pre><code>brpoplpush msg reciver 500 #如在指定时间内没有任何元素被弹出，则返回一个 nil 和等待时长。 反之，返回一个含有两个元素的列表，第一个元素是被弹出元素的值，第二个元素是等待时长
+</code></pre></li>
+<li><p>blpop list1 list2…timeout移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
+<pre><code>blpop list1 100          #如果列表为空，返回一个 nil 。 
+                        否则，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，
+                        第二个元素是被弹出元素的值 
+</code></pre></li>
+<li><p>brpop list1 list2…timeout移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
+<pre><code>brpop list 100           #假如在指定时间内没有任何元素被弹出，则返回一个 nil 和等待时长。         
+                        反之，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，
+                            第二个元素是被弹出元素的值
+</code></pre></li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li>lset key_name index value过索引来设置元素的值</li>
+<li>ltrim key_name start stop 对一个列表进行修剪(trim)，让列表只保留指定区间内的元素</li>
+<li><p>lindex kye_name index用于通过索引获取列表中的元素</p>
+<pre><code>lpush mylist hello world
+lindex mylist 1        #列表中下标为指定索引值的元素
+</code></pre></li>
+<li><p>linsert key_name before exist_value new_value用于在列表的元素前或者后插入元素。 当指定元素不存在于列表中时，不执行任何操作</p>
+<pre><code>linsert mylist before hello 2018
+</code></pre></li>
+<li><p>llen key_name用于返回列表的长度</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjeyazaqw00161kwvrt11flhy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/16/Set类型操作/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Set类型操作
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/16/Hash类型操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hash类型操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 10px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/19/Python之socket/">Python之socket</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/16/Zset类型操作/">Zset类型操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/16/Set类型操作/">Set类型操作</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/16/List类型操作/">List类型操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
