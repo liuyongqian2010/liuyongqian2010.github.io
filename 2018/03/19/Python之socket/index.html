@@ -7,17 +7,18 @@
   
   <title>Python之socket | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="永远相信美好的事情将要发生！">
+  <meta name="description" content="Python之socket   socket是什么  OSI（开放式系统互联模型）  互联网协议按照功能不同分为osi七层或者tcp/ip四层 应用层----C/S架构的软件是基于网络进行通讯的；学习socket就是为了完成C/S架构的开发 传输层 网络层 网络接口层    Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口。在设计模式中，Socket其实就是一个门面模式，">
+<meta name="keywords" content="Python学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python之socket">
 <meta property="og:url" content="http://yoursite.com/2018/03/19/Python之socket/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="永远相信美好的事情将要发生！">
+<meta property="og:description" content="Python之socket   socket是什么  OSI（开放式系统互联模型）  互联网协议按照功能不同分为osi七层或者tcp/ip四层 应用层----C/S架构的软件是基于网络进行通讯的；学习socket就是为了完成C/S架构的开发 传输层 网络层 网络接口层    Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口。在设计模式中，Socket其实就是一个门面模式，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-19T12:10:17.136Z">
+<meta property="og:updated_time" content="2018-03-20T13:36:11.430Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python之socket">
-<meta name="twitter:description" content="永远相信美好的事情将要发生！">
+<meta name="twitter:description" content="Python之socket   socket是什么  OSI（开放式系统互联模型）  互联网协议按照功能不同分为osi七层或者tcp/ip四层 应用层----C/S架构的软件是基于网络进行通讯的；学习socket就是为了完成C/S架构的开发 传输层 网络层 网络接口层    Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口。在设计模式中，Socket其实就是一个门面模式，">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -60,7 +61,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -94,13 +95,94 @@
       
 	  
 	  
-        
+        <p></p><h5>Python之socket</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>socket是什么</h6><p></p>
+<ul>
+<li><p>OSI（开放式系统互联模型）</p>
+<ul>
+<li><p>互联网协议按照功能不同分为osi七层或者tcp/ip四层</p>
+<pre><code>应用层----C/S架构的软件是基于网络进行通讯的；学习socket就是为了完成C/S架构的开发
+传输层
+网络层
+网络接口层
+</code></pre></li>
+</ul>
+</li>
+<li><p>Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口。在设计模式中，Socket其实就是一个门面模式，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议</p>
+</li>
+<li><p>扫盲篇</p>
+<pre><code>1 将socket说成ip+port，ip是用来标识互联网中的一台主机的位置，而port是用来标识这台机器上的一个应用程序，ip地址是配置到网卡上的，而port是应用程序开启的，ip与port的绑定就标识了互联网中独一无二的一个应用程序
+2 
+3 而程序的pid是同一台机器上不同进程或者线程的标识（Google Chrome会有多个PID）
+</code></pre></li>
+</ul>
+<p></p><h6>基于TCP的套接字</h6><p></p>
+<ul>
+<li><p>tcpserver.py</p>
+<pre><code>import socket
+server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)#获取tcp/ip套接字
+ip_port=(&apos;127.0.0.1&apos;,8001)
+server.bind(ip_port)#绑定(主机,端口号)到套接字
+server.listen(5)    #开始TCP监听,5的作用是最大挂起连接数
+print(&apos;-------服务端开始运行--------&apos;)
+conn,addr=server.accept()#被动接受TCP客户的连接,(阻塞式)等待连接的到来
+#print(&apos;双向连接是：&apos;,conn)
+#print(&apos;客户端地址：：&apos;,addr)
+while True: #通讯循环
+    msg=conn.recv(1024)#接收tcp信息
+    print(&apos;客户端发来的消息：&apos;,msg.decode(&apos;utf-8&apos;))
+    conn.send(input(&apos;请服务端回复：&apos;).encode(&apos;utf-8&apos;))#发送tcp消息
+conn.close()#关闭客户端套接字
+server.close()#关闭服务器套接字
+</code></pre></li>
+<li><p>tcpclient.py</p>
+<pre><code>import socket
+client=socket.socket(socket.AF_INET,socket.SOCK_STREAM) #创建客户端套接字
+ip_port=(&apos;127.0.0.1&apos;,8001)
+client.connect(ip_port)     #主动初始化TCP服务器连接
+while True:
+    client.send(input(&apos;请输入客户端信息：&apos;).encode(&apos;utf-8&apos;)) #发送信息
+    data=client.recv(1024)  ##收到服务器发来的消息
+    print(&apos;服务端返回的消息：&apos;,data.decode(&apos;utf-8&apos;))
+client.close()   #关闭客户端套接字
+</code></pre></li>
+</ul>
+<p></p><h6>基于UDP的套接字</h6><p></p>
+<ul>
+<li><p>udpserver.py</p>
+<pre><code>import socket
+server=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)#创建服务器的套接字
+ipport=(&apos;127.0.0.1&apos;,8001)
+server.bind(ipport)#绑定服务器套接字
+while True:
+    data,addr=server.recvfrom(1024)
+    print(&apos;收到：&apos;,str(addr),&apos;消息：&apos;,data.decode(&apos;utf-8&apos;))
+    msg=input(&apos;请回复:&apos;).encode(&apos;utf-8&apos;)
+    server.sendto(msg,addr)
+</code></pre></li>
+<li><p>udpclient.py</p>
+<pre><code>import socket
+client=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+ip_port=(&apos;127.0.0.1&apos;,8001)
+while True:
+    msg=input(&apos;请输入发送内容:&apos;).encode(&apos;utf-8&apos;)
+    client.sendto(msg,ip_port)  #数据，ip地址+端口
+    data,addr=client.recvfrom(1024)
+    print(&apos;收到{}返回消息&apos;.format(addr),data.decode(&apos;utf-8&apos;))
+</code></pre></li>
+</ul>
+<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/nulige/p/6235531.html?utm_source=itdadao&amp;utm_medium=referral" target="_blank" rel="noopener">python网络编程-socket编程</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjeyazarz001q1kwv25d5tuz8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjezpyoaq001kuowvi5n1e3v0" class="article-share-link">Teilen</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
     </footer>
   </div>
   
@@ -108,7 +190,7 @@
 <nav id="article-nav">
   
     <a href="/2018/03/19/MongoDB基本操作/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+      <strong class="article-nav-caption">Neuer</strong>
       <div class="article-nav-title">
         
           MongoDB基本操作
@@ -118,7 +200,7 @@
   
   
     <a href="/2018/03/16/Zset类型操作/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Älter</strong>
       <div class="article-nav-title">Zset类型操作</div>
     </a>
   
@@ -140,7 +222,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -157,7 +239,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
@@ -167,7 +249,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         

@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="LiuYongQian">
 <meta property="og:description" content="Python的进程与线程   概念  进程：独立（内存独立，cpu使用独立）的所有子任务的集合，启动进程开销大，进程之间很难共享数据和数据通信 线程：进程中额每个子任务，不能独立存在，cpu执行的最小单位；依赖进程（内存共享）启动开销小，线程之间共享数据容易 实现线程的两种形式  函数方式实现：线程必须依赖函数实现，不能单独运行。单函数结束，线程结束。如果想让线程一致运行，就要想办法让程序不结束，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-18T10:13:07.875Z">
+<meta property="og:updated_time" content="2018-03-20T07:54:32.853Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python的进程与线程">
 <meta name="twitter:description" content="Python的进程与线程   概念  进程：独立（内存独立，cpu使用独立）的所有子任务的集合，启动进程开销大，进程之间很难共享数据和数据通信 线程：进程中额每个子任务，不能独立存在，cpu执行的最小单位；依赖进程（内存共享）启动开销小，线程之间共享数据容易 实现线程的两种形式  函数方式实现：线程必须依赖函数实现，不能单独运行。单函数结束，线程结束。如果想让线程一致运行，就要想办法让程序不结束，">
@@ -61,7 +61,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -181,12 +181,67 @@ huangniu.start()
 phone.start()
 </code></pre></li>
 </ul>
-<p></p><h6>多线程互相影响</h6><br>* <p></p>
+<p></p><h6>多线程互相影响</h6><p></p>
+<ul>
+<li><p>厨师与吃货</p>
+<pre><code>import threading,time
+zhenglong=[]      #蒸笼，存包子资源
+class Cook(threading.Thread):
+    def run(self):
+        while True:
+            chi_cond.acquire()
+            global zhenglong
+            if len(zhenglong)==0:
+                print(&apos;厨师开始蒸包子&apos;)
+                for i in range(1,8):
+                    print(&apos;厨师正在蒸第{0}个包子&apos;.format(i))
+                    zhenglong.append(i)
+                    time.sleep(1)
+                print(&apos;包子蒸完，唤醒吃货......&apos;)
+                chi_cond.notify()
+            chi_cond.release()
+            zheng_cond.acquire()
+            zheng_cond.wait()
+            zheng_cond.release()
+class Chihuo(threading.Thread):
+    def __init__(self,c_name):
+        threading.Thread.__init__(self)
+        self.name=c_name
+    def run(self):
+        while True:
+            chi_cond.acquire()
+            global zhenglong
+            if len(zhenglong) == 0:
+                zheng_cond.acquire()
+                zheng_cond.notify()
+                zheng_cond.release()
+                chi_cond.wait()
+            else:
+                baozi=zhenglong.pop()
+                print(self.name,&apos;吃了第{0}个包子，还剩{1}个包子&apos;.format(baozi,len(zhenglong)))
+                time.sleep(1)
+            chi_cond.release()
+chi=threading.Lock()
+chi_cond=threading.Condition(lock=chi)
+zheng=threading.Lock()
+zheng_cond=threading.Condition(lock=zheng)
+
+cook=Cook()
+aa=Chihuo(&apos;aa&apos;)
+bb=Chihuo(&apos;bb&apos;)
+cc=Chihuo(&apos;cc&apos;)
+cook.start()
+aa.start()
+bb.start()
+cc.start()
+input()
+</code></pre></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjeyazarm001j1kwvv7xfohby" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjezpyoay001puowvztoozytd" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -198,7 +253,7 @@ phone.start()
 <nav id="article-nav">
   
     <a href="/2018/03/14/HTTP协议浅析/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
+      <strong class="article-nav-caption">Neuer</strong>
       <div class="article-nav-title">
         
           HTTP协议浅析
@@ -208,7 +263,7 @@ phone.start()
   
   
     <a href="/2018/03/13/python之XML/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Älter</strong>
       <div class="article-nav-title">python之XML</div>
     </a>
   
@@ -230,7 +285,7 @@ phone.start()
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -247,7 +302,7 @@ phone.start()
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
@@ -257,7 +312,7 @@ phone.start()
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         

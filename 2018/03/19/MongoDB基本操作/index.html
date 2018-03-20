@@ -7,18 +7,18 @@
   
   <title>MongoDB基本操作 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="MongoDB基本操作">
+  <meta name="description" content="MongoDB基本操作   01  1.创建数据库 use db_name   #如果数据库不存在，则创建数据库，否则切换到指定数据库 db            #查看当前数据库名 show dbs      #查看所有数据库；刚创建的数据库不会在数据库列表中，要显示的话，需要插入数据               # mongodb中默认的数据库为test，如没有创建新的数据库，集合将存放在te">
 <meta name="keywords" content="MongoDB数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MongoDB基本操作">
 <meta property="og:url" content="http://yoursite.com/2018/03/19/MongoDB基本操作/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="MongoDB基本操作">
+<meta property="og:description" content="MongoDB基本操作   01  1.创建数据库 use db_name   #如果数据库不存在，则创建数据库，否则切换到指定数据库 db            #查看当前数据库名 show dbs      #查看所有数据库；刚创建的数据库不会在数据库列表中，要显示的话，需要插入数据               # mongodb中默认的数据库为test，如没有创建新的数据库，集合将存放在te">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-19T12:11:44.621Z">
+<meta property="og:updated_time" content="2018-03-20T01:21:15.789Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB基本操作">
-<meta name="twitter:description" content="MongoDB基本操作">
+<meta name="twitter:description" content="MongoDB基本操作   01  1.创建数据库 use db_name   #如果数据库不存在，则创建数据库，否则切换到指定数据库 db            #查看当前数据库名 show dbs      #查看所有数据库；刚创建的数据库不会在数据库列表中，要显示的话，需要插入数据               # mongodb中默认的数据库为test，如没有创建新的数据库，集合将存放在te">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -61,7 +61,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -98,11 +98,146 @@
         <p></p><h5>MongoDB基本操作</h5><p></p>
 <hr>
 <hr>
-<h6></h6>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.创建数据库</p>
+<pre><code>use db_name   #如果数据库不存在，则创建数据库，否则切换到指定数据库
+db            #查看当前数据库名
+show dbs      #查看所有数据库；刚创建的数据库不会在数据库列表中，要显示的话，需要插入数据
+              # mongodb中默认的数据库为test，如没有创建新的数据库，集合将存放在test数据库中
+</code></pre></li>
+<li><p>2.删除数据库</p>
+<pre><code>db.dropDatabase()   #删除当前数据库
+</code></pre></li>
+<li><p>3.创建集合</p>
+<ul>
+<li>db.createCollection(name,option) 其中name为集合名称，option为可选参数，指定有关内存大小及索引的选项</li>
+<li><p>options 可以是如下参数：</p>
+<ul>
+<li>capped    如果为 true，则创建固定集合。固定集合是指有着固定大小的集合，当达到最大值时，它会自动覆盖最早的文档<br>当该值为 true 时，必须指定 size 参数</li>
+<li>autoIndexId  如为 true，自动在 _id 字段创建索引。默认为 false</li>
+<li>size   为固定集合指定一个最大值（以字节计），如果 capped 为 true，也需要指定该字段</li>
+<li><p>max    指定固定集合中包含文档的最大数量</p>
+<pre><code>use myfirstdb             #创建数据库
+db.createCollection(&apos;myinfo&apos;)   #创建集合
+show collections        #查看已有集合
+
+#下面是带有几个关键参数的 createCollection() 的用法：
+创建固定集合 myinfo，整个集合空间大小 6142800 KB, 文档最大个数为 10000 个
+db.createCollection(&apos;myinfo&apos;,{capped:true,autoIndexId:true,size:6142800,max:10000})
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>4.删除集合</p>
+<ul>
+<li><p>db.collection_name.drop()如果删除成功，返回true</p>
+<pre><code>db.myinfo.drop()     #result:true
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li><p>1.插入文档</p>
+<ul>
+<li>文档的数据结构和JSON基本一样,所有存储在集合中的数据都是BSON格式</li>
+<li><p>BSON是一种类json的一种二进制形式的存储格式,简称Binary JSON</p>
+<pre><code>db.collection_name.insert(键值对，逗号隔开)
+db.collection_name.find()      #查看已经插入文档
+
+#可以将数据定义为一个变量，如下所示
+doc1=({
+    description:&apos;this is my pravite infomation&apos;,
+    name:&apos;liuyongqian&apos;,
+    age:108,
+    work:&apos;Engineer&apos;,
+    url:&apos;http://www.liuyongqian.com&apos;
+})
+db.myinfo.insert(doc1)
+</code></pre></li>
+</ul>
+</li>
+<li><p>2.更新文档</p>
+<ul>
+<li><p>update()用于更新已经存在的文档</p>
+<pre><code>db.collection_name.update(
+    &lt;query&gt;,#查询条件，类似sql update查询内where后面的
+    &lt;update&gt;,#更新内容，可以理解为sql update查询内set后面的
+    {
+        upsert:&lt;boolean&gt;, #可选，如果不存在update的记录，是否插入objNew,true为插入，默认是false，不插入
+        multi:&lt;boolean&gt;, #可选，默认是false,只更新找到的第一条记录，如果这个参数为true,就把按条件查出来多条记录全部更新
+        writeConcern:&lt;document&gt;  #可选，抛出异常的级别
+    }
+)
+#如更新‘work’
+db.myinfo.update(
+    {&apos;work&apos;:&apos;Engineer&apos;},
+    {$set:{&apos;work&apos;:&apos;Farmer&apos;}},
+    {multi:true}
+)
+</code></pre></li>
+<li><p>save()通过传入的文档来替换已有文档</p>
+<pre><code>db.collection_name.save(
+    &lt;document&gt;,#文档数据
+    {
+        writeConcern:&lt;document&gt;
+    }
+)
+
+#如更新&apos;work&apos;
+db.myinfo.save(
+    {&apos;work&apos;:&apos;Father&apos;}
+)
+</code></pre></li>
+</ul>
+</li>
+<li><p>删除文档</p>
+<ul>
+<li><p>官方推荐使用 deleteOne() 和 deleteMany() 方法</p>
+<pre><code>#如删除集合下全部文档
+db.myinfo.deleteMany({})
+#如删除status等于A的全部文档
+db.myinfo.deleteMany({status:&apos;A&apos;})
+#如删除status等于B的全部文档
+db.myinfo.deleteOne({status:&apos;B&apos;})
+</code></pre></li>
+</ul>
+</li>
+<li><p>查询文档<br>find() 方法以非结构化的方式来显示所有文档</p>
+<pre><code>db.collection_name.find(query,projection)
+#query ：可选，使用查询操作符指定查询条件
+#projection ：可选，使用投影操作符指定返回的键。查询时返回文档中所有键值， 只需省略该参数即可（默认省略）
+
+db.collection_name.find().pretty()#以格式化的方式来显示所有文档
+</code></pre></li>
+<li><p>AND条件， find() 方法可以传入多个键(key)，每个键(key)以逗号隔开</p>
+<pre><code>db.clooection_name.find(key1:value1,key2:value2)
+#如通过name、age键来查询数据
+db.myinfo.find({&apos;name&apos;:&apos;liuyongqian&apos;,&apos;age&apos;:&apos;108&apos;})
+</code></pre></li>
+</ul>
+<ul>
+<li><p>OR条件，使用了关键字<code>$or</code></p>
+<pre><code>db.collection_name.find({$or:[{key1:value1},{key2:value2}]})
+#如通过name或者age键来查询数据
+db.myinfo.find({$or:[{&apos;name&apos;:&apos;liuyongqian&apos;},{&apos;age&apos;:&apos;108&apos;}]})
+</code></pre></li>
+<li><p>比较符</p>
+<pre><code>等于 {key:value}  db.myinfo.find({&apos;age&apos;:&apos;108&apos;})    where age=108
+小于 {key:{$lt:value}}  db.myinfo.find({&apos;age&apos;:{$lt:108}})   where age&lt;108
+大于 {key:{$gt:value}}  db.myibfo.find({&apos;age&apos;:{$gt:108}})   where age&gt;108
+小于等于 {key:{$lte:value}}  db.myinfo.find({&apos;age&apos;:{$lte:108}})  where age&lt;=108
+大于等于 {key:{$gte:value}}  db.myinfo.find({&apos;age&apos;:{$gte:108}})  where age&gt;=108
+不等于   {key:{$ne:value}} db.myinfo.find({&apos;age&apos;:{$ne:108}})  where age!=108
+</code></pre></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjeyazar7001b1kwvbkfvi2vx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjezpyoa30018uowvg6ksao1a" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -115,7 +250,7 @@
   
   
     <a href="/2018/03/19/Python之socket/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
+      <strong class="article-nav-caption">Älter</strong>
       <div class="article-nav-title">Python之socket</div>
     </a>
   
@@ -137,7 +272,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">25</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -154,7 +289,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
@@ -164,7 +299,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
