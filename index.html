@@ -70,6 +70,478 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-mongodb操作符" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/mongodb操作符/" class="article-date">
+  <time datetime="2018-03-22T10:47:37.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/22/mongodb操作符/">mongodb操作符</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>mongodb操作符</h5><p></p>
+<hr>
+<hr>
+<p></p><h6><h6><p></p>
+</h6></h6>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/mongodb操作符/" data-id="cjf2m9pcs002ba0wvu9p9u7v3" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-requests模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/requests模块/" class="article-date">
+  <time datetime="2018-03-22T07:28:23.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/22/requests模块/">requests模块</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>requests模块</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li><p>Requests是用python语言基于urllib编写的，采用的是Apache2 Licensed开源协议的HTTP库，Requests它会比urllib更加方便，可以节约我们大量的工作</p>
+<pre><code>import requests
+res=requests.get(&apos;https://www.baidu.com&apos;)
+print(res.status_code)      #返回状态码
+print(res.headers)      #打印请求网址的headers所有信息
+print(res.cookies)      #打印请求网址的cookies信息
+for key,value in res.cookies.items():
+    print(key,&apos;==&apos;,value)
+print(res.text)          #res.text返回的是Unicode格式，通常需要转换为utf-8格式，否则就是乱码
+res.encoding=&apos;utf-8&apos;
+print(res.text)
+
+print(res.content)     #res.content是二进制模式，可下载视频之类的，如想看的话需要decode成utf-8格式
+print(res.content.decode(&apos;utf-8&apos;))
+
+#如果你想取文本，可以通过res.text;如果想取图片，文件，则可以通过res.content
+</code></pre></li>
+</ul>
+<p></p><h6>GET请求</h6><p></p>
+<ul>
+<li><p>带参数的GET请求,如果想查询<a href="http://httpbin.org/get页面的具体参数，需要在url里面加上" target="_blank" rel="noopener">http://httpbin.org/get页面的具体参数，需要在url里面加上</a></p>
+<pre><code>import requests
+url = &apos;http://httpbin.org/get&apos;
+data = {&apos;name&apos;:&apos;zhangsan&apos;,&apos;age&apos;:&apos;25&apos;}
+res=requests.get(url,params=data)
+print(res.url)                #result:http://httpbin.org/get?age=25&amp;name=zhangsan
+res.encoding=&apos;utf-8&apos;
+print(res.text)
+</code></pre></li>
+</ul>
+<p></p><h6>Json数据</h6><p></p>
+<ul>
+<li><p>requests中res.json()方法等同于json.loads（res.text）方法</p>
+<pre><code>import requests,json
+url = &apos;http://httpbin.org/get&apos;
+res=requests.get(url)
+print(res.json())
+print(json.loads(res.text))
+</code></pre></li>
+</ul>
+<p></p><h6>添加header</h6><p></p>
+<ul>
+<li><p>添加headers的目的是为了防止发生服务器内部错误，可以正常执行</p>
+<pre><code>import requests
+url=&apos;https://www.zhihu.com&apos;
+header={
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&quot;
+}
+res=requests.get(url,headers=header)
+res.encoding=&apos;utf-8&apos;
+print(res.status_code)
+print(res.text)
+</code></pre></li>
+</ul>
+<p></p><h6>post请求</h6><p></p>
+<ul>
+<li><p>通过post把数据提交到url地址，等同于一字典的形式提交form表单里面的数据</p>
+<pre><code>import requests
+url=&apos;http://httpbin.org/post&apos;
+data = {&apos;name&apos;:&apos;jack&apos;,&apos;age&apos;:&apos;23&apos;}
+header={
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&quot;
+}
+res=requests.post(url,data=data,headers=header)
+res.encoding=&apos;utf-8&apos;
+print(res.status_code)
+print(res.text)
+</code></pre></li>
+</ul>
+<p></p><h6>高级操作</h6><p></p>
+<ul>
+<li><p>文件上传</p>
+<pre><code>import requests
+url=&quot;http://httpbin.org/post&quot;
+file={&apos;files&apos;:open(&apos;test.jpg&apos;,&apos;rb&apos;)}
+res=requests.post(url,files=file)
+res.encoding=&apos;utf-8&apos;
+print(res.text)
+</code></pre></li>
+<li><p>会话维持</p>
+<ul>
+<li><p>cookie的一个作用就是可以用于模拟登陆，做会话维持</p>
+<pre><code>import requests
+se = requests.session()     #声明session对象
+se.get(&apos;http://httpbin.org/cookies/set/number/12456&apos;) #在一个浏览器中浏览两个页面
+res= se.get(&apos;http://httpbin.org/cookies&apos;)
+print(res.text)
+</code></pre></li>
+</ul>
+</li>
+<li><p>证书验证</p>
+<ul>
+<li><p>在请求https时，request会进行证书的验证</p>
+<pre><code>import requests,urllib3
+url=&apos;https://www.12306.cn&apos;
+urllib3.disable_warnings()       #消除验证证书的警报
+res=requests.get(url,verify=False)
+#在请求https时，request会进行证书的验证，如果验证失败则会抛出异常,
+#为避免这种情况发生可通过verify=False，但是这样是可以访问到页面结果,也还有警报，可消除
+print(res.status_code)
+</code></pre></li>
+</ul>
+</li>
+<li><p>代理设置</p>
+<ul>
+<li><p>受限制网站需要使用代理服务器访问</p>
+<pre><code>import requests
+proxies = {
+    &quot;http&quot;: &quot;http://123.206.75.213:8080&quot;,
+}
+response = requests.get(&quot;https://www.taobao.com&quot;, proxies=proxies)
+print(response.status_code)
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="cjf2m9pcs002la0wv7w99y3cd" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-urllib模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/urllib模块/" class="article-date">
+  <time datetime="2018-03-21T23:42:42.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/22/urllib模块/">urllib模块</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>urllib模块</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>爬虫基本原理</h6><p></p>
+<ul>
+<li>爬虫是请求网站并提取数据的自动化程序</li>
+<li>爬虫的基本流程<ul>
+<li>1.发起请求<ul>
+<li>通过HTTP库向目标站点发起请求，即发送一个Request，请求可以包含额外的headers等信息，等待服务器响应</li>
+</ul>
+</li>
+<li>2.获取响应内容<ul>
+<li>如果服务器能正常响应，会得到一个Response，Response的内容便是所要获取的页面内容，类型可能有HTML，Json字符串，二进制数据（如图片视频）等类型</li>
+</ul>
+</li>
+<li>3.解析内容<ul>
+<li>得到的内容可能是HTML，可以用正则表达式、网页解析库进行解析。可能是Json，可以直接转为Json对象解析，可能是二进制数据，可以做保存或者进一步的处理</li>
+</ul>
+</li>
+<li>4.保存数据<ul>
+<li>保存形式多样，可以存为文本，也可以保存至数据库，或者保存特定格式的文件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>urllib模块</h6><p></p>
+<ul>
+<li>Urllib库是Python中的一个功能强大、用于操作URL，并在做爬虫的时候经常要用到的库</li>
+<li><p>urllib.request.urlopen(url, data=None,[timeout])</p>
+<ul>
+<li>可以获取页面，获取页面内容的数据格式为bytes类型，需要进行decode()解码，转换成str类型</li>
+<li>url : 需要打开的网址</li>
+<li>data : 字典形式，默认为None时是GET方法，data不为空时, * urlopen()的提交方式为POST，注意POST提交时，data需要转换为字节</li>
+<li>timeout : 设置网站访问的超时时间</li>
+<li><p>urlopen返回对象提供的方法：</p>
+<ul>
+<li>read(),readline(): 对HTTPResponse类型数据进行操作</li>
+<li>info() : 返回HTTPMessage对象，表示远程服务器返回的头信息</li>
+<li>getcode() : 返回HTTP状态码</li>
+<li><p>geturl(): 返回请求的url</p>
+<pre><code>import urllib.request
+file=urllib.request.urlopen(&apos;http://www.baidu.com&apos;)
+data=file.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(data)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>urllib.request.Request(url,data=None,headers={},method=None)</p>
+<ul>
+<li>有些网页进行了一些反爬虫的设置,我们可以设置一些Headers信息（User-Agent），模拟成浏览器去访问这些网站</li>
+<li><p>该函数第一个参数传入url，第二个参数可以传入数据，默认是传入0数据，第三个参数是传入头部，该参数也是有默认值的，默认是不传任何头部；需要创建一个dict，将头部信息以键值对的形式存入到dict对象中，然后将该dict对象传入该函数第三个参数</p>
+<pre><code>import urllib.request
+url=&apos;http://www.baidu.com&apos;
+header={
+    &apos;User-Agent&apos;:r&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&apos;,
+    &apos;Connection&apos;: &apos;keep-alive&apos;
+}
+request=urllib.request.Request(url,headers=header)
+file=urllib.request.urlopen(request,timeout=10)
+data=file.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(data)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+<li><p>urllib.parse.urlencode(query, doseq=False,safe=’’,encoding=None,errors=None)</p>
+<ul>
+<li>主要作用就是将url附上要提交的数据. 对data数据进行编码</li>
+<li><p>POST的数据必须是bytes或者iterable of bytes，不能是str，因此需要encode编码</p>
+<pre><code>示例一下如何使用爬虫通过POST表单传递信息
+测试网址为： http://www.iqianyue.com/mypost 
+from urllib import request,parse
+url=&apos;http://www.iqianyue.com/mypost&apos;
+header={
+    &apos;User-Agent&apos;:r&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&apos;,
+    &apos;Connection&apos;: &apos;keep-alive&apos;
+}
+data={&apos;name&apos;:&apos;liuyongqian&apos;,&apos;pass&apos;:&apos;123456&apos;}
+postdata=parse.urlencode(data).encode(&apos;utf-8&apos;)  #进行编码
+req=request.Request(url,postdata,headers=header)
+file=request.urlopen(req,timeout=10)
+res=file.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(res)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+<li><p>request.ProxyHandler(proxies=None)</p>
+<ul>
+<li><p>当需要抓取的网站设置了访问限制，这时就需要用到代理来抓取数据；在对方的网站上，显示的不是我们真实的IP地址，而是代理服务器的IP地址</p>
+<pre><code>from urllib import request
+proxy_hander=request.ProxyHandler({&apos;http&apos;:&apos;5.22.195.215:80&apos;})
+opener=request.build_opener(proxy_hander)
+res=opener.open(&apos;http://www.baidu.com&apos;)
+data=res.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(data)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+<li><p>Cookie的使用</p>
+<ul>
+<li>参考<a href="http://blog.csdn.net/fengxinlinux/article/details/77340666" target="_blank" rel="noopener"> Python3爬虫代理服务器与cookie的使用</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cjf2m9pd8002qa0wv44oi9y9m" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Django基本概念" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/Django基本概念/" class="article-date">
+  <time datetime="2018-03-21T16:00:42.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/22/Django基本概念/">Django基本概念</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Django基本概念</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>Django是一个开放源代码的Web应用框架，由Python写成。采用了MTV的框架模式，即模型M，模板T和视图V</li>
+<li>Django 框架的核心组件有：<ul>
+<li>用于创建模型的对象关系映射</li>
+<li>为最终用户设计的完美管理界面</li>
+<li>一流的 URL 设计</li>
+<li>设计者友好的模板语言</li>
+<li>缓存系统</li>
+</ul>
+</li>
+<li>Django是一个基于MVC构造的框架。但是在Django中，控制器接受用户输入的部分由框架自行处理，所以 Django 里更关注的是模型（Model）、模板(Template)和视图（Views），称为 MTV模式。它们各自的职责如下：<ul>
+<li>模型（Model）即数据存取层<ul>
+<li>处理与数据相关的所有事务： 如何存取、如何验证有效性、包含哪些行为以及数据之间的关系等</li>
+</ul>
+</li>
+<li>视图（View）即表现层<ul>
+<li>处理与表现相关的决定： 如何在页面或其他类型文档中进行显示</li>
+</ul>
+</li>
+<li>模板(Template)即业务逻辑层<ul>
+<li>存取模型及调取恰当模板的相关逻辑。模型与模板的桥梁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>c/s与b/s的区别</p>
+<pre><code>c/s--&gt;client/server 客户端与服务器交互
+    主要工作在客户端 处理请求  响应请求
+    好：分减服务器压力 用户体验更好，方便
+    坏：下载客户端
+b/s--&gt;browser/server 浏览器与服务器交互
+    主要工作在服务器 处理请求 相应请求
+    好：不需要下载客户端
+    坏：大量的工作精力花销子啊服务端
+</code></pre></li>
+<li><p>目录介绍</p>
+<pre><code>文件夹dj_myschool
+    文件夹dj_myschool
+        __init__.py     #一个空文件，告诉python该目录是一个python包
+        settings.py     #该项目的设置与配置
+        urls.py         #该项目的URL声明，一份由Django驱动的网站目录
+        wsgi.py            #一个WSGI兼容的web服务器的入口，以便运行你的项目
+    文件夹student
+        文件夹migrations
+            __init__.py
+        __init__.py
+        admin.py
+        apps.py
+        models.py
+        tests.py
+        views.py
+        文件夹
+    文件夹templates
+    文件db.sqlite3
+    文件manage.py          #一个实用的命令行工具
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjf2m9pa7000ea0wvc1vb7zem" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-MongoDB基本操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/19/MongoDB基本操作/" class="article-date">
@@ -237,7 +709,7 @@ db.myinfo.find({$or:[{&apos;name&apos;:&apos;liuyongqian&apos;},{&apos;age&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjezpyoa30018uowvg6ksao1a" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjf2m9pb20018a0wvqv78nbgp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -359,7 +831,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjezpyoaq001kuowvi5n1e3v0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjf2m9pbx001pa0wvvtvq7y97" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -433,7 +905,7 @@ zlexcount mykey [one [three #result:1
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjezpyobo0024uowvcac38pfg" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjf2m9pcd0026a0wv68k196sw" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -532,7 +1004,7 @@ smembers key4      #result:a b c
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjezpyobc001wuowvta686pc0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjf2m9pbx001wa0wv64p27hy8" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -636,7 +1108,7 @@ lindex mylist 1        #列表中下标为指定索引值的元素
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjezpyo9y0015uowvx11yv711" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjf2m9pbi001aa0wv0h4rf39g" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -736,534 +1208,10 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjezpyo9f000tuowvic39op8i" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjf2m9pam000va0wvvj6kq8sn" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-String类型操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/15/String类型操作/" class="article-date">
-  <time datetime="2018-03-15T10:49:02.000Z" itemprop="datePublished">2018-03-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/15/String类型操作/">String类型操作</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>String类型操作</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>01</h6><p></p>
-<ul>
-<li><p>1.set key value设置指定key的值</p>
-<pre><code>set myname liuyongqian
-set age 108
-</code></pre></li>
-<li><p>2.get key获取指定key的值</p>
-<pre><code>get myname
-</code></pre></li>
-<li><p>3.getset key_name value用于设置指定key的值，并返回key的旧值，当key 没有旧值返回 nil</p>
-<pre><code>getset myname lailai     #result:&apos;liuyongqian&apos;
-</code></pre></li>
-<li><p>4.getrange key_name start end获取存储在指定key中字符串的子字符串</p>
-<pre><code>set myname liuyongqian
-getrange myname 0,2      #result:&apos;liu&apos;
-</code></pre></li>
-<li><p>5.setrange key_name offset value用指定的字符串覆盖给定 key 所储存的字符串值，覆盖的位置从偏移量offset开始</p>
-<pre><code>setrange job 5 manager
-get job               #result:code-manager
-</code></pre></li>
-<li><p>6.strlen key_name 用于获取指定 key 所储存的字符串值的长度。当 key 储存的不是字符串值时，返回一个错误</p>
-<pre><code>strlen job             #result:12
-</code></pre></li>
-</ul>
-<p></p><h6>02</h6><p></p>
-<ul>
-<li><p>7.mset key1 value1 key2 value2 …用于同时设置一个或多个 key-value 对</p>
-<pre><code>mset k1 hello k2 world     #result:OK
-</code></pre></li>
-<li><p>8.setnx key_name value在指定的key不存在时，为key设置指定的值；若key存在，则设置失败，覆盖也失败</p>
-<pre><code>exists job            #result:0
-setnx job code-farmer #result:1
-</code></pre></li>
-<li><p>9.msetnx key1 value1 key2 value2 …用于所有给定 key 都不存在时，同时设置一个或多个 key-value 对,若某个键已存在，则设置失败</p>
-</li>
-<li><p>10.mget key1 key2 … 返回所有(一个或多个)给定 key 的值。 如果给定的 key 里面，有某个 key 不存在，那么这个 key 返回特殊值 nil </p>
-<pre><code>mget myname age         #result:&apos;lailai&apos;&apos;108&apos;
-</code></pre></li>
-</ul>
-<p></p><h6>03</h6><p></p>
-<ul>
-<li><p>11.getbit keyname offset对key所储存的字符串值，获取指定偏移量上的位(bit),当偏移量offset比字符串值的长度大，或者key不存在时，返回0 </p>
-<pre><code>set mynum a  #&apos;a&apos;的ASCII码是 97,转换为二进制是：1100001。offset的学名叫做“偏移” 。
-             #二进制中的每一位就是offset值，比如在这里ffset 1等于&apos;1&apos; ,offset2等于&apos;1&apos;,offset 7 等于&apos;1&apos; ，offset是从左往右计数的
-getbit mynum 2           #result:1
-</code></pre></li>
-<li><p>12.setbit key_name offset value 用于对key所储存的字符串值，设置或清除指定偏移量上的位(bit)</p>
-<pre><code>#将mynum的值a变成b，也就是将01100001变成01100010（b的ASCII码是98），
-#即将&apos;a&apos;中的offset 6从0变成1，将offset 7从1变成0
-setbit mynum 6 1
-setbit mynum 7 0
-get mynum            #result:&apos;b&apos;
-</code></pre></li>
-</ul>
-<p></p><h6>04</h6><p></p>
-<ul>
-<li><p>13.setex key_name timeout value为指定的key设置值及其过期时间，单位为秒。如果 key 已经存在，将会替换旧的值</p>
-<pre><code>setex mymemory 8 loveyou         #待8秒后mymemory的值为空
-</code></pre></li>
-<li><p>14.psetex key_name timeout value以毫秒为单位设置 key 的生存时间</p>
-</li>
-</ul>
-<p></p><h6>05</h6><p></p>
-<ul>
-<li><p>15.incr key_name将key中储存的数字值增一<br>如果key不存在，那么 key的值会先被初始化 0，然后再执行incr操作<br>如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误</p>
-<pre><code>set page 108
-incr page
-get page          #result:109
-</code></pre></li>
-<li><p>16.incrby key_name value将key中储存的数字加上指定的增量值</p>
-<pre><code>set rank 110
-incrby rank 50
-get rank          #result:160
-</code></pre></li>
-<li><p>17.incrbyfloat key_name value为key中所储存的值加上指定的浮点数增量值</p>
-<pre><code>set price 3.14
-incrbyfloat price 0.01
-get price         #result:3.15
-</code></pre></li>
-<li><p>18.decr key_name将key中储存的数字值减一</p>
-</li>
-<li>19.decrby key_name value将key所储存的值减去指定的减量值</li>
-<li><p>20.append key_name new_value 用于为指定的key追加值<br><br>如果 key 已经存在并且是一个字符串，append命令将value追加到 key 原来的值的末尾<br>如果key不存在，append就简单地将给定key设为 value ，就像执行set key value 一样</p>
-<pre><code>exists myname       #result:0
-append myname  liu
-append myname  yongqian
-get myname          #result:liuyongqian
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjezpyobg001zuowvfvr242kc" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-MongoDB基本概念" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/15/MongoDB基本概念/" class="article-date">
-  <time datetime="2018-03-15T01:04:18.000Z" itemprop="datePublished">2018-03-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/15/MongoDB基本概念/">MongoDB基本概念</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>MongoDB基本概念</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>分布式系统</h6><p></p>
-<ul>
-<li>由多台计算机和通信的软件组件通过计算机网络连接（本地网络或广域网）组成</li>
-<li>建立在网络之上的软件系统。正是因为软件的特性，所以分布式系统具有高度的内聚性和透明性</li>
-<li>可以应用在不同的平台上如：Pc、工作站、局域网和广域网上等</li>
-</ul>
-<p></p><h6>MongoDB简介</h6><p></p>
-<ul>
-<li>是由C++语言编写的，是一个基于分布式文件存储的开源数据库系统</li>
-<li>旨在为WEB应用提供可扩展的高性能数据存储解决方案</li>
-<li>数据存储为一个文档，数据结构由键值(key=&gt;value)对组成。MongoDB 文档类似于 JSON 对象。字段值可以包含其他文档，数组及文档数组</li>
-<li>Mongodb中的Map/reduce主要是用来对数据进行批量处理和聚合操作</li>
-<li>Map和Reduce。Map函数调用emit(key,value)遍历集合中所有的记录，将key与value传给Reduce函数进行处理</li>
-<li>Map函数和Reduce函数是使用Javascript编写的，并可以通过db.runCommand或mapreduce命令来执行MapReduce操作</li>
-<li>GridFS是MongoDB中的一个内置功能，可以用于存放大量小文件</li>
-</ul>
-<p></p><h6>MongoDB安装与配置</h6><p></p>
-<ul>
-<li><p>1.安装</p>
-<ul>
-<li>1.1下载安装包mongodb-win32-x86_64-2008plus-ssl-3.6.3-signed</li>
-<li>1.2安装时选择“Custom”自定义，安装路径为E:\mongodb</li>
-</ul>
-</li>
-<li><p>2.创建数据库文件的存放位置<br>因为启动mongodb服务之前需要创建数据库文件的存放文件夹，否则命令不会自动创建，而且不能启动成功</p>
-<ul>
-<li>2.1创建data目录，即E:\mongodb\data</li>
-<li>2.2创建db目录，即E:\mongodb\data\db</li>
-</ul>
-</li>
-<li><p>3.启动mongodb服务</p>
-<ul>
-<li>3.1打开cmd命令行后cd E:\mongodb\bin目录下</li>
-<li>3.2接着输入启动服务命令：mongod –dbpath E:\mongodb\data\db</li>
-<li><p>3.3在浏览器输入<a href="http://localhost:27017查看，若显示“It" target="_blank" rel="noopener">http://localhost:27017查看，若显示“It</a> looks like you are trying to access MongoDB over HTTP on the native driver port.”则表示连接成功</p>
-<pre><code>mongod.exe　　-- MongoDB 的服务,通常用作启动服务用
-mongo.exe　　-- MongoDB 的客户端,使用命令工具查询操作数据库
-</code></pre></li>
-</ul>
-</li>
-<li><p>4.配置本地windows mongodb服务<br>在本地windows“服务”中，是没有配置上mongodb服务的，通过配置本地服务，可设置为开机自启动、手动启动或者命令行启动（net start/stop mongodb）</p>
-<ul>
-<li>4.1创建存放日志的文件夹在data下，并新建文件mongodb.log即E:\mongodb\data\logs\mongodb.log</li>
-<li>4.2创建配置文件在data下，即E:\mongodb\data\mongo.config</li>
-<li><p>4.3用记事本打开mongo.config，并输入：</p>
-<pre><code>dbpath=E:\mongodb\data\db   #数据库路径
-logpath=E:\mongodb\data\logs\mongodb.log #日志输出文件路径
-logappend=true  #错误日志采用追加模式，追加到现有的日志文件，而不是重建一个新文件
-journal=true    #启用日志文件，默认启用
-quiet=true   #可以过滤掉一些无用日志信息，若需要调试使用请设置为false
-port=27017   #端口号 默认为27017
-</code></pre></li>
-<li><p>4.4用管理员身份打开cmd后，cd E:\mongodb\bin目录下，输入：<code>mongod --config E:\mongodb\data\mongo.config --install --serviceName &quot;mongodb&quot;</code></p>
-</li>
-<li>4.5安装后可查看本地服务（services.msc）</li>
-<li>4.6最好添加环境变量E:\mongodb\bin</li>
-</ul>
-</li>
-<li><p>5.配置MongoDB插件</p>
-<ul>
-<li>5.1打开pycharm</li>
-<li>5.2File–&gt;Settings–&gt;Plugins–&gt;Browse repositories–&gt;Mongo–&gt;Install</li>
-<li>5.3View-&gt;ToolButton</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>概念解析</h6><p></p>
-<ul>
-<li>在mongodb中基本的概念是文档、集合、数据库</li>
-<li><p>数据库</p>
-<ul>
-<li>一个mongodb中可以建立多个数据库</li>
-<li>MongoDB的默认数据库为”db”，该数据库存储在data目录中</li>
-<li>MongoDB的单个实例可以容纳多个独立的数据库，每一个都有自己的集合和权限，不同的数据库也放置在不同的文件中</li>
-<li>有一些数据库名是保留的，可以直接访问这些有特殊作用的数据库<ul>
-<li>admin： 从权限的角度来看，这是”root”数据库。要是将一个用户添加到这个数据库，这个用户自动继承所有数据库的权限。一些特定的服务器端命令也只能从这个数据库运行，比如列出所有的数据库或者关闭服务器</li>
-<li>local: 这个数据永远不会被复制，可以用来存储限于本地单台服务器的任意集合</li>
-<li>config: 当Mongo用于分片设置时，config数据库在内部使用，用于保存分片的相关信息</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>文档</p>
-<ul>
-<li>文档是一组有序的键值(key-value)对(即BSON)</li>
-<li>文档的键是字符串。除了少数例外情况，键可以使用任意UTF-8字符</li>
-<li>MongoDB的文档不能有重复的键</li>
-<li>文档中的值不仅可以是在双引号里面的字符串，还可以是其他几种数据类型（甚至可以是整个嵌入的文档)</li>
-<li>MongoDB区分类型和大小写</li>
-<li>MongoDB 的文档不需要设置相同的字段，并且相同的字段不需要相同的数据类型，这与关系型数据库有很大的区别</li>
-</ul>
-</li>
-<li><p>集合</p>
-<ul>
-<li>集合就是 MongoDB 文档组，类似于RDBMS中的表格</li>
-<li>集合存在于数据库中，集合没有固定的结构；当第一个文档插入时，集合就会被创建</li>
-<li>集合名不能以”system.”开头，这是为系统集合保留的前缀</li>
-</ul>
-</li>
-<li><p>元数据</p>
-<ul>
-<li>数据库的信息是存储在集合中。它们使用了系统的命名空间：<code>dbname.system.*</code><ul>
-<li>dbname.system.namespaces列出所有名字空间</li>
-<li>dbname.system.indexes    列出所有索引</li>
-<li>dbname.system.profile    包含数据库概要(profile)信息</li>
-<li>dbname.system.users    列出所有可访问数据库的用户</li>
-<li>dbname.local.sources    包含复制对端（slave）的服务器信息和状态</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjezpyoak001iuowvbyo0ltkz" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-HTTP协议浅析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/14/HTTP协议浅析/" class="article-date">
-  <time datetime="2018-03-14T08:19:37.000Z" itemprop="datePublished">2018-03-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/HTTP协议浅析/">HTTP协议浅析</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>HTTP协议浅析</h5><p></p>
-<hr>
-<hr>
-<h6></h6>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjezpyo9a000ruowvv72aktw9" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Python的进程与线程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/14/Python的进程与线程/" class="article-date">
-  <time datetime="2018-03-14T04:00:57.000Z" itemprop="datePublished">2018-03-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/Python的进程与线程/">Python的进程与线程</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Python的进程与线程</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>概念</h6><p></p>
-<ul>
-<li>进程：独立（内存独立，cpu使用独立）的所有子任务的集合，启动进程开销大，进程之间很难共享数据和数据通信</li>
-<li>线程：进程中额每个子任务，不能独立存在，cpu执行的最小单位；依赖进程（内存共享）启动开销小，线程之间共享数据容易</li>
-<li><p>实现线程的两种形式</p>
-<ul>
-<li><p>函数方式实现：线程必须依赖函数实现，不能单独运行。单函数结束，线程结束。如果想让线程一致运行，就要想办法让程序不结束，比如在程序最后加一个input()或者死循环</p>
-<pre><code>import threading,time
-thr=threading.current_thread()  #threading.current_thread()返回当前的线程变量
-thr.setName(&apos;主线程&apos;)
-print(&apos;当前线程：&apos;,thr.getName())
-def fun1(t_name):
-    for i in range(1,6):
-        print(t_name,i)
-        time.sleep(2)
-threading._start_new_thread(fun1,(&apos;子线程&apos;,))   #第二个参数类型为元组，为第一个参数传参
-for i in range(1,6):
-    print(thr.name,i)
-    time.sleep(2)
-input()
-</code></pre></li>
-<li><p>类方式实现：</p>
-<ul>
-<li>a继承threading.Thread</li>
-<li>b写构造方法，且必须调用父类的构造方法</li>
-<li>c重写父类的run方法，会在start之后自动调用</li>
-<li><p>d实现开始方法，如果重写了start()方法，一定要调用父类的start()</p>
-<pre><code>import threading,time
-class myThread(threading.Thread):
-    def run(self):
-        for i in range(1,11):
-            print(self.name,i)
-            time.sleep(1)
-thread1=myThread()
-thread1.start()
-thread2=threading.current_thread()
-for i in range(1,11):
-    print(thread2.name,i)
-    if i==3:
-        print(&apos;开始礼让&apos;)
-        thread1.join()
-        #join([time])强制调用某个线程进入执行状态，本线程礼让CPU资源，直至某个线程退出/抛异常/超时，本线程才进入就绪状态
-    time.sleep(1)
-input()
-</code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>资源共享引发的问题—锁</h6><p></p>
-<ul>
-<li>由于并发的问题，需要加锁</li>
-<li>锁有锁定和未锁定两种状态，当一个线程要访问共享数据时，必须要先获得锁定，如果已经有别的线程获得锁定，那么就进入暂停状态，等别的线程把所释放后再进行操作</li>
-<li><p>Conditon：更精确的控制锁，提供了四个方法，上锁-acquire()，等待-wait()，解锁-release()，唤醒-notify()</p>
-<pre><code>import threading,time
-sum=20  #总票数
-count=0  #当前抢到票数
-lock=threading.Lock()             #建锁
-class qiangpiao(threading.Thread):
-    def __init__(self,t_name):
-        threading.Thread.__init__(self)
-        self.name=t_name
-    def run(self):
-        global sum, count
-        while True:
-            lock.acquire()   #上锁
-            if sum&lt;=0:
-                return
-            else:
-                sum-=1
-                count+= 1
-                print(self.name,&apos;抢到了第{0}张票，剩余{1}张票&apos;.format(count,sum))
-            lock.release()    #释放
-            time.sleep(1)
-chuangkou=qiangpiao(&apos;窗口&apos;)
-huangniu=qiangpiao(&apos;黄牛&apos;)
-phone=qiangpiao(&apos;手机&apos;)
-chuangkou.start()
-huangniu.start()
-phone.start()
-</code></pre></li>
-</ul>
-<p></p><h6>多线程互相影响</h6><p></p>
-<ul>
-<li><p>厨师与吃货</p>
-<pre><code>import threading,time
-zhenglong=[]      #蒸笼，存包子资源
-class Cook(threading.Thread):
-    def run(self):
-        while True:
-            chi_cond.acquire()
-            global zhenglong
-            if len(zhenglong)==0:
-                print(&apos;厨师开始蒸包子&apos;)
-                for i in range(1,8):
-                    print(&apos;厨师正在蒸第{0}个包子&apos;.format(i))
-                    zhenglong.append(i)
-                    time.sleep(1)
-                print(&apos;包子蒸完，唤醒吃货......&apos;)
-                chi_cond.notify()
-            chi_cond.release()
-            zheng_cond.acquire()
-            zheng_cond.wait()
-            zheng_cond.release()
-class Chihuo(threading.Thread):
-    def __init__(self,c_name):
-        threading.Thread.__init__(self)
-        self.name=c_name
-    def run(self):
-        while True:
-            chi_cond.acquire()
-            global zhenglong
-            if len(zhenglong) == 0:
-                zheng_cond.acquire()
-                zheng_cond.notify()
-                zheng_cond.release()
-                chi_cond.wait()
-            else:
-                baozi=zhenglong.pop()
-                print(self.name,&apos;吃了第{0}个包子，还剩{1}个包子&apos;.format(baozi,len(zhenglong)))
-                time.sleep(1)
-            chi_cond.release()
-chi=threading.Lock()
-chi_cond=threading.Condition(lock=chi)
-zheng=threading.Lock()
-zheng_cond=threading.Condition(lock=zheng)
-
-cook=Cook()
-aa=Chihuo(&apos;aa&apos;)
-bb=Chihuo(&apos;bb&apos;)
-cc=Chihuo(&apos;cc&apos;)
-cook.start()
-aa.start()
-bb.start()
-cc.start()
-input()
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjezpyoay001puowvztoozytd" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1292,7 +1240,7 @@ input()
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/零散知识点/">零散知识点</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1302,7 +1250,7 @@ input()
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 10px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a> <a href="/tags/零散知识点/" style="font-size: 10px;">零散知识点</a>
+      <a href="/tags/Django学习/" style="font-size: 10px;">Django学习</a> <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.86px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.43px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 12.86px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a>
     </div>
   </div>
 
@@ -1311,7 +1259,7 @@ input()
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">32</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1324,23 +1272,23 @@ input()
       <ul>
         
           <li>
+            <a href="/2018/03/22/mongodb操作符/">mongodb操作符</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/requests模块/">requests模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/urllib模块/">urllib模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/Django基本概念/">Django基本概念</a>
+          </li>
+        
+          <li>
             <a href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/19/Python之socket/">Python之socket</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/16/Zset类型操作/">Zset类型操作</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/16/Set类型操作/">Set类型操作</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/16/List类型操作/">List类型操作</a>
           </li>
         
       </ul>

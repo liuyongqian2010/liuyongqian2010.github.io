@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Django基本概念 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Django基本概念   简介  Django是一个开放源代码的Web应用框架，由Python写成。采用了MTV的框架模式，即模型M，模板T和视图V Django 框架的核心组件有： 用于创建模型的对象关系映射 为最终用户设计的完美管理界面 一流的 URL 设计 设计者友好的模板语言 缓存系统   Django是一个基于MVC构造的框架。但是在Django中，控制器接受用户输入的部分由框架自行处理">
+<meta name="keywords" content="Django学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Django基本概念">
+<meta property="og:url" content="http://yoursite.com/2018/03/22/Django基本概念/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="Django基本概念   简介  Django是一个开放源代码的Web应用框架，由Python写成。采用了MTV的框架模式，即模型M，模板T和视图V Django 框架的核心组件有： 用于创建模型的对象关系映射 为最终用户设计的完美管理界面 一流的 URL 设计 设计者友好的模板语言 缓存系统   Django是一个基于MVC构造的框架。但是在Django中，控制器接受用户输入的部分由框架自行处理">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-22T12:40:23.020Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Django基本概念">
+<meta name="twitter:description" content="Django基本概念   简介  Django是一个开放源代码的Web应用框架，由Python写成。采用了MTV的框架模式，即模型M，模板T和视图V Django 框架的核心组件有： 用于创建模型的对象关系映射 为最终用户设计的完美管理界面 一流的 URL 设计 设计者友好的模板语言 缓存系统   Django是一个基于MVC构造的框架。但是在Django中，控制器接受用户输入的部分由框架自行处理">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Django基本概念" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/Django基本概念/" class="article-date">
+  <time datetime="2018-03-21T16:00:42.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Django基本概念
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Django基本概念</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>Django是一个开放源代码的Web应用框架，由Python写成。采用了MTV的框架模式，即模型M，模板T和视图V</li>
+<li>Django 框架的核心组件有：<ul>
+<li>用于创建模型的对象关系映射</li>
+<li>为最终用户设计的完美管理界面</li>
+<li>一流的 URL 设计</li>
+<li>设计者友好的模板语言</li>
+<li>缓存系统</li>
+</ul>
+</li>
+<li>Django是一个基于MVC构造的框架。但是在Django中，控制器接受用户输入的部分由框架自行处理，所以 Django 里更关注的是模型（Model）、模板(Template)和视图（Views），称为 MTV模式。它们各自的职责如下：<ul>
+<li>模型（Model）即数据存取层<ul>
+<li>处理与数据相关的所有事务： 如何存取、如何验证有效性、包含哪些行为以及数据之间的关系等</li>
+</ul>
+</li>
+<li>视图（View）即表现层<ul>
+<li>处理与表现相关的决定： 如何在页面或其他类型文档中进行显示</li>
+</ul>
+</li>
+<li>模板(Template)即业务逻辑层<ul>
+<li>存取模型及调取恰当模板的相关逻辑。模型与模板的桥梁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>c/s与b/s的区别</p>
+<pre><code>c/s--&gt;client/server 客户端与服务器交互
+    主要工作在客户端 处理请求  响应请求
+    好：分减服务器压力 用户体验更好，方便
+    坏：下载客户端
+b/s--&gt;browser/server 浏览器与服务器交互
+    主要工作在服务器 处理请求 相应请求
+    好：不需要下载客户端
+    坏：大量的工作精力花销子啊服务端
+</code></pre></li>
+<li><p>目录介绍</p>
+<pre><code>文件夹dj_myschool
+    文件夹dj_myschool
+        __init__.py     #一个空文件，告诉python该目录是一个python包
+        settings.py     #该项目的设置与配置
+        urls.py         #该项目的URL声明，一份由Django驱动的网站目录
+        wsgi.py            #一个WSGI兼容的web服务器的入口，以便运行你的项目
+    文件夹student
+        文件夹migrations
+            __init__.py
+        __init__.py
+        admin.py
+        apps.py
+        models.py
+        tests.py
+        views.py
+        文件夹
+    文件夹templates
+    文件db.sqlite3
+    文件manage.py          #一个实用的命令行工具
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjf2m9pa7000ea0wvc1vb7zem" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/22/urllib模块/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          urllib模块
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/19/MongoDB基本操作/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">MongoDB基本操作</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 10px;">Django学习</a> <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.86px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.43px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 12.86px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/22/mongodb操作符/">mongodb操作符</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/requests模块/">requests模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/urllib模块/">urllib模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/Django基本概念/">Django基本概念</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

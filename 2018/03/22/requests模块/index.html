@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>requests模块 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="requests模块   简介  Requests是用python语言基于urllib编写的，采用的是Apache2 Licensed开源协议的HTTP库，Requests它会比urllib更加方便，可以节约我们大量的工作 import requests res=requests.get(&amp;apos;https://www.baidu.com&amp;apos;) print(res.status_cod">
+<meta name="keywords" content="爬虫学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="requests模块">
+<meta property="og:url" content="http://yoursite.com/2018/03/22/requests模块/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="requests模块   简介  Requests是用python语言基于urllib编写的，采用的是Apache2 Licensed开源协议的HTTP库，Requests它会比urllib更加方便，可以节约我们大量的工作 import requests res=requests.get(&amp;apos;https://www.baidu.com&amp;apos;) print(res.status_cod">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-22T10:42:15.554Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="requests模块">
+<meta name="twitter:description" content="requests模块   简介  Requests是用python语言基于urllib编写的，采用的是Apache2 Licensed开源协议的HTTP库，Requests它会比urllib更加方便，可以节约我们大量的工作 import requests res=requests.get(&amp;apos;https://www.baidu.com&amp;apos;) print(res.status_cod">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-requests模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/requests模块/" class="article-date">
+  <time datetime="2018-03-22T07:28:23.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      requests模块
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>requests模块</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li><p>Requests是用python语言基于urllib编写的，采用的是Apache2 Licensed开源协议的HTTP库，Requests它会比urllib更加方便，可以节约我们大量的工作</p>
+<pre><code>import requests
+res=requests.get(&apos;https://www.baidu.com&apos;)
+print(res.status_code)      #返回状态码
+print(res.headers)      #打印请求网址的headers所有信息
+print(res.cookies)      #打印请求网址的cookies信息
+for key,value in res.cookies.items():
+    print(key,&apos;==&apos;,value)
+print(res.text)          #res.text返回的是Unicode格式，通常需要转换为utf-8格式，否则就是乱码
+res.encoding=&apos;utf-8&apos;
+print(res.text)
+
+print(res.content)     #res.content是二进制模式，可下载视频之类的，如想看的话需要decode成utf-8格式
+print(res.content.decode(&apos;utf-8&apos;))
+
+#如果你想取文本，可以通过res.text;如果想取图片，文件，则可以通过res.content
+</code></pre></li>
+</ul>
+<p></p><h6>GET请求</h6><p></p>
+<ul>
+<li><p>带参数的GET请求,如果想查询<a href="http://httpbin.org/get页面的具体参数，需要在url里面加上" target="_blank" rel="noopener">http://httpbin.org/get页面的具体参数，需要在url里面加上</a></p>
+<pre><code>import requests
+url = &apos;http://httpbin.org/get&apos;
+data = {&apos;name&apos;:&apos;zhangsan&apos;,&apos;age&apos;:&apos;25&apos;}
+res=requests.get(url,params=data)
+print(res.url)                #result:http://httpbin.org/get?age=25&amp;name=zhangsan
+res.encoding=&apos;utf-8&apos;
+print(res.text)
+</code></pre></li>
+</ul>
+<p></p><h6>Json数据</h6><p></p>
+<ul>
+<li><p>requests中res.json()方法等同于json.loads（res.text）方法</p>
+<pre><code>import requests,json
+url = &apos;http://httpbin.org/get&apos;
+res=requests.get(url)
+print(res.json())
+print(json.loads(res.text))
+</code></pre></li>
+</ul>
+<p></p><h6>添加header</h6><p></p>
+<ul>
+<li><p>添加headers的目的是为了防止发生服务器内部错误，可以正常执行</p>
+<pre><code>import requests
+url=&apos;https://www.zhihu.com&apos;
+header={
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&quot;
+}
+res=requests.get(url,headers=header)
+res.encoding=&apos;utf-8&apos;
+print(res.status_code)
+print(res.text)
+</code></pre></li>
+</ul>
+<p></p><h6>post请求</h6><p></p>
+<ul>
+<li><p>通过post把数据提交到url地址，等同于一字典的形式提交form表单里面的数据</p>
+<pre><code>import requests
+url=&apos;http://httpbin.org/post&apos;
+data = {&apos;name&apos;:&apos;jack&apos;,&apos;age&apos;:&apos;23&apos;}
+header={
+    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&quot;
+}
+res=requests.post(url,data=data,headers=header)
+res.encoding=&apos;utf-8&apos;
+print(res.status_code)
+print(res.text)
+</code></pre></li>
+</ul>
+<p></p><h6>高级操作</h6><p></p>
+<ul>
+<li><p>文件上传</p>
+<pre><code>import requests
+url=&quot;http://httpbin.org/post&quot;
+file={&apos;files&apos;:open(&apos;test.jpg&apos;,&apos;rb&apos;)}
+res=requests.post(url,files=file)
+res.encoding=&apos;utf-8&apos;
+print(res.text)
+</code></pre></li>
+<li><p>会话维持</p>
+<ul>
+<li><p>cookie的一个作用就是可以用于模拟登陆，做会话维持</p>
+<pre><code>import requests
+se = requests.session()     #声明session对象
+se.get(&apos;http://httpbin.org/cookies/set/number/12456&apos;) #在一个浏览器中浏览两个页面
+res= se.get(&apos;http://httpbin.org/cookies&apos;)
+print(res.text)
+</code></pre></li>
+</ul>
+</li>
+<li><p>证书验证</p>
+<ul>
+<li><p>在请求https时，request会进行证书的验证</p>
+<pre><code>import requests,urllib3
+url=&apos;https://www.12306.cn&apos;
+urllib3.disable_warnings()       #消除验证证书的警报
+res=requests.get(url,verify=False)
+#在请求https时，request会进行证书的验证，如果验证失败则会抛出异常,
+#为避免这种情况发生可通过verify=False，但是这样是可以访问到页面结果,也还有警报，可消除
+print(res.status_code)
+</code></pre></li>
+</ul>
+</li>
+<li><p>代理设置</p>
+<ul>
+<li><p>受限制网站需要使用代理服务器访问</p>
+<pre><code>import requests
+proxies = {
+    &quot;http&quot;: &quot;http://123.206.75.213:8080&quot;,
+}
+response = requests.get(&quot;https://www.taobao.com&quot;, proxies=proxies)
+print(response.status_code)
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="cjf2m9pcs002la0wv7w99y3cd" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/22/mongodb操作符/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          mongodb操作符
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/22/urllib模块/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">urllib模块</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 10px;">Django学习</a> <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.86px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.43px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 12.86px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/22/mongodb操作符/">mongodb操作符</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/requests模块/">requests模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/urllib模块/">urllib模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/Django基本概念/">Django基本概念</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

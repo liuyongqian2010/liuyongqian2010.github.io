@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>urllib模块 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="urllib模块   爬虫基本原理  爬虫是请求网站并提取数据的自动化程序 爬虫的基本流程 1.发起请求 通过HTTP库向目标站点发起请求，即发送一个Request，请求可以包含额外的headers等信息，等待服务器响应   2.获取响应内容 如果服务器能正常响应，会得到一个Response，Response的内容便是所要获取的页面内容，类型可能有HTML，Json字符串，二进制数据（如图片视频）">
+<meta name="keywords" content="爬虫学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="urllib模块">
+<meta property="og:url" content="http://yoursite.com/2018/03/22/urllib模块/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="urllib模块   爬虫基本原理  爬虫是请求网站并提取数据的自动化程序 爬虫的基本流程 1.发起请求 通过HTTP库向目标站点发起请求，即发送一个Request，请求可以包含额外的headers等信息，等待服务器响应   2.获取响应内容 如果服务器能正常响应，会得到一个Response，Response的内容便是所要获取的页面内容，类型可能有HTML，Json字符串，二进制数据（如图片视频）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-22T05:09:59.753Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="urllib模块">
+<meta name="twitter:description" content="urllib模块   爬虫基本原理  爬虫是请求网站并提取数据的自动化程序 爬虫的基本流程 1.发起请求 通过HTTP库向目标站点发起请求，即发送一个Request，请求可以包含额外的headers等信息，等待服务器响应   2.获取响应内容 如果服务器能正常响应，会得到一个Response，Response的内容便是所要获取的页面内容，类型可能有HTML，Json字符串，二进制数据（如图片视频）">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-urllib模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/urllib模块/" class="article-date">
+  <time datetime="2018-03-21T23:42:42.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      urllib模块
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>urllib模块</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>爬虫基本原理</h6><p></p>
+<ul>
+<li>爬虫是请求网站并提取数据的自动化程序</li>
+<li>爬虫的基本流程<ul>
+<li>1.发起请求<ul>
+<li>通过HTTP库向目标站点发起请求，即发送一个Request，请求可以包含额外的headers等信息，等待服务器响应</li>
+</ul>
+</li>
+<li>2.获取响应内容<ul>
+<li>如果服务器能正常响应，会得到一个Response，Response的内容便是所要获取的页面内容，类型可能有HTML，Json字符串，二进制数据（如图片视频）等类型</li>
+</ul>
+</li>
+<li>3.解析内容<ul>
+<li>得到的内容可能是HTML，可以用正则表达式、网页解析库进行解析。可能是Json，可以直接转为Json对象解析，可能是二进制数据，可以做保存或者进一步的处理</li>
+</ul>
+</li>
+<li>4.保存数据<ul>
+<li>保存形式多样，可以存为文本，也可以保存至数据库，或者保存特定格式的文件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>urllib模块</h6><p></p>
+<ul>
+<li>Urllib库是Python中的一个功能强大、用于操作URL，并在做爬虫的时候经常要用到的库</li>
+<li><p>urllib.request.urlopen(url, data=None,[timeout])</p>
+<ul>
+<li>可以获取页面，获取页面内容的数据格式为bytes类型，需要进行decode()解码，转换成str类型</li>
+<li>url : 需要打开的网址</li>
+<li>data : 字典形式，默认为None时是GET方法，data不为空时, * urlopen()的提交方式为POST，注意POST提交时，data需要转换为字节</li>
+<li>timeout : 设置网站访问的超时时间</li>
+<li><p>urlopen返回对象提供的方法：</p>
+<ul>
+<li>read(),readline(): 对HTTPResponse类型数据进行操作</li>
+<li>info() : 返回HTTPMessage对象，表示远程服务器返回的头信息</li>
+<li>getcode() : 返回HTTP状态码</li>
+<li><p>geturl(): 返回请求的url</p>
+<pre><code>import urllib.request
+file=urllib.request.urlopen(&apos;http://www.baidu.com&apos;)
+data=file.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(data)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>urllib.request.Request(url,data=None,headers={},method=None)</p>
+<ul>
+<li>有些网页进行了一些反爬虫的设置,我们可以设置一些Headers信息（User-Agent），模拟成浏览器去访问这些网站</li>
+<li><p>该函数第一个参数传入url，第二个参数可以传入数据，默认是传入0数据，第三个参数是传入头部，该参数也是有默认值的，默认是不传任何头部；需要创建一个dict，将头部信息以键值对的形式存入到dict对象中，然后将该dict对象传入该函数第三个参数</p>
+<pre><code>import urllib.request
+url=&apos;http://www.baidu.com&apos;
+header={
+    &apos;User-Agent&apos;:r&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&apos;,
+    &apos;Connection&apos;: &apos;keep-alive&apos;
+}
+request=urllib.request.Request(url,headers=header)
+file=urllib.request.urlopen(request,timeout=10)
+data=file.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(data)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+<li><p>urllib.parse.urlencode(query, doseq=False,safe=’’,encoding=None,errors=None)</p>
+<ul>
+<li>主要作用就是将url附上要提交的数据. 对data数据进行编码</li>
+<li><p>POST的数据必须是bytes或者iterable of bytes，不能是str，因此需要encode编码</p>
+<pre><code>示例一下如何使用爬虫通过POST表单传递信息
+测试网址为： http://www.iqianyue.com/mypost 
+from urllib import request,parse
+url=&apos;http://www.iqianyue.com/mypost&apos;
+header={
+    &apos;User-Agent&apos;:r&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&apos;,
+    &apos;Connection&apos;: &apos;keep-alive&apos;
+}
+data={&apos;name&apos;:&apos;liuyongqian&apos;,&apos;pass&apos;:&apos;123456&apos;}
+postdata=parse.urlencode(data).encode(&apos;utf-8&apos;)  #进行编码
+req=request.Request(url,postdata,headers=header)
+file=request.urlopen(req,timeout=10)
+res=file.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(res)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+<li><p>request.ProxyHandler(proxies=None)</p>
+<ul>
+<li><p>当需要抓取的网站设置了访问限制，这时就需要用到代理来抓取数据；在对方的网站上，显示的不是我们真实的IP地址，而是代理服务器的IP地址</p>
+<pre><code>from urllib import request
+proxy_hander=request.ProxyHandler({&apos;http&apos;:&apos;5.22.195.215:80&apos;})
+opener=request.build_opener(proxy_hander)
+res=opener.open(&apos;http://www.baidu.com&apos;)
+data=res.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(data)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+<li><p>Cookie的使用</p>
+<ul>
+<li>参考<a href="http://blog.csdn.net/fengxinlinux/article/details/77340666" target="_blank" rel="noopener"> Python3爬虫代理服务器与cookie的使用</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cjf2m9pd8002qa0wv44oi9y9m" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/22/requests模块/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          requests模块
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/22/Django基本概念/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Django基本概念</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 10px;">Django学习</a> <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.86px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.43px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 12.86px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/22/mongodb操作符/">mongodb操作符</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/requests模块/">requests模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/urllib模块/">urllib模块</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/22/Django基本概念/">Django基本概念</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
