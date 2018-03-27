@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,383 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Zset类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/Zset类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:23:30.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/Zset类型操作/">Zset类型操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Zset类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.zadd key_name score1 value1 score2 value2 …用于将一个或多个成员元素及其分数值加入到有序集当中,分数值可以是整数值或双精度浮点数</p>
+<pre><code>zadd mykey 1 one 2 two 3 three  #返回被成功添加的新成员的数量，不包括那些被更新的、已经存在的成员
+</code></pre></li>
+<li><p>2.zcard key_name用于计算集合中元素的数量</p>
+<pre><code>zcard mykey         #result:3
+</code></pre></li>
+<li><p>3.zcount key_name min max用于计算有序集合中指定分数区间的成员数量</p>
+<pre><code>zcount mykey  1 3  #result:3
+</code></pre></li>
+<li><p>4.zincrby key_name increment member对有序集合中指定成员的分数加上增量 </p>
+<pre><code>zincrby mykey 1 three    #返回member 成员的新分数值，以字符串形式表示
+zrange mykey 0 -1 withscores
+</code></pre></li>
+<li><p>5.zinterstore destination keysnum key1 key2计算给定的一个或多个有序集的交集，其中给定 key 的数量必须以 numkeys 参数指定，并将该交集(结果集)储存到 destination </p>
+<pre><code>zadd test1 11 tom 12 jerry 13 john
+zadd test2 11 tom 14 oven 15 honey
+zinterstore test3 2 test1 test2
+</code></pre></li>
+<li><p>6.zlexcount key_name min max 计算有序集合中指定字典区间内成员数量</p>
+<pre><code>zlexcount mykey - +   #返回所有成员数量
+zlexcount mykey [one [three #result:1
+</code></pre></li>
+<li><p>7.zrange key_name start stop返回指定区间内的成员,其中成员的位置按分数值递增(从小到大)来排序<br>zrevrange命令则递减排序</p>
+<pre><code>zrange mykey 0 -1     #one two three
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjf8xw1i9002hkgwv7oyr28p0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Set类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/Set类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:21:57.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/Set类型操作/">Set类型操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Set类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.sadd key_name value1 value2 …将一个或多个成员元素加入到集合中，已经存在于集合的成员元素将被忽略</p>
+<pre><code>sadd myfamily yongmei yongqin yongxing   
+</code></pre></li>
+<li><p>2.scard key_name返回集合中元素的数量</p>
+<pre><code>scard myfamily    #返回集合的数量。 当集合 key 不存在时，返回 0 
+</code></pre></li>
+<li><p>3.sismember key_name value判断成员元素是否是集合的成员</p>
+<pre><code>sismember key4 a  #result:1
+</code></pre></li>
+<li><p>4.smembers key_name返回集合中的所有的成员。 不存在的集合 key 被视为空集合</p>
+<pre><code>smembers key4      #result:a c
+</code></pre></li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li><p>5.sdiff first_key other_key1 other_key2 …返回给定集合之间的差集。不存在的集合 key 将视为空集,差集的结果来自前面的first_key</p>
+<pre><code>sadd key1 a b c d
+sadd key2 a c
+sdiff key1 key2     #result:b d 
+</code></pre></li>
+<li><p>6.sdiffstore key_name key1 key2将给定集合之间的差集存储在指定的集合中。如果指定的集合 key 已存在，则会被覆盖</p>
+<pre><code>sdiffstore key3 key1 key2
+smembers key3      #result:b d
+</code></pre></li>
+<li><p>7.sinter key1 key2 返回所有给定集合的交集</p>
+<pre><code>sinter key1 key2   #result:a c
+</code></pre></li>
+<li><p>8.sinterstore key_name key1 key2将给定集合之间的交集存储在指定的集合中。如果指定的集合已经存在，则将其覆盖</p>
+<pre><code>sinterstore key4 key1  key2
+smembers key4      #result:a c
+</code></pre></li>
+<li><p>9.sunion key1 key2 …返回给定集合的并集。不存在的集合 key 被视为空集</p>
+</li>
+<li>10.sunionstore destination key1 key2 …将给定集合的并集存储在指定的集合 destination 中。如果 destination 已经存在，则将其覆盖  </li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li><p>11.smove source destination member将指定成员 member 元素从 source 集合移动到 destination集合,此为原子性操作</p>
+<pre><code>smove key3 key4 b
+smembers key4      #result:a b c 
+</code></pre></li>
+<li><p>12.spop key_name 用于移除并返回集合中的一个随机元素</p>
+<pre><code>spop key4          #返回b
+</code></pre></li>
+<li><p>13.srem key_name member1 member2 …用于移除集合中的一个或多个成员元素，不存在的成员元素会被忽略</p>
+<pre><code>screm key4 a c     #返回被成功移除的元素的数量
+</code></pre></li>
+<li><p>14.srandmember key [count] 用于返回集合中的一个随机元素</p>
+<pre><code>srandmember key1 2  #result:b d 
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjf8xw1he001qkgwvybiqqgjy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-List类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/List类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:21:37.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/List类型操作/">List类型操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>List类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>lpush key_name value1 value2…将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行lpush操作</p>
+<pre><code>lpush mylist hello world
+</code></pre></li>
+<li><p>lpushx key_name value1 value2…将一个值插入到已存在的列表头部，列表不存在时操作无效</p>
+</li>
+<li>rpush key_name value1 value2…用于将一个或多个值插入到列表的尾部(最右边)</li>
+<li>rpushx key_name value1 value2…用于将一个值插入到已存在的列表尾部(最右边)。如果列表不存在，操作无效</li>
+<li>lpop key移出并获取列表的第一个元素</li>
+<li>rpop key移出并获取列表的最后一个元素</li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li>lrange key_name start stop将一个值插入到已存在的列表头部，列表不存在时操作无效</li>
+<li><p>lrem key_name count value根据参数 COUNT 的值，移除列表中与参数 VALUE 相等的元素</p>
+<ul>
+<li><p>count的值可以是以下几种：</p>
+<ul>
+<li>count &gt; 0 : 从表头开始向表尾搜索，移除与value相等的元素，数量为value</li>
+<li>count &lt; 0 : 从表尾开始向表头搜索，移除与value相等的元素，数量为value的绝对值</li>
+<li><p>count = 0 : 移除表中所有与value相等的值</p>
+<pre><code>lrem mylist -2 hell0
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>rpoplpush用于移除列表的最后一个元素，并将该元素添加到另一个列表并返回</p>
+</li>
+<li><p>brpoplpush list1 another_list timeout从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
+<pre><code>brpoplpush msg reciver 500 #如在指定时间内没有任何元素被弹出，则返回一个 nil 和等待时长。 反之，返回一个含有两个元素的列表，第一个元素是被弹出元素的值，第二个元素是等待时长
+</code></pre></li>
+<li><p>blpop list1 list2…timeout移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
+<pre><code>blpop list1 100          #如果列表为空，返回一个 nil 。 
+                        否则，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，
+                        第二个元素是被弹出元素的值 
+</code></pre></li>
+<li><p>brpop list1 list2…timeout移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
+<pre><code>brpop list 100           #假如在指定时间内没有任何元素被弹出，则返回一个 nil 和等待时长。         
+                        反之，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，
+                            第二个元素是被弹出元素的值
+</code></pre></li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li>lset key_name index value过索引来设置元素的值</li>
+<li>ltrim key_name start stop 对一个列表进行修剪(trim)，让列表只保留指定区间内的元素</li>
+<li><p>lindex kye_name index用于通过索引获取列表中的元素</p>
+<pre><code>lpush mylist hello world
+lindex mylist 1        #列表中下标为指定索引值的元素
+</code></pre></li>
+<li><p>linsert key_name before exist_value new_value用于在列表的元素前或者后插入元素。 当指定元素不存在于列表中时，不执行任何操作</p>
+<pre><code>linsert mylist before hello 2018
+</code></pre></li>
+<li><p>llen key_name用于返回列表的长度</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjf8xw1gi0010kgwvk3iue7sc" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Hash类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/Hash类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:21:20.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/Hash类型操作/">Hash类型操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Hash类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.hdel key_name filed_name用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略</p>
+<pre><code>hset myhash name liuyongqian
+hdel myhash name         #result:被成功删除字段的数量
+</code></pre></li>
+<li><p>2.hexists key_name filed_name用于查看哈希表的指定字段是否存在</p>
+<pre><code>hexists myhash name      #result:如果哈希表含有给定字段，返回 1 ;
+                    如果哈希表不含有给定字段，或 key 不存在，返回 0
+</code></pre></li>
+<li><p>3.hget key_name field_name用于返回哈希表中指定字段的值</p>
+<pre><code>hget myhash name         #result:返回给定字段的值。如果给定的字段或 key 不存在时，返回 nil 
+</code></pre></li>
+<li><p>4.hgetall key_name用于返回哈希表中，所有的字段和值</p>
+<pre><code>hgetall myhash          #resutl:在返回值里，紧跟每个字段名(field name)之后是字段的值(value)
+</code></pre></li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li><p>5.hincrby key_name field_name value 用于为哈希表中的字段值加上指定增量值<br>如果哈希表的 key 不存在，一个新的哈希表被创建并执行hincrby命令<br>如果指定的字段不存在，那么在执行命令前，字段的值被初始化为 0</p>
+<pre><code>hset myhash age 108
+hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
+</code></pre></li>
+<li><p>6.hincrbyfloat key_name field_name value用于为哈希表中的字段值加上指定浮点数增量值</p>
+<pre><code>hincrbyfloat myhash age 1.5  #result:返回命令执行后的字段值
+</code></pre></li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li><p>7.hkeys key_name用于获取哈希表中的所有域（field）</p>
+<pre><code>hkeys myhash             #result:包含哈希表中所有域（field）列表。 当 key 不存在时，返回一个空列表
+</code></pre></li>
+<li><p>8.hvals key_name返回哈希表所有域(field)的值</p>
+<pre><code>hvals myinfo          #result:一个包含哈希表中所有域(field)值的列表
+</code></pre></li>
+<li><p>9.hlen key_name用于获取哈希表中字段的数量</p>
+<pre><code>hlen myhash   #result:哈希表中字段的数量  
+</code></pre></li>
+</ul>
+<p></p><h6>04</h6>    <p></p>
+<ul>
+<li><p>10.hmget key_name field1 field2 …用于返回哈希表中，一个或多个给定字段的值</p>
+<pre><code>hmget myhash name age
+</code></pre></li>
+<li><p>11.hmset key_name field1 value1 field2 value2 …用于同时将多个 field-value (字段-值)对设置到哈希表中,<br>此命令会覆盖哈希表中已存在的字段</p>
+<pre><code>hmset myinfo name liuyongqian age 108 work engineer
+</code></pre></li>
+<li><p>12.hset key_name field_name用于为哈希表中的字段赋值<br>如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作<br>如果字段已经存在于哈希表中，旧值将被覆盖</p>
+<pre><code>hset myonfo age 54
+</code></pre></li>
+<li><p>13.hsetnx key_name field value用于为哈希表中不存在的的字段赋值 <br>如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作<br>如果字段已经存在于哈希表中，操作无效<br>如果 key 不存在，一个新哈希表被创建并执行 HSETNX 命令</p>
+<pre><code>hsetnx myinfo limit  no
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjf8xw1g3000xkgwv19lmnxay" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-String类型操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -191,7 +568,7 @@ get myname          #result:liuyongqian
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjf2m9pcd0021a0wvsjctns0s" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjf8xw1ht001xkgwv82js7r6c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -349,7 +726,7 @@ port=27017   #端口号 默认为27017
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjf2m9pbi001da0wv9bmsl70s" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjf8xw1gy001ckgwvv93dy5m2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -395,7 +772,7 @@ port=27017   #端口号 默认为27017
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjf2m9pam000qa0wvbrbl0tie" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjf8xw1g3000pkgwv6b0ftrk0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
@@ -580,7 +957,7 @@ input()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjf2m9pbx001ra0wvt2bhe4i1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjf8xw1gy001fkgwvmvdomh6a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -756,7 +1133,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/python之XML/" data-id="cjf2m9pcs002ia0wvy3nsn3i2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/13/python之XML/" data-id="cjf8xw1j40033kgwvcn0048fu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -934,500 +1311,10 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/Redis数据库入门/" data-id="cjf2m9pbx001ua0wv508a9seb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/13/Redis数据库入门/" data-id="cjf8xw1he001vkgwv0cc8533g" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Git高级" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/13/Git高级/" class="article-date">
-  <time datetime="2018-03-13T02:21:05.000Z" itemprop="datePublished">2018-03-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/13/Git高级/">Git高级</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Git高级</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>分支管理</h6><p></p>
-<ul>
-<li><p>Git会串成一条时间线，这条时间线就是分支， 默认就是master<br>HEAD并不是指向提交，而是指向master，指向最新版本</p>
-<pre><code>v1  ==&gt;  v2  ==&gt; v3
-                 |
-                 master
-                  |
-                  HEAD
-如果创建了新的分支，head将指向新的分支，如下
-                        master
-                          |
-v1  ==&gt;  v2  ==&gt; v3  ==&gt; v4
-                          |
-                        dev
-                          |
-                        HEAD
-</code></pre></li>
-<li><p>基本命令</p>
-<ul>
-<li>查看分支：git branch（*表示你当前所处的branch是哪个）</li>
-<li>创建分支：git branch 分支名</li>
-<li>切换分支： git checkout 分支名</li>
-<li>创建并切换分支：git checkout -b 分支名</li>
-<li>合并分支：git merge 分支名 （需要切换到主分支或者依附分支再执行该命令）</li>
-<li>删除分支： git branch -d 分支名</li>
-<li>分支合并图：git log –graph  –pretty=oneline  –abbrev-commit</li>
-</ul>
-</li>
-<li><p>解决冲突</p>
-<ul>
-<li><p>先在feature1 分支:  a.txt中新增并提交‘AND simple’；<br>后在master 分支:  a.txt 中新增提交‘&amp; simple’ <br>在master和分支上分别对a.txt做了不同修改之后，合并分支出现以下错误：</p>
-<pre><code>git merge feature1
-Auto-merging a.txt
-CONFLICT (content): Merge conflict in a.txt
-Automatic merge failed; fix conflicts and then commit the result.
-</code></pre></li>
-<li><p>当Git无法自动合并分支时，就必须首先解决冲突，再提交，最后merge</p>
-</li>
-</ul>
-</li>
-<li><p>分支管理策略：</p>
-<ul>
-<li>1）master分支： 代码是稳定的，平时不能在上面干活的，仅仅是用来发布新版本用</li>
-<li>2）其他分支：是不稳定的，bug、feature可以创建新的分支进行开发，最后再合并到master即可</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>标签管理</h6><p></p>
-<ul>
-<li>标签（tag），是版本库的一个快照；发布一个新版本时，通常先在版本库中打一个标签，无论在将来什么时候，取某个标签的版本即可</li>
-<li><p>基本命令</p>
-<pre><code>git tag &lt;tagname&gt;创建标签
-git tag查看所有标签
-git tag -a &lt;tagname&gt; -m &lt;desc&gt;创建带有说明的标签
-git show &lt;tagname&gt;查看标签的说明
-git tag -d &lt;tagname&gt;删除标签
-
-git push origin &lt;tagname&gt;推送一个本地标签
-git push origin --tags推送全部未推送的本地标签
-
-#如果tag已经推送到远程，要删除远程标签分2步：
-1）删除本地tag:  git tag -d 本地标签名
-2）git push origin :refs/tags/本地标签名
-</code></pre></li>
-</ul>
-<p></p><h6>多人协作</h6><p></p>
-<ul>
-<li>开源项目肯定都是很多人参与到社区中，通过协作完成</li>
-<li>多人协作常用操作<ul>
-<li>克隆远程仓库：git clone xxxxxxx</li>
-<li>查看远程信息：git remove (-v)</li>
-<li>创建自己的分支：git branch xxxxxx</li>
-<li>推送分支：git push origin <branch-name></branch-name></li>
-<li>创建Pull Request</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>其他操作</h6><p></p>
-<ul>
-<li><p>git颜色设置</p>
-<pre><code>Git控制台颜色设置
-git config --global color.diff auto
-git config --global color.status auto
-git config --global color.branch auto
-
-颜色设置关闭
-git config --global color.status false
-</code></pre></li>
-<li><p>忽略某些特殊文件不提交</p>
-<ul>
-<li>1）只需要在git项目的根目录下创建一个.gitignore</li>
-<li>2) 把需要提交的文件或者目录名称写到.gitignore</li>
-<li>3）如果你真正想提交的文件已经被包含在.gitignore里面了，那么就需要使用-f进行强制提交</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjf2m9pam000ra0wvmn7nxfj6" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Fiddler学习01" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/12/Fiddler学习01/" class="article-date">
-  <time datetime="2018-03-12T04:02:33.000Z" itemprop="datePublished">2018-03-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/12/Fiddler学习01/">Fiddler学习01</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Fiddler学习01</h5><p></p>
-<hr>
-<hr>
-<h6></h6>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习01/" data-id="cjf2m9pam000ka0wv385l5uid" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-re模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/12/re模块/" class="article-date">
-  <time datetime="2018-03-12T03:40:14.000Z" itemprop="datePublished">2018-03-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/12/re模块/">re模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>re模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>常用匹配模式</h6><p></p>
-<ul>
-<li><p>正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑</p>
-<pre><code>\w     匹配字母数字及下划线
-\W     匹配非字母数字及下划线
-\s     匹配任意空白字符
-\S     匹配任意非空白字符
-\d     匹配任意数字，等价于[0-9]
-\D     匹配任意非数字
-^      匹配字符串开头
-$      匹配字符串结尾
-.      匹配除了换行符外的任意字符
-*      匹配0个或者多个的表达式
-+      匹配至少一个表达式
-？     匹配最多一个表达式，非贪婪方式
-{n}    精准匹配n个前面的表达式
-{n,m}    匹配n到m次前面的表达式的片断
-a|b    匹配a或者b
-()     匹配括号内的表达式，也表示一个组
-</code></pre></li>
-</ul>
-<p></p><h6>re.match(表达式,内容,匹配模式)</h6><p></p>
-<ul>
-<li>尝试从字符串的起始位置匹配一个模式，如果不是起始位置匹配成功的话，返回none</li>
-<li><p>在Match对象上用group()方法提取子串</p>
-<pre><code>import re
-content=&apos;Hello 20180101 World_This is my festival year&apos;
-result=re.match(r&apos;^Hello.*?(\d+).*year$&apos;,content)  #使用Python的r前缀，就不用考虑转义的问题了
-print(result)
-print(result.group(0))    #group(0) 永远是原始字符串
-#想要获取content中的数字，如果不加问号，result为1，这是贪婪匹配；加了问号后，result为20180101，这是非贪婪匹配
-print(result.group(1))    #result:20180101
-</code></pre></li>
-<li><p>匹配模式</p>
-<pre><code>import re
-content=&apos;&apos;&apos;Hello 20180101 World_This
-        is my festival year&apos;&apos;&apos;
-result=re.match(r&apos;^Hello.*?(\d+).*year$&apos;,content,re.S)  #有换行符就用re.S
-print(result.group(1))     #result:20180101
-</code></pre></li>
-</ul>
-<p></p><h6>re.search()</h6><p></p>
-<ul>
-<li><p>扫描整个字符串并返回第一个成功的匹配</p>
-<pre><code>import re
-content=&apos;Liuyongqian Hello 20180101 World_This is my festival year&apos;
-result=re.search(r&apos;Hello.*year&apos;,content)
-print(result)          #为匹配方便，一般使用search
-</code></pre></li>
-</ul>
-<p></p><h6>re.findall()</h6><p></p>
-<ul>
-<li><p>搜索字符串，以列表形式返回全部能匹配的子串</p>
-<pre><code>import re
-html=&apos;&apos;&apos;
-    &lt;div&gt;
-        &lt;ul&gt;
-            &lt;li data-view=&apos;1&apos;&gt;
-                &lt;a href=&quot;/2.mp3&quot; singer=&quot;齐秦&quot;&gt;往事随风&lt;/a&gt;
-            &lt;/li&gt;
-            &lt;li&gt;&lt;a href=&quot;/3.mp3&quot; singer=&quot;邓丽君&quot;&gt;但愿人长久&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href=&quot;/3.mp3&quot; singer=&quot;水木年华&quot;&gt;完美世界&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/div&gt;
-&apos;&apos;&apos;
-results=re.findall(r&apos;&lt;li.*?href=(.*?mp).*?singer=(.*?)&gt;(.*?)&lt;/a&gt;&apos;,html,re.S)
-for result in results:
-    print(result[0],result[1],result[2])
-</code></pre></li>
-</ul>
-<p></p><h6>re.sub()</h6><p></p>
-<ul>
-<li><p>替换字符串中每一个匹配的子串后返回替换后的字符串</p>
-<pre><code>import re
-result=re.sub(r&apos;\d+&apos;,&apos;2018&apos;,content)
-print(result)      #result:Hello 2018 World_This is my festival year
-</code></pre></li>
-</ul>
-<p></p><h6>re.compile()</h6><p></p>
-<ul>
-<li><p>将正则字符串编译成正则对象，以便于复用该匹配模式</p>
-<pre><code>import re
-content=&apos;&apos;&apos;Hello 20180101 World_
-        This is my festival year&apos;&apos;&apos;
-pattern=re.compile(r&apos;^He.*?(\d+).*?year$&apos;,re.S)
-result=re.match(pattern,content)
-print(result.group(1))       #result:20180101
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjf2m9pd8002na0wv8gvig95n" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Git入门" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/11/Git入门/" class="article-date">
-  <time datetime="2018-03-11T10:10:16.000Z" itemprop="datePublished">2018-03-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/11/Git入门/">Git入门</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Git入门</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>git是一款免费、开源的分布式版本控制系统，用于敏捷高效的处理任何或大或小的项目<br>github是一个面向开源及私有软件项目的托管平台，因为只支持git作为唯一的版本库格式进行托管，故名github</li>
-<li>Git和SVN的对比：<ul>
-<li>1）Git是分布式的，SVN是集中式</li>
-<li>2）Git可离线完成大部分操作，SVN则必须与中央服务器进行网络交互</li>
-<li>3）Git有着优雅的分支和合并功能</li>
-<li>4）Git有着更强的撤销修改和修改版本历史的能力</li>
-<li>5）Git速度更快，效率更好</li>
-</ul>
-</li>
-<li>git的三个区<ul>
-<li>工作区：编辑代码的地方</li>
-<li>暂存区：工作区与历史提交中间的缓存，代表的是要提交的工作状态</li>
-<li>历史仓库：commit指向的</li>
-</ul>
-</li>
-<li>Git管理的是修改，而不是文件</li>
-</ul>
-<p></p><h6>基本配置</h6><p></p>
-<ul>
-<li><p>目前git for window的版本是2.16.2</p>
-<pre><code>which -a git 查看git的安装位置
-git version     查看git的版本
-
-添加user.name和user.email
-git config --global user.name fyuan925
-git config --global user.email fyuan925@gmail.com
-
-添加一个新的user.name
-git config --global --add user.name kgc
-
-得到属性的值
-git config user.name
-git config --get user.name
-
-得到全局所有属性的值
-git config --list --global
-
-删除一个属性，并且是指定属性名进行删除
-git config --global --unset user.name kgc
-
-当只有一个属性值的时候，可以在删除时不指定值
-git config --global --unset user.name
-</code></pre></li>
-<li><p>关联github</p>
-<ul>
-<li><p>本地生成SSH KEYS</p>
-<pre><code>先生成ssh，命令如下：
-ssh-keygen -t rsa -C &apos;kgc@gmail.com&apos;
-进入ssh目录后将该目录下文件id_rsa.pub中的内容拷贝
-</code></pre></li>
-<li><p>在github上设置SSH公钥</p>
-<pre><code>进入github主页，点击右上角的setting，选择SSH and GPG keys;
-新建一个ssh key，将公钥粘贴后点击Add SSH key
-输入GitHub的密码进行验证，点击Confirm password
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>本地库连接远程库</h6><p></p>
-<ul>
-<li><p>第一种方式：先有本地仓库，后有远程仓库</p>
-<pre><code>在本地仓库中执行以下命令，同步信息
-git remote add origin git@github.com:fangyuan925/kgc_git.git
-git push -u origin master
-第一次使用-u，后面不再使用
-</code></pre></li>
-<li><p>第二种方式：先有远程仓库，再clone到本地（最常见的，一般都是先在GitHub上创建仓库，可以选择初始化选项，然后开发人员再clone到本地）</p>
-<pre><code>git clone xxxxxx
-git push -u origin master
-第一次使用-u，后面不再使用
-</code></pre></li>
-</ul>
-<p></p><h6>基本命令</h6><p></p>
-<ul>
-<li><p>在本地新建仓库</p>
-<pre><code>git init      新建文件夹后用此命令初始化仓库
-vi readme.txt 添加一个readme.txt
-git status  查看当前版本库的状态
-git add filename    使用git add命令告诉git，把该文件添加到仓库
-git commit -m &apos;comment&apos;  使用git commit命令告诉git，把文件提交到仓库,可设置注释内容
-
-git add     可以反复添加多个
-git diff filename     查看修改的内容
-git log      可以查看所有的提交历史记录
-git log filename     仅查看指定文件名的提交历史记录
-git log --pretty=oneline filename
-d085ee8434392d2cf88b48592f29fbeefb0818f7  此为commit id（版本号） SHA-1 Hash计算出来一个16进制的值
-</code></pre></li>
-<li><p>版本回退</p>
-<pre><code>前提：知道当前版本是哪个， HEAD表示当前版本
-回退到上一个版本： HEAD^   一个^就表示前一个版本， 如果N个前版本可以用HEAD~N
-
-回退命令：git reset --hard HEAD^
-回退之后你后悔了又想回到后退之前的那个版本： git reset --hard xxxxxxxxx
-xxxxxxxxx  前面可以通过 git log filename
-
-3commit   &lt;== HEAD
-2commit
-1commit
-
-执行了git reset --hard HEAD^之后
-3commit   
-2commit  &lt;== HEAD
-1commit
-
-git reset：版本穿梭， 可以使用git log查看提交历史，以便确定回退/穿梭到哪个版本     
-git reflog：查看命令历史，以便确定要回到未来/过去的哪个版本
-</code></pre></li>
-<li><p>撤销修改</p>
-<pre><code>没有提交到暂存区时，其实就在工作区： git checkout – filename
-已经提交到暂存区了： 分两步：1）git reset HEAD file 2）git checkout -- filename
-</code></pre></li>
-<li><p>删除文件</p>
-<pre><code>手误删除，如何恢复： git checkout -- filename
-真删除版本库的文件： 
-    1) git rm filename
-    2) git commit -m &apos;xxx&apos;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjf2m9pam000oa0wvrg1vk3x2" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
 
     </footer>
   </div>
@@ -1442,7 +1329,7 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1456,7 +1343,7 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1466,16 +1353,16 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 10px;">Django学习</a> <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.86px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.43px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 12.86px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 10px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 14.29px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.86px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.43px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.14px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">40</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1483,28 +1370,28 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/03/22/mongodb操作符/">mongodb操作符</a>
+            <a href="/2018/03/24/pyspider框架/">pyspider框架</a>
           </li>
         
           <li>
-            <a href="/2018/03/22/requests模块/">requests模块</a>
+            <a href="/2018/03/23/selenium模块/">selenium模块</a>
           </li>
         
           <li>
-            <a href="/2018/03/22/urllib模块/">urllib模块</a>
+            <a href="/2018/03/23/pyquery模块/">pyquery模块</a>
           </li>
         
           <li>
-            <a href="/2018/03/22/Django基本概念/">Django基本概念</a>
+            <a href="/2018/03/23/beautifulsoup模块/">beautifulsoup模块</a>
           </li>
         
           <li>
-            <a href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
+            <a href="/2018/03/22/mongodb排序/">mongodb排序</a>
           </li>
         
       </ul>

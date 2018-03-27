@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,467 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-变量、数据类型、运算符、分支" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/10/变量、数据类型、运算符、分支/" class="article-date">
+  <time datetime="2018-01-10T09:09:48.000Z" itemprop="datePublished">2018-01-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/10/变量、数据类型、运算符、分支/">变量、数据类型、运算符、分支</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>变量、数据类型、运算符、分支</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>变量</h6><p></p>
+<ul>
+<li>是一个数据存储空间的表示，无需关键字，不需要声明；</li>
+<li>命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写；</li>
+<li>print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’</li>
+<li>del删除单个或多个对象的引用<pre><code>x=1
+x,y,z=1,2,3  
+print(x)
+del x,y            #删除单个或者多个对象的引用
+print(&quot;===========================================&quot;)
+name=input(&quot;Please input NAME：&quot;)  #input() 键盘录入 类型：str
+print(&quot;NAME:%s&quot; %name)
+age=int(input(&quot;Please input AGE：&quot;)) #int() 将str转换成int
+print(&quot;AGE:%d&quot; %age)
+work=input(&quot;Please input limit：&quot;)
+print(&quot;WORK:%s&quot; %work)
+</code></pre><h6>数据类型</h6></li>
+<li>数字Number：int,float,bool,复数<br></li>
+<li>字符串：String<br><pre><code>x=1 #int
+y=1.2 #float
+z=&quot;张三&quot; #字符串
+</code></pre><h6>运算符</h6></li>
+<li>算术运算符：+ - <em> /(得到小数), %(取余), //(只得到商，取整),*</em> 幂(返回x的y次幂)</li>
+<li>关系运算符：&gt; &lt; &gt;= == &lt;= !=  最终的返回bool</li>
+<li>逻辑运算符：and or not  &amp;&amp;  || !</li>
+<li>成员运算符: in( x 在 y 序列中返回 True) not in( x 不在 y 序列中返回 True)</li>
+<li>小练习：请用户输入一个四位数字：求此数字各个位之和<pre><code>value=int(input(&quot;Please input a 4-bit value:&quot;))
+qian=value//1000
+bai=value%1000//100
+shi=value%100//10
+ge=value%10
+sum=qian+bai+shi+ge
+print(sum)
+</code></pre><h6>分支结构</h6><pre><code>score=int(input(&quot;Please input score:&quot;))
+if(score&gt;=90):
+    print(&quot;Excellent!&quot;)
+elif(score&gt;=60):
+    print(&quot;Medium!&quot;)
+else:
+    print(&quot;Flunk!&quot;)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjf8xw1kf003tkgwvq601hr4e" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Ajax回顾" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/01/Ajax回顾/" class="article-date">
+  <time datetime="2018-01-01T07:28:10.000Z" itemprop="datePublished">2018-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/01/Ajax回顾/">Ajax回顾</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p>Ajax回顾</p>
+<hr>
+<hr>
+<h4>简介</h4><br>Asynchronous Javascript And XML，异步的JavaScript和XML。通过在后台与服务器进行少量数据交换，AJAX可以使网页实现异步更新。即在不重新加载整个网页的情况下，对网页的某部分进行更新。<br><h4>以封装一个请求为例</h4>
+
+<pre><code>function ajax(url,funSucc,funFail){
+    //1.创建ajax对象
+    var xhr=new XMLHttpRequest()
+    ////兼容IE6，IE5
+    if(window.XMLHttpRequest){
+        var xhr=new XMLHttpRequest()
+    }else{
+        var xhr=new ActiveXObject(&quot;Microsoft.XMLHttp&quot;)    
+    }
+    //2.连接服务器，open(请求类型,文件路径,是否异步)
+    //如果是post请求，则需要手动设置请求消息头，如下
+    xhr.open(&apos;post&apos;,url,true);
+    xhr.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+    //如果是get请求，如下
+    xhr.open(&apos;get&apos;,url,true)
+    //3.发送请求，send方法内传递的是提交参数，没有可为null
+    xhr.send(null)
+    //4.接收数据，为Ajax对象的onreadystatechange事件设定响应函数
+    xhr.onreadystatechange=function(){
+        //readyState 请求状态:
+            0尚未初始化
+            1正在发送请求
+            2请求完成
+            3请求成功，正在接受数据
+            4接收数据成功
+        if(xhr.readyState==4){
+            //status 服务器返回的http请求响应值常用的有：
+                200表示请求成功
+                202请求被接受但处理未完成
+                400错误的请求
+                404资源未找到
+                500内部服务器错误
+
+            if(xhr.status==200){
+                //responseText 服务器返回的文本
+                funSucc(xhr.responseText)
+            }else{
+                //statusText 服务器返回的请求响应文本
+                funFail(xhr.statusText)
+            }
+        }
+    }
+}
+</code></pre><p><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cjf8xw1f70005kgwvxxc2fa8n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-进程与线程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/30/进程与线程/" class="article-date">
+  <time datetime="2017-12-30T13:28:24.000Z" itemprop="datePublished">2017-12-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/30/进程与线程/">进程与线程</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p>进程与线程</p>
+<hr>
+<hr>
+<p><em>在刚开始学习性能工具LR时，常听到进程与线程；但不得具体是什么意思，或者比较抽象；然后在网络上找到了比较形象的解释</em></p>
+<ol>
+<li>计算机的核心是CPU，它承担了所有的计算任务。它就像一座工厂，时刻在运行。</li>
+<li>假定工厂的电力有限，一次只能供给一个车间使用。也就是说，一个车间开工的时候，其他车间都必须停工。背后的含义就是，单个CPU一次只能运行一个任务。</li>
+<li>进程就好比工厂的车间，它代表CPU所能处理的单个任务。任一时刻，CPU总是运行一个进程，其他进程处于非运行状态。</li>
+<li>一个车间里，可以有很多工人。他们协同完成一个任务。</li>
+<li>线程就好比车间里的工人。一个进程可以包括多个线程。</li>
+<li>车间的空间是工人们共享的，比如许多房间是每个工人都可以进出的。这象征一个进程的内存空间是共享的，每个线程都可以使用这些共享内存。</li>
+<li>可是，每间房间的大小不同，有些房间最多只能容纳一个人，比如厕所。里面有人的时候，其他人就不能进去了。这代表一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。</li>
+<li>一个防止他人进入的简单方法，就是门口加一把锁。先到的人锁上门，后到的人看到上锁，就在门口排队，等锁打开再进去。这就叫”互斥锁”（Mutual exclusion，缩写 Mutex），防止多个线程同时读写某一块内存区域。</li>
+<li>还有些房间，可以同时容纳n个人，比如厨房。也就是说，如果人数大于n，多出来的人只能在外面等着。这好比某些内存区域，只能供给固定数目的线程使用。</li>
+<li>这时的解决方法，就是在门口挂n把钥匙。进去的人就取一把钥匙，出来时再把钥匙挂回原处。后到的人发现钥匙架空了，就知道必须在门口排队等着了。这种做法叫做”信号量”（Semaphore），用来保证多个线程不会互相冲突。<br><br>不难看出，mutex是semaphore的一种特殊情况（n=1时）。也就是说，完全可以用后者替代前者。但是，因为mutex较为简单，且效率高，所以在必须保证资源独占的情况下，还是采用这种设计。</li>
+</ol>
+<hr>
+<ul>
+<li>操作系统的设计，因此可以归结为三点：<br><br>（1）以多进程形式，允许多个任务同时运行；<br><br>（2）以多线程形式，允许单个任务分成不同的部分运行；<br><br>（3）提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源。</li>
+</ul>
+<p><em>小白参考大神佳作<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">进程与线程的一个简单解释</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjf8xw1la004nkgwvu7hbwhs6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Django连接MySQL" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/18/Django连接MySQL/" class="article-date">
+  <time datetime="2017-12-18T13:33:37.000Z" itemprop="datePublished">2017-12-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/18/Django连接MySQL/">Django连接MySQL</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <hr>
+<hr>
+<p> </p><h5>1.创建数据库</h5><br><em>请先确保已安装pymsql，命令：<code>pip3 install pymysql</code></em><p></p>
+<p><em>文章中，执行项目类的命令均可在powershell窗口中进行</em></p>
+<ul>
+<li>通过root用户密码登录，比如密码为123456，命令：<code>mysql -u root -p 123456</code></li>
+<li>创建名为“store”的数据库，命令：<code>create database store</code></li>
+<li>给数据库“store”添加用户名liu，密码为liu，命令：<code>grant all on store.* liu@localhost identified by &#39;liu&#39;</code>；此步骤也可以省略</li>
+</ul>
+<p></p><h5>2.新建store app模块</h5><p></p>
+<ul>
+<li>在项目文件夹D:/test/mysite下新建名字为“store”的app模块，命令：<code>python manage.py startapp store</code></li>
+<li>新建后可在pycharm上查看目录结构，在dos中也可查看，命令：<code>tree  store /f</code></li>
+<li><p>在pycharm中的/mysite/setting.py文件中配置store，如下所示：</p>
+<pre><code>INSTALLED_APPS = [
+    &apos;django.contrib.admin&apos;,
+    &apos;django.contrib.auth&apos;,
+    &apos;django.contrib.contenttypes&apos;,
+    &apos;django.contrib.sessions&apos;,
+    &apos;django.contrib.messages&apos;,
+    &apos;django.contrib.staticfiles&apos;,
+    &apos;testapp&apos;,
+    &apos;store&apos;, #添加store app
+]
+</code></pre></li>
+</ul>
+<p></p><h5>3.配置数据库信息与生成表</h5><p></p>
+<ul>
+<li><p>在pycharm中的/mysite/setting.py文件中配置数据库连接信息，如下所示：</p>
+<pre><code># Database
+# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+
+DATABASES = {
+    &apos;default&apos;: {
+        &apos;ENGINE&apos;: &apos;django.db.backends.mysql&apos;,
+        &apos;NAME&apos;: &apos;store&apos;, #数据库名称
+        &apos;USER&apos;: &apos;yuan&apos;, #连接用户名
+        &apos;PASSWORD&apos;: &apos;yuan&apos;,#连接密码
+        &apos;HOST&apos;: &apos;localhost&apos;,
+        &apos;PORT&apos;: &apos;3306&apos;
+    }
+}
+</code></pre></li>
+<li><p>在pycharm中的store/__init__.py文件中配置如下信息：</p>
+<pre><code>import pymysql
+pymysql.install_as_MySQLdb()
+</code></pre></li>
+<li><p>在项目文件夹D:/test/mysite下生成数据表，命令：<code>python manage.py migrate</code></p>
+</li>
+<li>可登录数据库store查看自动生成的Django自带app数据库表，命令：<code>use store;</code>，<code>show tables;</code></li>
+</ul>
+<p></p><h5>4.实现查询功能</h5><br>需求：<br><br>商店：name , address <br><br>增 ： 添加 商店信息<br><br>查 ： 显示所有 <br><br>删 ： 删除商店信息<p></p>
+<p></p><h6>4.1编辑model.py</h6><p></p>
+<ul>
+<li><p>在store/model.py中定义实体，对应数据库表，如下所示：</p>
+<pre><code>from django.db import models
+
+# Create your models here.
+# 这里注意:需要继承 models.Model ，不然没办法生成表的哈
+class StoreInfo（models.Model）:
+    name = models.CharField(max_length=20, default=&apos;&apos;) #name属性，字段
+    address = models.CharField(max_length=50, default=&quot;China&quot;) #address属性，字段
+
+    #此方法在print对象的时候，可以打印字符串，类似java中的toString()方法
+    def __str__(self):
+        return self.name + self.address
+</code></pre></li>
+<li><p>在项目文件夹D:/test/mysite下生成数据表，命令：<code>python manage.py makemigrations</code>、<code>python manage.py migrate</code>应用到数据库</p>
+</li>
+<li>在dos窗口中可查看所有表，命令：<code>use store;</code>、<code>show tables;</code></li>
+<li>在dos窗口中可查看storeinfo表结构，命令：<code>show columns from store_storeinfo;</code></li>
+<li><p>在项目文件夹D:/test/mysite下输入命令<code>python manage.py shell</code>打开Terminal添加如下数据：</p>
+<pre><code>In [1]: from store.models import StoreInfo #1.引入刚才创建的 Model
+
+In [2]: store_list=StoreInfo.objects.all() #2.查询操作
+
+In [3]: print(store_list) #3.打印查询结果
+&lt;QuerySet []&gt;
+
+In [4]: create=StoreInfo.objects.create(name=&apos;LMP&apos;,address=&quot;ShangHai&quot;) #4.添加数据操作
+
+In [5]: print(create)#5.打印添加后的返回值
+LMPShangHai
+</code></pre></li>
+</ul>
+<p></p><h6>4.2编辑views.py</h6><p></p>
+<ul>
+<li><p>需要显示所有信息，则需要在store/views.py中定义如下：</p>
+<pre><code>from django.http import HttpResponse
+from django.shortcuts import render
+
+from store.models import StoreInfo
+
+# Create your views here.
+
+# 查下store全部信息 
+def select_store_list(request):
+    store_list = StoreInfo.objects.all() #查询所有的信息
+    print(type(store_list), store_list)  #打印结果类型与结果值
+    return render(request, &quot;store_list.html&quot;, {&quot;content&quot;: store_list}) #返回界面
+</code></pre></li>
+<li><p>上面需要将查询结果在store_list.html中进行填充，如下所示：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Store&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;table border=&quot;1&quot;&gt;
+    &lt;thead&gt;
+    &lt;tr&gt;
+        &lt;th&gt;名称&lt;/th&gt;
+        &lt;th&gt;地址&lt;/th&gt;
+        &lt;th&gt;操作&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+    #这里是模板语言，for循环，最后需要 endfor
+    {% for foo in content %}
+		        <tr>
+		            <td>{{ foo.name }}</td>
+		            <td>{{ foo.address }}</td>
+		            <td></td>
+		        </tr>
+		    {% endfor %}
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+<li><p>在store app下即store/下新建templates文件夹存放store_list.html文件</p>
+</li>
+<li><p>在pycharm中的/mysite/setting.py文件中配置templates,如下所示：</p>
+<pre><code>TEMPLATES = [
+    {
+        &apos;BACKEND&apos;: &apos;django.template.backends.django.DjangoTemplates&apos;,
+        &apos;DIRS&apos;: [
+            BASE_DIR + &quot;/store/templates&quot;, #在这里进行配置，默认是空的list
+        ],
+        &apos;APP_DIRS&apos;: True,
+        &apos;OPTIONS&apos;: {
+            &apos;context_processors&apos;: [
+                &apos;django.template.context_processors.debug&apos;,
+                &apos;django.template.context_processors.request&apos;,
+                &apos;django.contrib.auth.context_processors.auth&apos;,
+                &apos;django.contrib.messages.context_processors.messages&apos;,
+            ],
+        },
+    },
+]
+</code></pre></li>
+<li><p>在store app下即store/下新建url.py文件，如下所示：</p>
+<pre><code>from django.conf.urls import url
+
+from store import views
+
+urlpatterns = [
+    url(r&apos;^list$&apos;, views.select_store_list),
+]
+</code></pre></li>
+<li><p>在pycharm中的/mysite/urls.py文件中配置store app urls，如下所示：（此方法无效的话，按照在store app中路径设置方法）</p>
+<pre><code>urlpatterns = [
+    url(r&apos;^admin/&apos;, admin.site.urls),
+    url(r&apos;^test/&apos;, include(&apos;testapp.urls&apos;)),
+    url(r&apos;^store/&apos;, include(&apos;store.urls&apos;)), # store的urls
+]
+</code></pre></li>
+<li><p>在项目文件夹D:/test/mysite下输入命令<code>python manage.py runserver 8080</code></p>
+</li>
+</ul>
+<p><em>小白参考大神佳作<a href="http://blog.csdn.net/LABLENET/article/details/53321260" target="_blank" rel="noopener">Django-Mysql结合 基本配置操作并实现查询功能</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjf8xw1fn000fkgwvzf8gspgt" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-CentOS7安装Redis3-2遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -137,7 +598,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjf2m9p9r0005a0wvi7ft3d9y" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjf8xw1f70003kgwv65un8ksg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -210,7 +671,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="cjf2m9p9r000aa0wv85n9kou3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="cjf8xw1f7000bkgwv52pp8hzw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -433,7 +894,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="cjf2m9pbi001ha0wvkgq8n24t" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="cjf8xw1gy001hkgwv2be8qufb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -501,7 +962,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="cjf2m9pej003ia0wvtlgt1d7x" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="cjf8xw1jz003nkgwvzbna621o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -570,10 +1031,10 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjf2m9pam000ma0wvwieb46pq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjf8xw1g3000vkgwvlm7kdn9x" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github博客/">Github博客</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
 
     </footer>
   </div>
@@ -676,157 +1137,11 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="cjf2m9pa7000ia0wv7cw26yi6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="cjf8xw1gi001akgwv8cud4xsm" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github博客/">Github博客</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-验证博客是否正常？" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/15/验证博客是否正常？/" class="article-date">
-  <time datetime="2017-12-15T09:02:08.000Z" itemprop="datePublished">2017-12-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/15/验证博客是否正常？/">验证博客是否正常？</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <blockquote><p>一艘货轮卸货后返航,在浩渺的大海上,突然遭遇巨大风暴,老船长果断下令:“打开所有货舱,立刻往里面灌水。”  　　</p>
-</blockquote>
-<blockquote><p>水手们担忧:“往船里灌水是险上加险,这不是自找死路吗?” 船长镇定地说:“大家见过根深干粗的树被暴风刮倒过吗?被刮倒的是没有根基的小树。”  　</p>
-</blockquote>
-<blockquote><p>水手们半信半疑地照着做了。虽然暴风巨浪依旧那么猛烈,但随着货舱里的水位越来越高,货轮渐渐地平稳了。　</p>
-</blockquote>
-<blockquote><p>船长告诉那些松了一口气的水手:“一只空木桶,是很容易被风打翻的,如果装满水负重了,风是吹不倒的。船在负重的时候,是最安全的;空船时,才是最危险的时候。”  </p>
-</blockquote>
-<blockquote><p>人何尝不是呢?那些胸怀大志的人,沉重的责任感时刻压在心头,砥砺着人生的坚稳脚步,从岁月和历史的风雨中坚定地走了出来。而那些得过且过的空耗时光的人,像一个没有盛水的空水桶,往往一场人生的风雨便把他们彻底地打翻了。 </p>
-</blockquote>
-<blockquote><p>给我们自己加满“水”,使我们负重,这样才不会被打翻。</p>
-</blockquote>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/验证博客是否正常？/" data-id="cjf2m9pga004oa0wvq6az4fjk" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Github博客/">Github博客</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-起点" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/15/起点/" class="article-date">
-  <time datetime="2017-12-15T08:26:00.000Z" itemprop="datePublished">2017-12-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/15/起点/">起点</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
-</blockquote>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjf2m9pfe0048a0wvuk6kwef5" class="article-share-link">Teilen</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/14/hello-world/" class="article-date">
-  <time datetime="2017-12-14T15:15:06.308Z" itemprop="datePublished">2017-12-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/14/hello-world/">Hello World</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjf2m9pcd0029a0wv2gho2ahn" class="article-share-link">Teilen</a>
-      
-      
     </footer>
   </div>
   
@@ -840,7 +1155,7 @@ limit: 20
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/7/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -854,7 +1169,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -864,16 +1179,16 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 10px;">Django学习</a> <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.86px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.43px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 12.86px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 10px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 14.29px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.86px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.43px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.14px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">40</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -881,28 +1196,28 @@ limit: 20
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/03/22/mongodb操作符/">mongodb操作符</a>
+            <a href="/2018/03/24/pyspider框架/">pyspider框架</a>
           </li>
         
           <li>
-            <a href="/2018/03/22/requests模块/">requests模块</a>
+            <a href="/2018/03/23/selenium模块/">selenium模块</a>
           </li>
         
           <li>
-            <a href="/2018/03/22/urllib模块/">urllib模块</a>
+            <a href="/2018/03/23/pyquery模块/">pyquery模块</a>
           </li>
         
           <li>
-            <a href="/2018/03/22/Django基本概念/">Django基本概念</a>
+            <a href="/2018/03/23/beautifulsoup模块/">beautifulsoup模块</a>
           </li>
         
           <li>
-            <a href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
+            <a href="/2018/03/22/mongodb排序/">mongodb排序</a>
           </li>
         
       </ul>

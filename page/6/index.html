@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,789 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Js基础、函数、循环" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/23/Js基础、函数、循环/" class="article-date">
+  <time datetime="2018-02-23T12:36:14.000Z" itemprop="datePublished">2018-02-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/23/Js基础、函数、循环/">Js基础、函数、循环</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h6>基础</h6><p></p>
+<ul>
+<li>js是一种广泛应用于客户端网页开发的脚本语言，是基于对象的弱类型语言，无需编译，由JavaScript引擎解释执行<br>其核心部分只包括基本的语法构造（比如操作符、控制结构、语法）和标准库（一系列具有各种功能的对象如Maths、Date等）<br>完整的js包括三部分：核心（ECMAScript)、BOM、DOM</li>
+<li>js数据类型<br>基本数据类型包括：原始类型：string、number、boolean、undefined、bull，引用类型：object、function、date、number、string、boolean</li>
+<li><p>运用js的三种方式：<br>第一种，要执行的脚本语句直接编写在body中，如：</p>
+<pre><code>&lt;body&gt;
+    &lt;button onclick=&quot;console.log(&apos;hello world&apos;)&quot;&gt;打印&lt;/button&gt;
+&lt;/body&gt;
+</code></pre><p>第二种，外部，内部脚本块中可以执行多条语句：</p>
+<pre><code>&lt;script&gt;
+    document.write(&apos;&lt;b&gt;你好&lt;/b&gt;&apos;);
+    console.log(&apos;脚本执行完成&apos;);
+&lt;/script&gt;
+</code></pre><p>第三种，将JavaScript代码写入一个后缀名为js的文件中并在<head>中引入：</head></p>
+<pre><code>&lt;script src=&quot;js文件.js&quot;&gt;&lt;/script&gt;
+</code></pre></li>
+<li><p>js语法规范<br><br>语句中大小写敏感，使用分号或者换行结束；<br><br>单行注释：//                 多行注释：/<em>  </em>/<br><br>基本输出语句：</p>
+<pre><code>console.log();//控制台输出
+document.write();//页面输出
+window.alert();//弹出提示框
+</code></pre></li>
+<li>变量<br>存储信息的容器，使用关键字var，用=为变量赋值，没有初始化的变量自动取值为underfined；一条语句中可声明多个变量，如：<code>var name1,name2,name3=liu</code>,<br>不允许使用语言关键字和保留字变量名<br><br>标准关键字:<br>break，case，catch，continue，deflault，delete，do，else，false，finally，or，function，if，in，instanceof，new，null，return，switch，this，throw，true，try，typeof，var，with，undefined<br><br>标识符命名规范：可以包含字母、数字、下划线、美元符号；不能以数字开头</li>
+<li>常量<br>是值不能改变的量，使用const关键字声明变量，一般常量名使用纯大写形式，如 <code>const PI=3.15</code></li>
+</ul>
+<p></p><h6>函数</h6><p></p>
+<ul>
+<li><p>运算符</p>
+<pre><code>算数运算：加（+）、减（-）、乘（*）除（/）求余（%）
+关系运算：“&gt;”(大于)，“&lt;”(小于)，“&gt;=”(大于等于)，“&lt;=”(小于等于)，“==”(等于)，“!=”(不等于)，===（类型、数值全等），!==（类型、数值全不等）
+逻辑运算：&amp;&amp;（与）、||（或）、!（非）
+赋值运算：+=（先运算后赋值） =+（先赋值后运算）   -=   *=   /=   %=
+字符连接： +
+
+三目运算：表达式1？表达式2：表达式3  举例：var age = 20；  var msg = age&gt;18?”成年人”:”未成年”
+</code></pre></li>
+<li><p>数据类型转换函数</p>
+<pre><code>Number()
+把一个string解析为number，如果包含非法字符，则返回NaN
+parseFloat()
+解析出一个string或number的浮点数部分，如果没有可转换的部分，则返回NaN
+parseInt()
+解析出一个string或number的整数部分，如果没有可转换的部分，则返回NaN
+toString()
+转换成字符串，所有数据类型均可转换为string类型
+</code></pre></li>
+<li><p>函数</p>
+<ul>
+<li>函数是一段定义好，并可以被反复使用的代码块，其中以包含多条可执行语句；函数本质上是功能完整的对象</li>
+<li><p>如</p>
+<pre><code>function add(ename,epwd){
+  console.log(&apos;用户名&apos;+ename+&apos;密码&apos;+epwd);
+ }
+add(&apos;Marry&apos;,&apos;123&apos;)
+</code></pre></li>
+<li><p>ECMAScript中预定义全局函数，可直接应用，如：<br>encodeURI函数用于对统一资源标识符（URI）进行编码，返回编码后的URI字符串<br>decodeURI函数用于对使用encodeURI编码之后的字符串进行解码，举例：</p>
+<pre><code>var ur=”http://www.baidu.com/name/web/前端”;
+var encoded = encodeURI(ur);
+var decoded = decodeURI(encoded);
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>分支结构</h6><p></p>
+<ul>
+<li>if语句</li>
+<li>if-else语句</li>
+<li><p>switch-case语句</p>
+<pre><code>&lt;body&gt;
+&lt;button onclick=&quot;fn3()&quot;&gt;Switch&lt;/button&gt;
+&lt;script&gt;
+function fn3(){
+    var m1=Number(prompt(&quot;Please input a value:&quot;));
+    switch (m1)
+    {
+        case 1:
+            console.log(&quot;游戏人生&quot;);
+            break;
+        case 2:
+            console.log(&quot;奋斗人生&quot;);
+            break;
+    }
+}
+&lt;/script&gt;
+&lt;/body&gt;
+</code></pre></li>
+<li><p>switch-case在实现分支功能时和if–else的主要区别在于：<br><br>if…else…可以判定相等或不等的情况，适用性广<br><br>switch…case…结构更清晰、效率更高;但是一般只用于指定变量相等于某个范围内的某个特定的值</p>
+</li>
+</ul>
+<p></p><h6>循环结构</h6><p></p>
+<ul>
+<li><p>while语句</p>
+<pre><code>var i = 0;
+while(i&lt;10){
+    console.log(i);
+    i++;            //循环条件每执行一次就改变一次
+}
+</code></pre></li>
+<li><p>do-while语句</p>
+<pre><code>do{
+    可执行语句;
+}while(boolean表达式);
+</code></pre></li>
+<li>while和do-while的区别<br><br>while循环  “先判断再执行”<br><br>do-while循环 “先执行再判断”<br><br>当初始情况不满足循环条件时，while循环一次都不会执行；do-while循环不管任何情况至少执行一次。</li>
+<li><p>for 语句</p>
+<pre><code>for(表达式1;表达式2;表达式3){
+    循环体语句;
+}
+</code></pre></li>
+<li>break用于循环，可使程序终止循环而执行循环后面的语句，常常与条件语句一起使用</li>
+<li>continue关键字只能用于循环中，作用为跳过本次循环体中剩余语句而执行下一次循环</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/23/Js基础、函数、循环/" data-id="cjf8xw1g3000rkgwv1i2wt7dh" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-CSS全析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/21/CSS全析/" class="article-date">
+  <time datetime="2018-02-21T03:49:56.000Z" itemprop="datePublished">2018-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/21/CSS全析/">CSS全析</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>CSS基础、样式、新增</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>定义</h6><p></p>
+<ul>
+<li>CSS是层叠样式表，即多重样式定义被层叠在一起成为一个整体，在页面设置中是标准的布局语言，用来控制元素的尺寸、颜色和排版<br>用来将“页面结构代码”和“网页格式风格代码”分离开。从而使页面设计者可以对页面的布局进行更多地控制</li>
+</ul>
+<p></p><h6>选择器</h6><p></p>
+<ul>
+<li>通用选择器<code>*{color:red}</code></li>
+<li>分组选择器<code>h1,h2,h3,h4,p{color:red}</code></li>
+<li>后代(派生)选择器<code>p span{color:red}</code> 只针对p标签中的span标签有用</li>
+<li>子选择器<code>p&gt;span{border:1px solid red}</code>    只针对p标签中的第一级span标签有用</li>
+<li>兄弟选择器<code>h1+p {color:red}</code> h1标签后的第一个p标签有用，并且需要时同级且同一个父级</li>
+<li>标签选择器，p、span、div等，如p{color：#fff}</li>
+<li>类选择器，如 .Liu{color：#f9f9f9}</li>
+<li>ID选择器，如 #Liu{color：blue}</li>
+<li>优先级：ID选择符、类选择符、HTML标记选择器。可用!important提升样式表的优先权，如： .p{clolor:#ff0000!important}</li>
+</ul>
+<p></p><h6>引入</h6><p></p>
+<ul>
+<li>内联，<code>&lt;p style=&quot;color:red&quot;&gt;&lt;/p&gt;</code></li>
+<li>内部，将CSS代码添加到头部的style标签中</li>
+<li>外部，也是头部<code>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css  href=&quot;css文件路径&quot;&gt;</code></li>
+</ul>
+<p></p><h6>样式</h6><p></p>
+<ul>
+<li><p>超链接样式</p>
+<pre><code>未被访问前样式a:link{color:black} 
+已访问过的样式a:visited{color:green}
+鼠标悬停时样式a:hover{ }
+按下鼠标时样式a:active{ }
+
+鼠标样式cursor:default默认\pointer小手\crosshair十字
+</code></pre></li>
+<li><p>表格样式</p>
+<pre><code>border-style:所有边框样式
+border-width：所有边框宽度
+border-color：所有边框颜色
+border：可把其余属性写在一起
+</code></pre></li>
+<li><p>表单样式</p>
+<pre><code>background: black;
+color:white;
+border-radius: 8px;/*边框倒角*/      
+outline: none;/*外边框消失*/       
+height: 20px
+</code></pre></li>
+<li><p>文字样式</p>
+<pre><code>font-style:inherit继承  italic斜体  normal正常  oblique偏斜体
+font-weight:像素  bold粗体  bolder特粗  lighter细体  normal正常
+font-size:数值   medium   large
+font-family：&quot;字体样式&quot;
+
+#可以写成这样的
+font：italic bold 24px &quot;幼圆&quot;
+</code></pre></li>
+<li><p>文本样式</p>
+<pre><code>text-align:left\center\right
+text-decoration:underline下划线 line-through删除线 overline顶划线
+text-indent:缩进20px
+line-height:行高25px
+letter-spacing:字间距10px
+text-shadow:水平阴影 垂直阴影 模糊距离 阴影颜色(10px 10px 5px #ccc)
+</code></pre></li>
+<li><p>图片样式</p>
+<pre><code>1.定义图片边框
+border-style:none无 solid实线 dashed虚线 dotted点划线  double双线
+border-color：边框颜色
+border-width：边框宽度
+
+2.定义图片大小
+width：宽度
+height：高度
+max-width：最大宽度值
+
+3.定义对齐方式
+text-align：横向对齐left center right
+vertical-align：纵向对齐top middle bottom
+</code></pre></li>
+<li><p>背景样式</p>
+<pre><code>1.设置页面背景图
+background-image：url(&quot;路径&quot;)
+
+2.设置背景图重复样式
+background-repeat：repeat-x   repeat-y  no-repeat
+
+3.定义背景图片位置
+background-position：center  水平居中
+                     center  center   水平并垂直居中
+                     top   left   图片在页面顶端且局左
+                     center  left  图片在左侧水平居中
+                     bottom  left  图片在页面左下角
+                     x  y   由X轴和Y轴坐标来确定
+
+4.固定背景图片
+background-attachment：scroll  背景图片随对象内容滚动
+                       fixed   背景图片不随对象内容移动
+
+5.设置背景颜色
+background-color：颜色参数
+</code></pre></li>
+</ul>
+<p></p><h6>盒子模型</h6><p></p>
+<ul>
+<li>content（内容）：可以是文字、图片等元素</li>
+<li>padding（空白）：也成内边距，补白，用来设置盒子模型的内容与边框之间的距离</li>
+<li>border（边框），即盒子本身，该属性可设置内容边框线的粗细、颜色和样式等</li>
+<li>margin（边界），也称外边距，用来设置内容与内容之间的距离</li>
+</ul>
+<p></p><h6>元素定位</h6><p></p>
+<ul>
+<li>在CSS中，可以通过position、float、z-index等定位元素进行定位<ul>
+<li>position<code>{position:relative|absolute|static|fixed}</code><ul>
+<li>relative相对定位:相对于原来的位置，保留原有空间</li>
+<li>absolute绝对定位:脱离文档流,选取其最近的父级定位元素定位，当父元素的position为static时，该元素将以body坐标原点进行定位;一般情况下绝对定位配合相对定位</li>
+<li>static所有元素定位的默认值</li>
+<li>fixed该参数固定的对象是可视窗口而并非body或父级元素</li>
+</ul>
+</li>
+<li>相对定位<ul>
+<li>通过某个元素的上下左右移动来对其进行相对地定位,是相对于原来位置的定位，但仍占据原来位置,因此，移动元素会造成覆盖其他框</li>
+</ul>
+</li>
+<li>绝对定位<ul>
+<li>通过某个元素的上下左右移动来对其进行定位,默认依据父级的坐标原点进行定位,如果父级position属性为默认值，且top、left、bottom、right4个值均未设置，则是参照浏览器的左上角</li>
+</ul>
+</li>
+<li>float<ul>
+<li>{ float:left|right|none } 水平方向定位</li>
+<li>{ clear:left|right|both }  清除浮动</li>
+</ul>
+</li>
+<li>z-index<ul>
+<li>CSS中可以处理元素的高度、宽度、深度三个维度，深度的处理就是z-index</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>块元素、内联元素</h6><p></p>
+<ul>
+<li>块元素<ul>
+<li>display:block总是在新行上开始，行高以及顶底边距可以控制</li>
+<li>display:inline和其他元素都在一行上，行高及顶和底边距不可改变</li>
+<li>display:inline-block和其他元素都在一行上，元素的高度、宽度、行高以及顶和底边距都可设置</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>新增</h6><p></p>
+<ul>
+<li>文字阴影<br>text-shadow:X轴 Y轴 模糊距离 颜色（如果不需要阴影模糊效果，可以blur值设置为0）</li>
+<li>文字描边<br>text-stroke:宽度值 颜色值</li>
+<li>文本溢出<br>overflow：hidden；overflow-X:hidden</li>
+<li>渐变<br>默认从上到下：background:linear-gradient(red,blue); <br>从左往右：background:linear-gradient(to right,red,blue)</li>
+<li><p>动画<br><br>第一步：定义动画，</p>
+<pre><code>@keyframes 动画名{
+ 0%{left：0px}
+ 100%{left：100px}
+}
+</code></pre><p>第二步：调用动画，<br>animation：动画名 持续时间 播放方式 播放次数；（animation: c  5s linear infinite;）</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/21/CSS全析/" data-id="cjf8xw1f70008kgwvi82awmku" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-表格、表单" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/21/表格、表单/" class="article-date">
+  <time datetime="2018-02-21T03:19:09.000Z" itemprop="datePublished">2018-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/21/表格、表单/">表格、表单</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>表格、表单</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>表格</h6><p></p>
+<ul>
+<li><p>表格table标签常用属性</p>
+<pre><code>width            表格的宽度
+height            表格的高度
+align            表格在页面的水平摆放位置
+background        表格的背景图片
+bgcolor            表格的背景颜色
+border            表格边框的宽度
+bordercolor        表格边框的颜色
+bordercolorlight表格边框明亮部分的颜色
+bordercolordark    表格边框昏暗部门的颜色
+cellspacing        单元格之间的间距
+cellpadding        单元格内容与单元格边界之间的空白距离
+</code></pre></li>
+<li><p>表格行的设定</p>
+<pre><code>height                行高
+align                行内容的水平对齐
+valign                行内容的垂直对齐
+bgcolor                行的背景颜色
+bordercolor            行的边框颜色
+bordercolorlight    行的亮边框颜色
+bordercolordark        行的暗边框颜色
+</code></pre></li>
+<li><p>单元格的设定</p>
+<pre><code>width/height        单元格的宽 高
+colspan                单元格向右打通的栏数
+rowspan                单元格向下打通的列数
+align                单元格内字画的水平位置left、center、right
+valign                单元格内字画的垂直位置top、middle、bottom
+bgcolor                单元格的底色
+bordercolor            单元格边框颜色
+bordercolorlight    单元格边框向光部分颜色
+bordercolordark        单元格边框背光部分颜色
+background            单元格背景图片
+</code></pre></li>
+<li><p>分隔线的显示状态rules</p>
+<pre><code>all        显示所有分隔线
+groups    只显示组与组的分隔线
+rows    只显示行与行的分隔线
+cols    只显示列与列的分隔线
+none    所有分隔线都不显示
+</code></pre></li>
+<li><p>表格的边框显示状态frame</p>
+<pre><code>box        显示整个表格边框
+void    不显示表格边框
+</code></pre></li>
+<li><p>学生信息表</p>
+<pre><code>&lt;table border=&quot;5&quot;  bordercolor=&quot;blue&quot; width=&quot;500&quot; height=&quot;250&quot; align=&quot;center&quot; rules=&quot;all&quot; frame=&quot;box&quot; &gt;
+    &lt;caption&gt;学生信息表&lt;/caption&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th colspan=&quot;3&quot;&gt;学生基本信息&lt;/th&gt;
+            &lt;th colspan=&quot;2&quot;&gt;成绩&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;th&gt;姓名&lt;/th&gt;&lt;th&gt;性别&lt;/th&gt;&lt;th&gt;专业&lt;/th&gt;&lt;th&gt;课程&lt;/th&gt;&lt;th&gt;分数&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr align=&quot;center&quot;&gt;
+            &lt;td&gt;球球&lt;/td&gt;&lt;td&gt;男&lt;/td&gt;&lt;td rowspan=&quot;2&quot;&gt;计算机&lt;/td&gt;&lt;td rowspan=&quot;3&quot;&gt;程序设计&lt;/td&gt;&lt;td&gt;68&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr align=&quot;center&quot;&gt;
+            &lt;td&gt;喃喃&lt;/td&gt;&lt;td&gt;女&lt;/td&gt;&lt;td&gt;89&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr align=&quot;center&quot;&gt;
+            &lt;td&gt;小明&lt;/td&gt;&lt;td&gt;男&lt;/td&gt;&lt;td&gt;会计&lt;/td&gt;&lt;td&gt;68&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr align=&quot;center&quot;&gt;
+            &lt;td&gt;小明&lt;/td&gt;&lt;td&gt;男&lt;/td&gt;&lt;td&gt;建筑&lt;/td&gt;&lt;td&gt;建筑设计&lt;/td&gt;&lt;td&gt;68&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;tfoot&gt;
+        &lt;tr&gt;
+            &lt;td colspan=&quot;5&quot;&gt;备注：&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tfoot&gt;
+&lt;/table&gt;
+</code></pre><h6>表单</h6></li>
+<li><p>表单标签</p>
+<pre><code>&lt;form  action=&quot;url&quot;  method=get|post   name=&quot;myform&quot;&gt;   &lt;/form&gt;
+</code></pre></li>
+<li><p>表单控件</p>
+<pre><code>&lt;input type=&quot;&quot;  name=&quot;控件名称&quot;   value=&quot;初始值&quot;   size=&quot;显示的最大字符数&quot;  maxlength=&quot;输入的最大字符数&quot;  placeholder=&quot;请输入……&quot;   textarea-cols|rows多行文本 &gt;     
+
+1.type= text文本、 password密码、checkbox复选框、radio单选、hidden隐藏、file文件、button按钮、submit提交、reset重置、select-option多选
+2.onchang 当文本改变时要执行的函数、onselect 当控件被选中时要执行的函数、onfocus 当文本接受焦点时要执行的函数、onclick当单击按钮后调用的函数、onblur当控件失去焦点时要执行的函数
+3.控件需要放在&lt;form&gt;&lt;/form&gt;标志之间
+4.label标签：&lt;input type=&quot;&quot;text&quot;&quot; id=&quot;&quot;Liu&quot;&quot;/&gt;&lt;label for=&quot;&quot;Liu&quot;&quot;&gt;请输入……&lt;/label&gt;&quot;                        
+</code></pre></li>
+<li><p>练习</p>
+<pre><code>&lt;form&gt;
+    账号：&lt;input type=&quot;text&quot;  readonly name=&quot;NAME:&quot; value=&quot;请输入账号&quot; size=&quot;10&quot; maxlength=&quot;6&quot;&gt;
+
+    密码：&lt;input type=&quot;password&quot; name=&quot;PWD:&quot;  size=&quot;10&quot; maxlength=&quot;6&quot; placeholder=&quot;请输入密码&quot;&gt;
+    密码：&lt;input type=&quot;password&quot; disabled name=&quot;PWD:&quot;  size=&quot;10&quot; maxlength=&quot;6&quot; placeholder=&quot;请输入密码&quot;&gt;
+
+    &lt;input type=&quot;checkbox&quot; name=&quot;选项&quot; value=&quot;A&quot; checked&gt;A&amp;nbsp&amp;nbsp
+    &lt;input type=&quot;checkbox&quot; &gt;B&amp;nbsp&amp;nbsp
+    &lt;input type=&quot;checkbox&quot; &gt;C
+
+    单选&lt;input type=&quot;radio&quot; name=&quot;s&quot; value=&quot;中国&quot; checked&gt;中国
+    &lt;input type=&quot;radio&quot;&gt;美国
+
+    &lt;input type=&quot;hidden&quot; name=&quot;隐藏了！&quot;&gt;
+
+    是否确定？&lt;input type=&quot;button&quot; name=&quot;按钮&quot; value=&quot;YES&quot;&gt;&amp;nbsp&lt;input type=&quot;button&quot; value=&quot;NO&quot;&gt;
+
+    &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;
+
+    &lt;select multiple name=&quot;Countrys&quot; size=&quot;5&quot;&gt;
+        &lt;option&gt;请选择&lt;/option&gt;
+        &lt;option&gt;美国&lt;/option&gt;
+        &lt;option&gt;韩国&lt;/option&gt;
+        &lt;option&gt;泰国&lt;/option&gt;
+        &lt;option&gt;英国&lt;/option&gt;
+        &lt;option&gt;法国&lt;/option&gt;
+        &lt;option&gt;伊斯兰国&lt;/option&gt;
+    &lt;/select&gt;
+
+    其他&lt;textarea name=&quot;说明&quot; cols=&quot;100&quot; rows=&quot;5&quot;&gt;郑重申明：本书籍仅供特定工作人员参阅！&lt;/textarea&gt;
+
+    &lt;input type=&quot;file&quot; name=&quot;file&quot; value=&quot;请选择文件&quot;&gt;
+
+    &lt;label for=&quot;1101&quot;&gt;账号：&lt;/label&gt;
+    &lt;input type=&quot;text&quot; id=&quot;1101&quot;&gt;
+
+    &lt;input type=&quot;radio&quot; id=&quot;nan&quot; name=&quot;sex&quot;&gt;&lt;label for=&quot;nan&quot;&gt;男&lt;/label&gt;
+    &lt;input type=&quot;radio&quot; id=&quot;nv&quot; name=&quot;sex&quot;&gt;&lt;label for=&quot;nv&quot;&gt;女&lt;/label&gt;
+&lt;/form&gt;        
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/21/表格、表单/" data-id="cjf8xw1lq004tkgwvieyi0dwd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-标签、链接、列表、框架" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/21/标签、链接、列表、框架/" class="article-date">
+  <time datetime="2018-02-21T01:28:48.000Z" itemprop="datePublished">2018-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/21/标签、链接、列表、框架/">标签、链接、列表、框架</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>标签、链接、列表、框架</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>标签</h6><p></p>
+<ul>
+<li><p>文本格式化标签<br>格式化标签是使用一些标签来改变字体的形态和式样，以便产生一些浏览者习惯的或约定的显示效果，放在标签之间的文字受其控制</p>
+<pre><code>&lt;b&gt;            定义粗体文本     
+&lt;i&gt;            定义斜体字
+&lt;del&gt;        定义删除字       
+&lt;sub&gt;        定义下标字
+&lt;sup&gt;        定义上标字       
+&lt;small&gt;     定义小号字
+&lt;strong&gt;    定义加重语气字    
+&lt;em&gt;        定义着重文
+&lt;ins&gt;        定义插入字
+</code></pre></li>
+<li><p>引用输出标签</p>
+<pre><code>&lt;code&gt;            定义计算机代码        
+&lt;pre&gt;            定义预格式文本
+&lt;address&gt;        定义地址          
+&lt;q&gt;                  定义短的引用
+&lt;bdo dir=&apos;rtl&apos;&gt;    定义文字方向
+</code></pre></li>
+<li><p>字符实体<br>在 HTML 文档中，有些字符没办法直接显示出来，需要用一些代码来表示它们</p>
+<pre><code>空格      &amp;nbsp
+&lt;        &amp;lt                
+&gt;        &amp;gt
+&amp;        &amp;amp            
+&quot;        &amp;quot
+®        &amp;reg            
+TM         &amp;trade
+Ⓒ        &amp;copy            
+×        &amp;times
+÷        &amp;divide
+</code></pre></li>
+<li><p>html常用标签</p>
+<pre><code>&lt;!DOCTYPE html/&gt;
+&lt;html&gt;
+&lt;head lang=&quot;en&quot;&gt;
+    &lt;meta charset=&quot;utf-8&quot;/gb2312&gt;      
+    &lt;meta name=&quot;Author&quot; content=&quot;Liu&quot;&gt; #&lt;meta&gt; 定义网页的基本信息（供搜索引擎抓取）
+    &lt;title&gt;document&lt;/title&gt;            #定义网页标题（唯一）
+    &lt;link ...&gt;                         #导入外部文件
+    &lt;script&gt;...&lt;/script&gt;               #定义JS脚本语言
+    &lt;style&gt;...&lt;/style&gt;                 #定义CSS样式
+&lt;/head&gt;
+    &lt;body&gt;
+          &lt;hn&gt;...&lt;/hn&gt;                   #标题标签
+        &lt;p&gt;...&lt;/p&gt;                     #段落标签
+        &lt;br/&gt;                          #换行标签
+        &lt;hr/&gt;                          #水平线标签
+        &lt;span&gt;...&lt;/span&gt;               #无语义标签
+        &lt;div&gt;...&lt;/div&gt;
+        &lt;img src=&apos;图片路径&apos;&gt;            #图片标签
+        &lt;!--注释内容--&gt;                 #注释
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+<li>元素归纳<ul>
+<li>块状元素（独占一行，可设置宽高）：address blockquote center div ul ol dl form hn  hr p pre table </li>
+<li>内联元素（只可设置水平方向的margin padding）：a b br code em font i img input label q select small span strong sub sup textarea u下划线 strike中划线</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>链接</h6><p></p>
+<ul>
+<li><p>超链接</p>
+<pre><code>#超链接语法
+&lt;a href=&quot;资源地址&quot; target=&quot;窗口名称&quot; title=&quot;鼠标指向连接显示的文字&quot;&gt;超链接名称&lt;/a&gt;
+注：target,  _blank在新窗口打开    _self在同一个窗口打开    _top在浏览器的整个窗口中打开
+
+&lt;a href=&quot;基本标签.html&quot; title=&quot;这是跳转基本标签的超链接&quot; target=&quot;_blank&quot;&gt;这是第一个网页&lt;/a&gt;
+&lt;a href=&quot;pictures/大山.jpg&quot; &gt;这里是下载图片的链接&lt;/a&gt;
+</code></pre></li>
+<li><p>锚链接</p>
+<ul>
+<li><p>1.在同一个页面要使用链接</p>
+<pre><code>#语法：
+&lt;a href=&quot;#书签名称&quot; target=&quot;窗口名称&quot;&gt;超链接标题名称&lt;/a&gt;
+
+&lt;h1 align=&quot;center&quot; colour=&quot;blue&quot;&gt;三国演义&lt;/h1&gt;
+&lt;center&gt;
+    &lt;a href=&quot;#s1&quot;&gt;第一回&lt;/a&gt;&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp;
+    &lt;a href=&quot;#s2&quot;&gt;第二回&lt;/a&gt;&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp;
+    &lt;a href=&quot;#s3&quot;&gt;第三回&lt;/a&gt;&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp;
+&lt;/center&gt;
+&lt;div&gt;
+    &lt;a name=&quot;s1&quot;&gt;&lt;/a&gt;
+    &lt;h3&gt;第一回 宴桃园豪杰三结义  斩黄巾英雄首立功&lt;/h3&gt;
+    &lt;p&gt;话说天下大势，分久必合，合久必分&lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;
+    &lt;a name=&quot;s2&quot;&gt;&lt;/a&gt;
+    &lt;h3&gt;第二回 张翼德怒鞭督邮  何国舅谋诛宦竖&lt;/h3&gt;
+    &lt;p&gt;话说天下大势，分久必合，合久必分&lt;/p&gt;
+&lt;/div&gt;
+&lt;div&gt;
+    &lt;a name=&quot;s3&quot;&gt;&lt;/a&gt;
+    &lt;h3&gt;第三回 议温明董卓叱丁原 馈金珠李肃说吕布&lt;/h3&gt;
+    &lt;p&gt;话说天下大势，分久必合，合久必分&lt;/p&gt;
+&lt;/div&gt;
+</code></pre></li>
+<li><p>2.在不同页面要使用链接</p>
+<pre><code>#语法：
+&lt;a href=&quot; URL地址 #书签名称&quot; target=&quot;窗口名称&quot;&gt;超链接标题名称&lt;/a&gt;
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>列表</h6><p></p>
+<ul>
+<li><p>无序列表</p>
+<pre><code>&lt;ul type=&quot;square&quot;&gt;
+    &lt;li&gt;小方块&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul type=&quot;circle&quot;&gt;
+    &lt;li&gt;空心圆&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ul type=&quot;disc&quot;&gt;
+    &lt;li&gt;默认实心圆&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre></li>
+<li><p>有序列表<br>顺序编号的设置是由两个属性type和start 来完成的</p>
+<pre><code>#语法：
+&lt;ol type=A  start=A&gt;           #type用于编号的类型，可以为数字、大小写字母、大小写罗马数字
+    &lt;li&gt;......&lt;/li&gt; 
+    &lt;li  value=&quot;n&quot;&gt;....&lt;/li&gt;   #value 改变列表行项目的特定编号
+&lt;/ol&gt;
+
+&lt;ol type=1 start=3&gt;
+    &lt;li&gt;仓库&lt;/li&gt;
+    &lt;li&gt;仓库&lt;/li&gt;
+    &lt;li&gt;仓库&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre></li>
+<li><p>嵌套列表</p>
+<pre><code>&lt;ol type=A&gt;
+    &lt;li&gt;名次&lt;/li&gt;
+    &lt;ul&gt;
+        &lt;li type=&quot;circle&quot;&gt;姓名&lt;/li&gt;
+    &lt;/ul&gt;
+&lt;/ol&gt;
+</code></pre></li>
+<li><p>自定义列表</p>
+<pre><code>#默认两个层次，第一层为列表项标签&lt;dt&gt;,第二层为注释项标签&lt;dd&gt;
+&lt;dl&gt;
+    &lt;dt&gt;第一项&lt;/dt&gt;&lt;dd&gt;注释一&lt;/dd&gt;
+    &lt;dt&gt;第二项&lt;dd&gt;注释二
+    &lt;dt&gt;第三项&lt;dd&gt;注释三
+&lt;/dl&gt;
+</code></pre></li>
+</ul>
+<p></p><h6>框架</h6><p></p>
+<ul>
+<li>框架就是把一个浏览器窗口划分为若干个小窗口，每个窗口可以显示不同的 URL 网页。使用框架可以非常方便的在浏览器中同时浏览不同的页面效果，也可以非常方便的完成导航工作<br>而所有的框架标记要放在一个html文档中。html页面的文档体标签<body>被框架集标签frameset所取代，然后通过frameset的子窗口标签frame定义每一个子窗口和子窗口的页面属性</body></li>
+<li><p>框架集frameset控制</p>
+<ul>
+<li><p>框架结构可以根据框架集标签frameset的分割属性分为3种：左右分割、上下分割、嵌套分割</p>
+<pre><code>border                设置边框粗细，默认是5px
+bordercolor            设置边框颜色
+frameborder            指定是否显示边框，0表示不显示，1表示显示
+cols                可用像素、百分比
+rows                可用像素、百分比
+framespacing=&quot;5&quot;    表示框架间保留空白的距离
+</code></pre></li>
+</ul>
+</li>
+<li><p>子窗口frame标签的设定</p>
+<ul>
+<li><p>frame是个单标签,frame标签要放在框架集frameset中,frameset设置了几个子窗口就必须对应几个frame标签，而且每一个frame标签内还必须设定一个网页文件src=”*.html”,其常用属性有:</p>
+<pre><code>src                指定加载的URL文件地址
+bordercolor        设定边框颜色
+frameborder        指定是否需要边框，1显示边框，0不显示
+border            设置边框粗细
+name            指示框架名称，是连接标记的target所要的参数
+scorlling        指示是否需要滚动条，auto yes no
+marginwidth        设置内容与窗口左右边缘的距离，默认为1
+marginheight    设置内容与窗口上下边缘的距离，默认为1
+width            框窗的宽及高，默认width-100，height-100
+align            等于left right center top middle bottom
+</code></pre></li>
+</ul>
+</li>
+<li><p>比如</p>
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;UTF-8&quot;&gt;
+        &lt;title&gt;框架&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;frameset cols=&quot;25%,50%,25%&quot;&gt;
+        &lt;frame src=&quot;基本标签.html&quot;&gt;
+        &lt;frame src=&quot;列表表格.html&quot;&gt;
+        &lt;frame src=&quot;......&quot;&gt;
+        &lt;noframes&gt;                #这对标签的作用是避免浏览器版本太旧而无法显示时会弹出提示语，而不是一片空白
+            &lt;body&gt;您的浏览器无法处理框架&lt;/body&gt;
+        &lt;/noframes&gt;    
+    &lt;/frameset&gt;
+&lt;/html&gt;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/21/标签、链接、列表、框架/" data-id="cjf8xw1la004jkgwvbfdsz6ce" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-推导" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -197,7 +980,7 @@ print(m)                        #result:[[1, 2, 3], [2, 4, 5], [3, 6, 7], [4, 8,
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/05/推导/" data-id="cjf2m9pej003sa0wvx6yi9ng0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/05/推导/" data-id="cjf8xw1jz003pkgwvf62slqip" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -301,7 +1084,7 @@ print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/随机数Random/" data-id="cjf2m9pfu004ka0wveyopj6xj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/随机数Random/" data-id="cjf8xw1lq004pkgwvagrmyd2i" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -488,7 +1271,7 @@ logobj = Logger(&apos;008&apos;,logging.ERROR,logging.DEBUG)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/日志Logging/" data-id="cjf2m9pez003wa0wv2hjxi5mw" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/日志Logging/" data-id="cjf8xw1kf003xkgwvf4uocx1m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -647,7 +1430,7 @@ except SexException as m:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/01/迭代器、生成器、异常/" data-id="cjf2m9pfe004ca0wvj61e51ve" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/01/迭代器、生成器、异常/" data-id="cjf8xw1la004lkgwvu4ux9j5p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -842,7 +1625,7 @@ print(callable(stu))         #result:True
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/01/工厂类、单例、其他/" data-id="cjf2m9pej003qa0wvcqtlgje8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/01/工厂类、单例、其他/" data-id="cjf8xw1kf003zkgwvj0u6h7xj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -930,755 +1713,7 @@ if __name__==&apos;__main__&apos;:             #程序从这里启动
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/31/计算器/" data-id="cjf2m9pfe0046a0wv9k14gk1q" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-DVD管理系统" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/29/DVD管理系统/" class="article-date">
-  <time datetime="2018-01-29T09:50:37.000Z" itemprop="datePublished">2018-01-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/29/DVD管理系统/">DVD管理系统</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <h5>DVD管理系统</h5>
-
-<pre><code>class dvd:
-    def __init__(self,name,price,status):
-        self.name=name
-        self.price=price
-        self.status=status
-    def __str__(self):
-        stat=&apos;已借出&apos;
-        if self.status==1:
-            stat=&apos;未借出&apos;
-        return &apos;名称：《%s》  单价：%d  状态：%s&apos;%(self.name,self.price,stat)
-class DvdManage:
-    dvds=[]  #存储  多个dvds，每个元素都是一个DVD
-    def init(self):
-        self.dvds.append(dvd(&apos;光辉岁月&apos;,10,0))
-        self.dvds.append(dvd(&apos;大海日出&apos;,12,1))
-        self.dvds.append(dvd(&apos;你好小明&apos;,20,1))
-    def Menu(self):
-        self.init()
-        while(True):
-            print(&apos;1.查询所有DVD&apos;)
-            print(&apos;2.增加DVD&apos;)
-            print(&apos;3.借出DVD&apos;)
-            print(&apos;4.归还DVD&apos;)
-            print(&apos;5.退出&apos;)
-            choose=int(input(&apos;请选择操作项:&apos;))
-            if choose==1:
-                self.showAlldvd()
-            elif choose==2:
-                self.insertDvd()
-            elif choose==3:
-                self.lend()
-            elif choose==4:
-                self.backDvd()
-            elif choose==5:
-                print(&apos;5.谢谢使用！&apos;)
-                break
-    def showAlldvd(self):
-        for d in self.dvds:
-            print(str(d))
-    def insertDvd(self):
-        name = input(&apos;请输入DVD的名称:&apos;)
-        ret=self.checkDvd(name)
-        if ret!=None:
-            print(&apos;DVD已存在!&apos;)
-        else:
-            price=int(input(&apos;请输入价格:&apos;))
-            new_dvd=dvd(name,price,1)
-            self.dvds.append(new_dvd)
-            print(&apos;存放成功!&apos;)
-    def lend(self):
-        name = input(&apos;请输入DVD的名称:&apos;)
-        ret = self.checkDvd(name)
-        if ret != None:
-            if ret.status==0:
-                print(&apos;DVD已借出!&apos;)
-            else:
-                days=int(input(&apos;请输入借出天数:&apos;))
-                ret.status=0
-                print(&apos;借出%d天，应收%d&apos;%(days,ret.price*days))
-        else:
-            print(&apos;DVD不存在!&apos;)
-    def backDvd(self):
-        name=input(&apos;请输入DVD的名称:&apos;)
-        ret=self.checkDvd(name)
-        if ret==None:
-            print(&apos;DVD不存在!&apos;)
-        else:
-            if ret.status==1:
-                print(&apos;DVD未借出!&apos;)
-            else:
-                days=int(input(&apos;请输入借出天数:&apos;))
-                y_money=ret.price * days
-                print(&apos;借出%d天，应收%d&apos; % (days, ret.price * days))
-                money=0
-                while True:
-                    money=int(input(&apos;实收:&apos;))
-                    if money&lt;y_money:
-                        print(&apos;不够啊!&apos;)
-                    else:
-                        break
-                if money&gt;=y_money:
-                    print(&apos;找零:%d&apos;%(money-y_money))
-                ret.status=1
-                print(&apos;归还成功!&apos;)
-    def checkDvd(self,name):
-        for d in self.dvds:
-            if d.name==name:
-                return d       #返回当前对象---内存地址
-        else:
-            return None
-manager=DvdManage()
-manager.Menu()
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjf2m9p9r0008a0wvqmcpc54n" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-封装、继承、多态" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/28/封装、继承、多态/" class="article-date">
-  <time datetime="2018-01-28T08:40:03.000Z" itemprop="datePublished">2018-01-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/28/封装、继承、多态/">封装、继承、多态</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>封装、继承、多态</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>封装</h6><p></p>
-<ul>
-<li><p>隐藏内部实现，提供外部接口<br>两个步骤：属性私有化——set\get函数写方法</p>
-<pre><code>class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.__age=age
-    @property
-    def age(self):
-        return self.__age
-    @age.setter
-    def age(self,value):
-        if value&lt;0 or value&gt;100:
-            self.__age=18
-        else:
-            self.__age=value
-m=Student(&apos;刘桑&apos;,25)
-m.age=100
-print(m.age)              #result:100
-</code></pre></li>
-</ul>
-<p></p><h6>继承</h6><p></p>
-<ul>
-<li><p>继承：子类继承父类，子类可以使用父类的属性和方法，简化代码<br>子类继承父类，父类派生子类（父类又叫基类，子类又叫派生类）<br>继承指出两个类符合“A是B”的关系</p>
-<pre><code>class Vehicle:         #交通工具类
-    def __init__(self,name):
-        self.name=name
-        print(&apos;交通工具被初始化！&apos;)
-    def run(self):
-        print(&apos;交通工具在行驶...&apos;)
-    def show(self):
-        print(&apos;车的名字是%s&apos;%self.name)
-class Truck(Vehicle):    #卡车，属性：载重
-    #当子类继承父类时，子类的构造方法应该包含父类和子类共有的属性，如name
-    #在子类的初始化方法中，将父类的属性传递给父类，子类的属性赋值给子类
-    #在子类的初始化方法中，调用父类的属性有四种方法：
-    # 1，父类名.属性 2，self.属性 3，父类名.__init__(self,属性) 4，super(子类名,self).__init__(属性)
-    def __init__(self,name,weight):
-        #Vehicle.name=name                 #1，父类名.属性
-        #self.name=name                    #2，self.属性
-        #Vehicle.__init__(self,name)       #3，父类名.__init__(self,属性)
-        super(Truck,self).__init__(name)   #4，super(子类名,self).__init__(属性)
-        self.weight=weight
-        print(&apos;卡车被初始化！&apos;)
-    def run(self):        #卡车，重写行驶方法
-        #super().show() #调用父类方法
-        #Vehicle.show(self)
-        super(Truck,self).show()
-        print(&apos;%s卡车载重%d吨在行驶...&apos;%(self.name,self.weight))
-class Train(Vehicle):     #火车，属性：车厢个数
-    def __init__(self,name,nums):
-        self.nums=nums
-    def run(self):        #火车，重写行驶方法
-        print(&apos;火车在轨道行驶...&apos;)
-
-t=Truck(&apos;解放&apos;,25)
-t.run()
-</code></pre></li>
-<li><p>三代继承：子类初始化方法需祖父、父类及自己的属性，可以调用父类的初始化方法传参，可以重写父类的方法，构造的顺序依然先构造祖父类，再构造父类，最后构造自己</p>
-</li>
-<li><p>多继承：一个类同时继承多个父类，class(A,B),当AB均有相同方法，而子类又重写时，调用子类的方法；如果子类没有方法，则调用优先继承的类</p>
-<h6>多态</h6></li>
-<li>封装可以隐藏实现细节，使得代码模块化；继承可以扩展已存在的代码模块（类）；它们的目的都是为了——代码重用。而多态则是为了实现另一个目的——接口重用！多态的作用，就是为了类在继承和派生的时候，保证使用“家谱”中任一类的实例的某一属性时的正确调用</li>
-<li><p>多态就是多种表现形态的意思。它是一种机制、一种能力，而非某个关键字。它在类的继承中得以实现，在类的方法调用中得以体现。多态意味着变量并不知道引用的对象是什么，根据引用对象的不同表现不同的行为方式</p>
-<pre><code>class Pet:
-    def look(self):
-        print(&apos;给宠物看病...&apos;)
-class cat(Pet):
-    def look(self):
-        print(&apos;给猫咪吃药、打针...&apos;)
-class dog(Pet):
-    def look(self):
-        print(&apos;给小狗打针、输液...&apos;)
-class bird(Pet):
-    def look(self):
-        print(&apos;给小鸟输液、疗养...&apos;)
-class Doctor:
-    def jiuzhen(self,Pet):        #传参的时候达到了多态
-        print(&apos;兽医出诊，给宠物看病...&apos;)
-        Pet.look()
-class person:
-    def look(self):
-        print(&apos;给人类看病...&apos;)
-
-longmao=cat()
-dahu=dog()
-yingwu=bird()
-xiaoming=person()
-#longmao.look()
-#dahu.look()
-#yingwu.look()
-doctor=Doctor()
-doctor.jiuzhen(longmao)     #result:兽医出诊，给宠物看病..   给猫咪吃药、打针...
-doctor.jiuzhen(dahu)        #result:兽医出诊，给宠物看病..   给小狗打针、输液...
-doctor.jiuzhen(yingwu)      #result:兽医出诊，给宠物看病..   给小鸟输液、疗养...
-doctor.jiuzhen(xiaoming)    #result:兽医出诊，给宠物看病..   给人类看病...
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjf2m9pej003ma0wvopbh7qmk" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-类与对象" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/22/类与对象/" class="article-date">
-  <time datetime="2018-01-22T09:23:16.000Z" itemprop="datePublished">2018-01-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/22/类与对象/">类与对象</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>类与对象</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>基础定义</h6><p></p>
-<ul>
-<li><p>在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合</p>
-<pre><code>class Student:
-    &apos;&apos;&apos;
-    学生类             #文档说明，可通过类名.__doc__访问
-    &apos;&apos;&apos;
-    #类的成员：特性  行为
-    pass              #保证语义的完整
-</code></pre></li>
-<li><p>类名规范：首字母大写，以大写字母分割单词，不使用下划线;不允许使用数字、关键字、除下划线以外的特殊字符开头<br><br>属性名规范：使用名词，首字母小写，以大写字母分割单词<br><br>方法名规范：使用谓词（动词+对象），首字母小写，以大写字母分割单词<br></p>
-<pre><code>class Student:
-    def __init__(self,name,age):    
-    #__init__()这个方法会在创建对象时完成初始化，并把类的属性绑上去
-        self.name=name           #创建对象属性
-        self.age=age
-    def showName(self):   #self对象的载体
-        print(&apos;我叫{}!&apos;.format(self.name))        
-m=Student(&apos;张三&apos;,27)
-m.showName()
-</code></pre></li>
-<li><p>属性分归属：对象属性、类属性<br>对象属性有两种创建方式</p>
-<pre><code>#第一种方式，初始化时添加对象属性
-class Student:
-    def __init__(self,name,age):    
-        self.name=name           #创建对象属性
-        self.age=age
-    def showName(self):   
-        print(&apos;我叫{}!&apos;.format(self.name))        
-m=Student(&apos;张三&apos;,27)
-m.showName()
-
-#第二种方式，赋值的形式
-class Student:
-    def showName(self):
-        print(&apos;我叫{}!&apos;.format(self.name))
-n=Student()
-n.name=&apos;李四&apos;                    #对象名.属性 
-n.showName()
-</code></pre></li>
-<li><p>类属性的创建、修改</p>
-<pre><code>#类属性，属于类的成员，对象共有的,类属性也可以如下创建
-class Student:
-    ablity=&apos;study&apos;             #在类里直接写：attr=value
-#类属性修改方式：类名.类属性=xxx  或者 实例对象.__class__类属性=xxx
-</code></pre><p>  <em>关于类属性与对象属性的区别可参考<a href="http://python.jobbole.com/85100/" target="_blank" rel="noopener">关于Python类属性与实例属性的讨论</a></em></p>
-</li>
-<li><p>__new__()<br>定义一个类时，如果使用__init__函数来设置类具有的属性，实际上最先执行__new__函数，通过该函数，返回一个类的实例，故而init函数才有self参数</p>
-<pre><code>class Student:
-    def __new__(cls, *args, **kwargs):
-        return object.__new__(cls)
-    def __init__(self,name,age):
-        self.name=name
-        self.age=age
-    def showName(self):
-        print(&apos;我叫{}!&apos;.format(self.name))
-m=Student(&apos;张三&apos;,27)
-m.showName()
-</code></pre></li>
-<li><p>对象属性的公有、私有<br>如果有一些属性不想给外部权限来访问或者修改，可以在属性或者方法的名字前加双下划线，声明为私有属性；私有属性只能在当前类中使用</p>
-<pre><code>#如只给外部访问的权限，不给修改的权限，可以在类里定义一个返回属性的函数
-class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.__age=age         #在属性名字前加双下划线，声明为私有属性
-    def get_Age(self):
-        return self.__age
-m=Student(&apos;刘桑&apos;,25)
-print(m.get_Age())              #result:25
-&apos;&apos;&apos;
-#给与外部访问与修改权限，但修改值应按照设计的范围来
-class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.__age=age         #在属性名字前加双下划线，声明为私有属性
-    def get_Age(self):
-        return self.__age
-    def set_Age(self,age):
-        if age&lt;0 or age&gt;100:
-            self.__age=18   #给一个默认值
-        else:
-            self.__age=age
-m=Student(&apos;刘桑&apos;,25)
-m.set_Age(100)
-print(m.get_Age())              #result:100
-</code></pre></li>
-<li><p>注解@property的使用<br>它的作用是将一个函数作为类的一个属性来访问，或者把一个getter方法变成属性，@属性名.setter把setter方法变成属性赋值</p>
-<pre><code>class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.__age=age
-    #先定义两个函数，函数名为属性名，第一个函数返回属性值，第二个函数修改属性值
-    @property               #在第一个函数头上写@property
-    def age(self):
-        return self.__age
-    @age.setter             #在第二个函数头上写@属性名.setter
-    def age(self,value):
-        if value&lt;0 or value&gt;100:
-            self.__age=18   #给一个默认值
-        else:
-            self.__age=value
-m=Student(&apos;刘桑&apos;,25)
-m.age=100
-print(m.age)              #result:100
-</code></pre></li>
-<li><p>对象方法的公有、私有<br>私有方法在方法前加双下划线；私有方法只能在当前类中使用</p>
-<pre><code>class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.__age=age
-    def __showInfo(self):    #私有方法在方法前加双下划线
-        return &apos;My name is&apos;+self.name
-m=Student(&apos;刘桑&apos;,100)
-print(m.__showInfo())       #result:AttributeError
-</code></pre></li>
-<li><p>类方法、静态方法<br>类方法，在方法前添加@classmethod装饰器，可通过类、对象调用<br>静态方法，在方法前添加@staticmethod，参数没有要求，与类、对象没有关系，但可通过类、对象调用</p>
-<pre><code>class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.age=age
-    def instance_method(self):   #实例方法
-        print(&apos;实例方法&apos;)
-    @classmethod
-    def class_method(cls):       #类方法：第一个参数会自动接收类对象，一般用cls
-        print(&apos;类方法&apos;)
-    @staticmethod
-    def static_method():         #静态方法，参数没有要求
-        print(&apos;静态方法&apos;)
-m=Student(&apos;刘桑&apos;,100)
-Student.class_method()           #通过类名调用类方法
-m.class_method()                 #通过实例调用类方法
-
-Student.static_method()          #通过类名调用静态方法
-m.static_method()                #通过实例调用静态方法
-</code></pre></li>
-<li><p>__str__()<br>这个方法告诉python在打印一个对象时,具体显示什么内容</p>
-<pre><code>class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.__age=age
-    def __str__(self):    #可以重写
-        return &apos;My name is&apos;+self.name
-m=Student(&apos;刘桑&apos;,100)
-print(m)                  #result:My name is刘桑
-</code></pre></li>
-<li><p>__del__()<br>自动销毁，当对象没有引用或者程序结束的时候，程序自动调用该方法</p>
-<pre><code>class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.__age=age
-    def __str__(self):    #可以重写
-        return &apos;My name is&apos;+self.name
-    def __del__(self):
-        print(self.name+&apos;被销毁！&apos;)
-m=Student(&apos;刘桑&apos;,100)
-                          #result:刘桑被销毁！
-
-#也可以直接使用del m
-</code></pre></li>
-<li><p>__dir__()<br>用来展示一个类、对象的属性和方法</p>
-<pre><code>class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.age=age
-m=Student(&apos;刘桑&apos;,100)
-print(m.__dir__())
-</code></pre></li>
-<li><p>getrefcount()可返回一个对象有多少个引用，返回2，从2开始</p>
-<pre><code>import sys
-class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.__age=age        
-m=Student(&apos;刘桑&apos;,25)
-mm=m
-print(sys.getrefcount(m))      #result:3
-</code></pre></li>
-<li><p>_类名__属性名,通过该方式可访问私有属性，一般不建议</p>
-<pre><code>class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.__age=age
-m=Student(&apos;刘桑&apos;,25)
-print(m._Student__age)
-</code></pre></li>
-<li><p>id()<br>对一个对象的引用调用id()函数，可得到该对象的标识符dentity，该标识符是一个int，它保证在该对象的生命周期内是唯一恒定的，具有不重叠生命周期的两个对象具有不同的id值</p>
-<pre><code>class Student:
-    def __init__(self,name,age):
-        self.name=name
-        self.age=age
-m=Student(&apos;刘桑&apos;,25)
-n=Student(&apos;宮某&apos;,25)
-print(id(m))                  #result:1832993645624
-print(id(n))                  #result:1832993647864
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjf2m9pez0040a0wvwuu55bx2" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-函数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/19/函数/" class="article-date">
-  <time datetime="2018-01-19T13:47:47.000Z" itemprop="datePublished">2018-01-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/19/函数/">函数</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>函数</h5><p></p>
-<hr>
-<hr>
-<h6>定义</h6>
-
-<ul>
-<li>高复用、低耦合</li>
-<li><p>语法</p>
-<pre><code>def add(a,b):        #def 函数名(参数列表):
-                     #函数体
-    return a+b       #可以返回多个值，返回的多个值组成元组；返回值加上中括号，返回列表      
-ret=add(1,2)
-print(&apos;返回值&apos;,ret)           #result:返回值 3
-</code></pre></li>
-<li><p>可更改与不可更改对象</p>
-<pre><code>def fun(a):
-    a=10
-    print(&apos;函数内部a为&apos;,a)
-a=5
-print(&apos;调用前&apos;,a)      #result:调用前 5
-fun(a)                #result:函数内部a为 10
-print(&apos;调用后&apos;,a)      #result:调用后 5
-#在python中，string,tuples,numbers是不可更改的对象，list,dict则是可以修改的对象
-#不可变类型：变量赋值a=5后再次赋值a=10，这里实际是新生成一个int值对象10，再让a指向它，而5被丢弃，不是改变a的值；相当于新生成了a
-#不可变类型：值传递（复制副本），如fun(a),传递的只是a的值，没有影响a对象本身；如在fun(a)内部修改a的值，只是修改另一个复制的对象，不会影响a本身
-
-def fun(b):
-    b[0]=&apos;刘备&apos;
-    b[1]=&apos;刘禅&apos;
-b=[&apos;刘邦&apos;,&apos;刘秀&apos;]
-print(&apos;调用前&apos;,b)      #result:调用前 [&apos;刘邦&apos;, &apos;刘秀&apos;]
-fun(b)
-print(&apos;调用后&apos;,b)      #result:调用后 [&apos;刘备&apos;, &apos;刘禅&apos;]
-#可变类型：变量赋值b=[1,2,3]后再次赋值b[2]=5则是将b的第三个元素值更改，本身b没有动，只是其内部的一部分值被修改了
-#可变类型：引用传递(实质是值传递，传递可变类型-可以改变内容，但不可以改变原地址)，如fun(b)，则是将b真正的传过去，修改后fun外部的b也会受影响
-
-def fun(b):
-    b=[&apos;刘备&apos;,&apos;刘禅&apos;]
-    print(&apos;函数内部b为&apos;,b)
-b=[&apos;刘邦&apos;,&apos;刘秀&apos;]
-print(&apos;调用前&apos;,b)      #result:调用前 [&apos;刘邦&apos;, &apos;刘秀&apos;]
-fun(b)                   #result:函数内部b为 [&apos;刘备&apos;, &apos;刘禅&apos;]
-print(&apos;调用后&apos;,b)      #result:调用后 [&apos;刘邦&apos;, &apos;刘秀&apos;]
-#相当于不可变类型
-</code></pre></li>
-</ul>
-<h6>参数类型</h6>
-
-<ul>
-<li>在Python中定义函数,可用必选参数、默认参数、可变参数、关键字参数、命名关键字参数；除了可变参数无法和命名关键字参数组合使用外，其他均可组合使用；参数定义的顺序必须是：必选参数、默认参数、可变参数/命名关键字参数和关键字参数</li>
-<li><p>必选参数（形参与实参的个数、类型、顺序一一对应）</p>
-<pre><code>def fun1(a,b):              #形参：定义方法
-    &apos;&apos;&apos;
-    :param a:               第一个加数
-    :param b:               第二个加数
-    :return:                和
-    &apos;&apos;&apos;
-    return a+b
-h=fun1(33,66)               #实参：调用方法
-print(fun1.__doc__)         #调看文档
-print(h)                    #result:99
-</code></pre></li>
-<li><p>默认参数（缺省参数）须写在后面，可以不指定参数名，但是顺序要正确，否则需要指定参数名</p>
-<pre><code>def fun2(a,b=3):
-    return a+b
-h=fun2(4)
-print(h)                    #result:7
-</code></pre></li>
-<li><p>可变参数（不定长参数）该参数允许传入0个或者任意个参数，这些参数在函数调用时组装为一个tuple</p>
-<pre><code>def getSum(*nums):
-    sum=0
-    for i in nums:
-        sum+=i
-    return sum
-m=[1,2,3,4,5]
-n=(1,2,3,4,5)
-print(getSum())                  #result:0
-print(getSum(1,2,3,4,5,6,7))     #result:28
-print(getSum(*m))                #result:15
-print(getSum(*n))                #result:15
-</code></pre></li>
-<li><p>命名关键字参数  该参数允许传入0个或者任意个参数，这些参数在函数内部自动组装为一个dict;一旦以name=value的的传参数的形式存在，之后都要以这种形式存在，但不要求顺序</p>
-<pre><code>def show(name,age,score=90):
-    print(&apos;姓名{} 年龄{} 成绩{}&apos;.format(name,age,score))
-show(name=&apos;Liu&apos;,age=27,score=135)      #result:姓名Liu 年龄27 成绩135
-</code></pre></li>
-<li><p>关键字参数 该参数允许传入0个或者任意个参数，这些参数在函数内部自动组装为一个dic</p>
-<pre><code>def student(name,age,**hobby):
-    print(&apos;姓名{} 年龄{} 爱好{}&apos;.format(name,age,hobby))
-dic={&apos;一&apos;:111,&apos;二&apos;:222,&apos;三&apos;:333}
-student(&apos;Liu&apos;,30,hobby=&apos;Footboll&apos;)     #result:姓名Liu 年龄30 爱好{&apos;hobby&apos;: &apos;Footboll&apos;}
-student(&apos;Liu&apos;,30,**dic)                #result:姓名Liu 年龄30 爱好{&apos;三&apos;: 333, &apos;二&apos;: 222, &apos;一&apos;: 111}
-</code></pre></li>
-<li><p>组合参数 包括若干种参数</p>
-<pre><code>def fun1(a,b,c=9,*args,**kw):
-    print(&apos;a=&apos;,a,&apos;b=&apos;,b,&apos;c=&apos;,c,&apos;args=&apos;,args,&apos;kw=&apos;,kw)
-#*args是可变参数，会这个分割args 逐个对应形参列表
-#**kw只能对应到形参列表的**kw
-m=(1,2,3,4,5)
-n={&apos;一&apos;:111,&apos;二&apos;:222}
-fun1(&apos;A&apos;,&apos;B&apos;)                      #result:a= A b= B c= 9 args= () kw= {}
-fun1(*m)                           #result:a= 1 b= 2 c= 3 args= (4, 5) kw= {}
-fun1(*m,**n)                       #result:a= 1 b= 2 c= 3 args= (4, 5) kw= {&apos;二&apos;: 222, &apos;一&apos;: 111}
-</code></pre></li>
-</ul>
-<h6>变量作用域</h6>
-
-<ul>
-<li><p>当全局和局部同名时，优先局部变量</p>
-<pre><code>a=10           #全局变量
-def changeNum():
-    global a
-    a=5        #局部变量
-    print(&apos;函数内部a为&apos;,a)
-print(&apos;调用前a为&apos;,a)              #result:10
-changeNum()                      #result:5
-print(&apos;调用后a为&apos;,a)              #result:5
-</code></pre></li>
-</ul>
-<h6>匿名函数（lambda）</h6>
-
-<pre><code>sum=lambda a,b:a+b               #定义函数
-s=sum(3,9)                       #执行函数
-print(s)                         #result:12
-
-def add(a,b,fun):
-    &apos;&apos;&apos;
-    :param a:
-    :param b:
-    :param fun:        传递过来的函数
-    :return:
-    &apos;&apos;&apos;
-    print(fun(a,b))              #委托
-add(11,22,lambda a,b:a+b)        #result:33
-
-m=int(input(&apos;请输入一个操作数：&apos;))
-n=int(input(&apos;请输入一个操作数：&apos;))
-fun1=input(&apos;请输入一个函数：&apos;)     #lambda a,b:a+b
-fun1=eval(fun1)                  #eval函数将字符串当成有效Python表达式来求值，并返回计算结果
-print(fun1(n,m))
-</code></pre><p></p><h6>内置函数</h6><p></p>
-<ul>
-<li><p>filter()通过表达式返回true时保留符合条件的信息</p>
-<pre><code>#filter(函数,列表、元组、字典、可迭代的)
-foo=[2,18,9,22,17,24,8,12,27]
-result=filter(lambda x:x%3==0,foo)
-print(list(result))              #result:[18, 9, 24, 12, 27]
-</code></pre></li>
-<li><p>map()函数接收两个参数，一个是函数，一个是序列，该函数将序列的每个元素传入函数中执行，并把结果作为新的list返回</p>
-<pre><code>foo=[1,2,3,4,5]
-result=map(lambda x:x+4,foo)
-print(list(result))              #result:[5, 6, 7, 8, 9]
-</code></pre></li>
-<li><p>reduce()对于序列内所有元素进行累计操作，先对序列中的第1、2个数据进行操作，得到的结果再与第三个数据运算，最后得到一个结果；python内置了求和函数sum(),一般用reduce()</p>
-</li>
-</ul>
-<pre><code>import functools            #reduce()函数现在放置在了functools模块里了
-foo=[1,2,3,4,5,6,7]
-m=functools.reduce(lambda a,b:a+b,foo)
-print(m)                    #result:28
-
-foo=[1,2,3,4,5,6,7]
-m=functools.reduce(lambda a,b:a+b,foo,100)    #可以接受第三个参数
-print(m)                    #result:128
-
-foo=[1,2,3,4,5,6,7]
-print(sum(foo))             #result:28
-</code></pre><ul>
-<li><p>sorted()排序函数，排序时不影响原数据，产生新的排序数据  </p>
-<pre><code>ol=[1,3,9,5,2,4]
-ul=sorted(ol,reverse=False)
-print(ul)            #result:[1, 2, 3, 4, 5, 9]
-
-ol=[1,3,9,5,2,4]
-ul=sorted(ol,reverse=True)
-print(ul)            #result:[9, 5, 4, 3, 2, 1]
-
-ol=[(&apos;Abot&apos;,98),(&apos;Tom&apos;,57),(&apos;Honey&apos;,77)]
-ul=sorted(ol,key=lambda s:s[1],reverse=True)  #key,依据什么来进行排序
-print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (&apos;Tom&apos;, 57)]
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjf2m9pdo002va0wvfm36o1bq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/31/计算器/" data-id="cjf8xw1kv0047kgwvij0eki1c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1696,7 +1731,7 @@ print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/5/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/7/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1710,7 +1745,7 @@ print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github博客/">Github博客</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux-Shell/">Linux Shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1720,16 +1755,16 @@ print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 10px;">Django学习</a> <a href="/tags/Github博客/" style="font-size: 12.86px;">Github博客</a> <a href="/tags/Git学习/" style="font-size: 11.43px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.86px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.43px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 12.86px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 10px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 14.29px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux-Shell/" style="font-size: 10px;">Linux Shell</a> <a href="/tags/Linux学习/" style="font-size: 10px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.86px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.71px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 17.14px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.86px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.43px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.43px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.14px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 14.29px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">36</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">40</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1737,28 +1772,28 @@ print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/03/22/mongodb操作符/">mongodb操作符</a>
+            <a href="/2018/03/24/pyspider框架/">pyspider框架</a>
           </li>
         
           <li>
-            <a href="/2018/03/22/requests模块/">requests模块</a>
+            <a href="/2018/03/23/selenium模块/">selenium模块</a>
           </li>
         
           <li>
-            <a href="/2018/03/22/urllib模块/">urllib模块</a>
+            <a href="/2018/03/23/pyquery模块/">pyquery模块</a>
           </li>
         
           <li>
-            <a href="/2018/03/22/Django基本概念/">Django基本概念</a>
+            <a href="/2018/03/23/beautifulsoup模块/">beautifulsoup模块</a>
           </li>
         
           <li>
-            <a href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
+            <a href="/2018/03/22/mongodb排序/">mongodb排序</a>
           </li>
         
       </ul>
