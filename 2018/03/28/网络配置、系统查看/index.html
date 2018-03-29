@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>网络配置、系统查看 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="网络配置、系统查看   网络配置  VMware的三种网络连接方式区别 桥接模式 在局域网内，虚拟机和宿主机视为两台PC机；可以单独通过局域网网关或者路由访问外网 利用相同的网关网段配置，Bridged可用来配置集群   NAT（网络地址转换） NAT方式使虚拟机接入外网方便，不需要进行其他配置，只需要物理主机可以上网即可 NAT模式下的虚拟系统的TCP/IP配置信息是由VMnet8(NAT)虚拟">
+<meta name="keywords" content="Linux学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络配置、系统查看">
+<meta property="og:url" content="http://yoursite.com/2018/03/28/网络配置、系统查看/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="网络配置、系统查看   网络配置  VMware的三种网络连接方式区别 桥接模式 在局域网内，虚拟机和宿主机视为两台PC机；可以单独通过局域网网关或者路由访问外网 利用相同的网关网段配置，Bridged可用来配置集群   NAT（网络地址转换） NAT方式使虚拟机接入外网方便，不需要进行其他配置，只需要物理主机可以上网即可 NAT模式下的虚拟系统的TCP/IP配置信息是由VMnet8(NAT)虚拟">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-29T01:22:13.900Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络配置、系统查看">
+<meta name="twitter:description" content="网络配置、系统查看   网络配置  VMware的三种网络连接方式区别 桥接模式 在局域网内，虚拟机和宿主机视为两台PC机；可以单独通过局域网网关或者路由访问外网 利用相同的网关网段配置，Bridged可用来配置集群   NAT（网络地址转换） NAT方式使虚拟机接入外网方便，不需要进行其他配置，只需要物理主机可以上网即可 NAT模式下的虚拟系统的TCP/IP配置信息是由VMnet8(NAT)虚拟">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-网络配置、系统查看" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/28/网络配置、系统查看/" class="article-date">
+  <time datetime="2018-03-28T15:00:41.000Z" itemprop="datePublished">2018-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      网络配置、系统查看
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>网络配置、系统查看</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>网络配置</h6><p></p>
+<ul>
+<li>VMware的三种网络连接方式区别</li>
+<li>桥接模式<ul>
+<li>在局域网内，虚拟机和宿主机视为两台PC机；可以单独通过局域网网关或者路由访问外网</li>
+<li>利用相同的网关网段配置，Bridged可用来配置集群</li>
+</ul>
+</li>
+<li>NAT（网络地址转换）<ul>
+<li>NAT方式使虚拟机接入外网方便，不需要进行其他配置，只需要物理主机可以上网即可</li>
+<li>NAT模式下的虚拟系统的TCP/IP配置信息是由VMnet8(NAT)虚拟网络的DHCP服务器提供的，无法进行手工修改，因此虚拟系统也就无法和本局域网中的其他真实主机进行通讯</li>
+<li>不能用NAT配置集群</li>
+</ul>
+</li>
+<li>Host-Only（主机）<ul>
+<li>这种模式下，所有局域网内所有虚拟机互通，但虚拟机无法访问外网，与外网完全隔离</li>
+<li>此种模式同样可以配置集群，但是集群无法访问外网，比较适合公司内网</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>linux系统ifconfig命令不显示IP地址或者只显示127.0.0.1</h6><p></p>
+<ul>
+<li>1.在Linux系统中输入命令:   vi  /etc/sysconfig/network-scripts/ifcfg-ens33</li>
+<li>2.修改文件中的ONBOOT=no,将no改为yes</li>
+<li>3.重启服务: service network restart</li>
+</ul>
+<p></p><h6>系统查看</h6><p></p>
+<ul>
+<li><p>查看进程</p>
+<pre><code>ps -A 显示所有程序
+ps -H 显示树状结构，表示程序间的相互关系
+ps u 以用户为主的格式来显示程序状况
+ps aux|less 查看所有运行中的进程
+</code></pre></li>
+<li><p>监控系统资源</p>
+<pre><code>top 查看整个系统运行状况；该命令功能十分强大，但是它的缺点是会消耗很多系统资源
+free -m 显示内存使用情况
+</code></pre></li>
+<li><p>查看硬盘占用</p>
+<pre><code>df -h  检查linux服务器的文件系统的磁盘空间占用情况
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjfclw99f004wa0wvsbnlchsv" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/29/scrapy基础了解/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          scrapy基础了解
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/28/vi-vim/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">vi/vim</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.75px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.5px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.25px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.25px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/29/scrapy基础了解/">scrapy基础了解</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/28/网络配置、系统查看/">网络配置、系统查看</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/28/vi-vim/">vi/vim</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/28/linux常用命令/">linux常用命令</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/28/session会话/">session会话</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

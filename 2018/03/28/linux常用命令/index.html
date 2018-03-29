@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>linux常用命令 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="linux常用命令   常见的系统目录结构  根目录下 [root@localhost ~]# ls / bin   dev  ftp   lib    media  opt   root  sbin  sys  usr boot  etc  home  lib64  mnt    proc  run   srv   tmp  var  bin：Binary的缩写, 这个目录存放着最经常使用的命令">
+<meta name="keywords" content="Linux学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux常用命令">
+<meta property="og:url" content="http://yoursite.com/2018/03/28/linux常用命令/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="linux常用命令   常见的系统目录结构  根目录下 [root@localhost ~]# ls / bin   dev  ftp   lib    media  opt   root  sbin  sys  usr boot  etc  home  lib64  mnt    proc  run   srv   tmp  var  bin：Binary的缩写, 这个目录存放着最经常使用的命令">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-28T14:48:52.563Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux常用命令">
+<meta name="twitter:description" content="linux常用命令   常见的系统目录结构  根目录下 [root@localhost ~]# ls / bin   dev  ftp   lib    media  opt   root  sbin  sys  usr boot  etc  home  lib64  mnt    proc  run   srv   tmp  var  bin：Binary的缩写, 这个目录存放着最经常使用的命令">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-linux常用命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/28/linux常用命令/" class="article-date">
+  <time datetime="2018-03-28T09:05:54.000Z" itemprop="datePublished">2018-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      linux常用命令
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>linux常用命令</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>常见的系统目录结构</h6><p></p>
+<ul>
+<li><p>根目录下</p>
+<pre><code>[root@localhost ~]# ls /
+bin   dev  ftp   lib    media  opt   root  sbin  sys  usr
+boot  etc  home  lib64  mnt    proc  run   srv   tmp  var
+</code></pre><ul>
+<li>bin：Binary的缩写, 这个目录存放着最经常使用的命令</li>
+<li>boot：这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件</li>
+<li>dev：Device(设备)的缩写, 该目录下存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的</li>
+<li>etc：这个目录用来存放所有的系统管理所需要的配置文件和子目录</li>
+<li>home：用户的主目录，在Linux中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的</li>
+<li>lib：这个目录里存放着系统最基本的动态连接共享库，其作用类似于Windows里的DLL文件。几乎所有的应用程序都需要用到这些共享库</li>
+<li>media：linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下</li>
+<li>mnt：系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在/mnt/上，然后进入该目录就可以查看光驱里的内容了</li>
+<li>opt：这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的</li>
+<li>proc：这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息</li>
+<li>root：该目录为系统管理员，也称作超级权限者的用户主目录</li>
+<li>tmp：这个目录是用来存放一些临时文件的</li>
+<li>usr：这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录</li>
+<li>var：这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>终端</h6><p></p>
+<ul>
+<li><p>用户</p>
+<pre><code>新建用户：useradd &lt;name&gt;
+         passwd &lt;pwd&gt;
+删除用户：userdel &lt;name&gt;
+切换用户：su - &lt;name&gt;
+退出当前用户：logout (普通用户)
+             exit  （管理用户）
+</code></pre></li>
+<li><p>前缀</p>
+<pre><code>[root@localhost ~]# 
+
+1.root 表示登录的用户名
+2.localhost 表示登录的主机
+3.~ 表示当前用户的所在路径，即/root
+4.# 表示超管用户，$ 表示普通用户
+</code></pre></li>
+<li><p>开机关机<br>不管是重启系统还是关闭系统，首先要运行sync命令，把内存中的数据写到磁盘中</p>
+<pre><code>sync 将数据由内存同步到硬盘中
+shutdown -h now 离开关机
+shutdown -h +10 10分钟后关机
+shutdown -h 10:10 系统会在今天的10:10关机
+reboot 系统重启
+halt 关闭系统
+</code></pre></li>
+</ul>
+<p></p><h6>目录/文件命令</h6><p></p>
+<ul>
+<li><p>新建目录</p>
+<pre><code>mkdir &lt;目录名&gt;                        创建单个目录
+mkdir -p &lt;目录名1&gt;/&lt;目录名2&gt;/&lt;目录名3&gt; 创建多层目录
+mkdir -m *** &lt;目录名&gt;                 创建目录时指定权限，三颗星代表rwx的数字码
+</code></pre></li>
+<li><p>新建文件</p>
+<pre><code>touch 文件名
+</code></pre></li>
+<li><p>删除目录</p>
+<pre><code>rmdir &lt;目录名&gt;        删除空的目录
+rm -r &lt;目录名&gt;        递归删除整个目录树,非空
+rm &lt;文件名或者目录名&gt;        删除文件
+rm -i &lt;文件名或者目录名&gt;     互动模式，在删除前会询问是否动作
+rm -f &lt;文件名&gt;        强制删除文件，没有提示
+</code></pre></li>
+<li><p>查看目录</p>
+<pre><code>ls 表示查看当前目录下的文件或者文件夹
+ls -a 表示查看当前目录下的所有内容，包括隐藏文件
+ls -l 表示查看当前目录下内容的详细信息
+ls -al 表示查看当前目录下所有内容的详细内容
+</code></pre></li>
+<li><p>切换目录</p>
+<pre><code>cd [相对路径或绝对路径] .表示当前路径  ..表示上层路径
+</code></pre></li>
+<li><p>复制目录/文件</p>
+<pre><code>cp 源文件 /目的地址
+cp -i 源文件 /目的地址     若目标档已存在，在覆盖时会先询问动作的进行
+</code></pre></li>
+<li><p>剪切目录/文件</p>
+<pre><code>mv 文件名/目录名 目的地
+</code></pre></li>
+<li><p>重命名</p>
+<pre><code>mv 文件名/目录名 新的文件名/目录名
+</code></pre></li>
+</ul>
+<p></p><h6>文件内容查看</h6><p></p>
+<ul>
+<li><p>cat、more、head</p>
+<pre><code>cat 文件名      #正序查看，由第一行开始显示文件内容
+cat -n 文件名   #连同空白行也会显示行号
+
+tac 文件名      #倒序查看
+tac -n 文件名   #连同空白行也会显示行号
+
+more 文件名     #查看大文件，显示百分比；空白键代表向下翻页，Enter键表示向下翻行
+less 文件夹     #查看大文件，不显示百分比；空白键代表向下翻页，[pgup][pgdn]代表向上向下翻页
+
+head 文件名             #默认显示前10行
+head -n 数字 文件名       #规定显示前几行
+
+tail 文件名               #默认显示最后10行
+tail -n 数字 文件名      #规定显示最后几行
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjfclw95y002ja0wvaw76k96i" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/28/vi-vim/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          vi/vim
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/28/session会话/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">session会话</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.75px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.5px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.25px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.25px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/29/scrapy基础了解/">scrapy基础了解</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/28/网络配置、系统查看/">网络配置、系统查看</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/28/vi-vim/">vi/vim</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/28/linux常用命令/">linux常用命令</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/28/session会话/">session会话</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
