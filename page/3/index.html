@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,210 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-List类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/List类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:21:37.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/List类型操作/">List类型操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>List类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>lpush key_name value1 value2…将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行lpush操作</p>
+<pre><code>lpush mylist hello world
+</code></pre></li>
+<li><p>lpushx key_name value1 value2…将一个值插入到已存在的列表头部，列表不存在时操作无效</p>
+</li>
+<li>rpush key_name value1 value2…用于将一个或多个值插入到列表的尾部(最右边)</li>
+<li>rpushx key_name value1 value2…用于将一个值插入到已存在的列表尾部(最右边)。如果列表不存在，操作无效</li>
+<li>lpop key移出并获取列表的第一个元素</li>
+<li>rpop key移出并获取列表的最后一个元素</li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li>lrange key_name start stop将一个值插入到已存在的列表头部，列表不存在时操作无效</li>
+<li><p>lrem key_name count value根据参数 COUNT 的值，移除列表中与参数 VALUE 相等的元素</p>
+<ul>
+<li><p>count的值可以是以下几种：</p>
+<ul>
+<li>count &gt; 0 : 从表头开始向表尾搜索，移除与value相等的元素，数量为value</li>
+<li>count &lt; 0 : 从表尾开始向表头搜索，移除与value相等的元素，数量为value的绝对值</li>
+<li><p>count = 0 : 移除表中所有与value相等的值</p>
+<pre><code>lrem mylist -2 hell0
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>rpoplpush用于移除列表的最后一个元素，并将该元素添加到另一个列表并返回</p>
+</li>
+<li><p>brpoplpush list1 another_list timeout从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
+<pre><code>brpoplpush msg reciver 500 #如在指定时间内没有任何元素被弹出，则返回一个 nil 和等待时长。 反之，返回一个含有两个元素的列表，第一个元素是被弹出元素的值，第二个元素是等待时长
+</code></pre></li>
+<li><p>blpop list1 list2…timeout移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
+<pre><code>blpop list1 100          #如果列表为空，返回一个 nil 。 
+                        否则，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，
+                        第二个元素是被弹出元素的值 
+</code></pre></li>
+<li><p>brpop list1 list2…timeout移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
+<pre><code>brpop list 100           #假如在指定时间内没有任何元素被弹出，则返回一个 nil 和等待时长。         
+                        反之，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，
+                            第二个元素是被弹出元素的值
+</code></pre></li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li>lset key_name index value过索引来设置元素的值</li>
+<li>ltrim key_name start stop 对一个列表进行修剪(trim)，让列表只保留指定区间内的元素</li>
+<li><p>lindex kye_name index用于通过索引获取列表中的元素</p>
+<pre><code>lpush mylist hello world
+lindex mylist 1        #列表中下标为指定索引值的元素
+</code></pre></li>
+<li><p>linsert key_name before exist_value new_value用于在列表的元素前或者后插入元素。 当指定元素不存在于列表中时，不执行任何操作</p>
+<pre><code>linsert mylist before hello 2018
+</code></pre></li>
+<li><p>llen key_name用于返回列表的长度</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjfgwwuwl001av4wvmqjajh8f" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Hash类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/Hash类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:21:20.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/Hash类型操作/">Hash类型操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Hash类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.hdel key_name filed_name用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略</p>
+<pre><code>hset myhash name liuyongqian
+hdel myhash name         #result:被成功删除字段的数量
+</code></pre></li>
+<li><p>2.hexists key_name filed_name用于查看哈希表的指定字段是否存在</p>
+<pre><code>hexists myhash name      #result:如果哈希表含有给定字段，返回 1 ;
+                    如果哈希表不含有给定字段，或 key 不存在，返回 0
+</code></pre></li>
+<li><p>3.hget key_name field_name用于返回哈希表中指定字段的值</p>
+<pre><code>hget myhash name         #result:返回给定字段的值。如果给定的字段或 key 不存在时，返回 nil 
+</code></pre></li>
+<li><p>4.hgetall key_name用于返回哈希表中，所有的字段和值</p>
+<pre><code>hgetall myhash          #resutl:在返回值里，紧跟每个字段名(field name)之后是字段的值(value)
+</code></pre></li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li><p>5.hincrby key_name field_name value 用于为哈希表中的字段值加上指定增量值<br>如果哈希表的 key 不存在，一个新的哈希表被创建并执行hincrby命令<br>如果指定的字段不存在，那么在执行命令前，字段的值被初始化为 0</p>
+<pre><code>hset myhash age 108
+hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
+</code></pre></li>
+<li><p>6.hincrbyfloat key_name field_name value用于为哈希表中的字段值加上指定浮点数增量值</p>
+<pre><code>hincrbyfloat myhash age 1.5  #result:返回命令执行后的字段值
+</code></pre></li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li><p>7.hkeys key_name用于获取哈希表中的所有域（field）</p>
+<pre><code>hkeys myhash             #result:包含哈希表中所有域（field）列表。 当 key 不存在时，返回一个空列表
+</code></pre></li>
+<li><p>8.hvals key_name返回哈希表所有域(field)的值</p>
+<pre><code>hvals myinfo          #result:一个包含哈希表中所有域(field)值的列表
+</code></pre></li>
+<li><p>9.hlen key_name用于获取哈希表中字段的数量</p>
+<pre><code>hlen myhash   #result:哈希表中字段的数量  
+</code></pre></li>
+</ul>
+<p></p><h6>04</h6>    <p></p>
+<ul>
+<li><p>10.hmget key_name field1 field2 …用于返回哈希表中，一个或多个给定字段的值</p>
+<pre><code>hmget myhash name age
+</code></pre></li>
+<li><p>11.hmset key_name field1 value1 field2 value2 …用于同时将多个 field-value (字段-值)对设置到哈希表中,<br>此命令会覆盖哈希表中已存在的字段</p>
+<pre><code>hmset myinfo name liuyongqian age 108 work engineer
+</code></pre></li>
+<li><p>12.hset key_name field_name用于为哈希表中的字段赋值<br>如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作<br>如果字段已经存在于哈希表中，旧值将被覆盖</p>
+<pre><code>hset myonfo age 54
+</code></pre></li>
+<li><p>13.hsetnx key_name field value用于为哈希表中不存在的的字段赋值 <br>如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作<br>如果字段已经存在于哈希表中，操作无效<br>如果 key 不存在，一个新哈希表被创建并执行 HSETNX 命令</p>
+<pre><code>hsetnx myinfo limit  no
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjfgwwuw6000zv4wvbs77y6qe" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-String类型操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -191,7 +395,7 @@ get myname          #result:liuyongqian
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjffk8zwc0022awwv7d3grly7" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjfgwwuxp0021v4wvocl3cvrs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -349,7 +553,7 @@ port=27017   #端口号 默认为27017
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjffk8zuz001eawwv2lmpz6q6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjfgwwuwt001fv4wvq22hlrin" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -391,11 +595,41 @@ port=27017   #端口号 默认为27017
         <p></p><h5>HTTP协议浅析</h5><p></p>
 <hr>
 <hr>
-<h6></h6>
+<p></p><h6>http概述</h6><br>Q:http是干嘛的？<br><br><i>A:http是数据传输协议（超文本传输协议），用来沟通客户端和服务器的！</i><br><br>Q:怎么理解URI以及它的子集？<br><br><i>A:首先URI从其概念来说是统一资源标识符，它的作用就是在网络上唯一确定一个资源，就好比，在中国，身份证能唯一确定一个人一样！知道身份证号，就一定能确定一个人姓甚名谁一样！它有两个子集：URL(统一资源定位符)和URN(统一资源名)，首先不特别声明，我们所说的URI就是指URL，URL是跟资源其在网络上的位置有关！而URN是指资源跟其名字有关，URN是未来的趋势，不过貌似具体实施现在还在商讨中！所以短时间之内URN难以取代URL！</i><br><br>Q:什么是事务？<br><br><i>A:说白了事务就是“一次http链接（不包括tcp/ip连接，只包括一次http报文发送与接收）”的整个过程，由请求命令和响应结果组成！中间数据格式是http报文。我们平常打开一个网站，里面包括很多事务！如：请求网页文档、请求某个logo图片及请求某个视频等！</i><br><br>Q:方法指什么？<br><br><i>A:方法就是客户端向服务器发起的请求命令！常见方法有：get、post、delete、put、head！</i><br><br>Q:简单介绍一些报文！<br><br><i>A:首先报文是http协议一种纯文本的数据格式，分为请求报文和响应报文，两种报文都具有类似的结构，分别由三个部分构成：起始行、首部、主体，起始行描述报文干了什么！首部描述报文传输的具体细节！主体描述传输的实际内容！</i><br><br>Q:什么是TCP/IP？跟HTTP有什么关系？<br><br><i>A:tcp/ip是全世界的计算机和网络设备常用的层次化分组交换网络协议集！简单的说，http协议是一个应用层协议，位于tcp/ip协议的上一层，tcp/ip协议的主要作用就是过滤掉每个计算机的差异性，隐藏相关弱点，使得对于http协议来说提供的都是“相同的”接口！</i><br><br>Q:http协议有哪些版本？<br><br>A:<p></p>
+<pre><code>* http/0.9，这个版本有严重设计权限
+* http/1.0，广泛使用
+* http/1.0+ 非官方的http/1.0的扩展版本
+* http/1.1 目前正在使用的版本，修复的相关设计缺陷，增加的相关特性
+* http-NG 将来使用与否正在商讨中
+</code></pre><p></p><h6>URL</h6><p></p>
+<ul>
+<li>URI的分类<ul>
+<li>URI（统一资源标识符）由URL（统一资源定位符）和URN（统一资源名）两个子集构成</li>
+<li>URL是从资源的位置来定义一个资源的，比如在“中国三东的一只小狗”和在“中国广东的一只小狗”就分别定义了两只不同的狗</li>
+<li>URN是从资源的名字来定义的，比如小明和小李就分别定义了两个人</li>
+<li>目前的网络架构来说，大部分都是URL。URL的缺点就是如果资源的位置发生了改变，那么资源也就找不到了，而URN正是解决这个问题的，因为URN不受位置的限制，它只受名字的管理，因为对于URN来说，一个资源的名字是唯一的，所以无论资源移动到什么地方，都能通过名字定位到资源</li>
+<li>从某种意义上来说，URN是URI的未来趋势，但是URN的实现需要一个中间架构来满足这种位置到名字的映射，所以要完成从URL到URN的过度，显然是一个工程量的过程</li>
+</ul>
+</li>
+<li><p>URL的语法</p>
+<pre><code>&lt;scheme&gt;://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;path&gt;;&lt;params&gt;?&lt;query&gt;#&lt;frag&gt;
+
+scheme:方法描述了请求资源时用了什么协议，用“:”与url其它部分隔开；
+user:用户名描述了访问是带的用户名；
+password:密码描述了用户名后面可能跟的密码，用“:”跟用户名隔开；
+host:主机描述了网站主机名或ip地址，如果前面有用户名和密码，用@分开；
+post:服务器当前正在监听的端口，http默认为80，https默认为443;
+path:路劲描述了资源在服务器上的位置，用‘/’跟前面部分隔开；
+params:参数描述了请求需要附加的参数，用“;”与其他部分隔开；
+query:查询是用来激活服务器程序去执行某些操作，比如查询数据库等，用“?”与其余部分隔开；
+frag:片段只在客户端使用，不发送到服务器端；
+</code></pre></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjffk8zty000sawwvr6ccaedv" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjfgwwuw0000uv4wv59fhc5q5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
@@ -580,7 +814,7 @@ input()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjffk8zvw001vawwv9rhi791g" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjfgwwuxa001sv4wvknj2wszc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -756,7 +990,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/python之XML/" data-id="cjffk8zxs002tawwv6lt2u4b3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/13/python之XML/" data-id="cjfgwwuyw002vv4wvo6g1emdm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -934,7 +1168,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/Redis数据库入门/" data-id="cjffk8zvr001tawwvq472ldh4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/13/Redis数据库入门/" data-id="cjfgwwuxd001uv4wvrhtscpk3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -1076,7 +1310,7 @@ git config --global color.status false
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjffk8ztw000rawwveb6s586g" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjfgwwuvu000qv4wvmxknez3x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -1122,312 +1356,10 @@ git config --global color.status false
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习01/" data-id="cjffk8ztl000lawwv0s6icfas" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习01/" data-id="cjfgwwuvc000gv4wvmtnxmrhd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-re模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/12/re模块/" class="article-date">
-  <time datetime="2018-03-12T03:40:14.000Z" itemprop="datePublished">2018-03-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/12/re模块/">re模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>re模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>常用匹配模式</h6><p></p>
-<ul>
-<li><p>正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑</p>
-<pre><code>\w     匹配字母数字及下划线
-\W     匹配非字母数字及下划线
-\s     匹配任意空白字符
-\S     匹配任意非空白字符
-\d     匹配任意数字，等价于[0-9]
-\D     匹配任意非数字
-^      匹配字符串开头
-$      匹配字符串结尾
-.      匹配除了换行符外的任意字符
-*      匹配0个或者多个的表达式
-+      匹配至少一个表达式
-？     匹配最多一个表达式，非贪婪方式
-{n}    精准匹配n个前面的表达式
-{n,m}    匹配n到m次前面的表达式的片断
-a|b    匹配a或者b
-()     匹配括号内的表达式，也表示一个组
-</code></pre></li>
-</ul>
-<p></p><h6>re.match(表达式,内容,匹配模式)</h6><p></p>
-<ul>
-<li>尝试从字符串的起始位置匹配一个模式，如果不是起始位置匹配成功的话，返回none</li>
-<li><p>在Match对象上用group()方法提取子串</p>
-<pre><code>import re
-content=&apos;Hello 20180101 World_This is my festival year&apos;
-result=re.match(r&apos;^Hello.*?(\d+).*year$&apos;,content)  #使用Python的r前缀，就不用考虑转义的问题了
-print(result)
-print(result.group(0))    #group(0) 永远是原始字符串
-#想要获取content中的数字，如果不加问号，result为1，这是贪婪匹配；加了问号后，result为20180101，这是非贪婪匹配
-print(result.group(1))    #result:20180101
-</code></pre></li>
-<li><p>匹配模式</p>
-<pre><code>import re
-content=&apos;&apos;&apos;Hello 20180101 World_This
-        is my festival year&apos;&apos;&apos;
-result=re.match(r&apos;^Hello.*?(\d+).*year$&apos;,content,re.S)  #有换行符就用re.S
-print(result.group(1))     #result:20180101
-</code></pre></li>
-</ul>
-<p></p><h6>re.search()</h6><p></p>
-<ul>
-<li><p>扫描整个字符串并返回第一个成功的匹配</p>
-<pre><code>import re
-content=&apos;Liuyongqian Hello 20180101 World_This is my festival year&apos;
-result=re.search(r&apos;Hello.*year&apos;,content)
-print(result)          #为匹配方便，一般使用search
-</code></pre></li>
-</ul>
-<p></p><h6>re.findall()</h6><p></p>
-<ul>
-<li><p>搜索字符串，以列表形式返回全部能匹配的子串</p>
-<pre><code>import re
-html=&apos;&apos;&apos;
-    &lt;div&gt;
-        &lt;ul&gt;
-            &lt;li data-view=&apos;1&apos;&gt;
-                &lt;a href=&quot;/2.mp3&quot; singer=&quot;齐秦&quot;&gt;往事随风&lt;/a&gt;
-            &lt;/li&gt;
-            &lt;li&gt;&lt;a href=&quot;/3.mp3&quot; singer=&quot;邓丽君&quot;&gt;但愿人长久&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href=&quot;/3.mp3&quot; singer=&quot;水木年华&quot;&gt;完美世界&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-    &lt;/div&gt;
-&apos;&apos;&apos;
-results=re.findall(r&apos;&lt;li.*?href=(.*?mp).*?singer=(.*?)&gt;(.*?)&lt;/a&gt;&apos;,html,re.S)
-for result in results:
-    print(result[0],result[1],result[2])
-</code></pre></li>
-</ul>
-<p></p><h6>re.sub()</h6><p></p>
-<ul>
-<li><p>替换字符串中每一个匹配的子串后返回替换后的字符串</p>
-<pre><code>import re
-result=re.sub(r&apos;\d+&apos;,&apos;2018&apos;,content)
-print(result)      #result:Hello 2018 World_This is my festival year
-</code></pre></li>
-</ul>
-<p></p><h6>re.compile()</h6><p></p>
-<ul>
-<li><p>将正则字符串编译成正则对象，以便于复用该匹配模式</p>
-<pre><code>import re
-content=&apos;&apos;&apos;Hello 20180101 World_
-        This is my festival year&apos;&apos;&apos;
-pattern=re.compile(r&apos;^He.*?(\d+).*?year$&apos;,re.S)
-result=re.match(pattern,content)
-print(result.group(1))       #result:20180101
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjffk8zy0002yawwv2m5k5y3i" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Git入门" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/11/Git入门/" class="article-date">
-  <time datetime="2018-03-11T10:10:16.000Z" itemprop="datePublished">2018-03-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/11/Git入门/">Git入门</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Git入门</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>git是一款免费、开源的分布式版本控制系统，用于敏捷高效的处理任何或大或小的项目<br>github是一个面向开源及私有软件项目的托管平台，因为只支持git作为唯一的版本库格式进行托管，故名github</li>
-<li>Git和SVN的对比：<ul>
-<li>1）Git是分布式的，SVN是集中式</li>
-<li>2）Git可离线完成大部分操作，SVN则必须与中央服务器进行网络交互</li>
-<li>3）Git有着优雅的分支和合并功能</li>
-<li>4）Git有着更强的撤销修改和修改版本历史的能力</li>
-<li>5）Git速度更快，效率更好</li>
-</ul>
-</li>
-<li>git的三个区<ul>
-<li>工作区：编辑代码的地方</li>
-<li>暂存区：工作区与历史提交中间的缓存，代表的是要提交的工作状态</li>
-<li>历史仓库：commit指向的</li>
-</ul>
-</li>
-<li>Git管理的是修改，而不是文件</li>
-</ul>
-<p></p><h6>基本配置</h6><p></p>
-<ul>
-<li><p>目前git for window的版本是2.16.2</p>
-<pre><code>which -a git 查看git的安装位置
-git version     查看git的版本
-
-添加user.name和user.email
-git config --global user.name fyuan925
-git config --global user.email fyuan925@gmail.com
-
-添加一个新的user.name
-git config --global --add user.name kgc
-
-得到属性的值
-git config user.name
-git config --get user.name
-
-得到全局所有属性的值
-git config --list --global
-
-删除一个属性，并且是指定属性名进行删除
-git config --global --unset user.name kgc
-
-当只有一个属性值的时候，可以在删除时不指定值
-git config --global --unset user.name
-</code></pre></li>
-<li><p>关联github</p>
-<ul>
-<li><p>本地生成SSH KEYS</p>
-<pre><code>先生成ssh，命令如下：
-ssh-keygen -t rsa -C &apos;kgc@gmail.com&apos;
-进入ssh目录后将该目录下文件id_rsa.pub中的内容拷贝
-</code></pre></li>
-<li><p>在github上设置SSH公钥</p>
-<pre><code>进入github主页，点击右上角的setting，选择SSH and GPG keys;
-新建一个ssh key，将公钥粘贴后点击Add SSH key
-输入GitHub的密码进行验证，点击Confirm password
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>本地库连接远程库</h6><p></p>
-<ul>
-<li><p>第一种方式：先有本地仓库，后有远程仓库</p>
-<pre><code>在本地仓库中执行以下命令，同步信息
-git remote add origin git@github.com:fangyuan925/kgc_git.git
-git push -u origin master
-第一次使用-u，后面不再使用
-</code></pre></li>
-<li><p>第二种方式：先有远程仓库，再clone到本地（最常见的，一般都是先在GitHub上创建仓库，可以选择初始化选项，然后开发人员再clone到本地）</p>
-<pre><code>git clone xxxxxx
-git push -u origin master
-第一次使用-u，后面不再使用
-</code></pre></li>
-</ul>
-<p></p><h6>基本命令</h6><p></p>
-<ul>
-<li><p>在本地新建仓库</p>
-<pre><code>git init      新建文件夹后用此命令初始化仓库
-vi readme.txt 添加一个readme.txt
-git status  查看当前版本库的状态
-git add filename    使用git add命令告诉git，把该文件添加到仓库
-git commit -m &apos;comment&apos;  使用git commit命令告诉git，把文件提交到仓库,可设置注释内容
-
-git add     可以反复添加多个
-git diff filename     查看修改的内容
-git log      可以查看所有的提交历史记录
-git log filename     仅查看指定文件名的提交历史记录
-git log --pretty=oneline filename
-d085ee8434392d2cf88b48592f29fbeefb0818f7  此为commit id（版本号） SHA-1 Hash计算出来一个16进制的值
-</code></pre></li>
-<li><p>版本回退</p>
-<pre><code>前提：知道当前版本是哪个， HEAD表示当前版本
-回退到上一个版本： HEAD^   一个^就表示前一个版本， 如果N个前版本可以用HEAD~N
-
-回退命令：git reset --hard HEAD^
-回退之后你后悔了又想回到后退之前的那个版本： git reset --hard xxxxxxxxx
-xxxxxxxxx  前面可以通过 git log filename
-
-3commit   &lt;== HEAD
-2commit
-1commit
-
-执行了git reset --hard HEAD^之后
-3commit   
-2commit  &lt;== HEAD
-1commit
-
-git reset：版本穿梭， 可以使用git log查看提交历史，以便确定回退/穿梭到哪个版本     
-git reflog：查看命令历史，以便确定要回到未来/过去的哪个版本
-</code></pre></li>
-<li><p>撤销修改</p>
-<pre><code>没有提交到暂存区时，其实就在工作区： git checkout – filename
-已经提交到暂存区了： 分两步：1）git reset HEAD file 2）git checkout -- filename
-</code></pre></li>
-<li><p>删除文件</p>
-<pre><code>手误删除，如何恢复： git checkout -- filename
-真删除版本库的文件： 
-    1) git rm filename
-    2) git commit -m &apos;xxx&apos;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjffk8zts000pawwv1wbuqik8" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
 
     </footer>
   </div>
@@ -1442,7 +1374,7 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; zurück</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/4/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1456,7 +1388,7 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1466,16 +1398,16 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.75px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 12.5px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.25px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.25px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.75px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1483,9 +1415,17 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/01/HTTP报文/">HTTP报文</a>
+          </li>
         
           <li>
             <a href="/2018/03/29/scrapy基础了解/">scrapy基础了解</a>
@@ -1497,14 +1437,6 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
         
           <li>
             <a href="/2018/03/28/vi-vim/">vi/vim</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/28/linux常用命令/">linux常用命令</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/28/session会话/">session会话</a>
           </li>
         
       </ul>

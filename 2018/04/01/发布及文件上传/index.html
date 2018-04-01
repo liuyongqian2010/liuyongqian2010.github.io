@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>发布及文件上传 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="发布及文件上传   发布博客  用户登录之后，点击“发布博客”即可进入发布博客页面，在这儿需要在登录的欢迎页面增加一下这个发布博客链接 &amp;lt;a href=&amp;quot;/pyblogA/fabu&amp;quot;&amp;gt;发布博客&amp;lt;a/&amp;gt;  之后编辑发布博客的前端页面 &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt;     &amp;lt;meta cha">
+<meta name="keywords" content="Django学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="发布及文件上传">
+<meta property="og:url" content="http://yoursite.com/2018/04/01/发布及文件上传/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="发布及文件上传   发布博客  用户登录之后，点击“发布博客”即可进入发布博客页面，在这儿需要在登录的欢迎页面增加一下这个发布博客链接 &amp;lt;a href=&amp;quot;/pyblogA/fabu&amp;quot;&amp;gt;发布博客&amp;lt;a/&amp;gt;  之后编辑发布博客的前端页面 &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt;     &amp;lt;meta cha">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-01T14:39:13.005Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="发布及文件上传">
+<meta name="twitter:description" content="发布及文件上传   发布博客  用户登录之后，点击“发布博客”即可进入发布博客页面，在这儿需要在登录的欢迎页面增加一下这个发布博客链接 &amp;lt;a href=&amp;quot;/pyblogA/fabu&amp;quot;&amp;gt;发布博客&amp;lt;a/&amp;gt;  之后编辑发布博客的前端页面 &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt; &amp;lt;head&amp;gt;     &amp;lt;meta cha">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-发布及文件上传" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/01/发布及文件上传/" class="article-date">
+  <time datetime="2018-04-01T09:47:40.000Z" itemprop="datePublished">2018-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      发布及文件上传
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>发布及文件上传</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>发布博客</h6><p></p>
+<ul>
+<li><p>用户登录之后，点击“发布博客”即可进入发布博客页面，在这儿需要在登录的欢迎页面增加一下这个发布博客链接</p>
+<pre><code>&lt;a href=&quot;/pyblogA/fabu&quot;&gt;发布博客&lt;a/&gt;
+</code></pre></li>
+<li><p>之后编辑发布博客的前端页面</p>
+<pre><code>&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;欢迎发布博客&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;欢迎{{ user.username }}发布博客...&lt;/h2&gt;
+    &lt;span style=&quot;color:red&quot;&gt;{{ msg }}&lt;/span&gt;
+    &lt;form action=&quot;/pyblogA/fabu&quot; method=&quot;post&quot;&gt;
+        {% csrf_token %}
+        &lt;p&gt;标题：&lt;input type=&quot;text&quot; name=&apos;title&apos; style=&quot;width:300px&quot;&gt;&lt;/p&gt;
+        &lt;p&gt;内容：&lt;textarea  name=&apos;context&apos; style=&quot;width:300px;height:200px&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;确认发布&quot;&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+<li><p>在该app的models中编辑与数据库的映射</p>
+<pre><code>from django.db import models
+from bloguser.models import BlogUser
+class Blog(models.Model):
+    title=models.CharField(max_length=30,null=True)
+    context=models.CharField(max_length=500,null=True)
+    createDate=models.DateTimeField(null=True)    #默认当前时间
+    BlogUser=models.ForeignKey(&apos;bloguser.BlogUser&apos;,on_delete=None)   #app下的名字
+</code></pre></li>
+<li><p>需要在项目的settings.py下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;pyblogA/&apos;,include(&apos;pyblogA.urls&apos;)),
+]
+</code></pre></li>
+<li><p>接着在该app的urls下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;fabu&apos;, fabu),
+]
+</code></pre></li>
+<li><p>接下来编辑该appviews内容</p>
+<pre><code>from django.shortcuts import render,redirect,reverse
+from .models import *
+from django.http import HttpResponse
+import time,datetime,os
+
+def fabu(request):
+    user = request.session.get(&apos;user&apos;, None)
+    if request.method==&apos;GET&apos;:
+        if user is not None:
+            return render(request,&apos;fabu.html&apos;,{&apos;user&apos;: request.session.get(&apos;user&apos;, None)})
+        else:
+            return render(request,&apos;login.html&apos;)
+    elif request.method==&apos;POST&apos;:
+        blogA=Blog()
+        blogA.title=request.POST.get(&apos;title&apos;)
+        blogA.context=request.POST.get(&apos;context&apos;)
+        blogA.createDate=datetime.datetime.now()
+
+        uid=request.session.get(&apos;user&apos;)[&apos;id&apos;]
+        bloguserset=BlogUser.objects.filter(pk=uid).all()
+        blogA.BlogUser=bloguserset.first()
+
+        blogA.save()
+        ret={&apos;msg&apos;:&apos;发布成功！&apos;,&apos;user&apos;:request.session.get(&apos;user&apos;)}
+        return render(request,&apos;fabu.html&apos;,ret)
+</code></pre></li>
+</ul>
+<p></p><h6>文件上传</h6><p></p>
+<ul>
+<li><p>创建一个html文件用于上传文件</p>
+<pre><code>&lt;form method=&quot;post&quot; action=&quot;/pyblogA/upload&quot; enctype=&quot;multipart/form-data&quot;&gt;
+    {% csrf_token %}
+    选择文件：&lt;input type=&quot;file&quot; name=&quot;myfile&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;上传&quot;&gt;
+&lt;/form&gt;
+</code></pre></li>
+<li><p>在该app下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;upload&apos;, upload),
+]
+</code></pre></li>
+<li><p>在该app的views中编辑业务逻辑</p>
+<pre><code>def upload(request):
+    myfile=request._files.get(&apos;myfile&apos;)  #获取上传的文件
+    file_path=os.path.join(&apos;file&apos;,myfile.name)  #配置存放路径为file
+    file=open(file_path,&apos;wb+&apos;)           #打开并写入
+    for row in myfile.chunks():      #循环chunks(),里面包含用户上传的文件
+        file.write(row)              #写入到我们创建的那个文件中
+    file.close()
+    return HttpResponse(&apos;上传成功！&apos;)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjfgwwv0h003vv4wv85cl8oe1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/04/01/HTTP报文/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">HTTP报文</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.75px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/01/HTTP报文/">HTTP报文</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/29/scrapy基础了解/">scrapy基础了解</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/28/网络配置、系统查看/">网络配置、系统查看</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/28/vi-vim/">vi/vim</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
