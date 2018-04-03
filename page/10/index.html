@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,208 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Git-NodeJS-Hexo创建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/15/Git-NodeJS-Hexo创建个人博客/" class="article-date">
+  <time datetime="2017-12-15T13:51:31.000Z" itemprop="datePublished">2017-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/15/Git-NodeJS-Hexo创建个人博客/">Git+NodeJS+Hexo创建个人博客</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p>##1.Git篇</p>
+<ul>
+<li>Windows环境下，安装（Git-2.15.1.2-64-bit.exe）后可打开gitbash运用”git version”查看版本</li>
+</ul>
+<p>##2.NodeJS篇</p>
+<ul>
+<li>Windows环境下，安装（node-v8.9.3-x64.msi）并配置环境变量后，在win-dos窗口中运用”node -v”查看版本</li>
+</ul>
+<p>##3.Hexo篇（接下来均在gitbash中完成</p>
+<ul>
+<li><p>3.1手动创建一个将来存放blog的文件夹，在gitbash中cd到该文件夹下运用”npm i -g hexo”安装hexo后使用”hexo -v”查看版本；</p>
+</li>
+<li><p>3.2运用”hexo init”初始化文件夹</p>
+</li>
+</ul>
+<p>##4.关联github</p>
+<ul>
+<li><p>4.1在github网页端创建自己的账号后new一个repository，name如liuyongqian2010.github.io，记得勾选initialize；</p>
+</li>
+<li><p>4.2回到gitbash中，配置github账户信息，两条命令：git config –blobal user.name “liuyongqian2010” ,git config –global user.email “1029853206@qq.com”</p>
+</li>
+<li><p>4.3在gitbash中创建SSH，输入”ssh-keygen -t rsa -C “1029853206@qq.com”生成ssh，输入”cd ~/.ssh”，”cat id_rsa.pub”后复制出现的一堆码</p>
+</li>
+<li><p>4.4在github网页端，你的头像下setting中的SSH and GPG keys一栏添加一个New SSH key后在gitbash中输入”ssh -T git@github.com”验证是否添加成功</p>
+</li>
+</ul>
+<p>##5.本地验证</p>
+<ul>
+<li><p>5.1先在gitbash中运用”npm i hexo-server”安装hexo的服务器</p>
+</li>
+<li><p>5.2使用随便一个编辑器修改blog文件夹下的”_config.yml”文件中的”deploy”模块中的”repo”为你在github上的库地址如”<a href="https://github.com/liuyongqian2010/liuyongqian2010.github.io" target="_blank" rel="noopener">https://github.com/liuyongqian2010/liuyongqian2010.github.io</a>“</p>
+</li>
+<li><p>5.3在gitbash中cd到blog目录下，分别执行以下三条命令：”hexo clean””hexo generate””hexo server”后打开浏览器输入”<a href="http://localhost:4000&quot;可见hexo默认主题页面" target="_blank" rel="noopener">http://localhost:4000&quot;可见hexo默认主题页面</a></p>
+</li>
+</ul>
+<p>##6.上传github</p>
+<ul>
+<li><p>6.1为了将以后所写文章部署到github服务器上让别人看到请在gtibash中输入”npm install hexo-deployer-git –save”</p>
+</li>
+<li><p>6.2在gitbash中依次执行那三条命令后在浏览器中输入”<a href="https://liuyongqian2010.github.io/&quot;可见自己的博客了" target="_blank" rel="noopener">https://liuyongqian2010.github.io/&quot;可见自己的博客了</a></p>
+</li>
+</ul>
+<p>##7.添加RSS</p>
+<ul>
+<li><p>7.1在gitbash中输入”npm i hexo-generator-feed”安装rss插件</p>
+</li>
+<li><p>7.2在blog文件夹下的_config.yml中找到Extension添加如下内容：<br>  Extensions<br>  plugin:<br>   -hexo-generator-feed<br>  Feed Atom<br>  feed:</p>
+<pre><code>type: atom
+path: atom.xml
+limit: 20
+</code></pre></li>
+</ul>
+<p>##8.写文章了</p>
+<ul>
+<li>在gitbash中运用”hexo new ‘文章名’”后可在source/_posts路径下看到你创建的内容了，可下载Markdown进行内容编辑，之后执行那三条命令……</li>
+</ul>
+<p>##9.遇到障碍</p>
+<ul>
+<li><p>9.1在window10上运行Markdown可能会总弹出“HTML渲染错误”，下载安装（awesomium_v1.6.6_sdk_win.exe）后重启Markdown即可</p>
+</li>
+<li><p>9.2详细内容可参见：<a href="https://www.cnblogs.com/visugar/p/6821777.html" target="_blank" rel="noopener">hexo从零开始到搭建完整</a></p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="cjfji2uc0000kagwv3wopaoec" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-验证博客是否正常？" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/15/验证博客是否正常？/" class="article-date">
+  <time datetime="2017-12-15T09:02:08.000Z" itemprop="datePublished">2017-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/15/验证博客是否正常？/">验证博客是否正常？</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <blockquote><p>一艘货轮卸货后返航,在浩渺的大海上,突然遭遇巨大风暴,老船长果断下令:“打开所有货舱,立刻往里面灌水。”  　　</p>
+</blockquote>
+<blockquote><p>水手们担忧:“往船里灌水是险上加险,这不是自找死路吗?” 船长镇定地说:“大家见过根深干粗的树被暴风刮倒过吗?被刮倒的是没有根基的小树。”  　</p>
+</blockquote>
+<blockquote><p>水手们半信半疑地照着做了。虽然暴风巨浪依旧那么猛烈,但随着货舱里的水位越来越高,货轮渐渐地平稳了。　</p>
+</blockquote>
+<blockquote><p>船长告诉那些松了一口气的水手:“一只空木桶,是很容易被风打翻的,如果装满水负重了,风是吹不倒的。船在负重的时候,是最安全的;空船时,才是最危险的时候。”  </p>
+</blockquote>
+<blockquote><p>人何尝不是呢?那些胸怀大志的人,沉重的责任感时刻压在心头,砥砺着人生的坚稳脚步,从岁月和历史的风雨中坚定地走了出来。而那些得过且过的空耗时光的人,像一个没有盛水的空水桶,往往一场人生的风雨便把他们彻底地打翻了。 </p>
+</blockquote>
+<blockquote><p>给我们自己加满“水”,使我们负重,这样才不会被打翻。</p>
+</blockquote>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/15/验证博客是否正常？/" data-id="cjfji2uiy005kagwvi1iosehx" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-起点" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/15/起点/" class="article-date">
+  <time datetime="2017-12-15T08:26:00.000Z" itemprop="datePublished">2017-12-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/15/起点/">起点</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
+</blockquote>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjfji2ui30054agwvjs3s1e3h" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -108,7 +310,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjfgwwuy4002bv4wvogaolvc5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjfji2uem002eagwvuh5r9lgl" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -124,7 +326,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
   </nav>
 
 </section>
@@ -138,7 +340,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -148,16 +350,16 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.75px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.86px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.86px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 12.86px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.29px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.71px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.43px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.14px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.86px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -165,9 +367,21 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/03/富文本、分页/">富文本、分页</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/02/scrapy选择器css、xpath/">scrapy选择器css、xpath</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/02/scrapy命令行详解/">scrapy命令行详解</a>
+          </li>
         
           <li>
             <a href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
@@ -175,18 +389,6 @@
         
           <li>
             <a href="/2018/04/01/HTTP报文/">HTTP报文</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/29/scrapy基础了解/">scrapy基础了解</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/28/网络配置、系统查看/">网络配置、系统查看</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/28/vi-vim/">vi/vim</a>
           </li>
         
       </ul>

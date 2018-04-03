@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,379 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-自动化测试模型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/01/自动化测试模型/" class="article-date">
+  <time datetime="2018-02-28T23:44:01.000Z" itemprop="datePublished">2018-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/01/自动化测试模型/">自动化测试模型</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>自动化测试模型</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>概述</h6><p></p>
+<ul>
+<li>自动化测试模型可以看作自动化测试框架与工具设计的思想。自动化测试不仅仅是单纯写写脚本运行就可以了，还需要考虑到如何使脚本运行效率提高，代码复用、参数化等问题</li>
+<li>自动化测试模型分为四大类：线性模型，模块化驱动测试、数据驱动、关键词驱动</li>
+</ul>
+<p></p><h6>线性模型</h6><p></p>
+<ul>
+<li>线性脚本中每个脚本都相互独立，且不会产生其他依赖与调用，其实就是简单模拟用户某个操作流程的脚本</li>
+</ul>
+<p></p><h6>模块化驱动测试</h6><p></p>
+<ul>
+<li>线性模型虽然每个用例都可以拿出来独立运行，但是用例之间重复代码很多，开发、维护成本高。其实把重复的操作代码封装为独立的公共模块，当用例执行时需要用到这部分，直接调用即可，这就是模块驱动的方式。比如登录系统、退出登录、截图函数等等</li>
+</ul>
+<p></p><h6>数据驱动测试</h6><p></p>
+<ul>
+<li>模块驱动的模型虽然解决了脚本的重复问题，但是需要测试不同数据的用例时，模块驱动的方式就不很适合了。数据驱动就是数据的改变从而驱动自动化测试的执行，最终引起测试结果的改变</li>
+<li><p>装载数据的方式可以是列表、字典或是外部文件（txt、csv、xml、excel），目的就是实现数据和脚本的分离</p>
+<pre><code>#文件名：login.py
+#coding:utf-8
+from selenium import webdriver
+from time import sleep
+class Login():
+    def user_login(self,driver,username,password):
+        driver.find_element_by_name(&apos;username&apos;).clear()
+        driver.find_element_by_name(&apos;username&apos;).send_keys(username)
+        driver.find_element_by_name(&apos;password&apos;).clear()
+        driver.find_element_by_name(&apos;password&apos;).send_keys(password)
+        driver.find_element_by_name(&apos;Submit&apos;).click()
+    def user_logout(self,driver):
+        driver.find_element_by_link_text(&apos;退出&apos;).click()
+        sleep(2)
+        driver.switch_to_alert().accept()
+
+    #模块化与参数化
+    from login import *
+    from time import sleep
+    from selenium import webdriver
+
+    driver=webdriver.Firefox()
+    driver.get(&apos;http://localhost&apos;)
+
+    Login().user_login(driver,&apos;51zxw&apos;,&apos;123456&apos;)
+    sleep(5)
+    Login().user_logout(driver)
+    sleep(5)
+
+    Login().user_login(driver,&apos;52zxw&apos;,&apos;123456&apos;)
+    sleep(5)
+    Login().user_logout(driver)
+    sleep(2)
+
+    driver.quit()
+</code></pre></li>
+</ul>
+<p></p><h6>关键字驱动测试</h6><p></p>
+<ul>
+<li>通过关键字的改变引起测试结果的改变叫关键字驱动测试。 selenium IDE也是一种传统的关键字驱动的自动化工具，Robot Framework 是一个功能更强大的关键字驱动测试框架</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjfji2ui30050agwvojlsfolw" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Jmeter基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/28/Jmeter基础/" class="article-date">
+  <time datetime="2018-02-28T15:10:23.000Z" itemprop="datePublished">2018-02-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/28/Jmeter基础/">Jmeter基础</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Jmeter基础</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>Jmeter简介</h6><p></p>
+<ul>
+<li>Apache Jmeter是Apache组织的开放源代码项目，是一个纯Java桌面应用，用于分析不同压力条件下的总体性能情况，也可以使用Jmeter提供的图形化界面分析性能指标或者在高负载情况下测试服务器、脚本、对象</li>
+<li>Jmeter与LR的主要区别在于Jmeter不提供IP欺骗技术</li>
+<li>Jmeter安装配置<ul>
+<li>安装配置好jdk后，解压apache-jmeter-4.0，运行bin目录下的ApacheJMeter.jar</li>
+</ul>
+</li>
+<li>Jmeter文件目录介绍<ul>
+<li>bin可执行文件目录<ul>
+<li>jmeter.bat windows的启动文件</li>
+<li>jmeter.sh linux的启动文件</li>
+<li>jmeter.properties 系统配置文件</li>
+<li>jmeter-server.bat Windows分布式测试要用到的服务器配置</li>
+<li>jmeter-server linux分布式测试要用到的服务器配置</li>
+</ul>
+</li>
+<li>docs接口文档目录</li>
+<li>lib所用到的插件目录</li>
+<li>License Jmeter证书目录</li>
+<li>printable_docs用户使用手册</li>
+</ul>
+</li>
+<li>功能概要<ul>
+<li>Jmeter工具组成部分<ul>
+<li>资源生成器：用于生成测试过程中服务器、负载机的资源代码（VuGen）</li>
+<li>用户运行器：根据脚本要求模拟指定的用户行为（Controller）</li>
+<li>报表生成器：根据测试中实时的数据生成报表，提供可视化的数据显示形式（Analysis）</li>
+<li>负载发生器：用于产生负载，通常以多线程、多进程的方式模拟用户行为（Load Generater）</li>
+<li>测试计划：相当于lr的一个测试场景</li>
+</ul>
+</li>
+<li>Threads(Users)线程  用户<ul>
+<li>a.setup thread group,可用于执行预测试操作，类似lr的init()</li>
+<li>b.teardown thread group，可用于执行测试后动作，类似lr的end()</li>
+<li>c.Thread group，这个就是通常运行的线程，类似lr的action()</li>
+</ul>
+</li>
+<li>线程组的8类可执行文件<ul>
+<li>配置元件（cinfig element）用于提供对静态数据配置的支持</li>
+<li>定时器（Timer）类似于lr中的思考时间</li>
+<li>前置处理器（per processors）用于在实际的请求发出前对即将发出的请求进行特殊处理</li>
+<li>后置处理器（post processors）类似于lr中的关联概念</li>
+<li>断言（assertions）用于检查测试中得到的相应数据是否符合预期</li>
+<li>监听器（listener）用来对测试结果数据进行处理和可视化展示的一系列元件，这个监听器可不是用来监听系统资源的元件</li>
+<li>取样器（sample）是性能测试中向服务器发送请求，记录相应信息，记录响应时间的最小单元</li>
+<li>逻辑控制器（logic controller）包括两类元件，一类是用于控制测试计划中sampler节点发送请求的逻辑顺序控制器，常用的有if控制器、循环控制器等，另一类是用来组织可控制sampler节点的，如事务控制器，吞吐量控制器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>脚本录制</h6><p></p>
+<ul>
+<li>Badboy脚本录制完成后，导出为Export to jmeter</li>
+<li>Badboy检查点设置</li>
+<li>Badboy参数化</li>
+</ul>
+<p></p><h6>元件作用域、执行顺序</h6><p></p>
+<ul>
+<li>元件作用域<ul>
+<li>8类可被执行的元件（测试计划与线程组不属于可执行元件），这些元件中，取样器是典型的不与其他元件发生交互作用的元件，逻辑控制器只对其子节点的取样器有效，而其他元件需要与取样器等元件交互</li>
+<li>在Jmeter中，元件的作用域是靠测试计划的树型结构中元件的父子关系来确定的，作用域的原则是：<ul>
+<li>a，取样器元件不和其他元件相互作用，因此不存在作用域的问题</li>
+<li>b，逻辑控制器元件只对其子节点中的取样器和逻辑控制器作用</li>
+<li>c，除取样器和逻辑控制器元件外，其他6类元件，如果是某个取样器的子节点，则该元件对其父子节点起作用，如果其父节点不是取样器，则其作用域是该元件父节点下的其他所有后代节点（包括子节点，子节点的子节点等）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>元件执行顺序<ul>
+<li>配置元件–前置处理程序–定时器–取样器–后置处理程序–断言–监听器<ul>
+<li>注意：前置处理器、后置处理器和断言等元件功能对取样器作用，因此，如果在他们的作用域内没有任何取样器，则不会被执行；如果在同一作用域内有多个同一类型的元件，则这些元件按照他们在测试计划中的上下顺序依次执行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjfji2ucg0010agwv4savqjis" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-初识MySQL" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/28/初识MySQL/" class="article-date">
+  <time datetime="2018-02-28T10:08:48.000Z" itemprop="datePublished">2018-02-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/28/初识MySQL/">初识MySQL</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>初识MySQL</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>基础</h6><p></p>
+<ul>
+<li>数据库就是“数据”的“仓库”,包含表、关系以及操作对象,数据存放在表中</li>
+<li>MySQL的优势：运行速度快、使用成本低、可移植性强、适用用户广</li>
+<li><p>安装目录下主要文件夹</p>
+<pre><code>bin：客户端程序和服务器
+data：临时数据存放，日志文件，数据库
+include:导入，需要里面这些文件，包含（头）文件
+lib:组件
+share:错误消息文件
+</code></pre></li>
+<li><p>DOS下运行mysql</p>
+<pre><code>net start mysql
+mysql -h服务器主机地址（本地可省略） -u用户名 -p密码
+create database 数据库名;         #创建数据库
+show databases;                  #查看数据库
+use数据库;                         #选择数据库
+drop database 数据库名;              #删除数据库
+
+create table if not exists 表名(
+    studentNo INT(4) NOT NULL COMMENT&apos;学号&apos; PRIMARY KEY,
+    ...
+)comment=&apos;表名&apos;
+show tables;                    #查看表是否存在
+desc 表名;                     #查看表定义
+drop table if exists 表名;      #删除表
+</code></pre></li>
+<li>SQL结构化查询语言<ul>
+<li>DML(数据操作语言)用来操作数据库中所包含的数据，命令：insert、update、delete</li>
+<li>DDL（数据定义语言）用来创建和删除数据库对象等操作，命令：create、drop、alert</li>
+<li>DQL（数据查询语言）用来对数据库中的数据进行查询，命令：select</li>
+<li>DCL（数据控制语言）用来控制数据库组件的存取许可、存取权限等，命令：grant、commit、rollback</li>
+</ul>
+</li>
+<li>SQL中的运算符<ul>
+<li>算术运算符，用来进行列间或者变量之间的比较和数学运算<ul>
+<li>+加、-减、*乘、/除、%取余</li>
+</ul>
+</li>
+<li>赋值运算符，把一个数或者变量或者表达式赋值给另一个变量，如Name=’刘桑’<ul>
+<li>=赋值</li>
+</ul>
+</li>
+<li>逻辑运算符<ul>
+<li>and 当且仅当两个布尔表达式都为true时，返回true</li>
+<li>or 当且仅当两个布尔表达式都为false时，返回false</li>
+<li>not布尔表达式的值取反</li>
+</ul>
+</li>
+<li>比较运算符<ul>
+<li>=等于、&gt;大于、&lt;小于、&lt;&gt;不等于、&gt;=大于等于、&lt;=小于等于、!=不等于（非SQL-92标准）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数据类型<ul>
+<li>数值<ul>
+<li>INT，标准整数，4字节</li>
+<li>FLOAT，单精度浮点数，4字节</li>
+<li>DECIMAL，字符串形式的浮点数，Decimal(M,D),M为存储数，D为小数位</li>
+<li>unsigned属性，标识为无符号数，就是数值不能增加符号，比如不能增加负号</li>
+<li>zerofill属性，宽度不足以0填充</li>
+</ul>
+</li>
+<li>字符串<ul>
+<li>CHAR(M)，定长字符串，长度为M字节</li>
+<li>VARCHAR(M)，可变字符串，节省存储空间</li>
+</ul>
+</li>
+<li>日期<ul>
+<li>DATETIME，YY-MM-DD hh:mm:ss</li>
+<li>TIMESTAMP，YYYYMMDDHHMMSS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>字段的约束及属性</p>
+<ul>
+<li>非空约束NOT NULL，字段不允许为空</li>
+<li>默认约束DEFAULT，赋予某字段默认值</li>
+<li>唯一约束UNIQUE KEY(UK)，设置字段的值是唯一的，允许为空，但只能有一个空值</li>
+<li>主键约束PRIMARY KEY(PK)，设置该字段为表的主键，可唯一标识该表记录</li>
+<li>外键约束FOREIGN KEY(FK)，用于在两表之间建立关系，需要指定引用主表的哪一个字段</li>
+<li>自动增长AUTO_INCREMENT，设置该列为自增字段，默认每条自增1，通常用于设置主键</li>
+</ul>
+</li>
+<li><p>修改表</p>
+<pre><code>alter table 表名 rename to 新表名         #修改表名
+alter table 表名 add 新字段 字段类型       #添加字段
+alter table 表名 change 原字段名 新字段名 字段类型     #修改字段
+alter table 表名 drop 字段名              #删除字段
+</code></pre></li>
+<li><p>添加主外键</p>
+<pre><code>alter table 表名 add constraint 主键名 primary key 表名(主键字段)
+#主键名可以随意，比如pk_studentNo
+
+alert table 表名 add constraint 外键名 foreign key (外键字段) references 主表名(主键名)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjfji2ugc003wagwvh86hyqj2" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-BOM" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -180,7 +553,7 @@ clearInterval取消由setInterval()设置的timeout
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjfgwwuu20001v4wvnb92vgdn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjfji2uap0001agwvehp6n0hp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -299,7 +672,7 @@ div.appendChild(img)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjfgwwuvx000sv4wvb2zb58fk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjfji2ucg000uagwvzpabjosv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -447,7 +820,7 @@ nextSibling      获取下一个兄弟节点
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjfgwwv07003pv4wvpw06jfxe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjfji2ugc003uagwvklcy45rv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -598,7 +971,7 @@ a()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjfgwwv0e003tv4wvculhtp0x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjfji2ugc003yagwvsow1kijb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -737,7 +1110,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjfgwwv1n004lv4wvyx3ew2eq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjfji2ui3004uagwvqglo9o24" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -934,7 +1307,7 @@ print(guodi())
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjfgwwv2k0057v4wv92vi5787" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjfji2uij005gagwv7fc21tbn" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1120,583 +1493,7 @@ callee：返回当前函数的引用
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cjfgwwuwc0013v4wvgyfc27dy" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Js数组、正则" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/23/Js数组、正则/" class="article-date">
-  <time datetime="2018-02-23T12:37:41.000Z" itemprop="datePublished">2018-02-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/Js数组、正则/">Js数组、正则</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>数组、二维数组、正则表达</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>数组</h6><p></p>
-<ul>
-<li><p>什么是数组</p>
-<ul>
-<li>多个元素组成的集合；可以通过元素所在位置的顺序号（下标）做标识来访问每一个元素（下标从0开始，最大到元素的个数-1）</li>
-<li><p>数组中的元素可以在定义时初始化</p>
-<pre><code>var arr1=[1,2,3];
-var arr2=new Array(&apos;苹果&apos;,&apos;橘子&apos;,&apos;西瓜&apos;)
-</code></pre></li>
-</ul>
-</li>
-<li><p>数组是引用类型的对象</p>
-<ul>
-<li><p>引用类型：数据保存在堆中，栈中只有内存的编号，要通过此编号到堆中查找真正的数据，如：</p>
-<pre><code>var arr=new Array(&apos;北京&apos;,&apos;哈尔滨&apos;);
-</code></pre></li>
-<li><p>值类型：保存在栈中，速度快</p>
-<pre><code>var n=100;
-</code></pre></li>
-<li><p>js中的对象，保存了相关的数据和对数据的常用操作方法,对象都是用new关键字创建的。(new专门用于在内存中开辟一块储存空间，然后返回存储空间的地址,使用new创建出的都是引用类型的对象。)</p>
-</li>
-<li><p>null与undefined：</p>
-<pre><code>共同点：都是原始类型，保存在栈中变量本地
-不同点：
-undefined：表示变量声明过但未赋值。是所有未赋值变量的默认值。一般不主动使用。例如 var a; //a被自动赋值为undefined
-null：表示一个变量将来可能指向一个对象，但目前暂时什么都没指向。一般用于主动释放指向对象的引用。
-例如：var emps =[“Tom”,”Marray”];
- emps=null;//释放指向数组的引用，清空掉栈中的编号，对中的数据没人用，被回收
-</code></pre></li>
-<li><p>使用length属性获取数组中元素的个数，既数组的长度</p>
-</li>
-</ul>
-</li>
-<li><p>遍历数组元素</p>
-<ul>
-<li><p>遍历数组元素，通过选择for循环语句，元素的下标做循环变量</p>
-<pre><code>var arr1 = [10,20,30,40];
-for(var i = 0 ; i&lt;arr1.length ; i++){
-    console.log(arr1[i]);
-}
-#for...in遍历数组
-var nums = [10,21,32,24];
-for(var i  in  nums ){
-    console.log(nums[i]);
-}
-</code></pre></li>
-</ul>
-</li>
-<li><p>数组的常用方法</p>
-<pre><code>toString()把数组转换成字符串
-toLocaleString()把数组转换成本地字符串
-join(拼接参数)返回一个拼接的字符串
-concat(arr)拼接多个数组
-splice(start,count,e1,e2,……)从数组删除部分元素，添加部分元素；返回被删除的项目,start为起始位置，count为删除数
-slice(start,end)返回现有数组的一个子数组，2为起始位置，4为结束位置但不包括该位置
-indexOf(a,b)查询数据第一次出现的位置，即下标；a为查询数据，b为查询范围
-lastIndexOf()查询最后一次出现的位置
-reverse()颠倒数组中元素的顺序
-sort()默认按照数值的第一位数进行由小到大排序
-unshift(x)在数组头部添加新的元素，并返回新的长度
-shift()删除并返回数组头部的元素
-push(x)在数组尾部添加新的元素，并返回新的长度
-pop()删除并返回数组尾部的元素
-</code></pre></li>
-</ul>
-<p></p><h6>二维数组</h6><p></p>
-<ul>
-<li>从整体上来看，是一个数组，只是其中的每个元素又是一个数组，既数组的数组</li>
-<li>遍历二维数组中的每一个元素—-循环嵌套<pre><code>var arr=[[1,2,3],[4,5,6],[7,8,9]]
-for (var i = 0; i &lt; arr.length; i++) {
-    for (var j = 0; j &lt; arr[i].length; j++) {
-        document.write(arr[i][j]+&quot;&amp;nbsp;&quot;);
-    }
-    document.write(&quot;&lt;br/&gt;&quot;);
-}
-</code></pre></li>
-</ul>
-<p></p><h6>正则表达</h6><p></p>
-<ul>
-<li>正则表达式常用于在一段文本中搜索、匹配或替换特定形式的文本。如：词语出现频率统计、验证字符串是否符合邮箱格式、屏蔽一篇帖子中的限制性词语等</li>
-<li><p>正则表达式使用如下语法匹配一个范围内的字符</p>
-<pre><code>[abc]  匹配指定集合内的任一个字符
-[^abc] 匹配不在指定集合内的任一个字符
-[0-9]  匹配任一个数字
-[a-z]  匹配任一个小写字符
-[A-Z]  匹配任一个大写字符
-[A-z]  匹配大写A到小写z的所有字符
-</code></pre></li>
-<li><p>正则表达式中可以使用如下元字符引用来进行简化</p>
-<pre><code>\d    匹配一个数字
-\D    匹配一个非数字
-.     匹配除了回车和换行外的任何单个字符
-\s    匹配一个空白符
-\S    匹配一个非空白符
-</code></pre></li>
-<li><p>正则表达式中可以使用如下特殊字符定义字符的出现频次–量词元字符</p>
-<pre><code>n?     匹配零次或一次字符n
-n*     匹配零次或多次字符n
-n+     匹配一次或多次字符n
-n{x}   匹配字符n出现x次
-n{x,y} 匹配字符n出现x到y次
-n{x,}  匹配字符n的出现次数&gt;=x次
-</code></pre></li>
-<li><p>正则表达式使用如下语法定义子表达式 分组或选择</p>
-<pre><code>exp1|exp2   使用|进行条件选择
-(exp1)   使用()指定分组--每个分组自动获得分组号如：1、2、3、的分组号
-
-&lt;script&gt;
-    var str1=&apos;三原色：red yellow green&apos;;
-    document.write(str1)
-    document.write(&apos;&lt;hr/&gt;&apos;)
-    var reg=/(red|yellow|green)/g;
-    str2=str1.replace(reg,&apos;&lt;span style=&quot;color:$1&quot;&gt;$1&lt;/span&gt;&apos;)
-    document.write(str2)
-&lt;/script&gt;
-
-&lt;script&gt;
-    var student=&apos;a1234&apos;;
-    var reg4=/([abc])(\d{4})/;
-    console.log(reg4.test(student));    //result：true  
-    console.log(RegExp.$1)              //result：a
-    console.log(RegExp.$2)              //result：1234
-&lt;/script&gt;
-</code></pre></li>
-<li><p>可以使用如下字符进行指定位置的匹配</p>
-<pre><code>^   匹配字符串的开头           $  匹配字符串的结尾
-\b  匹配单词的边界            \B  匹配单词的非边界
-?=x 匹配其后紧接x的字符串     ?!x  匹配其后没有紧接x的字符串
-</code></pre></li>
-<li><p>RegExp对象具有如下方法</p>
-<pre><code>compile()   重新编译正则表达式，加快执行速度
-exec()      检索字符串中指定的值。返回找到的值，并确定其位置
-test()         检索字符串中指定的值。返回true或false
-</code></pre></li>
-<li><p>小练习</p>
-<pre><code>&lt;body&gt;
-    账号：&lt;input type=&quot;text&quot;/&gt;
-      &lt;button onclick=&quot;fn1()&quot;&gt;验证&lt;/button&gt;&lt;span&gt;&lt;/span&gt;
-    &lt;script&gt;
-        var regex=/asd/;
-        function fn1(){
-            var inp=document.getElementsByTagName(&apos;input&apos;)[0];
-            var span=document.getElementsByTagName(&apos;span&apos;)[0];
-            if (regex.test(inp.value))
-            {
-                span.innerHTML=&quot;通过&quot;
-            }else{
-                span.innerHTML=&quot;&lt;font color=&apos;red&apos;&gt;输入有误！&lt;/font&gt;&quot;
-            }
-        }
-
-        //手机验证
-        var tel1=&apos;18841845636&apos;
-        var reg2=/^1[34578][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/; 
-        /*
-        reg2=/^1[34578]\d\d\d\d\d\d\d\d\d\d$/
-        */
-        /*
-        reg2=/^1[34578]\d{9}$/
-        */
-        console.log(reg2.test(tel1))
-
-        //邮箱验证
-        var email=&apos;bnsj5116156@163.com&apos;; 
-        var reg3=/^.{6,18}@163\.com$/;
-        console.log(reg3.test(email))
-    &lt;/script&gt;
-&lt;/body&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js数组、正则/" data-id="cjfgwwuwj0018v4wv8jk8pumr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Js基础、函数、循环" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/23/Js基础、函数、循环/" class="article-date">
-  <time datetime="2018-02-23T12:36:14.000Z" itemprop="datePublished">2018-02-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/Js基础、函数、循环/">Js基础、函数、循环</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h6>基础</h6><p></p>
-<ul>
-<li>js是一种广泛应用于客户端网页开发的脚本语言，是基于对象的弱类型语言，无需编译，由JavaScript引擎解释执行<br>其核心部分只包括基本的语法构造（比如操作符、控制结构、语法）和标准库（一系列具有各种功能的对象如Maths、Date等）<br>完整的js包括三部分：核心（ECMAScript)、BOM、DOM</li>
-<li>js数据类型<br>基本数据类型包括：原始类型：string、number、boolean、undefined、bull，引用类型：object、function、date、number、string、boolean</li>
-<li><p>运用js的三种方式：<br>第一种，要执行的脚本语句直接编写在body中，如：</p>
-<pre><code>&lt;body&gt;
-    &lt;button onclick=&quot;console.log(&apos;hello world&apos;)&quot;&gt;打印&lt;/button&gt;
-&lt;/body&gt;
-</code></pre><p>第二种，外部，内部脚本块中可以执行多条语句：</p>
-<pre><code>&lt;script&gt;
-    document.write(&apos;&lt;b&gt;你好&lt;/b&gt;&apos;);
-    console.log(&apos;脚本执行完成&apos;);
-&lt;/script&gt;
-</code></pre><p>第三种，将JavaScript代码写入一个后缀名为js的文件中并在<head>中引入：</head></p>
-<pre><code>&lt;script src=&quot;js文件.js&quot;&gt;&lt;/script&gt;
-</code></pre></li>
-<li><p>js语法规范<br><br>语句中大小写敏感，使用分号或者换行结束；<br><br>单行注释：//                 多行注释：/<em>  </em>/<br><br>基本输出语句：</p>
-<pre><code>console.log();//控制台输出
-document.write();//页面输出
-window.alert();//弹出提示框
-</code></pre></li>
-<li>变量<br>存储信息的容器，使用关键字var，用=为变量赋值，没有初始化的变量自动取值为underfined；一条语句中可声明多个变量，如：<code>var name1,name2,name3=liu</code>,<br>不允许使用语言关键字和保留字变量名<br><br>标准关键字:<br>break，case，catch，continue，deflault，delete，do，else，false，finally，or，function，if，in，instanceof，new，null，return，switch，this，throw，true，try，typeof，var，with，undefined<br><br>标识符命名规范：可以包含字母、数字、下划线、美元符号；不能以数字开头</li>
-<li>常量<br>是值不能改变的量，使用const关键字声明变量，一般常量名使用纯大写形式，如 <code>const PI=3.15</code></li>
-</ul>
-<p></p><h6>函数</h6><p></p>
-<ul>
-<li><p>运算符</p>
-<pre><code>算数运算：加（+）、减（-）、乘（*）除（/）求余（%）
-关系运算：“&gt;”(大于)，“&lt;”(小于)，“&gt;=”(大于等于)，“&lt;=”(小于等于)，“==”(等于)，“!=”(不等于)，===（类型、数值全等），!==（类型、数值全不等）
-逻辑运算：&amp;&amp;（与）、||（或）、!（非）
-赋值运算：+=（先运算后赋值） =+（先赋值后运算）   -=   *=   /=   %=
-字符连接： +
-
-三目运算：表达式1？表达式2：表达式3  举例：var age = 20；  var msg = age&gt;18?”成年人”:”未成年”
-</code></pre></li>
-<li><p>数据类型转换函数</p>
-<pre><code>Number()
-把一个string解析为number，如果包含非法字符，则返回NaN
-parseFloat()
-解析出一个string或number的浮点数部分，如果没有可转换的部分，则返回NaN
-parseInt()
-解析出一个string或number的整数部分，如果没有可转换的部分，则返回NaN
-toString()
-转换成字符串，所有数据类型均可转换为string类型
-</code></pre></li>
-<li><p>函数</p>
-<ul>
-<li>函数是一段定义好，并可以被反复使用的代码块，其中以包含多条可执行语句；函数本质上是功能完整的对象</li>
-<li><p>如</p>
-<pre><code>function add(ename,epwd){
-  console.log(&apos;用户名&apos;+ename+&apos;密码&apos;+epwd);
- }
-add(&apos;Marry&apos;,&apos;123&apos;)
-</code></pre></li>
-<li><p>ECMAScript中预定义全局函数，可直接应用，如：<br>encodeURI函数用于对统一资源标识符（URI）进行编码，返回编码后的URI字符串<br>decodeURI函数用于对使用encodeURI编码之后的字符串进行解码，举例：</p>
-<pre><code>var ur=”http://www.baidu.com/name/web/前端”;
-var encoded = encodeURI(ur);
-var decoded = decodeURI(encoded);
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>分支结构</h6><p></p>
-<ul>
-<li>if语句</li>
-<li>if-else语句</li>
-<li><p>switch-case语句</p>
-<pre><code>&lt;body&gt;
-&lt;button onclick=&quot;fn3()&quot;&gt;Switch&lt;/button&gt;
-&lt;script&gt;
-function fn3(){
-    var m1=Number(prompt(&quot;Please input a value:&quot;));
-    switch (m1)
-    {
-        case 1:
-            console.log(&quot;游戏人生&quot;);
-            break;
-        case 2:
-            console.log(&quot;奋斗人生&quot;);
-            break;
-    }
-}
-&lt;/script&gt;
-&lt;/body&gt;
-</code></pre></li>
-<li><p>switch-case在实现分支功能时和if–else的主要区别在于：<br><br>if…else…可以判定相等或不等的情况，适用性广<br><br>switch…case…结构更清晰、效率更高;但是一般只用于指定变量相等于某个范围内的某个特定的值</p>
-</li>
-</ul>
-<p></p><h6>循环结构</h6><p></p>
-<ul>
-<li><p>while语句</p>
-<pre><code>var i = 0;
-while(i&lt;10){
-    console.log(i);
-    i++;            //循环条件每执行一次就改变一次
-}
-</code></pre></li>
-<li><p>do-while语句</p>
-<pre><code>do{
-    可执行语句;
-}while(boolean表达式);
-</code></pre></li>
-<li>while和do-while的区别<br><br>while循环  “先判断再执行”<br><br>do-while循环 “先执行再判断”<br><br>当初始情况不满足循环条件时，while循环一次都不会执行；do-while循环不管任何情况至少执行一次。</li>
-<li><p>for 语句</p>
-<pre><code>for(表达式1;表达式2;表达式3){
-    循环体语句;
-}
-</code></pre></li>
-<li>break用于循环，可使程序终止循环而执行循环后面的语句，常常与条件语句一起使用</li>
-<li>continue关键字只能用于循环中，作用为跳过本次循环体中剩余语句而执行下一次循环</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js基础、函数、循环/" data-id="cjfgwwuwf0015v4wva2vd8ewl" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-CSS全析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/21/CSS全析/" class="article-date">
-  <time datetime="2018-02-21T03:49:56.000Z" itemprop="datePublished">2018-02-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/21/CSS全析/">CSS全析</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>CSS基础、样式、新增</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>定义</h6><p></p>
-<ul>
-<li>CSS是层叠样式表，即多重样式定义被层叠在一起成为一个整体，在页面设置中是标准的布局语言，用来控制元素的尺寸、颜色和排版<br>用来将“页面结构代码”和“网页格式风格代码”分离开。从而使页面设计者可以对页面的布局进行更多地控制</li>
-</ul>
-<p></p><h6>选择器</h6><p></p>
-<ul>
-<li>通用选择器<code>*{color:red}</code></li>
-<li>分组选择器<code>h1,h2,h3,h4,p{color:red}</code></li>
-<li>后代(派生)选择器<code>p span{color:red}</code> 只针对p标签中的span标签有用</li>
-<li>子选择器<code>p&gt;span{border:1px solid red}</code>    只针对p标签中的第一级span标签有用</li>
-<li>兄弟选择器<code>h1+p {color:red}</code> h1标签后的第一个p标签有用，并且需要时同级且同一个父级</li>
-<li>标签选择器，p、span、div等，如p{color：#fff}</li>
-<li>类选择器，如 .Liu{color：#f9f9f9}</li>
-<li>ID选择器，如 #Liu{color：blue}</li>
-<li>优先级：ID选择符、类选择符、HTML标记选择器。可用!important提升样式表的优先权，如： .p{clolor:#ff0000!important}</li>
-</ul>
-<p></p><h6>引入</h6><p></p>
-<ul>
-<li>内联，<code>&lt;p style=&quot;color:red&quot;&gt;&lt;/p&gt;</code></li>
-<li>内部，将CSS代码添加到头部的style标签中</li>
-<li>外部，也是头部<code>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css  href=&quot;css文件路径&quot;&gt;</code></li>
-</ul>
-<p></p><h6>样式</h6><p></p>
-<ul>
-<li><p>超链接样式</p>
-<pre><code>未被访问前样式a:link{color:black} 
-已访问过的样式a:visited{color:green}
-鼠标悬停时样式a:hover{ }
-按下鼠标时样式a:active{ }
-
-鼠标样式cursor:default默认\pointer小手\crosshair十字
-</code></pre></li>
-<li><p>表格样式</p>
-<pre><code>border-style:所有边框样式
-border-width：所有边框宽度
-border-color：所有边框颜色
-border：可把其余属性写在一起
-</code></pre></li>
-<li><p>表单样式</p>
-<pre><code>background: black;
-color:white;
-border-radius: 8px;/*边框倒角*/      
-outline: none;/*外边框消失*/       
-height: 20px
-</code></pre></li>
-<li><p>文字样式</p>
-<pre><code>font-style:inherit继承  italic斜体  normal正常  oblique偏斜体
-font-weight:像素  bold粗体  bolder特粗  lighter细体  normal正常
-font-size:数值   medium   large
-font-family：&quot;字体样式&quot;
-
-#可以写成这样的
-font：italic bold 24px &quot;幼圆&quot;
-</code></pre></li>
-<li><p>文本样式</p>
-<pre><code>text-align:left\center\right
-text-decoration:underline下划线 line-through删除线 overline顶划线
-text-indent:缩进20px
-line-height:行高25px
-letter-spacing:字间距10px
-text-shadow:水平阴影 垂直阴影 模糊距离 阴影颜色(10px 10px 5px #ccc)
-</code></pre></li>
-<li><p>图片样式</p>
-<pre><code>1.定义图片边框
-border-style:none无 solid实线 dashed虚线 dotted点划线  double双线
-border-color：边框颜色
-border-width：边框宽度
-
-2.定义图片大小
-width：宽度
-height：高度
-max-width：最大宽度值
-
-3.定义对齐方式
-text-align：横向对齐left center right
-vertical-align：纵向对齐top middle bottom
-</code></pre></li>
-<li><p>背景样式</p>
-<pre><code>1.设置页面背景图
-background-image：url(&quot;路径&quot;)
-
-2.设置背景图重复样式
-background-repeat：repeat-x   repeat-y  no-repeat
-
-3.定义背景图片位置
-background-position：center  水平居中
-                     center  center   水平并垂直居中
-                     top   left   图片在页面顶端且局左
-                     center  left  图片在左侧水平居中
-                     bottom  left  图片在页面左下角
-                     x  y   由X轴和Y轴坐标来确定
-
-4.固定背景图片
-background-attachment：scroll  背景图片随对象内容滚动
-                       fixed   背景图片不随对象内容移动
-
-5.设置背景颜色
-background-color：颜色参数
-</code></pre></li>
-</ul>
-<p></p><h6>盒子模型</h6><p></p>
-<ul>
-<li>content（内容）：可以是文字、图片等元素</li>
-<li>padding（空白）：也成内边距，补白，用来设置盒子模型的内容与边框之间的距离</li>
-<li>border（边框），即盒子本身，该属性可设置内容边框线的粗细、颜色和样式等</li>
-<li>margin（边界），也称外边距，用来设置内容与内容之间的距离</li>
-</ul>
-<p></p><h6>元素定位</h6><p></p>
-<ul>
-<li>在CSS中，可以通过position、float、z-index等定位元素进行定位<ul>
-<li>position<code>{position:relative|absolute|static|fixed}</code><ul>
-<li>relative相对定位:相对于原来的位置，保留原有空间</li>
-<li>absolute绝对定位:脱离文档流,选取其最近的父级定位元素定位，当父元素的position为static时，该元素将以body坐标原点进行定位;一般情况下绝对定位配合相对定位</li>
-<li>static所有元素定位的默认值</li>
-<li>fixed该参数固定的对象是可视窗口而并非body或父级元素</li>
-</ul>
-</li>
-<li>相对定位<ul>
-<li>通过某个元素的上下左右移动来对其进行相对地定位,是相对于原来位置的定位，但仍占据原来位置,因此，移动元素会造成覆盖其他框</li>
-</ul>
-</li>
-<li>绝对定位<ul>
-<li>通过某个元素的上下左右移动来对其进行定位,默认依据父级的坐标原点进行定位,如果父级position属性为默认值，且top、left、bottom、right4个值均未设置，则是参照浏览器的左上角</li>
-</ul>
-</li>
-<li>float<ul>
-<li>{ float:left|right|none } 水平方向定位</li>
-<li>{ clear:left|right|both }  清除浮动</li>
-</ul>
-</li>
-<li>z-index<ul>
-<li>CSS中可以处理元素的高度、宽度、深度三个维度，深度的处理就是z-index</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>块元素、内联元素</h6><p></p>
-<ul>
-<li>块元素<ul>
-<li>display:block总是在新行上开始，行高以及顶底边距可以控制</li>
-<li>display:inline和其他元素都在一行上，行高及顶和底边距不可改变</li>
-<li>display:inline-block和其他元素都在一行上，元素的高度、宽度、行高以及顶和底边距都可设置</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>新增</h6><p></p>
-<ul>
-<li>文字阴影<br>text-shadow:X轴 Y轴 模糊距离 颜色（如果不需要阴影模糊效果，可以blur值设置为0）</li>
-<li>文字描边<br>text-stroke:宽度值 颜色值</li>
-<li>文本溢出<br>overflow：hidden；overflow-X:hidden</li>
-<li>渐变<br>默认从上到下：background:linear-gradient(red,blue); <br>从左往右：background:linear-gradient(to right,red,blue)</li>
-<li><p>动画<br><br>第一步：定义动画，</p>
-<pre><code>@keyframes 动画名{
- 0%{left：0px}
- 100%{left：100px}
-}
-</code></pre><p>第二步：调用动画，<br>animation：动画名 持续时间 播放方式 播放次数；（animation: c  5s linear infinite;）</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/21/CSS全析/" data-id="cjfgwwuub0003v4wvcgeyyl80" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cjfji2ucv0015agwvwx0dbiv0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1714,7 +1511,7 @@ background-color：颜色参数
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/7/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1728,7 +1525,7 @@ background-color：颜色参数
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1738,16 +1535,16 @@ background-color：颜色参数
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.75px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.86px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.86px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 12.86px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.29px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.71px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.43px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.14px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.86px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1755,9 +1552,21 @@ background-color：颜色参数
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/03/富文本、分页/">富文本、分页</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/02/scrapy选择器css、xpath/">scrapy选择器css、xpath</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/02/scrapy命令行详解/">scrapy命令行详解</a>
+          </li>
         
           <li>
             <a href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
@@ -1765,18 +1574,6 @@ background-color：颜色参数
         
           <li>
             <a href="/2018/04/01/HTTP报文/">HTTP报文</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/29/scrapy基础了解/">scrapy基础了解</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/28/网络配置、系统查看/">网络配置、系统查看</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/28/vi-vim/">vi/vim</a>
           </li>
         
       </ul>

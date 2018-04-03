@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,372 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Redis数据库入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/13/Redis数据库入门/" class="article-date">
+  <time datetime="2018-03-13T09:29:25.000Z" itemprop="datePublished">2018-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/13/Redis数据库入门/">Redis数据库入门</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Redis数据库入门</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>NoSql(Not Only Sql)概念</h6><p></p>
+<ul>
+<li>NoSql是非关系型数据库的集合，如Redis、MongoDB、HBase…</li>
+<li>NoSql产生背景，为解决三高而产生：数据库高并发大写；海量数据下的效率；高扩展和可用性</li>
+<li>NoSQL优点：扩展方便，读写快速高效，数据类型灵活</li>
+<li>NoSQL缺点：不支持sql语句</li>
+</ul>
+<p></p><h6>Redis简介</h6><p></p>
+<ul>
+<li>由c语言编写，基于内存运行的并支持持久化，存储形式为key-value型</li>
+<li>单进程运行<ul>
+<li>redis服务程序是单进程运行，当多个客户端同时访问时，服务器的处理能力是会有一定的下降的。面对这种场景，我们可能会考虑在同一台服务器上开启多个Redis进程，Redis会对CPU存在竞争</li>
+</ul>
+</li>
+<li>Redis部署<ul>
+<li>1.将redis安装包（此时最新版本是3.2.11）放入Linux服务器中</li>
+<li>2.解压redis，进入redis解压目录</li>
+<li>3.make</li>
+<li>4.make install，可指定安装目录，如<code>make PREFIX=&quot;/optredis3&quot; install</code></li>
+<li>5.之后安装目录中出现了bin目录，再将解压目录中的redis.conf放在与bin目录同级的目录下</li>
+<li>6.进入bin目录下，运行redis-server,出现层状方形小时运行成功 </li>
+</ul>
+</li>
+<li>在redis的bin目录下：<ul>
+<li>redis-server用来启动redis的工具，关闭该工具命令为<code>shutdown</code></li>
+<li>redis-benchmark检测redis在本机运行效率</li>
+<li>redis-check-aof修复AOF持久化</li>
+<li>redis-check-rdb修复RDB持久化文件</li>
+<li>redis-cli命令行工具</li>
+</ul>
+</li>
+<li>Redis的多数据库（16个数据库：0-15 ）<ul>
+<li>Redis的多数据库在一定程度上是独立的,不支持自定义数据库名称，不能为每一个数据库设置独立密码</li>
+<li>切换数据库命令：select [dbindex]</li>
+<li>多数据库间移动数据：mv [key] [dbindex]</li>
+<li>清除数据库内数据：<ul>
+<li>清空当前数据库数据：flushdb</li>
+<li>清空所有数据库数据：flushALL</li>
+</ul>
+</li>
+<li>查看数据库内数据的数量：Dbsize</li>
+</ul>
+</li>
+<li>redis常用场景<ul>
+<li>缓存</li>
+<li>排行榜类的应用</li>
+<li>实时分析系统</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>Redis参数配置</h6><p></p>
+<ul>
+<li>config命令：<ul>
+<li>动态取出参数配置config get 参数名称，如config get port</li>
+<li>动态设置参数配置config set 参数名称</li>
+</ul>
+</li>
+<li>配置分类：通用部分、快照、复制、安全、限制、追加、Lua脚本、慢日志、事件通知、高级配置、引入</li>
+<li>Redis的基础配置（redis.conf）<ul>
+<li>notework:<ul>
+<li>bind: 指定要绑定的IP地址</li>
+<li>protected-mode：询问是否开启保护模式；如不开启，bind会不起作用，密码也不起作用    </li>
+<li>port： 端口号，默认是6379，如果想开启多个Redis进程，需要指定不同的端口号        </li>
+<li>tcp-backlog：设置tcp的backlog的连接队列，即tcp的三次握手，未完成三次握手和已完成三次握手的队列总和</li>
+<li>timeout：连接超时时间，默认是0</li>
+<li>tcp-keepalive：检测keepalive的值，即健康检查，默认单位是秒。HA，默认值是0，表示不检测，建议设置为60秒    </li>
+</ul>
+</li>
+<li>通用配置：<ul>
+<li>daemonize：是否以后台进程的方式运行</li>
+<li>pidfile: 指定pid存储的路径和文件，在正式使用时，一定会使用pidfile指定路径</li>
+</ul>
+</li>
+<li>日志相关：<ul>
+<li>loglevel:四个级别</li>
+<li>logfile：指定log日志文件位置,/dev/null</li>
+</ul>
+</li>
+<li>databases: <ul>
+<li>Redis启动后有多少个数据库            </li>
+</ul>
+</li>
+<li>Redis限制部分配置[limits]<ul>
+<li>maxclients:客户端最大连接数，默认是10000</li>
+<li>maxmemory：最大内存数，实际工作时，最大内存数一般都是50%左右的内存，一定不能超过70%</li>
+<li>maxmemory-samples：样例数量</li>
+<li>maxmemory-policy：设置内存的移除规则<ul>
+<li>volatile-lru：LRU算法进行移除，只针对设置了过期时间的值</li>
+<li>allkeys-lru ：LRU算法</li>
+<li>volatile-random：在过期集合中移除随机的key</li>
+<li>allkeys-random：移除随机的key</li>
+<li>volatile-ttl ：移除TTL最小的key，即数据的生命期</li>
+<li>noeviction ：默认值，不进行移除</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>key操作</h6><p></p>
+<ul>
+<li>keys ：获得符合规则的键值列表，keys *</li>
+<li>exists: 检测key是否存在，exists key名称    </li>
+<li>del: 单条删除key操作，del key名称</li>
+<li>type:获取key对应的value值类型，type key名称</li>
+<li>rename语句： rename oldKey newKey 不管新的key有没有都改名</li>
+<li>renamenx: renamenx oldkey newkey  如果新的key存在，则不改名</li>
+</ul>
+<p></p><h6>数据类型</h6><p></p>
+<ul>
+<li>String类型<ul>
+<li>string是redis最基本的类型,可以包含任何数据。比如jpg图片或者序列化的对象</li>
+</ul>
+</li>
+<li>List类型<ul>
+<li>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）</li>
+</ul>
+</li>
+<li>Set类型<ul>
+<li>Redis的Set是string类型的无序集合。集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)</li>
+</ul>
+</li>
+<li>Hash类型<ul>
+<li>Redis hash 是一个键值(key=&gt;value)对集合，是一个string类型的field和value的映射表，hash特别适合用于存储对象</li>
+</ul>
+</li>
+<li>Zset类型<ul>
+<li>Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/13/Redis数据库入门/" data-id="cjfji2udr001xagwvqtfalyuk" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Git高级" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/13/Git高级/" class="article-date">
+  <time datetime="2018-03-13T02:21:05.000Z" itemprop="datePublished">2018-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/13/Git高级/">Git高级</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Git高级</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>分支管理</h6><p></p>
+<ul>
+<li><p>Git会串成一条时间线，这条时间线就是分支， 默认就是master<br>HEAD并不是指向提交，而是指向master，指向最新版本</p>
+<pre><code>v1  ==&gt;  v2  ==&gt; v3
+                 |
+                 master
+                  |
+                  HEAD
+如果创建了新的分支，head将指向新的分支，如下
+                        master
+                          |
+v1  ==&gt;  v2  ==&gt; v3  ==&gt; v4
+                          |
+                        dev
+                          |
+                        HEAD
+</code></pre></li>
+<li><p>基本命令</p>
+<ul>
+<li>查看分支：git branch（*表示你当前所处的branch是哪个）</li>
+<li>创建分支：git branch 分支名</li>
+<li>切换分支： git checkout 分支名</li>
+<li>创建并切换分支：git checkout -b 分支名</li>
+<li>合并分支：git merge 分支名 （需要切换到主分支或者依附分支再执行该命令）</li>
+<li>删除分支： git branch -d 分支名</li>
+<li>分支合并图：git log –graph  –pretty=oneline  –abbrev-commit</li>
+</ul>
+</li>
+<li><p>解决冲突</p>
+<ul>
+<li><p>先在feature1 分支:  a.txt中新增并提交‘AND simple’；<br>后在master 分支:  a.txt 中新增提交‘&amp; simple’ <br>在master和分支上分别对a.txt做了不同修改之后，合并分支出现以下错误：</p>
+<pre><code>git merge feature1
+Auto-merging a.txt
+CONFLICT (content): Merge conflict in a.txt
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre></li>
+<li><p>当Git无法自动合并分支时，就必须首先解决冲突，再提交，最后merge</p>
+</li>
+</ul>
+</li>
+<li><p>分支管理策略：</p>
+<ul>
+<li>1）master分支： 代码是稳定的，平时不能在上面干活的，仅仅是用来发布新版本用</li>
+<li>2）其他分支：是不稳定的，bug、feature可以创建新的分支进行开发，最后再合并到master即可</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>标签管理</h6><p></p>
+<ul>
+<li>标签（tag），是版本库的一个快照；发布一个新版本时，通常先在版本库中打一个标签，无论在将来什么时候，取某个标签的版本即可</li>
+<li><p>基本命令</p>
+<pre><code>git tag &lt;tagname&gt;创建标签
+git tag查看所有标签
+git tag -a &lt;tagname&gt; -m &lt;desc&gt;创建带有说明的标签
+git show &lt;tagname&gt;查看标签的说明
+git tag -d &lt;tagname&gt;删除标签
+
+git push origin &lt;tagname&gt;推送一个本地标签
+git push origin --tags推送全部未推送的本地标签
+
+#如果tag已经推送到远程，要删除远程标签分2步：
+1）删除本地tag:  git tag -d 本地标签名
+2）git push origin :refs/tags/本地标签名
+</code></pre></li>
+</ul>
+<p></p><h6>多人协作</h6><p></p>
+<ul>
+<li>开源项目肯定都是很多人参与到社区中，通过协作完成</li>
+<li>多人协作常用操作<ul>
+<li>克隆远程仓库：git clone xxxxxxx</li>
+<li>查看远程信息：git remove (-v)</li>
+<li>创建自己的分支：git branch xxxxxx</li>
+<li>推送分支：git push origin <branch-name></branch-name></li>
+<li>创建Pull Request</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>其他操作</h6><p></p>
+<ul>
+<li><p>git颜色设置</p>
+<pre><code>Git控制台颜色设置
+git config --global color.diff auto
+git config --global color.status auto
+git config --global color.branch auto
+
+颜色设置关闭
+git config --global color.status false
+</code></pre></li>
+<li><p>忽略某些特殊文件不提交</p>
+<ul>
+<li>1）只需要在git项目的根目录下创建一个.gitignore</li>
+<li>2) 把需要提交的文件或者目录名称写到.gitignore</li>
+<li>3）如果你真正想提交的文件已经被包含在.gitignore里面了，那么就需要使用-f进行强制提交</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjfji2ucg000qagwv9i5r9ryr" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Fiddler学习01" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/12/Fiddler学习01/" class="article-date">
+  <time datetime="2018-03-12T04:02:33.000Z" itemprop="datePublished">2018-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/12/Fiddler学习01/">Fiddler学习01</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Fiddler学习01</h5><p></p>
+<hr>
+<hr>
+<h6></h6>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习01/" data-id="cjfji2uc0000iagwvlybzy8dc" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-re模块" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -191,7 +557,7 @@ print(result.group(1))       #result:20180101
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjfgwwuzc0037v4wvrm8ytme3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjfji2uf20030agwvh6045nia" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -358,7 +724,7 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjfgwwuvr000ov4wvtjz09b5e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjfji2uc0000oagwvxo8gdh0q" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -434,7 +800,7 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjfgwwuyt002tv4wvpn18nsbh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjfji2uf2002tagwv97hnbz14" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -540,7 +906,7 @@ print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="cjfgwwux4001nv4wv5a35dlg0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="cjfji2udr001sagwvrehz2gt5" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -669,7 +1035,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjfgwwuwz001kv4wvc5yulr77" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjfji2udb001nagwvwd7j7l67" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -796,7 +1162,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjfgwwuxt0024v4wv5lpvjyc7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjfji2ue60026agwvgioquj25" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -872,400 +1238,10 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjfgwwuxh001xv4wv6bedjby0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjfji2udr001zagwvoowabqmq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-基本安全测试" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/10/基本安全测试/" class="article-date">
-  <time datetime="2018-03-10T08:10:50.000Z" itemprop="datePublished">2018-03-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/10/基本安全测试/">基本安全测试</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>基本安全测试</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>用户权限测试</h6><p></p>
-<ul>
-<li>用户权限控制<ul>
-<li>用户权限控制主要是对一些有权限控制的功能进行验证</li>
-<li>用户A才能进行的操作，B是否能够进行操作</li>
-<li>只能有A条件的用户才能查看的页面，是否B能够查看（可直接敲URL访问）</li>
-</ul>
-</li>
-<li>页面权限控制<ul>
-<li>必须有登陆权限的页面，是否能够在不登陆情况下进行访问</li>
-<li>必须经过A——B——C的页面，是否能够直接由A——C？</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>URL安全测试</h6><p></p>
-<ul>
-<li>适用范围： URL中含有参数，也就是通过GET方式传递的HTTP请求</li>
-<li>什么叫GET方式<ul>
-<li>GET方式在客户端通过URL提交数据，数据在URL中可以看到</li>
-<li>POST方式，数据放置在HTML HEADER内提交，数据在URL中看不到</li>
-<li>GET只能传输比较少的数据，安全性较低，POST传输数据较多，安全性也比GET高</li>
-</ul>
-</li>
-<li><p>测试关注点</p>
-<ul>
-<li>URL 参数检查<ul>
-<li>对URL中参数信息检查是否正确，如：URL中的订单号、金额允许显示出来的话，需要验证其是否正确</li>
-<li>对于一些重要的参数信息，不应该在URL中显示出来，如：用户登陆时登录名、密码是否被显示出来了</li>
-</ul>
-</li>
-<li>URL参数值篡改<ul>
-<li>修改URL中的数据，看程序是否能识别，对于URL中包含金额参数的，修改金额看是否能够提交成功（可能导致用户把2元金额改成1元金额能提交），还有修改订单号等重要信息看是否会报错</li>
-</ul>
-</li>
-<li><p>URL中参数修改进行XSS注入</p>
-<ul>
-<li><p>XSS的全称是Cross Site Script（跨站点脚本），XSS的原理很简单，即进行脚本注入，URL执行时即把此脚本进行了执行，一般都是JavaScript脚本</p>
-<pre><code>如“http://www.cnblogs.com/javame/index.asp?IDClass=2&amp;ClassName=abc”
-
-改成“http://www.cnblogs.com/javame/index.asp?IDClass=2&amp;ClassName=abc&lt;script&gt;alert(&quot;hello&quot;);&lt;/script&gt;”
-
-看看有没弹出对话框显示hello，有的话就有跨站漏洞
-</code></pre></li>
-</ul>
-</li>
-<li><p>URL参数中进行SQL注入</p>
-<ul>
-<li>SQL注入全称是SQL Injection ，当应用程序使用输入内容来构造动态sql语句以访问数据库时，会发生sql注入攻击，如查询、插入数据时</li>
-<li>测试方法： URL中写入SQL注入语句，看是否被执行<br>如：www.cnblogs.com/javame这个网站中，选择登陆设置用户名为 admin ‘ or ‘1’=’1 密码为任意数字 ，点击登录就可以登陆。一般情况下要进行SQL注入攻击，需要对数据库类型、表名、判断逻辑、查询语句等比较清楚才能够写出有效的SQL注入语句</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>表单提交安全测试</h6><p></p>
-<ul>
-<li>适用范围：有表单提交的地方、有HTTP请求的地方</li>
-<li>测试关注点<ul>
-<li>表单中注入XSS脚本<ul>
-<li>即在表单填写框中直接注入JS脚本如在表单中输入XSS脚本，程序是不应该让脚本执行的</li>
-</ul>
-</li>
-<li>表单中注入SQL 脚本<ul>
-<li>与URL中参数进行XSS注入类似，就是在表单中写入SQL注入脚本提交看是否会有问题</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>Session测试</h6><p></p>
-<ul>
-<li>Session是客户端与服务器端建立的会话，总是放在服务器上的，服务器会为每次会话建立一个sessionId，每个客户会跟一个sessionID对应，并不是关闭浏览器就结束了本次会话，通常是用户执行“退出”操作或者会话超时时才会结束</li>
-<li>测试关注点<ul>
-<li>Session互窜<ul>
-<li>Session互窜即用户A的操作被用户B执行了</li>
-<li>验证Session互窜，其原理还是基于权限控制，如某笔订单只能是A进行操作，或者只能是A才能看到的页面，但是B的session窜进来却能够获得A的订单详情等</li>
-<li>Session互窜方法<ul>
-<li>多TAB浏览器，在两个TAB页中都保留的是用户A的session记录，然后在其中一个TAB页执行退出操作，登陆用户B，此时两个TAB页都是B的session，然后在另一个A的页面执行操作，查看是否能成功。预期结果：有权限控制的操作，B不能执行A页面的操作，应该报错，没有权限控制的操作，B执行了A页面操作后，数据记录是B的而不是A的</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Session超时<ul>
-<li>基于Session原理，需要验证系统session是否有超时机制，还需要验证session超时后功能是否还能继续走下去</li>
-<li>测试方法：<ul>
-<li>打开一个页面，等着10分钟session超时时间到了，然后对页面进行操作，查看效果</li>
-<li>多TAB浏览器，在两个TAB页中都保留的是用户A的session记录，然后在其中一个TAB页执行退出操作，马上在另外一个页面进行要验证的操作，查看是能继续到下一步还是到登录页面</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjfgwwv100047v4wvfr13kv78" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-事务视图索引备份" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/09/事务视图索引备份/" class="article-date">
-  <time datetime="2018-03-09T10:10:58.000Z" itemprop="datePublished">2018-03-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/09/事务视图索引备份/">事务视图索引备份</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>事务视图索引备份</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>事务</h6><p></p>
-<ul>
-<li><p>事务是一个不可分割的工作逻辑单元 </p>
-<pre><code>begin;   #开始事务（指定事务从此处开始，后续的SQL语句都是一个整体）
-update bank set currentMoney=currentMoney-1000 
-where customerName=&apos;张三&apos;;
-update bank set currentMoney=currentMoney+1000 
-where customerName=&apos;李四&apos;;
-commit;  #提交事务，事务结束
-
-begin;
-update bank set currentMoney=currentMoney-1000 
-where customerName=&apos;张三&apos;;
-update bank set currentMoney=currentMoney+1000 
-where customerName=&apos;李四&apos;;
-rollback;  #回滚事务，数据恢复到原始状态
-
-#转账过程就是一个整体它需要两条UPDATE语句来完成，
-这两条语句是一个整体如果其中任一条出现错误，
-则整个转账业务也应取消，
-两个账户中的余额应恢复到原来的数据，
-从而确保转账前和转账后的余额不变，即都是1001元
-</code></pre></li>
-<li><p>事务必须具备以下四个属性，简称ACID 属性</p>
-<ul>
-<li>原子性（Atomicity）<ul>
-<li>事务是一个完整的操作，事务的各步操作是不可分的(原子的)，要么都执行，要么都不执行</li>
-</ul>
-</li>
-<li>一致性（Consistency）<ul>
-<li>当事务完成时，数据必须处于一致状态</li>
-</ul>
-</li>
-<li>隔离性（Isolation）<ul>
-<li>并发事务之间彼此隔离、独立，它不应以任何方式依赖于或影响其他事务</li>
-</ul>
-</li>
-<li>持久性（Durability）<ul>
-<li>事务完成后,它对数据库的修改被永久保持</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>事务关闭<ul>
-<li>默认情况下，每条单独的SQL语句视为一个事务，默认开启，即autocommit=1</li>
-<li>关闭开启自动提交状态 set autocommit=0|1,0为关闭自动提交</li>
-<li>关闭自动提交后，从下一条SQL语句开始则开启新事务，需使用commit或者rollback语句结束该事</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>视图</h6><p></p>
-<ul>
-<li>视图是一张虚拟表<ul>
-<li>表示一张表的部分数据或多张表的综合数据</li>
-<li>其结构和数据是建立在对表的查询基础上</li>
-</ul>
-</li>
-<li>视图中不存放数据<ul>
-<li>数据存放在视图所引用的原始表中</li>
-</ul>
-</li>
-<li>一个原始表，根据不同用户的不同需求，可以创建不同的视图</li>
-<li><p>对视图数据进行添加、更新和删除操作直接影响所引用表中的数据</p>
-<pre><code>#删除视图
-drop view if exists view_name;
-#创建视图
-create view view_name(
-    select ......
-)
-#查看视图
-select ... from view_name;
-</code></pre></li>
-</ul>
-<p></p><h6>索引</h6><p></p>
-<ul>
-<li>索引是一种有效组合数据的方式，为快速查找到指定记录</li>
-<li>作用<ul>
-<li>大大提高数据库的检索速度</li>
-<li>改善数据库性能</li>
-</ul>
-</li>
-<li><p>一般用的最多的就是主键索引和唯一索引</p>
-<ul>
-<li>一个主键将自动创建主键索引</li>
-<li><p>索引列数据不重复UNIQUE</p>
-<pre><code>create [UNIQUE] index index_stuName 
-on student(studentName)
-
-drop index index_name on table_name
-#删除表时，该表的所有索引同时会被删除
-
-show index from table_name   #查看索引
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>备份</h6><p></p>
-<ul>
-<li><p>mysqldump是DOS系统下的命令，<br>在使用时无须进入mysql命令行，否则将无法执行</p>
-<pre><code>mysqldump -uroot -p123456 mybank bank &gt;D:\Python\0309.sql
-#备份
-mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
-#还原
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjfgwwuzr003fv4wvky11gn8l" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-httpwatch" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/08/httpwatch/" class="article-date">
-  <time datetime="2018-03-08T05:49:23.000Z" itemprop="datePublished">2018-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/httpwatch/">httpwatch</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>httpwatch</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>HttpWatch是一个可用于录制HTTP请求信息的工具，由Simtec Limited公司开发，其官网为：Http://www.httpwatch.com，HttpWatch只支持IE和Firefox，也就是说只有当你用IE或Firefox访问网页时，它才会进行录制，不像Sniffer和Omnipeek那样监控所有数据，但对于网站分析来说，已经是不可多得的利器了</li>
-<li>HttpWatch是功能强大的网页数据分析工具，集成在IE工具栏，主要功能有网页摘要、cookies管理、缓存管理、消息头发送/接收，字符查询、POST数据、目录管理功能和报告输出。HttpWatch是一款能够收集并显示深层信息的软件，它不用代理服务器或一些复杂的网络监控工具，能够在显示网页的同时显示网页请求和回应的日志信息，甚至可以显示浏览器缓存和IE之间的交换信息，集成在IE工具栏</li>
-<li>HttpWatch有两部分组成： <ul>
-<li>1、一个是嵌入到IE或Firefox中用于收集、查看、保存HTTP信息的插件 </li>
-<li>2、一个是独立运行的日志查看器，叫做HttpWatch Studio</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>Time Chart</h6><p></p>
-<ul>
-<li>显示了一次请求应答过程中每个时间片段所花费的时间。一次完整的请求应答过程需要经历的时间片段如下：<br>Blocked-&gt;DNS Lookup-&gt;Connect    -&gt;Send -&gt;Wait    -&gt;Receive</li>
-<li>各时间片段含义如下：<ul>
-<li>Blocked（阻塞）：阻塞的时间主要包括预处理时间（如缓存查找）和网络排队等待时间，导致阻塞最主要原因是下载页面中的图片</li>
-<li>DNS Lookup（域名解释）：域名解释时间主要是将主机名（如www.google.com）转化为相应的IP地址（216.239.59.99）的时间，在访问URL地址时，地址本身不能被直接访问，需要将它对应为相应的IP地址才能访问</li>
-<li>Connect（连接）：连接时间是指与web服务器（或代理服务器）建立起TCP连接需要的时间，一个安全的HTTPS连接应该包含SSL握手的过程，让系统处于一种保持连接的状态，可以节约重复创建TCP连接的时间</li>
-<li>Send（发送）：发送时间是指从客户端发送HTTP请求到服务器所花费的时间，并且发送数据大小会影响发送的时间，如上传文件花费的时间就比较长</li>
-<li>Wait（等待）：等待时间是指服务器响应请求的时间，这个值包括网络延迟和服务器处理请求所花费的时间</li>
-<li>Receive（接收）：接收时间是指服务器返回数据到客户端所花费的时间，这个时间受所返回消息内容大小、网络带宽和HTTP压缩比的影响</li>
-<li>Cache Read（读cache）：读缓存时间是指从浏览器缓存中读取内容的时间</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>Headers</h6><p></p>
-<ul>
-<li><p>Headers Sent的内容如下：</p>
-<ul>
-<li>(Request-Line)：包括HTTP提交请求方法、HTTP版本和URL子路径</li>
-<li>Accept：可接受的文件类型，<em>/</em>表示所有</li>
-<li>Accept-Encoding：可接受的纯文本之外的内容编码的类型</li>
-<li>Accept-Language：可接受的返回数据的语言种类</li>
-<li>Connection：指定该次请求回应结束后，如何处理连接</li>
-<li>Cache-Control：指定请求和响应遵循的缓存机制</li>
-<li>Location：用于重定向接收者到一个新URL地址</li>
-<li>Host：请求连接的主机名</li>
-<li>User-Agent：客户端标识浏览器类型</li>
-</ul>
-</li>
-<li><p>Headers Received的内容如下：</p>
-<ul>
-<li>(Status-Line)：包括HTTP请求的状态码和HTTP版本信息</li>
-<li>Connection：指定该次请求回应结束后，如何处理连接</li>
-<li>Content-Language：内容数据的语言种类</li>
-<li>Content-Length：传输的内容长度</li>
-<li>Content-Type：内容数据的类型（Mini Type）</li>
-<li>Date：发送HTTP消息的日期</li>
-<li>Server：一种标明Web服务器软件及其版本号的</li>
-<li>X-Cache：表明你的http request是由proxy server回的</li>
-<li>Last-Modified：服务器上保存内容的最后修订时间</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjfgwwuy00029v4wv4uorq5fd" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
 
     </footer>
   </div>
@@ -1280,7 +1256,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; zurück</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1294,7 +1270,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1304,16 +1280,16 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.75px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.86px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.86px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 12.86px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.29px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.71px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.43px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.14px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.86px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1321,9 +1297,21 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/03/富文本、分页/">富文本、分页</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/02/scrapy选择器css、xpath/">scrapy选择器css、xpath</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/02/scrapy命令行详解/">scrapy命令行详解</a>
+          </li>
         
           <li>
             <a href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
@@ -1331,18 +1319,6 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
         
           <li>
             <a href="/2018/04/01/HTTP报文/">HTTP报文</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/29/scrapy基础了解/">scrapy基础了解</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/28/网络配置、系统查看/">网络配置、系统查看</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/28/vi-vim/">vi/vim</a>
           </li>
         
       </ul>
