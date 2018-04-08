@@ -70,6 +70,82 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-SQL注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/10/SQL注入/" class="article-date">
+  <time datetime="2018-03-10T14:12:52.000Z" itemprop="datePublished">2018-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/10/SQL注入/">SQL注入</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>SQL注入</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>概念</h6><p></p>
+<ul>
+<li>攻击者之所以可以利用自己输入的数据来达到攻击网站的目的，原因就在于SQL语言作为一种解释型语言，它的数据其实是由程序员编写的代码和用户提交的数据共同组成的。正是这个原因，攻击者可以构造对自己有利的数据，利用网站的一些SQL漏洞来达到恶意的目的</li>
+<li>SQL注入，就是指攻击者将恶意的字符串或者语句等信息作为参数输入，服务器在验证这个字段的时候，读取攻击者输入的数据，将其作为正常的值参与SQL语句的查询，试想，如果攻击者输入了一个字符串，在SQL语句执行之后，可以导致删除表等操作，对于一个应用来说，影响是很大的</li>
+<li>通过网页的输入项来注入SQL查询或命令是一种技巧。许多网页会从用户那里获取参数，并构建SQL查询来访问数据库。以用户登录为例，页面收集用户名和密码然后构建SQL去查询数据库，来校验用户名和密码的有效性。</li>
+</ul>
+<p></p><h6>简单实例</h6><p></p>
+<ul>
+<li>某网站的登录功能，用户登录页面需要填写用户名和密码，假设如果其中一个用户名和密码是admin和123456，当用户在相应的表单中输入正确的用户名和密码之后，此应用的相应函数执行一定的验证（验证用户名和密码是否匹配），服务器执行SQL语句（表名是user）：<code>select * from user where username=’username’ and pwd=’password’</code>，逻辑是如果这个查询语句返回结果不为0，则认为是验证通过，即可以登录成功的用户</li>
+<li>如果某用户输入admin和123456，即执行语句：select * from user where username=’admin’ and pwd=’123456’,执行结果不为0，所以用户登录成功</li>
+<li>如果一个用户输入test’ or 1=’1和111111，即执行语句：select * from user where username=’test’ or 1=’1’ and pwd=’111111’，因为此查询语句中1=’1’的结果为1，or 1=’1’使查询条件始终返回1，因此此语句的查询结果不为0，这样，此用户没有使用正确的用户名和密码也可以登录成功，这就是SQL注入的一个简单实例</li>
+</ul>
+<p></p><h6>SQL注入一般会出现在哪些地方</h6><p></p>
+<ul>
+<li>含有输入数据表单的页面（登录界面、查询界面、反馈界面等），即使是hidden的表单也有可能存在这个问题</li>
+<li>含有用户信息、ID等的URL（类似于<a href="http://XXX/index.asp?ID=155），可以操作ID后的参数数据" target="_blank" rel="noopener">http://XXX/index.asp?ID=155），可以操作ID后的参数数据</a></li>
+</ul>
+<p></p><h6>SQL注入的防范措施</h6><p></p>
+<ul>
+<li>从开发者的角度来说，防范措施如下<ul>
+<li>转义敏感字符及字符串<br>SQL的敏感字符包括： “exec”, “xp<em>”, “sp</em>”, “declare”, “cmd”, “Union”, “+”, “//”,              ”..”, “;”, “’”, “–”, “%”, “0x”, “&gt;&lt;=!-*/()|” ,和空格</li>
+<li>屏蔽出错信息：阻止攻击者知道攻击的结果</li>
+<li>在服务端正式处理之前提交数据的合法性(合法性检查主要包括三 项:数据类型,数据长度,敏感字符的校验)进行检查等。最根本的解决手段,在确认客 户端的输入合法之前,服务端拒绝进行关键性的处理操作</li>
+</ul>
+</li>
+<li>从测试人员的角度来说，防范措施是<ul>
+<li>在程序开发前(即需求阶段),我们就应该有意识的将安全性检查应用到需求测试中,例如对一个表单需求进行检查时,我们一般检验以下几项安全性问题:需求中应说明表单中某一field的类型,长度,以及取值范围(主要作用就是禁止输入敏感字符)；需求中应说明如果超出表单规定的类型,长度,以及取值范围的,应用程序应给出不包含任何代码或数据库信息的错误提示等</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjfqzxweq001wj4wvmegjn4ox" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-基本安全测试" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/10/基本安全测试/" class="article-date">
@@ -196,7 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjfji2uh8004aagwvyp7ah7hv" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjfqzxwih0047j4wvek7sc0pm" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -347,7 +423,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjfji2ufx003hagwveq2sg9gz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjfqzxwhm003nj4wvmm4e266r" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -446,7 +522,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjfji2uem002gagwv75vsh9tj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjfqzxwfi002ej4wvryqhpb7e" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
@@ -489,7 +565,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/20180308002/" data-id="cjfji2uap0000agwv3jywzp9o" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/20180308002/" data-id="cjfqzxwb10000j4wvawnf9i1i" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -612,7 +688,7 @@ driver.quit()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjfji2udb001iagwv74jfmggb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjfqzxwe5001ij4wv0o1339es" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -728,7 +804,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjfji2uhn004oagwv9967fcke" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjfqzxwjd004nj4wv96f2d6zd" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -829,7 +905,7 @@ and kcm=&apos;QTP&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjfji2uiy005oagwvjl0xqt05" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjfqzxwks005lj4wvfxpqn2ro" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -960,7 +1036,7 @@ print(&apos;End send email...&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjfji2ugs0042agwviqiuh1ks" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjfqzxwib0043j4wvinurgd2i" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -1159,188 +1235,10 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjfji2ugc0040agwvj26fswoz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjfqzxwhy003vj4wvj5gwhnum" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-DML和DQL" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/02/DML和DQL/" class="article-date">
-  <time datetime="2018-03-02T08:50:44.000Z" itemprop="datePublished">2018-03-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/02/DML和DQL/">DML和DQL</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>DML和DQL</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>DML</h6><p></p>
-<ul>
-<li><p>存储引擎</p>
-<ul>
-<li><p>存储引擎的类型：MyISAM、InnoDB、Memory、CSV等9种</p>
-<ul>
-<li>默认InnoDB，支持事务处理、数据行锁定、外键约束，表空间较大</li>
-<li>MyISAM，支持全文索引，表空间较小，以查询访问为主</li>
-<li>查看当前默认存储引擎<code>show variables like &#39;storage_engine%&#39;</code></li>
-<li>可以在配置文件my.ini中修改存储引擎<code>default-storage-engine=?</code></li>
-<li><p>设置表的存储引擎</p>
-<pre><code>create table 表名(
-    省略代码
-)engine=存储引擎
-</code></pre></li>
-</ul>
-</li>
-<li>MyISAM类型表文件<ul>
-<li>*.frm：表结构定义文件</li>
-<li>*.MYD：数据文件</li>
-<li>*.MYI：索引文件</li>
-</ul>
-</li>
-<li>InnoDB类型表文件<ul>
-<li>*.frm：表结构定义文件</li>
-<li>ibdata1文件</li>
-</ul>
-</li>
-<li>存储位置，可查my.ini中的<code>datadir</code></li>
-</ul>
-</li>
-<li><p>DML语句</p>
-<ul>
-<li><p>插入单条数据记录</p>
-<pre><code>insert into 表名(字段1,字段2,字段3...) values(值1,值2,值3...)
-#如果插入所有字段可省略字段名，如果是部分数据，字段名与值需要一一对应
-</code></pre></li>
-<li><p>插入多条数据记录</p>
-<pre><code>insert into 表名(字段1,字段2,字段3...) values(值1,值2,...),(值3,值4,...),(值5,值6,...)
-</code></pre></li>
-<li><p>将查询结果插入新表</p>
-<pre><code>create table 新表(        #自动创建一个新表
-    select 字段1,字段2 from 表名
-)
-</code></pre></li>
-<li><p>更新数据记录</p>
-<pre><code>update 表名 set 字段1=值1,字段2=值2,... where 条件
-</code></pre></li>
-<li><p>删除数据记录</p>
-<pre><code>delete from 表名 where 条件
-truncate table 表名   #该语句删除后将重置自增列，表结构及其字段、约束、索引保持不变，执行速度比delete语句快
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>DQL</h6><p></p>
-<ul>
-<li><p>什么是查询<br>查询产生一个虚拟表，看到的是表形式显示的结果，但结果并不真正存储，每次执行查询只是从数据表中提取数据，并按照表的形式显示出来</p>
-<pre><code>SELECT    &lt;列名|表达式|函数|常量&gt; 
-FROM      &lt;表名&gt; 
-[WHERE    &lt;查询条件表达式&gt;] 
-[ORDER BY &lt;排序的列名&gt;[ASC或DESC]]
-
-select studentNo as &apos;学生编号&apos;,studentName as &apos;学生姓名&apos;
-from student 
-where sex=&apos;男&apos; and gradeID=1 
-order by studentNo desc
-</code></pre></li>
-<li><p>聚合函数</p>
-<pre><code>avg() 返回某字段的平均值
-count()返回某字段的行数
-max()返回某字段的最大值
-min()返回某字段的最小值
-sum()返回某字段的和
-
-select avg(studentResult) from result
-</code></pre></li>
-<li><p>字符串函数</p>
-<pre><code>字符串连接concat(str1,str2,...)
-select CONCAT(&apos;Liu&apos;,&apos;Yong&apos;,&apos;qian&apos;,2018)  #result:LiuYongqian2018
-
-字符串替换insert(str,start,length,newstr)
-select INSERT(&apos;ABCDEFGHIJK&apos;,3,5,&apos;9&apos;)     #result:AB9HIJK
-
-将字符串转为小写lower(str)
-select lower(&apos;LIUYONGQIAN&apos;)                #result:liuyongqian
-
-将字符串转为大写upper(str)
-select upper(&apos;liuyongqian&apos;)                #result:LIUYONGQIAN
-
-字符串截取substring(str,start,length)
-select SUBSTRING(&apos;LiuYongqian&apos;,4,4)      #result:Yong
-</code></pre></li>
-<li><p>时间日期函数</p>
-<pre><code>curdate()获取当前日期
-select curdate()      #result:2018-01-01
-
-curtime() 获取当前时间
-select curtime()      #result:12:12:12
-
-now()获取当前日期和时间
-select now()          #result:2018-03-01 12:44:24
-
-week(date) 返回日期date为一年中的第几周
-select week(now())    #result:2
-
-year(date)返回日期date的年份
-select year(now())     #result:2018
-
-hour(time)返回时间time的小时值
-select hour(now())     #result:19
-
-minute(time)返回时间time的分钟值
-select minute(now())   #result:48
-
-datediff(date1,date2)返回参数之间相隔的天数
-select datediff(now(),&apos;2008-8-8&apos;)  #result:3493
-
-adddate(date，n)计算日期date加上n天后的日期
-select adddate(now(),5)  #result:2018-03-30 19:48:44
-</code></pre></li>
-<li><p>数学函数</p>
-<pre><code>ceil(x)返回大于或等于数值x的最小整数 
-select ceil(2.3)      #result:3
-
-floor(x)返回小于或等于数值x的最大整数
-select floor(2.3)     #result:2
-
-rand()返回0-1之间的随机数
-select rand()         #result:0.8155794216465013
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjfji2ubl0009agwv7lhnxxna" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
 
     </footer>
   </div>
@@ -1369,7 +1267,7 @@ select rand()         #result:0.8155794216465013
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1379,7 +1277,7 @@ select rand()         #result:0.8155794216465013
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.86px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.86px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 12.86px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.29px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.71px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.43px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.14px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.86px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.33px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.67px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.67px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.33px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.67px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.33px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
     </div>
   </div>
 
@@ -1388,7 +1286,7 @@ select rand()         #result:0.8155794216465013
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1399,6 +1297,10 @@ select rand()         #result:0.8155794216465013
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/08/爬虫之Mongodb常用命令/">爬虫之Mongodb常用命令</a>
+          </li>
         
           <li>
             <a href="/2018/04/03/富文本、分页/">富文本、分页</a>
@@ -1414,10 +1316,6 @@ select rand()         #result:0.8155794216465013
         
           <li>
             <a href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/01/HTTP报文/">HTTP报文</a>
           </li>
         
       </ul>

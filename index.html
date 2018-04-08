@@ -70,6 +70,155 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-爬虫之Mongodb常用命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/08/爬虫之Mongodb常用命令/" class="article-date">
+  <time datetime="2018-04-08T00:16:31.000Z" itemprop="datePublished">2018-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/08/爬虫之Mongodb常用命令/">爬虫之Mongodb常用命令</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>爬虫之Mongodb常用命令</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>连接数据库</h6><p></p>
+<ul>
+<li>连接数据库，参数为空的话默认ip为localhost，端口为27017</li>
+<li><p>一下三种结果都一样</p>
+<pre><code>from pymongo import MongoClient
+import datetime
+client=MongoClient()
+client=MongoClient(&apos;localhost&apos;,27017)
+client=MongoClient(&apos;mongodb://localhost:27017/&apos;)  #使用url格式连接数据库
+</code></pre></li>
+<li><p>连接指定的数据库</p>
+<pre><code>db=client.firstdb
+db=client[&apos;firstdb&apos;]
+</code></pre></li>
+<li><p>连接指定的集合</p>
+<pre><code>test1=db.student
+test1=db[&apos;student&apos;]
+</code></pre></li>
+</ul>
+<p></p><h6>插入文档</h6><p></p>
+<ul>
+<li><p>插入单条文档</p>
+<pre><code>data1={
+    &apos;name&apos;:&apos;gouzenggong&apos;,
+    &apos;text&apos;:&apos;MY first blog post&apos;,
+    &apos;tags&apos;:[&apos;mongo&apos;,&apos;python&apos;,&apos;pymongo&apos;],
+    &apos;date&apos;:datetime.datetime.now()
+    }
+test1.insert_one(data1)
+</code></pre></li>
+<li><p>查找单条文档</p>
+<pre><code>test1.find_one()
+test1.find_one({&apos;name&apos;:&apos;gouzenggong&apos;})   #指定条件查询，如果未查到，返回空
+
+#如果指定id查询，则需要这样做
+from bson.objectid import ObjectId
+test1.find_one({&apos;_id&apos;:ObjectId(&apos;5ac8df4eb09c061dfc517988&apos;)})
+</code></pre></li>
+<li><p>插入多条文档</p>
+<pre><code>data2=[
+    {
+    &apos;name&apos;:&apos;zhangsan&apos;,
+    &apos;text&apos;:&apos;MY second blog post&apos;,
+    &apos;tags&apos;:[&apos;python&apos;,&apos;pymongo&apos;],
+    &apos;date&apos;:datetime.datetime.now()
+    },
+    {
+    &apos;name&apos;:&apos;gouzenggong&apos;,
+    &apos;text&apos;:&apos;MY three blog post&apos;,
+    &apos;tags&apos;:[&apos;mongo&apos;,&apos;pymongo&apos;],
+    &apos;date&apos;:datetime.datetime.now()
+    }
+]
+test1.insert_many(data2)
+</code></pre></li>
+<li><p>查找多条文档</p>
+<pre><code>#查询所有结果
+for i in test1.find():
+    print(i)
+
+#查询指定结果
+for i in test1.find({&apos;name&apos;:&apos;gouzenggong&apos;}):
+    print(i)
+
+#查询总数
+test1.count()
+
+#查询指定的条数
+test1.find({&apos;name&apos;:&apos;gouzenggong&apos;}).count()
+</code></pre></li>
+</ul>
+<p></p><h6>更新文档</h6><p></p>
+<ul>
+<li><p>如果有找到x=1，则改成x=3，否则插入{‘x’:3}，单条</p>
+<pre><code>test2=db.teacher    #连接一个新的集合
+data3=[
+    {&apos;x&apos;:1},{&apos;x&apos;:1},{&apos;x&apos;:1}
+]
+test2.insert_many(data3)
+
+test2.update_one({&apos;x&apos;:1},{&apos;$set&apos;:{&apos;x&apos;:3}},upsert=True) #可以发现已经把其中一条改为x=3
+</code></pre></li>
+<li><p>如果找到x=4，则改成x=333，否则插入{‘x’:333}，单条</p>
+<pre><code>#文档中是没有x=4的
+test2.update_one({&apos;x&apos;:4},{&apos;$set&apos;:{&apos;x&apos;:333}},upsert=True) #可以发现新增了一条{&apos;x&apos;:333}
+</code></pre></li>
+<li><p>如果找到x=1，则改成x=’many’，否则插入{‘x’:’many’}，多条</p>
+<pre><code>test2.update_many({&apos;x&apos;:1},{&apos;$set&apos;:{&apos;x&apos;:&apos;many&apos;}},upsert=True) #可以发现已经把所有x=1改成了x=many
+</code></pre></li>
+<li><p>如果找到x=4，则改成{‘x’:1,’y’；2}，否则插入{‘x’:1,’y’:2}，多条</p>
+<pre><code>#文档中是没有x=4的
+test2.update_many({&apos;x&apos;:4},{&apos;$set&apos;:{&apos;x&apos;:1,&apos;y&apos;:2}},upsert=True) #可以发现新增一条文档
+</code></pre></li>
+</ul>
+<p></p><h6>小结</h6><p></p>
+<ul>
+<li>爬虫常用到的三条插入语句：（以test2为集合名）<ul>
+<li>test2.insert_one(data)  插入一条文档</li>
+<li>test2.insert_many(data-list) 插入多条文档</li>
+<li>test2.update_one({‘x’:1},{‘$set’:{‘x’:3}},upsert=True)一般会在防止重复性的数据被存放到数据库内要用的</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjfqzxwjn004tj4wvf4sr7cm8" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-富文本、分页" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/03/富文本、分页/" class="article-date">
@@ -259,7 +408,7 @@ def getAll(num):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjfji2uh8004eagwvbi1qqyeq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjfqzxwil0049j4wvp1dxna0u" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -363,7 +512,7 @@ response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjfji2ufh0037agwv8f41jhwe" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjfqzxwgu0037j4wvo7y4xfou" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -438,7 +587,7 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjfji2uf20032agwvgrbu23od" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjfqzxwgj0030j4wvms8dfck4" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -579,7 +728,7 @@ def fabu(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjfji2ugs0044agwvj35x6pzq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjfqzxwi4003zj4wv38li7nsb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -803,7 +952,7 @@ Last-Modified 　 这个实体最后一次被修改的日期和时间
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjfji2ucg000vagwvvnm90vvo" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjfqzxwd6000vj4wvnlry7nqa" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
@@ -962,7 +1111,7 @@ ITEM_PIPELINES = {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjfji2ufh0035agwvyt8a2l8t" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjfqzxwgr0035j4wvpxos4md1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1050,7 +1199,7 @@ free -m 显示内存使用情况
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjfji2ui3004yagwvow14jner" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjfqzxwjt004xj4wv0c20kvms" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -1152,7 +1301,7 @@ Ctrl+r    恢复撤销
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjfji2ufx003kagwvlir9p3pb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjfqzxwhc003hj4wvcf3hxdfl" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -1305,102 +1454,10 @@ tail -n 数字 文件名      #规定显示最后几行
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjfji2uem002jagwvpn37x2nr" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjfqzxwft002lj4wvdpflrimk" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-session会话" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/28/session会话/" class="article-date">
-  <time datetime="2018-03-28T09:01:57.000Z" itemprop="datePublished">2018-03-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/28/session会话/">session会话</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>session会话</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>在我们登录成功之后，我们需要把用户信息显示在页面上，并且在跳转到别的页面的时候，这个用户依然是已经登录的状态浏览器可以识别，这就需要session 会话作用域</li>
-<li>django session的设计原理<ul>
-<li>a、如果用户是第一次请求（就看客户端ie是否保存了sessionId的cookie）<br>创建session model <br>生成一个key sessionId 随机的一个字符串（uuid使id永远也不会重复）<br>保存到你session_engine指定位置<br>保存到cookie中，在客户的浏览器中</li>
-<li>b、如果第二次以上的请求，客户端ie都会自动提交cookie到django中，django中利用你配置的SessionMiddleware中间件激活session利用cookie中的sessionID到session_engine指定位置读取session model，并设置到request的session属性上<br>正是因为这样才能在view里面通过request.session使用session</li>
-<li>session只能储存json也就是字典类型的数据; session本身就是一个dict字段;session在存数据时数据必须支持序列化json</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>步骤</h6><p></p>
-<ul>
-<li><p>1.installed_apps</p>
-<pre><code>#settings.py
-INSTALLED_APPS = [
-    &apos;django.contrib.sessions&apos;,
-]
-</code></pre></li>
-<li><p>2.中间件（帮我们启用session）</p>
-<pre><code>#settings.py
-MIDDLEWARE = [
-   &apos;django.contrib.sessions.middleware.SessionMiddleware&apos;,
-]
-</code></pre></li>
-<li><p>3.设置存储形式（储存在设置数据库中）</p>
-<pre><code>makemigrations sessions
-migrate
-</code></pre></li>
-<li><p>4.引用 request.session</p>
-<pre><code>#views.py
-def login(request):
-    if request.method==&quot;GET&quot;:
-        return render(request,&apos;login.html&apos;,{})
-    else:
-        username=request.POST.get(&apos;username&apos;)
-        pwd=request.POST.get(&apos;pwd&apos;)
-        BlogUserSet = BlogUser.objects.filter(username=username,pwd=pwd)
-        if len(BlogUserSet)==1:
-            session=request.session
-            session[&apos;user&apos;]={&apos;username&apos;:BlogUserSet.first().username}
-            return redirect(reverse(&apos;user:welcome&apos;))
-            #return redirect(reverse(&apos;user:welcome&apos;,args=[BlogUserSet.first().id]))
-        else:
-            return render(request,&apos;login.html&apos;,{&apos;username&apos;:username,&apos;error&apos;:&apos;用户名或者密码错误！&apos;})
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjfji2ufh003cagwv0lmabawd" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
 
     </footer>
   </div>
@@ -1429,7 +1486,7 @@ def login(request):
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1439,7 +1496,7 @@ def login(request):
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.86px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.86px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 12.86px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.29px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.71px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.43px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 17.14px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.86px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.33px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.67px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.67px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.33px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.67px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.33px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
     </div>
   </div>
 
@@ -1448,7 +1505,7 @@ def login(request):
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1459,6 +1516,10 @@ def login(request):
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/08/爬虫之Mongodb常用命令/">爬虫之Mongodb常用命令</a>
+          </li>
         
           <li>
             <a href="/2018/04/03/富文本、分页/">富文本、分页</a>
@@ -1474,10 +1535,6 @@ def login(request):
         
           <li>
             <a href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/01/HTTP报文/">HTTP报文</a>
           </li>
         
       </ul>
