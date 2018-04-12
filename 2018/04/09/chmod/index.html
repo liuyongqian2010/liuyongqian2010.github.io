@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>chmod | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="chmod  简介  chmod(Change mode) 用来将每个文件的模式更改为指定值。Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他 u:目录或者文件的当前的用户 g:目录或者文件的当前的群组 o:除了目录或者文件的当前用户或者群组之外的用户或者群组 a:所有的用户和群组   Linux的文件基本上分为三个属性：可读(r)，可写(w)，可执行(x) 权限对文件的重">
+<meta name="keywords" content="Linux学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="chmod">
+<meta property="og:url" content="http://yoursite.com/2018/04/09/chmod/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="chmod  简介  chmod(Change mode) 用来将每个文件的模式更改为指定值。Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他 u:目录或者文件的当前的用户 g:目录或者文件的当前的群组 o:除了目录或者文件的当前用户或者群组之外的用户或者群组 a:所有的用户和群组   Linux的文件基本上分为三个属性：可读(r)，可写(w)，可执行(x) 权限对文件的重">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-11T01:14:52.489Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="chmod">
+<meta name="twitter:description" content="chmod  简介  chmod(Change mode) 用来将每个文件的模式更改为指定值。Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他 u:目录或者文件的当前的用户 g:目录或者文件的当前的群组 o:除了目录或者文件的当前用户或者群组之外的用户或者群组 a:所有的用户和群组   Linux的文件基本上分为三个属性：可读(r)，可写(w)，可执行(x) 权限对文件的重">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-chmod" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/09/chmod/" class="article-date">
+  <time datetime="2018-04-09T10:05:31.000Z" itemprop="datePublished">2018-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      chmod
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>chmod</h5><p></p>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>chmod(Change mode) 用来将每个文件的模式更改为指定值。Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他<ul>
+<li>u:目录或者文件的当前的用户</li>
+<li>g:目录或者文件的当前的群组</li>
+<li>o:除了目录或者文件的当前用户或者群组之外的用户或者群组</li>
+<li>a:所有的用户和群组</li>
+</ul>
+</li>
+<li>Linux的文件基本上分为三个属性：可读(r)，可写(w)，可执行(x)<ul>
+<li>权限对文件的重要性<ul>
+<li>r (read) 4：可读取此文件的实际内容，如读取文本文件的文字内容等 </li>
+<li>w (write) 2：可以编辑、新增或者是修改该文件的内容(但不含删除该文件)</li>
+<li>x (execute) 1：该文件具有可以被系统执行的权限。linux下文件是否可以执行和扩展名无关</li>
+</ul>
+</li>
+<li>权限对目录的重要性<ul>
+<li>r：表示具有读取目录结构列表的权限，可以查询该目录下的文件名数据，可以利用 ls 这个指令将该目录的内容列表显示出来</li>
+<li>w：表示具有移动该目录结构列表的权限，也就是这些权限：<ul>
+<li>建立新的文件与目录</li>
+<li>删除已经存在的文件与目录(不论该文件的权限为何！) </li>
+<li>将已存在的文件或目录进行更名</li>
+<li>搬移该目录内的文件、目录位置</li>
+</ul>
+</li>
+<li>x：目录不可以被执行，目录的x代表的是用户能否进入该目录成为工作目录的用途！ 所谓的工作目录(work directory)就是你目前所在的目录！举例来说，当你登入Linux时， 你所在的家目录就是你当下的工作目录</li>
+</ul>
+</li>
+<li>以rwx(Owner)r-x(Group)r-x(Other)为例：这个例子表示的权限是：使用者自己可读，可写，可执行;同一组的用户可读，不可写，可执行;其它用户可读，不可写，可执行</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>使用</h6><p></p>
+<ul>
+<li>文字设定法<ul>
+<li>chmod [u、g、o、a] [+（加入）、-（除去）、=（设定）] [r、w、x] [文件或者目录]</li>
+</ul>
+</li>
+<li>数字设定法<ul>
+<li>按照顺序（u）（g）（o），将权限转换成3个从0到7的八进制数字，如若要rwx属性则4+2+1=7 ; 若要rw-属性则4+2=6</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>示例</h6><p></p>
+<ul>
+<li><p>查看权限ll</p>
+<pre><code>-rw-r--r-- 1 root root 0 4月  24 15:24 backup.sh
+</code></pre></li>
+<li><p>将backup.sh设定为只有该档案拥有者可以执行</p>
+<pre><code>chmod u+x backup.sh
+</code></pre></li>
+<li><p>同时修改不同用户权限</p>
+<pre><code>chmod ug+w,o-x backup.sh
+</code></pre></li>
+<li><p>删除文件权限</p>
+<pre><code>chmod a-x backup.sh
+</code></pre></li>
+<li><p>使用“=”设置权限</p>
+<pre><code>chmod u=x backup.sh
+</code></pre></li>
+<li><p>根据数字修改权限</p>
+<pre><code>chmod 745 backup.sh
+</code></pre></li>
+<li><p>将目前目录下的所有档案与子目录皆设为任何人可读取</p>
+<pre><code>chmod -R a+r *
+</code></pre></li>
+</ul>
+<p>##参考大神佳作<a href="https://www.cnblogs.com/xqzt/p/5433022.html" target="_blank" rel="noopener">每天一个linux命令:chmod</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjfwo86le002m3owvgtbaq3vi" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/11/jdk部署/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          jdk部署
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/08/爬虫之Mongodb常用命令/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">爬虫之Mongodb常用命令</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 12.86px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.86px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 17.14px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.29px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.71px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.43px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.57px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.86px;">自动化测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/04/12/linux文件的打包、压缩/">linux文件的打包、压缩</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/11/jdk部署/">jdk部署</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/09/chmod/">chmod</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/08/爬虫之Mongodb常用命令/">爬虫之Mongodb常用命令</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/03/富文本、分页/">富文本、分页</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 刘永前<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,316 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-linux文件的打包、压缩" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/12/linux文件的打包、压缩/" class="article-date">
+  <time datetime="2018-04-12T13:37:47.000Z" itemprop="datePublished">2018-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/12/linux文件的打包、压缩/">linux文件的打包、压缩</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>linux文件的打包、压缩</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>Linux常见的压缩文件扩展名</h6><p></p>
+<ul>
+<li>.gz　　    gzip压缩的文件</li>
+<li>.bz2　　    bzip2压缩的文件</li>
+<li>.tar　　    tar程序打包的文件</li>
+<li>.tar.gz　　tar程序打包，gzip压缩的文件</li>
+<li>.tar.bz2　　tar程序打包，bzip2压缩的文件</li>
+</ul>
+<p></p><h6>gzip命令</h6><p></p>
+<ul>
+<li><p>使用最广的解压缩命令，可以解开zip，gzip压缩过的文件</p>
+<pre><code>gzip  [-cdtv#]  [文件名] &gt; [压缩后文件名]
+-c　　：将压缩的数据输出到屏幕上，通过数据流重定向来处理
+-d　　：解压缩参数
+-t　　：用来检验压缩文件的一致性，看看文件是否有错误
+-v　　：输出文件压缩比等信息
+-#　　：压缩等级０－９，１－９压缩比增大速度变慢，默认为６
+</code></pre></li>
+<li><p>示例</p>
+<pre><code>gzip -cv data1.txt &gt; data1.gz  (压缩)
+gzip -d data1.gz               (解压)
+</code></pre></li>
+</ul>
+<p></p><h6>bzip2命令</h6><p></p>
+<ul>
+<li><p>比gzip压缩更好的压缩命令</p>
+<pre><code>bzip2   [-cdkzv#]　文件名
+-c　　：将压缩过程中产生的数据输出到屏幕上
+-d　　：解压缩的参数
+-k　　：保留原文件
+-z　　：压缩的参数
+-v　　:可以显示出原文件/压缩文件的压缩比
+-#　　：同gzip
+</code></pre></li>
+<li><p>示例</p>
+<pre><code>如果使用的linux的版本是centos7的话需要yum install bzip2
+bzip2 -kzv data.txt      (压缩)
+bzip2 -d data.txt.bz2    (解压)
+</code></pre></li>
+</ul>
+<p></p><h6>tar命令</h6><p></p>
+<ul>
+<li><p>哈哈，这个比较多，也更加实用</p>
+<pre><code>tar　[-j|z]  [-cv]  [-f  新建的文件名]  filename 　　//打包与压缩
+tar  [-j|z]  [-tv]  [-f  新建的文件名]  filename　　//查看文件名
+tar  [-j|z]　[-xv]  [-f  新建的文件名]　[-C 目录]　　//解压缩
+
+参数：
+-c　　：新建打包文件
+-t　　：查看打包文件的内容中有那些文件名
+-x　　：解打包或解压缩
+以上3条不可出现在同一串命令中
+-j　　：通过bzip2的支持来压缩/解压缩
+-z　　：通过gzip的支持来压缩/解压缩
+-v　　：压缩/解压缩过程中显示正在处理的文件名
+-f　　：后面接要处理的文件名
+-C　　：特定目录解压
+-p　　：保留备份数据的　原本权限与属性
+</code></pre></li>
+<li><p>重点说一下常用到的命令</p>
+<pre><code>gzip压缩：tar  -zcvf  filename.tar.gz  要压缩的文件目录或名称
+gzip解压：tar  -zxvf  filename.tar.gz　-C　解压的目录
+gzip查看：tar  -zcvf  filename.tar.gz　
+bzip2压缩：tar  -jcvf  filename.tar.bz2  要压缩的文件目录或名称
+bzip2解压：tar  -jxvf  filename.tar.bz2　-C　解压的目录
+bzip2查看：tar  -jcvf  filename.tar.bz2　
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjfwo86li002p3owvfp2fvms2" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-jdk部署" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/11/jdk部署/" class="article-date">
+  <time datetime="2018-04-11T11:48:13.000Z" itemprop="datePublished">2018-04-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/11/jdk部署/">jdk部署</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>jdk部署</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>echo遍历、输出、打印</h6><p></p>
+<ul>
+<li><p>输出</p>
+<pre><code>name=&apos;hadoop&apos;(定义变量)
+echo $name（输出变量值）
+</code></pre></li>
+<li><p>重定向、覆盖</p>
+<pre><code>touch data1.txt(里面有内容)
+echo ookk &gt; data1.txt(此时文件中内容被“ookk”覆盖)
+</code></pre></li>
+<li><p>追加</p>
+<pre><code>touch data2.txt(里面有内容)
+echo ookk &gt;&gt;data2.txt(此时文件末尾追加字段“ookk”)
+</code></pre></li>
+</ul>
+<p></p><h6>jdk部署</h6> <p></p>
+<ul>
+<li><p>按照课堂讲解内容整理</p>
+<pre><code>1.root下新建用户useradd hadoop,并给用户hadoop设置密码passwd hadoop
+2.切换到hadoop下，su hadoop之后cd /home/hadoop下，即工作区；或者使用hadoop登录，默认进入工作区
+3.新建目录mkdir opt
+4.将文件jdk-8u152-linux-x64.tar.gz解压到opt目录下，命令为：
+tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
+5.配置jdk（两种方式）
+    第一种：在hadoop的主目录下，vi .bashrc后添加：
+        export JAVA_HOME=/home/hadoop/opt/jdk1.8.0_152
+        export PATH=$JAVA_HOME/bin:$PATH
+        source ~/.bashrc刷新
+    第二种：以追加的形式，hadoop用户
+        cd /opt/jdk1.8.0_152下，
+        设置变量java_home=`pwd`，
+        echo export JAVA_HOME=$java_home &gt;&gt; ~/.bashrc
+        echo export PATH=\$JAVA_HOME\/bin:\$PATH &gt;&gt; ~/.bashrc
+        追加之后刷新source ~/.bashrc
+6.输入java -version查看是否配置成功
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/11/jdk部署/" data-id="cjfwo86lc002k3owv8orl8dls" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-chmod" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/09/chmod/" class="article-date">
+  <time datetime="2018-04-09T10:05:31.000Z" itemprop="datePublished">2018-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/09/chmod/">chmod</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>chmod</h5><p></p>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>chmod(Change mode) 用来将每个文件的模式更改为指定值。Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他<ul>
+<li>u:目录或者文件的当前的用户</li>
+<li>g:目录或者文件的当前的群组</li>
+<li>o:除了目录或者文件的当前用户或者群组之外的用户或者群组</li>
+<li>a:所有的用户和群组</li>
+</ul>
+</li>
+<li>Linux的文件基本上分为三个属性：可读(r)，可写(w)，可执行(x)<ul>
+<li>权限对文件的重要性<ul>
+<li>r (read) 4：可读取此文件的实际内容，如读取文本文件的文字内容等 </li>
+<li>w (write) 2：可以编辑、新增或者是修改该文件的内容(但不含删除该文件)</li>
+<li>x (execute) 1：该文件具有可以被系统执行的权限。linux下文件是否可以执行和扩展名无关</li>
+</ul>
+</li>
+<li>权限对目录的重要性<ul>
+<li>r：表示具有读取目录结构列表的权限，可以查询该目录下的文件名数据，可以利用 ls 这个指令将该目录的内容列表显示出来</li>
+<li>w：表示具有移动该目录结构列表的权限，也就是这些权限：<ul>
+<li>建立新的文件与目录</li>
+<li>删除已经存在的文件与目录(不论该文件的权限为何！) </li>
+<li>将已存在的文件或目录进行更名</li>
+<li>搬移该目录内的文件、目录位置</li>
+</ul>
+</li>
+<li>x：目录不可以被执行，目录的x代表的是用户能否进入该目录成为工作目录的用途！ 所谓的工作目录(work directory)就是你目前所在的目录！举例来说，当你登入Linux时， 你所在的家目录就是你当下的工作目录</li>
+</ul>
+</li>
+<li>以rwx(Owner)r-x(Group)r-x(Other)为例：这个例子表示的权限是：使用者自己可读，可写，可执行;同一组的用户可读，不可写，可执行;其它用户可读，不可写，可执行</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>使用</h6><p></p>
+<ul>
+<li>文字设定法<ul>
+<li>chmod [u、g、o、a] [+（加入）、-（除去）、=（设定）] [r、w、x] [文件或者目录]</li>
+</ul>
+</li>
+<li>数字设定法<ul>
+<li>按照顺序（u）（g）（o），将权限转换成3个从0到7的八进制数字，如若要rwx属性则4+2+1=7 ; 若要rw-属性则4+2=6</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>示例</h6><p></p>
+<ul>
+<li><p>查看权限ll</p>
+<pre><code>-rw-r--r-- 1 root root 0 4月  24 15:24 backup.sh
+</code></pre></li>
+<li><p>将backup.sh设定为只有该档案拥有者可以执行</p>
+<pre><code>chmod u+x backup.sh
+</code></pre></li>
+<li><p>同时修改不同用户权限</p>
+<pre><code>chmod ug+w,o-x backup.sh
+</code></pre></li>
+<li><p>删除文件权限</p>
+<pre><code>chmod a-x backup.sh
+</code></pre></li>
+<li><p>使用“=”设置权限</p>
+<pre><code>chmod u=x backup.sh
+</code></pre></li>
+<li><p>根据数字修改权限</p>
+<pre><code>chmod 745 backup.sh
+</code></pre></li>
+<li><p>将目前目录下的所有档案与子目录皆设为任何人可读取</p>
+<pre><code>chmod -R a+r *
+</code></pre></li>
+</ul>
+<p>##参考大神佳作<a href="https://www.cnblogs.com/xqzt/p/5433022.html" target="_blank" rel="noopener">每天一个linux命令:chmod</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjfwo86le002m3owvgtbaq3vi" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-爬虫之Mongodb常用命令" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -205,7 +515,7 @@ test2.update_many({&apos;x&apos;:4},{&apos;$set&apos;:{&apos;x&apos;:1,&apos;y&a
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjfqzxwjn004tj4wvf4sr7cm8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjfwo86pc00533owvjefwsmv2" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -408,7 +718,7 @@ def getAll(num):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjfqzxwil0049j4wvp1dxna0u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjfwo86of004f3owvc9a94w1r" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -512,7 +822,7 @@ response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjfqzxwgu0037j4wvo7y4xfou" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjfwo86ml003f3owv4wh6tn1w" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -587,7 +897,7 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjfqzxwgj0030j4wvms8dfck4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjfwo86mi003d3owvic32nmqa" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -728,7 +1038,7 @@ def fabu(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjfqzxwi4003zj4wv38li7nsb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjfwo86o100473owvocrjplhg" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -952,7 +1262,7 @@ Last-Modified 　 这个实体最后一次被修改的日期和时间
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjfqzxwd6000vj4wvnlry7nqa" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjfwo86ix000x3owvpb189686" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
@@ -1111,353 +1421,10 @@ ITEM_PIPELINES = {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjfqzxwgr0035j4wvpxos4md1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjfwo86mf003b3owvrx6k1idk" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-网络配置、系统查看" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/28/网络配置、系统查看/" class="article-date">
-  <time datetime="2018-03-28T15:00:41.000Z" itemprop="datePublished">2018-03-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/28/网络配置、系统查看/">网络配置、系统查看</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>网络配置、系统查看</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>网络配置</h6><p></p>
-<ul>
-<li>VMware的三种网络连接方式区别</li>
-<li>桥接模式<ul>
-<li>在局域网内，虚拟机和宿主机视为两台PC机；可以单独通过局域网网关或者路由访问外网</li>
-<li>利用相同的网关网段配置，Bridged可用来配置集群</li>
-</ul>
-</li>
-<li>NAT（网络地址转换）<ul>
-<li>NAT方式使虚拟机接入外网方便，不需要进行其他配置，只需要物理主机可以上网即可</li>
-<li>NAT模式下的虚拟系统的TCP/IP配置信息是由VMnet8(NAT)虚拟网络的DHCP服务器提供的，无法进行手工修改，因此虚拟系统也就无法和本局域网中的其他真实主机进行通讯</li>
-<li>不能用NAT配置集群</li>
-</ul>
-</li>
-<li>Host-Only（主机）<ul>
-<li>这种模式下，所有局域网内所有虚拟机互通，但虚拟机无法访问外网，与外网完全隔离</li>
-<li>此种模式同样可以配置集群，但是集群无法访问外网，比较适合公司内网</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>linux系统ifconfig命令不显示IP地址或者只显示127.0.0.1</h6><p></p>
-<ul>
-<li>1.在Linux系统中输入命令:   vi  /etc/sysconfig/network-scripts/ifcfg-ens33</li>
-<li>2.修改文件中的ONBOOT=no,将no改为yes</li>
-<li>3.重启服务: service network restart</li>
-</ul>
-<p></p><h6>系统查看</h6><p></p>
-<ul>
-<li><p>查看进程</p>
-<pre><code>ps -A 显示所有程序
-ps -H 显示树状结构，表示程序间的相互关系
-ps u 以用户为主的格式来显示程序状况
-ps aux|less 查看所有运行中的进程
-</code></pre></li>
-<li><p>监控系统资源</p>
-<pre><code>top 查看整个系统运行状况；该命令功能十分强大，但是它的缺点是会消耗很多系统资源
-free -m 显示内存使用情况
-</code></pre></li>
-<li><p>查看硬盘占用</p>
-<pre><code>df -h  检查linux服务器的文件系统的磁盘空间占用情况
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjfqzxwjt004xj4wv0c20kvms" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-vi-vim" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/28/vi-vim/" class="article-date">
-  <time datetime="2018-03-28T14:55:30.000Z" itemprop="datePublished">2018-03-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/28/vi-vim/">vi/vim</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>vi/vim</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>vi是一款用来创建编辑文件的文本编辑软件</li>
-<li>vi的三大模式：<ul>
-<li>命令模式：用户刚刚启动 vi，便进入了命令模式。此状态下敲击键盘动作会被Vim识别为命令，而非输入字符</li>
-<li>底线命令模式：在命令模式下按下:（英文冒号）就进入了底线命令模式，主要进行文件的保存和退出</li>
-<li>编辑模式：在命令模式下按下i就进入了编辑模式</li>
-</ul>
-</li>
-<li>模式之间的转化常用到Esc，Shift+：</li>
-</ul>
-<p></p><h6>命令模式</h6><p></p>
-<ul>
-<li><p>常用命令</p>
-<pre><code>i 切换到编辑模式，以输入字符；在当前光标处插入
-a 在当前光标处下一个字符插入
-o 在当前光标处下一行插入新的一行
-</code></pre></li>
-</ul>
-<p></p><h6>底线命令行模式</h6><p></p>
-<ul>
-<li><p>常用命令</p>
-<pre><code>:q       #表示不保存退出
-:q!         #强制退出
-:w         #保存修改内容
-:wq         #保存并退出
-:set nu  #显示行号
-:set nonu   #不显示行号
-:r 文件名    #在编辑的数据中，读入另一个档案的数据，将文件内容加到游标所在行后面
-:1,$s /word1/word2/g  #从第一行到最后一行寻找 word1 字符串，并将该字符串取代为 word2 
-:n1,n2s/word1/word2/g #n1 与 n2 为数字。在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2
-</code></pre></li>
-</ul>
-<p></p><h6>编辑模式</h6><p></p>
-<ul>
-<li><p>删除、复制、粘贴</p>
-<pre><code>gg  移到这个文件的第一行
-G   移到这个文件的最后一行
-ngg 移到这个文件的第几行
-
-yy     复制光标所在行
-nyy 复制光标所在的向下n行
-
-P  大写，粘贴在光标的上一行
-p  小写，粘贴在光标的下一行
-
-dd        删除光标所在一整行
-ndd        删除光标所在向下n行
-
-数字0    移到这一行的最前面
-$         移到这一行的最后面
-
-u        撤销上一次的操作
-Ctrl+r    恢复撤销
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjfqzxwhc003hj4wvcf3hxdfl" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-linux常用命令" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/28/linux常用命令/" class="article-date">
-  <time datetime="2018-03-28T09:05:54.000Z" itemprop="datePublished">2018-03-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/28/linux常用命令/">linux常用命令</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>linux常用命令</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>常见的系统目录结构</h6><p></p>
-<ul>
-<li><p>根目录下</p>
-<pre><code>[root@localhost ~]# ls /
-bin   dev  ftp   lib    media  opt   root  sbin  sys  usr
-boot  etc  home  lib64  mnt    proc  run   srv   tmp  var
-</code></pre><ul>
-<li>bin：Binary的缩写, 这个目录存放着最经常使用的命令</li>
-<li>boot：这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件</li>
-<li>dev：Device(设备)的缩写, 该目录下存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的</li>
-<li>etc：这个目录用来存放所有的系统管理所需要的配置文件和子目录</li>
-<li>home：用户的主目录，在Linux中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的</li>
-<li>lib：这个目录里存放着系统最基本的动态连接共享库，其作用类似于Windows里的DLL文件。几乎所有的应用程序都需要用到这些共享库</li>
-<li>media：linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下</li>
-<li>mnt：系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在/mnt/上，然后进入该目录就可以查看光驱里的内容了</li>
-<li>opt：这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的</li>
-<li>proc：这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息</li>
-<li>root：该目录为系统管理员，也称作超级权限者的用户主目录</li>
-<li>tmp：这个目录是用来存放一些临时文件的</li>
-<li>usr：这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录</li>
-<li>var：这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>终端</h6><p></p>
-<ul>
-<li><p>用户</p>
-<pre><code>新建用户：useradd &lt;name&gt;
-         passwd &lt;pwd&gt;
-删除用户：userdel &lt;name&gt;
-切换用户：su - &lt;name&gt;
-退出当前用户：logout (普通用户)
-             exit  （管理用户）
-</code></pre></li>
-<li><p>前缀</p>
-<pre><code>[root@localhost ~]# 
-
-1.root 表示登录的用户名
-2.localhost 表示登录的主机
-3.~ 表示当前用户的所在路径，即/root
-4.# 表示超管用户，$ 表示普通用户
-</code></pre></li>
-<li><p>开机关机<br>不管是重启系统还是关闭系统，首先要运行sync命令，把内存中的数据写到磁盘中</p>
-<pre><code>sync 将数据由内存同步到硬盘中
-shutdown -h now 离开关机
-shutdown -h +10 10分钟后关机
-shutdown -h 10:10 系统会在今天的10:10关机
-reboot 系统重启
-halt 关闭系统
-</code></pre></li>
-</ul>
-<p></p><h6>目录/文件命令</h6><p></p>
-<ul>
-<li><p>新建目录</p>
-<pre><code>mkdir &lt;目录名&gt;                        创建单个目录
-mkdir -p &lt;目录名1&gt;/&lt;目录名2&gt;/&lt;目录名3&gt; 创建多层目录
-mkdir -m *** &lt;目录名&gt;                 创建目录时指定权限，三颗星代表rwx的数字码
-</code></pre></li>
-<li><p>新建文件</p>
-<pre><code>touch 文件名
-</code></pre></li>
-<li><p>删除目录</p>
-<pre><code>rmdir &lt;目录名&gt;        删除空的目录
-rm -r &lt;目录名&gt;        递归删除整个目录树,非空
-rm &lt;文件名或者目录名&gt;        删除文件
-rm -i &lt;文件名或者目录名&gt;     互动模式，在删除前会询问是否动作
-rm -f &lt;文件名&gt;        强制删除文件，没有提示
-</code></pre></li>
-<li><p>查看目录</p>
-<pre><code>ls 表示查看当前目录下的文件或者文件夹
-ls -a 表示查看当前目录下的所有内容，包括隐藏文件
-ls -l 表示查看当前目录下内容的详细信息
-ls -al 表示查看当前目录下所有内容的详细内容
-</code></pre></li>
-<li><p>切换目录</p>
-<pre><code>cd [相对路径或绝对路径] .表示当前路径  ..表示上层路径
-</code></pre></li>
-<li><p>复制目录/文件</p>
-<pre><code>cp 源文件 /目的地址
-cp -i 源文件 /目的地址     若目标档已存在，在覆盖时会先询问动作的进行
-</code></pre></li>
-<li><p>剪切目录/文件</p>
-<pre><code>mv 文件名/目录名 目的地
-</code></pre></li>
-<li><p>重命名</p>
-<pre><code>mv 文件名/目录名 新的文件名/目录名
-</code></pre></li>
-</ul>
-<p></p><h6>文件内容查看</h6><p></p>
-<ul>
-<li><p>cat、more、head</p>
-<pre><code>cat 文件名      #正序查看，由第一行开始显示文件内容
-cat -n 文件名   #连同空白行也会显示行号
-
-tac 文件名      #倒序查看
-tac -n 文件名   #连同空白行也会显示行号
-
-more 文件名     #查看大文件，显示百分比；空白键代表向下翻页，Enter键表示向下翻行
-less 文件夹     #查看大文件，不显示百分比；空白键代表向下翻页，[pgup][pgdn]代表向上向下翻页
-
-head 文件名             #默认显示前10行
-head -n 数字 文件名       #规定显示前几行
-
-tail 文件名               #默认显示最后10行
-tail -n 数字 文件名      #规定显示最后几行
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjfqzxwft002lj4wvdpflrimk" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
 
     </footer>
   </div>
@@ -1472,7 +1439,7 @@ tail -n 数字 文件名      #规定显示最后几行
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/2/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1484,9 +1451,9 @@ tail -n 数字 文件名      #规定显示最后几行
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1494,18 +1461,18 @@ tail -n 数字 文件名      #规定显示最后几行
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 13.33px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.67px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.67px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.33px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.67px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.33px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.86px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.86px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 17.14px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.29px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.71px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.43px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.57px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.86px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1513,9 +1480,21 @@ tail -n 数字 文件名      #规定显示最后几行
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/12/linux文件的打包、压缩/">linux文件的打包、压缩</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/11/jdk部署/">jdk部署</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/09/chmod/">chmod</a>
+          </li>
         
           <li>
             <a href="/2018/04/08/爬虫之Mongodb常用命令/">爬虫之Mongodb常用命令</a>
@@ -1523,18 +1502,6 @@ tail -n 数字 文件名      #规定显示最后几行
         
           <li>
             <a href="/2018/04/03/富文本、分页/">富文本、分页</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/02/scrapy选择器css、xpath/">scrapy选择器css、xpath</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/02/scrapy命令行详解/">scrapy命令行详解</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
           </li>
         
       </ul>
@@ -1565,7 +1532,7 @@ tail -n 数字 文件名      #规定显示最后几行
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
