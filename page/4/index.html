@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,241 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Hash类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/Hash类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:21:20.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/Hash类型操作/">Hash类型操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Hash类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.hdel key_name filed_name用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略</p>
+<pre><code>hset myhash name liuyongqian
+hdel myhash name         #result:被成功删除字段的数量
+</code></pre></li>
+<li><p>2.hexists key_name filed_name用于查看哈希表的指定字段是否存在</p>
+<pre><code>hexists myhash name      #result:如果哈希表含有给定字段，返回 1 ;
+                    如果哈希表不含有给定字段，或 key 不存在，返回 0
+</code></pre></li>
+<li><p>3.hget key_name field_name用于返回哈希表中指定字段的值</p>
+<pre><code>hget myhash name         #result:返回给定字段的值。如果给定的字段或 key 不存在时，返回 nil 
+</code></pre></li>
+<li><p>4.hgetall key_name用于返回哈希表中，所有的字段和值</p>
+<pre><code>hgetall myhash          #resutl:在返回值里，紧跟每个字段名(field name)之后是字段的值(value)
+</code></pre></li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li><p>5.hincrby key_name field_name value 用于为哈希表中的字段值加上指定增量值<br>如果哈希表的 key 不存在，一个新的哈希表被创建并执行hincrby命令<br>如果指定的字段不存在，那么在执行命令前，字段的值被初始化为 0</p>
+<pre><code>hset myhash age 108
+hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
+</code></pre></li>
+<li><p>6.hincrbyfloat key_name field_name value用于为哈希表中的字段值加上指定浮点数增量值</p>
+<pre><code>hincrbyfloat myhash age 1.5  #result:返回命令执行后的字段值
+</code></pre></li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li><p>7.hkeys key_name用于获取哈希表中的所有域（field）</p>
+<pre><code>hkeys myhash             #result:包含哈希表中所有域（field）列表。 当 key 不存在时，返回一个空列表
+</code></pre></li>
+<li><p>8.hvals key_name返回哈希表所有域(field)的值</p>
+<pre><code>hvals myinfo          #result:一个包含哈希表中所有域(field)值的列表
+</code></pre></li>
+<li><p>9.hlen key_name用于获取哈希表中字段的数量</p>
+<pre><code>hlen myhash   #result:哈希表中字段的数量  
+</code></pre></li>
+</ul>
+<p></p><h6>04</h6>    <p></p>
+<ul>
+<li><p>10.hmget key_name field1 field2 …用于返回哈希表中，一个或多个给定字段的值</p>
+<pre><code>hmget myhash name age
+</code></pre></li>
+<li><p>11.hmset key_name field1 value1 field2 value2 …用于同时将多个 field-value (字段-值)对设置到哈希表中,<br>此命令会覆盖哈希表中已存在的字段</p>
+<pre><code>hmset myinfo name liuyongqian age 108 work engineer
+</code></pre></li>
+<li><p>12.hset key_name field_name用于为哈希表中的字段赋值<br>如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作<br>如果字段已经存在于哈希表中，旧值将被覆盖</p>
+<pre><code>hset myonfo age 54
+</code></pre></li>
+<li><p>13.hsetnx key_name field value用于为哈希表中不存在的的字段赋值 <br>如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作<br>如果字段已经存在于哈希表中，操作无效<br>如果 key 不存在，一个新哈希表被创建并执行 HSETNX 命令</p>
+<pre><code>hsetnx myinfo limit  no
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjg0n9iox000w88wv44ue88qx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-String类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/15/String类型操作/" class="article-date">
+  <time datetime="2018-03-15T10:49:02.000Z" itemprop="datePublished">2018-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/15/String类型操作/">String类型操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>String类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.set key value设置指定key的值</p>
+<pre><code>set myname liuyongqian
+set age 108
+</code></pre></li>
+<li><p>2.get key获取指定key的值</p>
+<pre><code>get myname
+</code></pre></li>
+<li><p>3.getset key_name value用于设置指定key的值，并返回key的旧值，当key 没有旧值返回 nil</p>
+<pre><code>getset myname lailai     #result:&apos;liuyongqian&apos;
+</code></pre></li>
+<li><p>4.getrange key_name start end获取存储在指定key中字符串的子字符串</p>
+<pre><code>set myname liuyongqian
+getrange myname 0,2      #result:&apos;liu&apos;
+</code></pre></li>
+<li><p>5.setrange key_name offset value用指定的字符串覆盖给定 key 所储存的字符串值，覆盖的位置从偏移量offset开始</p>
+<pre><code>setrange job 5 manager
+get job               #result:code-manager
+</code></pre></li>
+<li><p>6.strlen key_name 用于获取指定 key 所储存的字符串值的长度。当 key 储存的不是字符串值时，返回一个错误</p>
+<pre><code>strlen job             #result:12
+</code></pre></li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li><p>7.mset key1 value1 key2 value2 …用于同时设置一个或多个 key-value 对</p>
+<pre><code>mset k1 hello k2 world     #result:OK
+</code></pre></li>
+<li><p>8.setnx key_name value在指定的key不存在时，为key设置指定的值；若key存在，则设置失败，覆盖也失败</p>
+<pre><code>exists job            #result:0
+setnx job code-farmer #result:1
+</code></pre></li>
+<li><p>9.msetnx key1 value1 key2 value2 …用于所有给定 key 都不存在时，同时设置一个或多个 key-value 对,若某个键已存在，则设置失败</p>
+</li>
+<li><p>10.mget key1 key2 … 返回所有(一个或多个)给定 key 的值。 如果给定的 key 里面，有某个 key 不存在，那么这个 key 返回特殊值 nil </p>
+<pre><code>mget myname age         #result:&apos;lailai&apos;&apos;108&apos;
+</code></pre></li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li><p>11.getbit keyname offset对key所储存的字符串值，获取指定偏移量上的位(bit),当偏移量offset比字符串值的长度大，或者key不存在时，返回0 </p>
+<pre><code>set mynum a  #&apos;a&apos;的ASCII码是 97,转换为二进制是：1100001。offset的学名叫做“偏移” 。
+             #二进制中的每一位就是offset值，比如在这里ffset 1等于&apos;1&apos; ,offset2等于&apos;1&apos;,offset 7 等于&apos;1&apos; ，offset是从左往右计数的
+getbit mynum 2           #result:1
+</code></pre></li>
+<li><p>12.setbit key_name offset value 用于对key所储存的字符串值，设置或清除指定偏移量上的位(bit)</p>
+<pre><code>#将mynum的值a变成b，也就是将01100001变成01100010（b的ASCII码是98），
+#即将&apos;a&apos;中的offset 6从0变成1，将offset 7从1变成0
+setbit mynum 6 1
+setbit mynum 7 0
+get mynum            #result:&apos;b&apos;
+</code></pre></li>
+</ul>
+<p></p><h6>04</h6><p></p>
+<ul>
+<li><p>13.setex key_name timeout value为指定的key设置值及其过期时间，单位为秒。如果 key 已经存在，将会替换旧的值</p>
+<pre><code>setex mymemory 8 loveyou         #待8秒后mymemory的值为空
+</code></pre></li>
+<li><p>14.psetex key_name timeout value以毫秒为单位设置 key 的生存时间</p>
+</li>
+</ul>
+<p></p><h6>05</h6><p></p>
+<ul>
+<li><p>15.incr key_name将key中储存的数字值增一<br>如果key不存在，那么 key的值会先被初始化 0，然后再执行incr操作<br>如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误</p>
+<pre><code>set page 108
+incr page
+get page          #result:109
+</code></pre></li>
+<li><p>16.incrby key_name value将key中储存的数字加上指定的增量值</p>
+<pre><code>set rank 110
+incrby rank 50
+get rank          #result:160
+</code></pre></li>
+<li><p>17.incrbyfloat key_name value为key中所储存的值加上指定的浮点数增量值</p>
+<pre><code>set price 3.14
+incrbyfloat price 0.01
+get price         #result:3.15
+</code></pre></li>
+<li><p>18.decr key_name将key中储存的数字值减一</p>
+</li>
+<li>19.decrby key_name value将key所储存的值减去指定的减量值</li>
+<li><p>20.append key_name new_value 用于为指定的key追加值<br><br>如果 key 已经存在并且是一个字符串，append命令将value追加到 key 原来的值的末尾<br>如果key不存在，append就简单地将给定key设为 value ，就像执行set key value 一样</p>
+<pre><code>exists myname       #result:0
+append myname  liu
+append myname  yongqian
+get myname          #result:liuyongqian
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjg0n9ir7002588wvb8s4qp38" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-MongoDB基本概念" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -214,7 +449,7 @@ port=27017   #端口号 默认为27017
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjfwo86jk001e3owv24j9zp3d" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjg0n9ipq001d88wvhph3gdmv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -290,7 +525,7 @@ frag:片段只在客户端使用，不发送到服务器端；
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjfwo86ip000s3owvk6qbxs4s" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjg0n9iot000t88wvbuck0gb3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
@@ -475,7 +710,7 @@ input()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjfwo86k4001s3owv0qcx7q0j" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjg0n9iqr001w88wvicyj1cnj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -651,7 +886,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/python之XML/" data-id="cjfwo86m900383owvco2yx0vp" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/13/python之XML/" data-id="cjg0n9ism002x88wvf5fkrkzd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -829,7 +1064,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/Redis数据库入门/" data-id="cjfwo86k1001q3owvqknznbcv" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/13/Redis数据库入门/" data-id="cjg0n9iqm001t88wvho120k3w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -971,7 +1206,7 @@ git config --global color.status false
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjfwo86ik000p3owvu3l5tysm" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjg0n9iom000p88wvdlldeyy7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -1018,7 +1253,7 @@ git config --global color.status false
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习/" data-id="cjfwo86ie000l3owviry5vxe1" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习/" data-id="cjg0n9io7000h88wvp5pa1erp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
@@ -1153,253 +1388,10 @@ print(result.group(1))       #result:20180101
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjfwo86m600363owvasfsxcg2" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjg0n9it2003688wveih6rzgk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Git入门" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/11/Git入门/" class="article-date">
-  <time datetime="2018-03-11T10:10:16.000Z" itemprop="datePublished">2018-03-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/11/Git入门/">Git入门</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Git入门</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>git是一款免费、开源的分布式版本控制系统，用于敏捷高效的处理任何或大或小的项目<br>github是一个面向开源及私有软件项目的托管平台，因为只支持git作为唯一的版本库格式进行托管，故名github</li>
-<li>Git和SVN的对比：<ul>
-<li>1）Git是分布式的，SVN是集中式</li>
-<li>2）Git可离线完成大部分操作，SVN则必须与中央服务器进行网络交互</li>
-<li>3）Git有着优雅的分支和合并功能</li>
-<li>4）Git有着更强的撤销修改和修改版本历史的能力</li>
-<li>5）Git速度更快，效率更好</li>
-</ul>
-</li>
-<li>git的三个区<ul>
-<li>工作区：编辑代码的地方</li>
-<li>暂存区：工作区与历史提交中间的缓存，代表的是要提交的工作状态</li>
-<li>历史仓库：commit指向的</li>
-</ul>
-</li>
-<li>Git管理的是修改，而不是文件</li>
-</ul>
-<p></p><h6>基本配置</h6><p></p>
-<ul>
-<li><p>目前git for window的版本是2.16.2</p>
-<pre><code>which -a git 查看git的安装位置
-git version     查看git的版本
-
-添加user.name和user.email
-git config --global user.name fyuan925
-git config --global user.email fyuan925@gmail.com
-
-添加一个新的user.name
-git config --global --add user.name kgc
-
-得到属性的值
-git config user.name
-git config --get user.name
-
-得到全局所有属性的值
-git config --list --global
-
-删除一个属性，并且是指定属性名进行删除
-git config --global --unset user.name kgc
-
-当只有一个属性值的时候，可以在删除时不指定值
-git config --global --unset user.name
-</code></pre></li>
-<li><p>关联github</p>
-<ul>
-<li><p>本地生成SSH KEYS</p>
-<pre><code>先生成ssh，命令如下：
-ssh-keygen -t rsa -C &apos;kgc@gmail.com&apos;
-进入ssh目录后将该目录下文件id_rsa.pub中的内容拷贝
-</code></pre></li>
-<li><p>在github上设置SSH公钥</p>
-<pre><code>进入github主页，点击右上角的setting，选择SSH and GPG keys;
-新建一个ssh key，将公钥粘贴后点击Add SSH key
-输入GitHub的密码进行验证，点击Confirm password
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>本地库连接远程库</h6><p></p>
-<ul>
-<li><p>第一种方式：先有本地仓库，后有远程仓库</p>
-<pre><code>在本地仓库中执行以下命令，同步信息
-git remote add origin git@github.com:fangyuan925/kgc_git.git
-git push -u origin master
-第一次使用-u，后面不再使用
-</code></pre></li>
-<li><p>第二种方式：先有远程仓库，再clone到本地（最常见的，一般都是先在GitHub上创建仓库，可以选择初始化选项，然后开发人员再clone到本地）</p>
-<pre><code>git clone xxxxxx
-git push -u origin master
-第一次使用-u，后面不再使用
-</code></pre></li>
-</ul>
-<p></p><h6>基本命令</h6><p></p>
-<ul>
-<li><p>在本地新建仓库</p>
-<pre><code>git init      新建文件夹后用此命令初始化仓库
-vi readme.txt 添加一个readme.txt
-git status  查看当前版本库的状态
-git add filename    使用git add命令告诉git，把该文件添加到仓库
-git commit -m &apos;comment&apos;  使用git commit命令告诉git，把文件提交到仓库,可设置注释内容
-
-git add     可以反复添加多个
-git diff filename     查看修改的内容
-git log      可以查看所有的提交历史记录
-git log filename     仅查看指定文件名的提交历史记录
-git log --pretty=oneline filename
-d085ee8434392d2cf88b48592f29fbeefb0818f7  此为commit id（版本号） SHA-1 Hash计算出来一个16进制的值
-</code></pre></li>
-<li><p>版本回退</p>
-<pre><code>前提：知道当前版本是哪个， HEAD表示当前版本
-回退到上一个版本： HEAD^   一个^就表示前一个版本， 如果N个前版本可以用HEAD~N
-
-回退命令：git reset --hard HEAD^
-回退之后你后悔了又想回到后退之前的那个版本： git reset --hard xxxxxxxxx
-xxxxxxxxx  前面可以通过 git log filename
-
-3commit   &lt;== HEAD
-2commit
-1commit
-
-执行了git reset --hard HEAD^之后
-3commit   
-2commit  &lt;== HEAD
-1commit
-
-git reset：版本穿梭， 可以使用git log查看提交历史，以便确定回退/穿梭到哪个版本     
-git reflog：查看命令历史，以便确定要回到未来/过去的哪个版本
-</code></pre></li>
-<li><p>撤销修改</p>
-<pre><code>没有提交到暂存区时，其实就在工作区： git checkout – filename
-已经提交到暂存区了： 分两步：1）git reset HEAD file 2）git checkout -- filename
-</code></pre></li>
-<li><p>删除文件</p>
-<pre><code>手误删除，如何恢复： git checkout -- filename
-真删除版本库的文件： 
-    1) git rm filename
-    2) git commit -m &apos;xxx&apos;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjfwo86ia000i3owvr42rlwo8" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-python之Excel操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/11/python之Excel操作/" class="article-date">
-  <time datetime="2018-03-11T10:09:52.000Z" itemprop="datePublished">2018-03-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/11/python之Excel操作/">python之Excel操作</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>python之Excel操作</h5><p></p>
-<hr>
-<hr>
-<h6>使用xlwt module将数据写入Excel表格</h6>
-
-<pre><code>import xlwt
-book=xlwt.Workbook(encoding=&apos;utf-8&apos;,style_compression=0)
-#创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩
-sheet1=book.add_sheet(&apos;test&apos;,cell_overwrite_ok=True)
-#创建一个sheet对象，一个sheet对象对应Excel文件中的一张表格
-#add_sheet的第一个参数是这张表的名字，第二个参数表示覆盖单元格
-sheet1.write(0,0,&apos;EnglishName&apos;)
-#其中第一个参数表示行，第二个参数表示列，第三个参数表示插入的数据
-sheet1.write(1,0,&apos;Liuyongqian&apos;)
-sheet1.write(0,1,&apos;中文名字&apos;)
-sheet1.write(1,1,&apos;刘永前&apos;)
-book.save(r&apos;e:\test1.xls&apos;)
-#将以上操作保存到指定excel文件中
-</code></pre><h6>使用xlrd module从Excel读取数据</h6>
-
-<pre><code>import xlrd
-file=r&apos;E:\test1.xls&apos;   #打开指定路径下的xls文件
-book=xlrd.open_workbook(file)  #得到excel文件的book对象，实例化对象
-sheet0=book.sheet_by_index(0)  #通过sheet索引获得sheet对象
-sheet_name=book.sheet_names()[0] #获得指定索引的sheet表名字
-&apos;&apos;&apos;
-sheet1=book.sheet_by_name(sheet_name) #通过sheet名字来获取，也可直接指定名字
-&apos;&apos;&apos;
-nrows=sheet0.nrows       #获取总行数
-ncols=sheet0.ncols       #获取总列数
-row_data=sheet0.row_values(1)  #获取第2行的数据列表
-col_data=sheet0.col_values(1)  #获取第2列的数据列表
-cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjfwo86lv002y3owv1qcl8rhu" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1414,7 +1406,7 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Précédent</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/">Suivant &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1426,9 +1418,9 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1436,9 +1428,9 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.86px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.86px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 17.14px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.43px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.29px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.71px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 18.57px;">Web前端</a> <a href="/tags/安全测试/" style="font-size: 11.43px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.57px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.86px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 11.11px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 12.22px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.11px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.11px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
     </div>
   </div>
 
@@ -1447,7 +1439,7 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1455,9 +1447,17 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/14/虚拟机centos上部署hadoop/">虚拟机centos上部署hadoop</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/14/使用LinkExtractor提取链接/">使用LinkExtractor提取链接</a>
+          </li>
         
           <li>
             <a href="/2018/04/12/linux文件的打包、压缩/">linux文件的打包、压缩</a>
@@ -1469,14 +1469,6 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
         
           <li>
             <a href="/2018/04/09/chmod/">chmod</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/08/爬虫之Mongodb常用命令/">爬虫之Mongodb常用命令</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/03/富文本、分页/">富文本、分页</a>
           </li>
         
       </ul>
@@ -1507,7 +1499,7 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 刘永前<br>
-      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
