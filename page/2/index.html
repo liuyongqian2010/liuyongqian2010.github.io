@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,222 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-scrapy命令行详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/02/scrapy命令行详解/" class="article-date">
+  <time datetime="2018-04-02T11:08:41.000Z" itemprop="datePublished">2018-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/02/scrapy命令行详解/">scrapy命令行详解</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>scrapy命令行详解</h5><p></p>
+<hr>
+<hr>
+<ul>
+<li><p>创建项目<code>scrapy startproject 项目名</code></p>
+<pre><code>#测试网站：http://quotes.toscrape.com/
+scrapy startproject quotetutorial
+</code></pre></li>
+<li><p>创建爬虫<code>scrapy genspider spider文件名 网站域名</code></p>
+<pre><code>cd quotetutorial         进入项目
+scrapy genspider quotes quotes.toscrape.com   创建爬虫
+</code></pre></li>
+<li><p>运行爬虫<code>scrapy crawl 爬虫文件名</code></p>
+<pre><code>scrapy crawl quotes
+scrapy crawl quotes -o quotes.json   保存爬取数据为json格式,还有其他格式如.jl、.csv、.xml、.pickle、.marshal等等
+</code></pre></li>
+<li><p>在项目中常用的其他命令（局部命令）</p>
+<pre><code>scrapy check   检查spider文件有无语法错误
+scrapy list    列出spider路径下的spider文件
+scrapy bench   测试电脑当前爬取速度性能，即基准测试
+</code></pre></li>
+</ul>
+<ul>
+<li><p>全局命令</p>
+<pre><code>scrapy fetch &lt;url&gt;  将网页内容下载下来，然后在终端打印当前返回的内容
+scrapy view &lt;url&gt;   将网页内容保存下来，并在浏览器中打开当前网页内容，直观呈现要爬取网页的内容（发现这个与上述命令效果一样啊）
+scrapy shell [url]  打开 scrapy 显示台，进入命令行交互模式
+可以用来做测试,（exit()退出模式）
+scrapy version [-v]  显示scrapy版本，后面加 -v 可以显示scrapy依赖库的版本
+scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中的爬虫，而不必创建一个项目
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjg26sxxu0032q0wvrkb50b2u" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-发布及文件上传" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/01/发布及文件上传/" class="article-date">
+  <time datetime="2018-04-01T09:47:40.000Z" itemprop="datePublished">2018-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>发布及文件上传</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>发布博客</h6><p></p>
+<ul>
+<li><p>用户登录之后，点击“发布博客”即可进入发布博客页面，在这儿需要在登录的欢迎页面增加一下这个发布博客链接</p>
+<pre><code>&lt;a href=&quot;/pyblogA/fabu&quot;&gt;发布博客&lt;a/&gt;
+</code></pre></li>
+<li><p>之后编辑发布博客的前端页面</p>
+<pre><code>&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;欢迎发布博客&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;欢迎{{ user.username }}发布博客...&lt;/h2&gt;
+    &lt;span style=&quot;color:red&quot;&gt;{{ msg }}&lt;/span&gt;
+    &lt;form action=&quot;/pyblogA/fabu&quot; method=&quot;post&quot;&gt;
+        {% csrf_token %}
+        &lt;p&gt;标题：&lt;input type=&quot;text&quot; name=&apos;title&apos; style=&quot;width:300px&quot;&gt;&lt;/p&gt;
+        &lt;p&gt;内容：&lt;textarea  name=&apos;context&apos; style=&quot;width:300px;height:200px&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;确认发布&quot;&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+<li><p>在该app的models中编辑与数据库的映射</p>
+<pre><code>from django.db import models
+from bloguser.models import BlogUser
+class Blog(models.Model):
+    title=models.CharField(max_length=30,null=True)
+    context=models.CharField(max_length=500,null=True)
+    createDate=models.DateTimeField(null=True)    #默认当前时间
+    BlogUser=models.ForeignKey(&apos;bloguser.BlogUser&apos;,on_delete=None)   #app下的名字
+</code></pre></li>
+<li><p>需要在项目的settings.py下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;pyblogA/&apos;,include(&apos;pyblogA.urls&apos;)),
+]
+</code></pre></li>
+<li><p>接着在该app的urls下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;fabu&apos;, fabu),
+]
+</code></pre></li>
+<li><p>接下来编辑该appviews内容</p>
+<pre><code>from django.shortcuts import render,redirect,reverse
+from .models import *
+from django.http import HttpResponse
+import time,datetime,os
+
+def fabu(request):
+    user = request.session.get(&apos;user&apos;, None)
+    if request.method==&apos;GET&apos;:
+        if user is not None:
+            return render(request,&apos;fabu.html&apos;,{&apos;user&apos;: request.session.get(&apos;user&apos;, None)})
+        else:
+            return render(request,&apos;login.html&apos;)
+    elif request.method==&apos;POST&apos;:
+        blogA=Blog()
+        blogA.title=request.POST.get(&apos;title&apos;)
+        blogA.context=request.POST.get(&apos;context&apos;)
+        blogA.createDate=datetime.datetime.now()
+
+        uid=request.session.get(&apos;user&apos;)[&apos;id&apos;]
+        bloguserset=BlogUser.objects.filter(pk=uid).all()
+        blogA.BlogUser=bloguserset.first()
+
+        blogA.save()
+        ret={&apos;msg&apos;:&apos;发布成功！&apos;,&apos;user&apos;:request.session.get(&apos;user&apos;)}
+        return render(request,&apos;fabu.html&apos;,ret)
+</code></pre></li>
+</ul>
+<p></p><h6>文件上传</h6><p></p>
+<ul>
+<li><p>创建一个html文件用于上传文件</p>
+<pre><code>&lt;form method=&quot;post&quot; action=&quot;/pyblogA/upload&quot; enctype=&quot;multipart/form-data&quot;&gt;
+    {% csrf_token %}
+    选择文件：&lt;input type=&quot;file&quot; name=&quot;myfile&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;上传&quot;&gt;
+&lt;/form&gt;
+</code></pre></li>
+<li><p>在该app下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;upload&apos;, upload),
+]
+</code></pre></li>
+<li><p>在该app的views中编辑业务逻辑</p>
+<pre><code>def upload(request):
+    myfile=request._files.get(&apos;myfile&apos;)  #获取上传的文件
+    file_path=os.path.join(&apos;file&apos;,myfile.name)  #配置存放路径为file
+    file=open(file_path,&apos;wb+&apos;)           #打开并写入
+    for row in myfile.chunks():      #循环chunks(),里面包含用户上传的文件
+        file.write(row)              #写入到我们创建的那个文件中
+    file.close()
+    return HttpResponse(&apos;上传成功！&apos;)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjg26sxzw0046q0wvmb6b9xn3" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-HTTP报文" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -280,7 +496,7 @@ Last-Modified 　 这个实体最后一次被修改的日期和时间
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjg0n9ip1000y88wv7yvrwbq6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjg26sxtt000uq0wvtduowi21" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
@@ -439,7 +655,7 @@ ITEM_PIPELINES = {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjg0n9it6003988wv81z0oisd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjg26sxy60038q0wvgy9hb6dl" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -527,7 +743,7 @@ free -m 显示内存使用情况
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjg0n9ixa005c88wv4e1m8vde" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjg26sy27005aq0wvmc4myngc" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -629,7 +845,7 @@ Ctrl+r    恢复撤销
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjg0n9itz003o88wv3ocgoxc2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjg26sxyp003iq0wvggb3i50y" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -782,7 +998,7 @@ tail -n 数字 文件名      #规定显示最后几行
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjg0n9is1002k88wvsihxs66l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjg26sxwz002lq0wvgirndlzu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -874,7 +1090,7 @@ def login(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjg0n9itq003j88wv00mnsx9x" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjg26sxyi003eq0wv18wlswrc" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -1011,7 +1227,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjg0n9ixm005j88wvo2mf5dpv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjg26sy2o005iq0wvhlwz86tl" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -1115,259 +1331,7 @@ class Handler(BaseHandler):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjg0n9isi002u88wvzzbzcjuz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-selenium模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/23/selenium模块/" class="article-date">
-  <time datetime="2018-03-23T15:15:47.000Z" itemprop="datePublished">2018-03-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/selenium模块/">selenium模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>selenium模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>selenium 是一套完整的web应用程序测试系统，Selenium的核心Selenium Core基于JsUnit，完全由JavaScript编写，因此可以用于任何支持JavaScript的浏览器上，爬虫中主要用来解决JavaScript渲染问题</li>
-<li>Selenium.Webdriver支持的浏览器中，比较重要的PhantomJS,PhantomJS是一个基于WebKit的服务端JavaScript API,支持Web而不需要浏览器支持，其快速、原生支持各种Web标准：Dom处理，CSS选择器，JSON等等。PhantomJS可用于页面自动化、网络监测、网页截屏，以及无界面测试</li>
-</ul>
-<p></p><h6>查找元素</h6><p></p>
-<ul>
-<li><p>单个元素和多个元素的查找，用法基本一致</p>
-<pre><code>from selenium import webdriver
-from selenium.webdriver.common.by import By
-from time import sleep
-
-browser=webdriver.Chrome()
-browser.get(&apos;http://www.baidu.com&apos;)  #声明浏览器对象
-#print(browser.page_source)       #打印百度首页的源代码
-input=browser.find_element(By.ID,&apos;kw&apos;)
-input.clear()
-input.send_keys(&apos;selenium&apos;)
-button=browser.find_element(By.CSS_SELECTOR,&apos;#su&apos;)
-button.click()
-sleep(3)
-browser.close()
-</code></pre></li>
-<li><p>这里列举一下常用的查找元素方法：</p>
-<pre><code>find_element_by_name
-find_element_by_id
-find_element_by_xpath
-find_element_by_link_text
-find_element_by_partial_link_text
-find_element_by_tag_name
-find_element_by_class_name
-find_element_by_css_selector
-</code></pre></li>
-</ul>
-<p></p><h6>执行JavaScript</h6><p></p>
-<ul>
-<li><p>这是一个非常有用的方法，这里就可以直接调用js方法来实现一些操作，下面的例子是通过登录知乎然后通过js翻到页面底部，并弹框提示</p>
-<pre><code>from selenium import webdriver
-
-browser=webdriver.Chrome()
-browser.get(&apos;http://www.zhihu.com/explore&apos;)  #声明浏览器对象
-browser.execute_script(&apos;window.scrollTo(0,document.body.scrollHeight)&apos;)
-browser.execute_script(&apos;alert(&quot;Hello World!&quot;)&apos;)
-</code></pre></li>
-</ul>
-<p></p><h6>01</h6><p></p>
-<ul>
-<li><p>获取属性值、文本值</p>
-<pre><code>from selenium import webdriver
-from selenium.webdriver.common.by import By
-
-browser=webdriver.Chrome()
-browser.get(&apos;https://www.zhihu.com/explore&apos;)
-logo=browser.find_element(By.ID,&apos;zh-top-link-logo&apos;)
-print(logo.get_attribute(&apos;class&apos;))    #获取元素的属性值
-print(logo.text)                      #获取文本值
-print(logo.id)
-print(logo.location)                  #获取位置
-print(logo.tag_name)                  #获取标签名
-print(logo.size)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cjg0n9ith003e88wv4a7s1cds" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-pyquery模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/23/pyquery模块/" class="article-date">
-  <time datetime="2018-03-23T15:15:27.000Z" itemprop="datePublished">2018-03-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/pyquery模块/">pyquery模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>pyquery模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>PyQuery库也是一个非常强大又灵活的网页解析库，是 Python 仿照 jQuery 的严格实现</li>
-<li><p>初始化<br>初始化的时候一般有三种传入方式：传入字符串，传入url,传入文件</p>
-<pre><code>from pyquery import PyQuery as pq
-html=&apos;&apos;&apos;
-    &lt;div id=&quot;container&quot;&gt;
-        &lt;ul class=&quot;list&quot;&gt;
-             &lt;li class=&quot;item-0&quot;&gt;first item&lt;/li&gt;
-             &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
-             &lt;li class=&quot;item-0 active&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;&lt;span class=&quot;bold&quot;&gt;third item&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-             &lt;li class=&quot;item-1 active&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
-             &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt;&lt;/li&gt;
-             &lt;p&gt;This is a paragraph.&lt;/p&gt;        
-        &lt;/ul&gt;
-    &lt;/div&gt;
-&apos;&apos;&apos;
-###字符串初始化
-doc=pq(html)      #doc其实就是一个pyquery对象
-print(doc(&apos;li&apos;))  #doc(标签名)就可以获取所有的该标签的内容
-print(doc(&apos;.item-0&apos;))  #doc(&apos;.class_name&apos;)，doc(&apos;#id_name&apos;)
-###URL初始化
-url=&apos;http://www.baidu.com&apos;
-doc=pq(url,encoding=&apos;utf-8&apos;)
-print(doc(&apos;head&apos;))
-###文件初始化
-在pq()这里可以传入url参数也可以传入文件参数，当然这里的文件通常是一个html文件，例如：pq(filename=&apos;index.html&apos;)
-</code></pre></li>
-</ul>
-<p></p><h6>查找元素</h6><p></p>
-<ul>
-<li><p>子元素（children,find）</p>
-<pre><code>doc=pq(html)
-items=doc(&apos;.list&apos;)
-lis=items.find(&apos;li&apos;)   #lis=items.children()可以实现同样的效果
-print(lis)
-</code></pre></li>
-<li><p>父元素（parent,parents）</p>
-<pre><code>doc=pq(html)
-items=doc(&apos;.list&apos;)
-cont=items.parent() #可以找到父元素的所有内容
-#cont=items.parents()返回两部分内容，一个是父节点信息，一个是父节点的父节点的信息即祖先节点的信息
-print(cont)
-</code></pre></li>
-<li><p>兄弟元素（siblings）</p>
-<pre><code>doc=pq(html)
-li=doc(&apos;.list .item-0.active&apos;)
-print(li.siblings())
-</code></pre></li>
-<li><p>遍历</p>
-<pre><code>doc=pq(html)
-lis=doc(&apos;li&apos;).items()
-print(type(lis))     #&lt;class &apos;generator&apos;&gt;
-for li in lis:
-    print(li)        #通过for循环得到的每个元素依然是一个pyquery对象
-</code></pre></li>
-</ul>
-<p></p><h6>获取信息</h6><p></p>
-<ul>
-<li><p>获取属性值–pyquery对象.attr(属性名)</p>
-<pre><code>doc=pq(html)
-a=doc(&apos;.list .item-1 a&apos;)
-print(a.attr(&apos;href&apos;))
-</code></pre></li>
-<li><p>获取文本–pyquery对象.text()</p>
-<pre><code>doc=pq(html)
-a=doc(&apos;.list .item-0.active a&apos;)
-print(a.text())
-</code></pre></li>
-<li><p>获取html–puquery对象.html()获取当前标签所包含的html信息</p>
-<pre><code>doc=pq(html)
-a=doc(&apos;.list .item-0.active a&apos;)
-print(a.html())
-</code></pre></li>
-</ul>
-<p></p><h6>DOM操作</h6><p></p>
-<ul>
-<li><p>addClass、removeClass添加和删除属性值</p>
-<pre><code>doc=pq(html)
-ul=doc(&apos;.list&apos;)
-ul.addClass(&apos;2018&apos;)
-ul.removeClass(&apos;2018&apos;)
-print(ul)
-</code></pre></li>
-<li><p>attr,css给标签添加和修改属性</p>
-<pre><code>doc=pq(html)
-ul=doc(&apos;.list&apos;)
-ul.attr(&apos;id&apos;,&apos;201803&apos;)
-ul.css(&apos;font-size&apos;,&apos;15px&apos;)
-print(ul)         #&lt;ul class=&quot;list&quot; id=&quot;201803&quot; style=&quot;font-size: 15px&quot;&gt;
-</code></pre></li>
-<li><p>remove将无用的或者干扰的标签直接删除</p>
-<pre><code>doc=pq(html)
-ul=doc(&apos;.list&apos;)
-ul.find(&apos;p&apos;).remove()
-print(ul.text())
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="cjg0n9ise002s88wvs9aaxic0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjg26sxxe002tq0wvz44b42wl" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1385,7 +1349,7 @@ print(ul.text())
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1399,7 +1363,7 @@ print(ul.text())
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1409,16 +1373,16 @@ print(ul.text())
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 11.11px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 12.22px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.11px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.11px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.5px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.25px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 13.75px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 11.25px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1426,9 +1390,17 @@ print(ul.text())
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/16/使用hadoop里面的MapReduce/">使用hadoop里面的MapReduce</a>
+          </li>
         
           <li>
             <a href="/2018/04/14/虚拟机centos上部署hadoop/">虚拟机centos上部署hadoop</a>
@@ -1440,14 +1412,6 @@ print(ul.text())
         
           <li>
             <a href="/2018/04/12/linux文件的打包、压缩/">linux文件的打包、压缩</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/11/jdk部署/">jdk部署</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/09/chmod/">chmod</a>
           </li>
         
       </ul>

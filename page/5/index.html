@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,188 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Fiddler学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/12/Fiddler学习/" class="article-date">
+  <time datetime="2018-03-12T04:02:33.000Z" itemprop="datePublished">2018-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/12/Fiddler学习/">Fiddler学习</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Fiddler学习01</h5><p></p>
+<hr>
+<hr>
+<p>参考大神佳作<a href="https://blog.csdn.net/fei2636/article/details/79020034" target="_blank" rel="noopener"> Fiddler 抓包工具总结</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习/" data-id="cjg26sxt1000gq0wvvt6jqfci" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-re模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/12/re模块/" class="article-date">
+  <time datetime="2018-03-12T03:40:14.000Z" itemprop="datePublished">2018-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/12/re模块/">re模块</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>re模块</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>常用匹配模式</h6><p></p>
+<ul>
+<li><p>正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑</p>
+<pre><code>\w     匹配字母数字及下划线
+\W     匹配非字母数字及下划线
+\s     匹配任意空白字符
+\S     匹配任意非空白字符
+\d     匹配任意数字，等价于[0-9]
+\D     匹配任意非数字
+^      匹配字符串开头
+$      匹配字符串结尾
+.      匹配除了换行符外的任意字符
+*      匹配0个或者多个的表达式
++      匹配至少一个表达式
+？     匹配最多一个表达式，非贪婪方式
+{n}    精准匹配n个前面的表达式
+{n,m}    匹配n到m次前面的表达式的片断
+a|b    匹配a或者b
+()     匹配括号内的表达式，也表示一个组
+</code></pre></li>
+</ul>
+<p></p><h6>re.match(表达式,内容,匹配模式)</h6><p></p>
+<ul>
+<li>尝试从字符串的起始位置匹配一个模式，如果不是起始位置匹配成功的话，返回none</li>
+<li><p>在Match对象上用group()方法提取子串</p>
+<pre><code>import re
+content=&apos;Hello 20180101 World_This is my festival year&apos;
+result=re.match(r&apos;^Hello.*?(\d+).*year$&apos;,content)  #使用Python的r前缀，就不用考虑转义的问题了
+print(result)
+print(result.group(0))    #group(0) 永远是原始字符串
+#想要获取content中的数字，如果不加问号，result为1，这是贪婪匹配；加了问号后，result为20180101，这是非贪婪匹配
+print(result.group(1))    #result:20180101
+</code></pre></li>
+<li><p>匹配模式</p>
+<pre><code>import re
+content=&apos;&apos;&apos;Hello 20180101 World_This
+        is my festival year&apos;&apos;&apos;
+result=re.match(r&apos;^Hello.*?(\d+).*year$&apos;,content,re.S)  #有换行符就用re.S
+print(result.group(1))     #result:20180101
+</code></pre></li>
+</ul>
+<p></p><h6>re.search()</h6><p></p>
+<ul>
+<li><p>扫描整个字符串并返回第一个成功的匹配</p>
+<pre><code>import re
+content=&apos;Liuyongqian Hello 20180101 World_This is my festival year&apos;
+result=re.search(r&apos;Hello.*year&apos;,content)
+print(result)          #为匹配方便，一般使用search
+</code></pre></li>
+</ul>
+<p></p><h6>re.findall()</h6><p></p>
+<ul>
+<li><p>搜索字符串，以列表形式返回全部能匹配的子串</p>
+<pre><code>import re
+html=&apos;&apos;&apos;
+    &lt;div&gt;
+        &lt;ul&gt;
+            &lt;li data-view=&apos;1&apos;&gt;
+                &lt;a href=&quot;/2.mp3&quot; singer=&quot;齐秦&quot;&gt;往事随风&lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;/3.mp3&quot; singer=&quot;邓丽君&quot;&gt;但愿人长久&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;/3.mp3&quot; singer=&quot;水木年华&quot;&gt;完美世界&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&apos;&apos;&apos;
+results=re.findall(r&apos;&lt;li.*?href=(.*?mp).*?singer=(.*?)&gt;(.*?)&lt;/a&gt;&apos;,html,re.S)
+for result in results:
+    print(result[0],result[1],result[2])
+</code></pre></li>
+</ul>
+<p></p><h6>re.sub()</h6><p></p>
+<ul>
+<li><p>替换字符串中每一个匹配的子串后返回替换后的字符串</p>
+<pre><code>import re
+result=re.sub(r&apos;\d+&apos;,&apos;2018&apos;,content)
+print(result)      #result:Hello 2018 World_This is my festival year
+</code></pre></li>
+</ul>
+<p></p><h6>re.compile()</h6><p></p>
+<ul>
+<li><p>将正则字符串编译成正则对象，以便于复用该匹配模式</p>
+<pre><code>import re
+content=&apos;&apos;&apos;Hello 20180101 World_
+        This is my festival year&apos;&apos;&apos;
+pattern=re.compile(r&apos;^He.*?(\d+).*?year$&apos;,re.S)
+result=re.match(pattern,content)
+print(result.group(1))       #result:20180101
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjg26sxxq0030q0wv2y07nrci" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-Git入门" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -223,7 +405,7 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjg0n9ioi000n88wv5ld30pff" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjg26sxte000mq0wv1i8n3lwq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -299,7 +481,7 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjg0n9isq002z88wv84tgp4iv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjg26sxxl002xq0wv5jcwepy5" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -405,7 +587,7 @@ print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="cjg0n9iq7001m88wvlczq3o1f" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="cjg26sxv7001nq0wvb34ycfcr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -534,7 +716,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjg0n9iq2001k88wvjruukfxv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjg26sxv3001kq0wvksu48eps" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -661,7 +843,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjg0n9ir4002388wvxfbirmmb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjg26sxw00021q0wvcr84nzbi" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -737,7 +919,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjg0n9iqw001y88wvee3lzw2h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjg26sxvw001zq0wvyv61nd60" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -877,7 +1059,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjg0n9ivt004i88wv2z7ahum2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjg26sy0l004gq0wvug3l5sog" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -1028,152 +1210,10 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjg0n9iu6003q88wvwkdftsik" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjg26sxyt003kq0wvtt7064w7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-httpwatch" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/08/httpwatch/" class="article-date">
-  <time datetime="2018-03-08T05:49:23.000Z" itemprop="datePublished">2018-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/httpwatch/">httpwatch</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>httpwatch</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>HttpWatch是一个可用于录制HTTP请求信息的工具，由Simtec Limited公司开发，其官网为：Http://www.httpwatch.com，HttpWatch只支持IE和Firefox，也就是说只有当你用IE或Firefox访问网页时，它才会进行录制，不像Sniffer和Omnipeek那样监控所有数据，但对于网站分析来说，已经是不可多得的利器了</li>
-<li>HttpWatch是功能强大的网页数据分析工具，集成在IE工具栏，主要功能有网页摘要、cookies管理、缓存管理、消息头发送/接收，字符查询、POST数据、目录管理功能和报告输出。HttpWatch是一款能够收集并显示深层信息的软件，它不用代理服务器或一些复杂的网络监控工具，能够在显示网页的同时显示网页请求和回应的日志信息，甚至可以显示浏览器缓存和IE之间的交换信息，集成在IE工具栏</li>
-<li>HttpWatch有两部分组成： <ul>
-<li>1、一个是嵌入到IE或Firefox中用于收集、查看、保存HTTP信息的插件 </li>
-<li>2、一个是独立运行的日志查看器，叫做HttpWatch Studio</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>Time Chart</h6><p></p>
-<ul>
-<li>显示了一次请求应答过程中每个时间片段所花费的时间。一次完整的请求应答过程需要经历的时间片段如下：<br>Blocked-&gt;DNS Lookup-&gt;Connect    -&gt;Send -&gt;Wait    -&gt;Receive</li>
-<li>各时间片段含义如下：<ul>
-<li>Blocked（阻塞）：阻塞的时间主要包括预处理时间（如缓存查找）和网络排队等待时间，导致阻塞最主要原因是下载页面中的图片</li>
-<li>DNS Lookup（域名解释）：域名解释时间主要是将主机名（如www.google.com）转化为相应的IP地址（216.239.59.99）的时间，在访问URL地址时，地址本身不能被直接访问，需要将它对应为相应的IP地址才能访问</li>
-<li>Connect（连接）：连接时间是指与web服务器（或代理服务器）建立起TCP连接需要的时间，一个安全的HTTPS连接应该包含SSL握手的过程，让系统处于一种保持连接的状态，可以节约重复创建TCP连接的时间</li>
-<li>Send（发送）：发送时间是指从客户端发送HTTP请求到服务器所花费的时间，并且发送数据大小会影响发送的时间，如上传文件花费的时间就比较长</li>
-<li>Wait（等待）：等待时间是指服务器响应请求的时间，这个值包括网络延迟和服务器处理请求所花费的时间</li>
-<li>Receive（接收）：接收时间是指服务器返回数据到客户端所花费的时间，这个时间受所返回消息内容大小、网络带宽和HTTP压缩比的影响</li>
-<li>Cache Read（读cache）：读缓存时间是指从浏览器缓存中读取内容的时间</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>Headers</h6><p></p>
-<ul>
-<li><p>Headers Sent的内容如下：</p>
-<ul>
-<li>(Request-Line)：包括HTTP提交请求方法、HTTP版本和URL子路径</li>
-<li>Accept：可接受的文件类型，<em>/</em>表示所有</li>
-<li>Accept-Encoding：可接受的纯文本之外的内容编码的类型</li>
-<li>Accept-Language：可接受的返回数据的语言种类</li>
-<li>Connection：指定该次请求回应结束后，如何处理连接</li>
-<li>Cache-Control：指定请求和响应遵循的缓存机制</li>
-<li>Location：用于重定向接收者到一个新URL地址</li>
-<li>Host：请求连接的主机名</li>
-<li>User-Agent：客户端标识浏览器类型</li>
-</ul>
-</li>
-<li><p>Headers Received的内容如下：</p>
-<ul>
-<li>(Status-Line)：包括HTTP请求的状态码和HTTP版本信息</li>
-<li>Connection：指定该次请求回应结束后，如何处理连接</li>
-<li>Content-Language：内容数据的语言种类</li>
-<li>Content-Length：传输的内容长度</li>
-<li>Content-Type：内容数据的类型（Mini Type）</li>
-<li>Date：发送HTTP消息的日期</li>
-<li>Server：一种标明Web服务器软件及其版本号的</li>
-<li>X-Cache：表明你的http request是由proxy server回的</li>
-<li>Last-Modified：服务器上保存内容的最后修订时间</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjg0n9iry002i88wvxs3hqz45" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-20180308002" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/08/20180308002/" class="article-date">
-  <time datetime="2018-03-08T05:48:02.000Z" itemprop="datePublished">2018-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/20180308002/">20180308002</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/20180308002/" data-id="cjg0n9inj000888wvl7xx2irl" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
 
     </footer>
   </div>
@@ -1188,7 +1228,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/6/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1202,7 +1242,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1212,16 +1252,16 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 11.11px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 12.22px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.11px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.11px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.5px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.25px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 13.75px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 11.25px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1229,9 +1269,17 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/16/使用hadoop里面的MapReduce/">使用hadoop里面的MapReduce</a>
+          </li>
         
           <li>
             <a href="/2018/04/14/虚拟机centos上部署hadoop/">虚拟机centos上部署hadoop</a>
@@ -1243,14 +1291,6 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
         
           <li>
             <a href="/2018/04/12/linux文件的打包、压缩/">linux文件的打包、压缩</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/11/jdk部署/">jdk部署</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/09/chmod/">chmod</a>
           </li>
         
       </ul>

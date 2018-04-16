@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,162 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Ajax回顾" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/01/Ajax回顾/" class="article-date">
+  <time datetime="2018-01-01T07:28:10.000Z" itemprop="datePublished">2018-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/01/Ajax回顾/">Ajax回顾</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p>Ajax回顾</p>
+<hr>
+<hr>
+<h4>简介</h4><br>Asynchronous Javascript And XML，异步的JavaScript和XML。通过在后台与服务器进行少量数据交换，AJAX可以使网页实现异步更新。即在不重新加载整个网页的情况下，对网页的某部分进行更新。<br><h4>以封装一个请求为例</h4>
+
+<pre><code>function ajax(url,funSucc,funFail){
+    //1.创建ajax对象
+    var xhr=new XMLHttpRequest()
+    ////兼容IE6，IE5
+    if(window.XMLHttpRequest){
+        var xhr=new XMLHttpRequest()
+    }else{
+        var xhr=new ActiveXObject(&quot;Microsoft.XMLHttp&quot;)    
+    }
+    //2.连接服务器，open(请求类型,文件路径,是否异步)
+    //如果是post请求，则需要手动设置请求消息头，如下
+    xhr.open(&apos;post&apos;,url,true);
+    xhr.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+    //如果是get请求，如下
+    xhr.open(&apos;get&apos;,url,true)
+    //3.发送请求，send方法内传递的是提交参数，没有可为null
+    xhr.send(null)
+    //4.接收数据，为Ajax对象的onreadystatechange事件设定响应函数
+    xhr.onreadystatechange=function(){
+        //readyState 请求状态:
+            0尚未初始化
+            1正在发送请求
+            2请求完成
+            3请求成功，正在接受数据
+            4接收数据成功
+        if(xhr.readyState==4){
+            //status 服务器返回的http请求响应值常用的有：
+                200表示请求成功
+                202请求被接受但处理未完成
+                400错误的请求
+                404资源未找到
+                500内部服务器错误
+
+            if(xhr.status==200){
+                //responseText 服务器返回的文本
+                funSucc(xhr.responseText)
+            }else{
+                //statusText 服务器返回的请求响应文本
+                funFail(xhr.statusText)
+            }
+        }
+    }
+}
+</code></pre><p><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cjg26sxrl0001q0wv59jo1yvl" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-进程与线程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/30/进程与线程/" class="article-date">
+  <time datetime="2017-12-30T13:28:24.000Z" itemprop="datePublished">2017-12-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/30/进程与线程/">进程与线程</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p>进程与线程</p>
+<hr>
+<hr>
+<p><em>在刚开始学习性能工具LR时，常听到进程与线程；但不得具体是什么意思，或者比较抽象；然后在网络上找到了比较形象的解释</em></p>
+<ol>
+<li>计算机的核心是CPU，它承担了所有的计算任务。它就像一座工厂，时刻在运行。</li>
+<li>假定工厂的电力有限，一次只能供给一个车间使用。也就是说，一个车间开工的时候，其他车间都必须停工。背后的含义就是，单个CPU一次只能运行一个任务。</li>
+<li>进程就好比工厂的车间，它代表CPU所能处理的单个任务。任一时刻，CPU总是运行一个进程，其他进程处于非运行状态。</li>
+<li>一个车间里，可以有很多工人。他们协同完成一个任务。</li>
+<li>线程就好比车间里的工人。一个进程可以包括多个线程。</li>
+<li>车间的空间是工人们共享的，比如许多房间是每个工人都可以进出的。这象征一个进程的内存空间是共享的，每个线程都可以使用这些共享内存。</li>
+<li>可是，每间房间的大小不同，有些房间最多只能容纳一个人，比如厕所。里面有人的时候，其他人就不能进去了。这代表一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。</li>
+<li>一个防止他人进入的简单方法，就是门口加一把锁。先到的人锁上门，后到的人看到上锁，就在门口排队，等锁打开再进去。这就叫”互斥锁”（Mutual exclusion，缩写 Mutex），防止多个线程同时读写某一块内存区域。</li>
+<li>还有些房间，可以同时容纳n个人，比如厨房。也就是说，如果人数大于n，多出来的人只能在外面等着。这好比某些内存区域，只能供给固定数目的线程使用。</li>
+<li>这时的解决方法，就是在门口挂n把钥匙。进去的人就取一把钥匙，出来时再把钥匙挂回原处。后到的人发现钥匙架空了，就知道必须在门口排队等着了。这种做法叫做”信号量”（Semaphore），用来保证多个线程不会互相冲突。<br><br>不难看出，mutex是semaphore的一种特殊情况（n=1时）。也就是说，完全可以用后者替代前者。但是，因为mutex较为简单，且效率高，所以在必须保证资源独占的情况下，还是采用这种设计。</li>
+</ol>
+<hr>
+<ul>
+<li>操作系统的设计，因此可以归结为三点：<br><br>（1）以多进程形式，允许多个任务同时运行；<br><br>（2）以多线程形式，允许单个任务分成不同的部分运行；<br><br>（3）提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源。</li>
+</ul>
+<p><em>小白参考大神佳作<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">进程与线程的一个简单解释</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjg26sy2u005mq0wvvtaa26rx" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-Django连接MySQL" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -273,7 +429,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjg0n9io4000g88wvuwdcucug" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjg26sxug0018q0wvbx0q5wz2" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -354,7 +510,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjg0n9in7000488wvf5jz5j7j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjg26sxsc0008q0wv4kpslyfb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -427,7 +583,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="cjg0n9ina000588wvsabp4syi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="cjg26sxs70005q0wvuenmc7nz" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -650,7 +806,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="cjg0n9iqc001o88wvn7erno7o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="cjg26sxuz001iq0wvpmvos0w1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -718,7 +874,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="cjg0n9ivp004g88wv9axfnv8r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="cjg26sy0h004eq0wvcw4xq1su" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -787,7 +943,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjg0n9ioe000l88wv6spd9ae3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjg26sxtb000kq0wvhrc6cxj8" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -893,7 +1049,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="cjg0n9iob000j88wvwnmhswiw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="cjg26sxt7000iq0wv4040oct0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -947,7 +1103,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/验证博客是否正常？/" data-id="cjg0n9iyk005z88wvfb8jc1et" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/15/验证博客是否正常？/" data-id="cjg26sy3a005uq0wvqmdyuwld" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -961,103 +1117,11 @@ limit: 20
 
 
   
-    <article id="post-起点" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/15/起点/" class="article-date">
-  <time datetime="2017-12-15T08:26:00.000Z" itemprop="datePublished">2017-12-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/15/起点/">起点</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque hendrerit lacus ut purus iaculis feugiat. Sed nec tempor elit, quis aliquam neque. Curabitur sed diam eget dolor fermentum semper at eu lorem.</p>
-</blockquote>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjg0n9ixp005l88wvug431au4" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/14/hello-world/" class="article-date">
-  <time datetime="2017-12-14T15:15:06.308Z" itemprop="datePublished">2017-12-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/14/hello-world/">Hello World</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjg0n9irq002f88wvzjb5dcz0" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
 
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span>
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/11/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1071,7 +1135,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1081,16 +1145,16 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 11.11px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 12.22px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.11px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 11.11px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.5px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.25px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 13.75px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 11.25px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1098,9 +1162,17 @@ limit: 20
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/16/使用hadoop里面的MapReduce/">使用hadoop里面的MapReduce</a>
+          </li>
         
           <li>
             <a href="/2018/04/14/虚拟机centos上部署hadoop/">虚拟机centos上部署hadoop</a>
@@ -1112,14 +1184,6 @@ limit: 20
         
           <li>
             <a href="/2018/04/12/linux文件的打包、压缩/">linux文件的打包、压缩</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/11/jdk部署/">jdk部署</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/09/chmod/">chmod</a>
           </li>
         
       </ul>
