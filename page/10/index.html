@@ -70,6 +70,305 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-字符串的定义、切片、格式化、函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/12/字符串的定义、切片、格式化、函数/" class="article-date">
+  <time datetime="2018-01-12T10:53:24.000Z" itemprop="datePublished">2018-01-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/12/字符串的定义、切片、格式化、函数/">字符串的定义、切片、格式化、函数</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>字符串的定义、切片、格式化、函数</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>定义</h6><p></p>
+<ul>
+<li><p>单引号、双引号都可以定义字符串，三引号允许一个字符串跨多行</p>
+<pre><code>name1=&apos;Honey&apos;  #单引号
+name2=&quot;Tom&quot;    #双引号
+html=&apos;&apos;&apos;       #三引号
+&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+&lt;body&gt;
+    &lt;p&gt;你好，2018！&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+&apos;&apos;&apos;
+</code></pre></li>
+</ul>
+<p></p><h6>切片</h6><p></p>
+<ul>
+<li><p>可以使用中括号和下标来获取单个字符或截取字符串，格式为[]、[ : ]、[ : : ]</p>
+<pre><code>str1=&apos;liuyongqian2018@163.com&apos; #先定义一个字符串
+#正序
+a=str1[0] #获取单个字符，取第一个字符      #result:l
+b=str1[len(str1)-1] #取最后一个字符，也可以写成 b=str1[-1],python特有         #result:m
+c=str1[1:5]#获取字符串，取下标为1、2、3、4的字符，不包括最后一位5      #result:iuyo
+d=str1[:]#取所有     #result:liuyongqian2018@163.com
+e=str1[1:]#取从下标为1到最后一个字符     #result:iuyongqian2018@163.com
+f=str1[:5]#取下标为0到4的字符，不包括5         #result:liuy
+g=str1[-5:]#取从-5到结尾的字符     #result:3.com
+h=str1[-5:-2]#取从-5到-3的字符，不包括-2         #result:3.c
+#逆序
+i=str1[ : : ]#取所有，最后一个参数为步长，默认为1     #result:liuyongqian2018@163.com
+j=str1[-1:-7:-2]#取-1到-6的字符，步长为2         #result:mc3
+k=str1[-1: :-3]#取-1到结尾的字符，步长为3         #result:m.11nqoi
+l=str1[-1: :-1]#倒序     #result:moc.361@8102naiqgnoyuil
+m=str1[ : :-1]#倒序         #result:moc.361@8102naiqgnoyuil
+</code></pre></li>
+</ul>
+<p></p><h6>格式化</h6><p></p>
+<ul>
+<li>第一种，%s 字符，%d 整数，%f 浮点型，%.2f 保留2位小数且四舍五入</li>
+<li><p>第二种，.format()格式化,如果以name开头，其后的变量均需以键值的形式出现</p>
+<pre><code>x=&apos;name:{0} age:{1}&apos;.format(&apos;Tom&apos;,33)     #result: name:Tom age:33
+y=&apos;name:{name} age:{age}&apos;.format(name=&quot;Tom&quot;,age=25)      #result: name:Tom age:25
+z1=&apos;name={0}&apos;.format(&quot;Tom&quot;)      #result: name=Tom
+z2=&apos;name={{0}}&apos;.format(&quot;Tom&quot;)       #result: name={0}
+z3=&apos;name={{{0}}}&apos;.format(&quot;Tom&quot;)           #result: name={Tom}
+</code></pre></li>
+<li><p>小练习：以上述两种方式输出结果</p>
+<pre><code>name=input(&quot;请输入NAME：&quot;) #字符型
+print(&quot;NAME:%s&quot; %name)
+age=int(input(&quot;请输入AGE：&quot;))#整型
+print(&quot;AGE:%d&quot; %age)
+work=float(input(&quot;请输入LIMIT：&quot;))#浮点型
+print(&quot;WORK:%f&quot;%work)
+print(&quot;===========================================&quot;)
+print(&quot;NAME:%s AGE:%d WORK:%.2f&quot;%(name,age,work))
+print(&quot;NAME:{0} AGE:{0}&quot;.format(name,age))
+</code></pre></li>
+</ul>
+<p></p><h6>函数</h6><p></p>
+<ul>
+<li><p>len()字符串的长度</p>
+<pre><code>str3=&quot;aabcd efghi jklmn&quot; #先定义一个字符
+print(&apos;str3的长度为{0}&apos;.format(len(str3)))        #result：str3的长度为17
+</code></pre></li>
+<li><p>count(str,start,end)返回指定范围内字符出现数量，范围不包括end</p>
+<pre><code>print(&quot;str3中a出现次数为{0}&quot;.format(str3.count(&apos;a&apos;,0,2)))     #result：str3中a出现次数为2
+</code></pre></li>
+<li><p>capitalize()将字符串的第一个字符转换为大写</p>
+<pre><code>print(str3.capitalize())     #result：Aabcd efghi jklmn
+</code></pre></li>
+<li><p>title()将字符串中每一个单词首字母大写</p>
+<pre><code>print(str3.title())     #result：Aabcd Efghi Jklmn
+</code></pre></li>
+<li><p>find()返回找到的字符串的下标，没有找到则返回-1</p>
+<pre><code>print(&apos;d在str3中的下标为{0}&apos;.format(str3.find(&apos;d&apos;,1)))#表示第一次出现字符d的下标，        #result：d在str3中的下标为4
+</code></pre></li>
+<li><p>rfind(str,start,end)从右边开始找,指定一个范围</p>
+<pre><code>print(&apos;d在str3中的下标为{0}&apos;.format(str3.rfind(&apos;d&apos;,-18,-1)))        #result：d在str3中的下标为4
+</code></pre></li>
+<li><p>index()找下标，没有找到则抛出异常</p>
+<pre><code>print(&apos;d在str3中的下标为{}&apos;.format(str3.index(&apos;d&apos;)))         #result：d在str3中的下标为4
+</code></pre></li>
+<li><p>rindex()从右边开始找，可以指定范围</p>
+<pre><code>print(&apos;d在str3中的下标为{}&apos;.format(str3.index(&apos;d&apos;,-18,-1)))    #result：d在str3中的下标为4
+</code></pre></li>
+<li><p>replace()替换,但是原字符不会改变</p>
+<pre><code>print(&quot;替换str3中的a为{}&quot;.format(str3.replace(&apos;a&apos;,&apos;A&apos;)))        #result:替换str3中的a:AAbcd efghi jklmn
+</code></pre></li>
+<li><p>split(str,num)如果括号内什么都不写，就是将通过\t和空格进行拆分，可设置拆分次数</p>
+<pre><code>print(&quot;str3默认拆分结果为{0}&quot;.format(str3.split()))         #result:str3默认拆分结果为[&apos;aabcd&apos;, &apos;efghi&apos;, &apos;jklmn&apos;]
+</code></pre></li>
+<li><p>startswith(str,start,end)检查是否以str开头，可指定检查范围，返回bool值</p>
+<pre><code>print(str3.startswith(&apos;aa&apos;))    #result:True
+</code></pre></li>
+<li><p>endswith()检查是否以str开头，返回bool值</p>
+<pre><code>print(str3.endswith(&apos;mn&apos;))        #result:True
+</code></pre></li>
+<li><p>lower()忽略大小写的地方，全部转为小写</p>
+<pre><code>print(str3.lower())        #result:aabcd efghi jklmn
+</code></pre></li>
+<li><p>upper()忽略大小写的地方，全部转为大写</p>
+<pre><code>print(str3.upper())        #result:AABCD EFGHI JKLMN
+</code></pre></li>
+<li><p>ljust(num,str),center(num,str),rjust(num,str)字符串输出时怎样对齐，字符串本来长度是5，把它变成长度为10，可用字符填充</p>
+<pre><code>str4=&apos;abcde&apos;#先定义一个字符串，以ljust()为例
+print(str4.ljust(10,&apos;*&apos;))        #result:abcde*****
+</code></pre></li>
+<li><p>lstrip(),strip(),rstrip()去除空格</p>
+<pre><code>str5=&apos;   abcde&apos;#先定义一个字符串，以lstrip()为例
+print(str4.lstrip())        #result:abcde
+</code></pre></li>
+<li><p>partition(str)以此字符串为节点拆分,返回头、分割符、尾三部分</p>
+<pre><code>str6=&apos;hello python-world&apos;#先定义一个字符串
+print(str6.partition(&quot;-&quot;))        #result:(&apos;hello python&apos;, &apos;-&apos;, &apos;world&apos;)
+</code></pre></li>
+<li><p>splitlines(bool keepends)按照换行符进行拆分，如果字符串中有”\n” 结果里是否去掉换行符(‘\r’, ‘\r\n’, \n’)，默认为 False，不包含换行符;如果为True，则保留换行符</p>
+<pre><code>str7=&apos;你好\npython-world&apos;#先定义一个字符串
+print(str7.splitlines())    #result：[&apos;你好&apos;, &apos;python-world&apos;]
+print(str7.splitlines(True))    #result：[&apos;你好\n&apos;, &apos;python-world&apos;]
+</code></pre></li>
+<li><p>isalpha()判断字符串是否全是字母/文字,即非特殊字符，返回bool值</p>
+<pre><code>str8=&apos;你好Pythonworld&apos;#先定义一个字符串
+print(str8.isalpha())        #result：True
+</code></pre></li>
+<li><p>isdigit()判断字符串是否是数字，返回bool值</p>
+<pre><code>print(str8.isdigit())        #result：False
+</code></pre></li>
+<li><p>isalnum()判断是否是数字和字母/文字，返回bool值</p>
+<pre><code>print(str8.isalnum())        #result：True
+</code></pre></li>
+<li><p>join(sequence)将列表组成新的字符串,sequence为要拼接列表的连接项</p>
+<pre><code>str9=(&apos;P&apos;,&apos;y&apos;,&apos;t&apos;,&apos;h&apos;,&apos;o&apos;,&apos;n&apos;)
+str10=&apos;-&apos;
+print(str10.join(str9))        #result:P-y-t-h-o-n
+</code></pre></li>
+<li><p>小练习：验证邮箱是否合法，要求：@在.的前边，如果合法获取用户名部分</p>
+<pre><code>email=input(&quot;请输入邮箱：&quot;)
+a=email.find(&apos;@&apos;) 
+b=email.find(&apos;.&apos;)
+if(a&lt;b and a!=0):
+    print(&quot;该邮箱合法！&quot;)
+    print(&quot;用户名部分：{}&quot;.format(email[:a]))
+else:
+    print(&quot;该邮箱不合法！&quot;)
+</code></pre></li>
+</ul>
+<p></p><h6>其他</h6><p></p>
+<ul>
+<li><p>str()将非字符型转换成字符型</p>
+<pre><code>a=123465
+b=str(aa)
+print(type(b))         #result：&lt;class &apos;str&apos;&gt;
+</code></pre></li>
+<li><p>in:判断是否字符串中存在某字符，返回bool值</p>
+</li>
+<li><p>not in：判断是否不在此字符串中，返回bool值</p>
+<pre><code>str2=&apos;abcdef&apos; #先定义一个字符
+print(&apos;d&apos; in str2)       #result:True
+print(&apos;d&apos; not in str2)       #result:False
+</code></pre></li>
+<li><p>r/R 原样输出字符串，取消特殊性</p>
+<pre><code>print(r&quot;\t代表一个制表符   \n表示换行符&quot;)
+</code></pre></li>
+</ul>
+<p><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjgdehhu7004hrswvphv3alzn" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-变量、数据类型、运算符、分支" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/10/变量、数据类型、运算符、分支/" class="article-date">
+  <time datetime="2018-01-10T09:09:48.000Z" itemprop="datePublished">2018-01-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/10/变量、数据类型、运算符、分支/">变量、数据类型、运算符、分支</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>变量、数据类型、运算符、分支</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>变量</h6><p></p>
+<ul>
+<li>是一个数据存储空间的表示，无需关键字，不需要声明；</li>
+<li>命名规则:由数字、字符、下划线组成，不能以数字开始，不能关键字，区分大小写；</li>
+<li>print()换行，不换行:print(,end=””),用户输入：input(),其中输入的为字符串，可以通过类型转换转为自己需要的类型,可以使用斜杠（ \）将一行的语句分为多行显示;注释：#单行注释 多行注释’’’ ‘’’</li>
+<li>del删除单个或多个对象的引用<pre><code>x=1
+x,y,z=1,2,3  
+print(x)
+del x,y            #删除单个或者多个对象的引用
+print(&quot;===========================================&quot;)
+name=input(&quot;Please input NAME：&quot;)  #input() 键盘录入 类型：str
+print(&quot;NAME:%s&quot; %name)
+age=int(input(&quot;Please input AGE：&quot;)) #int() 将str转换成int
+print(&quot;AGE:%d&quot; %age)
+work=input(&quot;Please input limit：&quot;)
+print(&quot;WORK:%s&quot; %work)
+</code></pre><h6>数据类型</h6></li>
+<li>数字Number：int,float,bool,复数<br></li>
+<li>字符串：String<br><pre><code>x=1 #int
+y=1.2 #float
+z=&quot;张三&quot; #字符串
+</code></pre><h6>运算符</h6></li>
+<li>算术运算符：+ - <em> /(得到小数), %(取余), //(只得到商，取整),*</em> 幂(返回x的y次幂)</li>
+<li>关系运算符：&gt; &lt; &gt;= == &lt;= !=  最终的返回bool</li>
+<li>逻辑运算符：and or not  &amp;&amp;  || !</li>
+<li>成员运算符: in( x 在 y 序列中返回 True) not in( x 不在 y 序列中返回 True)</li>
+<li>小练习：请用户输入一个四位数字：求此数字各个位之和<pre><code>value=int(input(&quot;Please input a 4-bit value:&quot;))
+qian=value//1000
+bai=value%1000//100
+shi=value%100//10
+ge=value%10
+sum=qian+bai+shi+ge
+print(sum)
+</code></pre><h6>分支结构</h6><pre><code>score=int(input(&quot;Please input score:&quot;))
+if(score&gt;=90):
+    print(&quot;Excellent!&quot;)
+elif(score&gt;=60):
+    print(&quot;Medium!&quot;)
+else:
+    print(&quot;Flunk!&quot;)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjgdehhu0004drswvid5ey66v" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-Ajax回顾" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/01/Ajax回顾/" class="article-date">
@@ -148,7 +447,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cjg26sxrl0001q0wv59jo1yvl" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cjgdehhlp0005rswvrg70n5va" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -212,7 +511,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjg26sy2u005mq0wvvtaa26rx" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjgdehhwd005prswvdio57n0l" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -429,7 +728,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjg26sxug0018q0wvbx0q5wz2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjgdehhnh000lrswvv9w315it" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -510,7 +809,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjg26sxsc0008q0wv4kpslyfb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjgdehhlm0004rswvhopyoebh" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -583,7 +882,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="cjg26sxs70005q0wvuenmc7nz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="cjgdehhla0001rswv0kri2n5a" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -806,7 +1105,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="cjg26sxuz001iq0wvpmvos0w1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="cjgdehhp4001jrswvrcvnz6dr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -874,7 +1173,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="cjg26sy0h004eq0wvcw4xq1su" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="cjgdehhun004rrswvbnl22yts" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -943,167 +1242,7 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjg26sxtb000kq0wvhrc6cxj8" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Git-NodeJS-Hexo创建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/15/Git-NodeJS-Hexo创建个人博客/" class="article-date">
-  <time datetime="2017-12-15T13:51:31.000Z" itemprop="datePublished">2017-12-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/15/Git-NodeJS-Hexo创建个人博客/">Git+NodeJS+Hexo创建个人博客</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p>##1.Git篇</p>
-<ul>
-<li>Windows环境下，安装（Git-2.15.1.2-64-bit.exe）后可打开gitbash运用”git version”查看版本</li>
-</ul>
-<p>##2.NodeJS篇</p>
-<ul>
-<li>Windows环境下，安装（node-v8.9.3-x64.msi）并配置环境变量后，在win-dos窗口中运用”node -v”查看版本</li>
-</ul>
-<p>##3.Hexo篇（接下来均在gitbash中完成</p>
-<ul>
-<li><p>3.1手动创建一个将来存放blog的文件夹，在gitbash中cd到该文件夹下运用”npm i -g hexo”安装hexo后使用”hexo -v”查看版本；</p>
-</li>
-<li><p>3.2运用”hexo init”初始化文件夹</p>
-</li>
-</ul>
-<p>##4.关联github</p>
-<ul>
-<li><p>4.1在github网页端创建自己的账号后new一个repository，name如liuyongqian2010.github.io，记得勾选initialize；</p>
-</li>
-<li><p>4.2回到gitbash中，配置github账户信息，两条命令：git config –blobal user.name “liuyongqian2010” ,git config –global user.email “1029853206@qq.com”</p>
-</li>
-<li><p>4.3在gitbash中创建SSH，输入”ssh-keygen -t rsa -C “1029853206@qq.com”生成ssh，输入”cd ~/.ssh”，”cat id_rsa.pub”后复制出现的一堆码</p>
-</li>
-<li><p>4.4在github网页端，你的头像下setting中的SSH and GPG keys一栏添加一个New SSH key后在gitbash中输入”ssh -T git@github.com”验证是否添加成功</p>
-</li>
-</ul>
-<p>##5.本地验证</p>
-<ul>
-<li><p>5.1先在gitbash中运用”npm i hexo-server”安装hexo的服务器</p>
-</li>
-<li><p>5.2使用随便一个编辑器修改blog文件夹下的”_config.yml”文件中的”deploy”模块中的”repo”为你在github上的库地址如”<a href="https://github.com/liuyongqian2010/liuyongqian2010.github.io" target="_blank" rel="noopener">https://github.com/liuyongqian2010/liuyongqian2010.github.io</a>“</p>
-</li>
-<li><p>5.3在gitbash中cd到blog目录下，分别执行以下三条命令：”hexo clean””hexo generate””hexo server”后打开浏览器输入”<a href="http://localhost:4000&quot;可见hexo默认主题页面" target="_blank" rel="noopener">http://localhost:4000&quot;可见hexo默认主题页面</a></p>
-</li>
-</ul>
-<p>##6.上传github</p>
-<ul>
-<li><p>6.1为了将以后所写文章部署到github服务器上让别人看到请在gtibash中输入”npm install hexo-deployer-git –save”</p>
-</li>
-<li><p>6.2在gitbash中依次执行那三条命令后在浏览器中输入”<a href="https://liuyongqian2010.github.io/&quot;可见自己的博客了" target="_blank" rel="noopener">https://liuyongqian2010.github.io/&quot;可见自己的博客了</a></p>
-</li>
-</ul>
-<p>##7.添加RSS</p>
-<ul>
-<li><p>7.1在gitbash中输入”npm i hexo-generator-feed”安装rss插件</p>
-</li>
-<li><p>7.2在blog文件夹下的_config.yml中找到Extension添加如下内容：<br>  Extensions<br>  plugin:<br>   -hexo-generator-feed<br>  Feed Atom<br>  feed:</p>
-<pre><code>type: atom
-path: atom.xml
-limit: 20
-</code></pre></li>
-</ul>
-<p>##8.写文章了</p>
-<ul>
-<li>在gitbash中运用”hexo new ‘文章名’”后可在source/_posts路径下看到你创建的内容了，可下载Markdown进行内容编辑，之后执行那三条命令……</li>
-</ul>
-<p>##9.遇到障碍</p>
-<ul>
-<li><p>9.1在window10上运行Markdown可能会总弹出“HTML渲染错误”，下载安装（awesomium_v1.6.6_sdk_win.exe）后重启Markdown即可</p>
-</li>
-<li><p>9.2详细内容可参见：<a href="https://www.cnblogs.com/visugar/p/6821777.html" target="_blank" rel="noopener">hexo从零开始到搭建完整</a></p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="cjg26sxt7000iq0wv4040oct0" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-验证博客是否正常？" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/15/验证博客是否正常？/" class="article-date">
-  <time datetime="2017-12-15T09:02:08.000Z" itemprop="datePublished">2017-12-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/15/验证博客是否正常？/">验证博客是否正常？</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <blockquote><p>一艘货轮卸货后返航,在浩渺的大海上,突然遭遇巨大风暴,老船长果断下令:“打开所有货舱,立刻往里面灌水。”  　　</p>
-</blockquote>
-<blockquote><p>水手们担忧:“往船里灌水是险上加险,这不是自找死路吗?” 船长镇定地说:“大家见过根深干粗的树被暴风刮倒过吗?被刮倒的是没有根基的小树。”  　</p>
-</blockquote>
-<blockquote><p>水手们半信半疑地照着做了。虽然暴风巨浪依旧那么猛烈,但随着货舱里的水位越来越高,货轮渐渐地平稳了。　</p>
-</blockquote>
-<blockquote><p>船长告诉那些松了一口气的水手:“一只空木桶,是很容易被风打翻的,如果装满水负重了,风是吹不倒的。船在负重的时候,是最安全的;空船时,才是最危险的时候。”  </p>
-</blockquote>
-<blockquote><p>人何尝不是呢?那些胸怀大志的人,沉重的责任感时刻压在心头,砥砺着人生的坚稳脚步,从岁月和历史的风雨中坚定地走了出来。而那些得过且过的空耗时光的人,像一个没有盛水的空水桶,往往一场人生的风雨便把他们彻底地打翻了。 </p>
-</blockquote>
-<blockquote><p>给我们自己加满“水”,使我们负重,这样才不会被打翻。</p>
-</blockquote>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/验证博客是否正常？/" data-id="cjg26sy3a005uq0wvqmdyuwld" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjgdehhp6001lrswv7u2253t0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -1135,7 +1274,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1145,7 +1284,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.5px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.25px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 13.75px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 11.25px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.11px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
     </div>
   </div>
 
@@ -1154,7 +1293,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1167,6 +1306,14 @@ limit: 20
       <ul>
         
           <li>
+            <a href="/2018/04/16/Centos7安装MySQL57/">Centos7安装MySQL57</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/16/python之Map、Reduce、Filte/">python之Map、Reduce、Filte</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
           </li>
         
@@ -1176,14 +1323,6 @@ limit: 20
         
           <li>
             <a href="/2018/04/14/虚拟机centos上部署hadoop/">虚拟机centos上部署hadoop</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/14/使用LinkExtractor提取链接/">使用LinkExtractor提取链接</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/12/linux文件的打包、压缩/">linux文件的打包、压缩</a>
           </li>
         
       </ul>

@@ -5,20 +5,20 @@
   
 
   
-  <title>python之Excel操作 | LiuYongQian</title>
+  <title>python之Map、Reduce、Filte | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="python之Excel操作   使用xlwt module将数据写入Excel表格  import xlwt book=xlwt.Workbook(encoding=&amp;apos;utf-8&amp;apos;,style_compression=0) #创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩 sheet1=book.add_sheet">
+  <meta name="description" content="python之Map、Reduce、Filte   Map  简介 map()函数接收两个及以上参数，一个是函数对象本身，一个是序列，map将传入的函数依次作用到序列的每个元素，并把结果作为新的list返回 在Python2里，直接使用map就可以打印结果；但是在Python3里，map返回的结果是迭代器(iterator)，需要先转换为列表list   计算列表中每个元素的的平方并输出 def">
 <meta name="keywords" content="Python学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python之Excel操作">
-<meta property="og:url" content="http://yoursite.com/2018/03/11/python之Excel操作/index.html">
+<meta property="og:title" content="python之Map、Reduce、Filte">
+<meta property="og:url" content="http://yoursite.com/2018/04/16/python之Map、Reduce、Filte/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="python之Excel操作   使用xlwt module将数据写入Excel表格  import xlwt book=xlwt.Workbook(encoding=&amp;apos;utf-8&amp;apos;,style_compression=0) #创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩 sheet1=book.add_sheet">
+<meta property="og:description" content="python之Map、Reduce、Filte   Map  简介 map()函数接收两个及以上参数，一个是函数对象本身，一个是序列，map将传入的函数依次作用到序列的每个元素，并把结果作为新的list返回 在Python2里，直接使用map就可以打印结果；但是在Python3里，map返回的结果是迭代器(iterator)，需要先转换为列表list   计算列表中每个元素的的平方并输出 def">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-11T13:35:31.682Z">
+<meta property="og:updated_time" content="2018-04-17T03:24:58.103Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python之Excel操作">
-<meta name="twitter:description" content="python之Excel操作   使用xlwt module将数据写入Excel表格  import xlwt book=xlwt.Workbook(encoding=&amp;apos;utf-8&amp;apos;,style_compression=0) #创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩 sheet1=book.add_sheet">
+<meta name="twitter:title" content="python之Map、Reduce、Filte">
+<meta name="twitter:description" content="python之Map、Reduce、Filte   Map  简介 map()函数接收两个及以上参数，一个是函数对象本身，一个是序列，map将传入的函数依次作用到序列的每个元素，并把结果作为新的list返回 在Python2里，直接使用map就可以打印结果；但是在Python3里，map返回的结果是迭代器(iterator)，需要先转换为列表list   计算列表中每个元素的的平方并输出 def">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -70,10 +70,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-python之Excel操作" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-python之Map、Reduce、Filte" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/03/11/python之Excel操作/" class="article-date">
-  <time datetime="2018-03-11T10:09:52.000Z" itemprop="datePublished">2018-03-11</time>
+    <a href="/2018/04/16/python之Map、Reduce、Filte/" class="article-date">
+  <time datetime="2018-04-16T15:38:13.000Z" itemprop="datePublished">2018-04-16</time>
 </a>
     
   </div>
@@ -84,7 +84,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      python之Excel操作
+      python之Map、Reduce、Filte
     </h1>
   
 
@@ -95,44 +95,73 @@
       
 	  
 	  
-        <p></p><h5>python之Excel操作</h5><p></p>
+        <p></p><h5>python之Map、Reduce、Filte</h5><p></p>
 <hr>
 <hr>
-<h6>使用xlwt module将数据写入Excel表格</h6>
+<p></p><h6>Map</h6><p></p>
+<ul>
+<li>简介<ul>
+<li>map()函数接收两个及以上参数，一个是函数对象本身，一个是序列，map将传入的函数依次作用到序列的每个元素，并把结果作为新的list返回</li>
+<li>在Python2里，直接使用map就可以打印结果；但是在Python3里，map返回的结果是迭代器(iterator)，需要先转换为列表list</li>
+</ul>
+</li>
+<li><p>计算列表中每个元素的的平方并输出</p>
+<pre><code>def f(x):
+    return x*x
+list1=[1,2,3,4,5,6]
+第一种方法：循环
+list2=[]
+for n in list1:
+    list2.append(f(n))
+print(list2)              #result:[1, 4, 9, 16, 25, 36]
 
-<pre><code>import xlwt
-book=xlwt.Workbook(encoding=&apos;utf-8&apos;,style_compression=0)
-#创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩
-sheet1=book.add_sheet(&apos;test&apos;,cell_overwrite_ok=True)
-#创建一个sheet对象，一个sheet对象对应Excel文件中的一张表格
-#add_sheet的第一个参数是这张表的名字，第二个参数表示覆盖单元格
-sheet1.write(0,0,&apos;EnglishName&apos;)
-#其中第一个参数表示行，第二个参数表示列，第三个参数表示插入的数据
-sheet1.write(1,0,&apos;Liuyongqian&apos;)
-sheet1.write(0,1,&apos;中文名字&apos;)
-sheet1.write(1,1,&apos;刘永前&apos;)
-book.save(r&apos;e:\test1.xls&apos;)
-#将以上操作保存到指定excel文件中
-</code></pre><h6>使用xlrd module从Excel读取数据</h6>
+第二种方法：map
+list3=list(map(f,list1))
+print(list3)              #result:[1, 4, 9, 16, 25, 36]
+</code></pre></li>
+<li><p>map()作为高阶函数，事实上它把运算规则抽象了，因此，我们不但可以计算简单的f(x)=x*x，还可以计算任意复杂的函数，比如，把这个list1所有数字转为字符串</p>
+<pre><code>list4=list(map(str,list1))
+print(list4)             #result:[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;, &apos;5&apos;, &apos;6&apos;]
+</code></pre></li>
+</ul>
+<p></p><h6>Reduce</h6><p></p>
+<ul>
+<li>简介<ul>
+<li>reduce把一个函数作用在一个序列[x1, x2, x3…]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算</li>
+<li>reduce可以有initial参数</li>
+</ul>
+</li>
+<li><p>示例</p>
+<pre><code>from functools import reduce
+#没有initial参数
+sum1=reduce(lambda x,y:x+y,[1,2,3,4,5,6])    #（（（1+2）+3+）+4...）
+print(sum1)             #result:21
 
-<pre><code>import xlrd
-file=r&apos;E:\test1.xls&apos;   #打开指定路径下的xls文件
-book=xlrd.open_workbook(file)  #得到excel文件的book对象，实例化对象
-sheet0=book.sheet_by_index(0)  #通过sheet索引获得sheet对象
-sheet_name=book.sheet_names()[0] #获得指定索引的sheet表名字
-&apos;&apos;&apos;
-sheet1=book.sheet_by_name(sheet_name) #通过sheet名字来获取，也可直接指定名字
-&apos;&apos;&apos;
-nrows=sheet0.nrows       #获取总行数
-ncols=sheet0.ncols       #获取总列数
-row_data=sheet0.row_values(1)  #获取第2行的数据列表
-col_data=sheet0.col_values(1)  #获取第2列的数据列表
-cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
-</code></pre>
+#有initial参数
+sum2=reduce(lambda x,y:x+y,[1,2,3,4,5,6],10)  #（（（（10+1）+2）+3）+4...）
+print(sum2)             #result:31
+</code></pre></li>
+</ul>
+<p></p><h6>Filte</h6><p></p>
+<ul>
+<li>简介<ul>
+<li>filter函数对指定的序列进行过滤操作</li>
+<li>filter()也接收一个函数和一个序列，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素</li>
+</ul>
+</li>
+<li><p>示例</p>
+<pre><code>list4=[1,2,3,4,5,6,7,8,9]
+def is_odd(x):
+    return x%2==1
+result=list(filter(is_odd,list4))
+print(result)               #result:[1, 3, 5, 7, 9]
+</code></pre></li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjgdehhrf002xrswvysthe7lf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/16/python之Map、Reduce、Filte/" data-id="cjgdehhsr003prswvgb6qgcyz" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -143,19 +172,19 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
     
 <nav id="article-nav">
   
-    <a href="/2018/03/11/Git入门/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/04/16/Centos7安装MySQL57/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Neuer</strong>
       <div class="article-nav-title">
         
-          Git入门
+          Centos7安装MySQL57
         
       </div>
     </a>
   
   
-    <a href="/2018/03/11/Python之OS操作/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/04/16/安装python3-6、spark/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Älter</strong>
-      <div class="article-nav-title">Python之OS操作</div>
+      <div class="article-nav-title">安装python3.6、spark</div>
     </a>
   
 </nav>

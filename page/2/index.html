@@ -70,6 +70,313 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-富文本、分页" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/03/富文本、分页/" class="article-date">
+  <time datetime="2018-04-03T00:05:22.000Z" itemprop="datePublished">2018-04-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/03/富文本、分页/">富文本、分页</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>富文本、分页</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>富文本</h6><p></p>
+<ul>
+<li>1.下载链接:  <a href="http://ueditor.baidu.com/website/download.html#ueditor,目前最新版本是ueditor-1.4.3.3" target="_blank" rel="noopener">http://ueditor.baidu.com/website/download.html#ueditor,目前最新版本是ueditor-1.4.3.3</a></li>
+<li>2.将下载的文件全部存放在我们的django项目里面，路径为static/ueditor/下</li>
+<li>3.将uecontroller.py文件放在与项目同名的文件夹下，该文件为格式文本请求地址，请求资源；需要将其中的依据引用代码稍做修改<code>import pyblog.settings as settings</code>，即引入项目的设置</li>
+<li><p>4.在于项目同名的文件夹下的urls.py中设置路由</p>
+<pre><code>from .uecontroller import handler
+urlpatterns = [
+    path(&apos;uecontroller&apos;,handler),
+]
+</code></pre></li>
+<li><p>5.将ueditor/jsp/config.json文件复制到项目根目录下</p>
+</li>
+<li><p>6.将文件ueditor/_example/submitFormDemo.html中的部分script内容复制到前端页面fabu.html中，并且修改路径，其中博客页面中的内容标签需要加id，serverUrl</p>
+<pre><code>&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;欢迎发布博客&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; src=&quot;/static/ueditor/ueditor.config.js&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; src=&quot;/static/ueditor/_examples/editor_api.js&quot;&gt;&lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+        body{
+            font-size:14px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;欢迎{{ user.username }}发布博客...&lt;/h2&gt;
+    &lt;span style=&quot;color:red&quot;&gt;{{ msg }}&lt;/span&gt;
+    &lt;form action=&quot;/pyblogA/fabu&quot; method=&quot;post&quot;&gt;
+        {% csrf_token %}
+        &lt;p&gt;标题：&lt;input type=&quot;text&quot; name=&apos;title&apos; style=&quot;width:500px&quot;&gt;&lt;/p&gt;
+        &lt;p&gt;内容：&lt;textarea  id=&quot;myEditor&quot; name=&apos;context&apos; style=&quot;width:600px;height:400px&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;确认发布&quot;&gt;
+    &lt;/form&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        var editor_a = UE.getEditor(&apos;myEditor&apos;,{initialFrameHeight:300,serverUrl:&apos;/uecontroller&apos;});
+    &lt;/script&gt;
+&lt;/body&gt;
+</code></pre></li>
+<li><p>7.打开文件ueditor/_examples/editor_api.js，将baseURL的路径改为当前_src的路径，即<code>baseURL = &#39;/static/ueditor/_src/&#39;;</code></p>
+</li>
+<li><p>8.新建上传文件存储路径为static/upload/imgs/，并修改uecontroller.py中的代码</p>
+<pre><code>try:
+    #重新定义上传图片的名字
+    truelyName = buildFileName(filename)
+    webUrl = config.SavePath+ truelyName
+    print(webUrl)
+    #!!!!!!!!!!!!
+    savePath =R&apos;static/upload/imgs/&apos;+webUrl
+    # savePath =ROOT+webUrl
+    print(&apos;savePath&apos;,savePath)
+    f = codecs.open(savePath,&quot;wb+&quot;)
+    for chunk in buf.chunks():
+        f.write(chunk)
+    f.flush()
+    f.close()
+    result.state = &quot;SUCCESS&quot;
+    #返回富文本显示的图片路径
+    result.url =&apos;/static/upload/imgs/&apos;+truelyName# truelyName
+    print(&apos;truelyName&apos;, truelyName)
+    result.title = truelyName
+    result.original = truelyName
+    response = HttpResponse(buildJsonResult(result))
+    response[&quot;Content-Type&quot;] = &quot;text/plain&quot;
+    return response
+</code></pre></li>
+</ul>
+<p></p><h6>在登录成功欢迎页面显示博客列表，并链接进入博客页面</h6><p></p>
+<ul>
+<li><p>1.在发布博客的views.py中写入getAll函数</p>
+<pre><code>def getAll():
+    Blogset=Blog.objects.values(&apos;id&apos;,&apos;title&apos;,&apos;createDate&apos;,&apos;BlogUser__username&apos;).all()
+    return Blogset
+</code></pre></li>
+<li><p>2.在用户的views.py中</p>
+<pre><code>from pyblogA.views import getAll
+def welcome(request):
+    Blogset=getAll()
+    return render(request, &apos;welcome.html&apos;,
+                  {&apos;user&apos;: request.session.get(&apos;user&apos;, None),
+                   &apos;Blogset&apos;:Blogset
+                   })
+</code></pre></li>
+<li><p>3.在登录欢迎页面welcome.html页面</p>
+<pre><code>{% for foo in Blogset %}
+		        <li>{{ foo.id }}&nbsp;&nbsp;
+		            <a href="/pyblogA/showOne?id={{ foo.id }}">{{ foo.title }}</a>&nbsp;&nbsp;
+		            {{ foo.createDate|date:'Y-m-d H:i:s' }}&nbsp;&nbsp;{{ foo.BlogUser__username }}
+		        </li>
+		{% endfor %}
+</code></pre></li>
+<li><p>4.接下来是链接进入博客页面，设置博客显示页面b.html</p>
+<pre><code>&lt;body&gt;
+    登录用户/非登录用户都可见
+    &lt;!--某个文档的显示页面--&gt;
+    &lt;h2&gt;标题：{{ blog.title }}&lt;/h2&gt;
+    &lt;h3&gt;发布时间：{{ blog.createDate|date:'Y-m-d H:i:s' }}&lt;/h3&gt;
+    &lt;h3&gt;作者：{{ blog.BlogUser__username }}&lt;/h3&gt;
+    &lt;h2&gt;内容：&lt;/h2&gt;
+    &lt;div style=&quot;width:85%;margin:0 auto&quot;&gt;
+        {% autoescape off %}  #转义，否则显示编码
+		            {{ blog.context }}
+		        {% endautoescape %}
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre></li>
+<li><p>5.在发布博客的urls中设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;showOne&apos;,showOne),
+]
+</code></pre></li>
+<li><p>6.在发布博客的views中定义showOne函数</p>
+<pre><code>def showOne(request):
+    id=request.GET.get(&apos;id&apos;,None)
+    if id is None:
+        return render(request,&apos;welcome.html&apos;)
+    else:
+        blog=Blog.objects.\
+            values(&apos;id&apos;,&apos;title&apos;,&apos;createDate&apos;,&apos;context&apos;,&apos;BlogUser__username&apos;).\
+            filter(pk=id).all()
+        return render(request,&apos;b.html&apos;,{&apos;blog&apos;:blog.first()})
+</code></pre></li>
+</ul>
+<p></p><h6>分页</h6><p></p>
+<ul>
+<li><p>1.设置发布博客的views中的getAll函数</p>
+<pre><code>from django.core.paginator import Paginator
+def getAll(num):
+    Blogset=Blog.objects.values(&apos;id&apos;,&apos;title&apos;,&apos;createDate&apos;,&apos;BlogUser__username&apos;).all()
+    paginator = Paginator(Blogset,5)  # 创建分页器
+    page=paginator.get_page(num)
+    return page,paginator
+</code></pre></li>
+<li><p>2.在用户的views.py中</p>
+<pre><code>def welcome(request):
+    num=request.GET.get(&apos;num&apos;,1)
+    Blogset=getAll(num)[0]
+    paginator=getAll(num)[1]
+    return render(request, &apos;welcome.html&apos;,
+                  {&apos;user&apos;: request.session.get(&apos;user&apos;, None),
+                   &apos;Blogset&apos;:Blogset,
+                   &apos;paginator&apos;:paginator
+                   })
+</code></pre></li>
+<li><p>3.在登录欢迎页面welcome.html页面中</p>
+<pre><code>&lt;body&gt;
+    {% if Blogset.has_previous %}
+		        <a href="?num=1">首页</a>
+		        <a href="?num={{ Blogset.previouse_page_number }}">上一页</a>
+		    {% endif %}
+    {% if Blogset.has_next %}
+		        <a href="?num={{ Blogset.next_page_number }}">下一页</a>
+		        <a href="?num={{ paginator.num_pages }}">尾页</a>
+		    {% endif %}
+&lt;/body&gt;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjgdehhuh004nrswvel8bnpz6" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-scrapy选择器css、xpath" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/02/scrapy选择器css、xpath/" class="article-date">
+  <time datetime="2018-04-02T13:33:47.000Z" itemprop="datePublished">2018-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/02/scrapy选择器css、xpath/">scrapy选择器css、xpath</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>scrapy选择器css、xpath</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>Scrapy自带了提取数据的机制。它们称为选择器，因为它们“选择”由XPath或CSS表达式指定的HTML文档的某些部分</li>
+<li>XPath是用于选择XML文档中的节点的语言，其也可以与HTML一起使用</li>
+<li>CSS是一种用于将样式应用于HTML文档的语言。它定义了选择器以将这些样式与特定的HTML元素相关联</li>
+<li>Scrapy选择器构建在lxml库之上，这意味着它们的速度和解析精度非常相似</li>
+</ul>
+<p></p><h6>使用选择器</h6><p></p>
+<ul>
+<li><p>为了解释如何使用选择器，我们将使用Scrapy shell（提供交互式测试）和位于Scrapy文档服务器中的示例页面：<a href="http://doc.scrapy.org/en/latest/_static/selectors-sample1.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</a></p>
+<pre><code>#打开shell
+scrapy shell http://doc.scrapy.org/en/latest/_static/selectors-sample1.html 
+#使用XPath和CSS选择标题标签中的文本:
+response.xpath(&apos;//title/text()&apos;)
+&gt;&gt;&gt;[&lt;Selector xpath=&apos;//title/text()&apos; data=&apos;Example website&apos;&gt;]
+response.css(&apos;title::text&apos;)
+&gt;&gt;&gt;[&lt;Selector xpath=&apos;descendant-or-self::title/text()&apos; data=&apos;Example website&apos;&gt;]
+#.css()方法返回一个 SelectorList实例，它是新的选择列表。此API可用于快速选择嵌套数据：
+response.css(&apos;img&apos;).xpath(&apos;@src&apos;).extract()
+#要实际提取文本数据，必须调用选择器.extract() 方法,如果只想提取第一个匹配的元素，可以调用选择器 .extract_first()
+response.xpath(&apos;//title/text()&apos;).extract()
+response.xpath(&apos;//div[@id=&quot;images&quot;]/a/text()&apos;).extract_first()
+#可以提供默认返回值作为参数
+response.xpath(&apos;//div[@id=&quot;not-exists&quot;]/text()&apos;).extract_first(default=&apos;not-found&apos;)
+</code></pre></li>
+<li><p>Xpath选择器常用方法</p>
+<pre><code>nodeName    选取此节点的所有节点
+/           从根节点选取
+//          从匹配选择的当前节点选择文档中的节点，不考虑它们的位置
+.           选择当前节点
+..          选取当前节点的父节点
+@           选取属性
+*           匹配任何元素节点
+@*          匹配任何属性节点
+Node()      匹配任何类型的节点
+</code></pre></li>
+<li><p>CSS选择器常用方法</p>
+<pre><code>.class              .color              选择class=”color”的所有元素
+#id                 #info               选择id=”info”的所有元素
+*                   *                   选择所有元素
+element             p                   选择所有的p元素
+element,element     div,p               选择所有div元素和所有p元素
+element element     div p               选择div标签内部的所有p元素
+[attribute]         [target]            选择带有targe属性的所有元素
+[arrtibute=value]   [target=_blank]     选择target=”_blank”的所有元素
+</code></pre></li>
+<li><p>获取基本URL和一些图像链接</p>
+<pre><code>response.xpath(&apos;//base/@href&apos;).extract()
+response.css(&apos;base::attr(href)&apos;).extract()
+
+response.xpath(&apos;//a[contains(@href, &quot;image&quot;)]/@href&apos;).extract()
+response.css(&apos;a[href*=&quot;image&quot;]::attr(href)&apos;).extract()
+#其中a[href*=&quot;image&quot;]表示href的属性值包含“image”的所有a元素
+
+response.xpath(&apos;//a[contains(@href, &quot;image&quot;)]/img/@src&apos;).extract()
+response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
+</code></pre></li>
+</ul>
+<h3 id="参考大神佳作Scrapy爬虫入门教程五-Selectors（选择器）"><a href="#参考大神佳作Scrapy爬虫入门教程五-Selectors（选择器）" class="headerlink" title="参考大神佳作Scrapy爬虫入门教程五 Selectors（选择器）"></a>参考大神佳作<a href="https://blog.csdn.net/Inke88/article/details/60589170" target="_blank" rel="noopener">Scrapy爬虫入门教程五 Selectors（选择器）</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjgdehhsh003jrswvly88alle" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-scrapy命令行详解" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/02/scrapy命令行详解/" class="article-date">
@@ -131,7 +438,7 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjg26sxxu0032q0wvrkb50b2u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjgdehhsb003frswvia3e6kx7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -272,7 +579,7 @@ def fabu(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjg26sxzw0046q0wvmb6b9xn3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjgdehhuk004prswvb8fqxxyu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -496,7 +803,7 @@ Last-Modified 　 这个实体最后一次被修改的日期和时间
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjg26sxtt000uq0wvtduowi21" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjgdehhor0019rswvudhl97rw" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
@@ -655,7 +962,7 @@ ITEM_PIPELINES = {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjg26sxy60038q0wvgy9hb6dl" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjgdehhrx0037rswv7vo552jr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -743,7 +1050,7 @@ free -m 显示内存使用情况
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjg26sy27005aq0wvmc4myngc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjgdehhvc0057rswvufm8quwc" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -845,7 +1152,7 @@ Ctrl+r    恢复撤销
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjg26sxyp003iq0wvggb3i50y" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjgdehhtd0043rswvk1n5v3cq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -998,7 +1305,7 @@ tail -n 数字 文件名      #规定显示最后几行
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjg26sxwz002lq0wvgirndlzu" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjgdehhs00039rswv0t4usfu1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -1090,251 +1397,10 @@ def login(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjg26sxyi003eq0wv18wlswrc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjgdehhsl003lrswvzfdwhvqo" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-转发与重定向" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/27/转发与重定向/" class="article-date">
-  <time datetime="2018-03-27T03:50:35.000Z" itemprop="datePublished">2018-03-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/27/转发与重定向/">转发与重定向</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>转发与重定向</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>重定向</h6><p></p>
-<ul>
-<li>数据库虽然已经添加了数据，但如果继续刷新浏览器数据库会保存重复的数据,这就需要重定向</li>
-<li>转发：一次请求和响应，请求的地址没有发生变化，请求的数据被服务器内部的资源共享，如果此时刷新页面就会出现重做现象（服务器响应给客户的是转发）</li>
-<li>重定向：一次以上的请求和响应，请求地址发生一次以上的变化。如果此时刷新页面不会出现重做现象（指向虚拟的网址页面）</li>
-<li><p>需要在views.py里面导入redirect和reverse模块，然后需要在我们刷新的时候跳转到另一个页面,代码如下：</p>
-<pre><code>#在bloguser/urls.py添加路径
-app_name=&apos;user&apos;
-urlpatterns = [
-    path(&apos;register&apos;, register),
-    path(&apos;welcome/&lt;int:id&gt;&apos;, welcome,name=&apos;welcome&apos;),
-]
-
-#在bloguser/views.py
-def register(request):
-    if request.method==&apos;GET&apos;:
-        return render(request,&apos;register.html&apos;)
-    elif request.method==&apos;POST&apos;:
-        bloguser=BlogUser()
-        bloguser.username=request.POST.get(&apos;username&apos;)
-        bloguser.pwd=request.POST.get(&apos;pwd&apos;)
-        bloguser.save()
-        return redirect(reverse(&apos;user:welcome&apos;,args=[bloguser.id]))   #user,虚拟的命名空间，welcome，执行的函数,
-def welcome(request,id):
-    bloguser=BlogUser.objects.get(pk=id)
-    return render(request, &apos;welcome.html&apos;, {&apos;bloguser&apos;: bloguser})
-
-#在pyblog/urls.py下
-urlpatterns = [
-    path(&apos;admin/&apos;, admin.site.urls),
-    path(&apos;bloguser/&apos;,include(&apos;bloguser.urls&apos;)),
-    path(&apos;user/&apos;,include(&apos;bloguser.urls&apos;,namespace=&apos;user&apos;)),
-]
-</code></pre></li>
-</ul>
-<p></p><h6>重名</h6><p></p>
-<ul>
-<li>如果使用<code>unique=True</code>，我们必须点击提交才会告诉我们用户名重复，应该在我们输入密码的时候就告诉我们用户名重复</li>
-<li><p>这时候我们需要使用ajax(ajax: jquery 是一种静态资源),不需要我们提交，当我们输入密码的时候就可以告诉我们用户名已重复</p>
-<ul>
-<li>1.在pyblog里面创建一个static的文件夹，接着创建js的文件夹，把jquery-3.3.1放进去</li>
-<li><p>2.接着需要在setings.py里面添加static文件</p>
-<pre><code>STATIC_URL = &apos;/static/&apos;
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,  &apos;static&apos;)
-]
-</code></pre></li>
-<li><p>3.在register.html中加上javascript</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;/static/js/jquery-3.3.1.js&quot;&gt;&lt;/script&gt;
-&lt;script &gt;
-    $(function(){
-        $(&apos;input[name=&quot;username&quot;]&apos;).blur(function(){
-            uname=$(&apos;input[name=&quot;username&quot;]&apos;).val()
-            CSRF=$(&quot;input[name=&apos;csrfmiddlewaretoken&apos;]&quot;).val()
-            $.ajax({
-                url:&apos;/bloguser/getUser&apos;,
-                data:{&apos;uname&apos;:uname,&apos;csrfmiddlewaretoken&apos;:CSRF},
-                type:&apos;POST&apos;,
-                success:function(dat){
-                    if(dat==&apos;True&apos;){
-                        $(&apos;span&apos;).html(&apos;用户名已经存在！&apos;)
-                    }
-                    else{
-                        $(&apos;span&apos;).html(&apos;用户名可以使用！&apos;)
-                    }
-                }
-            })
-        })
-    })
-&lt;/script&gt;
-</code></pre></li>
-<li><p>4.在views.py定义一个getUser(),同时需要导入HttpResponse模块，用来判断用户名有没有重复</p>
-<pre><code>def getUser(request):
-    uname=request.POST.get(&apos;uname&apos;)
-    BlogUserSet=BlogUser.objects.filter(username=uname)
-    if len(BlogUserSet)==1:
-        return HttpResponse(&apos;True&apos;)
-    else:
-        return HttpResponse(&apos;False&apos;)
-</code></pre></li>
-<li><p>5.然后在bloguser\urls.py配置一下路径</p>
-<pre><code>app_name=&apos;user&apos;
-urlpatterns = [
-    path(&apos;register&apos;, register),
-    path(&apos;getUser&apos;, getUser),
-    path(&apos;welcome/&lt;int:id&gt;&apos;, welcome,name=&apos;welcome&apos;),
-]
-</code></pre></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjg26sy2o005iq0wvhlwz86tl" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-pyspider框架" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/24/pyspider框架/" class="article-date">
-  <time datetime="2018-03-24T10:41:19.000Z" itemprop="datePublished">2018-03-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/24/pyspider框架/">pyspider框架</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>pyspider框架</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>pyspider 是一个用python实现的功能强大的网络爬虫系统，能在浏览器界面上进行脚本的编写，功能的调度和爬取结果的实时查看，后端使用常用的数据库进行爬取结果的存储，还能定时设置任务与任务优先级等</li>
-<li>PhantomJS 是一个基于 WebKit 的服务器端 JavaScript API。它全面支持web而不需浏览器支持，其快速、原生支持各种Web标准：DOM 处理、CSS 选择器、JSON、Canvas 和 SVG。 PhantomJS 可以用于页面自动化、网络监测、网页截屏以及无界面测试等</li>
-<li>安装完pyspider、phantomJS后，在命令行输入<code>pyspider all</code>启动pyspider所有服务组件…然后浏览器访问 <a href="http://localhost:5000，如果正常出现" target="_blank" rel="noopener">http://localhost:5000，如果正常出现</a> PySpider 的页面，那证明一切OK</li>
-<li>pyspider的架构主要分为 scheduler（调度器）, fetcher（抓取器）, processor（脚本执行）,以及一个监控组件，当启动服务组件的时候，这些程序均开始运行了…<ul>
-<li>1.各个组件间使用消息队列连接，除了scheduler是单点的，fetcher 和 processor 都是可以多实例分布式部署的。 scheduler 负责整体的调度控制</li>
-<li>2.任务由 scheduler 发起调度，fetcher 抓取网页内容， processor 执行预先编写的python脚本，输出结果或产生新的提链任务（发往 scheduler），形成闭环</li>
-<li>3.每个脚本可以灵活使用各种python库对页面进行解析，使用框架API控制下一步抓取动作，通过设置回调控制解析动作</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>页面内容解析</h6><p></p>
-<ul>
-<li>拿www.reeoo.com这个网页，爬取上面的数据</li>
-<li>创建新项目页面：<ul>
-<li>Project Name：任务的名字</li>
-<li>Start URL(s)：爬取任务开始的地址</li>
-</ul>
-</li>
-<li><p>创建后的页面</p>
-<pre><code>from pyspider.libs.base_handler import *
-class Handler(BaseHandler):
-    crawl_config = {
-    }
-
-    @every(minutes=24 * 60)
-    #@every(minutes=24 * 60) 通知 scheduler（框架的模块） 每天运行一次
-    def on_start(self):
-    #on_start(self) 程序的入口，当点击左侧绿色区域右上角的 run 按钮时首先会调用这个函数
-        self.crawl(&apos;https://reeoo.com/&apos;, callback=self.index_page)
-    #self.crawl(url, callback) pyspider库主要的API，用于创建一个爬取任务，url 为目标地址，这里为我们刚刚创建任务指定的起始地址，callback 为抓取到数据后的回调函数
-
-    @config(age=10 * 24 * 60 * 60)
-    #@config(age=10 * 24 * 60 * 60) 设置任务的有效期限，在这个期限内目标爬取的网页被认为不会进行修改
-    def index_page(self, response):
-    #index_page(self, response) 参数为 Response 对象，response.doc 为 pyquery 对象，主要用来方便地抓取返回的html文档中对应标签的数据
-        for each in response.doc(&apos;a[href^=&quot;http&quot;]&apos;).items():
-            self.crawl(each.attr.href, callback=self.detail_page)
-
-    @config(priority=2)
-    #@config(priority=2) 设定任务优先级
-    def detail_page(self, response):
-    #detail_page(self, response) 返回一个 dict 对象作为结果，结果会自动保存到默认的 resultdb 中，也可以通过重载方法来将结果数据存储到指定的数据库
-        return {
-            &quot;url&quot;: response.url,
-            &quot;title&quot;: response.doc(&apos;title&apos;).text(),
-        }
-</code></pre></li>
-<li><p>运行代码后时出现 HTTP 599: SSL certificate problem: unable to get local issuer certificate错误时：<br><br>使用 self.crawl(url, callback=self.index_page, validate_cert=False)</p>
-</li>
-<li>运行<br>1.点击左边绿色区域右上角的 run 按钮，运行之后页面下册的 follows 按钮出现红色角标<br>2.选中 follows 按钮，看到 index_page 行，点击行右侧的运行按钮<br>3.运行完成后显示 www.reeoo.com 页面上所有的url<br>4.此时任意选择一个结果运行，此时调用的是 detail_page 方法，返回结果为json格式的数据，这里我们保存的是网页的 title 和 url，见左侧黑色的区域<br>5.回到主页面，此时看到任务列表显示刚刚创建的任务，设置 status 为 running，然后点击 Run 按钮执行<br>6.执行过程中可以看到整个过程的打印输出<br>7.执行完成后，点击 Results 按钮，进入到爬取结果的页面<br>8.右上方的按钮选择将结果数据保存成对应的格式，例如：JSON格式的数据</li>
-</ul>
-<p></p><h6>查找文件路径</h6><p></p>
-<ul>
-<li>由于配置了windows的环境变量，所以习惯性的打开CMD后就直接敲命令行执行 pyspider语句，但找不到pyspider存储的数据在哪里</li>
-<li>后来才发现，pyspider命令行执行的时候，数据库data文件会自动在当前目录生成，即在<code>C:\Users\DELL&gt;</code>下，<code>C:\Users\DELL\data</code></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjg26sxxe002tq0wvz44b42wl" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
 
     </footer>
   </div>
@@ -1363,7 +1429,7 @@ class Handler(BaseHandler):
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">26</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1373,7 +1439,7 @@ class Handler(BaseHandler):
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.5px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.25px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 13.75px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 11.25px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.11px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
     </div>
   </div>
 
@@ -1382,7 +1448,7 @@ class Handler(BaseHandler):
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1395,6 +1461,14 @@ class Handler(BaseHandler):
       <ul>
         
           <li>
+            <a href="/2018/04/16/Centos7安装MySQL57/">Centos7安装MySQL57</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/16/python之Map、Reduce、Filte/">python之Map、Reduce、Filte</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
           </li>
         
@@ -1404,14 +1478,6 @@ class Handler(BaseHandler):
         
           <li>
             <a href="/2018/04/14/虚拟机centos上部署hadoop/">虚拟机centos上部署hadoop</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/14/使用LinkExtractor提取链接/">使用LinkExtractor提取链接</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/12/linux文件的打包、压缩/">linux文件的打包、压缩</a>
           </li>
         
       </ul>

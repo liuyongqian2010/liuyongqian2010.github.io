@@ -5,20 +5,20 @@
   
 
   
-  <title>python之Excel操作 | LiuYongQian</title>
+  <title>Centos7安装MySQL57 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="python之Excel操作   使用xlwt module将数据写入Excel表格  import xlwt book=xlwt.Workbook(encoding=&amp;apos;utf-8&amp;apos;,style_compression=0) #创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩 sheet1=book.add_sheet">
-<meta name="keywords" content="Python学习">
+  <meta name="description" content="Centos7安装MySQL57">
+<meta name="keywords" content="大数据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python之Excel操作">
-<meta property="og:url" content="http://yoursite.com/2018/03/11/python之Excel操作/index.html">
+<meta property="og:title" content="Centos7安装MySQL57">
+<meta property="og:url" content="http://yoursite.com/2018/04/16/Centos7安装MySQL57/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="python之Excel操作   使用xlwt module将数据写入Excel表格  import xlwt book=xlwt.Workbook(encoding=&amp;apos;utf-8&amp;apos;,style_compression=0) #创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩 sheet1=book.add_sheet">
+<meta property="og:description" content="Centos7安装MySQL57">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-11T13:35:31.682Z">
+<meta property="og:updated_time" content="2018-04-16T15:42:25.906Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python之Excel操作">
-<meta name="twitter:description" content="python之Excel操作   使用xlwt module将数据写入Excel表格  import xlwt book=xlwt.Workbook(encoding=&amp;apos;utf-8&amp;apos;,style_compression=0) #创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩 sheet1=book.add_sheet">
+<meta name="twitter:title" content="Centos7安装MySQL57">
+<meta name="twitter:description" content="Centos7安装MySQL57">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -70,10 +70,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-python之Excel操作" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Centos7安装MySQL57" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/03/11/python之Excel操作/" class="article-date">
-  <time datetime="2018-03-11T10:09:52.000Z" itemprop="datePublished">2018-03-11</time>
+    <a href="/2018/04/16/Centos7安装MySQL57/" class="article-date">
+  <time datetime="2018-04-16T15:41:40.000Z" itemprop="datePublished">2018-04-16</time>
 </a>
     
   </div>
@@ -84,7 +84,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      python之Excel操作
+      Centos7安装MySQL57
     </h1>
   
 
@@ -95,47 +95,17 @@
       
 	  
 	  
-        <p></p><h5>python之Excel操作</h5><p></p>
+        <p></p><h5>Centos7安装MySQL57</h5><p></p>
 <hr>
 <hr>
-<h6>使用xlwt module将数据写入Excel表格</h6>
-
-<pre><code>import xlwt
-book=xlwt.Workbook(encoding=&apos;utf-8&apos;,style_compression=0)
-#创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩
-sheet1=book.add_sheet(&apos;test&apos;,cell_overwrite_ok=True)
-#创建一个sheet对象，一个sheet对象对应Excel文件中的一张表格
-#add_sheet的第一个参数是这张表的名字，第二个参数表示覆盖单元格
-sheet1.write(0,0,&apos;EnglishName&apos;)
-#其中第一个参数表示行，第二个参数表示列，第三个参数表示插入的数据
-sheet1.write(1,0,&apos;Liuyongqian&apos;)
-sheet1.write(0,1,&apos;中文名字&apos;)
-sheet1.write(1,1,&apos;刘永前&apos;)
-book.save(r&apos;e:\test1.xls&apos;)
-#将以上操作保存到指定excel文件中
-</code></pre><h6>使用xlrd module从Excel读取数据</h6>
-
-<pre><code>import xlrd
-file=r&apos;E:\test1.xls&apos;   #打开指定路径下的xls文件
-book=xlrd.open_workbook(file)  #得到excel文件的book对象，实例化对象
-sheet0=book.sheet_by_index(0)  #通过sheet索引获得sheet对象
-sheet_name=book.sheet_names()[0] #获得指定索引的sheet表名字
-&apos;&apos;&apos;
-sheet1=book.sheet_by_name(sheet_name) #通过sheet名字来获取，也可直接指定名字
-&apos;&apos;&apos;
-nrows=sheet0.nrows       #获取总行数
-ncols=sheet0.ncols       #获取总列数
-row_data=sheet0.row_values(1)  #获取第2行的数据列表
-col_data=sheet0.col_values(1)  #获取第2列的数据列表
-cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
-</code></pre>
+<h6></h6>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjgdehhrf002xrswvysthe7lf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/16/Centos7安装MySQL57/" data-id="cjgdehhlw0008rswvkdbckaow" class="article-share-link">Teilen</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
 
     </footer>
   </div>
@@ -143,19 +113,10 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
     
 <nav id="article-nav">
   
-    <a href="/2018/03/11/Git入门/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
-      <div class="article-nav-title">
-        
-          Git入门
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/03/11/Python之OS操作/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/04/16/python之Map、Reduce、Filte/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Älter</strong>
-      <div class="article-nav-title">Python之OS操作</div>
+      <div class="article-nav-title">python之Map、Reduce、Filte</div>
     </a>
   
 </nav>
