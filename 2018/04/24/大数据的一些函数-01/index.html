@@ -5,19 +5,20 @@
   
 
   
-  <title>Hello World | LiuYongQian</title>
+  <title>大数据的一些函数-01 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="大数据一些函数-01   准备工作  1.已经安装配置完毕如下三大件： hadoop-2.9.0 python3.6.3 spark2.3.0（可直接pip install pyspark）   2.启动工作： start-all.sh 启动hadoop服务 jupyter-notebook –ip python333后使用提示的url打开jupyter页面（python333为我的主机名） py">
+<meta name="keywords" content="大数据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2017/12/14/hello-world/index.html">
+<meta property="og:title" content="大数据的一些函数-01">
+<meta property="og:url" content="http://yoursite.com/2018/04/24/大数据的一些函数-01/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="大数据一些函数-01   准备工作  1.已经安装配置完毕如下三大件： hadoop-2.9.0 python3.6.3 spark2.3.0（可直接pip install pyspark）   2.启动工作： start-all.sh 启动hadoop服务 jupyter-notebook –ip python333后使用提示的url打开jupyter页面（python333为我的主机名） py">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-14T15:15:06.309Z">
+<meta property="og:updated_time" content="2018-04-24T14:52:18.248Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="大数据的一些函数-01">
+<meta name="twitter:description" content="大数据一些函数-01   准备工作  1.已经安装配置完毕如下三大件： hadoop-2.9.0 python3.6.3 spark2.3.0（可直接pip install pyspark）   2.启动工作： start-all.sh 启动hadoop服务 jupyter-notebook –ip python333后使用提示的url打开jupyter页面（python333为我的主机名） py">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -69,10 +70,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-大数据的一些函数-01" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/14/hello-world/" class="article-date">
-  <time datetime="2017-12-14T15:15:06.308Z" itemprop="datePublished">2017-12-14</time>
+    <a href="/2018/04/24/大数据的一些函数-01/" class="article-date">
+  <time datetime="2018-04-24T12:41:20.000Z" itemprop="datePublished">2018-04-24</time>
 </a>
     
   </div>
@@ -83,7 +84,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Hello World
+      大数据的一些函数-01
     </h1>
   
 
@@ -94,37 +95,146 @@
       
 	  
 	  
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p></p><h5>大数据一些函数-01</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>准备工作</h6><p></p>
+<ul>
+<li>1.已经安装配置完毕如下三大件：<ul>
+<li>hadoop-2.9.0</li>
+<li>python3.6.3</li>
+<li>spark2.3.0（可直接pip install pyspark）</li>
+</ul>
+</li>
+<li>2.启动工作：<ul>
+<li>start-all.sh 启动hadoop服务</li>
+<li>jupyter-notebook –ip python333后使用提示的url打开jupyter页面（python333为我的主机名）</li>
+<li>pyspark启动spark</li>
+<li>之后就在jupyter中进行操作了</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>一些函数</h6><p></p>
+<ul>
+<li><p>创建会话</p>
+<pre><code>#导入模块
+import pyspark
+#导入类
+from pyspark import SparkContext,SparkConf
+#创建配置,指定AppName,指定Master(主机)
+conf = SparkConf().setAppName(&apos;demoRDD&apos;).setMaster(&apos;local[*]&apos;)
+#创建会话
+sc = SparkContext.getOrCreate(conf)
+#通过会话实现对SPARK的操作
+#以python list提供一个测试用的数据
+data = [x for x in range(11)]
+rdd = sc.parallelize(data)
+print(&apos;RDD对象:&apos;,rdd,&apos;\n记录数:&apos;,rdd.count())
+partiRdd = rdd.glom()
+print(&apos;RDD.GLOM Collect结果:&apos;,partiRdd.collect())
+print(partiRdd.count())
+print(&apos;RDD Collect结果:&apos;,rdd.collect())
+#关闭会话
+sc.stop()
+--------------------------------------------------------
+RDD对象: ParallelCollectionRDD[0] at parallelize at PythonRDD.scala:175 
+记录数: 11
+RDD.GLOM Collect结果: [[0, 1], [2, 3, 4, 5], [6, 7], [8, 9, 10]]
+4
+RDD Collect结果: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+</code></pre></li>
+<li><p>map、filter操作</p>
+<pre><code>#创建会话
+sc = SparkContext.getOrCreate(conf)
+#通过会话实现对SPARK的操作
+#以python list提供一个测试用的数据
+data = [x for x in range(11)]
+rdd = sc.parallelize(data)
+print(&apos;RDD对象记录数:&apos;,rdd.count())
+print(&apos;RDD Collect结果:&apos;,rdd.collect())
+#map操作,映射
+mappedRdd = rdd.map(lambda x:x**3)
+print(mappedRdd.collect())
+#判断一个数是否是偶数
+def filterOdd(x):
+    return x%2 == 0
+#过滤操作
+filtedRdd = mappedRdd.filter(filterOdd)
+print(filtedRdd.collect())
+print(rdd.collect())
+#关闭会话
+sc.stop()
+-----------------------------------------------
+RDD对象记录数: 11
+RDD Collect结果:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+[0, 1, 8, 27, 64, 125, 216, 343, 512, 729, 1000]
+[0, 8, 64, 216, 512, 1000]
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+</code></pre></li>
+<li><p>使用文本文件做数据源</p>
+<pre><code>sc = SparkContext.getOrCreate(conf)
+rows = sc.textFile(&quot;file:///home/hadoop/data1.txt&quot;)
+print(rows.first())
+print(rows.take(2))
+print(rows.count())
+print(rows.top(2))
+sc.stop()
+</code></pre></li>
+<li><p>使用多个文本文件，进行词频统计</p>
+<pre><code>sc = SparkContext.getOrCreate(conf)
+#多个文本文件获取到一个RDD里面
+filesRDD = sc.wholeTextFiles(&apos;file:///home/hadoop/*.txt&apos;)
+#文件内容RDD
+fileConRDD = filesRDD.map(lambda x:x[1])
+#用回车符分隔字符串,形成列表
+def sp(x):
+    return x.split(&apos;\n&apos;)
+#对每个文件内容做映射,结果是多个文件内容列表
+#存在二维结构
+strRDD = fileConRDD.map(sp)
+#同样是映射,结果展平成一维结构
+wordRDD = fileConRDD.flatMap(sp)
+#结果,形成类一个元组表达一个文件,多个元组的列表
+#词频统计map
+wordDictRDD = wordRDD.map(lambda x:(x,1))
+#Reduce
+r = wordDictRDD.reduceByKey(lambda x,y:x+y)
+print(strRDD.collect())
+print(wordRDD.collect())
+print(wordDictRDD.collect())
+print(r.collect())
+sc.stop()
+</code></pre></li>
+</ul>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjgduftwc002is0wvvddmhs4c" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-01/" data-id="cjgdufu01004ns0wvrev4vp2m" class="article-share-link">Teilen</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
   
-    <a href="/2017/12/15/起点/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/04/24/大数据的一些函数-02/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Neuer</strong>
       <div class="article-nav-title">
         
-          起点
+          大数据的一些函数-02
         
       </div>
     </a>
   
+  
+    <a href="/2018/04/16/Centos7安装MySQL57/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Centos7安装MySQL57</div>
+    </a>
   
 </nav>
 

@@ -70,6 +70,431 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-列表" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/16/列表/" class="article-date">
+  <time datetime="2018-01-16T01:28:02.000Z" itemprop="datePublished">2018-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/16/列表/">列表</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>列表</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>列表的定义</h6><p></p>
+<ul>
+<li><p>列表的数据项不需要具有相同的类型，逗号分隔，方括号括起来</p>
+<pre><code>list1=[&apos;News&apos;,&apos;Git&apos;,2018,1.15,False]
+print(list1[2])             #result:2018
+
+list=[[&apos;a&apos;,&apos;b&apos;],[&apos;A&apos;,&apos;B&apos;],[&apos;a&apos;,&apos;B&apos;]] 
+print(list[1][1])           #二维列表  #result:B
+</code></pre></li>
+</ul>
+<p></p><h6>列表的切片</h6><p></p>
+<ul>
+<li><p>列表也可以使用切片，使用方法与字符串一致</p>
+<pre><code>print(list1[:])  #所有       #result:[&apos;News&apos;, &apos;Git&apos;, 2018, 1.15, False]
+print(list1[1:2])           #result:[&apos;Git&apos;]
+print(list1[1:4:2])         #result:[&apos;Git&apos;, 1.15]
+print(list1[-1])            #result:False
+print(list1[-1:-5:-1])      #result:[False, 1.15, 2018, &apos;Git&apos;]
+print(list1[::-1])             #result:[False, 1.15, 2018, &apos;Git&apos;, &apos;News&apos;]
+</code></pre></li>
+</ul>
+<p></p><h6>列表的编辑</h6><p></p>
+<ul>
+<li><p>增加</p>
+<pre><code>list2=[&apos;Happy&apos;,&apos;New&apos;,&apos;Year&apos;]
+list2.append(&apos;2018&apos;)          #增加到列表尾部
+print(list2)      #result:[&apos;Happy&apos;, &apos;New&apos;, &apos;Year&apos;, &apos;2018&apos;]
+list2.insert(3,&apos;2018&apos;)        #插入到列表相应下标位置,超出范围则在尾部添加
+print(list2)      #result:[&apos;Happy&apos;, &apos;New&apos;, &apos;Year&apos;, &apos;2018&apos;]
+
+list3=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list4=[&apos;李桑&apos;,&apos;雷军&apos;,&apos;马云&apos;] #两个列表可以进行相加 
+print(list3+list4)            #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;, &apos;李桑&apos;, &apos;雷军&apos;, &apos;马云&apos;]
+print(list3)                  #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;]
+
+list3.extend(list4)           #列表1.extend(列表2)，是把列表2迭代后追加到列表1，extend()没有返回值
+print(list3)                  #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;, &apos;李桑&apos;, &apos;雷军&apos;, &apos;马云&apos;]
+</code></pre></li>
+<li><p>修改</p>
+<pre><code>list5=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list5[1]=&apos;大米&apos;
+print(list5)                  #result:[&apos;百度&apos;, &apos;大米&apos;, &apos;阿里&apos;]
+</code></pre></li>
+<li><p>删除</p>
+<pre><code>list6=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+del list6[1]                  #del
+print(list6)                  #result:[&apos;百度&apos;, &apos;阿里&apos;]
+
+list7=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list7.pop()                   #默认删除最后一个,也可以指定删除的下标，返回删除值
+print(list7)                  #result:[&apos;百度&apos;, &apos;小米&apos;]
+
+list8=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list8.remove(&apos;小米&apos;)          #删除括号中的内容，但只删除一次
+print(list8)                  #result:[&apos;百度&apos;, &apos;阿里&apos;]
+</code></pre></li>
+<li><p>查询</p>
+<pre><code>list9=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+print(list9.index(&apos;c&apos;))       #返回查找到的下标  #result:2
+print(&apos;a&apos; in list9)            #返回bool值       #result:True
+print(&apos;a&apos; not in list9)        #返回bool值       #result:False
+</code></pre></li>
+</ul>
+<p></p><h6>列表的函数</h6><p></p>
+<ul>
+<li><p>len() 列表元素个数</p>
+<pre><code>list1=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+print(len(list1))           #result:5
+</code></pre></li>
+<li><p>max()、min() 返回列表元素最大值、最小值;字母以ASCII为依据</p>
+<pre><code>print(max(list1))           #result:e
+print(min(list1))           #result:a
+</code></pre></li>
+<li><p>list()将元组转换成列表</p>
+<pre><code>a=(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)             #定义一个元组
+print(list(a))              #result:[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]
+</code></pre></li>
+<li><p>append()增加到列表尾部</p>
+</li>
+<li>insert(index,obj)插入到列表相应下标位置,超出范围则在尾部添加</li>
+<li>extend()列表1.extend(列表2)，是把列表2迭代后追加到列表1</li>
+<li>pop()默认删除最后一个,也可以指定删除的下标，返回删除值</li>
+<li>remove()删除括号中的内容，但只删除一次</li>
+<li><p>reverse()反向列表中的元素</p>
+<pre><code>list2=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+list2.reverse()
+print(list2)                  #result:[&apos;e&apos;, &apos;d&apos;, &apos;c&apos;, &apos;b&apos;, &apos;a&apos;]
+</code></pre></li>
+<li><p>sort([func])排序，默认升序</p>
+<pre><code>list3=[5,6,4,2,9]
+list3.sort()
+print(list3)                  #result:[2, 4, 5, 6, 9]
+</code></pre></li>
+<li><p>clear() 清空列表</p>
+<pre><code>list4=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+list4.clear()
+print(list4)                  #result:[]
+</code></pre></li>
+<li><p>copy()复制列表，在内存中又开辟了一个空间；通过等号复制副本，在内存中指向原来的地址</p>
+<pre><code>list5=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]
+list6=list5.copy()
+print(list6)                  #result:[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]
+</code></pre></li>
+<li><p>eval()将元组、字典、列表类型的字符串转为元组、字典、列表,可以把list,tuple,dict和string相互转化</p>
+<pre><code>a=&quot;[[1,2], [3,4], [5,6]]&quot;        #字符串转换成列表
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;list&apos;&gt;
+print(m)                        #result:[[1, 2], [3, 4], [5, 6]]
+
+a=&quot;{&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:&apos;25&apos;}&quot;   #字符串转换成字典
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;dict&apos;&gt;
+print(m)                        #result:{&apos;name&apos;: &apos;Liu&apos;, &apos;age&apos;: &apos;25&apos;}
+
+a=&quot;(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)&quot;               #字符串转换成元组
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;tuple&apos;&gt;
+print(m)                        #result:(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;)
+</code></pre></li>
+</ul>
+<p></p><h6>小练习</h6><p></p>
+<ul>
+<li><p>定义一个列表，让用户动态输入5个值,遍历输出列表的值</p>
+<pre><code>nums=[]
+for i in range(5):
+    nums.append(input(&apos;请输入：&apos;))
+else:
+    print(&apos;输入完毕！&apos;)
+print(nums)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjgduftyy0043s0wvzqamc20q" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-循环（while、for）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/15/循环（while、for）/" class="article-date">
+  <time datetime="2018-01-15T11:15:27.000Z" itemprop="datePublished">2018-01-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/15/循环（while、for）/">循环（while、for）</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>循环（while、for）</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>while循环</h6><p></p>
+<ul>
+<li><p>1.输出1-100的奇数和、偶数和</p>
+<pre><code>n=1;sum_even=0;sum_odd=0
+while n&lt;=100:        #判断条件
+    if n%2!=0:       #循环体
+        sum_odd+=n
+    else:
+        sum_even+=n
+    n+=1             #迭代部分，递增
+print(&apos;输出1-100的奇数和为%s&apos;%sum_odd)   #result:输出1-100的奇数和为2500
+print(&apos;输出1-100的偶数和为%s&apos;%sum_even)  #result:输出1-100的偶数和为2550
+</code></pre></li>
+<li><p>2.请用户输入数字，求和，数字直到0退出循环</p>
+<pre><code>n=int(input(&quot;请输入一个整数:&quot;));sum=0
+while n&gt;0:
+    sum+=n
+    n-=1             #迭代部分，递减
+print(sum)
+</code></pre></li>
+<li><p>3.输出1-20中3的倍数、5的倍数及3和5的公倍数</p>
+<pre><code>i=1
+while(i&lt;=20):
+    if(i%3==0 and i%5==0):
+        print(&apos;这个数是3和5的倍数：%s&apos;%i)
+    elif(i%3==0):
+        print(&apos;这个数是3的倍数：%s&apos;%i)
+    elif(i%5==0):
+        print(&apos;这个数是5的倍数：%s&apos;%i)
+    i+=1
+else:               #当循环正常执行结束后，执行else的语句块
+    print(&quot;循环结束，判断完毕！&quot;)
+</code></pre></li>
+</ul>
+<p></p><h6>for循环</h6><p></p>
+<ul>
+<li><p>range()函数,会生成有序数列</p>
+<pre><code>range(7)            #从0到7,不包含7,等同于range(0,7),举例：
+m=[]    定义一个空列表
+for i in range(7):
+    m.append(i)        #遍历并且存入列表中
+print(m)               #result:[0, 1, 2, 3, 4, 5, 6]
+
+range(2,7)          #从2到7，不包括7，举例：
+m=[]    #定义一个空列表
+for i in range(2,7):
+    m.append(i)        #遍历并且存入列表中
+print(m)               #result:[2, 3, 4, 5, 6]
+
+range(2,7,2)        #从2到7，不包括7,步长为2；步长可为负数,举例：
+m=[]    #定义一个空列表
+for i in range(2,7,2):
+    m.append(i)        #遍历并且存入列表中
+print(m)               #result:[2, 4, 6]
+</code></pre></li>
+<li><p>打印一个三角形</p>
+<pre><code>for i in range(0,6):
+    print((&apos;*&apos;*(2*i+1)).center(20,&apos; &apos;))
+else:                  #当循环正常执行结束后，执行else的语句块
+    print(&apos;打印完毕！&apos;)
+#result：
+         *          
+        ***         
+       *****        
+      *******       
+     *********      
+    ***********     
+打印完毕！
+</code></pre></li>
+</ul>
+<p></p><h6>嵌套循环</h6><p></p>
+<ul>
+<li><p>1.输出5行5个*</p>
+<pre><code>for i in range(5):
+    n=0;
+    while n&lt;5:
+        print(&apos;*&apos;,end=&apos;&apos;)
+        n+=1
+    print()
+#result：
+    *****
+    *****
+    *****
+    *****
+    *****
+</code></pre></li>
+<li><p>2.输出一个直角三角形</p>
+<pre><code>for i in range(5):
+    for j in range(i):
+        print(&apos;*&apos;,end=&apos;&apos;)
+    print()
+#result:
+    *
+    **
+    ***
+    ****
+</code></pre></li>
+<li><p>3.输出九九乘法表</p>
+<pre><code>for i in range(1,10):
+    for j in range(1,i+1):
+        print(&apos;%s*%s=%s&apos;%(j,i,i*j),end=&quot;\t&quot;)
+    print()
+#result:
+1*1=1    
+1*2=2    2*2=4    
+1*3=3    2*3=6     3*3=9    
+1*4=4    2*4=8     3*4=12    4*4=16    
+1*5=5    2*5=10    3*5=15    4*5=20    5*5=25    
+1*6=6    2*6=12    3*6=18    4*6=24    5*6=30    6*6=36    
+1*7=7    2*7=14    3*7=21    4*7=28    5*7=35    6*7=42    7*7=49    
+1*8=8    2*8=16    3*8=24    4*8=32    5*8=40    6*8=48    7*8=56    8*8=64    
+1*9=9    2*9=18    3*9=27    4*9=36    5*9=45    6*9=54    7*9=63    8*9=72    9*9=81
+</code></pre></li>
+</ul>
+<p></p><h6>break、continue</h6><p></p>
+<ul>
+<li><p>1.请用户输入0-100间的成绩,统计各区间的人数，若数值不在范围内提示重新输入，若输入正确提示是否继续</p>
+<pre><code>a,b,c=0,0,0                             #初始化各个区间的人数
+while(True):
+    score=int(input(&apos;请输入成绩：&apos;))
+    if score&gt;=90 and score&lt;=100:        #区间：[90,100]
+        a+=1
+    elif score&gt;=60 and score&lt;90:        #区间：[60,90)
+        b+=1
+    elif score&gt;0 and score&lt;60:          #区间：(0,60)
+        c+=1
+    else:
+        print(&apos;Error,请重新输入！&apos;)
+        continue;               #结束本次循环，进入下一次循环，即接着重新输入成绩
+    print(&apos;是否继续，y/n&apos;)
+    inp=input(&apos;是否继续：&apos;)
+    if inp==&apos;n&apos;:
+        break;                  #结束并跳出循环，成绩录入结束，也不会执行else语句块了
+else:
+    print(&apos;成绩录入完成！&apos;)
+print(&apos;晋级线{0} 合格线{1} 不及格{2}&apos;.format(a,b,c))
+</code></pre></li>
+<li><p>2.统计3个班级中，每个班级中3个学生中的成绩大于80的人数</p>
+<pre><code>count=0;
+for i in range(1,4):
+    print(&apos;第{0}个班级的学生成绩&apos;.format(i))
+    for j in range(1,4):
+        print(&apos;第{0}个学生的成绩:&apos;.format(j))
+        score=int(input())
+        if score&gt;80:
+            count+=1
+        elif score&lt;0:
+            print(&apos;Error，停止本班录入!&apos;)
+            break;         #结束内层循环，开始执行外层代码：结束本班学生成绩的录入，进入下一个班级
+print(&apos;大于80的人数为%s&apos;%count)
+==============================================================================================
+count=0;
+for i in range(1,4):
+    print(&apos;第{0}个班级的学生成绩&apos;.format(i))
+    for j in range(1,4):
+        print(&apos;第{0}个学生的成绩:&apos;.format(j))
+        score=int(input())
+        if score&lt;=80:
+            continue;       #结束本次循环，继续下一次循环：继续下一个学生的成绩输入，不管哪个班
+        count+=1
+print(&apos;大于80的人数为%s&apos;%count)
+</code></pre></li>
+</ul>
+<p></p><h6>小练习</h6><p></p>
+<ul>
+<li><p>1.输出菱形</p>
+<pre><code>for i in range(1,8,2):                #1,3,5,7
+    print((&apos;*&apos;*i).center(15,&apos; &apos;))
+for i in range(5,0,-2):               #5,3,1
+    print((&apos;*&apos;*i).center(15,&apos; &apos;))
+#result:
+       *       
+      ***      
+     *****     
+    *******    
+     *****     
+      ***      
+       *    
+</code></pre></li>
+<li><p>2.输出1-30内的所有质数</p>
+<pre><code>#除了1和本身外，不能被小于本身的数整除，就是素数；除了1，从2开始
+num=[];      #定义一个列表，将来存放质数
+i=2
+for i in range(2,31):
+   j=2
+   for j in range(2,i):
+      if(i%j==0):    #被小于本身的数整除，中断内层循环，进入下一个外层循环
+         break；
+   else:
+      num.append(i)
+print(num)           #result:[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+</code></pre></li>
+<li><p>3.输出斐波那切序列：1,1,2,3,5,8,13,21…</p>
+<pre><code>#斐波那契数列:第0项是0，第1项是第一个1。从第三项开始，每一项都等于前两项之和
+i,j=0,1
+while i&lt;10:
+    print(i,end=&apos;&apos;)
+    i,j=j,i+j 
+#这里i,j=j,i+j右边的表达式会在赋值变动之前执行，即先执行右边。
+#比如第一次循环得到j=1,i+j=0+1 然后再执行赋值i,j=1,0+1,执行完这条后i=1,j=1
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjgdufu0n0051s0wvuf6b4rc5" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-字符串的定义、切片、格式化、函数" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/12/字符串的定义、切片、格式化、函数/" class="article-date">
@@ -267,7 +692,7 @@ print(&apos;d&apos; not in str2)       #result:False
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjgdehhu7004hrswvphv3alzn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjgdufu07004rs0wv869kb936" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -355,7 +780,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjgdehhu0004drswvid5ey66v" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjgduftzl004hs0wvypl8q6wf" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -447,7 +872,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cjgdehhlp0005rswvrg70n5va" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cjgduftrp0001s0wvuj5b6pxf" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -511,7 +936,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjgdehhwd005prswvdio57n0l" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjgdufu25005vs0wvx0v3lxcd" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -728,7 +1153,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjgdehhnh000lrswvv9w315it" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjgduftt6000is0wv2oem40qf" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -809,7 +1234,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjgdehhlm0004rswvhopyoebh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjgdufts80005s0wvdkhqy1ji" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -882,7 +1307,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="cjgdehhla0001rswv0kri2n5a" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="cjgduftse0008s0wvo5n12waq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -1105,147 +1530,10 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="cjgdehhp4001jrswvrcvnz6dr" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="cjgduftuy001ls0wvvhzd546r" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-同时安装Python2与python3" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/16/同时安装Python2与python3/" class="article-date">
-  <time datetime="2017-12-16T07:17:27.000Z" itemprop="datePublished">2017-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/16/同时安装Python2与python3/">同时安装Python2与python3</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p><em>由于平时学习中需要两种版本不时的替换，索性通过网上查找资料自己配置安装了两个版本，以下是小白整理的一些步骤。</em></p>
-<p></p><h4>Python2安装</h4><p></p>
-<ul>
-<li>1.1到<a href="https://www.python.org/" target="_blank" rel="noopener">Python官网</a>下载Python2安装文件，如：python-2.7.12.amd64.exe</li>
-<li>1.2点击”python-2.7.12.amd64”进行安装后将该安装目录下的python.exe文件重新命名为python2.exe</li>
-<li>1.3在电脑–属性–高级系统设置–高级–环境变量–系统变量–Path–编辑中添加环境变量，如”C:\Python27”，即python2的安装目录</li>
-<li>1.4在Dos窗口中输入<code>python2</code>如出现python2的版本信息即表明安装成功</li>
-<li>1.5到<a href="https://pypi.python.org/pypi/setuptools" target="_blank" rel="noopener">Pip官网</a>下载名称类似”setuptools-28.7.0.zip”的pip依赖包，在cmd中cd到该依赖包解压后的目录下，输入<code>python2 setup.py install</code></li>
-<li>1.6到<a href="https://pypi.python.org/pypi/pip" target="_blank" rel="noopener">Pip官网</a>下载名称类似”pip-8.1.2.tar”的文件并解压，在cmd中cd到该文件解压后的目录下，再次输入<code>python2 setup.py install</code></li>
-<li>1.7在cmd中输入<code>pip2</code>,如果出现”Usage”字样说明安装成功</li>
-<li>1.8测试使用：在cmd中输入<code>pip2 install selenium</code>,如果窗口命令哗哗的下滚，说明可以了；也可下载python其他包，用cmd进入到其解压后的目录下，输入<code>python2 setup.py install</code></li>
-</ul>
-<p></p><h4>Python3安装</h4><p></p>
-<ul>
-<li>1.1到<a href="https://www.python.org/" target="_blank" rel="noopener">Python官网</a>下载Python3安装文件，如：python-3.5.0-amd64.exe</li>
-<li>1.2点击”python-3.5.0-amd64.exe”进行安装后将该安装目录下的python.exe文件重新命名为python2.exe</li>
-<li>1.3在电脑–属性–高级系统设置–高级–环境变量–系统变量–Path–编辑中添加环境变量，如”C:\Python35”，即python3的安装目录</li>
-<li>1.4在Dos窗口中输入<code>python</code>如出现python3.5的版本信息即表明安装成功；由于未修改python3安装目录下的python.exe文件名，此处python就是python3</li>
-<li>1.5在cmd中输入<code>pip3</code>,如果出现”Usage”字样说明自动安装成功；python3自带pip，无需手动安装</li>
-<li>1.6测试使用：在cmd中输入<code>pip3 install selenium</code>,如果窗口命令哗哗的下滚，说明可以了；也可下载python其他包，用cmd进入到其解压后的目录下，输入<code>python setup.py install</code></li>
-</ul>
-<ul>
-<li>该文参考大神的佳作<a href="http://blog.csdn.net/u014285884/article/details/70239511" target="_blank" rel="noopener">在同一台电脑上同时安装Python2和Python3</a></li>
-<li><em>若文中内容有误，希望大家指正，谢谢!</em></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="cjgdehhun004rrswvbnl22yts" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Github-Hexo博客更换主题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/16/Github-Hexo博客更换主题/" class="article-date">
-  <time datetime="2017-12-16T06:21:52.000Z" itemprop="datePublished">2017-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/16/Github-Hexo博客更换主题/">Github+Hexo博客更换主题</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h4>1.挑选主题</h4><p></p>
-<ul>
-<li>1.1在<a href="https://hexo.io/themes/" target="_blank" rel="noopener">Themes|Hexo</a>中挑选自己中意的主题，记住名字，比如“Again”</li>
-</ul>
-<ul>
-<li>1.2在gitbash中cd到博客所在文件夹的位置如”cd /e/github/myblog”,继续输入”<a href="https://github.com/lyyourc/hexo-theme-again&quot;可克隆最新的Again主题到你的博客文件夹里面" target="_blank" rel="noopener">https://github.com/lyyourc/hexo-theme-again&quot;可克隆最新的Again主题到你的博客文件夹里面</a></li>
-<li>1.3克隆之后可在你的博客文件中的themes下看到刚刚下载的Again主题</li>
-</ul>
-<p></p><h4>2.安装主题</h4><p></p>
-<ul>
-<li>2.1修改站点配置文件（你的博客最底层目录下的_config.yml），用任一编辑器打开找到“theme”选项，将原先的主题名称删除改为Again即可，注意theme的冒号与Again之间有空格</li>
-<li><p>2.1.1这里可以按照Again的官方指导教程，配置一下Site模块中的内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">title: LiuYongQian</span><br><span class="line">subtitle: 我知道你会来，所以我等···</span><br><span class="line">description: 永远相信美好的事情将要发生！</span><br><span class="line">author: 刘永前</span><br><span class="line">language: zh-Hans</span><br><span class="line">timezone: Asia/Shanghai</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>2.2在gitbash中输入”hexo s –debug”启动hexo服务器进行本地测试一下，在浏览器打开“<a href="http://localhost:4000/”" target="_blank" rel="noopener">http://localhost:4000/”</a></p>
-</li>
-<li>2.3修改主题配置文件（你的博客目录下的themes/Again下的_config.yml）,找到scheme关键字，保证只有一个scheme前面没有#号，说明这个scheme选中</li>
-</ul>
-<p></p><h4>3.发布主题</h4><p></p>
-<ul>
-<li>在gitbash中依次输入”hexo clean” “hexo generate” “hexo deploy”，字幕滚动完后，新博客就可以访问了</li>
-</ul>
-<p></p><h4>4.寻找大神</h4><p></p>
-<ul>
-<li>菜鸟的我参考过这位大神的佳作：<a href="http://www.jianshu.com/p/469e985288b3?from=jiantop.com" target="_blank" rel="noopener">GITHUB+HEXO博客轻松更换主题外观</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjgdehhp6001lrswv7u2253t0" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
 
     </footer>
   </div>
@@ -1274,7 +1562,7 @@ except:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1284,7 +1572,7 @@ except:
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.11px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.5px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.25px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 13.75px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a>
     </div>
   </div>
 
@@ -1293,7 +1581,7 @@ except:
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1306,6 +1594,14 @@ except:
       <ul>
         
           <li>
+            <a href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/24/大数据的一些函数-01/">大数据的一些函数-01</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/16/Centos7安装MySQL57/">Centos7安装MySQL57</a>
           </li>
         
@@ -1315,14 +1611,6 @@ except:
         
           <li>
             <a href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/16/使用hadoop里面的MapReduce/">使用hadoop里面的MapReduce</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/14/虚拟机centos上部署hadoop/">虚拟机centos上部署hadoop</a>
           </li>
         
       </ul>

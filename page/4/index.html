@@ -70,6 +70,293 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Django基本概念" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/Django基本概念/" class="article-date">
+  <time datetime="2018-03-21T16:00:42.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/22/Django基本概念/">Django基本概念</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Django基本概念</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>Django是一个开放源代码的Web应用框架，由Python写成。采用了MTV的框架模式，即模型M，模板T和视图V</li>
+<li>Django 框架的核心组件有：<ul>
+<li>用于创建模型的对象关系映射</li>
+<li>为最终用户设计的完美管理界面</li>
+<li>一流的 URL 设计</li>
+<li>设计者友好的模板语言</li>
+<li>缓存系统</li>
+</ul>
+</li>
+<li>Django是一个基于MVC构造的框架。但是在Django中，控制器接受用户输入的部分由框架自行处理，所以 Django 里更关注的是模型（Model）、模板(Template)和视图（Views），称为 MTV模式。它们各自的职责如下：<ul>
+<li>模型（Model）即数据存取层<ul>
+<li>处理与数据相关的所有事务： 如何存取、如何验证有效性、包含哪些行为以及数据之间的关系等</li>
+</ul>
+</li>
+<li>视图（View）即表现层<ul>
+<li>处理与表现相关的决定： 如何在页面或其他类型文档中进行显示</li>
+</ul>
+</li>
+<li>模板(Template)即业务逻辑层<ul>
+<li>存取模型及调取恰当模板的相关逻辑。模型与模板的桥梁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>c/s与b/s的区别</p>
+<pre><code>c/s--&gt;client/server 客户端与服务器交互
+    主要工作在客户端 处理请求  响应请求
+    好：分减服务器压力 用户体验更好，方便
+    坏：下载客户端
+b/s--&gt;browser/server 浏览器与服务器交互
+    主要工作在服务器 处理请求 相应请求
+    好：不需要下载客户端
+    坏：大量的工作精力花销子啊服务端
+</code></pre></li>
+<li><p>目录介绍</p>
+<pre><code>文件夹dj_myschool
+    文件夹dj_myschool
+        __init__.py     #一个空文件，告诉python该目录是一个python包
+        settings.py     #该项目的设置与配置
+        urls.py         #该项目的URL声明，一份由Django驱动的网站目录
+        wsgi.py            #一个WSGI兼容的web服务器的入口，以便运行你的项目
+    文件夹student
+        文件夹migrations
+            __init__.py
+        __init__.py
+        admin.py
+        apps.py
+        models.py      #负责业务对象和数据库的关系映射(ORM)
+        tests.py
+        views.py       #负责业务逻辑并在适当时候调用Models和Templates
+        文件夹
+    文件夹templates    #负责如何把页面展示给用户(html)
+    文件db.sqlite3
+    文件manage.py          #一个实用的命令行工具
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjgduftt0000gs0wvg7hkvl6e" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-MongoDB基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/19/MongoDB基本操作/" class="article-date">
+  <time datetime="2018-03-19T12:10:50.000Z" itemprop="datePublished">2018-03-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/19/MongoDB基本操作/">MongoDB基本操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>MongoDB基本操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.创建数据库</p>
+<pre><code>use db_name   #如果数据库不存在，则创建数据库，否则切换到指定数据库
+db            #查看当前数据库名
+show dbs      #查看所有数据库；刚创建的数据库不会在数据库列表中，要显示的话，需要插入数据
+              # mongodb中默认的数据库为test，如没有创建新的数据库，集合将存放在test数据库中
+</code></pre></li>
+<li><p>2.删除数据库</p>
+<pre><code>db.dropDatabase()   #删除当前数据库
+</code></pre></li>
+<li><p>3.创建集合</p>
+<ul>
+<li>db.createCollection(name,option) 其中name为集合名称，option为可选参数，指定有关内存大小及索引的选项</li>
+<li><p>options 可以是如下参数：</p>
+<ul>
+<li>capped    如果为 true，则创建固定集合。固定集合是指有着固定大小的集合，当达到最大值时，它会自动覆盖最早的文档<br>当该值为 true 时，必须指定 size 参数</li>
+<li>autoIndexId  如为 true，自动在 _id 字段创建索引。默认为 false</li>
+<li>size   为固定集合指定一个最大值（以字节计），如果 capped 为 true，也需要指定该字段</li>
+<li><p>max    指定固定集合中包含文档的最大数量</p>
+<pre><code>use myfirstdb             #创建数据库
+db.createCollection(&apos;myinfo&apos;)   #创建集合
+show collections        #查看已有集合
+
+#下面是带有几个关键参数的 createCollection() 的用法：
+创建固定集合 myinfo，整个集合空间大小 6142800 KB, 文档最大个数为 10000 个
+db.createCollection(&apos;myinfo&apos;,{capped:true,autoIndexId:true,size:6142800,max:10000})
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>4.删除集合</p>
+<ul>
+<li><p>db.collection_name.drop()如果删除成功，返回true</p>
+<pre><code>db.myinfo.drop()     #result:true
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li><p>1.插入文档</p>
+<ul>
+<li>文档的数据结构和JSON基本一样,所有存储在集合中的数据都是BSON格式</li>
+<li><p>BSON是一种类json的一种二进制形式的存储格式,简称Binary JSON</p>
+<pre><code>db.collection_name.insert(键值对，逗号隔开)
+db.collection_name.find()      #查看已经插入文档
+
+#可以将数据定义为一个变量，如下所示
+doc1=({
+    description:&apos;this is my pravite infomation&apos;,
+    name:&apos;liuyongqian&apos;,
+    age:108,
+    work:&apos;Engineer&apos;,
+    url:&apos;http://www.liuyongqian.com&apos;
+})
+db.myinfo.insert(doc1)
+</code></pre></li>
+</ul>
+</li>
+<li><p>2.更新文档</p>
+<ul>
+<li><p>update()用于更新已经存在的文档</p>
+<pre><code>db.collection_name.update(
+    &lt;query&gt;,#查询条件，类似sql update查询内where后面的
+    &lt;update&gt;,#更新内容，可以理解为sql update查询内set后面的
+    {
+        upsert:&lt;boolean&gt;, #可选，如果不存在update的记录，是否插入objNew,true为插入，默认是false，不插入
+        multi:&lt;boolean&gt;, #可选，默认是false,只更新找到的第一条记录，如果这个参数为true,就把按条件查出来多条记录全部更新
+        writeConcern:&lt;document&gt;  #可选，抛出异常的级别
+    }
+)
+#如更新‘work’
+db.myinfo.update(
+    {&apos;work&apos;:&apos;Engineer&apos;},
+    {$set:{&apos;work&apos;:&apos;Farmer&apos;}},
+    {multi:true}
+)
+</code></pre></li>
+<li><p>save()通过传入的文档来替换已有文档</p>
+<pre><code>db.collection_name.save(
+    &lt;document&gt;,#文档数据
+    {
+        writeConcern:&lt;document&gt;
+    }
+)
+
+#如更新&apos;work&apos;
+db.myinfo.save(
+    {&apos;work&apos;:&apos;Father&apos;}
+)
+</code></pre></li>
+</ul>
+</li>
+<li><p>删除文档</p>
+<ul>
+<li><p>官方推荐使用 deleteOne() 和 deleteMany() 方法</p>
+<pre><code>#如删除集合下全部文档
+db.myinfo.deleteMany({})
+#如删除status等于A的全部文档
+db.myinfo.deleteMany({status:&apos;A&apos;})
+#如删除status等于B的全部文档
+db.myinfo.deleteOne({status:&apos;B&apos;})
+</code></pre></li>
+</ul>
+</li>
+<li><p>查询文档<br>find() 方法以非结构化的方式来显示所有文档</p>
+<pre><code>db.collection_name.find(query,projection)
+#query ：可选，使用查询操作符指定查询条件
+#projection ：可选，使用投影操作符指定返回的键。查询时返回文档中所有键值， 只需省略该参数即可（默认省略）
+
+db.collection_name.find().pretty()#以格式化的方式来显示所有文档
+
+db.col.find({},{title:1,_id:0}).limit(2)  第一个大括号的意思是，要把查询出来的结果以Bson的形式展现出来；第二个大括号的意思是，要查询的字段有哪些，属性后面的1或者0代表的意思是查询和不查询的意思，那么不想查询_id的值，为何多此一举的写句_id:0？原因是这样的，在查询的时候，如果只写title:1，那么会默认的把_id也查询出来，为了过滤掉_id字段，我们需要加上_id:0。当然了，如果你还想查询更多的字段就在第二个{}里面加就可以了
+</code></pre></li>
+<li><p>AND条件， find() 方法可以传入多个键(key)，每个键(key)以逗号隔开</p>
+<pre><code>db.clooection_name.find(key1:value1,key2:value2)
+#如通过name、age键来查询数据
+db.myinfo.find({&apos;name&apos;:&apos;liuyongqian&apos;,&apos;age&apos;:&apos;108&apos;})
+</code></pre></li>
+</ul>
+<ul>
+<li><p>OR条件，使用了关键字<code>$or</code></p>
+<pre><code>db.collection_name.find({$or:[{key1:value1},{key2:value2}]})
+#如通过name或者age键来查询数据
+db.myinfo.find({$or:[{&apos;name&apos;:&apos;liuyongqian&apos;},{&apos;age&apos;:&apos;108&apos;}]})
+</code></pre></li>
+<li><p>比较符</p>
+<pre><code>等于 {key:value}  db.myinfo.find({&apos;age&apos;:&apos;108&apos;})    where age=108
+小于 {key:{$lt:value}}  db.myinfo.find({&apos;age&apos;:{$lt:108}})   where age&lt;108
+大于 {key:{$gt:value}}  db.myibfo.find({&apos;age&apos;:{$gt:108}})   where age&gt;108
+小于等于 {key:{$lte:value}}  db.myinfo.find({&apos;age&apos;:{$lte:108}})  where age&lt;=108
+大于等于 {key:{$gte:value}}  db.myinfo.find({&apos;age&apos;:{$gte:108}})  where age&gt;=108
+不等于   {key:{$ne:value}} db.myinfo.find({&apos;age&apos;:{$ne:108}})  where age!=108
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjgduftus001hs0wv88ass6rh" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-Python之socket" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/19/Python之socket/" class="article-date">
@@ -178,7 +465,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjgdehhqj002crswvydr8i62w" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjgduftvc001vs0wv9qczzr4y" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -252,7 +539,7 @@ zlexcount mykey [one [three #result:1
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjgdehhqf002arswvxpjzbt00" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjgduftw0002as0wvustya3vi" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -351,7 +638,7 @@ smembers key4      #result:a b c
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjgdehhq90027rswvjpakpe5k" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjgduftvp0023s0wv75lph2dw" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -455,7 +742,7 @@ lindex mylist 1        #列表中下标为指定索引值的元素
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjgdehhot001crswvybyzlbnz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjgduftuj001cs0wvd1sfgjls" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -555,7 +842,7 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjgdehhoi0014rswv7yqdafgs" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjgduftu00010s0wvyc29zeb9" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -690,7 +977,7 @@ get myname          #result:liuyongqian
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjgdehhqq002grswvob23m1fh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjgduftvs0025s0wvh3m6jt7j" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -848,7 +1135,7 @@ port=27017   #端口号 默认为27017
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjgdehhpo001vrswvxeiiv9ov" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjgduftun001es0wv52kozp18" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -924,371 +1211,10 @@ frag:片段只在客户端使用，不发送到服务器端；
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjgdehhol0017rswvukoafi7f" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjgduftts000vs0wv46crcyno" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Python的进程与线程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/14/Python的进程与线程/" class="article-date">
-  <time datetime="2018-03-14T04:00:57.000Z" itemprop="datePublished">2018-03-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/Python的进程与线程/">Python的进程与线程</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Python的进程与线程</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>概念</h6><p></p>
-<ul>
-<li>进程：独立（内存独立，cpu使用独立）的所有子任务的集合，启动进程开销大，进程之间很难共享数据和数据通信</li>
-<li>线程：进程中的每个子任务，不能独立存在，cpu执行的最小单位；依赖进程（内存共享）启动开销小，线程之间共享数据容易</li>
-<li><p>实现线程的两种形式</p>
-<ul>
-<li><p>函数方式实现：线程必须依赖函数实现，不能单独运行。单函数结束，线程结束。如果想让线程一致运行，就要想办法让程序不结束，比如在程序最后加一个input()或者死循环</p>
-<pre><code>import threading,time
-thr=threading.current_thread()  #threading.current_thread()返回当前的线程变量
-thr.setName(&apos;主线程&apos;)
-print(&apos;当前线程：&apos;,thr.getName())
-def fun1(t_name):
-    for i in range(1,6):
-        print(t_name,i)
-        time.sleep(2)
-threading._start_new_thread(fun1,(&apos;子线程&apos;,))   #第二个参数类型为元组，为第一个参数传参
-for i in range(1,6):
-    print(thr.name,i)
-    time.sleep(2)
-input()
-</code></pre></li>
-<li><p>类方式实现：</p>
-<ul>
-<li>a继承threading.Thread</li>
-<li>b写构造方法，且必须调用父类的构造方法</li>
-<li>c重写父类的run方法，会在start之后自动调用</li>
-<li><p>d实现开始方法，如果重写了start()方法，一定要调用父类的start()</p>
-<pre><code>import threading,time
-class myThread(threading.Thread):
-    def run(self):
-        for i in range(1,11):
-            print(self.name,i)
-            time.sleep(1)
-thread1=myThread()
-thread1.start()
-thread2=threading.current_thread()
-for i in range(1,11):
-    print(thread2.name,i)
-    if i==3:
-        print(&apos;开始礼让&apos;)
-        thread1.join()
-        #join([time])强制调用某个线程进入执行状态，本线程礼让CPU资源，直至某个线程退出/抛异常/超时，本线程才进入就绪状态
-    time.sleep(1)
-input()
-</code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>资源共享引发的问题—锁</h6><p></p>
-<ul>
-<li>由于并发的问题，需要加锁</li>
-<li>锁有锁定和未锁定两种状态，当一个线程要访问共享数据时，必须要先获得锁定，如果已经有别的线程获得锁定，那么就进入暂停状态，等别的线程把所释放后再进行操作</li>
-<li><p>Conditon：更精确的控制锁，提供了四个方法，上锁-acquire()，等待-wait()，解锁-release()，唤醒-notify()</p>
-<pre><code>import threading,time
-sum=20  #总票数
-count=0  #当前抢到票数
-lock=threading.Lock()             #建锁
-class qiangpiao(threading.Thread):
-    def __init__(self,t_name):
-        threading.Thread.__init__(self)
-        self.name=t_name
-    def run(self):
-        global sum, count
-        while True:
-            lock.acquire()   #上锁
-            if sum&lt;=0:
-                return
-            else:
-                sum-=1
-                count+= 1
-                print(self.name,&apos;抢到了第{0}张票，剩余{1}张票&apos;.format(count,sum))
-            lock.release()    #释放
-            time.sleep(1)
-chuangkou=qiangpiao(&apos;窗口&apos;)
-huangniu=qiangpiao(&apos;黄牛&apos;)
-phone=qiangpiao(&apos;手机&apos;)
-chuangkou.start()
-huangniu.start()
-phone.start()
-</code></pre></li>
-</ul>
-<p></p><h6>多线程互相影响</h6><p></p>
-<ul>
-<li><p>厨师与吃货</p>
-<pre><code>import threading,time
-zhenglong=[]      #蒸笼，存包子资源
-class Cook(threading.Thread):
-    def run(self):
-        while True:
-            chi_cond.acquire()
-            global zhenglong
-            if len(zhenglong)==0:
-                print(&apos;厨师开始蒸包子&apos;)
-                for i in range(1,8):
-                    print(&apos;厨师正在蒸第{0}个包子&apos;.format(i))
-                    zhenglong.append(i)
-                    time.sleep(1)
-                print(&apos;包子蒸完，唤醒吃货......&apos;)
-                chi_cond.notify()
-            chi_cond.release()
-            zheng_cond.acquire()
-            zheng_cond.wait()
-            zheng_cond.release()
-class Chihuo(threading.Thread):
-    def __init__(self,c_name):
-        threading.Thread.__init__(self)
-        self.name=c_name
-    def run(self):
-        while True:
-            chi_cond.acquire()
-            global zhenglong
-            if len(zhenglong) == 0:
-                zheng_cond.acquire()
-                zheng_cond.notify()
-                zheng_cond.release()
-                chi_cond.wait()
-            else:
-                baozi=zhenglong.pop()
-                print(self.name,&apos;吃了第{0}个包子，还剩{1}个包子&apos;.format(baozi,len(zhenglong)))
-                time.sleep(1)
-            chi_cond.release()
-chi=threading.Lock()
-chi_cond=threading.Condition(lock=chi)
-zheng=threading.Lock()
-zheng_cond=threading.Condition(lock=zheng)
-
-cook=Cook()
-aa=Chihuo(&apos;aa&apos;)
-bb=Chihuo(&apos;bb&apos;)
-cc=Chihuo(&apos;cc&apos;)
-cook.start()
-aa.start()
-bb.start()
-cc.start()
-input()
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjgdehhri002zrswvgt112bki" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-python之XML" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/13/python之XML/" class="article-date">
-  <time datetime="2018-03-13T10:06:12.000Z" itemprop="datePublished">2018-03-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/13/python之XML/">python之XML</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>python之XML</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>初识XML</h6><p></p>
-<ul>
-<li>定义<ul>
-<li>XML指可扩展标记语言（EXtensible Markup Language）,设计宗旨是传输数据，而不是显示数据,标签没有被预定义,需要自行定义标签,XML 被设计为具有自我描述性，被设计用来结构化、存储以及传输信息，是独立于软件和硬件的信息传输工具</li>
-</ul>
-</li>
-<li><p>语法</p>
-<ul>
-<li>XML 标签对大小写敏感。标签 \<letter\> 与标签 \&lt;\letter> 是不同的</letter\></li>
-<li>在 XML 中，XML 的属性值必须加引号，如<code>&lt;note date=&quot;12/11/2007&quot;&gt;</code></li>
-<li><p>在 XML 中，有 5 个预定义的实体引用</p>
-<pre><code>&amp;lt;    &lt;    
-&amp;gt;    &gt;    
-&amp;amp;    &amp;    
-&amp;apos;    &apos;    
-&amp;quot;    &quot;
-</code></pre></li>
-<li>没有什么规矩可以告诉我们什么时候该使用属性，而什么时候该使用元素。我的经验是在 HTML 中，属性用起来很便利，但是在 XML 中，您应该尽量避免使用属性。如果信息感觉起来很像数据，那么请使用元素</li>
-<li>xml文件格式介绍：tag，即标签；attri，即属性；text，即文本字符串</li>
-</ul>
-</li>
-<li><p>如下所示</p>
-<pre><code>#文件名：countrys.xml
-&lt;?xml version=&quot;1.0&quot;?&gt;             &lt;!--XML声明--&gt;
-&lt;data id=&apos;0314&apos; name=&quot;国家&quot;&gt;       &lt;!--根元素--&gt;
-    &lt;country name=&quot;Liechtenstein&quot;&gt;
-        &lt;rank&gt;1&lt;/rank&gt;
-        &lt;year&gt;2008&lt;/year&gt;
-        &lt;code&gt;141100&lt;/code&gt;
-        &lt;neighbor direction=&quot;E&quot;&gt;Austria&lt;/neighbor&gt;
-    &lt;/country&gt;
-    &lt;country name=&quot;Panama&quot;&gt;
-        &lt;rank&gt;68&lt;/rank&gt;
-        &lt;year&gt;2011&lt;/year&gt;
-        &lt;code&gt;13600&lt;/code&gt;
-        &lt;neighbor direction=&quot;W&quot;&gt;Costa Rica&lt;/neighbor&gt;
-    &lt;/country&gt;
-&lt;/data&gt;
-</code></pre></li>
-</ul>
-<p></p><h6>三种解析方式</h6><p></p>
-<ul>
-<li><p>方式一：ElementTree(元素树)</p>
-<ul>
-<li><p>ElementTree,类似一个轻量级的DOM解析XML文件的过程：</p>
-<ul>
-<li>1.导入ElementTree</li>
-<li>2.解析xml文件找到根节点：直接解析xml文件并获得根节点</li>
-<li>3.遍历根节点可以获得子节点，然后就可以根据需求拿到需要的字段</li>
-</ul>
-</li>
-<li><p>演示</p>
-<pre><code>import xml.etree.ElementTree as ET   #1.导入ElementTree
-tree=ET.parse(&apos;countrys.xml&apos;)
-root=tree.getroot()                  #2.直接加载解析xml文件并获得根节点
-print(&apos;根节点:&apos;,root.tag,&apos;根属性:&apos;,root.attrib,&apos;根文本:&apos;,root.text)
-for child in root:         #3.
-    print(&apos;节点:&apos;,child.tag,&apos;节点属性:&apos;,child.attrib,&apos;节点文本:&apos;,child.text)
-    for sub in child:
-        print(&apos;子节点:&apos;,sub.tag,&apos;子节点属性:&apos;,sub.attrib,&apos;子节点文本:&apos;,sub.text)
-</code></pre></li>
-</ul>
-</li>
-<li><p>方式二：DOM(Document Object Model)</p>
-<ul>
-<li>一个 DOM 的解析器在解析一个XML文档时，一次性读取整个文档，把文档中所有元素保存在内存中的一个树结构里，之后你可以利用DOM 提供的不同的函数来读取或修改文档的内容和结构，也可以把修改过的内容写入xml文件。python中用xml.dom.minidom来解析xml文件</li>
-<li><p>演示</p>
-<pre><code>from xml.dom.minidom import parse
-import xml.dom.minidom
-DOMTree=xml.dom.minidom.parse(&apos;countrys.xml&apos;) #使用minidom解析器打开xml文件
-date=DOMTree.documentElement                  #获取根节点
-if date.hasAttribute(&apos;name&apos;):
-    print(&apos;date.name=&apos;,date.getAttribute(&apos;name&apos;))
-countrys=date.getElementsByTagName(&apos;country&apos;) #获取所有子节点
-for country in countrys:
-    if country.hasAttribute(&apos;name&apos;):
-        print(&apos;country name:&apos;,country.getAttribute(&apos;name&apos;))
-        rank=country.getElementsByTagName(&apos;rank&apos;)[0]
-        print(&apos;rank:&apos;,rank.childNodes[0].data)
-        neighbor=country.getElementsByTagName(&apos;neighbor&apos;)[0]
-        print(&apos;neighbor:&apos;,neighbor.childNodes[0].data)
-        print(&apos;---------------------&apos;)
-</code></pre></li>
-</ul>
-</li>
-<li><p>方式三：SAX (simple API for XML )</p>
-<ul>
-<li>SAX是一种基于事件驱动的API，利用SAX解析XML牵涉到两个部分：解析器和事件处理器。其中解析器负责读取XML文档，并向事件处理器发送事件，如元素开始跟元素结束事件；而事件处理器则负责对事件作出相应，对传递的XML数据进行处理。python中使用sax方式处理xml要先引入xml.sax中的parse函数，还有xml.sax.handler中的ContentHandler</li>
-<li><p>演示</p>
-<pre><code>import xml.sax
-#创建属于自己的读取xml文件的handler格式
-class countryHandler(xml.sax.ContentHandler):
-    def __init__(self):
-        self.CurrentDate=&apos;&apos;    #中间量，用来存储读取到的节点名字
-        self.rank=&apos;&apos;
-        self.year=&apos;&apos;
-        self.neighber=&apos;&apos;
-    def startElement(self,tag,attributes):
-        #startElement(tag, attrs)方法，遇到XML开始标签时调用，tag是标签的名字，attrs是标签的属性值字典
-        self.CurrentDate=tag
-        if tag==&apos;country&apos;:
-            name=attributes[&apos;name&apos;]
-            print(&apos;-----------------------&apos;)
-            print(&apos;country:&apos;,name)
-    def characters(self,content):
-        if self.CurrentDate==&apos;rank&apos;:
-            self.rank=content
-        elif self.CurrentDate==&apos;year&apos;:
-            self.year = content
-        elif self.CurrentDate==&apos;neighbor&apos;:
-            self.neighbor=content
-    def endElement(self,tag):
-        #endElement(name)方法,遇到XML结束标签时调用
-        if self.CurrentDate==&apos;rank&apos;:
-            print(&apos;rank:&apos;,self.rank)
-        elif self.CurrentDate==&apos;year&apos;:
-            print(&apos;year:&apos;,self.year)
-        elif self.CurrentDate==&apos;neighbor&apos;:
-            print(&apos;neighbor:&apos;,self.neighbor)
-        self.CurrentDate=&apos;&apos;     #
-if __name__==&apos;__main__&apos;:
-    parser=xml.sax.make_parser()     #创建一个xml读取器
-    parser.setFeature(xml.sax.handler.feature_namespaces,0)
-    handler=countryHandler()         #
-    parser.setContentHandler(handler)
-    parser.parse(&apos;countrys.xml&apos;)     #解析文档
-</code></pre></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/python之XML/" data-id="cjgdehhs4003brswv5xyi5d82" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1317,7 +1243,7 @@ if __name__==&apos;__main__&apos;:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1327,7 +1253,7 @@ if __name__==&apos;__main__&apos;:
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.11px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.5px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.25px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 13.75px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a>
     </div>
   </div>
 
@@ -1336,7 +1262,7 @@ if __name__==&apos;__main__&apos;:
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1349,6 +1275,14 @@ if __name__==&apos;__main__&apos;:
       <ul>
         
           <li>
+            <a href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/24/大数据的一些函数-01/">大数据的一些函数-01</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/16/Centos7安装MySQL57/">Centos7安装MySQL57</a>
           </li>
         
@@ -1358,14 +1292,6 @@ if __name__==&apos;__main__&apos;:
         
           <li>
             <a href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/16/使用hadoop里面的MapReduce/">使用hadoop里面的MapReduce</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/14/虚拟机centos上部署hadoop/">虚拟机centos上部署hadoop</a>
           </li>
         
       </ul>

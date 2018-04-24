@@ -70,6 +70,360 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-迭代器、生成器、异常" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/01/迭代器、生成器、异常/" class="article-date">
+  <time datetime="2018-02-01T13:05:40.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>迭代器、生成器、异常</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>初识迭代器</h6><p></p>
+<ul>
+<li><p>容器，是一种把多个元素组织在一起的数据结构，容器中的元素可以逐个的迭代获取，可以用in，not in关键字判断元素是否包含在容器中<br>通常这类数据结构把所有的元素存储在内存中（也有特例，并不是所有的元素都放在内存中，比如迭代器、生成器对象）<br>在Python中，常见的容器对象有：list、set、dict、tuple、str、file、sockets等，这些对象都可以看作是容器，容器都可以迭代，因此它们被称为可迭代对象</p>
+<pre><code>m=(&apos;a&apos;,1,2,&apos;b&apos;)        #询问某元素是否在元组中，这个元组可以认为是一个容器
+print(&apos;a&apos; in m)        #result:True
+</code></pre></li>
+<li><p>可迭代对象，可直接作用于for循环的对象统称为可迭代对象，即iterable。可迭代对象实现了__iter__方法，该方法返回一个迭代器对象</p>
+</li>
+<li><p>迭代器，被next()函数调用并不断返回下一个值（直到没有数据时抛出StopIteration错误）的对象称为迭代器，即iterator<br>迭代器内部持有一个状态，该状态用于记录当前迭代所在的位置，以便下次迭代时获取正确的元素</p>
+<pre><code>m=[1,2,3]            #m为可迭代对象
+print(type(m))       #result:&lt;class &apos;list&apos;&gt;
+m=iter(m)            #iter(可迭代对象)，将可迭代对象转换成迭代器
+n=iter(m)            #m与n是两个独立的迭代器，每转换一次就生成一次迭代器
+print(type(m))       #result:&lt;class &apos;list_iterator&apos;&gt;
+print(next(m))       #result:1
+print(next(m))       #result:2  两个next()之间可以增加其他逻辑，但不会影响迭代器输出结果
+</code></pre></li>
+</ul>
+<p></p><h6>详细了解迭代器</h6><p></p>
+<ul>
+<li>它是一个带状态的对象，它能在你调用next()方法的时候返回容器中的下一个值，任何实现了__iter__和__next__()方法的对象都是迭代器<br>__iter__返回迭代器自身，__next__返回容器中的下一个值，如果容器中没有更多的值，则抛出StopIteration异常<br>迭代器就是实现了工厂模式的对象，它在你每次你询问要下一个值的时候给你返回</li>
+<li><p>自己创建一个迭代器，以斐波那契数列为例</p>
+<pre><code>#第一个版本，复用性较差
+def Fibo(max):          #输出斐波那契数列前N个数
+    n,a,b=0,0,1
+    while n&lt;max:
+        print(b)
+        a,b=b,a+b
+        n+=1
+Fibo(5)                 #result:1  1  2  3  5
+
+#第二个版本，要提高复用性最好不要直接打印出数列，而是返回一个数列
+def Fibo(max):
+    n,a,b=0,0,1
+    L=[]
+    while n&lt;max:
+        L.append(b)
+        a,b=b,a+b
+        n+=1
+    return L           #返回一个数列
+for i in Fibo(5):
+    print(i)           #result:1  1  2  3  5
+#第三个版本，返回数列能满足复用性的需求，但是运行时占用的内存会随着参数max的增大而增大，如果要控制内存占用，最好不要用List来保存中间结果，而是通过iterable对象来迭代
+
+class Fibo(object):
+    def __init__(self,max):
+        self.max=max
+        self.n,self.a,self.b=0,0,1
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.n&lt;self.max:
+            r=self.b
+            self.a,self.b=self.b,self.a+self.b
+            self.n+=1
+            return r
+        raise StopIteration()
+f=Fibo(5)
+for i in f:
+    print(i)            #result:1  1  2  3  5
+</code></pre></li>
+<li><p>生成器（generator）<br>生成器是一种特殊的迭代器，不需要写__iter__()和__next__()方法，只需要一个关键字yield<br>任何生成器都是以一种懒加载的模式生成值</p>
+<pre><code>#第四个版本，如果既要简洁，又要获得iterable的效果，yield就派上用场了
+def Fibo(max):
+    n,a,b=0,0,1
+    while n&lt;max:
+        yield b         #使用yield返回值
+        a,b=b,a+b
+        n+=1
+f = Fibo(5)
+for i in f:
+    print(i)            # result:1  1  2  3  5
+</code></pre></li>
+</ul>
+<p></p><h6>异常</h6><p></p>
+<ul>
+<li><p>异常：运行时异常，编译时异常，逻辑错误</p>
+<pre><code>#运行时异常
+a=100
+c=0
+try:                            #有可能发生异常的代码
+    b=int(input(&apos;请输入除数:&apos;))
+    c=a/b
+    print(c)   
+except ZeroDivisionError as m:  #Exception（异常类型1，异常类型2），常见的有ZeroDivisionError、ValueError
+    print(m)                    #捕获并处理异常   #result:如果除数为0，则抛出division by zero
+except ValueError as n:
+    print(n)                    #result:如果除数为字符，则抛出invalid literal for int()
+except Exception as p:
+    print(p)
+else:                           #没有异常才会执行的代码
+    print(&apos;程序正常执行!&apos;)
+finally:                        #最终要执行的代码，释放资源的作用
+    try:                        #异常可以嵌套
+        del a,b,c
+    except Exception as q:
+        print(q)
+    print(&apos;程序最终执行完成!&apos;)
+
+#自定义异常
+class SexException(Exception):
+    pass
+def inputSex():
+    sex=input(&apos;请输入性别:&apos;)
+    if sex!=&apos;男&apos; and sex!=&apos;女&apos;:
+        raise SexException(&apos;性别只能是男或者女&apos;)
+    print(&apos;输入的性别为&apos;,sex)
+try:
+    inputSex()
+except SexException as m:
+    print(m)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/01/迭代器、生成器、异常/" data-id="cjgdufu27005xs0wv4jr2y802" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-工厂类、单例、其他" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/01/工厂类、单例、其他/" class="article-date">
+  <time datetime="2018-02-01T07:33:58.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>工厂类、单例、其他</h5><p></p>
+<hr>
+<hr>
+<h6>工厂类、单例模式</h6>
+
+<ul>
+<li><p>通过专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类 并且重写父类方法</p>
+<pre><code>class  Operation:
+    def __init__(self,numA,numB):
+        self.numA=numA
+        self.numB=numB
+    def getResult(self):
+        print(&apos;计算2个操作数的运算结果&apos;)
+
+class Add(Operation):
+    def __init__(self,numA,numB):
+        super(Add, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA+self.numB
+class Minus(Operation):
+    def __init__(self,numA,numB):
+        super(Minus, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA-self.numB
+
+class Factory:            #根据不同的参数，创建不同的对象的函数
+    def create_class(self,ope,numA,numB):
+        if ope == &apos;+&apos;:
+            q = Add(numA, numB)
+        elif ope == &apos;-&apos;:
+            q = Minus(numA, numB)
+        else:
+            print(&apos;输入错误！&apos;)
+        return q
+
+if __name__==&apos;__main__&apos;:
+    factory=Factory()             #创建一个工厂对象
+    numA=int(input(&apos;请输入第一个数:&apos;))
+    numB=int(input(&apos;请输入第二个数:&apos;))
+    ope=input(&apos;请输入运算符:&apos;)
+    q=factory.create_class(ope,numA,numB)  #代表一个计算器
+    print(&apos;计算结果:&apos;,q.getResult())
+</code></pre></li>
+</ul>
+<h6>单例模式</h6>
+
+<ul>
+<li><p>该模式的主要目的是确保某一个类只有一个实例存在</p>
+<pre><code>class singleton:
+    __instance=None
+    def __new__(cls, *args, **kwargs):   #单例模式，一个对象
+        if cls.__instance==None:
+            cls.__instance=object.__new__(cls)
+            return cls.__instance
+        else:
+            return cls.__instance
+s1=singleton()
+s2=singleton()
+print(id(s1),id(s2))       #result:2489344543992   2489344543992
+</code></pre></li>
+</ul>
+<h6>isinstance()函数</h6>
+
+<ul>
+<li><p>判断是否是继承关系，判断变量的数据类型</p>
+<pre><code>class Pet:
+    def look(self):
+        print(&apos;给宠物看病...&apos;)
+class cat(Pet):
+    def look(self):
+        print(&apos;给猫咪吃药、打针...&apos;)
+kitty=cat()
+print(isinstance(kitty,cat))      #result:True
+print(isinstance(kitty,Pet))      #result:True
+
+a=&apos;Liu&apos;
+print(isinstance(a,str))          #result:True
+</code></pre></li>
+</ul>
+<h6>getattribute\setsttr\hasattr</h6>
+
+<pre><code>class  Operation:
+    numC=333
+    def __init__(self,numA,numB):
+        self.numA=numA
+        self.numB=numB
+    def getResult(self):
+        print(&apos;计算2个操作数的运算结果&apos;)
+q=Operation(3,6)
+print(Operation.numC)                 #result:333
+print(q.__getattribute__(&apos;numC&apos;))     #result:333
+
+q.__setattr__(&apos;numD&apos;,666)
+print(q.__getattribute__(&apos;numD&apos;))     #result:666
+
+setattr(Operation,&apos;numE&apos;,999)
+print(q.numE)                         #result:999
+
+print(hasattr(q,&apos;numC&apos;))              #result:True
+</code></pre><p></p><h6>操作对象的形态</h6><p></p>
+<ul>
+<li><p>给类动态添加方法</p>
+<pre><code>class Student:
+    def __init__(self,name):
+        self.name=name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+def ride(name):
+    print(&apos;%s在骑马...&apos;%name)
+stu1=Student(&apos;刘备&apos;)
+stu1.look()               #result:刘备在看书...
+
+stu1.ride=ride            #给实例添加一个方法
+stu1.ride(stu1.name)      #result:刘备在骑马...
+
+class Student:
+    def __init__(self,name):
+        self.name=name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+def ride(self):
+    print(&apos;%s在骑马...&apos;%self.name)
+Student.ride=ride         #给类动态添加方法
+stu1=Student(&apos;刘备&apos;)
+stu1.look()               #result:刘备在看书...
+stu1.ride()               #result:刘备在骑马...
+</code></pre></li>
+<li><p>为了达到限制的目的，Python允许在定义class的时候，定义一个特殊的__slots__变量，来限制该class实例能添加的属性</p>
+<pre><code>class Student:
+    __slots__=(&apos;name&apos;)   #限制该class实例能添加的属性
+    def __init__(self,name):
+        self.name = name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+stu=Student(&apos;刘禅&apos;)
+stu.look()
+stu.age=25
+print(stu.age)       #AttributeError: &apos;Student&apos; object has no attribute &apos;age&apos;
+</code></pre></li>
+<li><p>__call__,通过callable()函数，可以判断一个对象是否是“可调用”对象</p>
+<pre><code>class Student:
+    def __init__(self,name):
+        self.name = name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+    def __call__(self, *args, **kwargs):
+        #print(&apos;AAAAAAAAAAAAA&apos;)
+stu=Student(&apos;刘禅&apos;)
+stu.look()
+print(callable(stu))         #result:True
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/01/工厂类、单例、其他/" data-id="cjgdufu0k004zs0wvsyd88jje" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-计算器" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/31/计算器/" class="article-date">
@@ -144,7 +498,7 @@ if __name__==&apos;__main__&apos;:             #程序从这里启动
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/31/计算器/" data-id="cjgdehhvm005drswvhzywy5dl" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/31/计算器/" data-id="cjgdufu1o005ps0wv5wfhym6b" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -281,7 +635,7 @@ manager.Menu()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjgdehho4000vrswvy4ptes03" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjgduftsu000es0wv9k2s6fpl" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -425,7 +779,7 @@ doctor.jiuzhen(xiaoming)    #result:兽医出诊，给宠物看病..   给人类
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjgdehhue004lrswv4ff7kv1p" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjgdufu0d004vs0wvvx69fk3b" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -667,7 +1021,7 @@ print(id(n))                  #result:1832993647864
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjgdehhvf0059rswvoblrewo9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjgdufu17005fs0wv18642fvj" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -892,7 +1246,7 @@ print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjgdehhtl0047rswv0qby26wb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjgduftyv0041s0wvvk9ps5w3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1051,7 +1405,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjgdehhwz0065rswvtssmw0cb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjgdufu2i0065s0wv53j8x8xe" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1236,7 +1590,7 @@ print(&quot;谢谢使用！&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjgdehhwg005rrswv15v4inh5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjgdufu2a005zs0wvgjptacta" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1399,432 +1753,7 @@ print(d)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjgdehhsu003rrswv8gynyzc8" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-列表" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/16/列表/" class="article-date">
-  <time datetime="2018-01-16T01:28:02.000Z" itemprop="datePublished">2018-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/16/列表/">列表</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>列表</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>列表的定义</h6><p></p>
-<ul>
-<li><p>列表的数据项不需要具有相同的类型，逗号分隔，方括号括起来</p>
-<pre><code>list1=[&apos;News&apos;,&apos;Git&apos;,2018,1.15,False]
-print(list1[2])             #result:2018
-
-list=[[&apos;a&apos;,&apos;b&apos;],[&apos;A&apos;,&apos;B&apos;],[&apos;a&apos;,&apos;B&apos;]] 
-print(list[1][1])           #二维列表  #result:B
-</code></pre></li>
-</ul>
-<p></p><h6>列表的切片</h6><p></p>
-<ul>
-<li><p>列表也可以使用切片，使用方法与字符串一致</p>
-<pre><code>print(list1[:])  #所有       #result:[&apos;News&apos;, &apos;Git&apos;, 2018, 1.15, False]
-print(list1[1:2])           #result:[&apos;Git&apos;]
-print(list1[1:4:2])         #result:[&apos;Git&apos;, 1.15]
-print(list1[-1])            #result:False
-print(list1[-1:-5:-1])      #result:[False, 1.15, 2018, &apos;Git&apos;]
-print(list1[::-1])             #result:[False, 1.15, 2018, &apos;Git&apos;, &apos;News&apos;]
-</code></pre></li>
-</ul>
-<p></p><h6>列表的编辑</h6><p></p>
-<ul>
-<li><p>增加</p>
-<pre><code>list2=[&apos;Happy&apos;,&apos;New&apos;,&apos;Year&apos;]
-list2.append(&apos;2018&apos;)          #增加到列表尾部
-print(list2)      #result:[&apos;Happy&apos;, &apos;New&apos;, &apos;Year&apos;, &apos;2018&apos;]
-list2.insert(3,&apos;2018&apos;)        #插入到列表相应下标位置,超出范围则在尾部添加
-print(list2)      #result:[&apos;Happy&apos;, &apos;New&apos;, &apos;Year&apos;, &apos;2018&apos;]
-
-list3=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
-list4=[&apos;李桑&apos;,&apos;雷军&apos;,&apos;马云&apos;] #两个列表可以进行相加 
-print(list3+list4)            #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;, &apos;李桑&apos;, &apos;雷军&apos;, &apos;马云&apos;]
-print(list3)                  #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;]
-
-list3.extend(list4)           #列表1.extend(列表2)，是把列表2迭代后追加到列表1，extend()没有返回值
-print(list3)                  #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;, &apos;李桑&apos;, &apos;雷军&apos;, &apos;马云&apos;]
-</code></pre></li>
-<li><p>修改</p>
-<pre><code>list5=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
-list5[1]=&apos;大米&apos;
-print(list5)                  #result:[&apos;百度&apos;, &apos;大米&apos;, &apos;阿里&apos;]
-</code></pre></li>
-<li><p>删除</p>
-<pre><code>list6=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
-del list6[1]                  #del
-print(list6)                  #result:[&apos;百度&apos;, &apos;阿里&apos;]
-
-list7=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
-list7.pop()                   #默认删除最后一个,也可以指定删除的下标，返回删除值
-print(list7)                  #result:[&apos;百度&apos;, &apos;小米&apos;]
-
-list8=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
-list8.remove(&apos;小米&apos;)          #删除括号中的内容，但只删除一次
-print(list8)                  #result:[&apos;百度&apos;, &apos;阿里&apos;]
-</code></pre></li>
-<li><p>查询</p>
-<pre><code>list9=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
-print(list9.index(&apos;c&apos;))       #返回查找到的下标  #result:2
-print(&apos;a&apos; in list9)            #返回bool值       #result:True
-print(&apos;a&apos; not in list9)        #返回bool值       #result:False
-</code></pre></li>
-</ul>
-<p></p><h6>列表的函数</h6><p></p>
-<ul>
-<li><p>len() 列表元素个数</p>
-<pre><code>list1=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
-print(len(list1))           #result:5
-</code></pre></li>
-<li><p>max()、min() 返回列表元素最大值、最小值;字母以ASCII为依据</p>
-<pre><code>print(max(list1))           #result:e
-print(min(list1))           #result:a
-</code></pre></li>
-<li><p>list()将元组转换成列表</p>
-<pre><code>a=(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)             #定义一个元组
-print(list(a))              #result:[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]
-</code></pre></li>
-<li><p>append()增加到列表尾部</p>
-</li>
-<li>insert(index,obj)插入到列表相应下标位置,超出范围则在尾部添加</li>
-<li>extend()列表1.extend(列表2)，是把列表2迭代后追加到列表1</li>
-<li>pop()默认删除最后一个,也可以指定删除的下标，返回删除值</li>
-<li>remove()删除括号中的内容，但只删除一次</li>
-<li><p>reverse()反向列表中的元素</p>
-<pre><code>list2=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
-list2.reverse()
-print(list2)                  #result:[&apos;e&apos;, &apos;d&apos;, &apos;c&apos;, &apos;b&apos;, &apos;a&apos;]
-</code></pre></li>
-<li><p>sort([func])排序，默认升序</p>
-<pre><code>list3=[5,6,4,2,9]
-list3.sort()
-print(list3)                  #result:[2, 4, 5, 6, 9]
-</code></pre></li>
-<li><p>clear() 清空列表</p>
-<pre><code>list4=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
-list4.clear()
-print(list4)                  #result:[]
-</code></pre></li>
-<li><p>copy()复制列表，在内存中又开辟了一个空间；通过等号复制副本，在内存中指向原来的地址</p>
-<pre><code>list5=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]
-list6=list5.copy()
-print(list6)                  #result:[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]
-</code></pre></li>
-<li><p>eval()将元组、字典、列表类型的字符串转为元组、字典、列表,可以把list,tuple,dict和string相互转化</p>
-<pre><code>a=&quot;[[1,2], [3,4], [5,6]]&quot;        #字符串转换成列表
-m=eval(a)
-print(type(m))                  #result:&lt;class &apos;list&apos;&gt;
-print(m)                        #result:[[1, 2], [3, 4], [5, 6]]
-
-a=&quot;{&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:&apos;25&apos;}&quot;   #字符串转换成字典
-m=eval(a)
-print(type(m))                  #result:&lt;class &apos;dict&apos;&gt;
-print(m)                        #result:{&apos;name&apos;: &apos;Liu&apos;, &apos;age&apos;: &apos;25&apos;}
-
-a=&quot;(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)&quot;               #字符串转换成元组
-m=eval(a)
-print(type(m))                  #result:&lt;class &apos;tuple&apos;&gt;
-print(m)                        #result:(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;)
-</code></pre></li>
-</ul>
-<p></p><h6>小练习</h6><p></p>
-<ul>
-<li><p>定义一个列表，让用户动态输入5个值,遍历输出列表的值</p>
-<pre><code>nums=[]
-for i in range(5):
-    nums.append(input(&apos;请输入：&apos;))
-else:
-    print(&apos;输入完毕！&apos;)
-print(nums)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjgdehht6003zrswvou59qjdt" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-循环（while、for）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/15/循环（while、for）/" class="article-date">
-  <time datetime="2018-01-15T11:15:27.000Z" itemprop="datePublished">2018-01-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/15/循环（while、for）/">循环（while、for）</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>循环（while、for）</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>while循环</h6><p></p>
-<ul>
-<li><p>1.输出1-100的奇数和、偶数和</p>
-<pre><code>n=1;sum_even=0;sum_odd=0
-while n&lt;=100:        #判断条件
-    if n%2!=0:       #循环体
-        sum_odd+=n
-    else:
-        sum_even+=n
-    n+=1             #迭代部分，递增
-print(&apos;输出1-100的奇数和为%s&apos;%sum_odd)   #result:输出1-100的奇数和为2500
-print(&apos;输出1-100的偶数和为%s&apos;%sum_even)  #result:输出1-100的偶数和为2550
-</code></pre></li>
-<li><p>2.请用户输入数字，求和，数字直到0退出循环</p>
-<pre><code>n=int(input(&quot;请输入一个整数:&quot;));sum=0
-while n&gt;0:
-    sum+=n
-    n-=1             #迭代部分，递减
-print(sum)
-</code></pre></li>
-<li><p>3.输出1-20中3的倍数、5的倍数及3和5的公倍数</p>
-<pre><code>i=1
-while(i&lt;=20):
-    if(i%3==0 and i%5==0):
-        print(&apos;这个数是3和5的倍数：%s&apos;%i)
-    elif(i%3==0):
-        print(&apos;这个数是3的倍数：%s&apos;%i)
-    elif(i%5==0):
-        print(&apos;这个数是5的倍数：%s&apos;%i)
-    i+=1
-else:               #当循环正常执行结束后，执行else的语句块
-    print(&quot;循环结束，判断完毕！&quot;)
-</code></pre></li>
-</ul>
-<p></p><h6>for循环</h6><p></p>
-<ul>
-<li><p>range()函数,会生成有序数列</p>
-<pre><code>range(7)            #从0到7,不包含7,等同于range(0,7),举例：
-m=[]    定义一个空列表
-for i in range(7):
-    m.append(i)        #遍历并且存入列表中
-print(m)               #result:[0, 1, 2, 3, 4, 5, 6]
-
-range(2,7)          #从2到7，不包括7，举例：
-m=[]    #定义一个空列表
-for i in range(2,7):
-    m.append(i)        #遍历并且存入列表中
-print(m)               #result:[2, 3, 4, 5, 6]
-
-range(2,7,2)        #从2到7，不包括7,步长为2；步长可为负数,举例：
-m=[]    #定义一个空列表
-for i in range(2,7,2):
-    m.append(i)        #遍历并且存入列表中
-print(m)               #result:[2, 4, 6]
-</code></pre></li>
-<li><p>打印一个三角形</p>
-<pre><code>for i in range(0,6):
-    print((&apos;*&apos;*(2*i+1)).center(20,&apos; &apos;))
-else:                  #当循环正常执行结束后，执行else的语句块
-    print(&apos;打印完毕！&apos;)
-#result：
-         *          
-        ***         
-       *****        
-      *******       
-     *********      
-    ***********     
-打印完毕！
-</code></pre></li>
-</ul>
-<p></p><h6>嵌套循环</h6><p></p>
-<ul>
-<li><p>1.输出5行5个*</p>
-<pre><code>for i in range(5):
-    n=0;
-    while n&lt;5:
-        print(&apos;*&apos;,end=&apos;&apos;)
-        n+=1
-    print()
-#result：
-    *****
-    *****
-    *****
-    *****
-    *****
-</code></pre></li>
-<li><p>2.输出一个直角三角形</p>
-<pre><code>for i in range(5):
-    for j in range(i):
-        print(&apos;*&apos;,end=&apos;&apos;)
-    print()
-#result:
-    *
-    **
-    ***
-    ****
-</code></pre></li>
-<li><p>3.输出九九乘法表</p>
-<pre><code>for i in range(1,10):
-    for j in range(1,i+1):
-        print(&apos;%s*%s=%s&apos;%(j,i,i*j),end=&quot;\t&quot;)
-    print()
-#result:
-1*1=1    
-1*2=2    2*2=4    
-1*3=3    2*3=6     3*3=9    
-1*4=4    2*4=8     3*4=12    4*4=16    
-1*5=5    2*5=10    3*5=15    4*5=20    5*5=25    
-1*6=6    2*6=12    3*6=18    4*6=24    5*6=30    6*6=36    
-1*7=7    2*7=14    3*7=21    4*7=28    5*7=35    6*7=42    7*7=49    
-1*8=8    2*8=16    3*8=24    4*8=32    5*8=40    6*8=48    7*8=56    8*8=64    
-1*9=9    2*9=18    3*9=27    4*9=36    5*9=45    6*9=54    7*9=63    8*9=72    9*9=81
-</code></pre></li>
-</ul>
-<p></p><h6>break、continue</h6><p></p>
-<ul>
-<li><p>1.请用户输入0-100间的成绩,统计各区间的人数，若数值不在范围内提示重新输入，若输入正确提示是否继续</p>
-<pre><code>a,b,c=0,0,0                             #初始化各个区间的人数
-while(True):
-    score=int(input(&apos;请输入成绩：&apos;))
-    if score&gt;=90 and score&lt;=100:        #区间：[90,100]
-        a+=1
-    elif score&gt;=60 and score&lt;90:        #区间：[60,90)
-        b+=1
-    elif score&gt;0 and score&lt;60:          #区间：(0,60)
-        c+=1
-    else:
-        print(&apos;Error,请重新输入！&apos;)
-        continue;               #结束本次循环，进入下一次循环，即接着重新输入成绩
-    print(&apos;是否继续，y/n&apos;)
-    inp=input(&apos;是否继续：&apos;)
-    if inp==&apos;n&apos;:
-        break;                  #结束并跳出循环，成绩录入结束，也不会执行else语句块了
-else:
-    print(&apos;成绩录入完成！&apos;)
-print(&apos;晋级线{0} 合格线{1} 不及格{2}&apos;.format(a,b,c))
-</code></pre></li>
-<li><p>2.统计3个班级中，每个班级中3个学生中的成绩大于80的人数</p>
-<pre><code>count=0;
-for i in range(1,4):
-    print(&apos;第{0}个班级的学生成绩&apos;.format(i))
-    for j in range(1,4):
-        print(&apos;第{0}个学生的成绩:&apos;.format(j))
-        score=int(input())
-        if score&gt;80:
-            count+=1
-        elif score&lt;0:
-            print(&apos;Error，停止本班录入!&apos;)
-            break;         #结束内层循环，开始执行外层代码：结束本班学生成绩的录入，进入下一个班级
-print(&apos;大于80的人数为%s&apos;%count)
-==============================================================================================
-count=0;
-for i in range(1,4):
-    print(&apos;第{0}个班级的学生成绩&apos;.format(i))
-    for j in range(1,4):
-        print(&apos;第{0}个学生的成绩:&apos;.format(j))
-        score=int(input())
-        if score&lt;=80:
-            continue;       #结束本次循环，继续下一次循环：继续下一个学生的成绩输入，不管哪个班
-        count+=1
-print(&apos;大于80的人数为%s&apos;%count)
-</code></pre></li>
-</ul>
-<p></p><h6>小练习</h6><p></p>
-<ul>
-<li><p>1.输出菱形</p>
-<pre><code>for i in range(1,8,2):                #1,3,5,7
-    print((&apos;*&apos;*i).center(15,&apos; &apos;))
-for i in range(5,0,-2):               #5,3,1
-    print((&apos;*&apos;*i).center(15,&apos; &apos;))
-#result:
-       *       
-      ***      
-     *****     
-    *******    
-     *****     
-      ***      
-       *    
-</code></pre></li>
-<li><p>2.输出1-30内的所有质数</p>
-<pre><code>#除了1和本身外，不能被小于本身的数整除，就是素数；除了1，从2开始
-num=[];      #定义一个列表，将来存放质数
-i=2
-for i in range(2,31):
-   j=2
-   for j in range(2,i):
-      if(i%j==0):    #被小于本身的数整除，中断内层循环，进入下一个外层循环
-         break；
-   else:
-      num.append(i)
-print(num)           #result:[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-</code></pre></li>
-<li><p>3.输出斐波那切序列：1,1,2,3,5,8,13,21…</p>
-<pre><code>#斐波那契数列:第0项是0，第1项是第一个1。从第三项开始，每一项都等于前两项之和
-i,j=0,1
-while i&lt;10:
-    print(i,end=&apos;&apos;)
-    i,j=j,i+j 
-#这里i,j=j,i+j右边的表达式会在赋值变动之前执行，即先执行右边。
-#比如第一次循环得到j=1,i+j=0+1 然后再执行赋值i,j=1,0+1,执行完这条后i=1,j=1
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjgdehhuw004xrswv0f11cbho" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjgduftys003zs0wvxp3bw6f6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1856,7 +1785,7 @@ while i&lt;10:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1866,7 +1795,7 @@ while i&lt;10:
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.11px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.5px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.25px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 13.75px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a>
     </div>
   </div>
 
@@ -1875,7 +1804,7 @@ while i&lt;10:
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1888,6 +1817,14 @@ while i&lt;10:
       <ul>
         
           <li>
+            <a href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/24/大数据的一些函数-01/">大数据的一些函数-01</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/16/Centos7安装MySQL57/">Centos7安装MySQL57</a>
           </li>
         
@@ -1897,14 +1834,6 @@ while i&lt;10:
         
           <li>
             <a href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/16/使用hadoop里面的MapReduce/">使用hadoop里面的MapReduce</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/14/虚拟机centos上部署hadoop/">虚拟机centos上部署hadoop</a>
           </li>
         
       </ul>
