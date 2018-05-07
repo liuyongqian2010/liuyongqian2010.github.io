@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -156,7 +156,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/" data-id="cjgvkgq95001qbkwvbii59ruw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/" data-id="cjgw8dq0h001os4wv8jyhbnr3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -378,7 +378,7 @@ sc.stop()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-02/" data-id="cjgvkgqdr004qbkwv12yxkgjz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-02/" data-id="cjgw8dq59004os4wv6p7tcc8l" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -532,7 +532,7 @@ sc.stop()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-01/" data-id="cjgvkgqdo004obkwvzhc8rrxi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-01/" data-id="cjgw8dq59004ss4wv3emfauqv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -546,9 +546,9 @@ sc.stop()
 
 
   
-    <article id="post-Centos7安装MySQL57" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Centos7安装MySQL5.6" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/04/16/Centos7安装MySQL57/" class="article-date">
+    <a href="/2018/04/16/Centos7安装MySQL5.6/" class="article-date">
   <time datetime="2018-04-16T15:41:40.000Z" itemprop="datePublished">2018-04-16</time>
 </a>
     
@@ -560,7 +560,7 @@ sc.stop()
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/16/Centos7安装MySQL57/">Centos7安装MySQL57</a>
+      <a class="article-title" href="/2018/04/16/Centos7安装MySQL5.6/">Centos7安装MySQL5.6</a>
     </h1>
   
 
@@ -571,14 +571,103 @@ sc.stop()
       
 	  
 	  
-        <p></p><h5>Centos7安装MySQL57</h5><p></p>
+        <p></p><h5>Centos7安装MySQL5.6</h5><p></p>
 <hr>
 <hr>
-<h6></h6>
+<p></p><h6>安装MySQL</h6><p></p>
+<ul>
+<li>1.下载安装包mysql-5.6.40-linux-glibc2.12-x86_64.tar.gz</li>
+<li><p>2.卸载centos7自带的Mariadb数据库</p>
+<pre><code>[root@localhost ~]# rpm -qa|grep mariadb  // 查询出来已安装的mariadb  
+[root@localhost ~]# rpm -e --nodeps 文件名  // 卸载mariadb，文件名为上述命令查询出来的文件
+[root@localhost ~]# rm /etc/my.cnf    //删除etc目录下的my.cnf
+</code></pre></li>
+<li><p>3.创建一个用户名为mysql的用户并加入mysql用户组</p>
+<pre><code>[root@localhost ~]# groupadd mysql  
+[root@localhost ~]# useradd -g mysql mysql  
+</code></pre></li>
+<li><p>4.将下载的压缩包放到 /usr/local/ 目录下</p>
+</li>
+<li><p>5.解压安装包</p>
+<pre><code>[root@localhost local]# tar -zxvf mysql-5.6.40-linux-glibc2.12-x86_64.tar.gz
+</code></pre></li>
+<li><p>6.将解压好的文件夹重命名为mysql</p>
+<pre><code>[root@localhost local]# mv 解压出来的文件夹名 mysql
+</code></pre></li>
+<li><p>7.在/etc/下新建配置文件my.cnf，并在该文件中添加以下代码：</p>
+<pre><code>[mysql]  
+# 设置mysql客户端默认字符集  
+default-character-set=utf8   
+socket=/var/lib/mysql/mysql.sock  
+
+[mysqld]  
+skip-name-resolve  
+#设置3306端口  
+port = 3306   
+socket=/var/lib/mysql/mysql.sock  
+# 设置mysql的安装目录  
+basedir=/usr/local/mysql  
+# 设置mysql数据库的数据的存放目录  
+datadir=/usr/local/mysql/data  
+# 允许最大连接数  
+max_connections=200  
+# 服务端使用的字符集默认为8比特编码的latin1字符集  
+character-set-server=utf8  
+# 创建新表时将使用的默认存储引擎  
+default-storage-engine=INNODB  
+lower_case_table_name=1  
+max_allowed_packet=16M  
+</code></pre></li>
+<li><p>8.进入安装mysql软件目录</p>
+<pre><code>[root@localhost mysql]# chown -R mysql:mysql ./       修改当前目录拥有着为mysql用户  
+[root@localhost mysql]# ./scripts/mysql_install_db --user=mysql --basedir=/usr/local/mysql/ --datadir=/usr/local/mysql/data/           安装数据库
+</code></pre></li>
+</ul>
+<p></p><h6>配置MySQL</h6>  <p></p>
+<ul>
+<li><p>1.授予my.cnf最大权限</p>
+<pre><code>[root@localhost ~]# chmod 777 /etc/my.cnf 
+</code></pre></li>
+<li><p>2.设置开机自启动服务控制脚本</p>
+<pre><code>[root@localhost mysql]# cp ./support-files/mysql.server /etc/rc.d/init.d/mysqld     复制启动脚本到资源目录
+[root@localhost mysql]# chmod +x /etc/rc.d/init.d/mysqld   增加mysqld服务控制脚本执行权限
+[root@localhost mysql]# chkconfig --add mysqld    将mysqld服务加入到系统服务
+[root@localhost mysql]# chkconfig --list mysqld    检查mysqld服务是否已经生效,命令输出类似下面的结果:
+        mysqld 0:off 1:off 2:on 3:on 4:on 5:on 6:off 
+        表明mysqld服务已经生效，在2、3、4、5运行级别随系统启动而自动启动，
+        以后可以使用service命令控制mysql的启动和停止
+        命令为:service mysqld start和service mysqld stop
+</code></pre></li>
+<li><p>3.启动mysqld</p>
+<pre><code>[root@localhost mysql]# service mysqld start
+</code></pre></li>
+<li><p>4.将mysql的bin目录加入PATH环境变量，编辑 ~/.bash_profile文件</p>
+<pre><code>[root@localhost mysql]# vim ~/.bash_profile
+添加如下信息：
+export PATH=$PATH:/usr/local/mysql/bin
+之后：
+[root@localhost mysql]# source ~/.bash_profile 
+</code></pre></li>
+<li><p>5.以root账户登录mysql,默认是没有密码的</p>
+<pre><code>[root@localhost mysql]# mysql -uroot -p
+</code></pre></li>
+<li><p>6.设置root账户密码为root</p>
+<pre><code>mysql&gt;use mysql;  
+mysql&gt;update user set password=password(&apos;root&apos;) where user=&apos;root&apos; and host=&apos;localhost&apos;;  
+mysql&gt;flush privileges;
+</code></pre></li>
+<li><p>7.设置远程主机登录，注意下面的your username 和 your password改成你需要设置的用户和密码</p>
+<pre><code>mysql&gt;GRANT ALL PRIVILEGES ON *.* TO &apos;your username&apos;@&apos;%&apos; IDENTIFIED BY &apos;your password&apos; WITH  
+GRANT OPTION; 
+</code></pre></li>
+<li><p>8.到此，在Centos 7上安装mysql5.6就完成了</p>
+</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/Centos7安装MySQL57/" data-id="cjgvkgq6c0003bkwv9fhrzc2g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/16/Centos7安装MySQL5.6/" data-id="cjgw8dpyb0008s4wvrthkwjxb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -683,7 +772,7 @@ print(result)               #result:[1, 3, 5, 7, 9]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/python之Map、Reduce、Filte/" data-id="cjgvkgqb70035bkwv6bvbp1jt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/16/python之Map、Reduce、Filte/" data-id="cjgw8dq320039s4wv2c2t85mj" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -756,7 +845,7 @@ PATH=$PATH:$SPARK_HOME/bin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/安装python3-6、spark/" data-id="cjgvkgqep005abkwvzt74r8sx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/16/安装python3-6、spark/" data-id="cjgw8dq5o004ys4wvv6y91vez" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -829,7 +918,7 @@ PATH=$PATH:$SPARK_HOME/bin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/使用hadoop里面的MapReduce/" data-id="cjgvkgqcj003ybkwvt3g5k240" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/16/使用hadoop里面的MapReduce/" data-id="cjgw8dq3y003ws4wv9g9dl56n" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -992,7 +1081,7 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjgvkgqev005ebkwvsbd9cw0g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjgw8dq6k005ks4wv9y5b713b" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -1152,7 +1241,7 @@ print([link.url for link in links])   #打印出html2中a标签中的3个链接
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/14/使用LinkExtractor提取链接/" data-id="cjgvkgqcg003wbkwvl7s124rf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/14/使用LinkExtractor提取链接/" data-id="cjgw8dq3y003us4wvcoiqshf1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1266,7 +1355,7 @@ bzip2查看：tar  -jcvf  filename.tar.bz2　
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjgvkgqal002qbkwvh5u4jyzm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjgw8dq2l002ws4wvih91x8t7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -1284,7 +1373,7 @@ bzip2查看：tar  -jcvf  filename.tar.bz2　
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1315,7 +1404,7 @@ bzip2查看：tar  -jcvf  filename.tar.bz2　
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
@@ -1325,7 +1414,7 @@ bzip2查看：tar  -jcvf  filename.tar.bz2　
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
@@ -1342,7 +1431,7 @@ bzip2查看：tar  -jcvf  filename.tar.bz2　
           </li>
         
           <li>
-            <a href="/2018/04/16/Centos7安装MySQL57/">Centos7安装MySQL57</a>
+            <a href="/2018/04/16/Centos7安装MySQL5.6/">Centos7安装MySQL5.6</a>
           </li>
         
           <li>
