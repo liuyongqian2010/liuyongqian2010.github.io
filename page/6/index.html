@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,135 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Python之IO操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/11/Python之IO操作/" class="article-date">
+  <time datetime="2018-03-11T00:28:56.000Z" itemprop="datePublished">2018-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/11/Python之IO操作/">Python之IO操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Python之IO操作</h5><p></p>
+<hr>
+<hr>
+<h6>简介</h6>
+
+<ul>
+<li>读写文件是最常见的IO操作。Python内置了读写文件的函数，用法和C是兼容的</li>
+<li>读写文件就是请求操作系统打开一个文件对象（通常称为文件描述符），然后通过操作系统提供的接口从这个文件对象中读取数据（读文件），或者把数据写入这个文件对象（写文件）</li>
+</ul>
+<h6>常用mode</h6>
+
+<pre><code>r:以读方式打开文件（默认）
+r+:打开一个文件用于读写,文件指针将会放在文件的开头
+rb+:以二进制格式打开一个文件用于读写。文件指针将会放在文件的开头
+w:以写方式打开文件，可向文件中写入信息。如果文件存在，会清空文件，再写入新内容
+w+:打开一个文件用于读写,如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件
+wb+:以二进制格式打开一个文件用于读写。如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件
+a:以追加模式打开文件，如果文件不存在就先创建
+a+:打开一个文件用于读写。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写
+ab+:以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写
+</code></pre><p></p><h6>read()</h6><p></p>
+<ul>
+<li><p>为了读取一个文件的内容，调用 f.read(size), 这将读取一定数目的数据, 然后作为字符串或字节对象返回。size 是一个可选的数字类型的参数。 当 size 被忽略了或者为负, 那么该文件的所有内容都将被读取并且返回</p>
+<pre><code>f=open(r&apos;E:\test1.txt&apos;,&apos;r&apos;,encoding=&apos;gbk&apos;)
+#以读的模式打开一个文件对象，使用内置的open()函数，传入文件名和标示符
+a=f.read()
+#调用read()方法可一次读取文件的全部内容，Python把内容读到内存，用一个str对象表示
+print(a)
+f.close()
+#调用close()方法关闭文件。文件使用完毕后须关闭，因为文件对象会占用操作系统的资源，且操作系统同一时间能打开的文件数量有限
+#由于文件读写时都有可能产生IOError，一旦出错，后面的f.close()就不会调用。所以为了保证无论是否出错都能正确地关闭文件,可使用with语句来自动帮我们调用close()方法
+#上述写法可用下边写法替换
+with open(r&apos;E:\test1.txt&apos;,&apos;r&apos;,encoding=&apos;gbk&apos;) as f:
+    print(f.read())
+</code></pre></li>
+</ul>
+<p></p><h6>readline()、readlines()</h6><p></p>
+<ul>
+<li>f.readline() 会从文件中读取单独的一行。换行符为 ‘\n’。f.readline() 如果返回一个空字符串, 说明已经已经读取到最后一行</li>
+<li><p>f.readlines() 将返回该文件中包含的所有行。如果设置可选参数 sizehint, 则读取指定长度的字节, 并且将这些字节按行分割</p>
+<pre><code>with open(r&apos;E:\test1.txt&apos;,&apos;r&apos;,encoding=&apos;gbk&apos;) as f:
+    a=f.readlines()
+    print(a)
+</code></pre></li>
+</ul>
+<p></p><h6>tell()</h6><p></p>
+<ul>
+<li>f.tell() 返回文件对象当前所处的位置, 它是从文件开头开始算起的字节数</li>
+</ul>
+<p></p><h6>seek()</h6><p></p>
+<ul>
+<li>如果要改变文件当前的位置, 可以使用 f.seek(offset, from_what) 函数<ul>
+<li>Offset变量表示要移动的字节数。From变量指定开始移动字节的参考位置。 如果from被设为0，这意味着将文件的开头作为移动字节的参考位置。如果设为1，则使用当前的位置作为参考位置。如果它被设为2，那么该文件的末尾将作为参考位置。例如：<ul>
+<li>seek(x,0) ： 从起始位置即文件首行首字符开始移动 x 个字符</li>
+<li>seek(x,1) ： 表示从当前位置往后移动x个字符</li>
+<li>seek(-x,2)： 表示从文件的结尾往前移动x个字符</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>write()</h6><p></p>
+<ul>
+<li><p>f.write(string) 将 string 写入到文件中, 然后返回写入的字符数</p>
+<pre><code>with open(r&apos;E:\test2.txt&apos;,&apos;w+&apos;) as f:
+    a=f.write(&apos;追加内容&apos;)
+    print(a)          #result:4
+    f.seek(0,0)       #将光标移到文件首
+    b=f.read()        #读取文件内容
+    print(b)
+</code></pre></li>
+</ul>
+<p></p><h6>file-like Object</h6><p></p>
+<ul>
+<li>像open()函数返回的这种有个read()方法的对象，在Python中统称为file-like Object。除了file外，还可以是内存的字节流，网络流，自定义流等等。file-like Object不要求从特定类继承，只要写个read()方法就行。StringIO就是在内存中创建的file-like Object，常用作临时缓冲</li>
+<li><p>二进制文件</p>
+<ul>
+<li><p>前面讲的默认都是读取文本文件，并且是UTF-8编码的文本文件。要读取二进制文件，比如图片、视频等等，用’rb’模式打开文件即可</p>
+<pre><code>f = open(&apos;E:\test.jpg&apos;, &apos;rb&apos;)
+f.read()
+f.close()
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/guqing/p/6084009.html" target="_blank" rel="noopener">Python—-文件的IO操作</a></em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjgvkgq8y001lbkwvs8vithiw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-XSS注入" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -183,7 +312,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjgduftvv0028s0wvttzisqit" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjgvkgq9p0024bkwvrb0nliny" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -259,7 +388,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjgduftvj001ys0wvz27ecw71" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjgvkgqa0002bbkwvupfswz5t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -399,7 +528,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjgduftzv004ls0wvw0ainc21" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjgvkgqe4004ubkwvd8hxlrt5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -550,7 +679,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjgduftyi003ts0wvb43dz3xb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjgvkgqc8003rbkwvbd3o6nlb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -649,7 +778,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjgduftwh002ks0wvf1s53xhf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjgvkgqba0037bkwvrfl8muot" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
@@ -692,7 +821,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/20180308002/" data-id="cjgduftrg0000s0wv59g3yebd" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/20180308002/" data-id="cjgvkgq5u0000bkwv54sf5t2y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -815,7 +944,7 @@ driver.quit()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjgduftut001js0wv4hwnqja6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjgvkgq8i001bbkwvhy0rlert" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -931,7 +1060,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjgdufu0r0055s0wvs1bu34b8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjgvkgqeh0054bkwvb1yxpa92" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -1032,141 +1161,10 @@ and kcm=&apos;QTP&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjgdufu2n0069s0wv61j6uiy0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjgvkgqgn006mbkwvzn7otr92" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-发送邮件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/05/发送邮件/" class="article-date">
-  <time datetime="2018-03-05T02:06:34.000Z" itemprop="datePublished">2018-03-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/05/发送邮件/">发送邮件</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>发送邮件</h5><p></p>
-<hr>
-<hr>
-<h6>python里的smtplib</h6>
-
-<ul>
-<li>SMTP(Simple Mail Transfer Protocol)<ul>
-<li>即简单邮件传输协议。它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP 协议属于TCP/IP协议簇，它帮助每台计算机在发送或中转信件时找到下一个目的地。SMTP 服务器就是遵循 SMTP 协议的发送邮件服务器</li>
-</ul>
-</li>
-<li>SMTP 认证<ul>
-<li>简单地说就是要求必须在提供了账户名和密码之后才可以登录 SMTP 服务器，这就使得那些垃圾邮件的散播者无可乘之机</li>
-</ul>
-</li>
-<li>smtplib模块<ul>
-<li>Python内置对SMTP的支持，可以发送纯文本邮件、HTML邮件以及带附件的邮件</li>
-<li>Python对SMTP支持有smtplib和email两个模块，email负责构造邮件，smtplib负责发送邮件</li>
-<li>使用前需要开启SMTP服务</li>
-</ul>
-</li>
-</ul>
-<h6>使用163邮箱来结合smtp模块发送邮件</h6>
-
-<pre><code>import smtplib                         #发送邮件模块
-from email.mime.text import MIMEText   #定义邮件内容
-from email.header import Header        #定义邮件标题
-
-smtpserver=&apos;smtp.163.com&apos;              #发送邮箱服务器
-user=&apos;www_liuyongqian@163.com&apos;         #发送邮箱用户的账号和授权密码
-password=&apos;*********&apos;
-
-sender=&apos;www_liuyongqian@163.com&apos;       #发送邮箱
-receive=&apos;272501447@qq.com&apos;             #接收邮箱
-
-content=&apos;&lt;html&gt;&lt;h1 style=&quot;color:red&quot;&gt;这个就是我，不一样的模样&lt;/h1&gt;&lt;/html&gt;&apos;
-subject=&apos;Web 自动化测试报告&apos;
-msg=MIMEText(content,&apos;html&apos;,&apos;utf-8&apos;)   #发送邮件内容
-#MIMEText三个参数：第一个为文本内容，第二个设置文本格式，第三个设置编码
-msg[&apos;Subject&apos;]=Header(subject,&apos;utf-8&apos;) #发送邮件标题
-msg[&apos;From&apos;]=sender                     #发送人
-msg[&apos;To&apos;]=receive                      #收件人
-
-smtp=smtplib.SMTP_SSL(smtpserver,465)  #SSL协议端口要是用465
-smtp.helo(smtpserver)                  #helo向服务器标识用户身份
-smtp.ehlo(smtpserver)                  #服务器返回结果确认
-smtp.login(user,password)              #登录邮箱服务器的账号和授权密码
-
-print(&apos;Start send eamil...&apos;)
-smtp.sendmail(sender,receive,msg.as_string())
-#sendmail的三个参数：邮件发送者地址，邮件接收地址可为列表，发送消息
-smtp.quit()
-print(&apos;Send email end...&apos;)
-</code></pre><h6>发送带附件的邮件</h6>
-
-<pre><code>import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart   #用于传输附件
-
-smtpserver=&apos;smtp.163.com&apos;
-user=&apos;www_liuyongqian@163.com&apos;
-password=&apos;39a39b39c&apos;
-
-sender=&apos;www_liuyongqian@163.com&apos;
-receives=[&apos;272501447@qq.com&apos;,&apos;liuyongqian51@163.com&apos;]
-
-subject=&apos;web自动化测试报告0308&apos;
-content=&apos;&lt;html&gt;&lt;p&gt;这个里面写测试结果内容！&lt;/p&gt;&lt;/html&gt;&apos;
-
-send_file=open(r&apos;E:\selenium prt\test.jpg&apos;,&apos;rb&apos;).read()  #构造附件内容
-att=MIMEText(send_file,&apos;base64&apos;,&apos;utf-8&apos;)
-att[&apos;Content-Type&apos;]=&apos;application/octet-stream&apos;
-att[&apos;Content-Disposition&apos;]=&apos;attachment;filename=&quot;test.jpg&quot;&apos;
-
-msgRoot=MIMEMultipart()                             #构建发送与接收信息
-msgRoot.attach(MIMEText(content,&apos;html&apos;,&apos;utf-8&apos;))
-msgRoot[&apos;Subject&apos;]=subject
-msgRoot[&apos;From&apos;]=sender
-msgRoot[&apos;To&apos;]=&apos;,&apos;.join(receives)
-msgRoot.attach(att)
-
-smtp=smtplib.SMTP_SSL(smtpserver,465)
-smtp.helo(smtpserver)
-smtp.ehlo(smtpserver)
-smtp.login(user,password)
-print(&apos;Start send email...&apos;)
-smtp.sendmail(sender,receives,msgRoot.as_string())
-smtp.quit()
-print(&apos;End send email...&apos;)
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjgduftzi004fs0wvzahg7ldx" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
 
     </footer>
   </div>
@@ -1181,7 +1179,7 @@ print(&apos;End send email...&apos;)
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/5/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/7/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1195,7 +1193,7 @@ print(&apos;End send email...&apos;)
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1205,16 +1203,16 @@ print(&apos;End send email...&apos;)
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.5px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.25px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 13.75px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14.44px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1222,9 +1220,13 @@ print(&apos;End send email...&apos;)
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/29/MongoDB的备份、还原、导入、导出/">MongoDB的备份、还原、导入、导出</a>
+          </li>
         
           <li>
             <a href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
@@ -1240,10 +1242,6 @@ print(&apos;End send email...&apos;)
         
           <li>
             <a href="/2018/04/16/python之Map、Reduce、Filte/">python之Map、Reduce、Filte</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
           </li>
         
       </ul>

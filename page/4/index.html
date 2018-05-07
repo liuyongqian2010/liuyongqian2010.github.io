@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,205 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-urllib模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/urllib模块/" class="article-date">
+  <time datetime="2018-03-21T23:42:42.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/22/urllib模块/">urllib模块</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>urllib模块</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>爬虫基本原理</h6><p></p>
+<ul>
+<li>爬虫是请求网站并提取数据的自动化程序</li>
+<li>爬虫的基本流程<ul>
+<li>1.发起请求<ul>
+<li>通过HTTP库向目标站点发起请求，即发送一个Request，请求可以包含额外的headers等信息，等待服务器响应</li>
+</ul>
+</li>
+<li>2.获取响应内容<ul>
+<li>如果服务器能正常响应，会得到一个Response，Response的内容便是所要获取的页面内容，类型可能有HTML，Json字符串，二进制数据（如图片视频）等类型</li>
+</ul>
+</li>
+<li>3.解析内容<ul>
+<li>得到的内容可能是HTML，可以用正则表达式、网页解析库进行解析。可能是Json，可以直接转为Json对象解析，可能是二进制数据，可以做保存或者进一步的处理</li>
+</ul>
+</li>
+<li>4.保存数据<ul>
+<li>保存形式多样，可以存为文本，也可以保存至数据库，或者保存特定格式的文件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>urllib模块</h6><p></p>
+<ul>
+<li>Urllib库是Python中的一个功能强大、用于操作URL，并在做爬虫的时候经常要用到的库</li>
+<li><p>urllib.request.urlopen(url, data=None,[timeout])</p>
+<ul>
+<li>可以获取页面，获取页面内容的数据格式为bytes类型，需要进行decode()解码，转换成str类型</li>
+<li>url : 需要打开的网址</li>
+<li>data : 字典形式，默认为None时是GET方法，data不为空时, * urlopen()的提交方式为POST，注意POST提交时，data需要转换为字节</li>
+<li>timeout : 设置网站访问的超时时间</li>
+<li><p>urlopen返回对象提供的方法：</p>
+<ul>
+<li>read(),readline(): 对HTTPResponse类型数据进行操作</li>
+<li>info() : 返回HTTPMessage对象，表示远程服务器返回的头信息</li>
+<li>getcode() : 返回HTTP状态码</li>
+<li><p>geturl(): 返回请求的url</p>
+<pre><code>import urllib.request
+file=urllib.request.urlopen(&apos;http://www.baidu.com&apos;)
+data=file.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(data)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>urllib.request.Request(url,data=None,headers={},method=None)</p>
+<ul>
+<li>有些网页进行了一些反爬虫的设置,我们可以设置一些Headers信息（User-Agent），模拟成浏览器去访问这些网站</li>
+<li><p>该函数第一个参数传入url，第二个参数可以传入数据，默认是传入0数据，第三个参数是传入头部，该参数也是有默认值的，默认是不传任何头部；需要创建一个dict，将头部信息以键值对的形式存入到dict对象中，然后将该dict对象传入该函数第三个参数</p>
+<pre><code>import urllib.request
+url=&apos;http://www.baidu.com&apos;
+header={
+    &apos;User-Agent&apos;:r&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&apos;,
+    &apos;Connection&apos;: &apos;keep-alive&apos;
+}
+request=urllib.request.Request(url,headers=header)
+file=urllib.request.urlopen(request,timeout=10)
+data=file.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(data)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+<li><p>urllib.parse.urlencode(query, doseq=False,safe=’’,encoding=None,errors=None)</p>
+<ul>
+<li>主要作用就是将url附上要提交的数据. 对data数据进行编码</li>
+<li><p>POST的数据必须是bytes或者iterable of bytes，不能是str，因此需要encode编码</p>
+<pre><code>示例一下如何使用爬虫通过POST表单传递信息
+测试网址为： http://www.iqianyue.com/mypost 
+from urllib import request,parse
+url=&apos;http://www.iqianyue.com/mypost&apos;
+header={
+    &apos;User-Agent&apos;:r&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&apos;,
+    &apos;Connection&apos;: &apos;keep-alive&apos;
+}
+data={&apos;name&apos;:&apos;liuyongqian&apos;,&apos;pass&apos;:&apos;123456&apos;}
+postdata=parse.urlencode(data).encode(&apos;utf-8&apos;)  #进行编码
+req=request.Request(url,postdata,headers=header)
+file=request.urlopen(req,timeout=10)
+res=file.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(res)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+<li><p>request.ProxyHandler(proxies=None)</p>
+<ul>
+<li><p>当需要抓取的网站设置了访问限制，这时就需要用到代理来抓取数据；在对方的网站上，显示的不是我们真实的IP地址，而是代理服务器的IP地址</p>
+<pre><code>from urllib import request
+proxy_hander=request.ProxyHandler({&apos;http&apos;:&apos;5.22.195.215:80&apos;})
+opener=request.build_opener(proxy_hander)
+res=opener.open(&apos;http://www.baidu.com&apos;)
+data=res.read()
+with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
+    f.write(data)
+    f.close()
+</code></pre></li>
+</ul>
+</li>
+<li><p>Cookie的使用</p>
+<ul>
+<li>进行Cookie处理的一种常用思路如下：<ul>
+<li>导入Cookie处理模块http.cookiejar</li>
+<li>使用http.cookiejar.CookieJar()创建CookieJar对象</li>
+<li>使用HTTPCookieProcessor创建cookie处理器，并以其为参数构建opener对象</li>
+<li>创建全局默认的opener对象</li>
+</ul>
+</li>
+<li><p>拿ChinaUnix这个论坛网址就行实战测试一下</p>
+<pre><code>from urllib import request,parse,error
+import http
+from http import cookiejar
+
+url=&apos;http://bbs.chinaunix.net/member.php?mod=logging&amp;action=login&amp;loginsubmit=yes&amp;loginhash=LpozE&apos;
+data={
+    &apos;username&apos;:&apos;myspiders&apos;,
+    &apos;password&apos;:&apos;39a39b39c39#&apos;
+}
+postdata=parse.urlencode(data).encode(&apos;utf-8&apos;)
+header={
+    &apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&apos;,
+    &apos;Referer&apos;:&apos;http://bbs.chinaunix.net/member.php?mod=logging&amp;action=login&amp;logsubmit=yes&apos;
+}
+req=request.Request(url,postdata,headers=header)
+cjar=http.cookiejar.CookieJar()  #创建cookiejar对象
+cookie=request.HTTPCookieProcessor(cjar)  #创建cookie处理器，并以其为参数构建opener对象
+opener=request.build_opener(cookie)
+request.install_opener(opener)  #将opener安装为全局
+try:
+    res=request.urlopen(req)
+except error.HTTPError as e:
+    print(e.code)
+    print(e.reason)
+with open(&apos;./test1.html&apos;,&apos;wb&apos;) as f:  #保存登录后的页面到文件
+    f.write(res.read())
+    f.close()
+url2=&apos;http://bbs.chinaunix.net/forum-326-1.html&apos;  #再次访问该网站的其他的页面
+res2=request.urlopen(url2)
+with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
+    f2.write(res2.read())
+    f2.close()
+</code></pre></li>
+<li><p>参考<a href="http://blog.csdn.net/fengxinlinux/article/details/77340666" target="_blank" rel="noopener"> Python3爬虫代理服务器与cookie的使用</a></p>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cjgvkgqc4003pbkwvbepn2jfe" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-Django基本概念" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -160,7 +359,7 @@ b/s--&gt;browser/server 浏览器与服务器交互
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjgduftt0000gs0wvg7hkvl6e" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjgvkgq7d000kbkwvmlqx8zg7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -343,7 +542,7 @@ db.myinfo.find({$or:[{&apos;name&apos;:&apos;liuyongqian&apos;},{&apos;age&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjgduftus001hs0wv88ass6rh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjgvkgq92001obkwv47t5hdxz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -465,7 +664,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjgduftvc001vs0wv9qczzr4y" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjgvkgqah002obkwvg5ixyjhl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -539,7 +738,7 @@ zlexcount mykey [one [three #result:1
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjgduftw0002as0wvustya3vi" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjgvkgq9t0026bkwvj94qezwu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -638,7 +837,7 @@ smembers key4      #result:a b c
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjgduftvp0023s0wv75lph2dw" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjgvkgq9l0021bkwvklqf2tc9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -742,7 +941,7 @@ lindex mylist 1        #列表中下标为指定索引值的元素
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjgduftuj001cs0wvd1sfgjls" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjgvkgq9i001zbkwvw9sopu56" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -842,7 +1041,7 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjgduftu00010s0wvyc29zeb9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjgvkgq7x000wbkwvprxlx40x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -977,7 +1176,7 @@ get myname          #result:liuyongqian
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjgduftvs0025s0wvh3m6jt7j" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjgvkgq9w0029bkwv0lcf23pp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -1135,86 +1334,10 @@ port=27017   #端口号 默认为27017
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjgduftun001es0wv52kozp18" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjgvkgq98001sbkwvs6c9njaz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-HTTP协议浅析" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/14/HTTP协议浅析/" class="article-date">
-  <time datetime="2018-03-14T08:19:37.000Z" itemprop="datePublished">2018-03-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/HTTP协议浅析/">HTTP协议浅析</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>HTTP协议浅析</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>http概述</h6><br>Q:http是干嘛的？<br><br><i>A:http是数据传输协议（超文本传输协议），用来沟通客户端和服务器的！</i><br><br>Q:怎么理解URI以及它的子集？<br><br><i>A:首先URI从其概念来说是统一资源标识符，它的作用就是在网络上唯一确定一个资源，就好比，在中国，身份证能唯一确定一个人一样！知道身份证号，就一定能确定一个人姓甚名谁一样！它有两个子集：URL(统一资源定位符)和URN(统一资源名)，首先不特别声明，我们所说的URI就是指URL，URL是跟资源其在网络上的位置有关！而URN是指资源跟其名字有关，URN是未来的趋势，不过貌似具体实施现在还在商讨中！所以短时间之内URN难以取代URL！</i><br><br>Q:什么是事务？<br><br><i>A:说白了事务就是“一次http链接（不包括tcp/ip连接，只包括一次http报文发送与接收）”的整个过程，由请求命令和响应结果组成！中间数据格式是http报文。我们平常打开一个网站，里面包括很多事务！如：请求网页文档、请求某个logo图片及请求某个视频等！</i><br><br>Q:方法指什么？<br><br><i>A:方法就是客户端向服务器发起的请求命令！常见方法有：get、post、delete、put、head！</i><br><br>Q:简单介绍一些报文！<br><br><i>A:首先报文是http协议一种纯文本的数据格式，分为请求报文和响应报文，两种报文都具有类似的结构，分别由三个部分构成：起始行、首部、主体，起始行描述报文干了什么！首部描述报文传输的具体细节！主体描述传输的实际内容！</i><br><br>Q:什么是TCP/IP？跟HTTP有什么关系？<br><br><i>A:tcp/ip是全世界的计算机和网络设备常用的层次化分组交换网络协议集！简单的说，http协议是一个应用层协议，位于tcp/ip协议的上一层，tcp/ip协议的主要作用就是过滤掉每个计算机的差异性，隐藏相关弱点，使得对于http协议来说提供的都是“相同的”接口！</i><br><br>Q:http协议有哪些版本？<br><br>A:<p></p>
-<pre><code>* http/0.9，这个版本有严重设计权限
-* http/1.0，广泛使用
-* http/1.0+ 非官方的http/1.0的扩展版本
-* http/1.1 目前正在使用的版本，修复的相关设计缺陷，增加的相关特性
-* http-NG 将来使用与否正在商讨中
-</code></pre><p></p><h6>URL</h6><p></p>
-<ul>
-<li>URI的分类<ul>
-<li>URI（统一资源标识符）由URL（统一资源定位符）和URN（统一资源名）两个子集构成</li>
-<li>URL是从资源的位置来定义一个资源的，比如在“中国三东的一只小狗”和在“中国广东的一只小狗”就分别定义了两只不同的狗</li>
-<li>URN是从资源的名字来定义的，比如小明和小李就分别定义了两个人</li>
-<li>目前的网络架构来说，大部分都是URL。URL的缺点就是如果资源的位置发生了改变，那么资源也就找不到了，而URN正是解决这个问题的，因为URN不受位置的限制，它只受名字的管理，因为对于URN来说，一个资源的名字是唯一的，所以无论资源移动到什么地方，都能通过名字定位到资源</li>
-<li>从某种意义上来说，URN是URI的未来趋势，但是URN的实现需要一个中间架构来满足这种位置到名字的映射，所以要完成从URL到URN的过度，显然是一个工程量的过程</li>
-</ul>
-</li>
-<li><p>URL的语法</p>
-<pre><code>&lt;scheme&gt;://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;:&lt;port&gt;/&lt;path&gt;;&lt;params&gt;?&lt;query&gt;#&lt;frag&gt;
-
-scheme:方法描述了请求资源时用了什么协议，用“:”与url其它部分隔开；
-user:用户名描述了访问是带的用户名；
-password:密码描述了用户名后面可能跟的密码，用“:”跟用户名隔开；
-host:主机描述了网站主机名或ip地址，如果前面有用户名和密码，用@分开；
-post:服务器当前正在监听的端口，http默认为80，https默认为443;
-path:路劲描述了资源在服务器上的位置，用‘/’跟前面部分隔开；
-params:参数描述了请求需要附加的参数，用“;”与其他部分隔开；
-query:查询是用来激活服务器程序去执行某些操作，比如查询数据库等，用“?”与其余部分隔开；
-frag:片段只在客户端使用，不发送到服务器端；
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjgduftts000vs0wv46crcyno" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
 
     </footer>
   </div>
@@ -1229,7 +1352,7 @@ frag:片段只在客户端使用，不发送到服务器端；
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; zurück</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1243,7 +1366,7 @@ frag:片段只在客户端使用，不发送到服务器端；
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1253,16 +1376,16 @@ frag:片段只在客户端使用，不发送到服务器端；
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 12.5px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.25px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 11.25px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 13.75px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14.44px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1270,9 +1393,13 @@ frag:片段只在客户端使用，不发送到服务器端；
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/29/MongoDB的备份、还原、导入、导出/">MongoDB的备份、还原、导入、导出</a>
+          </li>
         
           <li>
             <a href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
@@ -1288,10 +1415,6 @@ frag:片段只在客户端使用，不发送到服务器端；
         
           <li>
             <a href="/2018/04/16/python之Map、Reduce、Filte/">python之Map、Reduce、Filte</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
           </li>
         
       </ul>

@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives: 2017 | LiuYongQian</title>
+  <title>MongoDB的备份、还原、导入、导出 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="永远相信美好的事情将要发生！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LiuYongQian">
-<meta property="og:url" content="http://yoursite.com/archives/2017/page/2/index.html">
+  <meta name="description" content="MongoDB的备份、还原、导入、导出   综述  进行整个库的导出导入时使用mongodump和mongorestore，这一对组合操作的数据是BSON格式，进行大量dump和restore时效率较高 进行单个集合导出导入时使用mongoexport和mongoimport，这一对组合操作的数据是JSON格式，可读性较高  备份mongodump  mongodump是一个用于导出二进制数据库内">
+<meta name="keywords" content="MongoDB数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB的备份、还原、导入、导出">
+<meta property="og:url" content="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="永远相信美好的事情将要发生！">
+<meta property="og:description" content="MongoDB的备份、还原、导入、导出   综述  进行整个库的导出导入时使用mongodump和mongorestore，这一对组合操作的数据是BSON格式，进行大量dump和restore时效率较高 进行单个集合导出导入时使用mongoexport和mongoimport，这一对组合操作的数据是JSON格式，可读性较高  备份mongodump  mongodump是一个用于导出二进制数据库内">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-29T07:51:23.186Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LiuYongQian">
-<meta name="twitter:description" content="永远相信美好的事情将要发生！">
+<meta name="twitter:title" content="MongoDB的备份、还原、导入、导出">
+<meta name="twitter:description" content="MongoDB的备份、还原、导入、导出   综述  进行整个库的导出导入时使用mongodump和mongorestore，这一对组合操作的数据是BSON格式，进行大量dump和restore时效率较高 进行单个集合导出导入时使用mongoexport和mongoimport，这一对组合操作的数据是JSON格式，可读性较高  备份mongodump  mongodump是一个用于导出二进制数据库内">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -68,45 +70,115 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/12/14/hello-world/" class="archive-article-date">
-  <time datetime="2017-12-14T15:15:06.308Z" itemprop="datePublished">12-14</time>
+        <section id="main"><article id="post-MongoDB的备份、还原、导入、导出" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/29/MongoDB的备份、还原、导入、导出/" class="article-date">
+  <time datetime="2018-04-29T04:10:35.000Z" itemprop="datePublished">2018-04-29</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/14/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      MongoDB的备份、还原、导入、导出
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-
-  <nav id="page-nav">
+      </header>
     
-    <a class="extend prev" rel="prev" href="/archives/2017/">&laquo; Prev</a><a class="page-number" href="/archives/2017/">1</a><span class="page-number current">2</span>
-  </nav>
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>MongoDB的备份、还原、导入、导出</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>综述</h6><p></p>
+<ul>
+<li>进行整个库的导出导入时使用mongodump和mongorestore，这一对组合操作的数据是BSON格式，进行大量dump和restore时效率较高</li>
+<li>进行单个集合导出导入时使用mongoexport和mongoimport，这一对组合操作的数据是JSON格式，可读性较高</li>
+</ul>
+<p></p><h6>备份mongodump</h6><p></p>
+<ul>
+<li>mongodump是一个用于导出二进制数据库内容的实用工具，它导出的bson文档中只会包含着集合文档等信息，不包括索引信息（索引信息会单独导出），所以还原后，索引必须重建（这个不用担心，使用mongorestore会自动重建mongodump生成的索引信息）</li>
+<li><p>常用参数</p>
+<pre><code>-h localhost:27017  #指定mongodb要连接的主机名及端口号，默认值为：localhost:27017 
+-d &lt;database&gt;    #指定要备份的数据库，如果不指定，默认所有数据库
+-c &lt;collection&gt;  #指定要备份的集合
+-o &lt;path&gt;        #指定导出数据的目录路径
+------------------------------------------
+示例：将mytest数据库中的user集合导出到E:\test目录下
+&gt;&gt;&gt;mongodump -d mytest -c user -o E:\test
+</code></pre></li>
+</ul>
+<p></p><h6>还原mongorestore</h6><p></p>
+<ul>
+<li>mongorestore用来导入数据到MongoDB实例中，3.0.0版本以上支持通过标准输入流来导入数据</li>
+<li><p>常用参数</p>
+<pre><code>-d &lt;database&gt; #指定要还原的数据库
+-c &lt;collection&gt;     #指定要还原的集合
+--drop     #还原集合前会先从目标数据库中删除集合，不会删除不在备份中的集合
+&lt;path&gt;    #要还原的数据文件路径，该参数必须是mongodbrestore命令的最后一个参数
+------------------------------------------------
+示例：通过user.bson文件还原mytest数据库中的user集合，并在还原之前进行删除
+&gt;&gt;&gt;mongorestore --drop -d mytest -c user E:\test\user.bson
+</code></pre></li>
+</ul>
+<p></p><h6>导出mongoexport</h6><p></p>
+<ul>
+<li><p>常用参数</p>
+<pre><code>-d &lt;database&gt;      #指定要在哪个数据库上运行命令
+-c &lt;collection&gt;    #指定要导出的集合
+-f &lt;field1,field2...&gt;  #指定导出时只导出一个或者多个字段，导出多个时，需要用逗号分隔；当字段中有空格时，需要用英文引号括起来
+-o &lt;path-file&gt;      #指定要导出的文件路径（含文件名）
+-------------------------------------------------
+示例：导出mytest数据库中的user集合到user.json文件中
+&gt;&gt;&gt;mongoexport -d mytest -c user -o E:\test\user.json
+</code></pre></li>
+</ul>
+<p></p><h6>导入mongoimport</h6><p></p>
+<ul>
+<li><p>常用参数</p>
+<pre><code>--type &lt;json|csv|tsv&gt;  #要导入的文件类型，另外支持tsv
+--headerline           #使用第一行作为字段名称
+--mode &lt;insert|upsert|merge&gt;   #指定导入过程中，如何应对数据库文档与导入文件中的文档匹配的情况，默认会使用_id字段对比；&lt;插入|替换数据库中的文档|合并&gt;
+------------------------------------------
+示例：从user.json文件导入到mytest数据库中的user集合，并在之前进行删除
+&gt;&gt;&gt;mongoimport --drop -d mytest -c user --file E:\test\user.json
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/" data-id="cjgvkgq95001qbkwvbii59ruw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/04/24/大数据的一些函数-02/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">大数据的一些函数-02</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
 
 </section>
         
