@@ -70,6 +70,355 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Git入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/11/Git入门/" class="article-date">
+  <time datetime="2018-03-11T10:10:16.000Z" itemprop="datePublished">2018-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/11/Git入门/">Git入门</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Git入门</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>git是一款免费、开源的分布式版本控制系统，用于敏捷高效的处理任何或大或小的项目<br>github是一个面向开源及私有软件项目的托管平台，因为只支持git作为唯一的版本库格式进行托管，故名github</li>
+<li>Git和SVN的对比：<ul>
+<li>1）Git是分布式的，SVN是集中式</li>
+<li>2）Git可离线完成大部分操作，SVN则必须与中央服务器进行网络交互</li>
+<li>3）Git有着优雅的分支和合并功能</li>
+<li>4）Git有着更强的撤销修改和修改版本历史的能力</li>
+<li>5）Git速度更快，效率更好</li>
+</ul>
+</li>
+<li>git的三个区<ul>
+<li>工作区：编辑代码的地方</li>
+<li>暂存区：工作区与历史提交中间的缓存，代表的是要提交的工作状态</li>
+<li>历史仓库：commit指向的</li>
+</ul>
+</li>
+<li>Git管理的是修改，而不是文件</li>
+</ul>
+<p></p><h6>基本配置</h6><p></p>
+<ul>
+<li><p>目前git for window的版本是2.16.2</p>
+<pre><code>which -a git 查看git的安装位置
+git version     查看git的版本
+
+添加user.name和user.email
+git config --global user.name fyuan925
+git config --global user.email fyuan925@gmail.com
+
+添加一个新的user.name
+git config --global --add user.name kgc
+
+得到属性的值
+git config user.name
+git config --get user.name
+
+得到全局所有属性的值
+git config --list --global
+
+删除一个属性，并且是指定属性名进行删除
+git config --global --unset user.name kgc
+
+当只有一个属性值的时候，可以在删除时不指定值
+git config --global --unset user.name
+</code></pre></li>
+<li><p>关联github</p>
+<ul>
+<li><p>本地生成SSH KEYS</p>
+<pre><code>先生成ssh，命令如下：
+ssh-keygen -t rsa -C &apos;kgc@gmail.com&apos;
+进入ssh目录后将该目录下文件id_rsa.pub中的内容拷贝
+</code></pre></li>
+<li><p>在github上设置SSH公钥</p>
+<pre><code>进入github主页，点击右上角的setting，选择SSH and GPG keys;
+新建一个ssh key，将公钥粘贴后点击Add SSH key
+输入GitHub的密码进行验证，点击Confirm password
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>本地库连接远程库</h6><p></p>
+<ul>
+<li><p>第一种方式：先有本地仓库，后有远程仓库</p>
+<pre><code>在本地仓库中执行以下命令，同步信息
+git remote add origin git@github.com:fangyuan925/kgc_git.git
+git push -u origin master
+第一次使用-u，后面不再使用
+</code></pre></li>
+<li><p>第二种方式：先有远程仓库，再clone到本地（最常见的，一般都是先在GitHub上创建仓库，可以选择初始化选项，然后开发人员再clone到本地）</p>
+<pre><code>git clone xxxxxx
+git push -u origin master
+第一次使用-u，后面不再使用
+</code></pre></li>
+</ul>
+<p></p><h6>基本命令</h6><p></p>
+<ul>
+<li><p>在本地新建仓库</p>
+<pre><code>git init      新建文件夹后用此命令初始化仓库
+vi readme.txt 添加一个readme.txt
+git status  查看当前版本库的状态
+git add filename    使用git add命令告诉git，把该文件添加到仓库
+git commit -m &apos;comment&apos;  使用git commit命令告诉git，把文件提交到仓库,可设置注释内容
+
+git add     可以反复添加多个
+git diff filename     查看修改的内容
+git log      可以查看所有的提交历史记录
+git log filename     仅查看指定文件名的提交历史记录
+git log --pretty=oneline filename
+d085ee8434392d2cf88b48592f29fbeefb0818f7  此为commit id（版本号） SHA-1 Hash计算出来一个16进制的值
+</code></pre></li>
+<li><p>版本回退</p>
+<pre><code>前提：知道当前版本是哪个， HEAD表示当前版本
+回退到上一个版本： HEAD^   一个^就表示前一个版本， 如果N个前版本可以用HEAD~N
+
+回退命令：git reset --hard HEAD^
+回退之后你后悔了又想回到后退之前的那个版本： git reset --hard xxxxxxxxx
+xxxxxxxxx  前面可以通过 git log filename
+
+3commit   &lt;== HEAD
+2commit
+1commit
+
+执行了git reset --hard HEAD^之后
+3commit   
+2commit  &lt;== HEAD
+1commit
+
+git reset：版本穿梭， 可以使用git log查看提交历史，以便确定回退/穿梭到哪个版本     
+git reflog：查看命令历史，以便确定要回到未来/过去的哪个版本
+</code></pre></li>
+<li><p>撤销修改</p>
+<pre><code>没有提交到暂存区时，其实就在工作区： git checkout – filename
+已经提交到暂存区了： 分两步：1）git reset HEAD file 2）git checkout -- filename
+</code></pre></li>
+<li><p>删除文件</p>
+<pre><code>手误删除，如何恢复： git checkout -- filename
+真删除版本库的文件： 
+    1) git rm filename
+    2) git commit -m &apos;xxx&apos;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjkf6d2fc000o5cwvmv9tcnmx" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-python之Excel操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/11/python之Excel操作/" class="article-date">
+  <time datetime="2018-03-11T10:09:52.000Z" itemprop="datePublished">2018-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/11/python之Excel操作/">python之Excel操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>python之Excel操作</h5><p></p>
+<hr>
+<hr>
+<h6>使用xlwt module将数据写入Excel表格</h6>
+
+<pre><code>import xlwt
+book=xlwt.Workbook(encoding=&apos;utf-8&apos;,style_compression=0)
+#创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩
+sheet1=book.add_sheet(&apos;test&apos;,cell_overwrite_ok=True)
+#创建一个sheet对象，一个sheet对象对应Excel文件中的一张表格
+#add_sheet的第一个参数是这张表的名字，第二个参数表示覆盖单元格
+sheet1.write(0,0,&apos;EnglishName&apos;)
+#其中第一个参数表示行，第二个参数表示列，第三个参数表示插入的数据
+sheet1.write(1,0,&apos;Liuyongqian&apos;)
+sheet1.write(0,1,&apos;中文名字&apos;)
+sheet1.write(1,1,&apos;刘永前&apos;)
+book.save(r&apos;e:\test1.xls&apos;)
+#将以上操作保存到指定excel文件中
+</code></pre><h6>使用xlrd module从Excel读取数据</h6>
+
+<pre><code>import xlrd
+file=r&apos;E:\test1.xls&apos;   #打开指定路径下的xls文件
+book=xlrd.open_workbook(file)  #得到excel文件的book对象，实例化对象
+sheet0=book.sheet_by_index(0)  #通过sheet索引获得sheet对象
+sheet_name=book.sheet_names()[0] #获得指定索引的sheet表名字
+&apos;&apos;&apos;
+sheet1=book.sheet_by_name(sheet_name) #通过sheet名字来获取，也可直接指定名字
+&apos;&apos;&apos;
+nrows=sheet0.nrows       #获取总行数
+ncols=sheet0.ncols       #获取总列数
+row_data=sheet0.row_values(1)  #获取第2行的数据列表
+col_data=sheet0.col_values(1)  #获取第2列的数据列表
+cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjkf6d2jm003c5cwv7vkodkzx" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Python之OS操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/11/Python之OS操作/" class="article-date">
+  <time datetime="2018-03-11T00:35:21.000Z" itemprop="datePublished">2018-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/11/Python之OS操作/">Python之OS操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Python之OS操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>os 模块在运维工作中是很常用的一个模块。通过os模块调用系统命令</li>
+<li>os模块可以跨平台使用</li>
+<li>在 import os的时候，建议使用import os而非from os import *。这样可以避免os.open()不会覆盖内置函数open()</li>
+</ul>
+<p></p><h6>模块详解</h6><p></p>
+<ul>
+<li><p>os.name()判断系统类型</p>
+<pre><code>import os
+print(os.name)      #linux和Unix系统会返回`posix`;windows 系统会返回`nt`
+</code></pre></li>
+<li><p>os.system()执行系统命令的模块，返回命令执行的状态码，开启一个子shell执行命令</p>
+<pre><code>cmd=&apos;ipconfig&apos;
+retval=os.system(cmd)
+print(retval)          #result: 0,表示命令执行成功，否则为失败
+</code></pre></li>
+<li><p>os.listdir(path)打印指定目录的文件,返回一个列表</p>
+<pre><code>a=os.listdir(&apos;E:\eclipse&apos;)
+print(a)
+</code></pre></li>
+<li><p>os.chdir(new_path)改变当前路径</p>
+<pre><code>print(os.getcwd())          #result:E:\selenium prt\0311
+os.chdir(&apos;E:\\selenium prt\\0312&apos;)
+print(os.getcwd())          #result:E:\selenium prt\0312
+</code></pre></li>
+<li><p>os.getcwd()返回当前绝对路径,返回类型为str</p>
+<pre><code>a=os.getcwd()
+print(a)
+</code></pre></li>
+<li><p>os.mkdir(path[,mode=0755])默认权限是0755，创建目录</p>
+<pre><code>os.mkdir(r&apos;E:\selenium prt\0311\0002&apos;)
+print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
+</code></pre></li>
+<li><p>os.rmdir(path)删除目录，只能删除目录</p>
+<pre><code>os.rmdir(r&apos;E:\selenium prt\0311\0002&apos;)
+print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
+</code></pre></li>
+<li><p>创建名为text的txt文件</p>
+<pre><code>def txt(name,text):
+    a=name+&apos;.txt&apos;
+    file=open(a,&apos;w&apos;)
+    file.write(text)
+    file.close()
+txt(&apos;test&apos;,&apos;Hello，2018！&apos;)
+</code></pre></li>
+<li><p>os.remove(path)删除文件，只能删除文件</p>
+<pre><code>os.remove(r&apos;E:\selenium prt\0311\test.txt&apos;)
+print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
+</code></pre></li>
+<li><p>os.path该模块主要针对路径的操作</p>
+<ul>
+<li>os.path.abspath(‘.’)返回当前绝对路径</li>
+<li>os.path.basename(r’E:\selenium prt\0311’)返回当前文件夹名</li>
+<li>os.path.dirname(r’E:\selenium prt\0311’)返回文件路径，不包含当前文件夹名</li>
+<li>os.path.exists(r’E:\selenium prt\0311’)判断路径是否存在，存在返回True，不存在返回False</li>
+<li>os.path.join(path,name):连接目录与文件名或目录</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="cjkf6d2h4001w5cwvv2xy1uwr" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-Python之IO操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/11/Python之IO操作/" class="article-date">
@@ -185,7 +534,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjgw8dq0w001ts4wvcnuj9a57" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjkf6d2h1001u5cwvdra697sw" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -312,7 +661,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjgw8dq1c0025s4wvrzf4yj2u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjkf6d2hr00295cwvgeg97zb8" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -369,7 +718,7 @@ f.close()
 <p></p><h6>SQL注入一般会出现在哪些地方</h6><p></p>
 <ul>
 <li>含有输入数据表单的页面（登录界面、查询界面、反馈界面等），即使是hidden的表单也有可能存在这个问题</li>
-<li>含有用户信息、ID等的URL（类似于<a href="http://XXX/index.asp?ID=155），可以操作ID后的参数数据" target="_blank" rel="noopener">http://XXX/index.asp?ID=155），可以操作ID后的参数数据</a></li>
+<li>含有用户信息、ID等的URL（类似于<code>http://XXX/index.asp?ID=155</code>），可以操作ID后的参数数据</li>
 </ul>
 <p></p><h6>SQL注入的防范措施</h6><p></p>
 <ul>
@@ -388,7 +737,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjgw8dq0w001ys4wvghhcdxcx" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjkf6d2iu002v5cwv91dxkaxg" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -528,7 +877,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjgw8dq59004ks4wv2w7g29o2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjkf6d2m9004s5cwvni7ayxu0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -679,7 +1028,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjgw8dq3y003ys4wvta8azbtx" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjkf6d2kt00425cwvt0a3awjt" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -778,7 +1127,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjgw8dq1s002ms4wvq2z3gjgs" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjkf6d2ih002o5cwv0y19ee2b" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
@@ -863,350 +1212,10 @@ chown 命令会更改由符号链接引用的目录的用户标识（和组标�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="cjgw8dq1s002ds4wv8j6wmsz8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="cjkf6d2ia002j5cwvrz31z0ah" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Page Object" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/08/Page Object/" class="article-date">
-  <time datetime="2018-03-08T03:30:46.000Z" itemprop="datePublished">2018-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/Page Object/">Page Object</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Page Object</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>By元素定位</h6><p></p>
-<ul>
-<li><p>已经将By方法封装</p>
-<pre><code>from selenium import webdriver
-from selenium.webdriver.common.by import By
-
-driver=webdriver.Firefox()
-driver.get(&apos;http://www.baidu.com&apos;)
-driver.find_element(By.ID,&apos;kw&apos;).clear()
-driver.find_element(By.NAME,&apos;wd&apos;).send_keys(&apos;selenium&apos;)
-driver.find_element(By.CLASS_NAME,&apos;s_ip&apos;).send_keys(&apos;study&apos;)
-driver.find_element(By.CSS_SELECTOR,&apos;#kw&apos;).send_keys(&apos;Python&apos;)
-driver.find_element(By.TAG_NAME,&apos;input&apos;)....
-driver.find_element(By.LINK_TEXT,&apos;退出&apos;)...
-driver.find_element(By.PARTIAL_LINK_TEXT,&apos;退&apos;)...
-driver.find_element(By.XPATH,&apos;.//[@id=&quot;Title&quot;]&apos;)...
-</code></pre></li>
-</ul>
-<p></p><h6>Page Object</h6><p></p>
-<ul>
-<li><p>Page Object是Selenium自动化测试项目开发实践的最佳设计模式之一，通过对界面元素和功能模块的封装减少冗余代码，同时在后期维护中，若元素定位或功能模块发生变化，只需要调整页面元素或功能模块封装的代码，提高测试用例的可维护性</p>
-<pre><code>#basepage.py
-from time import sleep
-class Page:                         #页面基础类
-    def __init__(self,driver):      #初始化
-        self.driver=driver
-        self.base_url=&apos;http://localhost&apos;
-        self.timeout=10
-    def _open(self,url):            #打开不同的子页面
-        url_=self.base_url+url
-        print(&apos;Test page is %s&apos;%url_)
-        self.driver.maximize_window()
-        self.driver.get(url_)
-        sleep(3)
-        assert self.driver.current_url==url_,&apos;Did not land on %s&apos;%url_
-    def open(self):
-        self._open(self.url)
-    def find_element(self,*location): #元素定位方法封装
-        return self.driver.find_element(*location)
-
-#loginpage.py
-from basepage import *
-from selenium.webdriver.common.by import By
-class LoginPage(Page):
-    &apos;&apos;&apos;首页登录页面&apos;&apos;&apos;
-    url=&apos;/&apos;
-    username_loc=(By.NAME,&apos;username&apos;)         #定位器
-    password_loc=(By.NAME,&apos;password&apos;)
-    submit_loc=(By.NAME,&apos;Submit&apos;)
-    def type_username(self,username):         #用户名输入框元素
-        self.find_element(*self.username_loc).clear()
-        self.find_element(*self.username_loc).send_keys(username)
-    def type_password(self,password):         #密码输入框元素
-        self.find_element(*self.password_loc).send_keys(password)
-    def type_submit(self):                    #登录按钮元素
-        self.find_element(*self.submit_loc).click()
-
-def test_user_login(driver,username,password):#登录功能模块封装
-    &apos;&apos;&apos;测试用户名密码是否可以登录&apos;&apos;&apos;
-    login_page=LoginPage(driver)
-    login_page.open()
-    login_page.type_username(username)
-    login_page.type_password(password)
-    login_page.type_submit()
-
-# test_login.py
-from loginpage import *
-from selenium import webdriver
-driver=webdriver.Firefox()
-username=&apos;51zxw&apos;
-password=&apos;123456&apos;
-
-test_user_login(driver,username,password)
-sleep(3)
-driver.quit()
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjgw8dq01001es4wv8admplmk" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-整合测试报告发送" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/07/整合测试报告发送/" class="article-date">
-  <time datetime="2018-03-07T01:13:05.000Z" itemprop="datePublished">2018-03-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/07/整合测试报告发送/">整合测试报告发送</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>整合测试报告发送</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>将生成的最新测试报告发送到指定邮箱</h6><p></p>
-<ul>
-<li>文件路径如下：<ul>
-<li>文件夹test_baidu<ul>
-<li>文件夹test_case<ul>
-<li>test_baidu.py</li>
-</ul>
-</li>
-<li>文件夹test_report</li>
-<li>文件send_test_email.py</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>send_test_email.py</p>
-<pre><code>import unittest,time,smtplib,os
-from BSTestRunner import BSTestRunner
-from email.mime.text import MIMEText
-from email.header import Header
-
-def latest_report(report_dir):      #获取最新生成的测试报告
-    lists=os.listdir(report_dir)
-    lists.sort(key=lambda fn:os.path.getatime(report_dir+&apos;\\&apos;+fn))
-    file=os.path.join(report_dir,lists[-1])
-    return file
-def send_mail(latest_report):       #发送邮件
-    f=open(latest_report,&apos;rb&apos;)
-    mail_content=f.read()
-    f.close()
-
-    smtpserver=&apos;smtp.163.com&apos;
-    user=&apos;www_liuyongqian@163.com&apos;
-    password=&apos;39a39b39c&apos;
-
-    sender=&apos;www_liuyongqian@163.com&apos;
-    receives=[&apos;272501447@qq.com&apos;,&apos;liuyongqian51@163.com&apos;]
-
-    subject=&apos;Web 自动化测试结果&apos;
-
-    msg=MIMEText(mail_content,&apos;html&apos;,&apos;utf-8&apos;)     #邮件正文
-    msg[&apos;Subject&apos;]=Header(subject,&apos;utf-8&apos;)
-    msg[&apos;From&apos;]=sender
-    msg[&apos;To&apos;]=&apos;,&apos;.join(receives)
-
-    smtp=smtplib.SMTP_SSL(smtpserver,465)
-    smtp.helo(smtpserver)
-    smtp.ehlo(smtpserver)
-    smtp.login(user,password)
-
-    print(&apos;Start send eamil...&apos;)
-    smtp.sendmail(sender,receives,msg.as_string())
-    smtp.quit()
-    print(&apos;Send email end...&apos;)
-
-if __name__==&apos;__main__&apos;:
-    test_dir=&apos;./test_case&apos;
-    report_dir=&apos;./test_report&apos;
-    discovery=unittest.defaultTestLoader.discover(test_dir,pattern=&apos;test*.py&apos;)
-    now=time.strftime(&apos;%Y-%m-%d %H_%M_%S&apos;)
-    report_name=report_dir+&apos;/&apos;+now+&apos;result.html&apos;
-
-    with open(report_name,&apos;wb&apos;) as f:
-        runner=BSTestRunner(stream=f,title=&apos;Test Report&apos;,description=&apos;baidu search&apos;)
-        runner.run(discovery)
-    f.close()
-
-    latest_report=latest_report(report_dir)  #获取最新测试报告
-    send_mail(latest_report)                 #发送邮件报告
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjgw8dq640056s4wv9t6c6cx9" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-高级查询" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/06/高级查询/" class="article-date">
-  <time datetime="2018-03-06T12:16:05.000Z" itemprop="datePublished">2018-03-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/06/高级查询/">高级查询</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>高级查询</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>其他查询</h6><p></p>
-<ul>
-<li><p>IN，NOT IN（可返回多条记录）</p>
-<pre><code>#查询学号为009最低分的课程名
-select kcm from kcb
-where kch in(
-    select kch from cjb
-    where cj in(
-        select MIN(cj) from cjb
-        where xh=&apos;009&apos;
-    )and xh=&apos;009&apos;
-)
-</code></pre></li>
-<li><p>LIMIT m,n<br>m表示从m+1条开始取值，n表示条数（在语句末尾取记录）</p>
-</li>
-<li><p>IS NULL，IS NOT NULL</p>
-<pre><code>select kch from cjb 
-where cj is not nul
-</code></pre></li>
-</ul>
-<p></p><h6>分组查询</h6><p></p>
-<ul>
-<li><p>GROUP BY … HAVING…</p>
-<pre><code>#统计每个班级人数且人数在30人以上的
-select bj as &apos;班级&apos;,count(*) as &apos;人数&apos;
-from xsb
-group by bj
-having count(*)&gt;30 
-</code></pre></li>
-<li><p>在SELECT语句中，WHERE、GROUP BY、HAVING子句的执行次序如下：</p>
-<pre><code>* 1、WHERE子句从数据源中去掉不符合其搜索条件的数据
-* 2、GROUP BY子句搜集数据行到各个组中
-* 3、HAVING子句去掉不符合其组搜索条件的各组数据行
-</code></pre></li>
-</ul>
-<p></p><h6>多表查询</h6><p></p>
-<ul>
-<li><p>等值连接（先连接后判断）</p>
-<pre><code>#查询张三的数据库的成绩
-select xm,kcm,cj
-from xsb,kcb,cjb
-where xsb.xh=cjb.xh and kcb.kch=cjb.kch
-#主表1.主键=从表.外键，主表2.主键=从表.外键
-and xm=&apos;张三&apos; and kcm=&apos;数据库&apos;
-</code></pre></li>
-<li>注：查询显示字段或者其他条件中字段在几张表内有重复，需要在字段前加上表名，表名.字段名</li>
-<li><p>内连接（先判断再连接）</p>
-<pre><code>#查询不是北京、上海的学生的QTP成绩
-select kcm,cj,jg
-from xsb inner join cjb on xsb.xh=cjb.xh
-inner join kcb on kcb.kch=cjb.kch
-and jg not in(&apos;北京&apos;,&apos;上海&apos;)
-and kcm=&apos;QTP&apos;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjgw8dq7f0068s4wvzxt80ar2" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
 
     </footer>
   </div>
@@ -1235,7 +1244,7 @@ and kcm=&apos;QTP&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1245,7 +1254,7 @@ and kcm=&apos;QTP&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 16.67px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 14.44px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.78px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14.44px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.89px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 17.5px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
     </div>
   </div>
 
@@ -1254,7 +1263,7 @@ and kcm=&apos;QTP&apos;
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1267,23 +1276,23 @@ and kcm=&apos;QTP&apos;
       <ul>
         
           <li>
+            <a href="/2018/08/04/JAVA项目更新部署/">JAVA项目更新部署</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/13/Linux上部署java项目/">Linux上部署java项目</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/07/linux下mysql基本操作/">linux下mysql基本操作</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/29/MongoDB的备份、还原、导入、导出/">MongoDB的备份、还原、导入、导出</a>
           </li>
         
           <li>
             <a href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/24/大数据的一些函数-01/">大数据的一些函数-01</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/16/Centos7安装MySQL5.6/">Centos7安装MySQL5.6</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/16/python之Map、Reduce、Filte/">python之Map、Reduce、Filte</a>
           </li>
         
       </ul>
