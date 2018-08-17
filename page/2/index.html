@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,79 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-使用hadoop里面的MapReduce" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/16/使用hadoop里面的MapReduce/" class="article-date">
+  <time datetime="2018-04-16T10:59:19.000Z" itemprop="datePublished">2018-04-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/16/使用hadoop里面的MapReduce/">使用hadoop里面的MapReduce</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>使用hadoop里面的MapReduce</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>示例：使用hadoop里面的MapReduce统计data1中有哪些内容及字段出现频率</h6><p></p>
+<ul>
+<li>1.普通用户（hadoop）启动服务，<code>start-all.sh</code>后在浏览器中输入：<code>python333:50070</code>，就是主机名与端口号，建立与HDFS的关联</li>
+<li>2.hadoop用户在工作目录下<code>touch data1.txt</code>，并新增任意内容</li>
+<li><p>3.创建文件上传后的目录</p>
+<pre><code>hadoop fs -mkdir -p /user/hadoop   #-p为创建多级目录，该目录为文件上传路径
+注：如果创建过程出现错误，如‘Name node is in safe mode’,需要进入hadoop-2.9.0目录下，
+执行命令：bin/hadoop dfsadmin -safemode leave
+</code></pre></li>
+<li><p>4.将本地文件data1.txt上传到hdfs上</p>
+<pre><code>hadoop fs -put data1.txt 
+</code></pre></li>
+<li><p>5.统计字段个数</p>
+<ul>
+<li><p>5.1进入/home/hadoop/opt/hadoop-2.9.0/share/hadoop/mapreduce下，执行命令：</p>
+<pre><code>hadoop jar hadoop-mapreduce-examples-2.9.0.jar wordcount /user/hadoop/ /user/output
+#该命令后两个路径，其中前一个为需要解析统计的文件路径，后一个为文件统计后的存放路径
+</code></pre></li>
+<li><p>5.2可在浏览器打开的“Browse Directory”中输入<code>/user/output</code>查看统计结果，结果的文件名为part-r-00000</p>
+</li>
+<li><p>5.3hadoop用户可以回到工作目录下，输入一下命令将结果文件下载到工作目录下</p>
+<pre><code>hadoop fs -get /user/output/part-r-00000
+</code></pre><p>5.4<code>cat part-r-00000</code>可以查看结果文件内容</p>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/16/使用hadoop里面的MapReduce/" data-id="cjkxndle300467wwv8dxktvxl" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-虚拟机centos上部署hadoop" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -219,7 +292,7 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjkf912h3005yegwvtfu2rku6" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjkxndliv005u7wwvpaik7mqg" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -379,7 +452,7 @@ print([link.url for link in links])   #打印出html2中a标签中的3个链接
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/14/使用LinkExtractor提取链接/" data-id="cjkf912cb0044egwvtdqfm6ag" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/14/使用LinkExtractor提取链接/" data-id="cjkxndle300447wwvmxmbp4ih" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -493,7 +566,7 @@ bzip2查看：tar  -jcvf  filename.tar.bz2　
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjkf9129u0031egwvx5kicova" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjkxndlam00357wwvcl4nbvu3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -576,7 +649,7 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/11/jdk部署/" data-id="cjkf9129i002uegwvb80g6jb1" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/11/jdk部署/" data-id="cjkxndla7002x7wwvqshwlf8j" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -690,7 +763,7 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjkf9128y002kegwvoyue7gda" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjkxndl9b002o7wwvzgmepc1i" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -839,7 +912,7 @@ test2.update_many({&apos;x&apos;:4},{&apos;$set&apos;:{&apos;x&apos;:1,&apos;y&a
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjkf912g7005megwv1o3pl9vg" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjkxndlig005o7wwvhxw2mb3d" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1042,7 +1115,7 @@ def getAll(num):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjkf912ez0054egwvddk2zffn" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjkxndlgp00547wwvb99658ew" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -1146,7 +1219,7 @@ response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjkf912be003segwvlqgqtll9" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjkxndlcd003s7wwvl5oefs37" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1221,151 +1294,10 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjkf912b7003oegwvp4bsstje" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjkxndlbx003m7wwvirnggooa" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-发布及文件上传" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/01/发布及文件上传/" class="article-date">
-  <time datetime="2018-04-01T09:47:40.000Z" itemprop="datePublished">2018-04-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>发布及文件上传</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>发布博客</h6><p></p>
-<ul>
-<li><p>用户登录之后，点击“发布博客”即可进入发布博客页面，在这儿需要在登录的欢迎页面增加一下这个发布博客链接</p>
-<pre><code>&lt;a href=&quot;/pyblogA/fabu&quot;&gt;发布博客&lt;a/&gt;
-</code></pre></li>
-<li><p>之后编辑发布博客的前端页面</p>
-<pre><code>&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;欢迎发布博客&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h2&gt;欢迎{{ user.username }}发布博客...&lt;/h2&gt;
-    &lt;span style=&quot;color:red&quot;&gt;{{ msg }}&lt;/span&gt;
-    &lt;form action=&quot;/pyblogA/fabu&quot; method=&quot;post&quot;&gt;
-        {% csrf_token %}
-        &lt;p&gt;标题：&lt;input type=&quot;text&quot; name=&apos;title&apos; style=&quot;width:300px&quot;&gt;&lt;/p&gt;
-        &lt;p&gt;内容：&lt;textarea  name=&apos;context&apos; style=&quot;width:300px;height:200px&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;
-        &lt;input type=&quot;submit&quot; value=&quot;确认发布&quot;&gt;
-    &lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre></li>
-<li><p>在该app的models中编辑与数据库的映射</p>
-<pre><code>from django.db import models
-from bloguser.models import BlogUser
-class Blog(models.Model):
-    title=models.CharField(max_length=30,null=True)
-    context=models.CharField(max_length=500,null=True)
-    createDate=models.DateTimeField(null=True)    #默认当前时间
-    BlogUser=models.ForeignKey(&apos;bloguser.BlogUser&apos;,on_delete=None)   #app下的名字
-</code></pre></li>
-<li><p>需要在项目的settings.py下设置路径</p>
-<pre><code>urlpatterns = [
-    path(&apos;pyblogA/&apos;,include(&apos;pyblogA.urls&apos;)),
-]
-</code></pre></li>
-<li><p>接着在该app的urls下设置路径</p>
-<pre><code>urlpatterns = [
-    path(&apos;fabu&apos;, fabu),
-]
-</code></pre></li>
-<li><p>接下来编辑该appviews内容</p>
-<pre><code>from django.shortcuts import render,redirect,reverse
-from .models import *
-from django.http import HttpResponse
-import time,datetime,os
-
-def fabu(request):
-    user = request.session.get(&apos;user&apos;, None)
-    if request.method==&apos;GET&apos;:
-        if user is not None:
-            return render(request,&apos;fabu.html&apos;,{&apos;user&apos;: request.session.get(&apos;user&apos;, None)})
-        else:
-            return render(request,&apos;login.html&apos;)
-    elif request.method==&apos;POST&apos;:
-        blogA=Blog()
-        blogA.title=request.POST.get(&apos;title&apos;)
-        blogA.context=request.POST.get(&apos;context&apos;)
-        blogA.createDate=datetime.datetime.now()
-
-        uid=request.session.get(&apos;user&apos;)[&apos;id&apos;]
-        bloguserset=BlogUser.objects.filter(pk=uid).all()
-        blogA.BlogUser=bloguserset.first()
-
-        blogA.save()
-        ret={&apos;msg&apos;:&apos;发布成功！&apos;,&apos;user&apos;:request.session.get(&apos;user&apos;)}
-        return render(request,&apos;fabu.html&apos;,ret)
-</code></pre></li>
-</ul>
-<p></p><h6>文件上传</h6><p></p>
-<ul>
-<li><p>创建一个html文件用于上传文件</p>
-<pre><code>&lt;form method=&quot;post&quot; action=&quot;/pyblogA/upload&quot; enctype=&quot;multipart/form-data&quot;&gt;
-    {% csrf_token %}
-    选择文件：&lt;input type=&quot;file&quot; name=&quot;myfile&quot;&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;上传&quot;&gt;
-&lt;/form&gt;
-</code></pre></li>
-<li><p>在该app下设置路径</p>
-<pre><code>urlpatterns = [
-    path(&apos;upload&apos;, upload),
-]
-</code></pre></li>
-<li><p>在该app的views中编辑业务逻辑</p>
-<pre><code>def upload(request):
-    myfile=request._files.get(&apos;myfile&apos;)  #获取上传的文件
-    file_path=os.path.join(&apos;file&apos;,myfile.name)  #配置存放路径为file
-    file=open(file_path,&apos;wb+&apos;)           #打开并写入
-    for row in myfile.chunks():      #循环chunks(),里面包含用户上传的文件
-        file.write(row)              #写入到我们创建的那个文件中
-    file.close()
-    return HttpResponse(&apos;上传成功！&apos;)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjkf912dd004kegwv10mylzhv" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
 
     </footer>
   </div>
@@ -1380,7 +1312,7 @@ def fabu(request):
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/">Suivant &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1392,9 +1324,9 @@ def fabu(request):
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1402,18 +1334,18 @@ def fabu(request):
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 17.5px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1421,9 +1353,13 @@ def fabu(request):
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/08/17/Redis安装与部署/">Redis安装与部署</a>
+          </li>
         
           <li>
             <a href="/2018/08/04/JAVA项目更新部署/">JAVA项目更新部署</a>
@@ -1439,10 +1375,6 @@ def fabu(request):
         
           <li>
             <a href="/2018/04/29/MongoDB的备份、还原、导入、导出/">MongoDB的备份、还原、导入、导出</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
           </li>
         
       </ul>
@@ -1473,7 +1405,7 @@ def fabu(request):
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 刘永前<br>
-      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

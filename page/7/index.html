@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,91 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-chown" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/08/chown/" class="article-date">
+  <time datetime="2018-03-08T05:48:02.000Z" itemprop="datePublished">2018-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/chown/">chown</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>chown</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>1.使用权限 : root</li>
+<li><p>2.使用方式</p>
+<pre><code>chown[-f][-h][-R] Owner [ :Group ] { File ... | Directory ... }
+chown -R [-f ][-H| -L| -P] Owner [ :Group ] { File ... | Directory ... }
+</code></pre></li>
+<li><p>3.说明：Linux/Unix 是多人多工作业系统，所有的档案皆有拥有者。利用 chown 可以将档案的拥<br>有者加以改变。一般来说，这个指令只有是由系统管理者(root)所使用，一般使用者没有权限可以<br>改变别人的档案拥有者，也没有权限可以自己的档案拥有者改设为别人。只有系统管理者(root)才<br>有这样的权限，一个字：更改与文件关联的所有者或组</p>
+</li>
+<li><p>4.描述：chown命令将 File 参数指定的文件的所有者更改为 Owner 参数指定的用户。Owner 参数的值可以是可在 /etc/passwd 文件中找到的用户标识或登录名。还可以选择性地指定组。Group 参数的值可以是可在 /etc/group 文件中找到的组标识或组名</p>
+<pre><code>-f
+禁止除用法消息之外的所有错误消息
+-h
+更改遇到的符号链接的所有权，而非符号链接指向的文件或目录的所有权
+当遇到符号链接而您未指定 -h 标志时，chown 命令更改链接指向的文件或目录的所有权，而非链接本身的所有权
+如果指定 -R 标志，chown 命令递归地降序指定的目录
+-H
+如果指定了 -R 选项，并且引用类型目录的文件的符号链接在命令行上指定，
+chown 变量会更改由符号引用的目录的用户标识（和组标识，如果已指定）和所有在该目录下的文件层次结构中的所有文件
+-L
+如果指定了 -R 选项，并且引用类型目录的文件的符号在命令行上指定或在遍历文件层次结构期间遇到，
+chown 命令会更改由符号链接引用的目录的用户标识（和组标识，如果已指定）和在该目录之下的文件层次结构中的所有文件
+-P
+如果指定了 -R 选项并且符号链接在命令行上指定或者在遍历文件层次结构期间遇到，则如果系统支持该操作，
+则chown 命令会更改符号链接的所有者标识（和组标识，如果已指定）。chown 命令不会执行至文件层次结构的任何其它部分的符号链接
+-R
+递归地降序目录，更改每个文件的所有权。当遇到符号链接并且链接指向目录时，更改该目录的所有权，但不进一步遍历目录。
+不过 -h、-H、-L or -P 标志也未指定，则当遇到符号链接并且该链接指向到目录时，该目录的组所有权更改但不会进一步遍历目录
+</code></pre></li>
+</ul>
+<p></p><h6>示例</h6><p></p>
+<ul>
+<li><p>将档案 file1.txt 的拥有者设为 users 群体的使用者 tom : </p>
+<pre><code>chown tom:users file1.txt 
+</code></pre></li>
+<li><p>将目前目录下的所有档案与子目录的拥有者皆设为 users 群体的使用者 jerry : </p>
+<pre><code>chown -R lamport:users * 
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="cjkxndl9b002q7wwvjn6qbkld" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-Page Object" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -179,7 +264,7 @@ driver.quit()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjkf91278001qegwvv562vdsl" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjkxndl6a001p7wwvpr41hcvh" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -295,7 +380,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjkf912fm005eegwv9ojq4e2a" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjkxndlhk005e7wwv6gcq40vt" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -396,7 +481,7 @@ and kcm=&apos;QTP&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjkf912il006iegwvs16lhbmn" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjkxndlkm006i7wwvu270trkk" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -527,7 +612,7 @@ print(&apos;End send email...&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjkf912di004megwvrih9jq7j" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjkxndlfe004o7wwvxmwaaee5" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -726,7 +811,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjkf912dw004segwvc95nhv3e" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjkxndlfe004k7wwv32ply11g" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -904,7 +989,7 @@ select rand()         #result:0.8155794216465013
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjkf912470008egwv6182sm0i" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjkxndl1y000a7wwvid9xbtep" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -1008,7 +1093,7 @@ class Login():
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjkf912gt005uegwvhwpmu67n" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjkxndlig005s7wwvh3paz3gs" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -1132,7 +1217,7 @@ class Login():
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjkf912640014egwv2pshngvs" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjkxndl4400107wwvd05yv12i" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -1277,134 +1362,10 @@ alert table 表名 add constraint 外键名 foreign key (外键字段) reference
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjkf912d5004gegwv6qn67sa0" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjkxndlez004g7wwvl6btlfih" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-BOM" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/27/BOM/" class="article-date">
-  <time datetime="2018-02-27T09:35:34.000Z" itemprop="datePublished">2018-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/27/BOM/">BOM</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>BOM</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>Window对象</h6><p></p>
-<ul>
-<li>window对象是BOM的根对象，其它对象其实都是window对象的属性，window对象的属性和方法都可以省略“window.”</li>
-<li><p>window对象常用属性</p>
-<pre><code>pageXOffset  设置或返回当前页面相对于窗口显示区左上角的x位置
-pageYOffset  设置或返回当前页面相对于窗口显示区左上角的y位置
-</code></pre></li>
-<li><p>window对象常用方法</p>
-<pre><code>alert() 显示带有一段消息和一个确认按钮的警告框
-confirm()显示带有一段消息以及确认和取消按钮的对话框
-prompt()显示可提示用户输入的对话框
-close()关闭浏览器窗口
-open()打开一个新的浏览器窗口或查找一个已命名的窗口
-setInterval 按照指定的周期（以毫秒计）来调用函数或计算表达式
-clearInterval取消由setInterval()设置的timeout
-
-&lt;h1&gt;
-    当前时间：&lt;span id=&quot;date&quot;&gt;&lt;/span&gt;
-&lt;/h1&gt;
-&lt;button onclick=&quot;fn1()&quot;&gt;开始时钟&lt;/button&gt;
-&lt;button onclick=&quot;fn2()&quot;&gt;停止时钟&lt;/button&gt;
-&lt;script&gt;
-    var setid                                      //动态显示时间
-    function fn1(){
-        var span=document.getElementById(&quot;date&quot;)
-        var date=new Date()
-        span.innerHTML=date
-        clearInterval(setid)
-        setid=setInterval(function(){
-            var date=new Date()
-            span.innerHTML=date
-        },1000)
-    }
-    function fn2(){
-        clearInterval(setid)
-    }
-&lt;/script&gt;
-</code></pre></li>
-</ul>
-<p></p><h6>Window常用子对象</h6><p></p>
-<ul>
-<li>navigator对象<ul>
-<li>navigator对象包含浏览器的信息，常用于获取客户端浏览器和操作系统信息</li>
-</ul>
-</li>
-<li>location对象<ul>
-<li>location对象包含有关当前URL的信息，常用于获取和改变当前浏览的网址</li>
-</ul>
-</li>
-<li>history对象<ul>
-<li>history对象包含用户（在浏览器窗口中）访问过的URL的历史记录</li>
-</ul>
-</li>
-<li>Screen对象<ul>
-<li>Screen对象包含有关客户端显示屏幕的信息，用于获取屏幕的分辨率和色彩</li>
-</ul>
-</li>
-<li><pre><code>&lt;script&gt;
-    //navigator对象
-    console.log(navigator)
-    for(var i in navigator){
-    console.log(i+&apos;:&apos;+navigator[i])
-    }
-    console.log(navigator.platform)//返回运行浏览器的系统操作平台
-
-    //location对象，包含当前有关URL信息
-    console.log(location.href)//返回完整的URL
-
-    //history对象，访问URL历史记录
-    //forward()   back()  go()
-    console.log(history.length)  //返回浏览器历史列表中的URL数量
-
-    //screen对象，包含客户端显示屏幕的信息
-    console.log(screen.availHeight)//返回显示屏幕的高度（除Windows任务栏之外）
-    console.log(screen.availWidth)//返回显示屏幕的宽度（除Windows任务栏之外）
-&lt;/script&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjkf9123d0001egwvki5hf2j5" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
 
     </footer>
   </div>
@@ -1419,7 +1380,7 @@ clearInterval取消由setInterval()设置的timeout
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/6/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/8/">Suivant &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/6/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/8/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1431,9 +1392,9 @@ clearInterval取消由setInterval()设置的timeout
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -1441,18 +1402,18 @@ clearInterval取消由setInterval()设置的timeout
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 17.5px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1460,9 +1421,13 @@ clearInterval取消由setInterval()设置的timeout
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/08/17/Redis安装与部署/">Redis安装与部署</a>
+          </li>
         
           <li>
             <a href="/2018/08/04/JAVA项目更新部署/">JAVA项目更新部署</a>
@@ -1478,10 +1443,6 @@ clearInterval取消由setInterval()设置的timeout
         
           <li>
             <a href="/2018/04/29/MongoDB的备份、还原、导入、导出/">MongoDB的备份、还原、导入、导出</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
           </li>
         
       </ul>
@@ -1512,7 +1473,7 @@ clearInterval取消由setInterval()设置的timeout
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 刘永前<br>
-      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
