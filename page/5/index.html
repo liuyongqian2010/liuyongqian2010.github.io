@@ -70,6 +70,179 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Zset类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/Zset类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:23:30.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/Zset类型操作/">Zset类型操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Zset类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.zadd key_name score1 value1 score2 value2 …用于将一个或多个成员元素及其分数值加入到有序集当中,分数值可以是整数值或双精度浮点数</p>
+<pre><code>zadd mykey 1 one 2 two 3 three  #返回被成功添加的新成员的数量，不包括那些被更新的、已经存在的成员
+</code></pre></li>
+<li><p>2.zcard key_name用于计算集合中元素的数量</p>
+<pre><code>zcard mykey         #result:3
+</code></pre></li>
+<li><p>3.zcount key_name min max用于计算有序集合中指定分数区间的成员数量</p>
+<pre><code>zcount mykey  1 3  #result:3
+</code></pre></li>
+<li><p>4.zincrby key_name increment member对有序集合中指定成员的分数加上增量 </p>
+<pre><code>zincrby mykey 1 three    #返回member 成员的新分数值，以字符串形式表示
+zrange mykey 0 -1 withscores
+</code></pre></li>
+<li><p>5.zinterstore destination keysnum key1 key2计算给定的一个或多个有序集的交集，其中给定 key 的数量必须以 numkeys 参数指定，并将该交集(结果集)储存到 destination </p>
+<pre><code>zadd test1 11 tom 12 jerry 13 john
+zadd test2 11 tom 14 oven 15 honey
+zinterstore test3 2 test1 test2
+</code></pre></li>
+<li><p>6.zlexcount key_name min max 计算有序集合中指定字典区间内成员数量</p>
+<pre><code>zlexcount mykey - +   #返回所有成员数量
+zlexcount mykey [one [three #result:1
+</code></pre></li>
+<li><p>7.zrange key_name start stop返回指定区间内的成员,其中成员的位置按分数值递增(从小到大)来排序<br>zrevrange命令则递减排序</p>
+<pre><code>zrange mykey 0 -1     #one two three
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjm7bd0od002hs8wvzzwlws95" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Set类型操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/Set类型操作/" class="article-date">
+  <time datetime="2018-03-16T09:21:57.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/Set类型操作/">Set类型操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Set类型操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>01</h6><p></p>
+<ul>
+<li><p>1.sadd key_name value1 value2 …将一个或多个成员元素加入到集合中，已经存在于集合的成员元素将被忽略</p>
+<pre><code>sadd myfamily yongmei yongqin yongxing   
+</code></pre></li>
+<li><p>2.scard key_name返回集合中元素的数量</p>
+<pre><code>scard myfamily    #返回集合的数量。 当集合 key 不存在时，返回 0 
+</code></pre></li>
+<li><p>3.sismember key_name value判断成员元素是否是集合的成员</p>
+<pre><code>sismember key4 a  #result:1
+</code></pre></li>
+<li><p>4.smembers key_name返回集合中的所有的成员。 不存在的集合 key 被视为空集合</p>
+<pre><code>smembers key4      #result:a c
+</code></pre></li>
+</ul>
+<p></p><h6>02</h6><p></p>
+<ul>
+<li><p>5.sdiff first_key other_key1 other_key2 …返回给定集合之间的差集。不存在的集合 key 将视为空集,差集的结果来自前面的first_key</p>
+<pre><code>sadd key1 a b c d
+sadd key2 a c
+sdiff key1 key2     #result:b d 
+</code></pre></li>
+<li><p>6.sdiffstore key_name key1 key2将给定集合之间的差集存储在指定的集合中。如果指定的集合 key 已存在，则会被覆盖</p>
+<pre><code>sdiffstore key3 key1 key2
+smembers key3      #result:b d
+</code></pre></li>
+<li><p>7.sinter key1 key2 返回所有给定集合的交集</p>
+<pre><code>sinter key1 key2   #result:a c
+</code></pre></li>
+<li><p>8.sinterstore key_name key1 key2将给定集合之间的交集存储在指定的集合中。如果指定的集合已经存在，则将其覆盖</p>
+<pre><code>sinterstore key4 key1  key2
+smembers key4      #result:a c
+</code></pre></li>
+<li><p>9.sunion key1 key2 …返回给定集合的并集。不存在的集合 key 被视为空集</p>
+</li>
+<li>10.sunionstore destination key1 key2 …将给定集合的并集存储在指定的集合 destination 中。如果 destination 已经存在，则将其覆盖  </li>
+</ul>
+<p></p><h6>03</h6><p></p>
+<ul>
+<li><p>11.smove source destination member将指定成员 member 元素从 source 集合移动到 destination集合,此为原子性操作</p>
+<pre><code>smove key3 key4 b
+smembers key4      #result:a b c 
+</code></pre></li>
+<li><p>12.spop key_name 用于移除并返回集合中的一个随机元素</p>
+<pre><code>spop key4          #返回b
+</code></pre></li>
+<li><p>13.srem key_name member1 member2 …用于移除集合中的一个或多个成员元素，不存在的成员元素会被忽略</p>
+<pre><code>screm key4 a c     #返回被成功移除的元素的数量
+</code></pre></li>
+<li><p>14.srandmember key [count] 用于返回集合中的一个随机元素</p>
+<pre><code>srandmember key1 2  #result:b d 
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjm7bd0od0027s8wvkj77q14f" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-List类型操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/16/List类型操作/" class="article-date">
@@ -160,7 +333,7 @@ lindex mylist 1        #列表中下标为指定索引值的元素
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjkxndl5f001f7wwvryrwwqa8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjm7bd0n3001es8wvkinmk11j" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -260,7 +433,7 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjkxndl44000y7wwvszysr1ii" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjm7bd0m7000ts8wv5vylw1hv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -395,7 +568,7 @@ get myname          #result:liuyongqian
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjkxndl8g002e7wwvjq7cx8jo" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjm7bd0od002cs8wv0ep22qj8" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -553,7 +726,7 @@ port=27017   #端口号 默认为27017
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjkxndl5u001k7wwv72hzfz68" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjm7bd0n3001js8wv66cvn92u" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -629,7 +802,7 @@ frag:片段只在客户端使用，不发送到服务器端；
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjkxndl39000r7wwvgde2el71" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjm7bd0m7000rs8wv6y1r73gf" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
@@ -814,7 +987,7 @@ input()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjkxndl7500217wwv3ib7nztu" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjm7bd0ny0020s8wv2z4hpzgm" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -990,7 +1163,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/python之XML/" data-id="cjkxndlbi003i7wwv78i4gr3r" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/13/python之XML/" data-id="cjm7bd0q4003ks8wv8ceqtivx" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1168,199 +1341,10 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/Redis数据库入门/" data-id="cjkxndl7l00267wwvdyexact9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/13/Redis数据库入门/" data-id="cjm7bd0ny0024s8wvb439ukmf" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Git高级" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/13/Git高级/" class="article-date">
-  <time datetime="2018-03-13T02:21:05.000Z" itemprop="datePublished">2018-03-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/13/Git高级/">Git高级</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Git高级</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>分支管理</h6><p></p>
-<ul>
-<li><p>Git会串成一条时间线，这条时间线就是分支， 默认就是master<br>HEAD并不是指向提交，而是指向master，指向最新版本</p>
-<pre><code>v1  ==&gt;  v2  ==&gt; v3
-                 |
-                 master
-                  |
-                  HEAD
-如果创建了新的分支，head将指向新的分支，如下
-                        master
-                          |
-v1  ==&gt;  v2  ==&gt; v3  ==&gt; v4
-                          |
-                        dev
-                          |
-                        HEAD
-</code></pre></li>
-<li><p>基本命令</p>
-<ul>
-<li>查看分支：git branch（*表示你当前所处的branch是哪个）</li>
-<li>创建分支：git branch 分支名</li>
-<li>切换分支： git checkout 分支名</li>
-<li>创建并切换分支：git checkout -b 分支名</li>
-<li>合并分支：git merge 分支名 （需要切换到主分支或者依附分支再执行该命令）</li>
-<li>删除分支： git branch -d 分支名</li>
-<li>分支合并图：git log –graph  –pretty=oneline  –abbrev-commit</li>
-</ul>
-</li>
-<li><p>解决冲突</p>
-<ul>
-<li><p>先在feature1 分支:  a.txt中新增并提交‘AND simple’；<br>后在master 分支:  a.txt 中新增提交‘&amp; simple’ <br>在master和分支上分别对a.txt做了不同修改之后，合并分支出现以下错误：</p>
-<pre><code>git merge feature1
-Auto-merging a.txt
-CONFLICT (content): Merge conflict in a.txt
-Automatic merge failed; fix conflicts and then commit the result.
-</code></pre></li>
-<li><p>当Git无法自动合并分支时，就必须首先解决冲突，再提交，最后merge</p>
-</li>
-</ul>
-</li>
-<li><p>分支管理策略：</p>
-<ul>
-<li>1）master分支： 代码是稳定的，平时不能在上面干活的，仅仅是用来发布新版本用</li>
-<li>2）其他分支：是不稳定的，bug、feature可以创建新的分支进行开发，最后再合并到master即可</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>标签管理</h6><p></p>
-<ul>
-<li>标签（tag），是版本库的一个快照；发布一个新版本时，通常先在版本库中打一个标签，无论在将来什么时候，取某个标签的版本即可</li>
-<li><p>基本命令</p>
-<pre><code>git tag &lt;tagname&gt;创建标签
-git tag查看所有标签
-git tag -a &lt;tagname&gt; -m &lt;desc&gt;创建带有说明的标签
-git show &lt;tagname&gt;查看标签的说明
-git tag -d &lt;tagname&gt;删除标签
-
-git push origin &lt;tagname&gt;推送一个本地标签
-git push origin --tags推送全部未推送的本地标签
-
-#如果tag已经推送到远程，要删除远程标签分2步：
-1）删除本地tag:  git tag -d 本地标签名
-2）git push origin :refs/tags/本地标签名
-</code></pre></li>
-</ul>
-<p></p><h6>多人协作</h6><p></p>
-<ul>
-<li>开源项目肯定都是很多人参与到社区中，通过协作完成</li>
-<li>多人协作常用操作<ul>
-<li>克隆远程仓库：git clone xxxxxxx</li>
-<li>查看远程信息：git remove (-v)</li>
-<li>创建自己的分支：git branch xxxxxx</li>
-<li>推送分支：git push origin <branch-name></branch-name></li>
-<li>创建Pull Request</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>其他操作</h6><p></p>
-<ul>
-<li><p>git颜色设置</p>
-<pre><code>Git控制台颜色设置
-git config --global color.diff auto
-git config --global color.status auto
-git config --global color.branch auto
-
-颜色设置关闭
-git config --global color.status false
-</code></pre></li>
-<li><p>忽略某些特殊文件不提交</p>
-<ul>
-<li>1）只需要在git项目的根目录下创建一个.gitignore</li>
-<li>2) 把需要提交的文件或者目录名称写到.gitignore</li>
-<li>3）如果你真正想提交的文件已经被包含在.gitignore里面了，那么就需要使用-f进行强制提交</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjkxndl3o000u7wwvgiowheo4" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Fiddler学习" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/12/Fiddler学习/" class="article-date">
-  <time datetime="2018-03-12T04:02:33.000Z" itemprop="datePublished">2018-03-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/12/Fiddler学习/">Fiddler学习</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Fiddler学习01</h5><p></p>
-<hr>
-<hr>
-<p>参考大神佳作<a href="https://blog.csdn.net/fei2636/article/details/79020034" target="_blank" rel="noopener"> Fiddler 抓包工具总结</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习/" data-id="cjkxndl2d000g7wwvsoh79yxr" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/抓包工具/">抓包工具</a></li></ul>
 
     </footer>
   </div>
@@ -1389,7 +1373,7 @@ git config --global color.status false
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/抓包工具/">抓包工具</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
@@ -1399,7 +1383,7 @@ git config --global color.status false
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 10px;">性能测试</a> <a href="/tags/抓包工具/" style="font-size: 10px;">抓包工具</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a>
+      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.25px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 11.25px;">软件工具</a>
     </div>
   </div>
 
@@ -1408,7 +1392,7 @@ git config --global color.status false
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1421,6 +1405,14 @@ git config --global color.status false
       <ul>
         
           <li>
+            <a href="/2018/09/18/nmon工具的使用/">nmon工具的使用</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/11/破解IDEA2018-1/">破解IDEA2018.1</a>
+          </li>
+        
+          <li>
             <a href="/2018/08/17/Redis安装与部署/">Redis安装与部署</a>
           </li>
         
@@ -1430,14 +1422,6 @@ git config --global color.status false
         
           <li>
             <a href="/2018/07/13/Linux上部署java项目/">Linux上部署java项目</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/07/linux下mysql基本操作/">linux下mysql基本操作</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/29/MongoDB的备份、还原、导入、导出/">MongoDB的备份、还原、导入、导出</a>
           </li>
         
       </ul>
