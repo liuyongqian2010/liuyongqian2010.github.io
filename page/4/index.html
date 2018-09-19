@@ -70,6 +70,143 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-转发与重定向" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/27/转发与重定向/" class="article-date">
+  <time datetime="2018-03-27T03:50:35.000Z" itemprop="datePublished">2018-03-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/27/转发与重定向/">转发与重定向</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>转发与重定向</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>重定向</h6><p></p>
+<ul>
+<li>数据库虽然已经添加了数据，但如果继续刷新浏览器数据库会保存重复的数据,这就需要重定向</li>
+<li>转发：一次请求和响应，请求的地址没有发生变化，请求的数据被服务器内部的资源共享，如果此时刷新页面就会出现重做现象（服务器响应给客户的是转发）</li>
+<li>重定向：一次以上的请求和响应，请求地址发生一次以上的变化。如果此时刷新页面不会出现重做现象（指向虚拟的网址页面）</li>
+<li><p>需要在views.py里面导入redirect和reverse模块，然后需要在我们刷新的时候跳转到另一个页面,代码如下：</p>
+<pre><code>#在bloguser/urls.py添加路径
+app_name=&apos;user&apos;
+urlpatterns = [
+    path(&apos;register&apos;, register),
+    path(&apos;welcome/&lt;int:id&gt;&apos;, welcome,name=&apos;welcome&apos;),
+]
+
+#在bloguser/views.py
+def register(request):
+    if request.method==&apos;GET&apos;:
+        return render(request,&apos;register.html&apos;)
+    elif request.method==&apos;POST&apos;:
+        bloguser=BlogUser()
+        bloguser.username=request.POST.get(&apos;username&apos;)
+        bloguser.pwd=request.POST.get(&apos;pwd&apos;)
+        bloguser.save()
+        return redirect(reverse(&apos;user:welcome&apos;,args=[bloguser.id]))   #user,虚拟的命名空间，welcome，执行的函数,
+def welcome(request,id):
+    bloguser=BlogUser.objects.get(pk=id)
+    return render(request, &apos;welcome.html&apos;, {&apos;bloguser&apos;: bloguser})
+
+#在pyblog/urls.py下
+urlpatterns = [
+    path(&apos;admin/&apos;, admin.site.urls),
+    path(&apos;bloguser/&apos;,include(&apos;bloguser.urls&apos;)),
+    path(&apos;user/&apos;,include(&apos;bloguser.urls&apos;,namespace=&apos;user&apos;)),
+]
+</code></pre></li>
+</ul>
+<p></p><h6>重名</h6><p></p>
+<ul>
+<li>如果使用<code>unique=True</code>，我们必须点击提交才会告诉我们用户名重复，应该在我们输入密码的时候就告诉我们用户名重复</li>
+<li><p>这时候我们需要使用ajax(ajax: jquery 是一种静态资源),不需要我们提交，当我们输入密码的时候就可以告诉我们用户名已重复</p>
+<ul>
+<li>1.在pyblog里面创建一个static的文件夹，接着创建js的文件夹，把jquery-3.3.1放进去</li>
+<li><p>2.接着需要在setings.py里面添加static文件</p>
+<pre><code>STATIC_URL = &apos;/static/&apos;
+STATICFILES_DIRS=[
+    os.path.join(BASE_DIR,  &apos;static&apos;)
+]
+</code></pre></li>
+<li><p>3.在register.html中加上javascript</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;/static/js/jquery-3.3.1.js&quot;&gt;&lt;/script&gt;
+&lt;script &gt;
+    $(function(){
+        $(&apos;input[name=&quot;username&quot;]&apos;).blur(function(){
+            uname=$(&apos;input[name=&quot;username&quot;]&apos;).val()
+            CSRF=$(&quot;input[name=&apos;csrfmiddlewaretoken&apos;]&quot;).val()
+            $.ajax({
+                url:&apos;/bloguser/getUser&apos;,
+                data:{&apos;uname&apos;:uname,&apos;csrfmiddlewaretoken&apos;:CSRF},
+                type:&apos;POST&apos;,
+                success:function(dat){
+                    if(dat==&apos;True&apos;){
+                        $(&apos;span&apos;).html(&apos;用户名已经存在！&apos;)
+                    }
+                    else{
+                        $(&apos;span&apos;).html(&apos;用户名可以使用！&apos;)
+                    }
+                }
+            })
+        })
+    })
+&lt;/script&gt;
+</code></pre></li>
+<li><p>4.在views.py定义一个getUser(),同时需要导入HttpResponse模块，用来判断用户名有没有重复</p>
+<pre><code>def getUser(request):
+    uname=request.POST.get(&apos;uname&apos;)
+    BlogUserSet=BlogUser.objects.filter(username=uname)
+    if len(BlogUserSet)==1:
+        return HttpResponse(&apos;True&apos;)
+    else:
+        return HttpResponse(&apos;False&apos;)
+</code></pre></li>
+<li><p>5.然后在bloguser\urls.py配置一下路径</p>
+<pre><code>app_name=&apos;user&apos;
+urlpatterns = [
+    path(&apos;register&apos;, register),
+    path(&apos;getUser&apos;, getUser),
+    path(&apos;welcome/&lt;int:id&gt;&apos;, welcome,name=&apos;welcome&apos;),
+]
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjm8qlyr0005wh0wvqlpwwvgv" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-pyspider框架" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/24/pyspider框架/" class="article-date">
@@ -160,7 +297,7 @@ class Handler(BaseHandler):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjm7bd0po003ds8wvpqm28e7s" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjm8qlyn40034h0wvbex7tlnk" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -268,7 +405,7 @@ print(logo.size)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cjm7bd0qk003zs8wvrwwqvedh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cjm8qlyny003sh0wvftpfj0mf" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -412,7 +549,7 @@ print(ul.text())
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="cjm7bd0po003as8wvrxw8drmg" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="cjm8qlyno003eh0wvwru7x5oi" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -575,7 +712,7 @@ for li in soup.select(&apos;li&apos;):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="cjm7bd0ot002js8wvll0ao5c5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="cjm8qlyn4002xh0wvg59eq33l" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -694,7 +831,7 @@ for li in soup.select(&apos;li&apos;):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="cjm7bd0p90035s8wvars90ps9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="cjm8qlyno003ih0wvxe4yeoyj" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -858,7 +995,7 @@ print(response.status_code)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="cjm7bd0q4003ns8wvqcx5bhl2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="cjm8qlyno003gh0wvn9kv3843" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1057,7 +1194,7 @@ with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cjm7bd0qz0044s8wvtq265bgk" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cjm8qlyo8003uh0wvcplk5dc6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1161,7 +1298,7 @@ b/s--&gt;browser/server 浏览器与服务器交互
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjm7bd0lc000cs8wvptf3ew4b" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjm8qlyiy000eh0wv6cnwxibz" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -1344,132 +1481,10 @@ db.myinfo.find({$or:[{&apos;name&apos;:&apos;liuyongqian&apos;},{&apos;age&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjm7bd0n3001hs8wvpf9jdllb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjm8qlylg001sh0wvtagqeobq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Python之socket" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/19/Python之socket/" class="article-date">
-  <time datetime="2018-03-19T12:10:17.000Z" itemprop="datePublished">2018-03-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/19/Python之socket/">Python之socket</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Python之socket</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>socket是什么</h6><p></p>
-<ul>
-<li><p>OSI（开放式系统互联模型）</p>
-<ul>
-<li><p>互联网协议按照功能不同分为osi七层或者tcp/ip四层</p>
-<pre><code>应用层----C/S架构的软件是基于网络进行通讯的；学习socket就是为了完成C/S架构的开发
-传输层
-网络层
-网络接口层
-</code></pre></li>
-</ul>
-</li>
-<li><p>Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口。在设计模式中，Socket其实就是一个门面模式，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议</p>
-</li>
-<li><p>扫盲篇</p>
-<pre><code>1 将socket说成ip+port，ip是用来标识互联网中的一台主机的位置，而port是用来标识这台机器上的一个应用程序，ip地址是配置到网卡上的，而port是应用程序开启的，ip与port的绑定就标识了互联网中独一无二的一个应用程序
-2 
-3 而程序的pid是同一台机器上不同进程或者线程的标识（Google Chrome会有多个PID）
-</code></pre></li>
-</ul>
-<p></p><h6>基于TCP的套接字</h6><p></p>
-<ul>
-<li><p>tcpserver.py</p>
-<pre><code>import socket
-server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)#获取tcp/ip套接字
-ip_port=(&apos;127.0.0.1&apos;,8001)
-server.bind(ip_port)#绑定(主机,端口号)到套接字
-server.listen(5)    #开始TCP监听,5的作用是最大挂起连接数
-print(&apos;-------服务端开始运行--------&apos;)
-conn,addr=server.accept()#被动接受TCP客户的连接,(阻塞式)等待连接的到来
-#print(&apos;双向连接是：&apos;,conn)
-#print(&apos;客户端地址：：&apos;,addr)
-while True: #通讯循环
-    msg=conn.recv(1024)#接收tcp信息
-    print(&apos;客户端发来的消息：&apos;,msg.decode(&apos;utf-8&apos;))
-    conn.send(input(&apos;请服务端回复：&apos;).encode(&apos;utf-8&apos;))#发送tcp消息
-conn.close()#关闭客户端套接字
-server.close()#关闭服务器套接字
-</code></pre></li>
-<li><p>tcpclient.py</p>
-<pre><code>import socket
-client=socket.socket(socket.AF_INET,socket.SOCK_STREAM) #创建客户端套接字
-ip_port=(&apos;127.0.0.1&apos;,8001)
-client.connect(ip_port)     #主动初始化TCP服务器连接
-while True:
-    client.send(input(&apos;请输入客户端信息：&apos;).encode(&apos;utf-8&apos;)) #发送信息
-    data=client.recv(1024)  ##收到服务器发来的消息
-    print(&apos;服务端返回的消息：&apos;,data.decode(&apos;utf-8&apos;))
-client.close()   #关闭客户端套接字
-</code></pre></li>
-</ul>
-<p></p><h6>基于UDP的套接字</h6><p></p>
-<ul>
-<li><p>udpserver.py</p>
-<pre><code>import socket
-server=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)#创建服务器的套接字
-ipport=(&apos;127.0.0.1&apos;,8001)
-server.bind(ipport)#绑定服务器套接字
-while True:
-    data,addr=server.recvfrom(1024)
-    print(&apos;收到：&apos;,str(addr),&apos;消息：&apos;,data.decode(&apos;utf-8&apos;))
-    msg=input(&apos;请回复:&apos;).encode(&apos;utf-8&apos;)
-    server.sendto(msg,addr)
-</code></pre></li>
-<li><p>udpclient.py</p>
-<pre><code>import socket
-client=socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-ip_port=(&apos;127.0.0.1&apos;,8001)
-while True:
-    msg=input(&apos;请输入发送内容:&apos;).encode(&apos;utf-8&apos;)
-    client.sendto(msg,ip_port)  #数据，ip地址+端口
-    data,addr=client.recvfrom(1024)
-    print(&apos;收到{}返回消息&apos;.format(addr),data.decode(&apos;utf-8&apos;))
-</code></pre></li>
-</ul>
-<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/nulige/p/6235531.html?utm_source=itdadao&amp;utm_medium=referral" target="_blank" rel="noopener">python网络编程-socket编程</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjm7bd0ny001ys8wv379zo10b" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1498,7 +1513,7 @@ while True:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -1508,7 +1523,7 @@ while True:
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.25px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 11.25px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.25px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.5px;">软件工具</a>
     </div>
   </div>
 
@@ -1517,7 +1532,7 @@ while True:
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1528,6 +1543,10 @@ while True:
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/09/18/JDK的安装部署/">JDK的安装部署</a>
+          </li>
         
           <li>
             <a href="/2018/09/18/nmon工具的使用/">nmon工具的使用</a>
@@ -1543,10 +1562,6 @@ while True:
         
           <li>
             <a href="/2018/08/04/JAVA项目更新部署/">JAVA项目更新部署</a>
-          </li>
-        
-          <li>
-            <a href="/2018/07/13/Linux上部署java项目/">Linux上部署java项目</a>
           </li>
         
       </ul>

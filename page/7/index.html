@@ -70,6 +70,146 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-基本安全测试" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/10/基本安全测试/" class="article-date">
+  <time datetime="2018-03-10T08:10:50.000Z" itemprop="datePublished">2018-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/10/基本安全测试/">基本安全测试</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>基本安全测试</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>用户权限测试</h6><p></p>
+<ul>
+<li>用户权限控制<ul>
+<li>用户权限控制主要是对一些有权限控制的功能进行验证</li>
+<li>用户A才能进行的操作，B是否能够进行操作</li>
+<li>只能有A条件的用户才能查看的页面，是否B能够查看（可直接敲URL访问）</li>
+</ul>
+</li>
+<li>页面权限控制<ul>
+<li>必须有登陆权限的页面，是否能够在不登陆情况下进行访问</li>
+<li>必须经过A——B——C的页面，是否能够直接由A——C？</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>URL安全测试</h6><p></p>
+<ul>
+<li>适用范围： URL中含有参数，也就是通过GET方式传递的HTTP请求</li>
+<li>什么叫GET方式<ul>
+<li>GET方式在客户端通过URL提交数据，数据在URL中可以看到</li>
+<li>POST方式，数据放置在HTML HEADER内提交，数据在URL中看不到</li>
+<li>GET只能传输比较少的数据，安全性较低，POST传输数据较多，安全性也比GET高</li>
+</ul>
+</li>
+<li><p>测试关注点</p>
+<ul>
+<li>URL 参数检查<ul>
+<li>对URL中参数信息检查是否正确，如：URL中的订单号、金额允许显示出来的话，需要验证其是否正确</li>
+<li>对于一些重要的参数信息，不应该在URL中显示出来，如：用户登陆时登录名、密码是否被显示出来了</li>
+</ul>
+</li>
+<li>URL参数值篡改<ul>
+<li>修改URL中的数据，看程序是否能识别，对于URL中包含金额参数的，修改金额看是否能够提交成功（可能导致用户把2元金额改成1元金额能提交），还有修改订单号等重要信息看是否会报错</li>
+</ul>
+</li>
+<li><p>URL中参数修改进行XSS注入</p>
+<ul>
+<li><p>XSS的全称是Cross Site Script（跨站点脚本），XSS的原理很简单，即进行脚本注入，URL执行时即把此脚本进行了执行，一般都是JavaScript脚本</p>
+<pre><code>如“http://www.cnblogs.com/javame/index.asp?IDClass=2&amp;ClassName=abc”
+
+改成“http://www.cnblogs.com/javame/index.asp?IDClass=2&amp;ClassName=abc&lt;script&gt;alert(&quot;hello&quot;);&lt;/script&gt;”
+
+看看有没弹出对话框显示hello，有的话就有跨站漏洞
+</code></pre></li>
+</ul>
+</li>
+<li><p>URL参数中进行SQL注入</p>
+<ul>
+<li>SQL注入全称是SQL Injection ，当应用程序使用输入内容来构造动态sql语句以访问数据库时，会发生sql注入攻击，如查询、插入数据时</li>
+<li>测试方法： URL中写入SQL注入语句，看是否被执行<br>如：www.cnblogs.com/javame这个网站中，选择登陆设置用户名为 admin ‘ or ‘1’=’1 密码为任意数字 ，点击登录就可以登陆。一般情况下要进行SQL注入攻击，需要对数据库类型、表名、判断逻辑、查询语句等比较清楚才能够写出有效的SQL注入语句</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>表单提交安全测试</h6><p></p>
+<ul>
+<li>适用范围：有表单提交的地方、有HTTP请求的地方</li>
+<li>测试关注点<ul>
+<li>表单中注入XSS脚本<ul>
+<li>即在表单填写框中直接注入JS脚本如在表单中输入XSS脚本，程序是不应该让脚本执行的</li>
+</ul>
+</li>
+<li>表单中注入SQL 脚本<ul>
+<li>与URL中参数进行XSS注入类似，就是在表单中写入SQL注入脚本提交看是否会有问题</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>Session测试</h6><p></p>
+<ul>
+<li>Session是客户端与服务器端建立的会话，总是放在服务器上的，服务器会为每次会话建立一个sessionId，每个客户会跟一个sessionID对应，并不是关闭浏览器就结束了本次会话，通常是用户执行“退出”操作或者会话超时时才会结束</li>
+<li>测试关注点<ul>
+<li>Session互窜<ul>
+<li>Session互窜即用户A的操作被用户B执行了</li>
+<li>验证Session互窜，其原理还是基于权限控制，如某笔订单只能是A进行操作，或者只能是A才能看到的页面，但是B的session窜进来却能够获得A的订单详情等</li>
+<li>Session互窜方法<ul>
+<li>多TAB浏览器，在两个TAB页中都保留的是用户A的session记录，然后在其中一个TAB页执行退出操作，登陆用户B，此时两个TAB页都是B的session，然后在另一个A的页面执行操作，查看是否能成功。预期结果：有权限控制的操作，B不能执行A页面的操作，应该报错，没有权限控制的操作，B执行了A页面操作后，数据记录是B的而不是A的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Session超时<ul>
+<li>基于Session原理，需要验证系统session是否有超时机制，还需要验证session超时后功能是否还能继续走下去</li>
+<li>测试方法：<ul>
+<li>打开一个页面，等着10分钟session超时时间到了，然后对页面进行操作，查看效果</li>
+<li>多TAB浏览器，在两个TAB页中都保留的是用户A的session记录，然后在其中一个TAB页执行退出操作，马上在另外一个页面进行要验证的操作，查看是能继续到下一步还是到登录页面</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjm8qlypd004sh0wv2u1adw2c" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-事务视图索引备份" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/09/事务视图索引备份/" class="article-date">
@@ -207,7 +347,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjm7bd0qz0047s8wvgtdcog94" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjm8qlyos004ah0wvocg2qabp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -306,7 +446,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjm7bd0ot002ts8wv4azwd5af" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjm8qlymu002vh0wv8e71gypn" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -391,7 +531,7 @@ chown 命令会更改由符号链接引用的目录的用户标识（和组标�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="cjm7bd0ot002os8wv9ylhixil" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="cjm8qlymu002th0wvrfonb1re" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -514,7 +654,7 @@ driver.quit()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjm7bd0ni001os8wvql6ycxcj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjm8qlyma002bh0wvoqq76hos" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -630,7 +770,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjm7bd0t5005js8wvsumf4o79" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjm8qlyq6005ch0wv65c6foui" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -731,7 +871,7 @@ and kcm=&apos;QTP&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjm7bd0uw006vs8wv06fld16m" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjm8qlyti006oh0wv0cwflaw9" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -862,7 +1002,7 @@ print(&apos;End send email...&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjm7bd0sa004zs8wv9z5d9zp0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjm8qlypd004mh0wvhg00p621" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -1061,7 +1201,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjm7bd0sa004vs8wv5kwntbws" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjm8qlyp2004gh0wvpi3gsidi" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -1239,114 +1379,10 @@ select rand()         #result:0.8155794216465013
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjm7bd0lc0008s8wvdgk1q4di" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjm8qlyj8000ih0wv978oju3s" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-自动化测试模型" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/01/自动化测试模型/" class="article-date">
-  <time datetime="2018-02-28T23:44:01.000Z" itemprop="datePublished">2018-03-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/01/自动化测试模型/">自动化测试模型</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>自动化测试模型</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>概述</h6><p></p>
-<ul>
-<li>自动化测试模型可以看作自动化测试框架与工具设计的思想。自动化测试不仅仅是单纯写写脚本运行就可以了，还需要考虑到如何使脚本运行效率提高，代码复用、参数化等问题</li>
-<li>自动化测试模型分为四大类：线性模型，模块化驱动测试、数据驱动、关键词驱动</li>
-</ul>
-<p></p><h6>线性模型</h6><p></p>
-<ul>
-<li>线性脚本中每个脚本都相互独立，且不会产生其他依赖与调用，其实就是简单模拟用户某个操作流程的脚本</li>
-</ul>
-<p></p><h6>模块化驱动测试</h6><p></p>
-<ul>
-<li>线性模型虽然每个用例都可以拿出来独立运行，但是用例之间重复代码很多，开发、维护成本高。其实把重复的操作代码封装为独立的公共模块，当用例执行时需要用到这部分，直接调用即可，这就是模块驱动的方式。比如登录系统、退出登录、截图函数等等</li>
-</ul>
-<p></p><h6>数据驱动测试</h6><p></p>
-<ul>
-<li>模块驱动的模型虽然解决了脚本的重复问题，但是需要测试不同数据的用例时，模块驱动的方式就不很适合了。数据驱动就是数据的改变从而驱动自动化测试的执行，最终引起测试结果的改变</li>
-<li><p>装载数据的方式可以是列表、字典或是外部文件（txt、csv、xml、excel），目的就是实现数据和脚本的分离</p>
-<pre><code>#文件名：login.py
-#coding:utf-8
-from selenium import webdriver
-from time import sleep
-class Login():
-    def user_login(self,driver,username,password):
-        driver.find_element_by_name(&apos;username&apos;).clear()
-        driver.find_element_by_name(&apos;username&apos;).send_keys(username)
-        driver.find_element_by_name(&apos;password&apos;).clear()
-        driver.find_element_by_name(&apos;password&apos;).send_keys(password)
-        driver.find_element_by_name(&apos;Submit&apos;).click()
-    def user_logout(self,driver):
-        driver.find_element_by_link_text(&apos;退出&apos;).click()
-        sleep(2)
-        driver.switch_to_alert().accept()
-
-    #模块化与参数化
-    from login import *
-    from time import sleep
-    from selenium import webdriver
-
-    driver=webdriver.Firefox()
-    driver.get(&apos;http://localhost&apos;)
-
-    Login().user_login(driver,&apos;51zxw&apos;,&apos;123456&apos;)
-    sleep(5)
-    Login().user_logout(driver)
-    sleep(5)
-
-    Login().user_login(driver,&apos;52zxw&apos;,&apos;123456&apos;)
-    sleep(5)
-    Login().user_logout(driver)
-    sleep(2)
-
-    driver.quit()
-</code></pre></li>
-</ul>
-<p></p><h6>关键字驱动测试</h6><p></p>
-<ul>
-<li>通过关键字的改变引起测试结果的改变叫关键字驱动测试。 selenium IDE也是一种传统的关键字驱动的自动化工具，Robot Framework 是一个功能更强大的关键字驱动测试框架</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjm7bd0u10063s8wvghpmyp93" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
 
     </footer>
   </div>
@@ -1375,7 +1411,7 @@ class Login():
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">3</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -1385,7 +1421,7 @@ class Login():
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.25px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 11.25px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.25px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.5px;">软件工具</a>
     </div>
   </div>
 
@@ -1394,7 +1430,7 @@ class Login():
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1405,6 +1441,10 @@ class Login():
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/09/18/JDK的安装部署/">JDK的安装部署</a>
+          </li>
         
           <li>
             <a href="/2018/09/18/nmon工具的使用/">nmon工具的使用</a>
@@ -1420,10 +1460,6 @@ class Login():
         
           <li>
             <a href="/2018/08/04/JAVA项目更新部署/">JAVA项目更新部署</a>
-          </li>
-        
-          <li>
-            <a href="/2018/07/13/Linux上部署java项目/">Linux上部署java项目</a>
           </li>
         
       </ul>
