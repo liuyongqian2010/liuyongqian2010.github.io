@@ -70,6 +70,439 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Centos7-yum源的配置与使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/16/Centos7-yum源的配置与使用/" class="article-date">
+  <time datetime="2017-12-16T10:54:34.000Z" itemprop="datePublished">2017-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/16/Centos7-yum源的配置与使用/">Centos7 yum源的配置与使用</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <hr>
+<hr>
+<p></p><h5>1.yum简介</h5><p></p>
+<p>yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了。<br><br>yum 主要功能是更方便的添加/删除/更新RPM 包，自动解决包的倚赖性问题，便于管理大量系统的更新问题。<br><br>yum 可以同时配置多个资源库(Repository)，简洁的配置文件（/etc/yum.conf），自动解决增加或删除rpm 包时遇到的依赖性问题，保持与RPM 数据库的一致性。</p><br><h5>2.yum安装</h5><br>CentOS 默认已经安装了yum，不需要另外安装，这里为了实验目的，先将yum 卸载再重新安装。<br><h6>2.1查看系统默认安装</h6><br><code>rpm -qa|grep yum</code><br><br><h6>2.2卸载yum</h6><br><code>rpm -e yum-fastestmirror-1.1.16-14.el5.centos.1 yum-metadata-parser-1.1.2-3.el5.centos yum-3.2.22-33.el5.centos</code><br><br><h6>2.3重新安装yum</h6><br>这里我们挂载系统安装光盘进行安装<br><br>– 在mnt下<code>mkdir /mnt/cdrom</code><br><br>– 挂载系统安装光盘<code>mount -t auto /dev/cdrom /mnt/cdrom</code><br><br>– yum基础安装<br><br><code>rpm -ivh yum-3.2.22-33.el5.centos.noarch.rpm yum-fastestmirror-1.1.16-14.el5.centos.1.noarch.rpm yum-metadata-parser-1.1.2-3.el5.centos.i386.rpm</code> <br><br>– 查看版本<code>yum -v</code><br><br><h6>2.4yum源配置</h6><br><p>–配置yum本地源<code>vi /etc/yum.repos.d/CentOs-Media.repo</code></p>
+
+<pre><code># CentOS-Media.repo
+#
+# This repo is used to mount the default locations for a CDROM / DVD on
+#  CentOS-5.  You can use this repo and yum to install items directly off the
+#  DVD ISO that we release.
+#
+# To use this repo, put in your DVD and use it with the other repos too:
+#  yum --enablerepo=c5-media [command]
+#  
+# or for ONLY the media repo, do this:
+#
+#  yum --disablerepo=\* --enablerepo=c5-media [command]     
+[c5-media]
+name=CentOS-$releasever - Media
+baseurl=file:///media/CentOS/
+        file:///mnt/cdrom/
+        file:///media/cdrecorder/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
+</code></pre><p></p><p>–在baseurl中修改第2个路径为/mnt/cdrom（即为光盘挂载点）将enabled=0改为1<br><br>–禁用默认的yum 网络源<code>mv CentOs-Base.repo CentOs-Base.repo.bak</code><br><br>–运行yum命令<code>yum install postgresql</code></p><p></p>
+<h6>2.5我们就用系统默认的yum源，速度也还是可以的！</h6>
+
+
+<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html" target="_blank" rel="noopener">CentOS yum 源的配置与使用</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="cjojh4ys00009jwwveeostwlj" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Python3.5连接MySQl数据库" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/16/Python3.5连接MySQl数据库/" class="article-date">
+  <time datetime="2017-12-16T09:32:45.000Z" itemprop="datePublished">2017-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/16/Python3.5连接MySQl数据库/">Python3.5连接MySQl数据库</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p><em>PyMySQL是在Pyhton3.x版本中用于连接MySQL数据库的一个库，Python2中则使用mysqldb库</em></p>
+<p>使用<code>pip3 install PyMySQl</code>进行安装PyMySQL库</p><br><h5>数据库连接</h5><br><p>连接数据库前，请先确认以下事项：</p>
+
+<ul>
+<li><p>已经创建了数据库 TESTDB</p>
+</li>
+<li><p>在TESTDB数据库中您已经创建了表 t_table</p>
+</li>
+<li><p>t_table表字段为 FIRST_NAME, LAST_NAME, AGE, SEX 和 INCOME</p>
+</li>
+<li><p>连接数据库testdb使用的用户名为 “testuser” ，密码为 “test123”，你可以自己设定或者直接使用root用户名及其密码</p>
+</li>
+<li>mysql数据库用户授权请使用grant命令</li>
+</ul>
+<p>以下示例是连接MySQL数据库中的TESTDB数据库：</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用 cursor() 方法创建一个游标对象 cursor
+cursor = db.cursor()
+# 使用 execute()  方法执行 SQL 查询 
+cursor.execute(&quot;SELECT VERSION()&quot;)
+# 使用 fetchone() 方法获取单条数据.
+data = cursor.fetchone()
+print (&quot;Database version : %s &quot; % data)
+# 关闭数据库连接
+db.close()
+</code></pre><p></p><h5>操作实例</h5><p></p>
+<h6>创建数据库表</h6>
+
+<p>如果数据库连接存在，可以使用execute()方法为数据库创建表，如下所示创建表t_table</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用 cursor() 方法创建一个游标对象 cursor
+cursor = db.cursor()
+# 使用 execute() 方法执行 SQL，如果表存在则删除
+cursor.execute(&quot;DROP TABLE IF EXISTS t_table&quot;)
+# 使用预处理语句创建表
+sql = &quot;&quot;&quot;CREATE TABLE t_table(
+         FIRST_NAME  CHAR(20) NOT NULL,
+         LAST_NAME  CHAR(20),
+         AGE INT,  
+         SEX CHAR(1),
+         INCOME FLOAT )&quot;&quot;&quot;
+cursor.execute(sql)
+# 关闭数据库连接
+db.close()
+</code></pre><h6>数据库插入操作</h6>
+
+<p>以下示例使用执行SQL insert 语句 向表t_table中插入一条记录：</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 插入语句
+sql = &quot;&quot;&quot;INSERT INTO t_table(FIRST_NAME,
+         LAST_NAME, AGE, SEX, INCOME)
+         VALUES (&apos;Mac&apos;, &apos;Mohan&apos;, 20, &apos;M&apos;, 2000)&quot;&quot;&quot;
+try:
+   # 执行sql语句
+   cursor.execute(sql)
+   # 提交到数据库执行
+   db.commit()
+except:
+   # 如果发生错误则回滚
+   db.rollback()
+# 关闭数据库连接
+db.close()
+</code></pre><h6>数据库查询操作</h6>
+
+<p>Python查询MySQL使用fetchone()方法获取单条记录，使用fetchall()方法获取多条记录</p>
+<ul>
+<li>fetchone()：该方法获取下一个查询结果集，结果集是一个对象</li>
+<li>fetchall():该方法接收全部返回结果集</li>
+<li>fetchnum(n):</li>
+<li><p>rowcount:这是一个只读属性，并返回执行execute()方法后影响的行数</p>
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 查询语句
+sql = &quot;SELECT * FROM t_table \
+       WHERE INCOME &gt; &apos;%d&apos;&quot; % (1000)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 获取所有记录列表
+   results = cursor.fetchall()
+   for row in results:
+      fname = row[0]
+      lname = row[1]
+      age = row[2]
+      sex = row[3]
+      income = row[4]
+       # 打印结果
+      print (&quot;fname=%s,lname=%s,age=%d,sex=%s,income=%d&quot; % \(fname, lname, age, sex, income ))
+except:
+   print (&quot;Error: unable to fecth data&quot;)
+# 关闭数据库连接
+db.close()
+</code></pre></li>
+</ul>
+<ul>
+<li>以上脚本执行结果如下：<br>  fname=Mac, lname=Mohan, age=20, sex=M, income=2000<h6>数据库更新操作</h6>
+
+</li>
+</ul>
+<p>更新操作用于更新数据表的的数据，以下实例将t_table表中的SEX字段全部修改为’M’,AGE字段递增1</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 更新语句
+sql = &quot;UPDATE EMPLOYEE SET AGE = AGE + 1
+                          WHERE SEX = &apos;%c&apos;&quot; % (&apos;M&apos;)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 提交到数据库执行
+   db.commit()
+except:
+   # 发生错误时回滚
+   db.rollback()
+# 关闭数据库连接
+db.close()
+</code></pre><h6>删除操作</h6>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 删除语句
+sql = &quot;DELETE FROM t_table WHERE AGE &gt; &apos;%d&apos;&quot; % (20)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 提交修改
+   db.commit()
+except:
+   # 发生错误时回滚
+   db.rollback()
+# 关闭连接
+db.close()
+</code></pre><p></p><h6>执行事务</h6><p></p>
+<p>事务机制可以确保数据一致性。<br><br>事务应该具有4个属性：原子性、一致性、隔离性、持久性,这四个属性通常称为ACID特性。<br><br>- 原子性（atomicity）。一个事务是一个不可分割的工作单位，事务中包括的诸操作要么都做，要么都不做<br><br>- 一致性（consistency）。事务必须是使数据库从一个一致性状态变到另一个一致性状态。一致性与原子性是密切相关的<br><br>- 隔离性（isolation）。一个事务的执行不能被其他事务干扰。即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰<br><br>- 持久性（durability）。持续性也称永久性（permanence），指一个事务一旦提交，它对数据库中数据的改变就应该是永久性的。接下来的其他操作或故障不应该对其有任何影响。<br><br>Python DB API 2.0 的事务提供了两个方法 commit 或 rollback<br></p>
+
+<pre><code># SQL删除记录语句
+sql = &quot;DELETE FROM EMPLOYEE WHERE AGE &gt; &apos;%d&apos;&quot; % (20)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 向数据库提交
+   db.commit()
+except:
+   # 发生错误时回滚
+   db.rollback()
+</code></pre><p>对于支持事务的数据库， 在Python数据库编程中，当游标建立之时，就自动开始了一个隐形的数据库事务。<br><br>commit()方法游标的所有更新操作，rollback（）方法回滚当前游标的所有操作。每一个方法都开始了一个新的事务。</p>
+
+<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/lhuan/p/6160023.html" target="_blank" rel="noopener">Python3.5  MySQL 数据库连接</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="cjojh4yv8001zjwwv0pcattoi" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-同时安装Python2与python3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/16/同时安装Python2与python3/" class="article-date">
+  <time datetime="2017-12-16T07:17:27.000Z" itemprop="datePublished">2017-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/16/同时安装Python2与python3/">同时安装Python2与python3</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p><em>由于平时学习中需要两种版本不时的替换，索性通过网上查找资料自己配置安装了两个版本，以下是小白整理的一些步骤。</em></p>
+<p></p><h4>Python2安装</h4><p></p>
+<ul>
+<li>1.1到<a href="https://www.python.org/" target="_blank" rel="noopener">Python官网</a>下载Python2安装文件，如：python-2.7.12.amd64.exe</li>
+<li>1.2点击”python-2.7.12.amd64”进行安装后将该安装目录下的python.exe文件重新命名为python2.exe</li>
+<li>1.3在电脑–属性–高级系统设置–高级–环境变量–系统变量–Path–编辑中添加环境变量，如”C:\Python27”，即python2的安装目录</li>
+<li>1.4在Dos窗口中输入<code>python2</code>如出现python2的版本信息即表明安装成功</li>
+<li>1.5到<a href="https://pypi.python.org/pypi/setuptools" target="_blank" rel="noopener">Pip官网</a>下载名称类似”setuptools-28.7.0.zip”的pip依赖包，在cmd中cd到该依赖包解压后的目录下，输入<code>python2 setup.py install</code></li>
+<li>1.6到<a href="https://pypi.python.org/pypi/pip" target="_blank" rel="noopener">Pip官网</a>下载名称类似”pip-8.1.2.tar”的文件并解压，在cmd中cd到该文件解压后的目录下，再次输入<code>python2 setup.py install</code></li>
+<li>1.7在cmd中输入<code>pip2</code>,如果出现”Usage”字样说明安装成功</li>
+<li>1.8测试使用：在cmd中输入<code>pip2 install selenium</code>,如果窗口命令哗哗的下滚，说明可以了；也可下载python其他包，用cmd进入到其解压后的目录下，输入<code>python2 setup.py install</code></li>
+</ul>
+<p></p><h4>Python3安装</h4><p></p>
+<ul>
+<li>1.1到<a href="https://www.python.org/" target="_blank" rel="noopener">Python官网</a>下载Python3安装文件，如：python-3.5.0-amd64.exe</li>
+<li>1.2点击”python-3.5.0-amd64.exe”进行安装后将该安装目录下的python.exe文件重新命名为python2.exe</li>
+<li>1.3在电脑–属性–高级系统设置–高级–环境变量–系统变量–Path–编辑中添加环境变量，如”C:\Python35”，即python3的安装目录</li>
+<li>1.4在Dos窗口中输入<code>python</code>如出现python3.5的版本信息即表明安装成功；由于未修改python3安装目录下的python.exe文件名，此处python就是python3</li>
+<li>1.5在cmd中输入<code>pip3</code>,如果出现”Usage”字样说明自动安装成功；python3自带pip，无需手动安装</li>
+<li>1.6测试使用：在cmd中输入<code>pip3 install selenium</code>,如果窗口命令哗哗的下滚，说明可以了；也可下载python其他包，用cmd进入到其解压后的目录下，输入<code>python setup.py install</code></li>
+</ul>
+<ul>
+<li>该文参考大神的佳作<a href="http://blog.csdn.net/u014285884/article/details/70239511" target="_blank" rel="noopener">在同一台电脑上同时安装Python2和Python3</a></li>
+<li><em>若文中内容有误，希望大家指正，谢谢!</em></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="cjojh4z1h0058jwwv1oaz2f3t" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Github-Hexo博客更换主题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/16/Github-Hexo博客更换主题/" class="article-date">
+  <time datetime="2017-12-16T06:21:52.000Z" itemprop="datePublished">2017-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/16/Github-Hexo博客更换主题/">Github+Hexo博客更换主题</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h4>1.挑选主题</h4><p></p>
+<ul>
+<li>1.1在<a href="https://hexo.io/themes/" target="_blank" rel="noopener">Themes|Hexo</a>中挑选自己中意的主题，记住名字，比如“Again”</li>
+</ul>
+<ul>
+<li>1.2在gitbash中cd到博客所在文件夹的位置如”cd /e/github/myblog”,继续输入”<a href="https://github.com/lyyourc/hexo-theme-again&quot;可克隆最新的Again主题到你的博客文件夹里面" target="_blank" rel="noopener">https://github.com/lyyourc/hexo-theme-again&quot;可克隆最新的Again主题到你的博客文件夹里面</a></li>
+<li>1.3克隆之后可在你的博客文件中的themes下看到刚刚下载的Again主题</li>
+</ul>
+<p></p><h4>2.安装主题</h4><p></p>
+<ul>
+<li>2.1修改站点配置文件（你的博客最底层目录下的_config.yml），用任一编辑器打开找到“theme”选项，将原先的主题名称删除改为Again即可，注意theme的冒号与Again之间有空格</li>
+<li><p>2.1.1这里可以按照Again的官方指导教程，配置一下Site模块中的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">title: LiuYongQian</span><br><span class="line">subtitle: 我知道你会来，所以我等···</span><br><span class="line">description: 永远相信美好的事情将要发生！</span><br><span class="line">author: 刘永前</span><br><span class="line">language: zh-Hans</span><br><span class="line">timezone: Asia/Shanghai</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.2在gitbash中输入”hexo s –debug”启动hexo服务器进行本地测试一下，在浏览器打开“<a href="http://localhost:4000/”" target="_blank" rel="noopener">http://localhost:4000/”</a></p>
+</li>
+<li>2.3修改主题配置文件（你的博客目录下的themes/Again下的_config.yml）,找到scheme关键字，保证只有一个scheme前面没有#号，说明这个scheme选中</li>
+</ul>
+<p></p><h4>3.发布主题</h4><p></p>
+<ul>
+<li>在gitbash中依次输入”hexo clean” “hexo generate” “hexo deploy”，字幕滚动完后，新博客就可以访问了</li>
+</ul>
+<p></p><h4>4.寻找大神</h4><p></p>
+<ul>
+<li>菜鸟的我参考过这位大神的佳作：<a href="http://www.jianshu.com/p/469e985288b3?from=jiantop.com" target="_blank" rel="noopener">GITHUB+HEXO博客轻松更换主题外观</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="cjojh4yt2000rjwwvb8y5fmhf" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-Git-NodeJS-Hexo创建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/15/Git-NodeJS-Hexo创建个人博客/" class="article-date">
@@ -162,7 +595,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="cjm8qlykn001dh0wv4ed38toz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="cjojh4ysu000njwwv0hwysd23" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -216,7 +649,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/验证博客是否正常？/" data-id="cjm8qlyrk006eh0wvuqtimpsz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/验证博客是否正常？/" data-id="cjojh4z4d006wjwwvfsjslktb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git学习/">Git学习</a></li></ul>
@@ -260,7 +693,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjm8qlyr0005yh0wv0dqcmh37" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/起点/" data-id="cjojh4z3o006ijwwv4utl2cco" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -310,7 +743,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjm8qlyma002gh0wv5172auev" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/14/hello-world/" data-id="cjojh4yx30031jwwvayx8ec1b" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -340,7 +773,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -350,7 +783,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.75px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.75px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.5px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 16.25px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17.5px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 15px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.25px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18.75px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.75px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.5px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.56px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14.44px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.11px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.78px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
@@ -359,7 +792,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -372,23 +805,23 @@ limit: 20
       <ul>
         
           <li>
+            <a href="/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/">CentOS下彻底删除MySQL-卸载二进制包/源码安装方式的MySQL</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/15/CentOS下彻底删除MySQL-删除系统自带的MySQL程序/">CentOS下彻底删除MySQL-删除系统自带的MySQL程序</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/15/Linu系统连接外网/">Linu系统连接外网</a>
+          </li>
+        
+          <li>
+            <a href="/2018/09/21/mysql5-6压缩版的安装配置/">mysql5.6压缩版的安装配置</a>
+          </li>
+        
+          <li>
             <a href="/2018/09/18/JDK的安装部署/">JDK的安装部署</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/18/nmon工具的使用/">nmon工具的使用</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/11/破解IDEA2018-1/">破解IDEA2018.1</a>
-          </li>
-        
-          <li>
-            <a href="/2018/08/17/Redis安装与部署/">Redis安装与部署</a>
-          </li>
-        
-          <li>
-            <a href="/2018/08/04/JAVA项目更新部署/">JAVA项目更新部署</a>
           </li>
         
       </ul>
