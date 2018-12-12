@@ -70,6 +70,329 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-虚拟机centos上部署hadoop" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/14/虚拟机centos上部署hadoop/" class="article-date">
+  <time datetime="2018-04-14T10:10:13.000Z" itemprop="datePublished">2018-04-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/14/虚拟机centos上部署hadoop/">虚拟机centos上部署hadoop</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>虚拟机centos上部署hadoop</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>基本配置</h6><p></p>
+<ul>
+<li>以下1-5的操作均以root用户身份针对虚拟机中的Linux系统</li>
+<li><p>1.root下分别配置静态IP、子网掩码、网关、域名解析</p>
+<pre><code>IPADDR=192.168.220.128    （linux系统的IP）
+NETMASK=255.255.255.0
+GATEWAY=192.168.220.2    （linux系统的网关）
+DNS1=202.106.0.20       （可以是这个）
+</code></pre></li>
+<li><p>2.root下vi /etc/sysconfig/network-scripts/ifcfg-ens33后追加如下内容：</p>
+<pre><code>IPADDR=192.168.220.128
+NETMASK=255.255.255.0
+GATEWAY=192.168.220.2
+DNS1=202.106.0.20
+
+并修改BOOTPROTO=static
+</code></pre></li>
+<li><p>3.重启网络：systemctl restart network</p>
+</li>
+<li><p>4.root下修改主机名称<br>默认情况下的主机名:localhost，修改为python333</p>
+<pre><code>vi /etc/hostname后只留存内容：python333
+</code></pre><p>  修改主机映射</p>
+<pre><code>vi /etc/hosts后追加内容：192.168.220.128 python333
+</code></pre></li>
+<li><p>5.重启linux系统，命令：reboot</p>
+</li>
+<li>6.修改Windows主机对虚拟机中linux系统的认知<br>在C:\Windows\System32\drivers\etc下的hosts中追加192.168.220.128 python333<br>即可以ssh python333远程登录linux</li>
+</ul>
+<p></p><h6>部署hadoop</h6><p></p>
+<ul>
+<li>以下步骤多以hadoop用户身份操作，即以普通用户操作</li>
+<li><p>1.hadoop用户解压文件于/home/hadoop/opt/下,命令：tar -zvxf hadoop-xxx.gx -C opt</p>
+</li>
+<li><p>2.配置hadoop环境变量,hadoop用户在工作目录下vi .bashrc后追加如下内容：</p>
+<pre><code>export HADOOP_HOME=/home/hadoop/opt/hadoop-2.9.0
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+</code></pre></li>
+<li><p>3.之后source .bashrc刷新，输入hadoop验证</p>
+</li>
+<li><p>4.配置hadoop配置文件，进入/home/hadoop/opt/hadoop-2.9.0/etc/hadoop下，添加如下信息</p>
+<pre><code>4.1.core-site.xml:默认文件系统hdfs，HDFS浏览器请求地址
+    &lt;property&gt;
+        &lt;name&gt;fs.defaultFS&lt;/name&gt;
+        &lt;value&gt;hdfs://python333:9000&lt;/value&gt; 
+    &lt;/property&gt;
+
+4.2.hdfs-site,xml：修改 Hadoop 文件块的默认备份数3为1
+    &lt;property&gt;
+        &lt;name&gt;dfs.replication&lt;/name&gt;
+        &lt;value&gt;1&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+        &lt;value&gt;file:///home/hadoop/opt/tmp/dfs/name&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;
+        &lt;value&gt;file:///home/hadoop/opt/tmp/dfs/data&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;dfs.namenode.http-address&lt;/name&gt;
+        &lt;value&gt;python333:50070&lt;/value&gt;
+    &lt;/property&gt;
+
+4.3.mapred-site.xml：启用yarn的资源调度框架，
+注：需要备份cp mapred-site.xml.template mapred-site.xml
+    &lt;property&gt;
+        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+        &lt;value&gt;yarn&lt;/value&gt;
+    &lt;/property&gt;
+
+4.4.yarn-site.xml：配置yarn主机  
+    &lt;property&gt;
+        &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
+        &lt;value&gt;python333&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property&gt;
+        &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+    &lt;/property&gt;
+
+4.5.slaves：配置dataname主机名称
+    python333
+</code></pre></li>
+<li><p>5.root用户关闭防火墙</p>
+<ul>
+<li><p>5.1.选择永久关闭（临时关闭：setenforce 0）<br></p>
+<pre><code>vi /etc/selinux/config后修改：SELINUX=disabled
+</code></pre></li>
+<li><p>5.2关闭防火墙（查看防火墙状态systemctl status firewalld）</p>
+<pre><code>临时关闭 systemctl stop firewalld
+永久关闭 systemctl disable firewalld
+</code></pre></li>
+<li><p>5.3重启电脑reboot</p>
+</li>
+</ul>
+</li>
+<li><p>6.退出管理员用户，以hadoop进入/home/hadoop/opt/下，</p>
+<ul>
+<li>6.1新建tmp目录：mkdir tmp</li>
+<li>6.2执行hdfs文件系统格式化,输入：hdfs namenode -format</li>
+</ul>
+</li>
+<li><p>7.配置密匙（公匙，私匙；可以在工作目录下）</p>
+<ul>
+<li>7.1执行ssh-keygen -t rsa，一路回车生成密匙</li>
+<li>7.2想无密码登陆到哪台电脑：ssh-copy-id python333，之后输入yes确认</li>
+</ul>
+</li>
+<li><p>8.8.验证（hadoop在工作目录下）</p>
+<ul>
+<li>8.1输入start-all.sh</li>
+<li>8.2输入jps</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjpl0gzst0069pwwvkvverfb7" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-使用LinkExtractor提取链接" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/14/使用LinkExtractor提取链接/" class="article-date">
+  <time datetime="2018-04-14T10:08:49.000Z" itemprop="datePublished">2018-04-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/14/使用LinkExtractor提取链接/">使用LinkExtractor提取链接</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>使用LinkExtractor提取链接</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>在爬取一个网站时，想要爬取的数据通常分布在多个页面中，每个页面包含一部分数据以及到其他页面的链接，提取链接有使用Selector和使用LinkExtractor两种方法</li>
+<li><p>使用Selector，因为链接也是页面中的数据，所以可以使用与提取数据相同的方法进行提取，在提取少量（几个）链接或提取规则比较简单时，使用Selector就足够了</p>
+<pre><code>next_url = response.css(&apos;ul.pager li.next a::attr(href)&apos;).extract_first()      
+if next_url:  # 如果找到下一页的url，得到绝对路径，构造新的Request 对象          
+    next_url = response.urljoin(next_url) 
+     yield scrapy.Request(next_url, callback=self.parse)
+</code></pre></li>
+<li><p>Scrapy提供了一个专门用于提取链接的类LinkExtractor，在提取大量链接或提取规则比较复杂时，使用LinkExtractor更加方便</p>
+</li>
+</ul>
+<p></p><h6>详解</h6><p></p>
+<ul>
+<li><p>首先制造一个实验环境，创建两个包含多个链接的HTML页面，使用这两个HTML文本构造两个Response对象</p>
+<pre><code>from scrapy.http import HtmlResponse
+from scrapy.linkextractors import LinkExtractor
+html1=&apos;&apos;&apos;
+    &lt;html&gt;
+        &lt;body&gt;      
+            &lt;div id=&quot;top&quot;&gt;         
+                &lt;p&gt;下面是一些站内链接&lt;/p&gt;         
+                &lt;a class=&quot;internal&quot; href=&quot;/intro/install.html&quot;&gt;Installation guide&lt;/a&gt;
+                &lt;a class=&quot;internal&quot; href=&quot;/intro/tutorial.html&quot;&gt;Tutorial&lt;/a&gt;         
+                &lt;a class=&quot;internal&quot; href=&quot;../examples.html&quot;&gt;Examples&lt;/a&gt;      
+            &lt;/div&gt;      
+            &lt;div id=&quot;bottom&quot;&gt;         
+                &lt;p&gt;下面是一些站外链接&lt;/p&gt;         
+                &lt;a href=&quot;http://stackoverflow.com/tags/scrapy/info&quot;&gt;StackOverflow&lt;/a&gt;         
+                &lt;a href=&quot;https://github.com/scrapy/scrapy&quot;&gt;Fork on Github&lt;/a&gt;      
+            &lt;/div&gt;
+        &lt;/body&gt;
+    &lt;/html&gt;
+&apos;&apos;&apos;
+html2=&apos;&apos;&apos;
+    &lt;html&gt;   
+        &lt;head&gt;       
+            &lt;script type=&apos;text/javascript&apos; src=&apos;/js/app1.js&apos;/&gt;       
+            &lt;script type=&apos;text/javascript&apos; src=&apos;/js/app2.js&apos;/&gt;   
+        &lt;/head&gt;   
+        &lt;body&gt;       
+            &lt;a href=&quot;/home.html&quot;&gt;主页&lt;/a&gt;       
+            &lt;a href=&quot;javascript:goToPage(&apos;/doc.html&apos;); return false&quot;&gt;文档&lt;/a&gt;       
+            &lt;a href=&quot;javascript:goToPage(&apos;/example.html&apos;); return false&quot;&gt;案例&lt;/a&gt;   
+        &lt;/body&gt;
+    &lt;/html&gt;
+&apos;&apos;&apos;
+response1=HtmlResponse(url=&apos;http://example1.com&apos;,body=html1,encoding=&apos;utf-8&apos;)
+response2=HtmlResponse(url=&apos;http://example2.com&apos;,body=html2,encoding=&apos;utf-8&apos;)
+</code></pre></li>
+<li><p>特例情况，LinkExtractor构造器的所有参数都有默认值，如果构造对象时不传递任何参数（使用默认值），就提取页面中所有链接</p>
+<pre><code>le=LinkExtractor()
+links=le.extract_links(response1)
+print([link.url for link in links])   #打印出html1中所有链接，5个
+</code></pre></li>
+<li><p>allow<br>接收一个正则表达式或一个正则表达式列表，提取绝对url与正则表达式匹配的链接</p>
+<pre><code>示例　提取页面example1.html中路径以/intro开始的链接：
+pattern=r&apos;/intro/.+.html$&apos;
+le=LinkExtractor(allow=pattern)
+links=le.extract_links(response1)
+print([link.url for link in links])   #打印出html1中2个以/intro开始的链接
+</code></pre></li>
+<li><p>deny<br>接收一个正则表达式或一个正则表达式列表，与allow相反，排除绝对url与正则表达式匹配的链接</p>
+<pre><code>示例　提取页面example1.html中所有站外链接（即排除站内链接）
+pattern=r&apos;.*.html$&apos;
+le=LinkExtractor(deny=pattern)
+links=le.extract_links(response1)
+print([link.url for link in links])   #打印出html1中2个站外链接
+</code></pre></li>
+<li><p>allow_domains<br>接收一个域名或一个域名列表，提取到指定域的链接</p>
+<pre><code>示例　提取页面example1.html中所有到github.com和stackoverflow.com这两个域的链接
+domains=[&apos;stackoverflow.com&apos;,&apos;github.com&apos;]
+le=LinkExtractor(allow_domains=domains)
+links=le.extract_links(response1)
+print([link.url for link in links])   #打印出html1中2个站外链接
+</code></pre></li>
+<li><p>deny_domains<br>接收一个域名或一个域名列表，与allow_domains相反,排除到指定域的链接</p>
+<pre><code>示例　提取页面example1.html中除了到github.com域以外的链接
+domains=[&apos;github.com&apos;]
+le=LinkExtractor(deny_domains=domains)
+links=le.extract_links(response1)
+print([link.url for link in links])   #打印出html1中除了github外的4个链接
+</code></pre></li>
+<li><p>restrict_xpaths<br>接收一个XPath表达式或一个XPath表达式列表，提取XPath表达式选中区域下的链接</p>
+<pre><code>示例　提取页面example1.html中&lt;div id=&quot;top&quot;&gt;元素下的链接：
+le=LinkExtractor(restrict_xpaths=&apos;//div[@id=&quot;top&quot;]&apos;)
+links=le.extract_links(response1)
+print([link.url for link in links])   #打印出html1中3个站内链接
+</code></pre></li>
+<li><p>restrict_css<br>接收一个CSS选择器或一个CSS选择器列表，提取CSS选择器选中区域下的链接</p>
+<pre><code>示例　提取页面example1.html中&lt;div id=&quot;bottom&quot;&gt;元素下的链接
+le=LinkExtractor(restrict_css=&apos;#bottom&apos;)
+links=le.extract_links(response1)
+print([link.url for link in links])   #打印出html1中2个站外链接
+</code></pre></li>
+<li><p>tags<br>接收一个标签（字符串）或一个标签列表，提取指定标签内的链接，默认为[‘a’, ‘area’]<br>attrs<br>接收一个属性（字符串）或一个属性列表，提取指定属性内的链接，默认为[‘href’]</p>
+<pre><code>示例　提取页面example2.html中引用JavaScript文件的链接
+le=LinkExtractor(tags=&apos;script&apos;,attrs=&apos;src&apos;)
+links=le.extract_links(response2)
+print([link.url for link in links])   #打印出html2中2个script链接
+</code></pre></li>
+<li><p>process_value<br>接收一个形如func(value)的回调函数。如果传递了该参数，LinkExtractor将调用该回调函数对提取的每一个链接（如a的href）进行处理，回调函数正常情况下应返回一个字符串（处理结果），想要抛弃所处理的链接时，返回None</p>
+<pre><code>示例　在页面example2.html中，某些a的href属性是一段JavaScript代码，代码中包含了链接页面的实际url地址，此时应对链接进行处理，提取页面example2.html中所有实际链接
+import re
+def process(value):
+    m=re.search(&quot;javascript:goToPage\(&apos;(.*?)&apos;&quot;,value)
+    if m:
+        value=m.group(1)
+    return value
+le=LinkExtractor(process_value=process)
+links=le.extract_links(response2)
+print([link.url for link in links])   #打印出html2中a标签中的3个链接
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/14/使用LinkExtractor提取链接/" data-id="cjpl0gzp2004fpwwv08z4ygri" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-linux文件的打包、压缩" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/12/linux文件的打包、压缩/" class="article-date">
@@ -170,7 +493,7 @@ bzip2查看：tar  -jcvf  filename.tar.bz2　
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjojh4yxo003djwwvgwbtxgyk" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjpl0gzm50035pwwvf7q9sfxw" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -253,7 +576,7 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/11/jdk部署/" data-id="cjojh4yxc0036jwwvlhvglxst" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/11/jdk部署/" data-id="cjpl0gzm00032pwwvqf2fmlbj" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -367,7 +690,7 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjojh4yww002wjwwv6cwqn3oe" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjpl0gzl9002qpwwvi2i2dlau" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -516,7 +839,7 @@ test2.update_many({&apos;x&apos;:4},{&apos;$set&apos;:{&apos;x&apos;:1,&apos;y&a
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjojh4z2v0062jwwv6l95muam" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjpl0gzs9005zpwwvwsbafwpd" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -719,7 +1042,7 @@ def getAll(num):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjojh4z21005kjwwvip4k1cfo" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjpl0gzr4005dpwwvw7ff0a5q" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -823,7 +1146,7 @@ response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjojh4yzi0048jwwvy7z5xhz1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjpl0gzoi0045pwwvyjfs86x4" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -898,7 +1221,7 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjojh4yzc0044jwwvy528fikb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjpl0gzo4003ypwwv0lko2h7y" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1039,393 +1362,10 @@ def fabu(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjojh4z180052jwwvg0k3vf8d" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjpl0gzq4004vpwwvfjns7mqv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-HTTP报文" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/01/HTTP报文/" class="article-date">
-  <time datetime="2018-04-01T03:15:03.000Z" itemprop="datePublished">2018-04-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/01/HTTP报文/">HTTP报文</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>HTTP报文</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>定义</h6><p></p>
-<ul>
-<li>用于 HTTP 协议交互的信息被称为 HTTP 报文。请求端（客户端）的<br>HTTP 报文叫做请求报文，响应端（服务器端）的叫做响应报文。<br>HTTP 报文本身是由多行（用 CR+LF 作换行符）数据构成的字符串文<br>本</li>
-<li><p>一个HTTP报文由3部分组成，分别是:起始行（start line）、首部（header）、主体（body），样子就像这个：</p>
-<pre><code>#请求报文的格式：                       #响应报文的格式：
-&lt;method&gt; &lt;request-URL&gt; &lt;version&gt;       &lt;version&gt; &lt;status&gt;&lt;reason-phrase&gt;
-&lt;headers&gt;                              &lt;headers&gt;
-
-&lt;entity-body&gt;                          &lt;entity-body&gt;
-</code></pre></li>
-<li><p>格式内容概略</p>
-<pre><code>##method
-方法　　　　　　　　    描述　　　　　　　　      是否包含主体
-GET 　　　　从服务器获取一份文档 　　　　　　　　 　   否
-HEAD 　　　只从服务器获取文档的首部 　　　　　　  　　　否
-POST 　　   向服务器发送需要处理的数据　　　　　　　　　是
-PUT 　　　　将请求的主体部分存储在服务器上 　　　  　　 是
-TRACE 　　 对可能经过代理服务器传送到服务器上去的报文进行跟踪 　　否
-OPTIONS 　 决定可以在服务器上执行哪些方法 　　　　　　  否
-DELETE 　　从服务器上删除一份文档 　　　　　　　　　　  否   
-
-##request-URL   
-命名了所有请求资源，或者URL路径组件的完整URL，
-一个完整的包括类型、主机名和可选路径名的统一资源引用名，
-如：http://www.example.com/path/to/file.html
-
-##version
-报文所使用的HTTP版本，其格式如：HTTP/&lt;major&gt;.&lt;minor&gt;
-其中主要版本号(major)和次要版本号(minor)都是整数，如：HTTP/1.1
-
-##status、reason-phrase
-状态码                类别                原因短语
-1XX Informational（信息性状态码）     接收的请求正在处理
-2XX Success        （成功状态码）         请求正常处理完毕
-3XX Redirection（重定向状态码）          需要进行附加操作以完成请求
-4XX Client Error（客户端错误状态码）  服务器无法处理请求
-5XX Server Error（服务器错误状态码）  服务器处理请求出错
-
-##headers
-可以有0个或多个首部，每个首部都包含一个名字，后面跟着一个冒号(:)，然后是一个可选的空格，接着是一个值，最后是一个CRLF
-
-##entity-body
-实体的主体部分包含一个由任意数据组成的数据块。并不是所有的报文都包含实体的主体部分。如GET请求就不包含实体
-</code></pre></li>
-</ul>
-<p></p><h6>headers-首部分类</h6><p></p>
-<ul>
-<li><p>通用首部</p>
-<ul>
-<li>既可以出现在请求报文中，也可以出现在响应报文中</li>
-<li><p>通用的信息性首部：</p>
-<pre><code>    首部 　　　　　　　　　　        描述
-Connection 　　　　　　  允许客户端和服务器指定与请求/响应连接有关的选项
-Date 　　　　　　　　　   提供日期和时间标志，说明报文是什么时间创建的
-MIME-Version 　　　　　  给出了发送端使用的MIME版本
-Trailer 　　　　　　　　　如果报文采用了分块传输编码(chunked transfer encoding)方式，就可以用这个首部列出位于报文拖鞋 (trailer)部分的首部集合。
-Transfer-Encoding 　　  告知接收端为了保证报文的可靠传输，对报文采用了什么编码方式。
-Update 　　　　　　　　   给出了发送端可能想要&quot;升级&quot;使用的新版本或协议
-Via 　　　　　　　　　　   显示了报文经过的中间节点(代理、网关)
-</code></pre></li>
-<li><p>通用缓存首部：</p>
-<pre><code>    首部 　　　　　　　　　　描述
-Cache-Control 　　　　  用于随报文传送缓存指示
-Pragma 　　　　　　　　  另一种随报文传送指示的方式，但并不专用于缓存
-</code></pre></li>
-</ul>
-</li>
-<li><p>请求首部</p>
-<ul>
-<li>请求首部是在请求报文中有意义的首部。用于说明是谁或什么在发送请求，请求源自何处，或者客户端的喜好及能力。服务器可以根据请求首部给出的客户端的信息，试着为客户端提供更好的响应</li>
-<li><p>请求的信息性首部：</p>
-<pre><code>    首部 　　　　　　　　　　　　 描述
-Client-IP 　　　　　　　　　提供了运行客户端的机器的IP地址
-From 　　　　　　　　　　　 提供了客户端用户的E-mail地址
-Host 　　　　　　　　　　　 给出了接收请求的服务器的主机名和端口号
-Referer 　　　　　　　　　　提供了包含当前请求URI的文档的URL
-UA-Color 　　　　　　　　　 提供了与客户端显示器的显示颜色有关的信息
-UA-CPU 　　　　　　　　　　 给出了客户端CPU的类型或制造商
-US-Disp 　　　　　　　　　　提供了与客户端显示器(屏幕)能力有关的信息
-US-OS 　　　　　　　　　　  给出了客户端显示器的像素信息
-UA-Pixels 　　　　　　　　　提供了客户端显示器的像素信息
-User-Agent 　　　　　　　　 将发起请求的应用程序名称告知服务器(User-Agent)用户代理，其实不就是浏览器吗
-</code></pre></li>
-<li><p>Accept首部<br>Accept首部为客户端提供了一种将其喜好和能力告知服务器的方式，包括他们想要什么，可以使用什么，以及最重要的，他们不想要什么。这样服务器就可以根据这些额外信息，对要发送的内容做出更明智的决定。Accept首部会使连接的两端都受益。客户端会得到他们想要的内容，服务器则不会浪费其时间和带宽来发送客户端无法使用的东西</p>
-<pre><code>    首部 　　　　　　　　　　 描述
-Accept 　　　　　　　　   告诉服务器能够发送哪些媒体类型
-Accept-Charset 　　　　  告诉服务器能够发送哪些字符集
-Accept-Encoding 　　　　 告诉服务器能够发送哪些编码方式
-Accept-Language 　　　   告诉服务器能够发送哪些语言
-TE 　　　　　　　　　　　  告诉服务器可以使用哪些扩展传输编码
-</code></pre></li>
-<li><p>条件请求首部<br>有时客户端希望为请求加上某些限制。比如客户端已经有了一份副本，就希望只在服务器上的文档与客户端拥有的副本有所区别时，才请求服务器传输文档。通过条件请求首部，客户端就可以加上这种限制，要求服务器在对请求进行相应之前，确保某个请求为真</p>
-<pre><code>    首部 　　　　　　　　　　 描述
-Expect 　　　　　　　　  允许客户端列出某请求所要求的服务器行为
-If-Match 　　　　　　　　如果实体标记与文档当前的实体标记相匹配，就或者这份文档
-If-Modified-Since 　　　除非在某个指定的日期之后资源被修改过，否则就限制这个请求
-If-Range 　　　　　　　　允许对文档的某个范围进行条件请求
-If-Unmodified-Since 　　除非在某个指定的日期之后资源没有被修改过，否则就限制这个请求
-Range 　　　　　　　　　 如果服务器支持范围请求，就请求资源的指定范围
-</code></pre></li>
-<li><p>安全请求首部<br>HTTP本身就支持一种简单的机制，可以对请求进行质询/响应认证。这种机制要求客户端在获取特定的资源之前，先对自身进行认证，这样就可以使事务稍微安全一些</p>
-<pre><code>    首部 　　　　　　　　　　 描述
-Authorization 　　　　　 包含了客户端提供给服务器，以便对其自身进行认证的数据
-Cookie 　　　　　　　　　 客户端用它想服务器传送一个令牌-他并不是真正的安全首部，但却是隐含了安全功能
-Cookie2 　　　　　　　　  用来说明请求端支持的cookie版本
-</code></pre></li>
-<li><p>代理请求首部<br>随着因特网上代理的普遍应用，人们定义了几个首部来协助其更好地工作</p>
-<pre><code>    首部 　　　　　　　　　　 描述
-Max-Forword 　　　　　   在通往源端服务器的路径上，将请求转发给其他代理或网关的最大次数-与TRACE方法一同使用
-Proxy-Authorization 　　与Authorization首部相同，但这个首部是在与代理进行认证时使用的
-Proxy-Connection 　　　 与Connection首部相同，但这个首部是在于代理建立连接时使用的
-</code></pre></li>
-</ul>
-</li>
-<li><p>响应首部</p>
-<ul>
-<li>响应首部为客户端提供了一些额外的信息，比如谁在发送响应、响应者的功能，甚至与响应相关的一些特殊指令。这些首部有助于客户端处理响应，并在将来发起更好的请求</li>
-<li><p>响应的信息性首部：</p>
-<pre><code>首部 　　　　　　　　     描述
-Age 　　　　　　　　 (从最初创建开始)响应持续时间
-Public 　　　　　　　服务器为其资源支持的请求方法列表
-Retry-After 　　　　如果资源不可用的话，再次日期或时间重试
-Server 　　　　　　　服务器应用程序软件的名称和版本
-Title 　　　　　　　 对HTML文档来说，就是HTML文档的源端给出的标题
-Warning 　　　　　　 比原因短语中更详细的一些警告报文
-</code></pre></li>
-<li><p>协商首部<br>如果资源有多种表示方法-比如，如果服务器上有某文档的法语和德语译稿，HTTP/1.1可以为服务器和客户端提供对资源进行协商的能力</p>
-<pre><code>首部　　　　　　　　         描述
-Accept-Ranges 　　 对此资源来说，服务器可接受的范围类型
-Vary 　　　　　　　  服务器查看的其他首部的列表，可能会使响应发生变化；
-                   也就是说，这是一个首部列表，服务器会根据这些首部的内容挑选出最合适的资源版本　　　　　　　　　　　 发送给客户端
-</code></pre></li>
-<li><p>安全响应首部</p>
-<pre><code>      首部                              描述
-Proxy-Authenticate             来自代理的对客户端的质询列表
-Set-Cookie                     不是真正的安全首部，但隐含有安全功能；可以在客户端设置一个令牌，以便服务器对客户端进行标识。
-Set-Cookie2                 与Set-Cookie类似。
-WWW-Authenticate             来自服务器的对客户端的质询列表
-</code></pre></li>
-</ul>
-</li>
-<li><p>实体首部</p>
-<ul>
-<li>描述主体的长度和内容，或者资源自身</li>
-<li>由于请求和响应文本中都可能包含实体部分，所以在这两种类型的报文中都可能出现这些首部。实体首部提供了有关实体及其内容的大量信息，从有关对象类型的信息，到能够对资源使用的各种有效的请求方法。总之，实体首部可以告知报文的接收者它在对什么进行处理</li>
-<li><p>实体信息性首部:</p>
-<pre><code>首部 　　　　　　　        描述
-Allow 　　　　　　  列出了可以对此实体执行的请求方法
-Location 　　　　  告知客户端实体实际上位于何处；用于将接收端定向到资源的位置上去
-</code></pre></li>
-<li><p>内容首部<br>内容首部提供了与实体内容有关的特定信息，说明了其类型、尺寸以及处理它所需的其他有用信息。比如，Web浏览器可以通过查看返回的内容类型，得知如何显示对象</p>
-<pre><code>    首部 　　　　　　　　　　　  描述
-Content-Base 　　　　　　   解析主体中的相对URL时使用的基础URL
-Content-Encoding 　　　　  对主体执行的任意编码方式
-Content-Language 　　　　  理解主体时最适宜使用的自然语言
-Content-Length 　　　　　  主体的长度或尺寸
-Content-Location 　　　　　资源实际所处的位置
-Content-MD5 　　　　　　　 主体的MD5校验
-Content-Range 　　　　　　 在整个资源中此实体表示的字节范围
-Content-Type 　　　　　　  这个主体的对象模型
-</code></pre></li>
-<li><p>实体缓存首部<br>通用的缓存首部说明了如何或什么时候进行缓存。实体的缓存首部提供了与被缓存实体有关的信息，比如验证已缓存的资源副本是否仍然有效所需的信息，以及更好地估计已缓存资源合适失效所需的线索</p>
-<pre><code>首部 　　　　　　         描述
-ETag 　　　　　   与此实体有关的实体标记
-Expires 　　　　  实体不在有效，要从原始的源端再次获取此实体的日期和时间
-Last-Modified 　 这个实体最后一次被修改的日期和时间
-</code></pre></li>
-</ul>
-</li>
-<li><p>以上参考大神佳作<a href="https://blog.csdn.net/lmj1436140682/article/details/63262459" target="_blank" rel="noopener">HTTP 报文及作用</a>，参考大神佳作<a href="https://blog.csdn.net/wzx19840423/article/details/47811559" target="_blank" rel="noopener">HTTP报文详解</a></p>
-</li>
-</ul>
-<p></p><h6>实体部分</h6><p></p>
-<ul>
-<li>实体的主体是HTTP报文的负荷,就是HTTP要传输的内容</li>
-<li>HTTP报文可以承载很多类型的数字数据，图片、视频、HTML文档、软件应用程序、信用卡事务、电子邮件等</li>
-<li>参考大神佳作<a href="https://blog.csdn.net/u012422829/article/details/51570652" target="_blank" rel="noopener">报文实体和编码</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjojh4ytj0012jwwvijjaev6u" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-scrapy基础了解" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/29/scrapy基础了解/" class="article-date">
-  <time datetime="2018-03-29T01:25:36.000Z" itemprop="datePublished">2018-03-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/29/scrapy基础了解/">scrapy基础了解</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>scrapy基础了解</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中</li>
-<li>依赖包<ul>
-<li>1.wheel      安装该文件后就可以安装.whl的依赖文件</li>
-<li>2.lxml       解析页面 </li>
-<li>3.PyOpenssl</li>
-<li>4.Twisted</li>
-<li>5.Pywin32，pypiwin32</li>
-<li>6.Scrapy </li>
-</ul>
-</li>
-<li>基本思路:<img src="../scrapy.jpg" alt="Scrapy基本思路"><ul>
-<li>1.Scrapy Engine: 引擎，负责Spiders、ItemPipeline、Downloader、Scheduler中间的通讯，信号、数据传递等等！</li>
-<li>2.Scheduler(调度器): 它负责接受引擎发送过来的requests请求，并按照一定的方式进行整理排列，入队、并等待Scrapy Engine(引擎)来请求时，交给引擎</li>
-<li>3.Downloader（下载器）：负责下载Scrapy Engine(引擎)发送的所有Requests请求，并将其获取到的Responses交还给Scrapy Engine(引擎)，由引擎交给Spiders来处理</li>
-<li>4.Spiders：它负责处理所有Responses,从中分析提取数据，获取Item字段需要的数据，并将需要跟进的URL提交给引擎，再次进入Scheduler(调度器)</li>
-<li>5.Item Pipeline：它负责处理Spiders中获取到的Item，并进行处理，比如去重，持久化存储（存数据库，写入文件，总之就是保存数据用的）</li>
-</ul>
-</li>
-<li>测试网站：<a href="http://quotes.toscrape.com/" target="_blank" rel="noopener">http://quotes.toscrape.com/</a></li>
-</ul>
-<p></p><h6>详解</h6><p></p>
-<ul>
-<li><p>1.进入要放置项目的目录，shift+右键的shell，输入命令：<code>scrapy startproject quotetutorial</code>，创建项目</p>
-<ul>
-<li>spiders    #这个目录放置爬虫</li>
-<li>items.py   #这个文件定义我们需要获取的字段</li>
-<li>pipelines.py    #这个文件用来定义数据存储</li>
-<li>settings.py        #这个文件用来设置</li>
-</ul>
-</li>
-<li><p>2.进入项目，<code>cd quotetutorial</code>,创建爬虫：<code>scrapy genspider quotes quotes.toscrape.com</code> </p>
-</li>
-<li><p>3.在spiders文件夹下的quotes中编写自己的爬虫</p>
-<pre><code>import scrapy
-from quotetutorial.items import QuoteItem
-class QuotesSpider(scrapy.Spider):
-    name = &apos;quotes&apos;
-    allowed_domains = [&apos;quotes.toscrape.com&apos;]
-    start_urls = [&apos;http://quotes.toscrape.com/&apos;]
-
-    def parse(self, response):
-        quotes=response.css(&apos;.quote&apos;)
-        for quote in quotes:
-            item=QuoteItem() #先声明一个对象，然后赋值
-            text=quote.css(&apos;.text::text&apos;).extract_first()
-            author=quote.css(&apos;.author::text&apos;).extract_first()
-            tags=quote.css(&apos;.tags .tag::text&apos;).extract()
-            item[&apos;text&apos;]=text
-            item[&apos;author&apos;]=author
-            item[&apos;tags&apos;]=tags
-            yield item #做下一步的存储操作
-        next=response.css(&apos;.pager .next a::attr(href)&apos;).extract_first()
-        url=response.urljoin(next)
-        yield scrapy.Request(url=url,callback=self.parse)
-</code></pre></li>
-<li><p>4.在items.py文件中定义一些字段，这些字段用来临时存储需要保存的数据。方便后面保存数据到其他地方，比如数据库或者本地文本之类的</p>
-<pre><code>import scrapy
-class QuoteItem(scrapy.Item):
-    text=scrapy.Field()
-    author=scrapy.Field()
-    tags=scrapy.Field()
-</code></pre></li>
-<li><p>5.在Terminal中运行爬虫<code>scrapy crawl quotes</code>;运行并且保存爬取数据为json格式<code>scrapy crawl quotes -o quotes.json</code> </p>
-</li>
-<li><p>6.保存数据到Mongodb中</p>
-<ul>
-<li><p>6.1在pipelines.py编写连接</p>
-<pre><code>from scrapy.exceptions import DropItem
-import pymongo
-class TextPipeline(object):
-    def __init__(self):
-        self.limit=50
-    def process_item(self, item, spider):
-        if item[&apos;text&apos;]:
-            if len(item[&apos;text&apos;])&gt;self.limit:
-                item[&apos;text&apos;]=item[&apos;text&apos;][0:self.limit].rstrip()+&apos;...&apos;
-            return item
-        else:
-            return DropItem(&apos;Missing Text&apos;)   #如果text不存在，则抛出异常
-class MongoPipeline(object):
-    def __init__(self,mongo_uri,mongo_db):
-        self.mongo_uri=mongo_uri
-        self.mongo_db=mongo_db
-    @classmethod
-    def from_crawler(cls,crawler):
-        return cls(
-            mongo_uri=crawler.settings.get(&apos;MONGO_URI&apos;),
-            mongo_db=crawler.settings.get(&apos;MONGO_DB&apos;)
-        )
-    def open_spider(self,spider):
-        self.client=pymongo.MongoClient(self.mongo_uri)
-        self.db=self.client[self.mongo_db]
-    def process_item(self,item,spider):
-        name=item.__class__.__name__
-        self.db[name].insert(dict(item))
-        return item
-    def close_spider(self,spider):
-        self.client.close()  
-</code></pre></li>
-<li><p>6.2在settings中设置</p>
-<pre><code>MONGO_URI=&apos;localhost:27017&apos;
-MONGO_DB=&apos;quotetutorial&apos;
-
-ITEM_PIPELINES = {
-   &apos;quotetutorial.pipelines.TextPipeline&apos;: 300,
-   &apos;quotetutorial.pipelines.MongoPipeline&apos;: 1000,
-}
-</code></pre></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjojh4yzf0046jwwv8ned770b" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
 
     </footer>
   </div>
@@ -1454,7 +1394,7 @@ ITEM_PIPELINES = {
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -1464,7 +1404,7 @@ ITEM_PIPELINES = {
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.56px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14.44px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.11px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.78px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 13px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 16px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 12px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12px;">软件工具</a>
     </div>
   </div>
 
@@ -1473,7 +1413,7 @@ ITEM_PIPELINES = {
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1486,6 +1426,14 @@ ITEM_PIPELINES = {
       <ul>
         
           <li>
+            <a href="/2018/12/12/mysql数据库安装/">mysql数据库安装</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/30/测试过程的遇到的问题/">测试过程的遇到的问题</a>
+          </li>
+        
+          <li>
             <a href="/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/">CentOS下彻底删除MySQL-卸载二进制包/源码安装方式的MySQL</a>
           </li>
         
@@ -1495,14 +1443,6 @@ ITEM_PIPELINES = {
         
           <li>
             <a href="/2018/11/15/Linu系统连接外网/">Linu系统连接外网</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/21/mysql5-6压缩版的安装配置/">mysql5.6压缩版的安装配置</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/18/JDK的安装部署/">JDK的安装部署</a>
           </li>
         
       </ul>

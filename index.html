@@ -70,6 +70,184 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-mysql数据库安装" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/12/mysql数据库安装/" class="article-date">
+  <time datetime="2018-12-12T09:48:10.000Z" itemprop="datePublished">2018-12-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/12/mysql数据库安装/">mysql数据库安装</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>mysql数据库安装</h5><p></p>
+<hr>
+<hr>
+<ul>
+<li><p>0.目前安装的版本是mysql-5.6.39-linux-glibc2.12-x86_64.tar.gz</p>
+</li>
+<li><p>1.将安装包拷贝到<code>/usr/local</code>目录下并解压</p>
+<pre><code>tar -zvxf mysql-5.6.39-linux-glibc2.12-x86_64.tar.gz
+之后重命名
+mv mysql-5.6.39-linux-glibc2.12-x86_64 mysql
+</code></pre></li>
+<li><p>2.以下动作均在/usr/local目录下执行</p>
+<pre><code>添加mysql用户组，执行：groupadd mysql
+为mysql用户组添加mysql用户，执行：useradd -r -g mysql -s /bin/false mysql
+为mysql用户设置密码，执行：passwd mysql    密码可以是mysql
+将文件及其子文件的所有者设为mysql组的mysql用户，执行：chown -R mysql:mysql /usr/local/mysql
+</code></pre></li>
+<li><p>3.安装数据库</p>
+<pre><code>/usr/local/mysql/scripts/mysql_install_db --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
+</code></pre></li>
+<li><p>4.安装mysql数据库后回到/usr/local目录下</p>
+<pre><code>修改mysql目录拥有者为root用户，执行：chown -R root:root ./mysql
+修改mysql/data目录拥有者为mysql用户，执行：chown -R mysql:mysql ./mysql/data
+</code></pre></li>
+<li><p>5.设置mysql服务开机启动，依次执行如下</p>
+<pre><code>cd mysql/support-files后复制mysql配置文件到系统配置目录下执行
+cp my-default.cnf /etc/my.cnf
+cp mysql.server /etc/init.d/mysql后赋予可执行权限执行
+chmod +x /etc/init.d/mysql后添加服务执行
+chkconfig --add mysql后显示服务列表执行
+chkconfig --list或者chkconfig --list|grep mysql
+如果看到mysql的服务，并且3,4,5都是on的话则成功，如果是off，则执行
+chkconfig --level 345 mysql on
+</code></pre></li>
+<li><p>6.添加环境变量，<code>vi /etc/profile</code>追加如下内容后执行<code>source /etc/profile</code>，使其重新加载并生效</p>
+<pre><code>MYSQL_HOME=/usr/local/mysql
+PATH=$PATH:$MYSQL_HOME/bin
+export MYSQL_HOME PATH
+</code></pre></li>
+<li><p>7.修改mysql配置文件<code>vi /etc/my.cnf</code>，修改内容如下</p>
+<pre><code>#These are commonly set,remove the # and set as required
+basedir=/usr/local/mysql
+datadir=/usr/local/mysql/data
+port=3306
+server_id=1
+socket=/tmp/mysql.sock
+</code></pre></li>
+<li><p>8.保存退出后，启动mysql服务</p>
+<pre><code>启动mysql服务，执行service mysql start
+查看mysql服务，执行service mysql status
+</code></pre></li>
+<li><p>9.其他必须操作</p>
+<ul>
+<li><p>9.1 root初始密码均为空，修改mysql的root用户密码执行</p>
+<pre><code>cd /usr/local/mysql
+./bin/mysqladmin -u root password &apos;新的密码&apos;
+</code></pre></li>
+<li><p>9.2 去除匿名用户登录执行</p>
+<pre><code>delete from mysql.user where User=&apos;&apos;;
+flush privileges;
+</code></pre></li>
+<li><p>9.3 授权允许所有外部链接访问执行</p>
+<pre><code>mysql -uroot -p
+&gt;grant all privileges on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;登录密码&apos; with grant option;
+&gt;flush privileges;
+</code></pre></li>
+<li><p>9.4 添加需要监听的端口执行</p>
+<pre><code>/sbin/iptables -l INPUT -p tcp --dport 3306 -j ACCEPT
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/12/12/mysql数据库安装/" data-id="cjpl0gzv1007epwwvnalff6yn" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-测试过程的遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/30/测试过程的遇到的问题/" class="article-date">
+  <time datetime="2018-11-30T02:05:09.000Z" itemprop="datePublished">2018-11-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/30/测试过程的遇到的问题/">测试过程的遇到的问题</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>测试过程的遇到的问题</h5><p></p>
+<hr>
+<hr>
+<h6></h6>
+
+<p></p><h6>jmeter报错“java.net.BindException: Address already in use: connect”解决办法</h6><p></p>
+<ul>
+<li>1.在cmd中，用regedit命令打开注册表 </li>
+<li>2.找到并到达HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters下　</li>
+<li>3.右击parameters，添加一个新的DWORD，名字为MaxUserPort 　　</li>
+<li>4.然后双击MaxUserPort，输入数值数据为65534，基数选择十进制（如果是分布式运行的话，控制机器和负载机器都需要这样操作） </li>
+<li>5.修改配置完毕之后重启电脑</li>
+</ul>
+<p></p><h6>使用sourceTree拉取代码过程中报错“fatal: Authentication failed for”解决办法</h6><p></p>
+<ul>
+<li>1.控制面板—用户账户—凭证管理器—windows凭证</li>
+<li>2.在“普通凭证”中删除相关联的git库</li>
+<li>3.重新拉取代码，会提示你重新输入用户名和密码。</li>
+<li>4.基本问题就解决了</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/30/测试过程的遇到的问题/" data-id="cjpl0gzs5005xpwwv1ptg32l6" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/" class="article-date">
@@ -120,7 +298,7 @@ id mysql              #查看
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/" data-id="cjojh4yrv0008jwwvhobs9mkk" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/" data-id="cjpl0gzfc0004pwwvdh2gomy9" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -198,7 +376,7 @@ rm /etc/my.cnf
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/15/CentOS下彻底删除MySQL-删除系统自带的MySQL程序/" data-id="cjojh4yrn0005jwwv93p1rnss" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/11/15/CentOS下彻底删除MySQL-删除系统自带的MySQL程序/" data-id="cjpl0gzfg0005pwwv90kjqoms" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -255,7 +433,7 @@ DNS1=202.106.0.20            #可以在网卡信息中设置DNS服务地址
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/15/Linu系统连接外网/" data-id="cjojh4yuj001ljwwvod2luss8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/11/15/Linu系统连接外网/" data-id="cjpl0gzim001fpwwvgumj29uu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -345,7 +523,7 @@ mysql&gt;flush privileges;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/21/mysql5-6压缩版的安装配置/" data-id="cjojh4yxs003fjwwvllsa8beq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/09/21/mysql5-6压缩版的安装配置/" data-id="cjpl0gzmk003cpwwvws2qeabf" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -427,7 +605,7 @@ C:\Program Files\Java\jdk1.8.0_181\lib\tools.jar
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/18/JDK的安装部署/" data-id="cjojh4yts0017jwwv1zxjf0ms" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/09/18/JDK的安装部署/" data-id="cjpl0gzht0013pwwv6eeo7nm5" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -518,7 +696,7 @@ cp nmon_x86_64_centos7 /usr/local/bin/nmon
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/18/nmon工具的使用/" data-id="cjojh4yye003kjwwvmyyat3xb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/09/18/nmon工具的使用/" data-id="cjpl0gzna003hpwwvbt4q02kg" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -573,7 +751,7 @@ cp nmon_x86_64_centos7 /usr/local/bin/nmon
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/11/破解IDEA2018-1/" data-id="cjojh4z2z0064jwwvxwsn48wq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/09/11/破解IDEA2018-1/" data-id="cjpl0gzsd0061pwwvprr7ivgm" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -679,312 +857,7 @@ sudo kill 进程
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/17/Redis安装与部署/" data-id="cjojh4yvy002cjwwv7behj236" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-JAVA项目更新部署" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/04/JAVA项目更新部署/" class="article-date">
-  <time datetime="2018-08-04T08:01:43.000Z" itemprop="datePublished">2018-08-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/04/JAVA项目更新部署/">JAVA项目更新部署</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>JAVA项目更新部署</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>先备份</h6><p></p>
-<ul>
-<li><p>将当前的war包备份</p>
-<pre><code>cd /mnt/project/apache-tomcat-7.0.79-info 
-sudo cp -f ./jeeplus.war /mnt/project/copyInfo/
-</code></pre></li>
-</ul>
-<p></p><h6>断服务</h6><p></p>
-<ul>
-<li><p>查看进程后杀掉该Tomcat进程</p>
-<pre><code>cd /mnt/project/apache-tomcat-7.0.79-info 
-ps -ef |grep tomcat  
-sudo kill ***
-</code></pre></li>
-</ul>
-<p></p><h6>打包war</h6><p></p>
-<ul>
-<li>使用软件有两个，一个是sourcetree，负责从git上拉取代码；另一个是java开发编辑工具ideaIU，负责调试、打包</li>
-<li><p>在本地需要有一个项目工程文件的存放位置，比如<code>C:\ruihuaoa</code>，在先期，需要将工程代码全部拉取到本地，命令如下：</p>
-<pre><code>cd c/ruihuaoa
-git clone http://code.gangwaninfo.com/ruihuaoa/jeeplus_maven.git
-</code></pre></li>
-<li><p>在日常的更新部署中，先删除本地的war包</p>
-<pre><code>在本地C:\ruihuaoa\jeeplus_maven\target下删除war文件
-</code></pre></li>
-<li><p>之后使用sourcetree拉取代码到本地后，如果拉取的代码中有关于js的代码，可以先在ideaIU中运行一次，之后再打包</p>
-<pre><code>Build--Build Artifact--jeeplus:war--build
-</code></pre></li>
-</ul>
-<p></p><h6>删除替换</h6><p></p>
-<ul>
-<li><p>1.上传新的war包</p>
-<pre><code>cd /mnt/project/apache-tomcat-7.0.79-info
-sudo rm -rf jeeplus.war      
-sudo rm -rf ./webapps/ROOT
-之后使用XFTP5远程上传新的war包到/mnt/project/apache-tomcat-7.0.79-info下
-</code></pre></li>
-<li><p>2.启动一次服务，在webapps下生成新的ROOT文件夹后，再断了服务</p>
-<pre><code>cd /mnt/project/apache-tomcat-7.0.79-info
-sudo ./bin/startup.sh
-</code></pre></li>
-<li><p>3.要以普通人权限替换配置文件，需要赋予操作权限</p>
-<pre><code>cd /mnt/project/apache-tomcat-7.0.79-info
-sudo chmod -R 777 ../apache-tomcat-7.0.79-info
-</code></pre></li>
-<li><p>4.替换配置文件jeeplus.properties</p>
-<pre><code>在XFTP5中，远程覆盖替换jeeplus.properties，路径是：
-/mnt/project/apache-tomcat-7.0.79-info/webapps/ROOT/WEB-INF/classes
-</code></pre></li>
-</ul>
-<p></p><h6>开服务</h6><p></p>
-<ul>
-<li><p>启动服务</p>
-<pre><code>cd /mnt/project/apache-tomcat-7.0.79-info
-sudo ./bin/startup.sh
-</code></pre></li>
-</ul>
-<p></p><h6>看日志</h6><p></p>
-<ul>
-<li><p>查看服务器输出内容</p>
-<pre><code>tail -f /mnt/project/apache-tomcat-7.0.79-info/logs/catalina.out
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/04/JAVA项目更新部署/" data-id="cjojh4ytn0014jwwvj9okziah" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Linux上部署java项目" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/07/13/Linux上部署java项目/" class="article-date">
-  <time datetime="2018-07-13T10:42:33.000Z" itemprop="datePublished">2018-07-13</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/07/13/Linux上部署java项目/">Linux上部署java项目</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Linux上部署java项目</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>关闭防火墙</h6><p></p>
-<ul>
-<li>目前安装的linux版本是CentOS7</li>
-<li>永久关闭防护墙 <code>systemctl disable firewalld</code></li>
-</ul>
-<p></p><h6>安装JDK</h6><p></p>
-<ul>
-<li>目前版本是jdk-7u79-linux-x64.tar.gz</li>
-<li><p>安装步骤：</p>
-<ul>
-<li>1.在<code>/usr</code>目录下<code>mkdir java</code>，把jdk安装包放到该文件夹下并解压<code>tar -zvxf jdk-7u79-linux-x64.tar.gz</code></li>
-<li><p>2.修改系统环境变量<code>vi /etc/profile</code>在文件尾部添加如下内容：</p>
-<pre><code>JAVA_HOME=/usr/java/jdk1.7.0_79
-PATH=$PATH:$JAVA_HOME/bin
-CLASSPATH=.:$JAVA_HOME/lib
-export JAVA_HOME PATH CLASSPATH
-</code></pre><p><em>3.之后重新加载，使其生效，命令为：<code>source /etc/profile</code><br>
-</em>4.查看是否安装成功，命令为：<code>java -version</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>安装Tomcat</h6><p></p>
-<ul>
-<li>目前的版本是apache-tomcat-7.0.79.tar.gz</li>
-<li><p>安装步骤：</p>
-<ul>
-<li>1.在<code>/usr</code>目录下<code>mkdir tomcat</code>，把Tomcat安装包放到该文件夹下并解压<code>tar -zvxf apache-tomcat-7.0.79.tar.gz</code></li>
-<li><p>2.修改系统环境变量<code>vi /etc/profile</code>，如下：</p>
-<pre><code>JAVA_HOME=/usr/java/jdk1.7.0_79
-CATALINA_HOME=/usr/tomcat/apache-tomcat-7.0.79
-PATH=$PATH:$JAVA_HOME/bin:$CATALINA_HOME/bin
-CLASSPATH=.:$JAVA_HOME/lib:$CATALINA_HOME/lib
-export JAVA_HOME CATALINA_HOME PATH CLASSPATH
-</code></pre><ul>
-<li>3.之后重新加载，使其生效，命令为：<code>source /etc/profile</code><br></li>
-<li><p>4.启动Tomcat，并查看日志</p>
-<pre><code>cd /usr/tomcat/apache-tomcat-7.0.79 
-执行 ./bin/startup.sh命令即可启动
-</code></pre></li>
-<li><p>5.关闭tomcat</p>
-<pre><code>ps -ef |grep tomcat  
-查看进程后杀掉进程sudo kill ***
-</code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>安装MySQL</h6><p></p>
-<ul>
-<li>目前的版本是mysql-5.6.39-linux-glibc2.12-x86_64.tar.gz</li>
-<li><p>安装步骤：</p>
-<ul>
-<li>1.将安装包拷贝到<code>/usr/local</code>目录下并解压<code>tar -zvxf mysql-5.6.39-linux-glibc2.12-x86_64.tar.gz</code>之后<code>mv mysql-5.6.39-linux-glibc2.12-x86_64 mysql</code></li>
-<li><p>2.均在<code>/usr/local</code>下执行：</p>
-<pre><code>添加mysql用户组，执行 groupadd mysql
-为mysql用户组添加mysql用户，执行useradd -r -g mysql mysql -d /usr/local/mysql
-为mysql用户设置密码，执行passwd mysql    密码可以是mysql
-将文件及其子文件的所有者设为mysql组的mysql用户，执行chown -R mysql:mysql /usr/local/mysql
-</code></pre></li>
-<li><p>3.切换到mysql用户即<code>su mysql</code>后安装数据库</p>
-<pre><code>/usr/local/mysql/scripts/mysql_install_db --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
-</code></pre></li>
-<li><p>4.安装mysql数据库结束后exit回到<code>/usr/local</code>目录下</p>
-</li>
-<li>5.<code>cd mysql/support-files</code>后复制mysql配置文件到系统配置目录下,执行<code>cp my-default.cnf /etc/my.cnf</code></li>
-<li><p>6.在mysql/support-files下将mysql添加为系统服务依次执行</p>
-<pre><code>cp mysql.server /etc/init.d/mysql                                                                          chkconfig --list|grep mysql                                                                           chkconfig --add mysql
-查看mysql服务是否添加成功chkconfig --list|grep mysql
-</code></pre></li>
-<li><p>7.添加环境变量，<code>vi /etc/profile</code>后增加</p>
-<pre><code>JAVA_HOME=/usr/java/jdk1.7.0_79
-CATALINA_HOME=/usr/tomcat/apache-tomcat-7.0.79
-MYSQL_HOME=/usr/local/mysql
-PATH=$PATH:$JAVA_HOME/bin:$CATALINA_HOME/bin:$MYSQL_HOME/bin
-CLASSPATH=.:$JAVA_HOME/lib:$CATALINA_HOME/lib
-export JAVA_HOME CATALINA_HOME MYSQL_HOME PATH CLASSPATH
-</code></pre></li>
-<li><p>8.之后重新加载，使其生效，执行<code>source /etc/profile</code></p>
-</li>
-<li><p>9.修改mysql配置文件<code>vi /etc/my.cnf</code>，修改内容如下</p>
-<pre><code>#These are commonly set,remove the # and set as required
-basedir=/usr/local/mysql
-datadir=/usr/local/mysql/data
-port=3306
-server_id=1
-socket=/tmp/mysql.sock
-</code></pre></li>
-<li><p>10.保存退出后，启动mysql服务</p>
-<pre><code>启动mysql服务，执行service mysql start
-查看mysql服务，执行service mysql status
-</code></pre></li>
-<li><p>11.其他必须操作</p>
-<pre><code>设置root密码，第一种方式（不建议采用，会将linux系统密码也同步修改）：执行mysqladmin -u root password &apos;admin&apos;
-第二种方式（登录mysql系统，执行mysql -u root -p）：
-Enter password: 【输入原来的密码】
-mysql&gt;use mysql;
-mysql&gt; update user set password=passworD(&quot;test&quot;) where user=&apos;root&apos;;
-mysql&gt; flush privileges;
-授权允许所有外部链接访问执行 GRANT ALL PRIVILEGES ON *.* TO &apos;root&apos;@&apos;%&apos; IDENTIFIED BY &apos;admin&apos; WITH
-GRANT OPTION;
-刷新权限执行：FLUSH PRIVILEGES;
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>安装redis</h6><p></p>
-<ul>
-<li>目前版本是redis-4.0.10.tar.gz</li>
-<li>安装步骤：<ul>
-<li>1.<code>cd /usr/local/</code>下，解压该文件并进入redis-4.0.10下的redis目录</li>
-<li>2.编译make，之后会有对应的src、conf等文件夹</li>
-<li>3.进入src文件夹执行make install进行安装</li>
-<li>4.接下来是部署redis（redis的安装部署，会在之后不久的博客中单独述说）</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>war包部署与配置</h6><p></p>
-<ul>
-<li>1.将jeeplus.war包拷到tomcat根目录下，即<code>/usr/tomcat/apache-tomcat-7.0.79</code>下</li>
-<li><p>2.在该目录下，修改<code>conf/server.xml</code>，具体如下：</p>
-<pre><code>在&lt;Host&gt;下添加&lt;Context path=&quot;&quot; docBase=&quot;../jeeplus.war&quot;/&gt;
-</code></pre></li>
-<li><p>3.全量部署时需要将webapps下的ROOT目录删除，第一次部署时要把ROOT目录删除先再重启服务</p>
-</li>
-<li><p>4.在该目录下，修改<code>bin\catalina.sh</code>，就是增加一句话JAVA_OPTS：</p>
-<pre><code># -----------------------------------------------------------------------------
-JAVA_OPTS=&quot;-server -XX:PermSize=128M -XX:MaxPermSize=256M -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC -Xloggc:gc.log&quot;
-# OS specific support.  $var _must_ be set to either true or false.
-</code></pre></li>
-<li><p>5.在该目录下，修改<code>webapps/ROOT/webpage/include/taglib.jsp</code>,就是关于js文件获取方式，具体注销内容如下：</p>
-<pre><code>&lt;c:set var=&quot;ctxStatic&quot; value=&quot;${pageContext.request.contextPath}/static&quot;/&gt;
-&lt;%--&lt;c:set var=&quot;ctxStatic&quot; value=&quot;${fns:getOSSUrl()}&quot;/&gt; --%&gt;
-&lt;c:set var=&quot;ctxp&quot; value=&quot;${pageContext.request.contextPath}&quot; /&gt;
-</code></pre></li>
-<li><p>6.在该目录下，修改<code>webapps/ROOT/WEB-INF/classes/jeeplus.properties</code>,关于数据库、redis缓存的内容：</p>
-<pre><code>#mysql database setting
-jdbc.type=mysql
-jdbc.driver=com.mysql.jdbc.Driver
-jdbc.url=jdbc:mysql://127.0.0.1:3306/ruihuaoa-activity-info?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true
-jdbc.username=root
-jdbc.password=gangwan123
-
-#redis settings
-redis.keyPrefix=jeeplus
-redis.host=127.0.0.1
-redis.port=6379
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/13/Linux上部署java项目/" data-id="cjojh4yud001ijwwvwc93sa1x" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/08/17/Redis安装与部署/" data-id="cjpl0gzk40026pwwvn119djpj" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -1016,7 +889,7 @@ redis.port=6379
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -1026,7 +899,7 @@ redis.port=6379
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13.33px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13.33px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 15.56px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14.44px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 11.11px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.78px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 13px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 16px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 12px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12px;">软件工具</a>
     </div>
   </div>
 
@@ -1035,7 +908,7 @@ redis.port=6379
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1048,6 +921,14 @@ redis.port=6379
       <ul>
         
           <li>
+            <a href="/2018/12/12/mysql数据库安装/">mysql数据库安装</a>
+          </li>
+        
+          <li>
+            <a href="/2018/11/30/测试过程的遇到的问题/">测试过程的遇到的问题</a>
+          </li>
+        
+          <li>
             <a href="/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/">CentOS下彻底删除MySQL-卸载二进制包/源码安装方式的MySQL</a>
           </li>
         
@@ -1057,14 +938,6 @@ redis.port=6379
         
           <li>
             <a href="/2018/11/15/Linu系统连接外网/">Linu系统连接外网</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/21/mysql5-6压缩版的安装配置/">mysql5.6压缩版的安装配置</a>
-          </li>
-        
-          <li>
-            <a href="/2018/09/18/JDK的安装部署/">JDK的安装部署</a>
           </li>
         
       </ul>
