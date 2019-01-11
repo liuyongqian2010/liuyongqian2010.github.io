@@ -70,6 +70,190 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-httpwatch" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/08/httpwatch/" class="article-date">
+  <time datetime="2018-03-08T05:49:23.000Z" itemprop="datePublished">2018-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/httpwatch/">httpwatch</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>httpwatch</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>HttpWatch是一个可用于录制HTTP请求信息的工具，由Simtec Limited公司开发，其官网为：Http://www.httpwatch.com，HttpWatch只支持IE和Firefox，也就是说只有当你用IE或Firefox访问网页时，它才会进行录制，不像Sniffer和Omnipeek那样监控所有数据，但对于网站分析来说，已经是不可多得的利器了</li>
+<li>HttpWatch是功能强大的网页数据分析工具，集成在IE工具栏，主要功能有网页摘要、cookies管理、缓存管理、消息头发送/接收，字符查询、POST数据、目录管理功能和报告输出。HttpWatch是一款能够收集并显示深层信息的软件，它不用代理服务器或一些复杂的网络监控工具，能够在显示网页的同时显示网页请求和回应的日志信息，甚至可以显示浏览器缓存和IE之间的交换信息，集成在IE工具栏</li>
+<li>HttpWatch有两部分组成： <ul>
+<li>1、一个是嵌入到IE或Firefox中用于收集、查看、保存HTTP信息的插件 </li>
+<li>2、一个是独立运行的日志查看器，叫做HttpWatch Studio</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>Time Chart</h6><p></p>
+<ul>
+<li>显示了一次请求应答过程中每个时间片段所花费的时间。一次完整的请求应答过程需要经历的时间片段如下：<br>Blocked-&gt;DNS Lookup-&gt;Connect    -&gt;Send -&gt;Wait    -&gt;Receive</li>
+<li>各时间片段含义如下：<ul>
+<li>Blocked（阻塞）：阻塞的时间主要包括预处理时间（如缓存查找）和网络排队等待时间，导致阻塞最主要原因是下载页面中的图片</li>
+<li>DNS Lookup（域名解释）：域名解释时间主要是将主机名（如www.google.com）转化为相应的IP地址（216.239.59.99）的时间，在访问URL地址时，地址本身不能被直接访问，需要将它对应为相应的IP地址才能访问</li>
+<li>Connect（连接）：连接时间是指与web服务器（或代理服务器）建立起TCP连接需要的时间，一个安全的HTTPS连接应该包含SSL握手的过程，让系统处于一种保持连接的状态，可以节约重复创建TCP连接的时间</li>
+<li>Send（发送）：发送时间是指从客户端发送HTTP请求到服务器所花费的时间，并且发送数据大小会影响发送的时间，如上传文件花费的时间就比较长</li>
+<li>Wait（等待）：等待时间是指服务器响应请求的时间，这个值包括网络延迟和服务器处理请求所花费的时间</li>
+<li>Receive（接收）：接收时间是指服务器返回数据到客户端所花费的时间，这个时间受所返回消息内容大小、网络带宽和HTTP压缩比的影响</li>
+<li>Cache Read（读cache）：读缓存时间是指从浏览器缓存中读取内容的时间</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>Headers</h6><p></p>
+<ul>
+<li><p>Headers Sent的内容如下：</p>
+<ul>
+<li>(Request-Line)：包括HTTP提交请求方法、HTTP版本和URL子路径</li>
+<li>Accept：可接受的文件类型，<em>/</em>表示所有</li>
+<li>Accept-Encoding：可接受的纯文本之外的内容编码的类型</li>
+<li>Accept-Language：可接受的返回数据的语言种类</li>
+<li>Connection：指定该次请求回应结束后，如何处理连接</li>
+<li>Cache-Control：指定请求和响应遵循的缓存机制</li>
+<li>Location：用于重定向接收者到一个新URL地址</li>
+<li>Host：请求连接的主机名</li>
+<li>User-Agent：客户端标识浏览器类型</li>
+</ul>
+</li>
+<li><p>Headers Received的内容如下：</p>
+<ul>
+<li>(Status-Line)：包括HTTP请求的状态码和HTTP版本信息</li>
+<li>Connection：指定该次请求回应结束后，如何处理连接</li>
+<li>Content-Language：内容数据的语言种类</li>
+<li>Content-Length：传输的内容长度</li>
+<li>Content-Type：内容数据的类型（Mini Type）</li>
+<li>Date：发送HTTP消息的日期</li>
+<li>Server：一种标明Web服务器软件及其版本号的</li>
+<li>X-Cache：表明你的http request是由proxy server回的</li>
+<li>Last-Modified：服务器上保存内容的最后修订时间</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjqrsy38i0035jwwvjw4lejdg" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-chown" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/08/chown/" class="article-date">
+  <time datetime="2018-03-08T05:48:02.000Z" itemprop="datePublished">2018-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/chown/">chown</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>chown</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>1.使用权限 : root</li>
+<li><p>2.使用方式</p>
+<pre><code>chown[-f][-h][-R] Owner [ :Group ] { File ... | Directory ... }
+chown -R [-f ][-H| -L| -P] Owner [ :Group ] { File ... | Directory ... }
+</code></pre></li>
+<li><p>3.说明：Linux/Unix 是多人多工作业系统，所有的档案皆有拥有者。利用 chown 可以将档案的拥<br>有者加以改变。一般来说，这个指令只有是由系统管理者(root)所使用，一般使用者没有权限可以<br>改变别人的档案拥有者，也没有权限可以自己的档案拥有者改设为别人。只有系统管理者(root)才<br>有这样的权限，一个字：更改与文件关联的所有者或组</p>
+</li>
+<li><p>4.描述：chown命令将 File 参数指定的文件的所有者更改为 Owner 参数指定的用户。Owner 参数的值可以是可在 /etc/passwd 文件中找到的用户标识或登录名。还可以选择性地指定组。Group 参数的值可以是可在 /etc/group 文件中找到的组标识或组名</p>
+<pre><code>-f
+禁止除用法消息之外的所有错误消息
+-h
+更改遇到的符号链接的所有权，而非符号链接指向的文件或目录的所有权
+当遇到符号链接而您未指定 -h 标志时，chown 命令更改链接指向的文件或目录的所有权，而非链接本身的所有权
+如果指定 -R 标志，chown 命令递归地降序指定的目录
+-H
+如果指定了 -R 选项，并且引用类型目录的文件的符号链接在命令行上指定，
+chown 变量会更改由符号引用的目录的用户标识（和组标识，如果已指定）和所有在该目录下的文件层次结构中的所有文件
+-L
+如果指定了 -R 选项，并且引用类型目录的文件的符号在命令行上指定或在遍历文件层次结构期间遇到，
+chown 命令会更改由符号链接引用的目录的用户标识（和组标识，如果已指定）和在该目录之下的文件层次结构中的所有文件
+-P
+如果指定了 -R 选项并且符号链接在命令行上指定或者在遍历文件层次结构期间遇到，则如果系统支持该操作，
+则chown 命令会更改符号链接的所有者标识（和组标识，如果已指定）。chown 命令不会执行至文件层次结构的任何其它部分的符号链接
+-R
+递归地降序目录，更改每个文件的所有权。当遇到符号链接并且链接指向目录时，更改该目录的所有权，但不进一步遍历目录。
+不过 -h、-H、-L or -P 标志也未指定，则当遇到符号链接并且该链接指向到目录时，该目录的组所有权更改但不会进一步遍历目录
+</code></pre></li>
+</ul>
+<p></p><h6>示例</h6><p></p>
+<ul>
+<li><p>将档案 file1.txt 的拥有者设为 users 群体的使用者 tom : </p>
+<pre><code>chown tom:users file1.txt 
+</code></pre></li>
+<li><p>将目前目录下的所有档案与子目录的拥有者皆设为 users 群体的使用者 jerry : </p>
+<pre><code>chown -R lamport:users * 
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="cjqrsy3890030jwwvfubvatqx" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-Page Object" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/08/Page Object/" class="article-date">
@@ -179,7 +363,7 @@ driver.quit()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjpl0gzje001tpwwv168snd6r" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjqrsy36h001zjwwvywzk5nn2" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -295,7 +479,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjpl0gztk006lpwwvgw5l4reh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjqrsy3dd005xjwwvsknnr7et" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -396,7 +580,7 @@ and kcm=&apos;QTP&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjpl0gzu8006xpwwvr676jrfh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjqrsy3f90075jwwvmnglzvne" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -527,7 +711,7 @@ print(&apos;End send email...&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjpl0gzqe004zpwwv1o2q3v3q" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjqrsy3cc0057jwwv3q7ozl2w" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -726,7 +910,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjpl0gzqa004xpwwvnkpbrxze" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjqrsy3c90055jwwvsgdd2doy" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -904,7 +1088,7 @@ select rand()         #result:0.8155794216465013
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjpl0gzg5000dpwwv2srnyhgt" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjqrsy33e000ejwwv4ldxeo8p" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -1008,7 +1192,7 @@ class Login():
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjpl0gzsk0065pwwvoev3b47b" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjqrsy3e7006hjwwvcdwiu5d2" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -1132,279 +1316,10 @@ class Login():
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjpl0gzhz0016pwwvg90urrg5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjqrsy355001ajwwv56xfix3i" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-初识MySQL" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/28/初识MySQL/" class="article-date">
-  <time datetime="2018-02-28T10:08:48.000Z" itemprop="datePublished">2018-02-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/28/初识MySQL/">初识MySQL</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>初识MySQL</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>基础</h6><p></p>
-<ul>
-<li>数据库就是“数据”的“仓库”,包含表、关系以及操作对象,数据存放在表中</li>
-<li>MySQL的优势：运行速度快、使用成本低、可移植性强、适用用户广</li>
-<li><p>安装目录下主要文件夹</p>
-<pre><code>bin：客户端程序和服务器
-data：临时数据存放，日志文件，数据库
-include:导入，需要里面这些文件，包含（头）文件
-lib:组件
-share:错误消息文件
-</code></pre></li>
-<li><p>DOS下运行mysql</p>
-<pre><code>net start mysql
-mysql -h服务器主机地址（本地可省略） -u用户名 -p密码
-create database 数据库名;         #创建数据库
-show databases;                  #查看数据库
-use数据库;                         #选择数据库
-drop database 数据库名;              #删除数据库
-
-create table if not exists 表名(
-    studentNo INT(4) NOT NULL COMMENT&apos;学号&apos; PRIMARY KEY,
-    ...
-)comment=&apos;表名&apos;
-show tables;                    #查看表是否存在
-desc 表名;                     #查看表定义
-drop table if exists 表名;      #删除表
-</code></pre></li>
-<li>SQL结构化查询语言<ul>
-<li>DML(数据操作语言)用来操作数据库中所包含的数据，命令：insert、update、delete</li>
-<li>DDL（数据定义语言）用来创建和删除数据库对象等操作，命令：create、drop、alert</li>
-<li>DQL（数据查询语言）用来对数据库中的数据进行查询，命令：select</li>
-<li>DCL（数据控制语言）用来控制数据库组件的存取许可、存取权限等，命令：grant、commit、rollback</li>
-</ul>
-</li>
-<li>SQL中的运算符<ul>
-<li>算术运算符，用来进行列间或者变量之间的比较和数学运算<ul>
-<li>+加、-减、*乘、/除、%取余</li>
-</ul>
-</li>
-<li>赋值运算符，把一个数或者变量或者表达式赋值给另一个变量，如Name=’刘桑’<ul>
-<li>=赋值</li>
-</ul>
-</li>
-<li>逻辑运算符<ul>
-<li>and 当且仅当两个布尔表达式都为true时，返回true</li>
-<li>or 当且仅当两个布尔表达式都为false时，返回false</li>
-<li>not布尔表达式的值取反</li>
-</ul>
-</li>
-<li>比较运算符<ul>
-<li>=等于、&gt;大于、&lt;小于、&lt;&gt;不等于、&gt;=大于等于、&lt;=小于等于、!=不等于（非SQL-92标准）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>数据类型<ul>
-<li>数值<ul>
-<li>INT，标准整数，4字节</li>
-<li>FLOAT，单精度浮点数，4字节</li>
-<li>DECIMAL，字符串形式的浮点数，Decimal(M,D),M为存储数，D为小数位</li>
-<li>unsigned属性，标识为无符号数，就是数值不能增加符号，比如不能增加负号</li>
-<li>zerofill属性，宽度不足以0填充</li>
-</ul>
-</li>
-<li>字符串<ul>
-<li>CHAR(M)，定长字符串，长度为M字节</li>
-<li>VARCHAR(M)，可变字符串，节省存储空间</li>
-</ul>
-</li>
-<li>日期<ul>
-<li>DATETIME，YY-MM-DD hh:mm:ss</li>
-<li>TIMESTAMP，YYYYMMDDHHMMSS</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>字段的约束及属性</p>
-<ul>
-<li>非空约束NOT NULL，字段不允许为空</li>
-<li>默认约束DEFAULT，赋予某字段默认值</li>
-<li>唯一约束UNIQUE KEY(UK)，设置字段的值是唯一的，允许为空，但只能有一个空值</li>
-<li>主键约束PRIMARY KEY(PK)，设置该字段为表的主键，可唯一标识该表记录</li>
-<li>外键约束FOREIGN KEY(FK)，用于在两表之间建立关系，需要指定引用主表的哪一个字段</li>
-<li>自动增长AUTO_INCREMENT，设置该列为自增字段，默认每条自增1，通常用于设置主键</li>
-</ul>
-</li>
-<li><p>修改表</p>
-<pre><code>alter table 表名 rename to 新表名         #修改表名
-alter table 表名 add 新字段 字段类型       #添加字段
-alter table 表名 change 原字段名 新字段名 字段类型     #修改字段
-alter table 表名 drop 字段名              #删除字段
-</code></pre></li>
-<li><p>添加主外键</p>
-<pre><code>alter table 表名 add constraint 主键名 primary key 表名(主键字段)
-#主键名可以随意，比如pk_studentNo
-
-alert table 表名 add constraint 外键名 foreign key (外键字段) references 主表名(主键名)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjpl0gzpp004ppwwvlguqymv7" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-BOM" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/27/BOM/" class="article-date">
-  <time datetime="2018-02-27T09:35:34.000Z" itemprop="datePublished">2018-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/27/BOM/">BOM</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>BOM</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>Window对象</h6><p></p>
-<ul>
-<li>window对象是BOM的根对象，其它对象其实都是window对象的属性，window对象的属性和方法都可以省略“window.”</li>
-<li><p>window对象常用属性</p>
-<pre><code>pageXOffset  设置或返回当前页面相对于窗口显示区左上角的x位置
-pageYOffset  设置或返回当前页面相对于窗口显示区左上角的y位置
-</code></pre></li>
-<li><p>window对象常用方法</p>
-<pre><code>alert() 显示带有一段消息和一个确认按钮的警告框
-confirm()显示带有一段消息以及确认和取消按钮的对话框
-prompt()显示可提示用户输入的对话框
-close()关闭浏览器窗口
-open()打开一个新的浏览器窗口或查找一个已命名的窗口
-setInterval 按照指定的周期（以毫秒计）来调用函数或计算表达式
-clearInterval取消由setInterval()设置的timeout
-
-&lt;h1&gt;
-    当前时间：&lt;span id=&quot;date&quot;&gt;&lt;/span&gt;
-&lt;/h1&gt;
-&lt;button onclick=&quot;fn1()&quot;&gt;开始时钟&lt;/button&gt;
-&lt;button onclick=&quot;fn2()&quot;&gt;停止时钟&lt;/button&gt;
-&lt;script&gt;
-    var setid                                      //动态显示时间
-    function fn1(){
-        var span=document.getElementById(&quot;date&quot;)
-        var date=new Date()
-        span.innerHTML=date
-        clearInterval(setid)
-        setid=setInterval(function(){
-            var date=new Date()
-            span.innerHTML=date
-        },1000)
-    }
-    function fn2(){
-        clearInterval(setid)
-    }
-&lt;/script&gt;
-</code></pre></li>
-</ul>
-<p></p><h6>Window常用子对象</h6><p></p>
-<ul>
-<li>navigator对象<ul>
-<li>navigator对象包含浏览器的信息，常用于获取客户端浏览器和操作系统信息</li>
-</ul>
-</li>
-<li>location对象<ul>
-<li>location对象包含有关当前URL的信息，常用于获取和改变当前浏览的网址</li>
-</ul>
-</li>
-<li>history对象<ul>
-<li>history对象包含用户（在浏览器窗口中）访问过的URL的历史记录</li>
-</ul>
-</li>
-<li>Screen对象<ul>
-<li>Screen对象包含有关客户端显示屏幕的信息，用于获取屏幕的分辨率和色彩</li>
-</ul>
-</li>
-<li><pre><code>&lt;script&gt;
-    //navigator对象
-    console.log(navigator)
-    for(var i in navigator){
-    console.log(i+&apos;:&apos;+navigator[i])
-    }
-    console.log(navigator.platform)//返回运行浏览器的系统操作平台
-
-    //location对象，包含当前有关URL信息
-    console.log(location.href)//返回完整的URL
-
-    //history对象，访问URL历史记录
-    //forward()   back()  go()
-    console.log(history.length)  //返回浏览器历史列表中的URL数量
-
-    //screen对象，包含客户端显示屏幕的信息
-    console.log(screen.availHeight)//返回显示屏幕的高度（除Windows任务栏之外）
-    console.log(screen.availWidth)//返回显示屏幕的宽度（除Windows任务栏之外）
-&lt;/script&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjpl0gzet0001pwwvemhjl8np" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
 
     </footer>
   </div>
@@ -1419,7 +1334,7 @@ clearInterval取消由setInterval()设置的timeout
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/7/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/9/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/9/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1433,7 +1348,7 @@ clearInterval取消由setInterval()设置的timeout
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -1443,7 +1358,7 @@ clearInterval取消由setInterval()设置的timeout
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 16px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 12px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 13px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 16px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 13px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12px;">软件工具</a>
     </div>
   </div>
 
@@ -1452,7 +1367,7 @@ clearInterval取消由setInterval()设置的timeout
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1465,23 +1380,23 @@ clearInterval取消由setInterval()设置的timeout
       <ul>
         
           <li>
+            <a href="/2019/01/11/时间设置与配置查询/">时间设置与配置查询</a>
+          </li>
+        
+          <li>
+            <a href="/2019/01/11/linux系统常见优化配置01/">linux系统常见优化配置01</a>
+          </li>
+        
+          <li>
             <a href="/2018/12/12/mysql数据库安装/">mysql数据库安装</a>
           </li>
         
           <li>
-            <a href="/2018/11/30/测试过程的遇到的问题/">测试过程的遇到的问题</a>
+            <a href="/2018/11/30/测试过程中遇到的问题/">测试过程中遇到的问题</a>
           </li>
         
           <li>
             <a href="/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/">CentOS下彻底删除MySQL-卸载二进制包/源码安装方式的MySQL</a>
-          </li>
-        
-          <li>
-            <a href="/2018/11/15/CentOS下彻底删除MySQL-删除系统自带的MySQL程序/">CentOS下彻底删除MySQL-删除系统自带的MySQL程序</a>
-          </li>
-        
-          <li>
-            <a href="/2018/11/15/Linu系统连接外网/">Linu系统连接外网</a>
           </li>
         
       </ul>
@@ -1511,7 +1426,7 @@ clearInterval取消由setInterval()设置的timeout
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 刘永前<br>
+      &copy; 2019 刘永前<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
