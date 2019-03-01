@@ -70,6 +70,1197 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-初识DOM与BOM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/初识DOM与BOM/" class="article-date">
+  <time datetime="2018-02-27T09:34:33.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/27/初识DOM与BOM/">初识DOM与BOM</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>DOM与BOM</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>DHTML</h6><p></p>
+<ul>
+<li>动态HTML,是一种将目前已有的网页技术、语言标准整合运用，制作出能在下载后仍然能实时变换页面元素效果的网页设计概念</li>
+<li>DHTML的功能:动态改变页面元素；与用户进行交互<br>DHTML对象模型包括DOM和BOM</li>
+<li>DOM：Document Object Model，文档对象模型，用来操作文档<ul>
+<li>定义了访问和操作HTML文档的标准方法</li>
+<li>通过对DOM树的操作，实现对HTML文档内容的操作</li>
+</ul>
+</li>
+<li>BOM：Browser Object Model，浏览器对象模型，用来访问和操做浏览器窗口，使JavaScript有能力与浏览器“对话”<ul>
+<li>通过使用BOM，可移动窗口，更改状态文本，执行其它与页面内容发生直接联系的操作</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>DOM</h6><p></p>
+<ul>
+<li>W3C DOM标准被分为3个不同的部分：<ul>
+<li>核心DOM 针对任何结构化文档的标准模型</li>
+<li>XML DOM 针对XML文档的标准模型</li>
+<li>HTML DOM针对HTML文档的标准模型（下面说这个）</li>
+</ul>
+</li>
+<li>document对象<ul>
+<li>文档中的所有节点组成了一个文档树，document对象是一颗文档树的根</li>
+<li>浏览器内置的JS解释器会为载入的每个HTML文档创建一个对应的document对象</li>
+<li>通过使用document对象，可以从脚本中对HTML页面中的所有元素进行访问</li>
+</ul>
+</li>
+<li><p>DOM节点树</p>
+<ul>
+<li>文档中的元素、属性、文本、注释等都被看作一个节点</li>
+<li><p>上下层节点：</p>
+<pre><code>parentNode  获取父节点
+childNodes  获取子节点集合
+firstChild  获取第一个子节点
+lastChild   获取最后一个子节点
+</code></pre></li>
+<li><p>平行层节点</p>
+<pre><code>previousSibling  获取上一个兄弟节点
+nextSibling      获取下一个兄弟节点
+</code></pre></li>
+<li>节点名称、类型、值<ul>
+<li>nodeName、nodeType、nodeValue</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>元素节点属性</p>
+<ul>
+<li>innerHTML 读取或设置元素节点中的HTML内容</li>
+<li>textContent 用于读取或设置元素节点中的文本内容</li>
+<li><p>attributes 返回节点的属性集合，即一个类数组对象</p>
+<ul>
+<li><p>读取属性</p>
+<pre><code>（1）element.attributes[下标].value
+（2）element.attributes[&apos;属性名&apos;].value
+（3）element.getAttributeNode(&apos;属性名&apos;).value
+（4）element.getAttribute(&apos;属性名&apos;)
+</code></pre></li>
+<li><p>设置属性</p>
+<pre><code>（1）element.setAttribute(name,value);
+（2）element.setAttributeNode(attrNode)
+</code></pre></li>
+<li><p>移除属性</p>
+<pre><code>（1）element.removeAttribute(&apos;属性名&apos;);
+（2）element.removeAttributeNode(attrNode)
+</code></pre></li>
+<li><p>判断属性</p>
+<pre><code>element.hasAttribute(&apos;属性名&apos;);//true或false
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>动态创建DIV</p>
+<pre><code>&lt;body&gt;
+    &lt;button onclick=&quot;createDiv()&quot;&gt;创建DIV&lt;/button&gt;
+    &lt;h1 style=&quot;clear:both&quot;&gt;&lt;/h1&gt;
+    &lt;script&gt;
+        function createDiv(){
+            var div=document.createElement(&apos;div&apos;)
+            div.setAttribute(&apos;style&apos;,&apos;width:100px;height:100px;background:&apos;+roundColor()+&apos;;margin:20px;float:left&apos;)
+            document.body.appendChild(div)
+            div.onclick=removeDiv
+        }
+        function roundColor(){
+            var str=&apos;1234657890abcdef;
+            var s=&apos;#&apos;;
+            for (var i=0; i&lt;6; i++)
+            {
+                var n=parseInt(Math.random()*str.length)
+                s+=str.charAt(n)
+            }
+            return s;
+        }
+        function removeDiv(){
+            document.body.removeChild(this);
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjspxwrqq0050pgwvmgneaa3i" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-匿名函数、封装继承" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/匿名函数、封装继承/" class="article-date">
+  <time datetime="2018-02-27T04:21:32.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/27/匿名函数、封装继承/">匿名函数、封装继承</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>匿名函数、封装继承</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>匿名函数</h6><p></p>
+<ul>
+<li><p>JavaScript中创建函数的三种方式</p>
+<pre><code>//使用function关键字声明命名函数
+function functionName{
+    functionBody;
+}
+//使用直接量方式命名函数
+var functionName = function(){
+    functionBody;
+}
+//使用Function对象构造方法创建函数
+var functionName = new Function(arg1,arg2,functionBody)
+</code></pre></li>
+<li><p>匿名函数，就是定义时未直接指定名称的函数，仅在调用时，才临时创建函数对象和作用域链对象，调用完，立刻释放；所以，匿名函数比非匿名函数更节省内存空间</p>
+<pre><code>function(num1,num2){
+    console.log(num1+num2);
+}
+
+var fn1=function(){
+    console.log(&quot;sad&quot;)
+}();                //隐式匿名函数；匿名函数只能调用一次，调用完立即释放
+fn1()                //sad
+fn1()                //fn1 is not a function
+
+function a(fn){
+    var num=fn()
+    console.log(num)
+}
+a(function(){          //回调函数，将一个函数作为另一个函数的参数
+    return 10+3
+})                  //13
+</code></pre></li>
+</ul>
+<p></p><h6>闭包</h6><p></p>
+<ul>
+<li><p>函数套函数，该函数能使用函数外定义的变量</p>
+<pre><code>function a(){
+    function b(){
+        console.log(1)  //闭包；函数套函数；就是一种访问局部变量的特殊方式
+    }
+    b()
+}
+a()
+</code></pre></li>
+<li><p>闭包的主要作用是：</p>
+<ul>
+<li>1.提供可共享的局部变量</li>
+<li>2.保护共享的局部变量。提供专门的读写变量的函数</li>
+<li>3.避免全局污染</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>封装继承</h6><p></p>
+<ul>
+<li>封装：把相关的信息（无论数据或方法）存储在对象中<br>继承：从其它对象获得属性和方法<br>多态：能以多种不同的形式运行函数或方法<br>原型：在JavaScript中，函数本身也是一个包含了方法和属性的对象，每个函数都有一个prototype属性，该属性引用的是原型对象；原型对象是保存共享属性值和共享方法的对象</li>
+<li>JavaScript中主要通过原型实现继承，通过原型实现继承主要有以下两中方式：<ul>
+<li>1.修改构造函数的原型，为该构造函数创建的对象指定统一的父级对象<br>语法：构造函数.prototype = 父级对象；</li>
+<li>2.单独修改一个对象的原型，而不影响其它对象的原型<br>语法：Object.setPrototypeOf(子对象,父级对象)</li>
+</ul>
+</li>
+<li><p>说明</p>
+<pre><code>&lt;script&gt;
+    function emp(ename,age){                //工厂函数
+        this.ename=ename;                   //谁调用this，this就指向谁;运用在函数中,this为当前对象
+        this.age=age;
+        console.log(this);
+    }
+    //为原型添加属性，子对象自动继承原型（父对象）所有的属性和方法
+    emp.prototype.jineng=&quot;我们都会HTML&quot;      //prototype是构造函数的方法，扩展共享属性值
+    var obj1=new emp(&apos;Tom&apos;,&apos;30&apos;)            //实例化对象
+    obj1.job=function(){                    //自有属性/方法
+        console.log(&apos;JAVA&apos;)
+    }
+    obj1.job()                              //JAVA
+    var obj2=new emp(&apos;Array&apos;,&apos;28&apos;)
+    obj2.work=function(){
+        console.log(&apos;Python&apos;)
+    }
+    Object.setPrototypeOf(obj2,obj1)        //修改单个对象的原型,前子后父
+    obj2.job()                              //JAVA
+    obj2.work()                             //Python
+    console.log(obj1.jineng)                //我们都会HTML
+    console.log(obj2.jineng)                //我们都会HTML
+
+    function a(){
+        this.ename=&quot;Tom&quot;
+    }
+    function b(){
+        this.age=&quot;29&quot;
+    }
+    b.prototype=new a()            //修改原型父对象,只有函数名能调用prototype
+    var obj=new b()
+    console.log(obj.age)        //29
+    console.log(obj.ename)      //Tom
+
+    var heihei={age:25}            //直接量创建对象
+    var obj={name:123};
+    Object.setPrototypeOf(obj,heihei)
+    //console.log(obj)             //打印出来是undefined,其原型是Object
+    console.log(Object.getPrototypeOf(obj))     //获取原型
+    console.log(heihei.isPrototypeOf(obj))      //isPrototypeOf()方法用于判定一个prototype对象是否存在于另一个对象的原型链中
+&lt;/script&gt;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjspxwrqz0054pgwvluuazahn" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-模块、包、枚举" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/26/模块、包、枚举/" class="article-date">
+  <time datetime="2018-02-26T10:56:37.000Z" itemprop="datePublished">2018-02-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/26/模块、包、枚举/">模块、包、枚举</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>模块、包、枚举</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>模块</h6><p></p>
+<ul>
+<li>Python 模块(Module)，是一个 Python文件，以.py 结尾，包含了Python对象定义和Python语句</li>
+<li><p>1.使用 python 标准库中模块</p>
+<pre><code>import datetime                 #引入 python 标准库中的 sys.py 模块；这是引入某一模块的方法
+print(datetime.datetime.now())  #显示当前时间
+print(datetime.datetime.now()+datetime.timedelta(3))  #显示当前时间+3天
+</code></pre></li>
+<li><p>2.import语句,想使用 Python 源文件，只需在另一个源文件里执行 import 语句</p>
+<pre><code>先定义一个名为test1.py的模块
+#!/usr/bin/env python      #这行注释可以让这个文件直接在Unix/Linux/Mac上运行
+#__author__:LiuYongqian
+&apos; a test module &apos;          #表示模块的文档注释，任何模块代码的第一个字符串都被视为模块的文档注释
+def print_mes(x):
+    print(&apos;Hello:&apos;,x)
+def add(x,y):
+    print(x+y)
+
+在test2.py中引入test1模块
+#!/usr/bin/env python
+#__author__:LiuYongqian
+import test1             #导入模块，下面可以调用模块里的函数了
+test1.print_mes(&apos;2018&apos;)  #result: Hello: 2018
+test1.add(3,6)           #result:9
+</code></pre></li>
+<li><p>3.from … import语句，from语句让你从模块中导入一个指定的部分到当前命名空间</p>
+<pre><code>from test1 import print_mes
+print_mes(&apos;2018&apos;)        #result:Hello: 2018
+</code></pre></li>
+</ul>
+<p></p><h6>包</h6><p></p>
+<ul>
+<li>目录只有包含一个叫做__init__.py 的文件才会被认作是一个包，主要是为了避免一些滥俗的名字（比如叫做 string）不小心的影响搜索路径中的有效模块</li>
+</ul>
+<p></p><h6>枚举</h6><p></p>
+<ul>
+<li>枚举类型可以看作是一种标签或是一系列常量的集合，通常用于表示某些特定的有限集合，例如星期、月份、状态等</li>
+<li><p>为何要用枚举</p>
+<pre><code>当我们需要定义常量时，一个办法是用大写变量通过整数来定义，例如星期：
+MON,TUE,WED,THI,FRI,STA,SUN=1,2,3,4,5,6,7
+这样定义的好处是简单，缺点是类型是整型，仍然是变量，更好的办法是为这样的枚举类型定义一个class类型，每个常量都是class的一个唯一实例。Python提供了Enum类来实现这个功能：
+from enum import Enum
+Week=Enum(&apos;Week&apos;,(&apos;Mon&apos;,&apos;Tue&apos;,&apos;Wed&apos;,&apos;Thi&apos;,&apos;Fri&apos;,&apos;Sta&apos;,&apos;Sun&apos;))
+这样我们就获得了Week类型的枚举类，可以直接使用Week.Mon来引用一个常量，或者枚举它的所有成员：
+print(Week[&apos;Wed&apos;])       #通过成员的名称来获取成员   #result:Week.Wed
+print(Week(3))           #通过成员的值来获取成员     #result:Week.Wed
+mem=Week.Wed             #通过成员，来获取它的名称和值
+print(mem.name)          #result:Wed
+print(mem.value)         #result:3
+for name,member in Week.__members__.items():  #值重复的成员也遍历出来，要用枚举的一个特殊属性__members__
+    print(name,&apos;=&gt;&apos;,member,&apos;-&apos;,member.value)  #value属性是自动赋给成员的int常量，默认从1开始计数
+#result:
+Mon =&gt; Week.Mon - 1         
+......
+Sun =&gt; Week.Sun - 7
+</code></pre></li>
+<li><p>如果需要更加精确的控制枚举类型，可以从Enum派生出自定义类</p>
+<pre><code>from enum import Enum,unique
+@unique              #该装饰器可以帮助我们检查保证没有重复值。
+class Week(Enum):    #用于定义枚举的class和定义类的class是有区别的
+    Mon = 1
+    Tue = 2
+    Wed = 3
+    Thu = 4
+    Fri = 5
+    Sat = 6
+    sun = 7
+print(Week[&apos;Thu&apos;])           #result:Week.Thu
+print(Week(4))               #result:Week.Thu
+for week in Week:
+    print(week)
+#result:
+Week.Mon
+......
+Week.sun
+</code></pre></li>
+<li><p>小练习：把Student的gender属性改造为枚举类型，可以避免使用字符串</p>
+<pre><code>from enum import Enum,unique
+class Gender(Enum):
+    Female=0
+    Male=1
+class Student():
+    def __init__(self,name,gender):
+        self.name=name
+        self.gender=gender
+mm=Student(&apos;LiuYongqian&apos;,Gender.Male)
+if mm.gender==Gender.Male:
+    print(&apos;信息正确!&apos;)
+else:
+    print(&apos;信息错误！&apos;)
+#result: 信息正确!
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjspxwrub006ipgwvt3ea41vc" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-闭包、装饰、冒泡" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/24/闭包、装饰、冒泡/" class="article-date">
+  <time datetime="2018-02-24T07:19:11.000Z" itemprop="datePublished">2018-02-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/24/闭包、装饰、冒泡/">闭包、装饰、冒泡</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>闭包、装饰、冒泡</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>冒泡</h6><p></p>
+<ul>
+<li><p>执行机制：两两相比，外侧循环n-1,控制比较多少轮;内侧循环n-1-i，控制每轮比较多少次</p>
+<pre><code>m=[3,4,5,1,2,6]            #升序
+for i in range(len(m)-1):
+    for j in range(len(m)-1-i):
+        if m[j]&gt;m[j+1]:
+            m[j],m[j+1]=m[j+1],m[j]
+            &apos;&apos;&apos;
+            n=m[j]
+            m[j]=m[j+1]
+            m[j+1]=n
+            &apos;&apos;&apos;
+&apos;&apos;&apos;
+for i in range(len(m)):     #插入数据不改变排列顺序
+    if m[i]&gt;3:
+        m.insert(i,7)
+        break
+&apos;&apos;&apos;        
+print(m)                    #result:[1, 2, 3, 4, 5, 6]
+</code></pre></li>
+</ul>
+<p></p><h6>闭包</h6><p></p>
+<ul>
+<li>如果在一个内部函数里，对在外部作用域（但不是在全局作用域）的变量进行引用，那么内部函数就被认为是闭包（closure）。一个闭包就是你调用了一个函数A，这个函数A返回了一个函数B给你。这个返回的函数B就叫做闭包</li>
+<li><p>构成闭包的三个条件：</p>
+<ul>
+<li>1.必须有一个内嵌函数</li>
+<li>2.内嵌函数必须引用一个定义在闭合范围外的变量，内部函数引用外部变量但非全局变量</li>
+<li><p>3.外部函数必须返回内嵌函数</p>
+<pre><code>def A():
+    num = 10
+    def B():
+        nonlocal num        # nonlocal 声明变量位置是闭包
+        num = num + 5
+        return 39
+    return B                #函数名后边加小括号的是立即调用，不带小括号的是引用，还没有执行
+A()
+print(A)                    #result:&lt;function A at 0x000001D42CA47F28&gt;
+print(A().__name__)         #result:B
+print(A()())                #result:39
+
+def funcx(x):
+    def funcy(y):
+        return x*y
+    return funcy
+m=funcx(3)
+n1=m(9)
+n2=m(6)
+print(n1)                    #result:27
+print(n2)                    #result:18
+
+def test(a,b,fun):
+    return fun(a,b)
+func=input(&apos;请输入一个函数：&apos;) #lambda a,b:a+b
+m=test(3,9,eval(func))       #eval函数将字符串当成有效python表达式来求值，并返回计算结果
+print(m)                     #result:12
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>装饰器</h6><p></p>
+<ul>
+<li><p>装饰器函数传入被装饰函数，返回内层函数，就是闭包函数，它起到装饰给定函数的作用</p>
+<pre><code>def outter(fun):             #成为装饰器必须有一个参数
+    def inner():
+        print(&apos;I Like You!&apos;)
+        fun()                #有这个，被装饰的函数才会执行
+    return inner
+
+@outter
+def index():
+    print(&apos;I Hate You!&apos;)
+index()                      #result:I Like You!     I Hate You!
+
+def coat(fun):
+    print(&apos;穿上衣服&apos;)
+    return fun
+def bag(fun):
+    print(&apos;带着书包&apos;)
+    return fun
+def bybus(fun):
+    print(&apos;坐着校车&apos;)
+    return fun
+@bybus
+@bag                          #靠近函数的装饰器最先执行，从下往上执行
+@coat                         #student函数和print打包作为参数传给装饰器bag，以此类推
+def student():
+    print(&apos;学生去上课！&apos;)
+student()                     #result:穿上衣服 带着书包 坐着校车 学生去上课！
+
+#火锅店
+def yangrou(fun):
+    sum=30+fun()
+    print(&apos;肥羊肉&apos;)
+    return sum
+def zhangliao(fun):
+    print(&apos;芝麻酱&apos;)
+    return 5+fun
+
+@zhangliao
+@yangrou
+def guodi():
+    print(&apos;微辣底料&apos;)
+    return 12
+print(guodi)
+
+#火锅店变形
+import types
+def yangrou(fun):
+    sum=0
+    if type(fun)==types.FunctionType:
+        sum=30+fun()
+    else:
+        sum=30+fun
+    print(&apos;肥羊肉&apos;)
+    return sum
+def zhangliao(fun):
+    sum = 0
+    if type(fun) == types.FunctionType:
+        sum =5 + fun()
+    else:
+        sum =5 + fun
+    print(&apos;芝麻酱&apos;)
+    return sum
+@zhangliao
+@yangrou
+def guodi():
+    print(&apos;微辣底料&apos;)
+    return 12
+print(guodi)
+
+#火锅店变形
+def yangrou(fun):
+    def caidan1():
+        print(&apos;肥羊肉&apos;)
+        return 30+fun()
+    return caidan1
+def zhangliao(fun):
+    def caidan3():
+        print(&apos;芝麻酱&apos;)
+        return 5+fun()
+    return caidan3
+@zhangliao
+@yangrou
+def guodi():
+    print(&apos;微辣底料&apos;)
+    return 12
+print(guodi())
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjspxwrw6007apgwvfirmbqu8" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Js对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/23/Js对象/" class="article-date">
+  <time datetime="2018-02-23T12:38:06.000Z" itemprop="datePublished">2018-02-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/23/Js对象/">Js对象</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>JS对象</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>内置对象</h6><p></p>
+<ul>
+<li>内置对象就是ECMAScript标准中已经定义好的，由浏览器厂商已经实现的标准对象！内置对象中封装了专门的数据和操作数据常用的API</li>
+<li>JavaScript中内置对象列表：String、Boolean、Number、Array、Date、RegExp、Math、Error、Function、Object、Global</li>
+</ul>
+<p></p><h6>String对象</h6><p></p>
+<ul>
+<li><p>String对象用于处理文本字符串,JavaScript中字符串的内容都是不可变的</p>
+<pre><code>创建原始类型字符串变量：
+var ename = &apos;Tom&apos;;
+创建引用类型字符串对象：
+var stuName = new String(&apos;Hello World&apos;)
+</code></pre></li>
+<li><p>String对象的所用方法，返回的都是一个全新的对象，而不是修改原始字符串内容</p>
+<pre><code>toLowerCase()方法返回字符串的小写;
+toUpperCase()方法返回字符串的大写;
+charAt()方法用于获取指定下标的字符;
+charCodeAt()方法用于获取指定下标的字符的Unicode码;
+indexOf()返回第一次出现指定子串的下标;
+lastIndexOf()返回最后一次出现指定子串的下标;
+slice(start,[end])返回从start到end-1范围内的子串;
+substring(start,[end])返回从start到end-1范围内的子串;
+split()使用指定分隔符对字符串进行拆分，返回数组
+concat()用于拼接两个或多个字符串
+replace()方法用于在字符串中用一些字符替换特定的字符，或替换一个与正则表达式匹配的子串
+match()方法可在字符串内检索指定的值，或找到一个或多个与正则表达式匹配的子串
+search()方法用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。
+返回第一个与regexp相匹配的子串的起始位置；如果没有找到任何匹配的子串，则返回-1
+
+var str=&quot;老鹰来了&quot;
+var s=&quot;&quot;                          //编码
+function fn1(){
+    for(var i=0;i&lt;str.length;i++){
+            s+=str.charCodeAt(i);
+    }
+    console.log(s)
+}
+fn1()
+function fn2(){                      //解码
+    for(var i=0;i&lt;s.length;i+=5){
+        var n=s.slice(i,i+5);
+        var num=Number(n);
+        var s1=String.fromCharCode(num);
+        console.log(s1)
+    }
+}
+fn2()
+</code></pre></li>
+</ul>
+<p></p><h6>Math对象</h6><p></p>
+<ul>
+<li>Math对象是ECMAScript提供的一个全局对象，它主要封装了一些常用的数学函数和常数<br>Math对象没有构造函数，无法创建它的实例；调用其属性和方法时，直接使用Math对象名即可</li>
+<li><p>Math对象具有如下成员属性：</p>
+<pre><code>E  返回算术常量e，即自然对数的底数（约等于2.718）
+PI 返回圆周率（约等于3.14159）
+</code></pre></li>
+<li><p>Math对象具有如下方法：</p>
+<pre><code>abs(x)   返回数的绝对值
+ceil(x)  对数进行上舍入
+floor(x) 对数进行下舍入
+max(x,y) 返回x和y中的最高值
+min(x,y) 返回x和y中的最低值
+pow(x,y) 返回x的y次幂
+round(x) 把数四舍五入为最接近的整数
+sqrt(x)  返回数的平方根
+</code></pre></li>
+<li><p>随机数</p>
+<pre><code>console.log(Math.random())//0-1之间的随机数，不包括1
+console.log(Math.random()*100)//0-99随机整数
+console.log(Math.random()*90+10)//10-99之间的随机整数
+</code></pre></li>
+</ul>
+<p></p><h6>Date对象</h6><p></p>
+<ul>
+<li><p>Date对象用于对时期和时间进行存储和计算</p>
+<pre><code>var date=new Date()
+date.getDate()            //日期
+date.getMonth()           //月份0-11
+date.getMinutes()        //分钟
+date.getSeconds()        //秒
+date.getMilliseconds()    //毫秒
+date.getHours()            //小时
+
+date.toString()                //返回Date对象的字符串形式
+date.toLocaleString()        //基于本地时间格式，返回Date对象的字符串形式
+date.toLocaleTimeString()    //基于本地时间格式返回Date对象“时间”部分（时分秒）的字符串形式
+date.toGMTString()            //基于GMT时间格式，返回Date对象的字符串形式
+date.toUTCString()            //基于UTC时间格式，返回Date对象的字符串形式
+</code></pre></li>
+</ul>
+<p></p><h6>Number对象</h6><p></p>
+<ul>
+<li><p>Number对象表示数值数据和数字常数，主要用于对数字进行指定格式的输出</p>
+<pre><code>//构造新的Number对象----引用类型的变量
+var num1 = new Number(5);         //[Number:5]
+var num2 = new Number(“5”)        //[Number:5]
+var num3 = new Number(“hello”)    //[Number:NaN]
+//将数据转换为Number数据类型-----值类型的变量
+var num4 = Number(“123”);         //123
+</code></pre></li>
+</ul>
+<p></p><h6>Error对象</h6><p></p>
+<ul>
+<li><p>六种错误对象：</p>
+<pre><code>1、Error：  广泛意义上的错误
+2、SyntaxError： 语法错误      var x = 10; x+++;
+3、ReferenceError:  引用错误     var userName = &apos;tom&apos;;  console.log(uName);
+4、TypeError:  类型错误     console.abc();
+5、EvalError:  eval()函数执行错误    
+6、RangeError：范围错误     var n = 123.456;    console.log( n.toFixed(20) );
+7、URIError:  URI解析错误
+</code></pre></li>
+<li><p>try/catch<br><br>ECMAScript中使用try…catch…finally…结构来执行异常处理功能，捕捉由系统生成或程序创建并抛出的Error对象，对错误情形加以处理。它的基本语法如下：</p>
+<pre><code>try{
+     //此处是主业务功能代码
+     //主业务功能代码中肯能产生并抛出错误
+}catch(error){
+     //此处是负责错误处理的代码
+}[finally{
+     //此处是出口语句，不论错误发生与否都要执行
+}]
+</code></pre></li>
+</ul>
+<p></p><h6>Function对象</h6><p></p>
+<ul>
+<li><p>在JavaScript中，函数也是以对象的形式存在的。每个函数都是一个Function对象实例</p>
+<pre><code>function add(){
+}
+console.log(typeof add);      //function 
+//函数名，本质也是一个变量名，是指向某个Function对象的引用
+</code></pre></li>
+</ul>
+<p></p><h6>arguments对象</h6><p></p>
+<ul>
+<li>每个函数对象都有一个arguments属性；此属性只能在函数执行体内使用<br>arguments属性中保存着当前函数接受到的所有实际参数，故可以使用arguments属性处理可变数量的参数</li>
+<li><p>arguments对象具有如下属性：</p>
+<pre><code>length：返回实际传入的参数的个数
+callee：返回当前函数的引用
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cjspxwrhl001dpgwv18w2ncks" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Js数组、正则" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/23/Js数组、正则/" class="article-date">
+  <time datetime="2018-02-23T12:37:41.000Z" itemprop="datePublished">2018-02-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/23/Js数组、正则/">Js数组、正则</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>数组、二维数组、正则表达</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>数组</h6><p></p>
+<ul>
+<li><p>什么是数组</p>
+<ul>
+<li>多个元素组成的集合；可以通过元素所在位置的顺序号（下标）做标识来访问每一个元素（下标从0开始，最大到元素的个数-1）</li>
+<li><p>数组中的元素可以在定义时初始化</p>
+<pre><code>var arr1=[1,2,3];
+var arr2=new Array(&apos;苹果&apos;,&apos;橘子&apos;,&apos;西瓜&apos;)
+</code></pre></li>
+</ul>
+</li>
+<li><p>数组是引用类型的对象</p>
+<ul>
+<li><p>引用类型：数据保存在堆中，栈中只有内存的编号，要通过此编号到堆中查找真正的数据，如：</p>
+<pre><code>var arr=new Array(&apos;北京&apos;,&apos;哈尔滨&apos;);
+</code></pre></li>
+<li><p>值类型：保存在栈中，速度快</p>
+<pre><code>var n=100;
+</code></pre></li>
+<li><p>js中的对象，保存了相关的数据和对数据的常用操作方法,对象都是用new关键字创建的。(new专门用于在内存中开辟一块储存空间，然后返回存储空间的地址,使用new创建出的都是引用类型的对象。)</p>
+</li>
+<li><p>null与undefined：</p>
+<pre><code>共同点：都是原始类型，保存在栈中变量本地
+不同点：
+undefined：表示变量声明过但未赋值。是所有未赋值变量的默认值。一般不主动使用。例如 var a; //a被自动赋值为undefined
+null：表示一个变量将来可能指向一个对象，但目前暂时什么都没指向。一般用于主动释放指向对象的引用。
+例如：var emps =[“Tom”,”Marray”];
+ emps=null;//释放指向数组的引用，清空掉栈中的编号，对中的数据没人用，被回收
+</code></pre></li>
+<li><p>使用length属性获取数组中元素的个数，既数组的长度</p>
+</li>
+</ul>
+</li>
+<li><p>遍历数组元素</p>
+<ul>
+<li><p>遍历数组元素，通过选择for循环语句，元素的下标做循环变量</p>
+<pre><code>var arr1 = [10,20,30,40];
+for(var i = 0 ; i&lt;arr1.length ; i++){
+    console.log(arr1[i]);
+}
+#for...in遍历数组
+var nums = [10,21,32,24];
+for(var i  in  nums ){
+    console.log(nums[i]);
+}
+</code></pre></li>
+</ul>
+</li>
+<li><p>数组的常用方法</p>
+<pre><code>toString()把数组转换成字符串
+toLocaleString()把数组转换成本地字符串
+join(拼接参数)返回一个拼接的字符串
+concat(arr)拼接多个数组
+splice(start,count,e1,e2,……)从数组删除部分元素，添加部分元素；返回被删除的项目,start为起始位置，count为删除数
+slice(start,end)返回现有数组的一个子数组，2为起始位置，4为结束位置但不包括该位置
+indexOf(a,b)查询数据第一次出现的位置，即下标；a为查询数据，b为查询范围
+lastIndexOf()查询最后一次出现的位置
+reverse()颠倒数组中元素的顺序
+sort()默认按照数值的第一位数进行由小到大排序
+unshift(x)在数组头部添加新的元素，并返回新的长度
+shift()删除并返回数组头部的元素
+push(x)在数组尾部添加新的元素，并返回新的长度
+pop()删除并返回数组尾部的元素
+</code></pre></li>
+</ul>
+<p></p><h6>二维数组</h6><p></p>
+<ul>
+<li>从整体上来看，是一个数组，只是其中的每个元素又是一个数组，既数组的数组</li>
+<li>遍历二维数组中的每一个元素—-循环嵌套<pre><code>var arr=[[1,2,3],[4,5,6],[7,8,9]]
+for (var i = 0; i &lt; arr.length; i++) {
+    for (var j = 0; j &lt; arr[i].length; j++) {
+        document.write(arr[i][j]+&quot;&amp;nbsp;&quot;);
+    }
+    document.write(&quot;&lt;br/&gt;&quot;);
+}
+</code></pre></li>
+</ul>
+<p></p><h6>正则表达</h6><p></p>
+<ul>
+<li>正则表达式常用于在一段文本中搜索、匹配或替换特定形式的文本。如：词语出现频率统计、验证字符串是否符合邮箱格式、屏蔽一篇帖子中的限制性词语等</li>
+<li><p>正则表达式使用如下语法匹配一个范围内的字符</p>
+<pre><code>[abc]  匹配指定集合内的任一个字符
+[^abc] 匹配不在指定集合内的任一个字符
+[0-9]  匹配任一个数字
+[a-z]  匹配任一个小写字符
+[A-Z]  匹配任一个大写字符
+[A-z]  匹配大写A到小写z的所有字符
+</code></pre></li>
+<li><p>正则表达式中可以使用如下元字符引用来进行简化</p>
+<pre><code>\d    匹配一个数字
+\D    匹配一个非数字
+.     匹配除了回车和换行外的任何单个字符
+\s    匹配一个空白符
+\S    匹配一个非空白符
+</code></pre></li>
+<li><p>正则表达式中可以使用如下特殊字符定义字符的出现频次–量词元字符</p>
+<pre><code>n?     匹配零次或一次字符n
+n*     匹配零次或多次字符n
+n+     匹配一次或多次字符n
+n{x}   匹配字符n出现x次
+n{x,y} 匹配字符n出现x到y次
+n{x,}  匹配字符n的出现次数&gt;=x次
+</code></pre></li>
+<li><p>正则表达式使用如下语法定义子表达式 分组或选择</p>
+<pre><code>exp1|exp2   使用|进行条件选择
+(exp1)   使用()指定分组--每个分组自动获得分组号如：1、2、3、的分组号
+
+&lt;script&gt;
+    var str1=&apos;三原色：red yellow green&apos;;
+    document.write(str1)
+    document.write(&apos;&lt;hr/&gt;&apos;)
+    var reg=/(red|yellow|green)/g;
+    str2=str1.replace(reg,&apos;&lt;span style=&quot;color:$1&quot;&gt;$1&lt;/span&gt;&apos;)
+    document.write(str2)
+&lt;/script&gt;
+
+&lt;script&gt;
+    var student=&apos;a1234&apos;;
+    var reg4=/([abc])(\d{4})/;
+    console.log(reg4.test(student));    //result：true  
+    console.log(RegExp.$1)              //result：a
+    console.log(RegExp.$2)              //result：1234
+&lt;/script&gt;
+</code></pre></li>
+<li><p>可以使用如下字符进行指定位置的匹配</p>
+<pre><code>^   匹配字符串的开头           $  匹配字符串的结尾
+\b  匹配单词的边界            \B  匹配单词的非边界
+?=x 匹配其后紧接x的字符串     ?!x  匹配其后没有紧接x的字符串
+</code></pre></li>
+<li><p>RegExp对象具有如下方法</p>
+<pre><code>compile()   重新编译正则表达式，加快执行速度
+exec()      检索字符串中指定的值。返回找到的值，并确定其位置
+test()         检索字符串中指定的值。返回true或false
+</code></pre></li>
+<li><p>小练习</p>
+<pre><code>&lt;body&gt;
+    账号：&lt;input type=&quot;text&quot;/&gt;
+      &lt;button onclick=&quot;fn1()&quot;&gt;验证&lt;/button&gt;&lt;span&gt;&lt;/span&gt;
+    &lt;script&gt;
+        var regex=/asd/;
+        function fn1(){
+            var inp=document.getElementsByTagName(&apos;input&apos;)[0];
+            var span=document.getElementsByTagName(&apos;span&apos;)[0];
+            if (regex.test(inp.value))
+            {
+                span.innerHTML=&quot;通过&quot;
+            }else{
+                span.innerHTML=&quot;&lt;font color=&apos;red&apos;&gt;输入有误！&lt;/font&gt;&quot;
+            }
+        }
+
+        //手机验证
+        var tel1=&apos;18841845636&apos;
+        var reg2=/^1[34578][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/; 
+        /*
+        reg2=/^1[34578]\d\d\d\d\d\d\d\d\d\d$/
+        */
+        /*
+        reg2=/^1[34578]\d{9}$/
+        */
+        console.log(reg2.test(tel1))
+
+        //邮箱验证
+        var email=&apos;bnsj5116156@163.com&apos;; 
+        var reg3=/^.{6,18}@163\.com$/;
+        console.log(reg3.test(email))
+    &lt;/script&gt;
+&lt;/body&gt;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/23/Js数组、正则/" data-id="cjspxwrhs001gpgwvuq3cd4i7" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Js基础、函数、循环" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/23/Js基础、函数、循环/" class="article-date">
+  <time datetime="2018-02-23T12:36:14.000Z" itemprop="datePublished">2018-02-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/23/Js基础、函数、循环/">Js基础、函数、循环</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h6>基础</h6><p></p>
+<ul>
+<li>js是一种广泛应用于客户端网页开发的脚本语言，是基于对象的弱类型语言，无需编译，由JavaScript引擎解释执行<br>其核心部分只包括基本的语法构造（比如操作符、控制结构、语法）和标准库（一系列具有各种功能的对象如Maths、Date等）<br>完整的js包括三部分：核心（ECMAScript)、BOM、DOM</li>
+<li>js数据类型<br>基本数据类型包括：原始类型：string、number、boolean、undefined、bull，引用类型：object、function、date、number、string、boolean</li>
+<li><p>运用js的三种方式：<br>第一种，要执行的脚本语句直接编写在body中，如：</p>
+<pre><code>&lt;body&gt;
+    &lt;button onclick=&quot;console.log(&apos;hello world&apos;)&quot;&gt;打印&lt;/button&gt;
+&lt;/body&gt;
+</code></pre><p>第二种，外部，内部脚本块中可以执行多条语句：</p>
+<pre><code>&lt;script&gt;
+    document.write(&apos;&lt;b&gt;你好&lt;/b&gt;&apos;);
+    console.log(&apos;脚本执行完成&apos;);
+&lt;/script&gt;
+</code></pre><p>第三种，将JavaScript代码写入一个后缀名为js的文件中并在<head>中引入：</head></p>
+<pre><code>&lt;script src=&quot;js文件.js&quot;&gt;&lt;/script&gt;
+</code></pre></li>
+<li><p>js语法规范<br><br>语句中大小写敏感，使用分号或者换行结束；<br><br>单行注释：//                 多行注释：/<em>  </em>/<br><br>基本输出语句：</p>
+<pre><code>console.log();//控制台输出
+document.write();//页面输出
+window.alert();//弹出提示框
+</code></pre></li>
+<li>变量<br>存储信息的容器，使用关键字var，用=为变量赋值，没有初始化的变量自动取值为underfined；一条语句中可声明多个变量，如：<code>var name1,name2,name3=liu</code>,<br>不允许使用语言关键字和保留字变量名<br><br>标准关键字:<br>break，case，catch，continue，deflault，delete，do，else，false，finally，or，function，if，in，instanceof，new，null，return，switch，this，throw，true，try，typeof，var，with，undefined<br><br>标识符命名规范：可以包含字母、数字、下划线、美元符号；不能以数字开头</li>
+<li>常量<br>是值不能改变的量，使用const关键字声明变量，一般常量名使用纯大写形式，如 <code>const PI=3.15</code></li>
+</ul>
+<p></p><h6>函数</h6><p></p>
+<ul>
+<li><p>运算符</p>
+<pre><code>算数运算：加（+）、减（-）、乘（*）除（/）求余（%）
+关系运算：“&gt;”(大于)，“&lt;”(小于)，“&gt;=”(大于等于)，“&lt;=”(小于等于)，“==”(等于)，“!=”(不等于)，===（类型、数值全等），!==（类型、数值全不等）
+逻辑运算：&amp;&amp;（与）、||（或）、!（非）
+赋值运算：+=（先运算后赋值） =+（先赋值后运算）   -=   *=   /=   %=
+字符连接： +
+
+三目运算：表达式1？表达式2：表达式3  举例：var age = 20；  var msg = age&gt;18?”成年人”:”未成年”
+</code></pre></li>
+<li><p>数据类型转换函数</p>
+<pre><code>Number()
+把一个string解析为number，如果包含非法字符，则返回NaN
+parseFloat()
+解析出一个string或number的浮点数部分，如果没有可转换的部分，则返回NaN
+parseInt()
+解析出一个string或number的整数部分，如果没有可转换的部分，则返回NaN
+toString()
+转换成字符串，所有数据类型均可转换为string类型
+</code></pre></li>
+<li><p>函数</p>
+<ul>
+<li>函数是一段定义好，并可以被反复使用的代码块，其中以包含多条可执行语句；函数本质上是功能完整的对象</li>
+<li><p>如</p>
+<pre><code>function add(ename,epwd){
+  console.log(&apos;用户名&apos;+ename+&apos;密码&apos;+epwd);
+ }
+add(&apos;Marry&apos;,&apos;123&apos;)
+</code></pre></li>
+<li><p>ECMAScript中预定义全局函数，可直接应用，如：<br>encodeURI函数用于对统一资源标识符（URI）进行编码，返回编码后的URI字符串<br>decodeURI函数用于对使用encodeURI编码之后的字符串进行解码，举例：</p>
+<pre><code>var ur=”http://www.baidu.com/name/web/前端”;
+var encoded = encodeURI(ur);
+var decoded = decodeURI(encoded);
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>分支结构</h6><p></p>
+<ul>
+<li>if语句</li>
+<li>if-else语句</li>
+<li><p>switch-case语句</p>
+<pre><code>&lt;body&gt;
+&lt;button onclick=&quot;fn3()&quot;&gt;Switch&lt;/button&gt;
+&lt;script&gt;
+function fn3(){
+    var m1=Number(prompt(&quot;Please input a value:&quot;));
+    switch (m1)
+    {
+        case 1:
+            console.log(&quot;游戏人生&quot;);
+            break;
+        case 2:
+            console.log(&quot;奋斗人生&quot;);
+            break;
+    }
+}
+&lt;/script&gt;
+&lt;/body&gt;
+</code></pre></li>
+<li><p>switch-case在实现分支功能时和if–else的主要区别在于：<br><br>if…else…可以判定相等或不等的情况，适用性广<br><br>switch…case…结构更清晰、效率更高;但是一般只用于指定变量相等于某个范围内的某个特定的值</p>
+</li>
+</ul>
+<p></p><h6>循环结构</h6><p></p>
+<ul>
+<li><p>while语句</p>
+<pre><code>var i = 0;
+while(i&lt;10){
+    console.log(i);
+    i++;            //循环条件每执行一次就改变一次
+}
+</code></pre></li>
+<li><p>do-while语句</p>
+<pre><code>do{
+    可执行语句;
+}while(boolean表达式);
+</code></pre></li>
+<li>while和do-while的区别<br><br>while循环  “先判断再执行”<br><br>do-while循环 “先执行再判断”<br><br>当初始情况不满足循环条件时，while循环一次都不会执行；do-while循环不管任何情况至少执行一次。</li>
+<li><p>for 语句</p>
+<pre><code>for(表达式1;表达式2;表达式3){
+    循环体语句;
+}
+</code></pre></li>
+<li>break用于循环，可使程序终止循环而执行循环后面的语句，常常与条件语句一起使用</li>
+<li>continue关键字只能用于循环中，作用为跳过本次循环体中剩余语句而执行下一次循环</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/23/Js基础、函数、循环/" data-id="cjspxwrhh001bpgwvttxj3kbk" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-CSS全析" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/02/21/CSS全析/" class="article-date">
@@ -262,7 +1453,7 @@ background-color：颜色参数
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/21/CSS全析/" data-id="cjqrsy32h0003jwwvdqobxg9c" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/21/CSS全析/" data-id="cjspxwree0003pgwvza7o15bl" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -441,7 +1632,7 @@ void    不显示表格边框
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/21/表格、表单/" data-id="cjqrsy3ee006ljwwvouw6rcpc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/21/表格、表单/" data-id="cjspxwrvi006ypgwvggykoc29" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -685,1021 +1876,10 @@ align            等于left right center top middle bottom
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/21/标签、链接、列表、框架/" data-id="cjqrsy3dm0063jwwv8rhoh1nn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/21/标签、链接、列表、框架/" data-id="cjspxwru7006gpgwvf0o7cg82" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-推导" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/05/推导/" class="article-date">
-  <time datetime="2018-02-05T14:52:41.000Z" itemprop="datePublished">2018-02-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/05/推导/">推导</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>推导</h5><p></p>
-<hr>
-<hr>
-<h6>三元表达式</h6>
-
-<ul>
-<li><p>类似C语言的三元条件表达式condition ? true_part : false_part，虽然Python没有三目运算符(?:)，但也有类似的替代方案，那就是true_part if condition else false_part</p>
-<pre><code>m=&apos;Fire&apos; if True else &apos;Water&apos;
-print(m)
-</code></pre></li>
-</ul>
-<h6>推导</h6>
-
-<ul>
-<li>推导式是Python中很强大的、很受欢迎的特性，具有语言简洁，速度快等优点</li>
-<li><p>列表推导式</p>
-<pre><code>list1=[]                       #例子1：10之内整除3的数
-for i in range(10):
-    if i%3==0:
-        list1.append(i)
-print(list1)                   #result:[0, 3, 6, 9]
-
-n=[i for i in range(10) if i%3==0]   #使用推导
-print(n)                             #result:[0, 3, 6, 9]
-
-def squared(x):                #例子2,10之内整除3的数的平方
-    return x*x
-list2=[]
-for i in range(10):
-    if i%3==0:
-        list2.append(squared(i))
-print(list2)                   #result:[0, 9, 36, 81]
-
-n=[squared(i) for i in range(10) if i%3==0]  #使用推导
-print(n)                                     #result:[0, 9, 36, 81]
-
-m=(squared(i) for i in range(10) if i%3==0)  #使用()生成generator将俩表推导式的[]改成()即可得到生成器
-print(type(m))                 #result:&lt;class &apos;generator&apos;&gt;
-print(next(m))                 #result:0
-print(next(m))                 #result:9
-</code></pre></li>
-<li><p>字典推导式<br>字典推导和列表推导的使用方法是类似的，只不过中括号改成大括号</p>
-<pre><code>dict1={&apos;a&apos;:1,&apos;b&apos;:2,&apos;c&apos;:3}
-for k,v in dict1.items():
-    print(k,v)                 #result:b 2     c 3     a 1
-
-n={(k,v) for k,v in dict1.items()}  #(k,v)可以写成k:v,就是要保证是一个值
-print(n)                            #result:{(&apos;c&apos;, 3), (&apos;a&apos;, 1), (&apos;b&apos;, 2)}
-</code></pre></li>
-<li><p>集合推导式<br>跟列表推导式也是类似的，唯一的区别在于它使用大括号{}</p>
-<pre><code>#用集合推导获取字符串长度的集合
-set1=[&apos;a&apos;,&apos;is&apos;,&apos;with&apos;,&apos;if&apos;,&apos;file&apos;,&apos;exception&apos;]
-m={len(i) for i in set1}
-print(m)                        #result:{1, 2, 4, 9}
-</code></pre></li>
-</ul>
-<h6>小练习</h6>
-
-<pre><code>#练习1,0--9的次方
-n={i*i for i in range(10)}
-print(n)                        #result:{0, 1, 64, 4, 36, 9, 16, 49, 81, 25}
-
-#练习2,将单词长度大于3的转化为大写输出
-n={&apos;Liu&apos;,&apos;yong&apos;,&apos;qian&apos;,&apos;is&apos;,&apos;a&apos;,&apos;engineer&apos;}
-m=[i.upper() for i in n if len(i)&gt;3]
-print(m)                        #result:[&apos;YONG&apos;, &apos;ENGINEER&apos;, &apos;QIAN&apos;]
-
-#练习3,求(x,y)其中x是0-5之间的偶数，y是0-5之间的奇数组成的元祖列表
-n=[(x,y) for x in range(0,6,2) for y in range(1,6,2)]
-print(n)                        #result:[(0, 1), (0, 3), (0, 5), (2, 1), (2, 3), (2, 5), (4, 1), (4, 3), (4, 5)]
-
-#练习4,求n中3,6,9组成的列表，斜线1,5,9组成的列表
-n=[[1,2,3],[4,5,6],[7,8,9]]
-m=[i[2] for i in n]
-print(m)                        #result:[3, 6, 9]
-
-m=[n[i][i] for i in range(len(n))]
-print(m)                        #result:[1, 5, 9]
-
-#练习5,求m,n中矩阵元素的乘积
-n=[[1,2,3],[4,5,6],[7,8,9]]
-m=[[2,2,2],[3,3,3],[4,4,4]]
-
-a=[n[i][j]*m[i][j] for i in range(len(n)) for j in range(len(n[i]))]
-print(a)                        #result:[2, 4, 6, 12, 15, 18, 28, 32, 36]
-
-#练习6,组成不重复数字的3位数组合
-a=[1,2,3,4]
-b=[1,2,3,4]
-c=[1,2,3,4]
-
-m=[i*100+j*10+k for i in a for j in b for k in c if i!=j and i!=k and j!=k]
-print(m)
-
-#练习7
-n=[[1,2,3,4],[2,4,6,8],[3,5,7,9]]
-m=[[n[i][j] for i in range(3)] for j in range(4)]
-print(m)                        #result:[[1, 2, 3], [2, 4, 5], [3, 6, 7], [4, 8, 9]]
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/05/推导/" data-id="cjqrsy3db005vjwwvvw3opb3v" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-随机数Random" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/02/随机数Random/" class="article-date">
-  <time datetime="2018-02-02T11:11:33.000Z" itemprop="datePublished">2018-02-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/02/随机数Random/">随机数Random</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Random随机数</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>常用函数</h6><p></p>
-<ul>
-<li><p>random() 用于生成一个0到1的随机浮点数</p>
-<pre><code>print(random.random())                  #result:0.3319445476632338
-</code></pre></li>
-<li><p>uniform(x,y) 用于生成指定该范围内的随机浮点数，两个参数其中一个是上限，一个是下限，可以不考虑先后顺序</p>
-<pre><code>print(random.uniform(1,9))              #result:6.238616035651107
-</code></pre></li>
-<li><p>randint(x,y) 用于生成一个指定范围内的整数，两个参数其中x为下限，y为上限</p>
-<pre><code>print(random.randint(1,9))              #result:8
-</code></pre></li>
-<li><p>randrange(start,stop,step) 从指定范围内，按指定基数递增的集合中，获取一个随机数</p>
-<pre><code>print(random.randrange(1,9,2))          #相当于从[1,3,5,7]序列中获取一个随机数
-</code></pre></li>
-<li><p>choice() 从序列中获取一个随机元素</p>
-<pre><code>print(random.choice(&apos;LiuYongqian&apos;))     #result:Y
-</code></pre></li>
-<li><p>shuffle() 用于将一个列表中的元素打乱</p>
-<pre><code>m=[&apos;Liu&apos;,&apos;Yong&apos;,&apos;Qian&apos;]
-random.shuffle(m)
-print(m)                                #result:[&apos;Yong&apos;, &apos;Liu&apos;, &apos;Qian&apos;]
-</code></pre></li>
-<li><p>sample() 从指定序列中随机获取指定长度的片断，该函数不会修改原有序列</p>
-<pre><code>m=[0,1,2,3,4,5,6,7,8,9]
-n=random.sample(m,5)
-print(n)                                #result:[2, 8, 5, 1, 3]
-</code></pre></li>
-</ul>
-<p></p><h6>双色球</h6><p></p>
-<ul>
-<li><p>运用sample()函数实现</p>
-<pre><code>import random
-list1,list2=range(1,34),range(1,17)
-blue=random.sample(list1,6)
-blue.sort()
-red=random.sample(list2,1)
-
-ball=blue+red
-print(ball)                             #result:[3, 5, 9, 11, 31, 32, 10]
-</code></pre></li>
-<li><p>运用递归实现</p>
-<pre><code>import random
-list1,list2=range(1,34),range(1,17)
-ball=[]
-def getBlueNum():
-    m=random.choice(list1)
-    if m not in ball:
-        ball.append(m)
-    else:
-        getBlueNum()
-
-for i in range(6):
-    getBlueNum()
-rednum=random.sample(list2,1)
-ball.append(rednum)
-print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/随机数Random/" data-id="cjqrsy3ey006zjwwv8arn4q4n" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-日志Logging" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/02/日志Logging/" class="article-date">
-  <time datetime="2018-02-02T11:11:21.000Z" itemprop="datePublished">2018-02-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/02/日志Logging/">日志Logging</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>日志Logging</h5><p></p>
-<hr>
-<hr>
-<h6>基础知识</h6>
-
-<ul>
-<li>Python的logging模块提供了记录程序运行情况的日志功能，logging模块主要可以根据自定义日志信息，在程序运行的时候将日志打印在终端及记录日志到文件中。默认情况下，logging打印日志级别为warning,而debug、info在warning级别之下，故而不打印<br></li>
-<li>日志级别，由低到高<ul>
-<li>debug() 调试级别，一般用于记录程序运行的详细信息</li>
-<li>info()事件级别，一般用于记录程序的运行过程</li>
-<li>warnning() 警告级别，，一般用于记录程序出现潜在错误的情形</li>
-<li>error() 错误级别，一般用于记录程序出现错误，但不影响整体运行</li>
-<li>critical() 严重错误级别 ， 出现该错误已经影响到整体运行</li>
-</ul>
-</li>
-<li>logging模块的四大组件<ul>
-<li>Logger：提供日志接口，供应用代码使用。logger最长用的操作有两类：配置和发送日志消息。可以通过logging.getLogger(name)获取logger对象，如果不指定name则返回root对象，多次使用相同的name调用getLogger方法返回同一个logger对象</li>
-<li>Handler：将日志记录（log record）发送到合适的目的地（destination），比如文件，socket等。一个logger对象可以通过addHandler方法添加0到多个handler，每个handler又可以定义不同日志级别，以实现日志分级过滤显示</li>
-<li>Filter：提供一种优雅的方式决定一个日志记录是否发送到handler</li>
-<li>Formatter：指定日志记录输出的具体格式。formatter的构造方法需要两个参数：消息的格式字符串和日期字符串，这两个参数都是可选的</li>
-</ul>
-</li>
-<li>logging的配置方法<ul>
-<li>通过代码进行完整配置，主要是通过getLogger方法实现</li>
-<li>通过代码进行简单配置，主要是通过basicConfig方法实现</li>
-<li>通过配置文件，主要是通过logging.config.fileConfig(filepath)</li>
-</ul>
-</li>
-<li><p>logging用法浅析（getLogger方法）</p>
-<ul>
-<li>1.初始化 logger = logging.getLogger(“endlesscode”)，getLogger()方法后面最好加上所要日志记录的模块名字，后面的日志格式中的%(name)s 对应的是这里的模块名字</li>
-<li>2.设置级别 logger.setLevel(logging.DEBUG),Logging中有NOTSET &lt; DEBUG &lt; INFO &lt; WARNING &lt; ERROR &lt; CRITICAL这几种级别，日志会记录设置级别以上的日志</li>
-<li>3.Handler，常用的是StreamHandler和FileHandler，windows下你可以简单理解为一个是console和文件日志，一个打印在CMD窗口上，一个记录在一个文件上</li>
-<li>4.formatter，定义了最终log信息的顺序,结构和内容，比如这样的格式 ‘[%(asctime)s] [%(levelname)s] %(message)s’, ‘%Y-%m-%d %H:%M:%S’。详细说明：<ul>
-<li>%(name)s Logger的名字</li>
-<li>%(levelname)s 文本形式的日志级别</li>
-<li>%(message)s 用户输出的消息</li>
-<li>%(asctime)s 字符串形式的当前时间。默认格式是 “2018-02-05 16:49:45,896”。逗号后面的是毫秒</li>
-<li>%(levelno)s 数字形式的日志级别</li>
-<li>%(pathname)s 调用日志输出函数的模块的完整路径名，可能没有</li>
-<li>%(filename)s 调用日志输出函数的模块的文件名</li>
-<li>%(module)s  调用日志输出函数的模块名</li>
-<li>%(funcName)s 调用日志输出函数的函数名</li>
-<li>%(lineno)d 调用日志输出函数的语句所在的代码行</li>
-<li>%(created)f 当前时间，用UNIX标准的表示时间的浮点数表示</li>
-<li>%(relativeCreated)d 输出日志信息时的，自Logger创建以来的毫秒数</li>
-<li>%(thread)d 线程ID。可能没有</li>
-<li>%(threadName)s 线程名。可能没有</li>
-<li>%(process)d 进程ID。可能没有</li>
-</ul>
-</li>
-<li>5.记录 使用object.debug(message)来记录日志</li>
-<li><p>写一个实例，在窗口上只打出error以上级别的日志，但是在日志中打出debug以上的信息，代码如下：</p>
-<pre><code>import logging,sys    
-#获取logger实例，如果参数为空则返回root logger
-logger=logging.getLogger(&apos;practic&apos;)
-logger.setLevel(logging.DEBUG)          #指定日志的最低输出级别，默认为WARN级别
-#指定logger输出格式
-formatter=logging.Formatter(&apos;%(asctime)s - %(name)s - %(levelname)-8s - %(message)s&apos;)
-#建立一个filehandler来把日志记录在文件里，级别为debug以上
-file=logging.FileHandler(&apos;test.log&apos;)
-file.setLevel(logging.DEBUG)            #通过setLevel设置日志级别
-file.setFormatter(formatter)            #通过setFormatter指定输出格式
-#建立一个streamhandler来把日志打在窗口上，级别为error以上
-console=logging.StreamHandler(sys.stdout)
-console.setLevel(logging.ERROR)
-console.formatter=formatter             #也可以直接给formatter赋值
-#将相应的handler添加在logger对象中，
-logger.addHandler(file)
-logger.addHandler(console)
-#开始打印日志
-logger.debug(&apos;debug信息&apos;)
-logger.info(&apos;info信息&apos;)
-logger.warning(&apos;warning信息&apos;)
-logger.error(&apos;error信息&apos;)
-logger.critical(&apos;critical信息&apos;)
-</code></pre></li>
-</ul>
-</li>
-<li><p>logging用法浅析（basicConfig方法）</p>
-<ul>
-<li><p>basicConfig()提供了非常便捷的方式来配置logging模块并马上开始使用</p>
-<pre><code>import logging,sys
-logging.basicConfig(level=logging.DEBUG,            #定义输出到文件的日志级别
-                    format=&apos;%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s %(message)s&apos;,#定义输出格式
-                    datefmt=&apos;%a,%d %b %Y %H:%M:%S&apos;) #时间格式
-&apos;&apos;&apos;
-logging.basicConfig(level=logging.DEBUG,            #定义输出到文件的日志级别
-                    format=&apos;%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s %(message)s&apos;,#定义输出格式
-                    datefmt=&apos;%a,%d %b %Y %H:%M:%S&apos;, #时间格式
-                    filename=&apos;test.log&apos;,            #日志文档名
-                    filemode=&apos;a&apos;)                   #写入模式，a为追加，w为覆盖
-&apos;&apos;&apos;
-logging.debug(&apos;debug信息&apos;)
-logging.info(&apos;info信息&apos;)
-logging.warning(&apos;warning信息&apos;)
-logging.error(&apos;error信息&apos;)
-logging.critical(&apos;critical信息&apos;)
-</code></pre></li>
-</ul>
-</li>
-<li><p>logging用法浅析（通过文件配置logging）</p>
-<ul>
-<li>该方法可以参考大神佳作<a href="http://blog.csdn.net/langb2014/article/details/53397164" target="_blank" rel="noopener">python的logging日志模块(一)</a></li>
-</ul>
-</li>
-</ul>
-<h6>自定义封装，优化getLogger方法</h6>
-
-<pre><code>import logging,os
-class Logger:
-    def __init__(self, path,clevel = logging.DEBUG,Flevel = logging.DEBUG):
-        self.logger = logging.getLogger(path)
-        self.logger.setLevel(logging.DEBUG)
-        fmt = logging.Formatter(&apos;[%(asctime)s] [%(levelname)s] %(message)s&apos;, &apos;%Y-%m-%d %H:%M:%S&apos;)
-        #设置CMD日志
-        sh = logging.StreamHandler()
-        sh.setFormatter(fmt)
-        sh.setLevel(clevel)
-        #设置文件日志
-        fh = logging.FileHandler(path)
-        fh.setFormatter(fmt)
-        fh.setLevel(Flevel)
-        self.logger.addHandler(sh)
-        self.logger.addHandler(fh)
-    def debug(self,message):
-        self.logger.debug(message)
-    def info(self,message):
-        self.logger.info(message)
-    def war(self,message):
-        self.logger.warn(message)
-    def error(self,message):
-        self.logger.error(message)
-    def cri(self,message):
-        self.logger.critical(message)
-if __name__ ==&apos;__main__&apos;:
-    logyyx=Logger(&apos;test.log&apos;,logging.ERROR,logging.DEBUG)
-    logyyx.debug(&apos;一个debug信息&apos;)
-    logyyx.info(&apos;一个info信息&apos;)
-    logyyx.war(&apos;一个warning信息&apos;)
-    logyyx.error(&apos;一个error信息&apos;)
-    logyyx.cri(&apos;一个致命critical信息&apos;)
-#每次使用的时候只要实例化一个对象就可以了
-logobj = Logger(&apos;008&apos;,logging.ERROR,logging.DEBUG)
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/日志Logging/" data-id="cjqrsy3dg005zjwwvv56j0nnb" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-迭代器、生成器、异常" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/01/迭代器、生成器、异常/" class="article-date">
-  <time datetime="2018-02-01T13:05:40.000Z" itemprop="datePublished">2018-02-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>迭代器、生成器、异常</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>初识迭代器</h6><p></p>
-<ul>
-<li><p>容器，是一种把多个元素组织在一起的数据结构，容器中的元素可以逐个的迭代获取，可以用in，not in关键字判断元素是否包含在容器中<br>通常这类数据结构把所有的元素存储在内存中（也有特例，并不是所有的元素都放在内存中，比如迭代器、生成器对象）<br>在Python中，常见的容器对象有：list、set、dict、tuple、str、file、sockets等，这些对象都可以看作是容器，容器都可以迭代，因此它们被称为可迭代对象</p>
-<pre><code>m=(&apos;a&apos;,1,2,&apos;b&apos;)        #询问某元素是否在元组中，这个元组可以认为是一个容器
-print(&apos;a&apos; in m)        #result:True
-</code></pre></li>
-<li><p>可迭代对象，可直接作用于for循环的对象统称为可迭代对象，即iterable。可迭代对象实现了__iter__方法，该方法返回一个迭代器对象</p>
-</li>
-<li><p>迭代器，被next()函数调用并不断返回下一个值（直到没有数据时抛出StopIteration错误）的对象称为迭代器，即iterator<br>迭代器内部持有一个状态，该状态用于记录当前迭代所在的位置，以便下次迭代时获取正确的元素</p>
-<pre><code>m=[1,2,3]            #m为可迭代对象
-print(type(m))       #result:&lt;class &apos;list&apos;&gt;
-m=iter(m)            #iter(可迭代对象)，将可迭代对象转换成迭代器
-n=iter(m)            #m与n是两个独立的迭代器，每转换一次就生成一次迭代器
-print(type(m))       #result:&lt;class &apos;list_iterator&apos;&gt;
-print(next(m))       #result:1
-print(next(m))       #result:2  两个next()之间可以增加其他逻辑，但不会影响迭代器输出结果
-</code></pre></li>
-</ul>
-<p></p><h6>详细了解迭代器</h6><p></p>
-<ul>
-<li>它是一个带状态的对象，它能在你调用next()方法的时候返回容器中的下一个值，任何实现了__iter__和__next__()方法的对象都是迭代器<br>__iter__返回迭代器自身，__next__返回容器中的下一个值，如果容器中没有更多的值，则抛出StopIteration异常<br>迭代器就是实现了工厂模式的对象，它在你每次你询问要下一个值的时候给你返回</li>
-<li><p>自己创建一个迭代器，以斐波那契数列为例</p>
-<pre><code>#第一个版本，复用性较差
-def Fibo(max):          #输出斐波那契数列前N个数
-    n,a,b=0,0,1
-    while n&lt;max:
-        print(b)
-        a,b=b,a+b
-        n+=1
-Fibo(5)                 #result:1  1  2  3  5
-
-#第二个版本，要提高复用性最好不要直接打印出数列，而是返回一个数列
-def Fibo(max):
-    n,a,b=0,0,1
-    L=[]
-    while n&lt;max:
-        L.append(b)
-        a,b=b,a+b
-        n+=1
-    return L           #返回一个数列
-for i in Fibo(5):
-    print(i)           #result:1  1  2  3  5
-#第三个版本，返回数列能满足复用性的需求，但是运行时占用的内存会随着参数max的增大而增大，如果要控制内存占用，最好不要用List来保存中间结果，而是通过iterable对象来迭代
-
-class Fibo(object):
-    def __init__(self,max):
-        self.max=max
-        self.n,self.a,self.b=0,0,1
-    def __iter__(self):
-        return self
-    def __next__(self):
-        if self.n&lt;self.max:
-            r=self.b
-            self.a,self.b=self.b,self.a+self.b
-            self.n+=1
-            return r
-        raise StopIteration()
-f=Fibo(5)
-for i in f:
-    print(i)            #result:1  1  2  3  5
-</code></pre></li>
-<li><p>生成器（generator）<br>生成器是一种特殊的迭代器，不需要写__iter__()和__next__()方法，只需要一个关键字yield<br>任何生成器都是以一种懒加载的模式生成值</p>
-<pre><code>#第四个版本，如果既要简洁，又要获得iterable的效果，yield就派上用场了
-def Fibo(max):
-    n,a,b=0,0,1
-    while n&lt;max:
-        yield b         #使用yield返回值
-        a,b=b,a+b
-        n+=1
-f = Fibo(5)
-for i in f:
-    print(i)            # result:1  1  2  3  5
-</code></pre></li>
-</ul>
-<p></p><h6>异常</h6><p></p>
-<ul>
-<li><p>异常：运行时异常，编译时异常，逻辑错误</p>
-<pre><code>#运行时异常
-a=100
-c=0
-try:                            #有可能发生异常的代码
-    b=int(input(&apos;请输入除数:&apos;))
-    c=a/b
-    print(c)   
-except ZeroDivisionError as m:  #Exception（异常类型1，异常类型2），常见的有ZeroDivisionError、ValueError
-    print(m)                    #捕获并处理异常   #result:如果除数为0，则抛出division by zero
-except ValueError as n:
-    print(n)                    #result:如果除数为字符，则抛出invalid literal for int()
-except Exception as p:
-    print(p)
-else:                           #没有异常才会执行的代码
-    print(&apos;程序正常执行!&apos;)
-finally:                        #最终要执行的代码，释放资源的作用
-    try:                        #异常可以嵌套
-        del a,b,c
-    except Exception as q:
-        print(q)
-    print(&apos;程序最终执行完成!&apos;)
-
-#自定义异常
-class SexException(Exception):
-    pass
-def inputSex():
-    sex=input(&apos;请输入性别:&apos;)
-    if sex!=&apos;男&apos; and sex!=&apos;女&apos;:
-        raise SexException(&apos;性别只能是男或者女&apos;)
-    print(&apos;输入的性别为&apos;,sex)
-try:
-    inputSex()
-except SexException as m:
-    print(m)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/01/迭代器、生成器、异常/" data-id="cjqrsy3et006vjwwvlj81kw2b" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-工厂类、单例、其他" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/01/工厂类、单例、其他/" class="article-date">
-  <time datetime="2018-02-01T07:33:58.000Z" itemprop="datePublished">2018-02-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>工厂类、单例、其他</h5><p></p>
-<hr>
-<hr>
-<h6>工厂类、单例模式</h6>
-
-<ul>
-<li><p>通过专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类 并且重写父类方法</p>
-<pre><code>class  Operation:
-    def __init__(self,numA,numB):
-        self.numA=numA
-        self.numB=numB
-    def getResult(self):
-        print(&apos;计算2个操作数的运算结果&apos;)
-
-class Add(Operation):
-    def __init__(self,numA,numB):
-        super(Add, self).__init__(numA,numB)
-    def getResult(self):
-        return self.numA+self.numB
-class Minus(Operation):
-    def __init__(self,numA,numB):
-        super(Minus, self).__init__(numA,numB)
-    def getResult(self):
-        return self.numA-self.numB
-
-class Factory:            #根据不同的参数，创建不同的对象的函数
-    def create_class(self,ope,numA,numB):
-        if ope == &apos;+&apos;:
-            q = Add(numA, numB)
-        elif ope == &apos;-&apos;:
-            q = Minus(numA, numB)
-        else:
-            print(&apos;输入错误！&apos;)
-        return q
-
-if __name__==&apos;__main__&apos;:
-    factory=Factory()             #创建一个工厂对象
-    numA=int(input(&apos;请输入第一个数:&apos;))
-    numB=int(input(&apos;请输入第二个数:&apos;))
-    ope=input(&apos;请输入运算符:&apos;)
-    q=factory.create_class(ope,numA,numB)  #代表一个计算器
-    print(&apos;计算结果:&apos;,q.getResult())
-</code></pre></li>
-</ul>
-<h6>单例模式</h6>
-
-<ul>
-<li><p>该模式的主要目的是确保某一个类只有一个实例存在</p>
-<pre><code>class singleton:
-    __instance=None
-    def __new__(cls, *args, **kwargs):   #单例模式，一个对象
-        if cls.__instance==None:
-            cls.__instance=object.__new__(cls)
-            return cls.__instance
-        else:
-            return cls.__instance
-s1=singleton()
-s2=singleton()
-print(id(s1),id(s2))       #result:2489344543992   2489344543992
-</code></pre></li>
-</ul>
-<h6>isinstance()函数</h6>
-
-<ul>
-<li><p>判断是否是继承关系，判断变量的数据类型</p>
-<pre><code>class Pet:
-    def look(self):
-        print(&apos;给宠物看病...&apos;)
-class cat(Pet):
-    def look(self):
-        print(&apos;给猫咪吃药、打针...&apos;)
-kitty=cat()
-print(isinstance(kitty,cat))      #result:True
-print(isinstance(kitty,Pet))      #result:True
-
-a=&apos;Liu&apos;
-print(isinstance(a,str))          #result:True
-</code></pre></li>
-</ul>
-<h6>getattribute\setsttr\hasattr</h6>
-
-<pre><code>class  Operation:
-    numC=333
-    def __init__(self,numA,numB):
-        self.numA=numA
-        self.numB=numB
-    def getResult(self):
-        print(&apos;计算2个操作数的运算结果&apos;)
-q=Operation(3,6)
-print(Operation.numC)                 #result:333
-print(q.__getattribute__(&apos;numC&apos;))     #result:333
-
-q.__setattr__(&apos;numD&apos;,666)
-print(q.__getattribute__(&apos;numD&apos;))     #result:666
-
-setattr(Operation,&apos;numE&apos;,999)
-print(q.numE)                         #result:999
-
-print(hasattr(q,&apos;numC&apos;))              #result:True
-</code></pre><p></p><h6>操作对象的形态</h6><p></p>
-<ul>
-<li><p>给类动态添加方法</p>
-<pre><code>class Student:
-    def __init__(self,name):
-        self.name=name
-    def look(self):
-        print(&apos;%s在看书...&apos;%self.name)
-def ride(name):
-    print(&apos;%s在骑马...&apos;%name)
-stu1=Student(&apos;刘备&apos;)
-stu1.look()               #result:刘备在看书...
-
-stu1.ride=ride            #给实例添加一个方法
-stu1.ride(stu1.name)      #result:刘备在骑马...
-
-class Student:
-    def __init__(self,name):
-        self.name=name
-    def look(self):
-        print(&apos;%s在看书...&apos;%self.name)
-def ride(self):
-    print(&apos;%s在骑马...&apos;%self.name)
-Student.ride=ride         #给类动态添加方法
-stu1=Student(&apos;刘备&apos;)
-stu1.look()               #result:刘备在看书...
-stu1.ride()               #result:刘备在骑马...
-</code></pre></li>
-<li><p>为了达到限制的目的，Python允许在定义class的时候，定义一个特殊的__slots__变量，来限制该class实例能添加的属性</p>
-<pre><code>class Student:
-    __slots__=(&apos;name&apos;)   #限制该class实例能添加的属性
-    def __init__(self,name):
-        self.name = name
-    def look(self):
-        print(&apos;%s在看书...&apos;%self.name)
-stu=Student(&apos;刘禅&apos;)
-stu.look()
-stu.age=25
-print(stu.age)       #AttributeError: &apos;Student&apos; object has no attribute &apos;age&apos;
-</code></pre></li>
-<li><p>__call__,通过callable()函数，可以判断一个对象是否是“可调用”对象</p>
-<pre><code>class Student:
-    def __init__(self,name):
-        self.name = name
-    def look(self):
-        print(&apos;%s在看书...&apos;%self.name)
-    def __call__(self, *args, **kwargs):
-        #print(&apos;AAAAAAAAAAAAA&apos;)
-stu=Student(&apos;刘禅&apos;)
-stu.look()
-print(callable(stu))         #result:True
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/01/工厂类、单例、其他/" data-id="cjqrsy3d4005rjwwvcmd09h20" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-计算器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/31/计算器/" class="article-date">
-  <time datetime="2018-01-31T09:38:33.000Z" itemprop="datePublished">2018-01-31</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/31/计算器/">计算器</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <h5>计算器</h5>
-
-<pre><code>class  Operation:
-    def __init__(self,numA,numB):
-        self.numA=numA
-        self.numB=numB
-    def getResult(self):
-        print(&apos;计算2个操作数的运算结果&apos;)
-
-class Add(Operation):
-    def __init__(self,numA,numB):
-        super(Add, self).__init__(numA,numB)
-    def getResult(self):
-        return self.numA+self.numB
-class Minus(Operation):
-    def __init__(self,numA,numB):
-        super(Minus, self).__init__(numA,numB)
-    def getResult(self):
-        return self.numA-self.numB
-class Multiply(Operation):
-    def __init__(self,numA,numB):
-        super(Multiply, self).__init__(numA,numB)
-    def getResult(self):
-        return self.numA*self.numB
-class Devide(Operation):
-    def __init__(self,numA,numB):
-        super(Devide, self).__init__(numA,numB)
-    def getResult(self):
-        return self.numA//self.numB
-if __name__==&apos;__main__&apos;:             #程序从这里启动
-    numA=int(input(&apos;请输入第一个数:&apos;))
-    numB=int(input(&apos;请输入第二个数:&apos;))
-    ope=input(&apos;请输入运算符:&apos;)
-    q=None      #未赋值的变量，代表一个计算器，类似一个对象
-    if ope==&apos;+&apos;:
-        q=Add(numA,numB)
-    elif ope==&apos;-&apos;:
-        q=Minus(numA,numB)
-    elif ope==&apos;*&apos;:
-        q=Multiply(numA,numB)
-    elif ope==&apos;/&apos;:
-        q=Devide(numA,numB)
-    else:
-        print(&apos;输入错误！&apos;)
-    print(&apos;计算结果:&apos;,q.getResult())
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/31/计算器/" data-id="cjqrsy3eh006njwwvj4uc1e9v" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-DVD管理系统" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/29/DVD管理系统/" class="article-date">
-  <time datetime="2018-01-29T09:50:37.000Z" itemprop="datePublished">2018-01-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/29/DVD管理系统/">DVD管理系统</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <h5>DVD管理系统</h5>
-
-<pre><code>class dvd:
-    def __init__(self,name,price,status):
-        self.name=name
-        self.price=price
-        self.status=status
-    def __str__(self):
-        stat=&apos;已借出&apos;
-        if self.status==1:
-            stat=&apos;未借出&apos;
-        return &apos;名称：《%s》  单价：%d  状态：%s&apos;%(self.name,self.price,stat)
-class DvdManage:
-    dvds=[]  #存储  多个dvds，每个元素都是一个DVD
-    def init(self):
-        self.dvds.append(dvd(&apos;光辉岁月&apos;,10,0))
-        self.dvds.append(dvd(&apos;大海日出&apos;,12,1))
-        self.dvds.append(dvd(&apos;你好小明&apos;,20,1))
-    def Menu(self):
-        self.init()
-        while(True):
-            print(&apos;1.查询所有DVD&apos;)
-            print(&apos;2.增加DVD&apos;)
-            print(&apos;3.借出DVD&apos;)
-            print(&apos;4.归还DVD&apos;)
-            print(&apos;5.退出&apos;)
-            choose=int(input(&apos;请选择操作项:&apos;))
-            if choose==1:
-                self.showAlldvd()
-            elif choose==2:
-                self.insertDvd()
-            elif choose==3:
-                self.lend()
-            elif choose==4:
-                self.backDvd()
-            elif choose==5:
-                print(&apos;5.谢谢使用！&apos;)
-                break
-    def showAlldvd(self):
-        for d in self.dvds:
-            print(str(d))
-    def insertDvd(self):
-        name = input(&apos;请输入DVD的名称:&apos;)
-        ret=self.checkDvd(name)
-        if ret!=None:
-            print(&apos;DVD已存在!&apos;)
-        else:
-            price=int(input(&apos;请输入价格:&apos;))
-            new_dvd=dvd(name,price,1)
-            self.dvds.append(new_dvd)
-            print(&apos;存放成功!&apos;)
-    def lend(self):
-        name = input(&apos;请输入DVD的名称:&apos;)
-        ret = self.checkDvd(name)
-        if ret != None:
-            if ret.status==0:
-                print(&apos;DVD已借出!&apos;)
-            else:
-                days=int(input(&apos;请输入借出天数:&apos;))
-                ret.status=0
-                print(&apos;借出%d天，应收%d&apos;%(days,ret.price*days))
-        else:
-            print(&apos;DVD不存在!&apos;)
-    def backDvd(self):
-        name=input(&apos;请输入DVD的名称:&apos;)
-        ret=self.checkDvd(name)
-        if ret==None:
-            print(&apos;DVD不存在!&apos;)
-        else:
-            if ret.status==1:
-                print(&apos;DVD未借出!&apos;)
-            else:
-                days=int(input(&apos;请输入借出天数:&apos;))
-                y_money=ret.price * days
-                print(&apos;借出%d天，应收%d&apos; % (days, ret.price * days))
-                money=0
-                while True:
-                    money=int(input(&apos;实收:&apos;))
-                    if money&lt;y_money:
-                        print(&apos;不够啊!&apos;)
-                    else:
-                        break
-                if money&gt;=y_money:
-                    print(&apos;找零:%d&apos;%(money-y_money))
-                ret.status=1
-                print(&apos;归还成功!&apos;)
-    def checkDvd(self,name):
-        for d in self.dvds:
-            if d.name==name:
-                return d       #返回当前对象---内存地址
-        else:
-            return None
-manager=DvdManage()
-manager.Menu()
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjqrsy33k000gjwwvn0v9mc3s" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1728,7 +1908,7 @@ manager.Menu()
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -1738,7 +1918,7 @@ manager.Menu()
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 16px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 13px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 13px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 13px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 16px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 13px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12px;">软件工具</a>
     </div>
   </div>
 
@@ -1747,7 +1927,7 @@ manager.Menu()
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1760,23 +1940,23 @@ manager.Menu()
       <ul>
         
           <li>
-            <a href="/2019/01/11/时间设置与配置查询/">时间设置与配置查询</a>
+            <a href="/2019/03/01/安装部署Tomcat9/">安装部署Tomcat9</a>
           </li>
         
           <li>
-            <a href="/2019/01/11/linux系统常见优化配置01/">linux系统常见优化配置01</a>
+            <a href="/2019/03/01/安装部署Mongodb4/">安装部署Mongodb4</a>
           </li>
         
           <li>
-            <a href="/2018/12/12/mysql数据库安装/">mysql数据库安装</a>
+            <a href="/2019/03/01/安装部署禅道11.2/">安装部署禅道11.2</a>
           </li>
         
           <li>
-            <a href="/2018/11/30/测试过程中遇到的问题/">测试过程中遇到的问题</a>
+            <a href="/2019/03/01/安装部署Nginx/">安装部署Nginx</a>
           </li>
         
           <li>
-            <a href="/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/">CentOS下彻底删除MySQL-卸载二进制包/源码安装方式的MySQL</a>
+            <a href="/2019/03/01/安装部署mysql5.7/">安装部署mysql5.7</a>
           </li>
         
       </ul>

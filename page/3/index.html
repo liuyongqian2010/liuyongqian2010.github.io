@@ -70,6 +70,967 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Linux上部署java项目" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/13/Linux上部署java项目/" class="article-date">
+  <time datetime="2018-07-13T10:42:33.000Z" itemprop="datePublished">2018-07-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/13/Linux上部署java项目/">Linux上部署java项目</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Linux上部署java项目</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>关闭防火墙</h6><p></p>
+<ul>
+<li>目前安装的linux版本是CentOS7</li>
+<li>永久关闭防护墙 <code>systemctl disable firewalld</code></li>
+</ul>
+<p></p><h6>安装JDK</h6><p></p>
+<ul>
+<li>目前版本是jdk-7u79-linux-x64.tar.gz</li>
+<li><p>安装步骤：</p>
+<ul>
+<li>1.在<code>/usr</code>目录下<code>mkdir java</code>，把jdk安装包放到该文件夹下并解压<code>tar -zvxf jdk-7u79-linux-x64.tar.gz</code></li>
+<li><p>2.修改系统环境变量<code>vi /etc/profile</code>在文件尾部添加如下内容：</p>
+<pre><code>JAVA_HOME=/usr/java/jdk1.7.0_79
+PATH=$PATH:$JAVA_HOME/bin
+CLASSPATH=.:$JAVA_HOME/lib
+export JAVA_HOME PATH CLASSPATH
+</code></pre><p><em>3.之后重新加载，使其生效，命令为：<code>source /etc/profile</code><br>
+</em>4.查看是否安装成功，命令为：<code>java -version</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>安装Tomcat</h6><p></p>
+<ul>
+<li>目前的版本是apache-tomcat-7.0.79.tar.gz</li>
+<li><p>安装步骤：</p>
+<ul>
+<li>1.在<code>/usr</code>目录下<code>mkdir tomcat</code>，把Tomcat安装包放到该文件夹下并解压<code>tar -zvxf apache-tomcat-7.0.79.tar.gz</code></li>
+<li><p>2.修改系统环境变量<code>vi /etc/profile</code>，如下：</p>
+<pre><code>JAVA_HOME=/usr/java/jdk1.7.0_79
+CATALINA_HOME=/usr/tomcat/apache-tomcat-7.0.79
+PATH=$PATH:$JAVA_HOME/bin:$CATALINA_HOME/bin
+CLASSPATH=.:$JAVA_HOME/lib:$CATALINA_HOME/lib
+export JAVA_HOME CATALINA_HOME PATH CLASSPATH
+</code></pre><ul>
+<li>3.之后重新加载，使其生效，命令为：<code>source /etc/profile</code><br></li>
+<li><p>4.启动Tomcat，并查看日志</p>
+<pre><code>cd /usr/tomcat/apache-tomcat-7.0.79 
+执行 ./bin/startup.sh命令即可启动
+</code></pre></li>
+<li><p>5.关闭tomcat</p>
+<pre><code>ps -ef |grep tomcat  
+查看进程后杀掉进程sudo kill ***
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>安装MySQL</h6><p></p>
+<ul>
+<li>目前的版本是mysql-5.6.39-linux-glibc2.12-x86_64.tar.gz</li>
+<li><p>安装步骤：</p>
+<ul>
+<li>1.将安装包拷贝到<code>/usr/local</code>目录下并解压<code>tar -zvxf mysql-5.6.39-linux-glibc2.12-x86_64.tar.gz</code>之后<code>mv mysql-5.6.39-linux-glibc2.12-x86_64 mysql</code></li>
+<li><p>2.均在<code>/usr/local</code>下执行：</p>
+<pre><code>添加mysql用户组，执行 groupadd mysql
+为mysql用户组添加mysql用户，执行useradd -r -g mysql mysql -d /usr/local/mysql
+为mysql用户设置密码，执行passwd mysql    密码可以是mysql
+将文件及其子文件的所有者设为mysql组的mysql用户，执行chown -R mysql:mysql /usr/local/mysql
+</code></pre></li>
+<li><p>3.切换到mysql用户即<code>su mysql</code>后安装数据库</p>
+<pre><code>/usr/local/mysql/scripts/mysql_install_db --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
+</code></pre></li>
+<li><p>4.安装mysql数据库结束后exit回到<code>/usr/local</code>目录下</p>
+</li>
+<li>5.<code>cd mysql/support-files</code>后复制mysql配置文件到系统配置目录下,执行<code>cp my-default.cnf /etc/my.cnf</code></li>
+<li><p>6.在mysql/support-files下将mysql添加为系统服务依次执行</p>
+<pre><code>cp mysql.server /etc/init.d/mysql                                                                          chkconfig --list|grep mysql                                                                           chkconfig --add mysql
+查看mysql服务是否添加成功chkconfig --list|grep mysql
+</code></pre></li>
+<li><p>7.添加环境变量，<code>vi /etc/profile</code>后增加</p>
+<pre><code>JAVA_HOME=/usr/java/jdk1.7.0_79
+CATALINA_HOME=/usr/tomcat/apache-tomcat-7.0.79
+MYSQL_HOME=/usr/local/mysql
+PATH=$PATH:$JAVA_HOME/bin:$CATALINA_HOME/bin:$MYSQL_HOME/bin
+CLASSPATH=.:$JAVA_HOME/lib:$CATALINA_HOME/lib
+export JAVA_HOME CATALINA_HOME MYSQL_HOME PATH CLASSPATH
+</code></pre></li>
+<li><p>8.之后重新加载，使其生效，执行<code>source /etc/profile</code></p>
+</li>
+<li><p>9.修改mysql配置文件<code>vi /etc/my.cnf</code>，修改内容如下</p>
+<pre><code>#These are commonly set,remove the # and set as required
+basedir=/usr/local/mysql
+datadir=/usr/local/mysql/data
+port=3306
+server_id=1
+socket=/tmp/mysql.sock
+</code></pre></li>
+<li><p>10.保存退出后，启动mysql服务</p>
+<pre><code>启动mysql服务，执行service mysql start
+查看mysql服务，执行service mysql status
+</code></pre></li>
+<li><p>11.其他必须操作</p>
+<pre><code>root账户默认是没有密码的，如果需要修改root账户密码：
+第一种方式（不建议采用，会将linux系统密码也同步修改）：
+执行mysqladmin -u root password &apos;admin&apos;
+第二种方式（登录mysql系统，执行mysql -u root -p）：
+Enter password: 【输入原来的密码，首次为空】
+mysql&gt;use mysql;
+mysql&gt; update user set password=&apos;新的密码&apos; where user=&apos;root&apos;;
+mysql&gt; flush privileges;
+授权允许所有外部链接访问执行 GRANT ALL PRIVILEGES ON *.* TO &apos;root&apos;@&apos;%&apos; IDENTIFIED BY &apos;admin&apos; WITH
+GRANT OPTION; （注：admin为登录用户的密码）
+刷新权限执行：FLUSH PRIVILEGES;
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>安装redis</h6><p></p>
+<ul>
+<li>目前版本是redis-4.0.10.tar.gz</li>
+<li>安装步骤：<ul>
+<li>1.<code>cd /usr/local/</code>下，解压该文件并进入redis-4.0.10下的redis目录</li>
+<li>2.编译make，之后会有对应的src、conf等文件夹</li>
+<li>3.进入src文件夹执行make install进行安装</li>
+<li>4.接下来是部署redis（redis的安装部署，会在之后不久的博客中单独述说）</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>war包部署与配置</h6><p></p>
+<ul>
+<li>1.将jeeplus.war包拷到tomcat根目录下，即<code>/usr/tomcat/apache-tomcat-7.0.79</code>下</li>
+<li><p>2.在该目录下，修改<code>conf/server.xml</code>，具体如下：</p>
+<pre><code>在&lt;Host&gt;下添加&lt;Context path=&quot;&quot; docBase=&quot;../jeeplus.war&quot;/&gt;
+</code></pre></li>
+<li><p>3.全量部署时需要将webapps下的ROOT目录删除，第一次部署时要把ROOT目录删除先再重启服务</p>
+</li>
+<li><p>4.在该目录下，修改<code>bin\catalina.sh</code>，就是增加一句话JAVA_OPTS：</p>
+<pre><code># -----------------------------------------------------------------------------
+JAVA_OPTS=&quot;-server -XX:PermSize=128M -XX:MaxPermSize=256M -XX:+HeapDumpOnOutOfMemoryError -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC -Xloggc:gc.log&quot;
+# OS specific support.  $var _must_ be set to either true or false.
+</code></pre></li>
+<li><p>5.在该目录下，修改<code>webapps/ROOT/webpage/include/taglib.jsp</code>,就是关于js文件获取方式，具体注销内容如下：</p>
+<pre><code>&lt;c:set var=&quot;ctxStatic&quot; value=&quot;${pageContext.request.contextPath}/static&quot;/&gt;
+&lt;%--&lt;c:set var=&quot;ctxStatic&quot; value=&quot;${fns:getOSSUrl()}&quot;/&gt; --%&gt;
+&lt;c:set var=&quot;ctxp&quot; value=&quot;${pageContext.request.contextPath}&quot; /&gt;
+</code></pre></li>
+<li><p>6.在该目录下，修改<code>webapps/ROOT/WEB-INF/classes/jeeplus.properties</code>,关于数据库、redis缓存的内容：</p>
+<pre><code>#mysql database setting
+jdbc.type=mysql
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://127.0.0.1:3306/ruihuaoa-activity-info?useUnicode=true&amp;characterEncoding=utf-8&amp;allowMultiQueries=true
+jdbc.username=root
+jdbc.password=gangwan123
+
+#redis settings
+redis.keyPrefix=jeeplus
+redis.host=127.0.0.1
+redis.port=6379
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/13/Linux上部署java项目/" data-id="cjspxwrhw001ipgwvi6uigiyp" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-linux下mysql基本操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/07/linux下mysql基本操作/" class="article-date">
+  <time datetime="2018-05-07T12:57:36.000Z" itemprop="datePublished">2018-05-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/07/linux下mysql基本操作/">linux下mysql基本操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>linux下mysql基本操作</h5><p></p>
+<hr>
+<hr>
+<h6>数据库用户权限相关设置</h6>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/07/linux下mysql基本操作/" data-id="cjspxwrm40038pgwvch334zvb" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-MongoDB的备份、还原、导入、导出" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/29/MongoDB的备份、还原、导入、导出/" class="article-date">
+  <time datetime="2018-04-29T04:10:35.000Z" itemprop="datePublished">2018-04-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/29/MongoDB的备份、还原、导入、导出/">MongoDB的备份、还原、导入、导出</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>MongoDB的备份、还原、导入、导出</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>综述</h6><p></p>
+<ul>
+<li>进行整个库的导出导入时使用mongodump和mongorestore，这一对组合操作的数据是BSON格式，进行大量dump和restore时效率较高</li>
+<li>进行单个集合导出导入时使用mongoexport和mongoimport，这一对组合操作的数据是JSON格式，可读性较高</li>
+</ul>
+<p></p><h6>备份mongodump</h6><p></p>
+<ul>
+<li>mongodump是一个用于导出二进制数据库内容的实用工具，它导出的bson文档中只会包含着集合文档等信息，不包括索引信息（索引信息会单独导出），所以还原后，索引必须重建（这个不用担心，使用mongorestore会自动重建mongodump生成的索引信息）</li>
+<li><p>常用参数</p>
+<pre><code>-h localhost:27017  #指定mongodb要连接的主机名及端口号，默认值为：localhost:27017 
+-d &lt;database&gt;    #指定要备份的数据库，如果不指定，默认所有数据库
+-c &lt;collection&gt;  #指定要备份的集合
+-o &lt;path&gt;        #指定导出数据的目录路径
+------------------------------------------
+示例：将mytest数据库中的user集合导出到E:\test目录下
+&gt;&gt;&gt;mongodump -d mytest -c user -o E:\test
+</code></pre></li>
+</ul>
+<p></p><h6>还原mongorestore</h6><p></p>
+<ul>
+<li>mongorestore用来导入数据到MongoDB实例中，3.0.0版本以上支持通过标准输入流来导入数据</li>
+<li><p>常用参数</p>
+<pre><code>-d &lt;database&gt; #指定要还原的数据库
+-c &lt;collection&gt;     #指定要还原的集合
+--drop     #还原集合前会先从目标数据库中删除集合，不会删除不在备份中的集合
+&lt;path&gt;    #要还原的数据文件路径，该参数必须是mongodbrestore命令的最后一个参数
+------------------------------------------------
+示例：通过user.bson文件还原mytest数据库中的user集合，并在还原之前进行删除
+&gt;&gt;&gt;mongorestore --drop -d mytest -c user E:\test\user.bson
+</code></pre></li>
+</ul>
+<p></p><h6>导出mongoexport</h6><p></p>
+<ul>
+<li><p>常用参数</p>
+<pre><code>-d &lt;database&gt;      #指定要在哪个数据库上运行命令
+-c &lt;collection&gt;    #指定要导出的集合
+-f &lt;field1,field2...&gt;  #指定导出时只导出一个或者多个字段，导出多个时，需要用逗号分隔；当字段中有空格时，需要用英文引号括起来
+-o &lt;path-file&gt;      #指定要导出的文件路径（含文件名）
+-------------------------------------------------
+示例：导出mytest数据库中的user集合到user.json文件中
+&gt;&gt;&gt;mongoexport -d mytest -c user -o E:\test\user.json
+</code></pre></li>
+</ul>
+<p></p><h6>导入mongoimport</h6><p></p>
+<ul>
+<li><p>常用参数</p>
+<pre><code>--type &lt;json|csv|tsv&gt;  #要导入的文件类型，另外支持tsv
+--headerline           #使用第一行作为字段名称
+--mode &lt;insert|upsert|merge&gt;   #指定导入过程中，如何应对数据库文档与导入文件中的文档匹配的情况，默认会使用_id字段对比；&lt;插入|替换数据库中的文档|合并&gt;
+------------------------------------------
+示例：从user.json文件导入到mytest数据库中的user集合，并在之前进行删除
+&gt;&gt;&gt;mongoimport --drop -d mytest -c user --file E:\test\user.json
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/" data-id="cjspxwril001upgwvolqs2zks" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-大数据的一些函数-02" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/24/大数据的一些函数-02/" class="article-date">
+  <time datetime="2018-04-24T14:51:09.000Z" itemprop="datePublished">2018-04-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>大数据的一些函数-02</h5><p></p>
+<hr>
+<hr>
+<ul>
+<li><p>parallelize</p>
+<pre><code>from pyspark import SparkContext,SparkConf
+
+conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+#用 python list 初始化
+data =[1,2,3,4,5,6,7,8,9]
+rdd = sc.parallelize(data,numSlices=4)       #parallelize并行化数据，转化为RDD;numSlices为分块数目，根据集群数进行分块
+print(rdd.collect())             #collect返回RDD所有元素
+print(rdd.getNumPartitions())    #返回分块数
+print(rdd.glom().collect())      #glom，说明rdd中的元素已经变成了分片映射的列表
+print(rdd.first())
+sc.stop()
+---------------------------------
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+4
+[[1, 2], [3, 4], [5, 6], [7, 8, 9]]
+1
+</code></pre></li>
+<li><p>读取一个文本文件</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+
+#读取一个文本文件
+rdd = sc.textFile(&quot;file:///home/hadoop/data1.txt&quot;)
+print(rdd.collect())
+print(rdd.getNumPartitions())
+print(rdd.glom().collect())
+#执行Map运算
+rdda=rdd.map(lambda x:len(x))
+print(rdda.collect())
+sc.stop()
+-----------------------------------
+[&apos;Hello, Spark&apos;, &apos;textfile&apos;, &apos;end&apos;]
+2
+[[&apos;Hello, Spark&apos;], [&apos;textfile&apos;, &apos;end&apos;]]
+[12, 8, 3]
+</code></pre></li>
+<li><p>读取所有文本文件</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+
+#读取所有文本文件
+rdd = sc.wholeTextFiles(&quot;file:///Users/chuzhengkai/Desktop/*.txt&quot;)
+a=rdd.collect()
+for b in a:
+    #b是一个元组(文件名,内容)
+    print(b[0])
+sc.stop()
+-------------------------------------
+file:/Users/chuzhengkai/Desktop/test0.txt
+file:/Users/chuzhengkai/Desktop/test.txt
+</code></pre></li>
+<li><p>map,filter</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+#用 python list 初始化
+data =[x for x in range(10)]
+rdd = sc.parallelize(data)
+print(rdd.collect())
+def pf(x):
+    return x**2
+def ou(x):
+    return x%2==0
+#map运算
+xrdd = rdd.map(pf)
+print(xrdd.collect())
+#filter运算
+xrdd = rdd.map(pf).filter(ou)
+print(xrdd.collect())
+sc.stop()
+-------------------------------------------
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+[0, 4, 16, 36, 64]
+</code></pre></li>
+<li><p>map,flatmap</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+#用 python list 初始化
+data =[&apos;Hello guys&apos;,&apos;My name is David&apos;,&apos;Welcome to USA&apos;]
+rdd = sc.parallelize(data)
+print(rdd.collect())
+def fg(x):
+    return x.split(&apos; &apos;)
+
+#map操作
+xrdd = rdd.map(fg)
+print(xrdd.collect())
+
+#flatMap
+xrdd = rdd.flatMap(fg)
+print(xrdd.collect())
+sc.stop()
+-----------------------------------------
+[&apos;Hello guys&apos;, &apos;My name is David&apos;, &apos;Welcome to USA&apos;]
+[[&apos;Hello&apos;, &apos;guys&apos;], [&apos;My&apos;, &apos;name&apos;, &apos;is&apos;, &apos;David&apos;], [&apos;Welcome&apos;, &apos;to&apos;, &apos;USA&apos;]]
+[&apos;Hello&apos;, &apos;guys&apos;, &apos;My&apos;, &apos;name&apos;, &apos;is&apos;, &apos;David&apos;, &apos;Welcome&apos;, &apos;to&apos;, &apos;USA&apos;]
+</code></pre></li>
+<li><p>词频统计</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+#读取一个文本文件
+rdd = sc.textFile(&quot;file:///Users/chuzhengkai/Desktop/test0.txt&quot;)
+print(rdd.collect())
+def wmap(x):
+    return (x,1)
+
+def wreduce(x,y):
+    return x+y
+
+#执行Map运算
+rddm=rdd.map(wmap)
+print(rddm.collect())
+#执行reduce运算
+rddr=rddm.reduceByKey(wreduce)
+print(rddr.collect())
+sc.stop()
+------------------------------------------------------
+[&apos;good&apos;, &apos;day&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;is&apos;, &apos;good&apos;, &apos;day&apos;]
+[(&apos;good&apos;, 1), (&apos;day&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;is&apos;, 1), (&apos;good&apos;, 1), (&apos;day&apos;, 1)]
+[(&apos;good&apos;, 4), (&apos;weather&apos;, 2), (&apos;is&apos;, 1), (&apos;day&apos;, 2), (&apos;has&apos;, 2), (&apos;today&apos;, 2)]
+</code></pre></li>
+<li><p>去重复</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+
+#读取一个文本文件
+rdd = sc.textFile(&quot;file:///Users/chuzhengkai/Desktop/test0.txt&quot;)
+print(rdd.collect())
+print(rdd.distinct().collect())
+sc.stop()
+--------------------------------------------------
+[&apos;good&apos;, &apos;day&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;is&apos;, &apos;good&apos;, &apos;day&apos;]
+[&apos;good&apos;, &apos;weather&apos;, &apos;is&apos;, &apos;day&apos;, &apos;has&apos;, &apos;today&apos;]
+</code></pre></li>
+<li><p>排序</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+
+#读取一个文本文件
+rdd = sc.textFile(&quot;file:///Users/chuzhengkai/Desktop/test0.txt&quot;)
+print(rdd.collect())
+def wmap(x):
+    return (x,1)
+def wreduce(x,y):
+    return x+y
+def px(x):
+    return x[1]
+#执行Map运算
+rddm=rdd.map(wmap)
+print(rddm.collect())
+#执行reduce运算
+rddr=rddm.reduceByKey(wreduce)
+print(rddr.collect())
+#对结果执行按词频排序
+rdds=rddr.sortBy(px,ascending=False)
+print(rdds.collectAsMap())
+#取前三名
+print(rdds.take(3))
+#按key排序
+print(rddr.sortByKey().collect())
+#按key分组
+print(rddm.groupByKey().map(lambda x:{x[0]:[y for y in x[1]]}).collect())
+sc.stop()
+----------------------------------------------------------
+[&apos;good&apos;, &apos;day&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;is&apos;, &apos;good&apos;, &apos;day&apos;]
+[(&apos;good&apos;, 1), (&apos;day&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;is&apos;, 1), (&apos;good&apos;, 1), (&apos;day&apos;, 1)]
+[(&apos;good&apos;, 4), (&apos;weather&apos;, 2), (&apos;is&apos;, 1), (&apos;day&apos;, 2), (&apos;has&apos;, 2), (&apos;today&apos;, 2)]
+{&apos;good&apos;: 4, &apos;weather&apos;: 2, &apos;day&apos;: 2, &apos;has&apos;: 2, &apos;today&apos;: 2, &apos;is&apos;: 1}
+[(&apos;good&apos;, 4), (&apos;weather&apos;, 2), (&apos;day&apos;, 2)]
+[(&apos;day&apos;, 2), (&apos;good&apos;, 4), (&apos;has&apos;, 2), (&apos;is&apos;, 1), (&apos;today&apos;, 2), (&apos;weather&apos;, 2)]
+[{&apos;good&apos;: [1, 1, 1, 1]}, {&apos;weather&apos;: [1, 1]}, {&apos;is&apos;: [1]}, {&apos;day&apos;: [1, 1]}, {&apos;has&apos;: [1, 1]}, {&apos;today&apos;: [1, 1]}]
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-02/" data-id="cjspxwrs7005kpgwve5fsso8g" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-大数据的一些函数-01" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/24/大数据的一些函数-01/" class="article-date">
+  <time datetime="2018-04-24T12:41:20.000Z" itemprop="datePublished">2018-04-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/24/大数据的一些函数-01/">大数据的一些函数-01</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>大数据一些函数-01</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>准备工作</h6><p></p>
+<ul>
+<li>1.已经安装配置完毕如下三大件：<ul>
+<li>hadoop-2.9.0</li>
+<li>python3.6.3</li>
+<li>spark2.3.0（可直接pip install pyspark）</li>
+</ul>
+</li>
+<li>2.启动工作：<ul>
+<li>start-all.sh 启动hadoop服务</li>
+<li>jupyter-notebook –ip python333后使用提示的url打开jupyter页面（python333为我的主机名）</li>
+<li>pyspark启动spark</li>
+<li>之后就在jupyter中进行操作了</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>一些函数</h6><p></p>
+<ul>
+<li><p>创建会话</p>
+<pre><code>#导入模块
+import pyspark
+#导入类
+from pyspark import SparkContext,SparkConf
+#创建配置,指定AppName,指定Master(主机)
+conf = SparkConf().setAppName(&apos;demoRDD&apos;).setMaster(&apos;local[*]&apos;)
+#创建会话
+sc = SparkContext.getOrCreate(conf)
+#通过会话实现对SPARK的操作
+#以python list提供一个测试用的数据
+data = [x for x in range(11)]
+rdd = sc.parallelize(data)
+print(&apos;RDD对象:&apos;,rdd,&apos;\n记录数:&apos;,rdd.count())
+partiRdd = rdd.glom()
+print(&apos;RDD.GLOM Collect结果:&apos;,partiRdd.collect())
+print(partiRdd.count())
+print(&apos;RDD Collect结果:&apos;,rdd.collect())
+#关闭会话
+sc.stop()
+--------------------------------------------------------
+RDD对象: ParallelCollectionRDD[0] at parallelize at PythonRDD.scala:175 
+记录数: 11
+RDD.GLOM Collect结果: [[0, 1], [2, 3, 4, 5], [6, 7], [8, 9, 10]]
+4
+RDD Collect结果: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+</code></pre></li>
+<li><p>map、filter操作</p>
+<pre><code>#创建会话
+sc = SparkContext.getOrCreate(conf)
+#通过会话实现对SPARK的操作
+#以python list提供一个测试用的数据
+data = [x for x in range(11)]
+rdd = sc.parallelize(data)
+print(&apos;RDD对象记录数:&apos;,rdd.count())
+print(&apos;RDD Collect结果:&apos;,rdd.collect())
+#map操作,映射
+mappedRdd = rdd.map(lambda x:x**3)
+print(mappedRdd.collect())
+#判断一个数是否是偶数
+def filterOdd(x):
+    return x%2 == 0
+#过滤操作
+filtedRdd = mappedRdd.filter(filterOdd)
+print(filtedRdd.collect())
+print(rdd.collect())
+#关闭会话
+sc.stop()
+-----------------------------------------------
+RDD对象记录数: 11
+RDD Collect结果:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+[0, 1, 8, 27, 64, 125, 216, 343, 512, 729, 1000]
+[0, 8, 64, 216, 512, 1000]
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+</code></pre></li>
+<li><p>使用文本文件做数据源</p>
+<pre><code>sc = SparkContext.getOrCreate(conf)
+rows = sc.textFile(&quot;file:///home/hadoop/data1.txt&quot;)
+print(rows.first())
+print(rows.take(2))
+print(rows.count())
+print(rows.top(2))
+sc.stop()
+</code></pre></li>
+<li><p>使用多个文本文件，进行词频统计</p>
+<pre><code>sc = SparkContext.getOrCreate(conf)
+#多个文本文件获取到一个RDD里面
+filesRDD = sc.wholeTextFiles(&apos;file:///home/hadoop/*.txt&apos;)
+#文件内容RDD
+fileConRDD = filesRDD.map(lambda x:x[1])
+#用回车符分隔字符串,形成列表
+def sp(x):
+    return x.split(&apos;\n&apos;)
+#对每个文件内容做映射,结果是多个文件内容列表
+#存在二维结构
+strRDD = fileConRDD.map(sp)
+#同样是映射,结果展平成一维结构
+wordRDD = fileConRDD.flatMap(sp)
+#结果,形成类一个元组表达一个文件,多个元组的列表
+#词频统计map
+wordDictRDD = wordRDD.map(lambda x:(x,1))
+#Reduce
+r = wordDictRDD.reduceByKey(lambda x,y:x+y)
+print(strRDD.collect())
+print(wordRDD.collect())
+print(wordDictRDD.collect())
+print(r.collect())
+sc.stop()
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-01/" data-id="cjspxwrs1005ipgwv4b2y2370" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Centos7安装MySQL5.6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/16/Centos7安装MySQL5.6/" class="article-date">
+  <time datetime="2018-04-16T15:41:40.000Z" itemprop="datePublished">2018-04-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/16/Centos7安装MySQL5.6/">Centos7安装MySQL5.6</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Centos7安装MySQL5.6</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>安装MySQL</h6><p></p>
+<ul>
+<li>1.下载安装包mysql-5.6.40-linux-glibc2.12-x86_64.tar.gz</li>
+<li><p>2.卸载centos7自带的Mariadb数据库</p>
+<pre><code>[root@localhost ~]# rpm -qa|grep mariadb  // 查询出来已安装的mariadb  
+[root@localhost ~]# rpm -e --nodeps 文件名  // 卸载mariadb，文件名为上述命令查询出来的文件
+[root@localhost ~]# rm /etc/my.cnf    //删除etc目录下的my.cnf
+</code></pre></li>
+<li><p>3.创建一个用户名为mysql的用户并加入mysql用户组</p>
+<pre><code>[root@localhost ~]# groupadd mysql  
+[root@localhost ~]# useradd -g mysql mysql  
+</code></pre></li>
+<li><p>4.将下载的压缩包放到 /usr/local/ 目录下</p>
+</li>
+<li><p>5.解压安装包</p>
+<pre><code>[root@localhost local]# tar -zxvf mysql-5.6.40-linux-glibc2.12-x86_64.tar.gz
+</code></pre></li>
+<li><p>6.将解压好的文件夹重命名为mysql</p>
+<pre><code>[root@localhost local]# mv 解压出来的文件夹名 mysql
+</code></pre></li>
+<li><p>7.在/etc/下新建配置文件my.cnf，并在该文件中添加以下代码：</p>
+<pre><code>[mysql]  
+# 设置mysql客户端默认字符集  
+default-character-set=utf8   
+socket=/var/lib/mysql/mysql.sock  
+
+[mysqld]  
+skip-name-resolve  
+#设置3306端口  
+port = 3306   
+socket=/var/lib/mysql/mysql.sock  
+# 设置mysql的安装目录  
+basedir=/usr/local/mysql  
+# 设置mysql数据库的数据的存放目录  
+datadir=/usr/local/mysql/data  
+# 允许最大连接数  
+max_connections=200  
+# 服务端使用的字符集默认为8比特编码的latin1字符集  
+character-set-server=utf8  
+# 创建新表时将使用的默认存储引擎  
+default-storage-engine=INNODB  
+lower_case_table_name=1  
+max_allowed_packet=16M  
+</code></pre></li>
+<li><p>8.进入安装mysql软件目录</p>
+<pre><code>[root@localhost mysql]# chown -R mysql:mysql ./       修改当前目录拥有着为mysql用户  
+[root@localhost mysql]# ./scripts/mysql_install_db --user=mysql --basedir=/usr/local/mysql/ --datadir=/usr/local/mysql/data/           安装数据库
+</code></pre></li>
+</ul>
+<p></p><h6>配置MySQL</h6>  <p></p>
+<ul>
+<li><p>1.授予my.cnf最大权限</p>
+<pre><code>[root@localhost ~]# chmod 777 /etc/my.cnf 
+</code></pre></li>
+<li><p>2.设置开机自启动服务控制脚本</p>
+<pre><code>[root@localhost mysql]# cp ./support-files/mysql.server /etc/rc.d/init.d/mysqld     复制启动脚本到资源目录
+[root@localhost mysql]# chmod +x /etc/rc.d/init.d/mysqld   增加mysqld服务控制脚本执行权限
+[root@localhost mysql]# chkconfig --add mysqld    将mysqld服务加入到系统服务
+[root@localhost mysql]# chkconfig --list mysqld    检查mysqld服务是否已经生效,命令输出类似下面的结果:
+        mysqld 0:off 1:off 2:on 3:on 4:on 5:on 6:off 
+        表明mysqld服务已经生效，在2、3、4、5运行级别随系统启动而自动启动，
+        以后可以使用service命令控制mysql的启动和停止
+        命令为:service mysqld start和service mysqld stop
+</code></pre></li>
+<li><p>3.启动mysqld</p>
+<pre><code>[root@localhost mysql]# service mysqld start
+</code></pre></li>
+<li><p>4.将mysql的bin目录加入PATH环境变量，编辑 ~/.bash_profile文件</p>
+<pre><code>[root@localhost mysql]# vim ~/.bash_profile
+添加如下信息：
+export PATH=$PATH:/usr/local/mysql/bin
+之后：
+[root@localhost mysql]# source ~/.bash_profile 
+</code></pre></li>
+<li><p>5.以root账户登录mysql,默认是没有密码的</p>
+<pre><code>[root@localhost mysql]# mysql -uroot -p
+</code></pre></li>
+<li><p>6.设置root账户密码为root</p>
+<pre><code>mysql&gt;use mysql;  
+mysql&gt;update user set password=password(&apos;root&apos;) where user=&apos;root&apos; and host=&apos;localhost&apos;;  
+mysql&gt;flush privileges;
+</code></pre></li>
+<li><p>7.设置远程主机登录，注意下面的your username 和 your password改成你需要设置的用户和密码</p>
+<pre><code>mysql&gt;GRANT ALL PRIVILEGES ON *.* TO &apos;your username&apos;@&apos;%&apos; IDENTIFIED BY &apos;your password&apos; WITH  
+GRANT OPTION; 
+</code></pre></li>
+<li><p>8.到此，在Centos 7上安装mysql5.6就完成了</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/16/Centos7安装MySQL5.6/" data-id="cjspxwrf8000cpgwvr37uytbx" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-python之Map、Reduce、Filte" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/16/python之Map、Reduce、Filte/" class="article-date">
+  <time datetime="2018-04-16T15:38:13.000Z" itemprop="datePublished">2018-04-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/16/python之Map、Reduce、Filte/">python之Map、Reduce、Filte</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>python之Map、Reduce、Filte</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>Map</h6><p></p>
+<ul>
+<li>简介<ul>
+<li>map()函数接收两个及以上参数，一个是函数对象本身，一个是序列，map将传入的函数依次作用到序列的每个元素，并把结果作为新的list返回</li>
+<li>在Python2里，直接使用map就可以打印结果；但是在Python3里，map返回的结果是迭代器(iterator)，需要先转换为列表list</li>
+</ul>
+</li>
+<li><p>计算列表中每个元素的的平方并输出</p>
+<pre><code>def f(x):
+    return x*x
+list1=[1,2,3,4,5,6]
+第一种方法：循环
+list2=[]
+for n in list1:
+    list2.append(f(n))
+print(list2)              #result:[1, 4, 9, 16, 25, 36]
+
+第二种方法：map
+list3=list(map(f,list1))
+print(list3)              #result:[1, 4, 9, 16, 25, 36]
+</code></pre></li>
+<li><p>map()作为高阶函数，事实上它把运算规则抽象了，因此，我们不但可以计算简单的f(x)=x*x，还可以计算任意复杂的函数，比如，把这个list1所有数字转为字符串</p>
+<pre><code>list4=list(map(str,list1))
+print(list4)             #result:[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;, &apos;5&apos;, &apos;6&apos;]
+</code></pre></li>
+</ul>
+<p></p><h6>Reduce</h6><p></p>
+<ul>
+<li>简介<ul>
+<li>reduce把一个函数作用在一个序列[x1, x2, x3…]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算</li>
+<li>reduce可以有initial参数</li>
+</ul>
+</li>
+<li><p>示例</p>
+<pre><code>from functools import reduce
+#没有initial参数
+sum1=reduce(lambda x,y:x+y,[1,2,3,4,5,6])    #（（（1+2）+3+）+4...）
+print(sum1)             #result:21
+
+#有initial参数
+sum2=reduce(lambda x,y:x+y,[1,2,3,4,5,6],10)  #（（（（10+1）+2）+3）+4...）
+print(sum2)             #result:31
+</code></pre></li>
+</ul>
+<p></p><h6>Filte</h6><p></p>
+<ul>
+<li>简介<ul>
+<li>filter函数对指定的序列进行过滤操作</li>
+<li>filter()也接收一个函数和一个序列，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素</li>
+</ul>
+</li>
+<li><p>示例</p>
+<pre><code>list4=[1,2,3,4,5,6,7,8,9]
+def is_odd(x):
+    return x%2==1
+result=list(filter(is_odd,list4))
+print(result)               #result:[1, 3, 5, 7, 9]
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/16/python之Map、Reduce、Filte/" data-id="cjspxwro60042pgwvz8xqx3cn" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-安装python3-6、spark" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/16/安装python3-6、spark/" class="article-date">
@@ -129,7 +1090,7 @@ PATH=$PATH:$SPARK_HOME/bin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/安装python3-6、spark/" data-id="cjqrsy3cw005ljwwvoml7ubub" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/16/安装python3-6、spark/" data-id="cjspxwrsh005opgwvfiz6fekx" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -202,7 +1163,7 @@ PATH=$PATH:$SPARK_HOME/bin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/使用hadoop里面的MapReduce/" data-id="cjqrsy3bl004pjwwvr8yg3cp2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/16/使用hadoop里面的MapReduce/" data-id="cjspxwrqa004spgwvw859ax3f" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -365,937 +1326,10 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjqrsy3ea006jjwwvw675urq6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjspxwrve006wpgwvh03p9t4p" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-使用LinkExtractor提取链接" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/14/使用LinkExtractor提取链接/" class="article-date">
-  <time datetime="2018-04-14T10:08:49.000Z" itemprop="datePublished">2018-04-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/14/使用LinkExtractor提取链接/">使用LinkExtractor提取链接</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>使用LinkExtractor提取链接</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>在爬取一个网站时，想要爬取的数据通常分布在多个页面中，每个页面包含一部分数据以及到其他页面的链接，提取链接有使用Selector和使用LinkExtractor两种方法</li>
-<li><p>使用Selector，因为链接也是页面中的数据，所以可以使用与提取数据相同的方法进行提取，在提取少量（几个）链接或提取规则比较简单时，使用Selector就足够了</p>
-<pre><code>next_url = response.css(&apos;ul.pager li.next a::attr(href)&apos;).extract_first()      
-if next_url:  # 如果找到下一页的url，得到绝对路径，构造新的Request 对象          
-    next_url = response.urljoin(next_url) 
-     yield scrapy.Request(next_url, callback=self.parse)
-</code></pre></li>
-<li><p>Scrapy提供了一个专门用于提取链接的类LinkExtractor，在提取大量链接或提取规则比较复杂时，使用LinkExtractor更加方便</p>
-</li>
-</ul>
-<p></p><h6>详解</h6><p></p>
-<ul>
-<li><p>首先制造一个实验环境，创建两个包含多个链接的HTML页面，使用这两个HTML文本构造两个Response对象</p>
-<pre><code>from scrapy.http import HtmlResponse
-from scrapy.linkextractors import LinkExtractor
-html1=&apos;&apos;&apos;
-    &lt;html&gt;
-        &lt;body&gt;      
-            &lt;div id=&quot;top&quot;&gt;         
-                &lt;p&gt;下面是一些站内链接&lt;/p&gt;         
-                &lt;a class=&quot;internal&quot; href=&quot;/intro/install.html&quot;&gt;Installation guide&lt;/a&gt;
-                &lt;a class=&quot;internal&quot; href=&quot;/intro/tutorial.html&quot;&gt;Tutorial&lt;/a&gt;         
-                &lt;a class=&quot;internal&quot; href=&quot;../examples.html&quot;&gt;Examples&lt;/a&gt;      
-            &lt;/div&gt;      
-            &lt;div id=&quot;bottom&quot;&gt;         
-                &lt;p&gt;下面是一些站外链接&lt;/p&gt;         
-                &lt;a href=&quot;http://stackoverflow.com/tags/scrapy/info&quot;&gt;StackOverflow&lt;/a&gt;         
-                &lt;a href=&quot;https://github.com/scrapy/scrapy&quot;&gt;Fork on Github&lt;/a&gt;      
-            &lt;/div&gt;
-        &lt;/body&gt;
-    &lt;/html&gt;
-&apos;&apos;&apos;
-html2=&apos;&apos;&apos;
-    &lt;html&gt;   
-        &lt;head&gt;       
-            &lt;script type=&apos;text/javascript&apos; src=&apos;/js/app1.js&apos;/&gt;       
-            &lt;script type=&apos;text/javascript&apos; src=&apos;/js/app2.js&apos;/&gt;   
-        &lt;/head&gt;   
-        &lt;body&gt;       
-            &lt;a href=&quot;/home.html&quot;&gt;主页&lt;/a&gt;       
-            &lt;a href=&quot;javascript:goToPage(&apos;/doc.html&apos;); return false&quot;&gt;文档&lt;/a&gt;       
-            &lt;a href=&quot;javascript:goToPage(&apos;/example.html&apos;); return false&quot;&gt;案例&lt;/a&gt;   
-        &lt;/body&gt;
-    &lt;/html&gt;
-&apos;&apos;&apos;
-response1=HtmlResponse(url=&apos;http://example1.com&apos;,body=html1,encoding=&apos;utf-8&apos;)
-response2=HtmlResponse(url=&apos;http://example2.com&apos;,body=html2,encoding=&apos;utf-8&apos;)
-</code></pre></li>
-<li><p>特例情况，LinkExtractor构造器的所有参数都有默认值，如果构造对象时不传递任何参数（使用默认值），就提取页面中所有链接</p>
-<pre><code>le=LinkExtractor()
-links=le.extract_links(response1)
-print([link.url for link in links])   #打印出html1中所有链接，5个
-</code></pre></li>
-<li><p>allow<br>接收一个正则表达式或一个正则表达式列表，提取绝对url与正则表达式匹配的链接</p>
-<pre><code>示例　提取页面example1.html中路径以/intro开始的链接：
-pattern=r&apos;/intro/.+.html$&apos;
-le=LinkExtractor(allow=pattern)
-links=le.extract_links(response1)
-print([link.url for link in links])   #打印出html1中2个以/intro开始的链接
-</code></pre></li>
-<li><p>deny<br>接收一个正则表达式或一个正则表达式列表，与allow相反，排除绝对url与正则表达式匹配的链接</p>
-<pre><code>示例　提取页面example1.html中所有站外链接（即排除站内链接）
-pattern=r&apos;.*.html$&apos;
-le=LinkExtractor(deny=pattern)
-links=le.extract_links(response1)
-print([link.url for link in links])   #打印出html1中2个站外链接
-</code></pre></li>
-<li><p>allow_domains<br>接收一个域名或一个域名列表，提取到指定域的链接</p>
-<pre><code>示例　提取页面example1.html中所有到github.com和stackoverflow.com这两个域的链接
-domains=[&apos;stackoverflow.com&apos;,&apos;github.com&apos;]
-le=LinkExtractor(allow_domains=domains)
-links=le.extract_links(response1)
-print([link.url for link in links])   #打印出html1中2个站外链接
-</code></pre></li>
-<li><p>deny_domains<br>接收一个域名或一个域名列表，与allow_domains相反,排除到指定域的链接</p>
-<pre><code>示例　提取页面example1.html中除了到github.com域以外的链接
-domains=[&apos;github.com&apos;]
-le=LinkExtractor(deny_domains=domains)
-links=le.extract_links(response1)
-print([link.url for link in links])   #打印出html1中除了github外的4个链接
-</code></pre></li>
-<li><p>restrict_xpaths<br>接收一个XPath表达式或一个XPath表达式列表，提取XPath表达式选中区域下的链接</p>
-<pre><code>示例　提取页面example1.html中&lt;div id=&quot;top&quot;&gt;元素下的链接：
-le=LinkExtractor(restrict_xpaths=&apos;//div[@id=&quot;top&quot;]&apos;)
-links=le.extract_links(response1)
-print([link.url for link in links])   #打印出html1中3个站内链接
-</code></pre></li>
-<li><p>restrict_css<br>接收一个CSS选择器或一个CSS选择器列表，提取CSS选择器选中区域下的链接</p>
-<pre><code>示例　提取页面example1.html中&lt;div id=&quot;bottom&quot;&gt;元素下的链接
-le=LinkExtractor(restrict_css=&apos;#bottom&apos;)
-links=le.extract_links(response1)
-print([link.url for link in links])   #打印出html1中2个站外链接
-</code></pre></li>
-<li><p>tags<br>接收一个标签（字符串）或一个标签列表，提取指定标签内的链接，默认为[‘a’, ‘area’]<br>attrs<br>接收一个属性（字符串）或一个属性列表，提取指定属性内的链接，默认为[‘href’]</p>
-<pre><code>示例　提取页面example2.html中引用JavaScript文件的链接
-le=LinkExtractor(tags=&apos;script&apos;,attrs=&apos;src&apos;)
-links=le.extract_links(response2)
-print([link.url for link in links])   #打印出html2中2个script链接
-</code></pre></li>
-<li><p>process_value<br>接收一个形如func(value)的回调函数。如果传递了该参数，LinkExtractor将调用该回调函数对提取的每一个链接（如a的href）进行处理，回调函数正常情况下应返回一个字符串（处理结果），想要抛弃所处理的链接时，返回None</p>
-<pre><code>示例　在页面example2.html中，某些a的href属性是一段JavaScript代码，代码中包含了链接页面的实际url地址，此时应对链接进行处理，提取页面example2.html中所有实际链接
-import re
-def process(value):
-    m=re.search(&quot;javascript:goToPage\(&apos;(.*?)&apos;&quot;,value)
-    if m:
-        value=m.group(1)
-    return value
-le=LinkExtractor(process_value=process)
-links=le.extract_links(response2)
-print([link.url for link in links])   #打印出html2中a标签中的3个链接
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/14/使用LinkExtractor提取链接/" data-id="cjqrsy3be004ljwwv14f8qou4" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-linux文件的打包、压缩" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/12/linux文件的打包、压缩/" class="article-date">
-  <time datetime="2018-04-12T13:37:47.000Z" itemprop="datePublished">2018-04-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/12/linux文件的打包、压缩/">linux文件的打包、压缩</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>linux文件的打包、压缩</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>Linux常见的压缩文件扩展名</h6><p></p>
-<ul>
-<li>.gz　　    gzip压缩的文件</li>
-<li>.bz2　　    bzip2压缩的文件</li>
-<li>.tar　　    tar程序打包的文件</li>
-<li>.tar.gz　　tar程序打包，gzip压缩的文件</li>
-<li>.tar.bz2　　tar程序打包，bzip2压缩的文件</li>
-</ul>
-<p></p><h6>gzip命令</h6><p></p>
-<ul>
-<li><p>使用最广的解压缩命令，可以解开zip，gzip压缩过的文件</p>
-<pre><code>gzip  [-cdtv#]  [文件名] &gt; [压缩后文件名]
--c　　：将压缩的数据输出到屏幕上，通过数据流重定向来处理
--d　　：解压缩参数
--t　　：用来检验压缩文件的一致性，看看文件是否有错误
--v　　：输出文件压缩比等信息
--#　　：压缩等级０－９，１－９压缩比增大速度变慢，默认为６
-</code></pre></li>
-<li><p>示例</p>
-<pre><code>gzip -cv data1.txt &gt; data1.gz  (压缩)
-gzip -d data1.gz               (解压)
-</code></pre></li>
-</ul>
-<p></p><h6>bzip2命令</h6><p></p>
-<ul>
-<li><p>比gzip压缩更好的压缩命令</p>
-<pre><code>bzip2   [-cdkzv#]　文件名
--c　　：将压缩过程中产生的数据输出到屏幕上
--d　　：解压缩的参数
--k　　：保留原文件
--z　　：压缩的参数
--v　　:可以显示出原文件/压缩文件的压缩比
--#　　：同gzip
-</code></pre></li>
-<li><p>示例</p>
-<pre><code>如果使用的linux的版本是centos7的话需要yum install bzip2
-bzip2 -kzv data.txt      (压缩)
-bzip2 -d data.txt.bz2    (解压)
-</code></pre></li>
-</ul>
-<p></p><h6>tar命令</h6><p></p>
-<ul>
-<li><p>哈哈，这个比较多，也更加实用</p>
-<pre><code>tar　[-j|z]  [-cv]  [-f  新建的文件名]  filename 　　//打包与压缩
-tar  [-j|z]  [-tv]  [-f  新建的文件名]  filename　　//查看文件名
-tar  [-j|z]　[-xv]  [-f  新建的文件名]　[-C 目录]　　//解压缩
-
-参数：
--c　　：新建打包文件
--t　　：查看打包文件的内容中有那些文件名
--x　　：解打包或解压缩
-以上3条不可出现在同一串命令中
--j　　：通过bzip2的支持来压缩/解压缩
--z　　：通过gzip的支持来压缩/解压缩
--v　　：压缩/解压缩过程中显示正在处理的文件名
--f　　：后面接要处理的文件名
--C　　：特定目录解压
--p　　：保留备份数据的　原本权限与属性
-</code></pre></li>
-<li><p>重点说一下常用到的命令</p>
-<pre><code>gzip压缩：tar  -zcvf  filename.tar.gz  要压缩的文件目录或名称
-gzip解压：tar  -zxvf  filename.tar.gz　-C　解压的目录
-gzip查看：tar  -zcvf  filename.tar.gz　
-bzip2压缩：tar  -jcvf  filename.tar.bz2  要压缩的文件目录或名称
-bzip2解压：tar  -jxvf  filename.tar.bz2　-C　解压的目录
-bzip2查看：tar  -jcvf  filename.tar.bz2　
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjqrsy39e003hjwwvwloggv6p" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-jdk部署" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/11/jdk部署/" class="article-date">
-  <time datetime="2018-04-11T11:48:13.000Z" itemprop="datePublished">2018-04-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/11/jdk部署/">jdk部署</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>jdk部署</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>echo遍历、输出、打印</h6><p></p>
-<ul>
-<li><p>输出</p>
-<pre><code>name=&apos;hadoop&apos;(定义变量)
-echo $name（输出变量值）
-</code></pre></li>
-<li><p>重定向、覆盖</p>
-<pre><code>touch data1.txt(里面有内容)
-echo ookk &gt; data1.txt(此时文件中内容被“ookk”覆盖)
-</code></pre></li>
-<li><p>追加</p>
-<pre><code>touch data2.txt(里面有内容)
-echo ookk &gt;&gt;data2.txt(此时文件末尾追加字段“ookk”)
-</code></pre></li>
-</ul>
-<p></p><h6>jdk部署</h6> <p></p>
-<ul>
-<li><p>按照课堂讲解内容整理</p>
-<pre><code>1.root下新建用户useradd hadoop,并给用户hadoop设置密码passwd hadoop
-2.切换到hadoop下，su hadoop之后cd /home/hadoop下，即工作区；或者使用hadoop登录，默认进入工作区
-3.新建目录mkdir opt
-4.将文件jdk-8u152-linux-x64.tar.gz解压到opt目录下，命令为：
-tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
-5.配置jdk（两种方式）
-    第一种：在hadoop的主目录下，vi .bashrc后添加：
-        export JAVA_HOME=/home/hadoop/opt/jdk1.8.0_152
-        export PATH=$JAVA_HOME/bin:$PATH
-        source ~/.bashrc刷新
-    第二种：以追加的形式，hadoop用户
-        cd /opt/jdk1.8.0_152下，
-        设置变量java_home=`pwd`，
-        echo export JAVA_HOME=$java_home &gt;&gt; ~/.bashrc
-        echo export PATH=\$JAVA_HOME\/bin:\$PATH &gt;&gt; ~/.bashrc
-        追加之后刷新source ~/.bashrc
-6.输入java -version查看是否配置成功
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/11/jdk部署/" data-id="cjqrsy38m0038jwwvubcqibn2" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-chmod" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/09/chmod/" class="article-date">
-  <time datetime="2018-04-09T10:05:31.000Z" itemprop="datePublished">2018-04-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/09/chmod/">chmod</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>chmod</h5><p></p>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>chmod(Change mode) 用来将每个文件的模式更改为指定值。Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他<ul>
-<li>u:目录或者文件的当前的用户</li>
-<li>g:目录或者文件的当前的群组</li>
-<li>o:除了目录或者文件的当前用户或者群组之外的用户或者群组</li>
-<li>a:所有的用户和群组</li>
-</ul>
-</li>
-<li>Linux的文件基本上分为三个属性：可读(r)，可写(w)，可执行(x)<ul>
-<li>权限对文件的重要性<ul>
-<li>r (read) 4：可读取此文件的实际内容，如读取文本文件的文字内容等 </li>
-<li>w (write) 2：可以编辑、新增或者是修改该文件的内容(但不含删除该文件)</li>
-<li>x (execute) 1：该文件具有可以被系统执行的权限。linux下文件是否可以执行和扩展名无关</li>
-</ul>
-</li>
-<li>权限对目录的重要性<ul>
-<li>r：表示具有读取目录结构列表的权限，可以查询该目录下的文件名数据，可以利用 ls 这个指令将该目录的内容列表显示出来</li>
-<li>w：表示具有移动该目录结构列表的权限，也就是这些权限：<ul>
-<li>建立新的文件与目录</li>
-<li>删除已经存在的文件与目录(不论该文件的权限为何！) </li>
-<li>将已存在的文件或目录进行更名</li>
-<li>搬移该目录内的文件、目录位置</li>
-</ul>
-</li>
-<li>x：目录不可以被执行，目录的x代表的是用户能否进入该目录成为工作目录的用途！ 所谓的工作目录(work directory)就是你目前所在的目录！举例来说，当你登入Linux时， 你所在的家目录就是你当下的工作目录</li>
-</ul>
-</li>
-<li>以rwx(Owner)r-x(Group)r-x(Other)为例：这个例子表示的权限是：使用者自己可读，可写，可执行;同一组的用户可读，不可写，可执行;其它用户可读，不可写，可执行</li>
-</ul>
-</li>
-<li>使用权限 : 所有使用者</li>
-</ul>
-<p></p><h6>使用</h6><p></p>
-<ul>
-<li>文字设定法<ul>
-<li>chmod [u、g、o、a] [+（加入）、-（除去）、=（设定）] [r、w、x] [文件或者目录]</li>
-</ul>
-</li>
-<li>数字设定法<ul>
-<li>按照顺序（u）（g）（o），将权限转换成3个从0到7的八进制数字，如若要rwx属性则4+2+1=7 ; 若要rw-属性则4+2=6</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>示例</h6><p></p>
-<ul>
-<li><p>查看权限ll</p>
-<pre><code>-rw-r--r-- 1 root root 0 4月  24 15:24 backup.sh
-</code></pre></li>
-<li><p>将backup.sh设定为只有该档案拥有者可以执行</p>
-<pre><code>chmod u+x backup.sh
-</code></pre></li>
-<li><p>同时修改不同用户权限</p>
-<pre><code>chmod ug+w,o-x backup.sh
-</code></pre></li>
-<li><p>删除文件权限</p>
-<pre><code>chmod a-x backup.sh
-</code></pre></li>
-<li><p>使用“=”设置权限</p>
-<pre><code>chmod u=x backup.sh
-</code></pre></li>
-<li><p>根据数字修改权限</p>
-<pre><code>chmod 745 backup.sh
-</code></pre></li>
-<li><p>将目前目录下的所有档案与子目录皆设为任何人可读取</p>
-<pre><code>chmod -R a+r *
-</code></pre></li>
-</ul>
-<p>##参考大神佳作<a href="https://www.cnblogs.com/xqzt/p/5433022.html" target="_blank" rel="noopener">每天一个linux命令:chmod</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjqrsy385002yjwwvhsoxp27w" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-爬虫之Mongodb常用命令" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/08/爬虫之Mongodb常用命令/" class="article-date">
-  <time datetime="2018-04-08T00:16:31.000Z" itemprop="datePublished">2018-04-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/08/爬虫之Mongodb常用命令/">爬虫之Mongodb常用命令</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>爬虫之Mongodb常用命令</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>连接数据库</h6><p></p>
-<ul>
-<li>连接数据库，参数为空的话默认ip为localhost，端口为27017</li>
-<li><p>一下三种结果都一样</p>
-<pre><code>from pymongo import MongoClient
-import datetime
-client=MongoClient()
-client=MongoClient(&apos;localhost&apos;,27017)
-client=MongoClient(&apos;mongodb://localhost:27017/&apos;)  #使用url格式连接数据库
-</code></pre></li>
-<li><p>连接指定的数据库</p>
-<pre><code>db=client.firstdb
-db=client[&apos;firstdb&apos;]
-</code></pre></li>
-<li><p>连接指定的集合</p>
-<pre><code>test1=db.student
-test1=db[&apos;student&apos;]
-</code></pre></li>
-</ul>
-<p></p><h6>插入文档</h6><p></p>
-<ul>
-<li><p>插入单条文档</p>
-<pre><code>data1={
-    &apos;name&apos;:&apos;gouzenggong&apos;,
-    &apos;text&apos;:&apos;MY first blog post&apos;,
-    &apos;tags&apos;:[&apos;mongo&apos;,&apos;python&apos;,&apos;pymongo&apos;],
-    &apos;date&apos;:datetime.datetime.now()
-    }
-test1.insert_one(data1)
-</code></pre></li>
-<li><p>查找单条文档</p>
-<pre><code>test1.find_one()
-test1.find_one({&apos;name&apos;:&apos;gouzenggong&apos;})   #指定条件查询，如果未查到，返回空
-
-#如果指定id查询，则需要这样做
-from bson.objectid import ObjectId
-test1.find_one({&apos;_id&apos;:ObjectId(&apos;5ac8df4eb09c061dfc517988&apos;)})
-</code></pre></li>
-<li><p>插入多条文档</p>
-<pre><code>data2=[
-    {
-    &apos;name&apos;:&apos;zhangsan&apos;,
-    &apos;text&apos;:&apos;MY second blog post&apos;,
-    &apos;tags&apos;:[&apos;python&apos;,&apos;pymongo&apos;],
-    &apos;date&apos;:datetime.datetime.now()
-    },
-    {
-    &apos;name&apos;:&apos;gouzenggong&apos;,
-    &apos;text&apos;:&apos;MY three blog post&apos;,
-    &apos;tags&apos;:[&apos;mongo&apos;,&apos;pymongo&apos;],
-    &apos;date&apos;:datetime.datetime.now()
-    }
-]
-test1.insert_many(data2)
-</code></pre></li>
-<li><p>查找多条文档</p>
-<pre><code>#查询所有结果
-for i in test1.find():
-    print(i)
-
-#查询指定结果
-for i in test1.find({&apos;name&apos;:&apos;gouzenggong&apos;}):
-    print(i)
-
-#查询总数
-test1.count()
-
-#查询指定的条数
-test1.find({&apos;name&apos;:&apos;gouzenggong&apos;}).count()
-</code></pre></li>
-</ul>
-<p></p><h6>更新文档</h6><p></p>
-<ul>
-<li><p>如果有找到x=1，则改成x=3，否则插入{‘x’:3}，单条</p>
-<pre><code>test2=db.teacher    #连接一个新的集合
-data3=[
-    {&apos;x&apos;:1},{&apos;x&apos;:1},{&apos;x&apos;:1}
-]
-test2.insert_many(data3)
-
-test2.update_one({&apos;x&apos;:1},{&apos;$set&apos;:{&apos;x&apos;:3}},upsert=True) #可以发现已经把其中一条改为x=3
-</code></pre></li>
-<li><p>如果找到x=4，则改成x=333，否则插入{‘x’:333}，单条</p>
-<pre><code>#文档中是没有x=4的
-test2.update_one({&apos;x&apos;:4},{&apos;$set&apos;:{&apos;x&apos;:333}},upsert=True) #可以发现新增了一条{&apos;x&apos;:333}
-</code></pre></li>
-<li><p>如果找到x=1，则改成x=’many’，否则插入{‘x’:’many’}，多条</p>
-<pre><code>test2.update_many({&apos;x&apos;:1},{&apos;$set&apos;:{&apos;x&apos;:&apos;many&apos;}},upsert=True) #可以发现已经把所有x=1改成了x=many
-</code></pre></li>
-<li><p>如果找到x=4，则改成{‘x’:1,’y’；2}，否则插入{‘x’:1,’y’:2}，多条</p>
-<pre><code>#文档中是没有x=4的
-test2.update_many({&apos;x&apos;:4},{&apos;$set&apos;:{&apos;x&apos;:1,&apos;y&apos;:2}},upsert=True) #可以发现新增一条文档
-</code></pre></li>
-</ul>
-<p></p><h6>小结</h6><p></p>
-<ul>
-<li>爬虫常用到的三条插入语句：（以test2为集合名）<ul>
-<li>test2.insert_one(data)  插入一条文档</li>
-<li>test2.insert_many(data-list) 插入多条文档</li>
-<li>test2.update_one({‘x’:1},{‘$set’:{‘x’:3}},upsert=True)一般会在防止重复性的数据被存放到数据库内要用的</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjqrsy3dv0069jwwvuiz8vfb9" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-富文本、分页" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/03/富文本、分页/" class="article-date">
-  <time datetime="2018-04-03T00:05:22.000Z" itemprop="datePublished">2018-04-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/03/富文本、分页/">富文本、分页</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>富文本、分页</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>富文本</h6><p></p>
-<ul>
-<li>1.下载链接:  <a href="http://ueditor.baidu.com/website/download.html#ueditor,目前最新版本是ueditor-1.4.3.3" target="_blank" rel="noopener">http://ueditor.baidu.com/website/download.html#ueditor,目前最新版本是ueditor-1.4.3.3</a></li>
-<li>2.将下载的文件全部存放在我们的django项目里面，路径为static/ueditor/下</li>
-<li>3.将uecontroller.py文件放在与项目同名的文件夹下，该文件为格式文本请求地址，请求资源；需要将其中的依据引用代码稍做修改<code>import pyblog.settings as settings</code>，即引入项目的设置</li>
-<li><p>4.在于项目同名的文件夹下的urls.py中设置路由</p>
-<pre><code>from .uecontroller import handler
-urlpatterns = [
-    path(&apos;uecontroller&apos;,handler),
-]
-</code></pre></li>
-<li><p>5.将ueditor/jsp/config.json文件复制到项目根目录下</p>
-</li>
-<li><p>6.将文件ueditor/_example/submitFormDemo.html中的部分script内容复制到前端页面fabu.html中，并且修改路径，其中博客页面中的内容标签需要加id，serverUrl</p>
-<pre><code>&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;欢迎发布博客&lt;/title&gt;
-    &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; src=&quot;/static/ueditor/ueditor.config.js&quot;&gt;&lt;/script&gt;
-    &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; src=&quot;/static/ueditor/_examples/editor_api.js&quot;&gt;&lt;/script&gt;
-    &lt;style type=&quot;text/css&quot;&gt;
-        body{
-            font-size:14px;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h2&gt;欢迎{{ user.username }}发布博客...&lt;/h2&gt;
-    &lt;span style=&quot;color:red&quot;&gt;{{ msg }}&lt;/span&gt;
-    &lt;form action=&quot;/pyblogA/fabu&quot; method=&quot;post&quot;&gt;
-        {% csrf_token %}
-        &lt;p&gt;标题：&lt;input type=&quot;text&quot; name=&apos;title&apos; style=&quot;width:500px&quot;&gt;&lt;/p&gt;
-        &lt;p&gt;内容：&lt;textarea  id=&quot;myEditor&quot; name=&apos;context&apos; style=&quot;width:600px;height:400px&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;
-        &lt;input type=&quot;submit&quot; value=&quot;确认发布&quot;&gt;
-    &lt;/form&gt;
-    &lt;script type=&quot;text/javascript&quot;&gt;
-        var editor_a = UE.getEditor(&apos;myEditor&apos;,{initialFrameHeight:300,serverUrl:&apos;/uecontroller&apos;});
-    &lt;/script&gt;
-&lt;/body&gt;
-</code></pre></li>
-<li><p>7.打开文件ueditor/_examples/editor_api.js，将baseURL的路径改为当前_src的路径，即<code>baseURL = &#39;/static/ueditor/_src/&#39;;</code></p>
-</li>
-<li><p>8.新建上传文件存储路径为static/upload/imgs/，并修改uecontroller.py中的代码</p>
-<pre><code>try:
-    #重新定义上传图片的名字
-    truelyName = buildFileName(filename)
-    webUrl = config.SavePath+ truelyName
-    print(webUrl)
-    #!!!!!!!!!!!!
-    savePath =R&apos;static/upload/imgs/&apos;+webUrl
-    # savePath =ROOT+webUrl
-    print(&apos;savePath&apos;,savePath)
-    f = codecs.open(savePath,&quot;wb+&quot;)
-    for chunk in buf.chunks():
-        f.write(chunk)
-    f.flush()
-    f.close()
-    result.state = &quot;SUCCESS&quot;
-    #返回富文本显示的图片路径
-    result.url =&apos;/static/upload/imgs/&apos;+truelyName# truelyName
-    print(&apos;truelyName&apos;, truelyName)
-    result.title = truelyName
-    result.original = truelyName
-    response = HttpResponse(buildJsonResult(result))
-    response[&quot;Content-Type&quot;] = &quot;text/plain&quot;
-    return response
-</code></pre></li>
-</ul>
-<p></p><h6>在登录成功欢迎页面显示博客列表，并链接进入博客页面</h6><p></p>
-<ul>
-<li><p>1.在发布博客的views.py中写入getAll函数</p>
-<pre><code>def getAll():
-    Blogset=Blog.objects.values(&apos;id&apos;,&apos;title&apos;,&apos;createDate&apos;,&apos;BlogUser__username&apos;).all()
-    return Blogset
-</code></pre></li>
-<li><p>2.在用户的views.py中</p>
-<pre><code>from pyblogA.views import getAll
-def welcome(request):
-    Blogset=getAll()
-    return render(request, &apos;welcome.html&apos;,
-                  {&apos;user&apos;: request.session.get(&apos;user&apos;, None),
-                   &apos;Blogset&apos;:Blogset
-                   })
-</code></pre></li>
-<li><p>3.在登录欢迎页面welcome.html页面</p>
-<pre><code>{% for foo in Blogset %}
-		        <li>{{ foo.id }}&nbsp;&nbsp;
-		            <a href="/pyblogA/showOne?id={{ foo.id }}">{{ foo.title }}</a>&nbsp;&nbsp;
-		            {{ foo.createDate|date:'Y-m-d H:i:s' }}&nbsp;&nbsp;{{ foo.BlogUser__username }}
-		        </li>
-		{% endfor %}
-</code></pre></li>
-<li><p>4.接下来是链接进入博客页面，设置博客显示页面b.html</p>
-<pre><code>&lt;body&gt;
-    登录用户/非登录用户都可见
-    &lt;!--某个文档的显示页面--&gt;
-    &lt;h2&gt;标题：{{ blog.title }}&lt;/h2&gt;
-    &lt;h3&gt;发布时间：{{ blog.createDate|date:'Y-m-d H:i:s' }}&lt;/h3&gt;
-    &lt;h3&gt;作者：{{ blog.BlogUser__username }}&lt;/h3&gt;
-    &lt;h2&gt;内容：&lt;/h2&gt;
-    &lt;div style=&quot;width:85%;margin:0 auto&quot;&gt;
-        {% autoescape off %}  #转义，否则显示编码
-		            {{ blog.context }}
-		        {% endautoescape %}
-    &lt;/div&gt;
-&lt;/body&gt;
-</code></pre></li>
-<li><p>5.在发布博客的urls中设置路径</p>
-<pre><code>urlpatterns = [
-    path(&apos;showOne&apos;,showOne),
-]
-</code></pre></li>
-<li><p>6.在发布博客的views中定义showOne函数</p>
-<pre><code>def showOne(request):
-    id=request.GET.get(&apos;id&apos;,None)
-    if id is None:
-        return render(request,&apos;welcome.html&apos;)
-    else:
-        blog=Blog.objects.\
-            values(&apos;id&apos;,&apos;title&apos;,&apos;createDate&apos;,&apos;context&apos;,&apos;BlogUser__username&apos;).\
-            filter(pk=id).all()
-        return render(request,&apos;b.html&apos;,{&apos;blog&apos;:blog.first()})
-</code></pre></li>
-</ul>
-<p></p><h6>分页</h6><p></p>
-<ul>
-<li><p>1.设置发布博客的views中的getAll函数</p>
-<pre><code>from django.core.paginator import Paginator
-def getAll(num):
-    Blogset=Blog.objects.values(&apos;id&apos;,&apos;title&apos;,&apos;createDate&apos;,&apos;BlogUser__username&apos;).all()
-    paginator = Paginator(Blogset,5)  # 创建分页器
-    page=paginator.get_page(num)
-    return page,paginator
-</code></pre></li>
-<li><p>2.在用户的views.py中</p>
-<pre><code>def welcome(request):
-    num=request.GET.get(&apos;num&apos;,1)
-    Blogset=getAll(num)[0]
-    paginator=getAll(num)[1]
-    return render(request, &apos;welcome.html&apos;,
-                  {&apos;user&apos;: request.session.get(&apos;user&apos;, None),
-                   &apos;Blogset&apos;:Blogset,
-                   &apos;paginator&apos;:paginator
-                   })
-</code></pre></li>
-<li><p>3.在登录欢迎页面welcome.html页面中</p>
-<pre><code>&lt;body&gt;
-    {% if Blogset.has_previous %}
-		        <a href="?num=1">首页</a>
-		        <a href="?num={{ Blogset.previouse_page_number }}">上一页</a>
-		    {% endif %}
-    {% if Blogset.has_next %}
-		        <a href="?num={{ Blogset.next_page_number }}">下一页</a>
-		        <a href="?num={{ paginator.num_pages }}">尾页</a>
-		    {% endif %}
-&lt;/body&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjqrsy3cy005njwwvcngkghrq" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-scrapy选择器css、xpath" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/02/scrapy选择器css、xpath/" class="article-date">
-  <time datetime="2018-04-02T13:33:47.000Z" itemprop="datePublished">2018-04-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/02/scrapy选择器css、xpath/">scrapy选择器css、xpath</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>scrapy选择器css、xpath</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>Scrapy自带了提取数据的机制。它们称为选择器，因为它们“选择”由XPath或CSS表达式指定的HTML文档的某些部分</li>
-<li>XPath是用于选择XML文档中的节点的语言，其也可以与HTML一起使用</li>
-<li>CSS是一种用于将样式应用于HTML文档的语言。它定义了选择器以将这些样式与特定的HTML元素相关联</li>
-<li>Scrapy选择器构建在lxml库之上，这意味着它们的速度和解析精度非常相似</li>
-</ul>
-<p></p><h6>使用选择器</h6><p></p>
-<ul>
-<li><p>为了解释如何使用选择器，我们将使用Scrapy shell（提供交互式测试）和位于Scrapy文档服务器中的示例页面：<a href="http://doc.scrapy.org/en/latest/_static/selectors-sample1.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</a></p>
-<pre><code>#打开shell
-scrapy shell http://doc.scrapy.org/en/latest/_static/selectors-sample1.html 
-#使用XPath和CSS选择标题标签中的文本:
-response.xpath(&apos;//title/text()&apos;)
-&gt;&gt;&gt;[&lt;Selector xpath=&apos;//title/text()&apos; data=&apos;Example website&apos;&gt;]
-response.css(&apos;title::text&apos;)
-&gt;&gt;&gt;[&lt;Selector xpath=&apos;descendant-or-self::title/text()&apos; data=&apos;Example website&apos;&gt;]
-#.css()方法返回一个 SelectorList实例，它是新的选择列表。此API可用于快速选择嵌套数据：
-response.css(&apos;img&apos;).xpath(&apos;@src&apos;).extract()
-#要实际提取文本数据，必须调用选择器.extract() 方法,如果只想提取第一个匹配的元素，可以调用选择器 .extract_first()
-response.xpath(&apos;//title/text()&apos;).extract()
-response.xpath(&apos;//div[@id=&quot;images&quot;]/a/text()&apos;).extract_first()
-#可以提供默认返回值作为参数
-response.xpath(&apos;//div[@id=&quot;not-exists&quot;]/text()&apos;).extract_first(default=&apos;not-found&apos;)
-</code></pre></li>
-<li><p>Xpath选择器常用方法</p>
-<pre><code>nodeName    选取此节点的所有节点
-/           从根节点选取
-//          从匹配选择的当前节点选择文档中的节点，不考虑它们的位置
-.           选择当前节点
-..          选取当前节点的父节点
-@           选取属性
-*           匹配任何元素节点
-@*          匹配任何属性节点
-Node()      匹配任何类型的节点
-</code></pre></li>
-<li><p>CSS选择器常用方法</p>
-<pre><code>.class              .color              选择class=”color”的所有元素
-#id                 #info               选择id=”info”的所有元素
-*                   *                   选择所有元素
-element             p                   选择所有的p元素
-element,element     div,p               选择所有div元素和所有p元素
-element element     div p               选择div标签内部的所有p元素
-[attribute]         [target]            选择带有targe属性的所有元素
-[arrtibute=value]   [target=_blank]     选择target=”_blank”的所有元素
-</code></pre></li>
-<li><p>获取基本URL和一些图像链接</p>
-<pre><code>response.xpath(&apos;//base/@href&apos;).extract()
-response.css(&apos;base::attr(href)&apos;).extract()
-
-response.xpath(&apos;//a[contains(@href, &quot;image&quot;)]/@href&apos;).extract()
-response.css(&apos;a[href*=&quot;image&quot;]::attr(href)&apos;).extract()
-#其中a[href*=&quot;image&quot;]表示href的属性值包含“image”的所有a元素
-
-response.xpath(&apos;//a[contains(@href, &quot;image&quot;)]/img/@src&apos;).extract()
-response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
-</code></pre></li>
-</ul>
-<h3 id="参考大神佳作Scrapy爬虫入门教程五-Selectors（选择器）"><a href="#参考大神佳作Scrapy爬虫入门教程五-Selectors（选择器）" class="headerlink" title="参考大神佳作Scrapy爬虫入门教程五 Selectors（选择器）"></a>参考大神佳作<a href="https://blog.csdn.net/Inke88/article/details/60589170" target="_blank" rel="noopener">Scrapy爬虫入门教程五 Selectors（选择器）</a></h3>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjqrsy3as004bjwwv9ty5p1zf" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
 
     </footer>
   </div>
@@ -1324,7 +1358,7 @@ response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -1334,7 +1368,7 @@ response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 16px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 13px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 13px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 13px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 16px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 13px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12px;">软件工具</a>
     </div>
   </div>
 
@@ -1343,7 +1377,7 @@ response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1356,23 +1390,23 @@ response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
       <ul>
         
           <li>
-            <a href="/2019/01/11/时间设置与配置查询/">时间设置与配置查询</a>
+            <a href="/2019/03/01/安装部署Tomcat9/">安装部署Tomcat9</a>
           </li>
         
           <li>
-            <a href="/2019/01/11/linux系统常见优化配置01/">linux系统常见优化配置01</a>
+            <a href="/2019/03/01/安装部署Mongodb4/">安装部署Mongodb4</a>
           </li>
         
           <li>
-            <a href="/2018/12/12/mysql数据库安装/">mysql数据库安装</a>
+            <a href="/2019/03/01/安装部署禅道11.2/">安装部署禅道11.2</a>
           </li>
         
           <li>
-            <a href="/2018/11/30/测试过程中遇到的问题/">测试过程中遇到的问题</a>
+            <a href="/2019/03/01/安装部署Nginx/">安装部署Nginx</a>
           </li>
         
           <li>
-            <a href="/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/">CentOS下彻底删除MySQL-卸载二进制包/源码安装方式的MySQL</a>
+            <a href="/2019/03/01/安装部署mysql5.7/">安装部署mysql5.7</a>
           </li>
         
       </ul>
