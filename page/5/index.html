@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,371 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-发布及文件上传" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/01/发布及文件上传/" class="article-date">
+  <time datetime="2018-04-01T09:47:40.000Z" itemprop="datePublished">2018-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>发布及文件上传</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>发布博客</h6><p></p>
+<ul>
+<li><p>用户登录之后，点击“发布博客”即可进入发布博客页面，在这儿需要在登录的欢迎页面增加一下这个发布博客链接</p>
+<pre><code>&lt;a href=&quot;/pyblogA/fabu&quot;&gt;发布博客&lt;a/&gt;
+</code></pre></li>
+<li><p>之后编辑发布博客的前端页面</p>
+<pre><code>&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;欢迎发布博客&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;欢迎{{ user.username }}发布博客...&lt;/h2&gt;
+    &lt;span style=&quot;color:red&quot;&gt;{{ msg }}&lt;/span&gt;
+    &lt;form action=&quot;/pyblogA/fabu&quot; method=&quot;post&quot;&gt;
+        {% csrf_token %}
+        &lt;p&gt;标题：&lt;input type=&quot;text&quot; name=&apos;title&apos; style=&quot;width:300px&quot;&gt;&lt;/p&gt;
+        &lt;p&gt;内容：&lt;textarea  name=&apos;context&apos; style=&quot;width:300px;height:200px&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;确认发布&quot;&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+<li><p>在该app的models中编辑与数据库的映射</p>
+<pre><code>from django.db import models
+from bloguser.models import BlogUser
+class Blog(models.Model):
+    title=models.CharField(max_length=30,null=True)
+    context=models.CharField(max_length=500,null=True)
+    createDate=models.DateTimeField(null=True)    #默认当前时间
+    BlogUser=models.ForeignKey(&apos;bloguser.BlogUser&apos;,on_delete=None)   #app下的名字
+</code></pre></li>
+<li><p>需要在项目的settings.py下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;pyblogA/&apos;,include(&apos;pyblogA.urls&apos;)),
+]
+</code></pre></li>
+<li><p>接着在该app的urls下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;fabu&apos;, fabu),
+]
+</code></pre></li>
+<li><p>接下来编辑该appviews内容</p>
+<pre><code>from django.shortcuts import render,redirect,reverse
+from .models import *
+from django.http import HttpResponse
+import time,datetime,os
+
+def fabu(request):
+    user = request.session.get(&apos;user&apos;, None)
+    if request.method==&apos;GET&apos;:
+        if user is not None:
+            return render(request,&apos;fabu.html&apos;,{&apos;user&apos;: request.session.get(&apos;user&apos;, None)})
+        else:
+            return render(request,&apos;login.html&apos;)
+    elif request.method==&apos;POST&apos;:
+        blogA=Blog()
+        blogA.title=request.POST.get(&apos;title&apos;)
+        blogA.context=request.POST.get(&apos;context&apos;)
+        blogA.createDate=datetime.datetime.now()
+
+        uid=request.session.get(&apos;user&apos;)[&apos;id&apos;]
+        bloguserset=BlogUser.objects.filter(pk=uid).all()
+        blogA.BlogUser=bloguserset.first()
+
+        blogA.save()
+        ret={&apos;msg&apos;:&apos;发布成功！&apos;,&apos;user&apos;:request.session.get(&apos;user&apos;)}
+        return render(request,&apos;fabu.html&apos;,ret)
+</code></pre></li>
+</ul>
+<p></p><h6>文件上传</h6><p></p>
+<ul>
+<li><p>创建一个html文件用于上传文件</p>
+<pre><code>&lt;form method=&quot;post&quot; action=&quot;/pyblogA/upload&quot; enctype=&quot;multipart/form-data&quot;&gt;
+    {% csrf_token %}
+    选择文件：&lt;input type=&quot;file&quot; name=&quot;myfile&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;上传&quot;&gt;
+&lt;/form&gt;
+</code></pre></li>
+<li><p>在该app下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;upload&apos;, upload),
+]
+</code></pre></li>
+<li><p>在该app的views中编辑业务逻辑</p>
+<pre><code>def upload(request):
+    myfile=request._files.get(&apos;myfile&apos;)  #获取上传的文件
+    file_path=os.path.join(&apos;file&apos;,myfile.name)  #配置存放路径为file
+    file=open(file_path,&apos;wb+&apos;)           #打开并写入
+    for row in myfile.chunks():      #循环chunks(),里面包含用户上传的文件
+        file.write(row)              #写入到我们创建的那个文件中
+    file.close()
+    return HttpResponse(&apos;上传成功！&apos;)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjt5mtl3f0055r4wv32cm8wbk" class="article-share-link">Compartir</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-HTTP报文" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/01/HTTP报文/" class="article-date">
+  <time datetime="2018-04-01T03:15:03.000Z" itemprop="datePublished">2018-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/01/HTTP报文/">HTTP报文</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>HTTP报文</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>定义</h6><p></p>
+<ul>
+<li>用于 HTTP 协议交互的信息被称为 HTTP 报文。请求端（客户端）的<br>HTTP 报文叫做请求报文，响应端（服务器端）的叫做响应报文。<br>HTTP 报文本身是由多行（用 CR+LF 作换行符）数据构成的字符串文<br>本</li>
+<li><p>一个HTTP报文由3部分组成，分别是:起始行（start line）、首部（header）、主体（body），样子就像这个：</p>
+<pre><code>#请求报文的格式：                       #响应报文的格式：
+&lt;method&gt; &lt;request-URL&gt; &lt;version&gt;       &lt;version&gt; &lt;status&gt;&lt;reason-phrase&gt;
+&lt;headers&gt;                              &lt;headers&gt;
+
+&lt;entity-body&gt;                          &lt;entity-body&gt;
+</code></pre></li>
+<li><p>格式内容概略</p>
+<pre><code>##method
+方法　　　　　　　　    描述　　　　　　　　      是否包含主体
+GET 　　　　从服务器获取一份文档 　　　　　　　　 　   否
+HEAD 　　　只从服务器获取文档的首部 　　　　　　  　　　否
+POST 　　   向服务器发送需要处理的数据　　　　　　　　　是
+PUT 　　　　将请求的主体部分存储在服务器上 　　　  　　 是
+TRACE 　　 对可能经过代理服务器传送到服务器上去的报文进行跟踪 　　否
+OPTIONS 　 决定可以在服务器上执行哪些方法 　　　　　　  否
+DELETE 　　从服务器上删除一份文档 　　　　　　　　　　  否   
+
+##request-URL   
+命名了所有请求资源，或者URL路径组件的完整URL，
+一个完整的包括类型、主机名和可选路径名的统一资源引用名，
+如：http://www.example.com/path/to/file.html
+
+##version
+报文所使用的HTTP版本，其格式如：HTTP/&lt;major&gt;.&lt;minor&gt;
+其中主要版本号(major)和次要版本号(minor)都是整数，如：HTTP/1.1
+
+##status、reason-phrase
+状态码                类别                原因短语
+1XX Informational（信息性状态码）     接收的请求正在处理
+2XX Success        （成功状态码）         请求正常处理完毕
+3XX Redirection（重定向状态码）          需要进行附加操作以完成请求
+4XX Client Error（客户端错误状态码）  服务器无法处理请求
+5XX Server Error（服务器错误状态码）  服务器处理请求出错
+
+##headers
+可以有0个或多个首部，每个首部都包含一个名字，后面跟着一个冒号(:)，然后是一个可选的空格，接着是一个值，最后是一个CRLF
+
+##entity-body
+实体的主体部分包含一个由任意数据组成的数据块。并不是所有的报文都包含实体的主体部分。如GET请求就不包含实体
+</code></pre></li>
+</ul>
+<p></p><h6>headers-首部分类</h6><p></p>
+<ul>
+<li><p>通用首部</p>
+<ul>
+<li>既可以出现在请求报文中，也可以出现在响应报文中</li>
+<li><p>通用的信息性首部：</p>
+<pre><code>    首部 　　　　　　　　　　        描述
+Connection 　　　　　　  允许客户端和服务器指定与请求/响应连接有关的选项
+Date 　　　　　　　　　   提供日期和时间标志，说明报文是什么时间创建的
+MIME-Version 　　　　　  给出了发送端使用的MIME版本
+Trailer 　　　　　　　　　如果报文采用了分块传输编码(chunked transfer encoding)方式，就可以用这个首部列出位于报文拖鞋 (trailer)部分的首部集合。
+Transfer-Encoding 　　  告知接收端为了保证报文的可靠传输，对报文采用了什么编码方式。
+Update 　　　　　　　　   给出了发送端可能想要&quot;升级&quot;使用的新版本或协议
+Via 　　　　　　　　　　   显示了报文经过的中间节点(代理、网关)
+</code></pre></li>
+<li><p>通用缓存首部：</p>
+<pre><code>    首部 　　　　　　　　　　描述
+Cache-Control 　　　　  用于随报文传送缓存指示
+Pragma 　　　　　　　　  另一种随报文传送指示的方式，但并不专用于缓存
+</code></pre></li>
+</ul>
+</li>
+<li><p>请求首部</p>
+<ul>
+<li>请求首部是在请求报文中有意义的首部。用于说明是谁或什么在发送请求，请求源自何处，或者客户端的喜好及能力。服务器可以根据请求首部给出的客户端的信息，试着为客户端提供更好的响应</li>
+<li><p>请求的信息性首部：</p>
+<pre><code>    首部 　　　　　　　　　　　　 描述
+Client-IP 　　　　　　　　　提供了运行客户端的机器的IP地址
+From 　　　　　　　　　　　 提供了客户端用户的E-mail地址
+Host 　　　　　　　　　　　 给出了接收请求的服务器的主机名和端口号
+Referer 　　　　　　　　　　提供了包含当前请求URI的文档的URL
+UA-Color 　　　　　　　　　 提供了与客户端显示器的显示颜色有关的信息
+UA-CPU 　　　　　　　　　　 给出了客户端CPU的类型或制造商
+US-Disp 　　　　　　　　　　提供了与客户端显示器(屏幕)能力有关的信息
+US-OS 　　　　　　　　　　  给出了客户端显示器的像素信息
+UA-Pixels 　　　　　　　　　提供了客户端显示器的像素信息
+User-Agent 　　　　　　　　 将发起请求的应用程序名称告知服务器(User-Agent)用户代理，其实不就是浏览器吗
+</code></pre></li>
+<li><p>Accept首部<br>Accept首部为客户端提供了一种将其喜好和能力告知服务器的方式，包括他们想要什么，可以使用什么，以及最重要的，他们不想要什么。这样服务器就可以根据这些额外信息，对要发送的内容做出更明智的决定。Accept首部会使连接的两端都受益。客户端会得到他们想要的内容，服务器则不会浪费其时间和带宽来发送客户端无法使用的东西</p>
+<pre><code>    首部 　　　　　　　　　　 描述
+Accept 　　　　　　　　   告诉服务器能够发送哪些媒体类型
+Accept-Charset 　　　　  告诉服务器能够发送哪些字符集
+Accept-Encoding 　　　　 告诉服务器能够发送哪些编码方式
+Accept-Language 　　　   告诉服务器能够发送哪些语言
+TE 　　　　　　　　　　　  告诉服务器可以使用哪些扩展传输编码
+</code></pre></li>
+<li><p>条件请求首部<br>有时客户端希望为请求加上某些限制。比如客户端已经有了一份副本，就希望只在服务器上的文档与客户端拥有的副本有所区别时，才请求服务器传输文档。通过条件请求首部，客户端就可以加上这种限制，要求服务器在对请求进行相应之前，确保某个请求为真</p>
+<pre><code>    首部 　　　　　　　　　　 描述
+Expect 　　　　　　　　  允许客户端列出某请求所要求的服务器行为
+If-Match 　　　　　　　　如果实体标记与文档当前的实体标记相匹配，就或者这份文档
+If-Modified-Since 　　　除非在某个指定的日期之后资源被修改过，否则就限制这个请求
+If-Range 　　　　　　　　允许对文档的某个范围进行条件请求
+If-Unmodified-Since 　　除非在某个指定的日期之后资源没有被修改过，否则就限制这个请求
+Range 　　　　　　　　　 如果服务器支持范围请求，就请求资源的指定范围
+</code></pre></li>
+<li><p>安全请求首部<br>HTTP本身就支持一种简单的机制，可以对请求进行质询/响应认证。这种机制要求客户端在获取特定的资源之前，先对自身进行认证，这样就可以使事务稍微安全一些</p>
+<pre><code>    首部 　　　　　　　　　　 描述
+Authorization 　　　　　 包含了客户端提供给服务器，以便对其自身进行认证的数据
+Cookie 　　　　　　　　　 客户端用它想服务器传送一个令牌-他并不是真正的安全首部，但却是隐含了安全功能
+Cookie2 　　　　　　　　  用来说明请求端支持的cookie版本
+</code></pre></li>
+<li><p>代理请求首部<br>随着因特网上代理的普遍应用，人们定义了几个首部来协助其更好地工作</p>
+<pre><code>    首部 　　　　　　　　　　 描述
+Max-Forword 　　　　　   在通往源端服务器的路径上，将请求转发给其他代理或网关的最大次数-与TRACE方法一同使用
+Proxy-Authorization 　　与Authorization首部相同，但这个首部是在与代理进行认证时使用的
+Proxy-Connection 　　　 与Connection首部相同，但这个首部是在于代理建立连接时使用的
+</code></pre></li>
+</ul>
+</li>
+<li><p>响应首部</p>
+<ul>
+<li>响应首部为客户端提供了一些额外的信息，比如谁在发送响应、响应者的功能，甚至与响应相关的一些特殊指令。这些首部有助于客户端处理响应，并在将来发起更好的请求</li>
+<li><p>响应的信息性首部：</p>
+<pre><code>首部 　　　　　　　　     描述
+Age 　　　　　　　　 (从最初创建开始)响应持续时间
+Public 　　　　　　　服务器为其资源支持的请求方法列表
+Retry-After 　　　　如果资源不可用的话，再次日期或时间重试
+Server 　　　　　　　服务器应用程序软件的名称和版本
+Title 　　　　　　　 对HTML文档来说，就是HTML文档的源端给出的标题
+Warning 　　　　　　 比原因短语中更详细的一些警告报文
+</code></pre></li>
+<li><p>协商首部<br>如果资源有多种表示方法-比如，如果服务器上有某文档的法语和德语译稿，HTTP/1.1可以为服务器和客户端提供对资源进行协商的能力</p>
+<pre><code>首部　　　　　　　　         描述
+Accept-Ranges 　　 对此资源来说，服务器可接受的范围类型
+Vary 　　　　　　　  服务器查看的其他首部的列表，可能会使响应发生变化；
+                   也就是说，这是一个首部列表，服务器会根据这些首部的内容挑选出最合适的资源版本　　　　　　　　　　　 发送给客户端
+</code></pre></li>
+<li><p>安全响应首部</p>
+<pre><code>      首部                              描述
+Proxy-Authenticate             来自代理的对客户端的质询列表
+Set-Cookie                     不是真正的安全首部，但隐含有安全功能；可以在客户端设置一个令牌，以便服务器对客户端进行标识。
+Set-Cookie2                 与Set-Cookie类似。
+WWW-Authenticate             来自服务器的对客户端的质询列表
+</code></pre></li>
+</ul>
+</li>
+<li><p>实体首部</p>
+<ul>
+<li>描述主体的长度和内容，或者资源自身</li>
+<li>由于请求和响应文本中都可能包含实体部分，所以在这两种类型的报文中都可能出现这些首部。实体首部提供了有关实体及其内容的大量信息，从有关对象类型的信息，到能够对资源使用的各种有效的请求方法。总之，实体首部可以告知报文的接收者它在对什么进行处理</li>
+<li><p>实体信息性首部:</p>
+<pre><code>首部 　　　　　　　        描述
+Allow 　　　　　　  列出了可以对此实体执行的请求方法
+Location 　　　　  告知客户端实体实际上位于何处；用于将接收端定向到资源的位置上去
+</code></pre></li>
+<li><p>内容首部<br>内容首部提供了与实体内容有关的特定信息，说明了其类型、尺寸以及处理它所需的其他有用信息。比如，Web浏览器可以通过查看返回的内容类型，得知如何显示对象</p>
+<pre><code>    首部 　　　　　　　　　　　  描述
+Content-Base 　　　　　　   解析主体中的相对URL时使用的基础URL
+Content-Encoding 　　　　  对主体执行的任意编码方式
+Content-Language 　　　　  理解主体时最适宜使用的自然语言
+Content-Length 　　　　　  主体的长度或尺寸
+Content-Location 　　　　　资源实际所处的位置
+Content-MD5 　　　　　　　 主体的MD5校验
+Content-Range 　　　　　　 在整个资源中此实体表示的字节范围
+Content-Type 　　　　　　  这个主体的对象模型
+</code></pre></li>
+<li><p>实体缓存首部<br>通用的缓存首部说明了如何或什么时候进行缓存。实体的缓存首部提供了与被缓存实体有关的信息，比如验证已缓存的资源副本是否仍然有效所需的信息，以及更好地估计已缓存资源合适失效所需的线索</p>
+<pre><code>首部 　　　　　　         描述
+ETag 　　　　　   与此实体有关的实体标记
+Expires 　　　　  实体不在有效，要从原始的源端再次获取此实体的日期和时间
+Last-Modified 　 这个实体最后一次被修改的日期和时间
+</code></pre></li>
+</ul>
+</li>
+<li><p>以上参考大神佳作<a href="https://blog.csdn.net/lmj1436140682/article/details/63262459" target="_blank" rel="noopener">HTTP 报文及作用</a>，参考大神佳作<a href="https://blog.csdn.net/wzx19840423/article/details/47811559" target="_blank" rel="noopener">HTTP报文详解</a></p>
+</li>
+</ul>
+<p></p><h6>实体部分</h6><p></p>
+<ul>
+<li>实体的主体是HTTP报文的负荷,就是HTTP要传输的内容</li>
+<li>HTTP报文可以承载很多类型的数字数据，图片、视频、HTML文档、软件应用程序、信用卡事务、电子邮件等</li>
+<li>参考大神佳作<a href="https://blog.csdn.net/u012422829/article/details/51570652" target="_blank" rel="noopener">报文实体和编码</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjt5mtkw7001mr4wvs66uzrts" class="article-share-link">Compartir</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP协议/">HTTP协议</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-scrapy基础了解" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -215,7 +580,7 @@ ITEM_PIPELINES = {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjspxwrp2004cpgwvhsmxfzpp" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjt5mtl2m004jr4wv8x2frxvg" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -303,7 +668,7 @@ free -m 显示内存使用情况
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjspxwruz006spgwv9aqe0gmx" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjt5mtl7c007lr4wvx2b6q7to" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -405,7 +770,7 @@ Ctrl+r    恢复撤销
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjspxwrpx004mpgwv31w6ywpm" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjt5mtl3q005br4wvfxxc0p7v" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -558,7 +923,7 @@ tail -n 数字 文件名      #规定显示最后几行
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjspxwrme003dpgwvyecyyugf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjt5mtl1r0041r4wv130tjeew" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -650,7 +1015,7 @@ def login(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjspxwrpl004ipgwvkpuv7hv2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjt5mtl2m004lr4wvx8us3ryj" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -787,7 +1152,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjspxwrvu0074pgwvwe7ezpi1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjt5mtl6i0071r4wvy3b8c2fr" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -891,7 +1256,7 @@ class Handler(BaseHandler):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjspxwrnv003ypgwvxbt23spy" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjt5mtl1h003tr4wvq80i1ci5" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -999,314 +1364,7 @@ print(logo.size)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cjspxwrpf004gpgwvnjkagfgv" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-pyquery模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/23/pyquery模块/" class="article-date">
-  <time datetime="2018-03-23T15:15:27.000Z" itemprop="datePublished">2018-03-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/pyquery模块/">pyquery模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>pyquery模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>PyQuery库也是一个非常强大又灵活的网页解析库，是 Python 仿照 jQuery 的严格实现</li>
-<li><p>初始化<br>初始化的时候一般有三种传入方式：传入字符串，传入url,传入文件</p>
-<pre><code>from pyquery import PyQuery as pq
-html=&apos;&apos;&apos;
-    &lt;div id=&quot;container&quot;&gt;
-        &lt;ul class=&quot;list&quot;&gt;
-             &lt;li class=&quot;item-0&quot;&gt;first item&lt;/li&gt;
-             &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
-             &lt;li class=&quot;item-0 active&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;&lt;span class=&quot;bold&quot;&gt;third item&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-             &lt;li class=&quot;item-1 active&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
-             &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt;&lt;/li&gt;
-             &lt;p&gt;This is a paragraph.&lt;/p&gt;        
-        &lt;/ul&gt;
-    &lt;/div&gt;
-&apos;&apos;&apos;
-###字符串初始化
-doc=pq(html)      #doc其实就是一个pyquery对象
-print(doc(&apos;li&apos;))  #doc(标签名)就可以获取所有的该标签的内容
-print(doc(&apos;.item-0&apos;))  #doc(&apos;.class_name&apos;)，doc(&apos;#id_name&apos;)
-###URL初始化
-url=&apos;http://www.baidu.com&apos;
-doc=pq(url,encoding=&apos;utf-8&apos;)
-print(doc(&apos;head&apos;))
-###文件初始化
-在pq()这里可以传入url参数也可以传入文件参数，当然这里的文件通常是一个html文件，例如：pq(filename=&apos;index.html&apos;)
-</code></pre></li>
-</ul>
-<p></p><h6>查找元素</h6><p></p>
-<ul>
-<li><p>子元素（children,find）</p>
-<pre><code>doc=pq(html)
-items=doc(&apos;.list&apos;)
-lis=items.find(&apos;li&apos;)   #lis=items.children()可以实现同样的效果
-print(lis)
-</code></pre></li>
-<li><p>父元素（parent,parents）</p>
-<pre><code>doc=pq(html)
-items=doc(&apos;.list&apos;)
-cont=items.parent() #可以找到父元素的所有内容
-#cont=items.parents()返回两部分内容，一个是父节点信息，一个是父节点的父节点的信息即祖先节点的信息
-print(cont)
-</code></pre></li>
-<li><p>兄弟元素（siblings）</p>
-<pre><code>doc=pq(html)
-li=doc(&apos;.list .item-0.active&apos;)
-print(li.siblings())
-</code></pre></li>
-<li><p>遍历</p>
-<pre><code>doc=pq(html)
-lis=doc(&apos;li&apos;).items()
-print(type(lis))     #&lt;class &apos;generator&apos;&gt;
-for li in lis:
-    print(li)        #通过for循环得到的每个元素依然是一个pyquery对象
-</code></pre></li>
-</ul>
-<p></p><h6>获取信息</h6><p></p>
-<ul>
-<li><p>获取属性值–pyquery对象.attr(属性名)</p>
-<pre><code>doc=pq(html)
-a=doc(&apos;.list .item-1 a&apos;)
-print(a.attr(&apos;href&apos;))
-</code></pre></li>
-<li><p>获取文本–pyquery对象.text()</p>
-<pre><code>doc=pq(html)
-a=doc(&apos;.list .item-0.active a&apos;)
-print(a.text())
-</code></pre></li>
-<li><p>获取html–puquery对象.html()获取当前标签所包含的html信息</p>
-<pre><code>doc=pq(html)
-a=doc(&apos;.list .item-0.active a&apos;)
-print(a.html())
-</code></pre></li>
-</ul>
-<p></p><h6>DOM操作</h6><p></p>
-<ul>
-<li><p>addClass、removeClass添加和删除属性值</p>
-<pre><code>doc=pq(html)
-ul=doc(&apos;.list&apos;)
-ul.addClass(&apos;2018&apos;)
-ul.removeClass(&apos;2018&apos;)
-print(ul)
-</code></pre></li>
-<li><p>attr,css给标签添加和修改属性</p>
-<pre><code>doc=pq(html)
-ul=doc(&apos;.list&apos;)
-ul.attr(&apos;id&apos;,&apos;201803&apos;)
-ul.css(&apos;font-size&apos;,&apos;15px&apos;)
-print(ul)         #&lt;ul class=&quot;list&quot; id=&quot;201803&quot; style=&quot;font-size: 15px&quot;&gt;
-</code></pre></li>
-<li><p>remove将无用的或者干扰的标签直接删除</p>
-<pre><code>doc=pq(html)
-ul=doc(&apos;.list&apos;)
-ul.find(&apos;p&apos;).remove()
-print(ul.text())
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="cjspxwrnk003upgwvpdamlvgw" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-beautifulsoup模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/23/beautifulsoup模块/" class="article-date">
-  <time datetime="2018-03-23T10:31:34.000Z" itemprop="datePublished">2018-03-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/beautifulsoup模块/">beautifulsoup模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>beautifulsoup模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>BeautifulSoup是Python的一个库，最主要的功能就是从网页爬取我们需要的数据。BeautifulSoup将html解析为对象进行处理，全部页面转变为字典或者数组，相对于正则表达式的方式，可以大大简化处理过程</li>
-<li>Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方的解析器，如果我们不安装它，则 Python 会使用 Python默认的解析器，lxml 解析器更加强大，速度更快，推荐安装</li>
-<li><p>以下是这两个库的比较：</p>
-<pre><code>1.Python标准库    BeautifulSoup(html,’html.parser’)    
-Python内置标准库；执行速度快     容错能力较差
-2.lxml HTML解析库    BeautifulSoup(html,’lxml’)    
-速度快；容错能力强    需要安装，需要C语言库
-</code></pre></li>
-</ul>
-<p></p><h6>标签选择器</h6><p></p>
-<ul>
-<li><p>soup.标签名，可以获得这个标签的内容；通过这种方式获取标签，如果文档中有多个这样的标签，返回的结果是第一个标签的内容</p>
-<pre><code>from bs4 import BeautifulSoup
-html=&apos;&apos;&apos;
-    &lt;html&gt;
-        &lt;head&gt;
-            &lt;title&gt;The Dormouse&apos;s story&lt;/title&gt;
-        &lt;/head&gt;
-        &lt;body&gt;
-            &lt;p class=&quot;story&quot;&gt;
-                Once upon a time there were three little sisters; and their names were
-                &lt;a href=&quot;http://example.com/elsie&quot; class=&quot;sister&quot; id=&quot;link1&quot;&gt;
-                    &lt;span&gt;Elsie&lt;/span&gt;
-                &lt;/a&gt;
-                &lt;a href=&quot;http://example.com/lacie&quot; class=&quot;sister&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;
-                and
-                &lt;a href=&quot;http://example.com/tillie&quot; class=&quot;sister&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;
-                and they lived at the bottom of a well.
-            &lt;/p&gt;
-            &lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;
-&apos;&apos;&apos;
-soup=BeautifulSoup(html,&apos;lxml&apos;)    #创建对象
-print(soup.head.title.string)
-</code></pre></li>
-<li><p>基本用法</p>
-<pre><code>soup.prettify()，自动补全缺失的标签
-soup.标签名，可以获得这个标签的内容
-soup.标签名.name，可以获得该标签的名称
-soup.标签名[&apos;name&apos;]，可以获得该标签的name属性值
-soup.标签名.string，可以获取第一个该标签的内容
-soup.标签名.内标签名.string，嵌套方式
-soup.标签名.contents，将该标签下的所有子标签存入到一个列表中
-soup.标签名.parent，可以获取父节点所有信息
-soup.标签名.next_sibling 获取下一个兄弟标签
-soup.标签名.next_siblings 获取后面的兄弟节点
-souo.标签名.previous_sinbling 获取上一个兄弟标签
-soup.标签名.previous_siblings 获取前面的兄弟节点
-</code></pre></li>
-</ul>
-<p></p><h6>标准选择器</h6><p></p>
-<ul>
-<li>soup.find_all(name,attrs,text)可根据标签名、属性、内容查找文档</li>
-<li><p>soup.find(name,attrs,text)返回匹配结果的第一个元素</p>
-<pre><code>from bs4 import BeautifulSoup
-html=&apos;&apos;&apos;
-    &lt;div class=&quot;panel&quot;&gt;
-        &lt;div class=&quot;panel-heading&quot;&gt;
-            &lt;h4&gt;Hello&lt;/h4&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;panel-body&quot;&gt;
-            &lt;ul class=&quot;list&quot; id=&quot;list-1&quot;&gt;
-                &lt;li class=&quot;element&quot;&gt;Foo&lt;/li&gt;
-                &lt;li class=&quot;element&quot;&gt;Bar&lt;/li&gt;
-                &lt;li class=&quot;element&quot;&gt;Jay&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;ul class=&quot;list list-small&quot; id=&quot;list-2&quot;&gt;
-                &lt;li class=&quot;element&quot;&gt;Foo&lt;/li&gt;
-                &lt;li class=&quot;element&quot;&gt;Bar&lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&apos;&apos;&apos;
-soup=BeautifulSoup(html,&apos;lxml&apos;)
-for li in soup.find_all(&apos;ul&apos;):    #以针对结果再次find_all,从而获取所有的li标签信息
-    print(li.find_all(&apos;li&apos;))
-print(soup.find_all(attrs={&apos;class_&apos;:&apos;element&apos;}))
-#attrs可以传入字典的方式来查找标签，但是这里有个特殊的就是class,因为class在python中是特殊的字段，所以如果想要查找class相关的可以更改attrs={&apos;class_&apos;:&apos;element&apos;}
-</code></pre></li>
-<li><p>基本用法：</p>
-<pre><code>soup.find_all(&apos;标签名&apos;)  结果返回的是一个列表的方式
-soup.finf_all(attrs={&apos;class_&apos;:&apos;element&apos;})
-soup.find_all(text=&apos;Foo&apos;) 返回的是查到的所有的text=&apos;Foo&apos;的文本
-</code></pre></li>
-</ul>
-<p></p><h6>CSS选择器</h6><p></p>
-<ul>
-<li>通过select()直接传入CSS选择器就可以完成选择</li>
-<li>通过get_text()可以获取文本内容</li>
-<li><p>通过 标签名[属性名] 或者 标签名.attrs[属性名]获取属性</p>
-<pre><code>from bs4 import BeautifulSoup
-html=&apos;&apos;&apos;
-    &lt;div class=&quot;panel&quot;&gt;
-        &lt;div class=&quot;panel-heading&quot;&gt;
-            &lt;h4&gt;Hello&lt;/h4&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;panel-body&quot;&gt;
-            &lt;ul class=&quot;list&quot; id=&quot;list-1&quot;&gt;
-                &lt;li class=&quot;element&quot;&gt;Foo&lt;/li&gt;
-                &lt;li class=&quot;element&quot;&gt;Bar&lt;/li&gt;
-                &lt;li class=&quot;element&quot;&gt;Jay&lt;/li&gt;
-            &lt;/ul&gt;
-            &lt;ul class=&quot;list list-small&quot; id=&quot;list-2&quot;&gt;
-                &lt;li class=&quot;element&quot;&gt;Foo&lt;/li&gt;
-                &lt;li class=&quot;element&quot;&gt;Bar&lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&apos;&apos;&apos;
-soup=BeautifulSoup(html,&apos;lxml&apos;)
-print(soup.select(&apos;#list-2 .element&apos;))
-print(soup.ul[&apos;id&apos;])
-for li in soup.select(&apos;li&apos;):
-    print(li.get_text())     #获得文本内容
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="cjspxwrl4002tpgwvhqriag53" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cjt5mtl2b004hr4wvtlgn4io1" class="article-share-link">Compartir</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1324,7 +1382,7 @@ for li in soup.select(&apos;li&apos;):
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/4/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/6/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Previo</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/6/">Siguiente &raquo;</a>
   </nav>
 
 </section>
@@ -1338,7 +1396,7 @@ for li in soup.select(&apos;li&apos;):
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git学习/">Git学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">4</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -1346,18 +1404,18 @@ for li in soup.select(&apos;li&apos;):
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nube de Tags</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 13px;">Django学习</a> <a href="/tags/Git学习/" style="font-size: 13px;">Git学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 13px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 16px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 17px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 14px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 13px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 18px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 13px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.78px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.22px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14.44px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archivos</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1365,9 +1423,17 @@ for li in soup.select(&apos;li&apos;):
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Posts recientes</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/03/12/批量添加用户，并设置sudo权限/">批量添加用户，并设置sudo权限</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/12/Centos中同时部署两个以上的Tomcat/">Centos中同时部署两个以上的Tomcat</a>
+          </li>
         
           <li>
             <a href="/2019/03/01/安装部署Tomcat9/">安装部署Tomcat9</a>
@@ -1379,14 +1445,6 @@ for li in soup.select(&apos;li&apos;):
         
           <li>
             <a href="/2019/03/01/安装部署禅道11.2/">安装部署禅道11.2</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/01/安装部署Nginx/">安装部署Nginx</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/01/安装部署mysql5.7/">安装部署mysql5.7</a>
           </li>
         
       </ul>
@@ -1417,7 +1475,7 @@ for li in soup.select(&apos;li&apos;):
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Construido por <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
