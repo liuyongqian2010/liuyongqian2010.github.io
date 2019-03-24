@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,184 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-python之Map、Reduce、Filte" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/16/python之Map、Reduce、Filte/" class="article-date">
+  <time datetime="2018-04-16T15:38:13.000Z" itemprop="datePublished">2018-04-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/16/python之Map、Reduce、Filte/">python之Map、Reduce、Filte</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>python之Map、Reduce、Filte</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>Map</h6><p></p>
+<ul>
+<li>简介<ul>
+<li>map()函数接收两个及以上参数，一个是函数对象本身，一个是序列，map将传入的函数依次作用到序列的每个元素，并把结果作为新的list返回</li>
+<li>在Python2里，直接使用map就可以打印结果；但是在Python3里，map返回的结果是迭代器(iterator)，需要先转换为列表list</li>
+</ul>
+</li>
+<li><p>计算列表中每个元素的的平方并输出</p>
+<pre><code>def f(x):
+    return x*x
+list1=[1,2,3,4,5,6]
+第一种方法：循环
+list2=[]
+for n in list1:
+    list2.append(f(n))
+print(list2)              #result:[1, 4, 9, 16, 25, 36]
+
+第二种方法：map
+list3=list(map(f,list1))
+print(list3)              #result:[1, 4, 9, 16, 25, 36]
+</code></pre></li>
+<li><p>map()作为高阶函数，事实上它把运算规则抽象了，因此，我们不但可以计算简单的f(x)=x*x，还可以计算任意复杂的函数，比如，把这个list1所有数字转为字符串</p>
+<pre><code>list4=list(map(str,list1))
+print(list4)             #result:[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;, &apos;5&apos;, &apos;6&apos;]
+</code></pre></li>
+</ul>
+<p></p><h6>Reduce</h6><p></p>
+<ul>
+<li>简介<ul>
+<li>reduce把一个函数作用在一个序列[x1, x2, x3…]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算</li>
+<li>reduce可以有initial参数</li>
+</ul>
+</li>
+<li><p>示例</p>
+<pre><code>from functools import reduce
+#没有initial参数
+sum1=reduce(lambda x,y:x+y,[1,2,3,4,5,6])    #（（（1+2）+3+）+4...）
+print(sum1)             #result:21
+
+#有initial参数
+sum2=reduce(lambda x,y:x+y,[1,2,3,4,5,6],10)  #（（（（10+1）+2）+3）+4...）
+print(sum2)             #result:31
+</code></pre></li>
+</ul>
+<p></p><h6>Filte</h6><p></p>
+<ul>
+<li>简介<ul>
+<li>filter函数对指定的序列进行过滤操作</li>
+<li>filter()也接收一个函数和一个序列，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素</li>
+</ul>
+</li>
+<li><p>示例</p>
+<pre><code>list4=[1,2,3,4,5,6,7,8,9]
+def is_odd(x):
+    return x%2==1
+result=list(filter(is_odd,list4))
+print(result)               #result:[1, 3, 5, 7, 9]
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/16/python之Map、Reduce、Filte/" data-id="cjtmzvl8t004660wv22zv5v7n" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-安装python3-6、spark" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/16/安装python3-6、spark/" class="article-date">
+  <time datetime="2018-04-16T11:13:35.000Z" itemprop="datePublished">2018-04-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>安装python3.6、spark</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>安装python3.6,，并可以通过页面进行编程</h6><p></p>
+<ul>
+<li><p>1.普通用户（hadoop用户）将文件Anaconda3-5.0.1-Linux-x86_64.sh放在工作目录下</p>
+</li>
+<li><p>2.切换root用户安装bzip2：<code>yum -y install bzip2</code></p>
+</li>
+<li>3.hadoop用户执行命令：<code>bash Anaconda3-5.0.1-Linux-x86_64.sh</code>，该命令执行过程中有一步可以自动配置环境变量，注意查看并输入yes进行确认</li>
+<li>4.刷新<code>source .bashrc</code>后，输入<code>python</code>后输出了python的最新版本信息</li>
+<li>5.hadoop用户执行：<code>jupyter-notebook --ip python333</code>（该命令必须启动yarn，我的主机名叫python333）后，提示：<br><code>http://python333:8888/?token=b528b9bf6f867f2471ee75ac04be8b46d30c957e2c76cadf</code><br><br>在浏览器新开窗口中输入该url后即打开了<code>http://python333:8888/tree</code>页面</li>
+<li>6.在打开的jupyter页面中，“New”一个新的notebook，开始编辑代码吧</li>
+</ul>
+<p></p><h6>安装spark</h6><p></p>
+<ul>
+<li>利用spark中的MapReduce比使用hadoop中的MapReduce运行速度快近100倍，但是spark不能建立集群文件，需要依赖hadoop</li>
+<li><p>开始安装</p>
+<ul>
+<li>1.普通用户（hadoop用户）将文件spark-2.2.1-bin-hadoop2.7.tgz放在工作目录下，并解压：<code>tar -zvxf spark-2.2.1-bin-hadoop2.7.tgz -C opt/</code></li>
+<li><p>2.还是在该工作目录下，<code>vi .bashrc</code>后追加如下变量：</p>
+<pre><code>SPARK_HOME=/home/hadoop/opt/spark-2.2.1-bin-hadoop2.7
+PATH=$PATH:$SPARK_HOME/bin
+</code></pre></li>
+<li><p>3.刷新<code>source .bashrc</code></p>
+</li>
+<li>4.现在可以在任意的目录下输入spark-shell,之后显示图标并进入scala命令行</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/16/安装python3-6、spark/" data-id="cjtmzvlgu005k60wvxdzrfx02" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-使用hadoop里面的MapReduce" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -129,7 +307,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/使用hadoop里面的MapReduce/" data-id="cjt5mtl2v004tr4wvea0wh9ep" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/04/16/使用hadoop里面的MapReduce/" data-id="cjtmzvlbu004o60wvlo5bd2bl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -292,7 +470,7 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjt5mtl68006vr4wvnitqa8nt" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjtmzvlog006w60wvqovg61u2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -452,7 +630,7 @@ print([link.url for link in links])   #打印出html2中a标签中的3个链接
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/14/使用LinkExtractor提取链接/" data-id="cjt5mtl2v004rr4wvn1i998x2" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/04/14/使用LinkExtractor提取链接/" data-id="cjtmzvlcf004s60wvqcgvtsmw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -566,7 +744,7 @@ bzip2查看：tar  -jcvf  filename.tar.bz2　
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjt5mtl0n003fr4wv6ooyvp6i" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjtmzvl5c003b60wviz8mse4s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -649,7 +827,7 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/11/jdk部署/" data-id="cjt5mtl0n003hr4wv5t1kuqef" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/04/11/jdk部署/" data-id="cjtmzvl56003960wvu6b51jvg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -763,7 +941,7 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjt5mtkzu002zr4wvj4fnbapw" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjtmzvl2v002k60wveknqlkwy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -912,7 +1090,7 @@ test2.update_many({&apos;x&apos;:4},{&apos;$set&apos;:{&apos;x&apos;:1,&apos;y&a
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjt5mtl6i0075r4wvgd1u4clw" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjtmzvllh006e60wvbl0umq00" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1115,189 +1293,10 @@ def getAll(num):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjt5mtl4u0061r4wv9o3vx7sl" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjtmzvlip005w60wvx36ckr0f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-scrapy选择器css、xpath" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/02/scrapy选择器css、xpath/" class="article-date">
-  <time datetime="2018-04-02T13:33:47.000Z" itemprop="datePublished">2018-04-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/02/scrapy选择器css、xpath/">scrapy选择器css、xpath</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>scrapy选择器css、xpath</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>Scrapy自带了提取数据的机制。它们称为选择器，因为它们“选择”由XPath或CSS表达式指定的HTML文档的某些部分</li>
-<li>XPath是用于选择XML文档中的节点的语言，其也可以与HTML一起使用</li>
-<li>CSS是一种用于将样式应用于HTML文档的语言。它定义了选择器以将这些样式与特定的HTML元素相关联</li>
-<li>Scrapy选择器构建在lxml库之上，这意味着它们的速度和解析精度非常相似</li>
-</ul>
-<p></p><h6>使用选择器</h6><p></p>
-<ul>
-<li><p>为了解释如何使用选择器，我们将使用Scrapy shell（提供交互式测试）和位于Scrapy文档服务器中的示例页面：<a href="http://doc.scrapy.org/en/latest/_static/selectors-sample1.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</a></p>
-<pre><code>#打开shell
-scrapy shell http://doc.scrapy.org/en/latest/_static/selectors-sample1.html 
-#使用XPath和CSS选择标题标签中的文本:
-response.xpath(&apos;//title/text()&apos;)
-&gt;&gt;&gt;[&lt;Selector xpath=&apos;//title/text()&apos; data=&apos;Example website&apos;&gt;]
-response.css(&apos;title::text&apos;)
-&gt;&gt;&gt;[&lt;Selector xpath=&apos;descendant-or-self::title/text()&apos; data=&apos;Example website&apos;&gt;]
-#.css()方法返回一个 SelectorList实例，它是新的选择列表。此API可用于快速选择嵌套数据：
-response.css(&apos;img&apos;).xpath(&apos;@src&apos;).extract()
-#要实际提取文本数据，必须调用选择器.extract() 方法,如果只想提取第一个匹配的元素，可以调用选择器 .extract_first()
-response.xpath(&apos;//title/text()&apos;).extract()
-response.xpath(&apos;//div[@id=&quot;images&quot;]/a/text()&apos;).extract_first()
-#可以提供默认返回值作为参数
-response.xpath(&apos;//div[@id=&quot;not-exists&quot;]/text()&apos;).extract_first(default=&apos;not-found&apos;)
-</code></pre></li>
-<li><p>Xpath选择器常用方法</p>
-<pre><code>nodeName    选取此节点的所有节点
-/           从根节点选取
-//          从匹配选择的当前节点选择文档中的节点，不考虑它们的位置
-.           选择当前节点
-..          选取当前节点的父节点
-@           选取属性
-*           匹配任何元素节点
-@*          匹配任何属性节点
-Node()      匹配任何类型的节点
-</code></pre></li>
-<li><p>CSS选择器常用方法</p>
-<pre><code>.class              .color              选择class=”color”的所有元素
-#id                 #info               选择id=”info”的所有元素
-*                   *                   选择所有元素
-element             p                   选择所有的p元素
-element,element     div,p               选择所有div元素和所有p元素
-element element     div p               选择div标签内部的所有p元素
-[attribute]         [target]            选择带有targe属性的所有元素
-[arrtibute=value]   [target=_blank]     选择target=”_blank”的所有元素
-</code></pre></li>
-<li><p>获取基本URL和一些图像链接</p>
-<pre><code>response.xpath(&apos;//base/@href&apos;).extract()
-response.css(&apos;base::attr(href)&apos;).extract()
-
-response.xpath(&apos;//a[contains(@href, &quot;image&quot;)]/@href&apos;).extract()
-response.css(&apos;a[href*=&quot;image&quot;]::attr(href)&apos;).extract()
-#其中a[href*=&quot;image&quot;]表示href的属性值包含“image”的所有a元素
-
-response.xpath(&apos;//a[contains(@href, &quot;image&quot;)]/img/@src&apos;).extract()
-response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
-</code></pre></li>
-</ul>
-<h3 id="参考大神佳作Scrapy爬虫入门教程五-Selectors（选择器）"><a href="#参考大神佳作Scrapy爬虫入门教程五-Selectors（选择器）" class="headerlink" title="参考大神佳作Scrapy爬虫入门教程五 Selectors（选择器）"></a>参考大神佳作<a href="https://blog.csdn.net/Inke88/article/details/60589170" target="_blank" rel="noopener">Scrapy爬虫入门教程五 Selectors（选择器）</a></h3>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjt5mtl2m004pr4wvqqumhv2u" class="article-share-link">Compartir</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-scrapy命令行详解" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/02/scrapy命令行详解/" class="article-date">
-  <time datetime="2018-04-02T11:08:41.000Z" itemprop="datePublished">2018-04-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/02/scrapy命令行详解/">scrapy命令行详解</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>scrapy命令行详解</h5><p></p>
-<hr>
-<hr>
-<ul>
-<li><p>创建项目<code>scrapy startproject 项目名</code></p>
-<pre><code>#测试网站：http://quotes.toscrape.com/
-scrapy startproject quotetutorial
-</code></pre></li>
-<li><p>创建爬虫<code>scrapy genspider spider文件名 网站域名</code></p>
-<pre><code>cd quotetutorial         进入项目
-scrapy genspider quotes quotes.toscrape.com   创建爬虫
-</code></pre></li>
-<li><p>运行爬虫<code>scrapy crawl 爬虫文件名</code></p>
-<pre><code>scrapy crawl quotes
-scrapy crawl quotes -o quotes.json   保存爬取数据为json格式,还有其他格式如.jl、.csv、.xml、.pickle、.marshal等等
-</code></pre></li>
-<li><p>在项目中常用的其他命令（局部命令）</p>
-<pre><code>scrapy check   检查spider文件有无语法错误
-scrapy list    列出spider路径下的spider文件
-scrapy bench   测试电脑当前爬取速度性能，即基准测试
-</code></pre></li>
-</ul>
-<ul>
-<li><p>全局命令</p>
-<pre><code>scrapy fetch &lt;url&gt;  将网页内容下载下来，然后在终端打印当前返回的内容
-scrapy view &lt;url&gt;   将网页内容保存下来，并在浏览器中打开当前网页内容，直观呈现要爬取网页的内容（发现这个与上述命令效果一样啊）
-scrapy shell [url]  打开 scrapy 显示台，进入命令行交互模式
-可以用来做测试,（exit()退出模式）
-scrapy version [-v]  显示scrapy版本，后面加 -v 可以显示scrapy依赖库的版本
-scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中的爬虫，而不必创建一个项目
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjt5mtl22004br4wvqc7netji" class="article-share-link">Compartir</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
 
     </footer>
   </div>
@@ -1312,7 +1311,7 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Previo</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/5/">Siguiente &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1326,7 +1325,7 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -1334,18 +1333,18 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nube de Tags</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.78px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.22px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14.44px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15.56px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.78px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.22px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14.44px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1353,9 +1352,17 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/03/23/Nginx转发SSH代理-Stream模块/">Nginx转发SSH代理-Stream模块</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/20/tomcat使用apr模式运行/">tomcat使用apr模式运行</a>
+          </li>
         
           <li>
             <a href="/2019/03/12/批量添加用户，并设置sudo权限/">批量添加用户，并设置sudo权限</a>
@@ -1367,14 +1374,6 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
         
           <li>
             <a href="/2019/03/01/安装部署Tomcat9/">安装部署Tomcat9</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/01/安装部署Mongodb4/">安装部署Mongodb4</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/01/安装部署禅道11.2/">安装部署禅道11.2</a>
           </li>
         
       </ul>
@@ -1405,7 +1404,7 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Construido por <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
