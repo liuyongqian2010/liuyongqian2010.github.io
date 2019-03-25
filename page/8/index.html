@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,360 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-python之XML" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/13/python之XML/" class="article-date">
+  <time datetime="2018-03-13T10:06:12.000Z" itemprop="datePublished">2018-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/13/python之XML/">python之XML</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>python之XML</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>初识XML</h6><p></p>
+<ul>
+<li>定义<ul>
+<li>XML指可扩展标记语言（EXtensible Markup Language）,设计宗旨是传输数据，而不是显示数据,标签没有被预定义,需要自行定义标签,XML 被设计为具有自我描述性，被设计用来结构化、存储以及传输信息，是独立于软件和硬件的信息传输工具</li>
+</ul>
+</li>
+<li><p>语法</p>
+<ul>
+<li>XML 标签对大小写敏感。标签 \<letter\> 与标签 \&lt;\letter> 是不同的</letter\></li>
+<li>在 XML 中，XML 的属性值必须加引号，如<code>&lt;note date=&quot;12/11/2007&quot;&gt;</code></li>
+<li><p>在 XML 中，有 5 个预定义的实体引用</p>
+<pre><code>&amp;lt;    &lt;    
+&amp;gt;    &gt;    
+&amp;amp;    &amp;    
+&amp;apos;    &apos;    
+&amp;quot;    &quot;
+</code></pre></li>
+<li>没有什么规矩可以告诉我们什么时候该使用属性，而什么时候该使用元素。我的经验是在 HTML 中，属性用起来很便利，但是在 XML 中，您应该尽量避免使用属性。如果信息感觉起来很像数据，那么请使用元素</li>
+<li>xml文件格式介绍：tag，即标签；attri，即属性；text，即文本字符串</li>
+</ul>
+</li>
+<li><p>如下所示</p>
+<pre><code>#文件名：countrys.xml
+&lt;?xml version=&quot;1.0&quot;?&gt;             &lt;!--XML声明--&gt;
+&lt;data id=&apos;0314&apos; name=&quot;国家&quot;&gt;       &lt;!--根元素--&gt;
+    &lt;country name=&quot;Liechtenstein&quot;&gt;
+        &lt;rank&gt;1&lt;/rank&gt;
+        &lt;year&gt;2008&lt;/year&gt;
+        &lt;code&gt;141100&lt;/code&gt;
+        &lt;neighbor direction=&quot;E&quot;&gt;Austria&lt;/neighbor&gt;
+    &lt;/country&gt;
+    &lt;country name=&quot;Panama&quot;&gt;
+        &lt;rank&gt;68&lt;/rank&gt;
+        &lt;year&gt;2011&lt;/year&gt;
+        &lt;code&gt;13600&lt;/code&gt;
+        &lt;neighbor direction=&quot;W&quot;&gt;Costa Rica&lt;/neighbor&gt;
+    &lt;/country&gt;
+&lt;/data&gt;
+</code></pre></li>
+</ul>
+<p></p><h6>三种解析方式</h6><p></p>
+<ul>
+<li><p>方式一：ElementTree(元素树)</p>
+<ul>
+<li><p>ElementTree,类似一个轻量级的DOM解析XML文件的过程：</p>
+<ul>
+<li>1.导入ElementTree</li>
+<li>2.解析xml文件找到根节点：直接解析xml文件并获得根节点</li>
+<li>3.遍历根节点可以获得子节点，然后就可以根据需求拿到需要的字段</li>
+</ul>
+</li>
+<li><p>演示</p>
+<pre><code>import xml.etree.ElementTree as ET   #1.导入ElementTree
+tree=ET.parse(&apos;countrys.xml&apos;)
+root=tree.getroot()                  #2.直接加载解析xml文件并获得根节点
+print(&apos;根节点:&apos;,root.tag,&apos;根属性:&apos;,root.attrib,&apos;根文本:&apos;,root.text)
+for child in root:         #3.
+    print(&apos;节点:&apos;,child.tag,&apos;节点属性:&apos;,child.attrib,&apos;节点文本:&apos;,child.text)
+    for sub in child:
+        print(&apos;子节点:&apos;,sub.tag,&apos;子节点属性:&apos;,sub.attrib,&apos;子节点文本:&apos;,sub.text)
+</code></pre></li>
+</ul>
+</li>
+<li><p>方式二：DOM(Document Object Model)</p>
+<ul>
+<li>一个 DOM 的解析器在解析一个XML文档时，一次性读取整个文档，把文档中所有元素保存在内存中的一个树结构里，之后你可以利用DOM 提供的不同的函数来读取或修改文档的内容和结构，也可以把修改过的内容写入xml文件。python中用xml.dom.minidom来解析xml文件</li>
+<li><p>演示</p>
+<pre><code>from xml.dom.minidom import parse
+import xml.dom.minidom
+DOMTree=xml.dom.minidom.parse(&apos;countrys.xml&apos;) #使用minidom解析器打开xml文件
+date=DOMTree.documentElement                  #获取根节点
+if date.hasAttribute(&apos;name&apos;):
+    print(&apos;date.name=&apos;,date.getAttribute(&apos;name&apos;))
+countrys=date.getElementsByTagName(&apos;country&apos;) #获取所有子节点
+for country in countrys:
+    if country.hasAttribute(&apos;name&apos;):
+        print(&apos;country name:&apos;,country.getAttribute(&apos;name&apos;))
+        rank=country.getElementsByTagName(&apos;rank&apos;)[0]
+        print(&apos;rank:&apos;,rank.childNodes[0].data)
+        neighbor=country.getElementsByTagName(&apos;neighbor&apos;)[0]
+        print(&apos;neighbor:&apos;,neighbor.childNodes[0].data)
+        print(&apos;---------------------&apos;)
+</code></pre></li>
+</ul>
+</li>
+<li><p>方式三：SAX (simple API for XML )</p>
+<ul>
+<li>SAX是一种基于事件驱动的API，利用SAX解析XML牵涉到两个部分：解析器和事件处理器。其中解析器负责读取XML文档，并向事件处理器发送事件，如元素开始跟元素结束事件；而事件处理器则负责对事件作出相应，对传递的XML数据进行处理。python中使用sax方式处理xml要先引入xml.sax中的parse函数，还有xml.sax.handler中的ContentHandler</li>
+<li><p>演示</p>
+<pre><code>import xml.sax
+#创建属于自己的读取xml文件的handler格式
+class countryHandler(xml.sax.ContentHandler):
+    def __init__(self):
+        self.CurrentDate=&apos;&apos;    #中间量，用来存储读取到的节点名字
+        self.rank=&apos;&apos;
+        self.year=&apos;&apos;
+        self.neighber=&apos;&apos;
+    def startElement(self,tag,attributes):
+        #startElement(tag, attrs)方法，遇到XML开始标签时调用，tag是标签的名字，attrs是标签的属性值字典
+        self.CurrentDate=tag
+        if tag==&apos;country&apos;:
+            name=attributes[&apos;name&apos;]
+            print(&apos;-----------------------&apos;)
+            print(&apos;country:&apos;,name)
+    def characters(self,content):
+        if self.CurrentDate==&apos;rank&apos;:
+            self.rank=content
+        elif self.CurrentDate==&apos;year&apos;:
+            self.year = content
+        elif self.CurrentDate==&apos;neighbor&apos;:
+            self.neighbor=content
+    def endElement(self,tag):
+        #endElement(name)方法,遇到XML结束标签时调用
+        if self.CurrentDate==&apos;rank&apos;:
+            print(&apos;rank:&apos;,self.rank)
+        elif self.CurrentDate==&apos;year&apos;:
+            print(&apos;year:&apos;,self.year)
+        elif self.CurrentDate==&apos;neighbor&apos;:
+            print(&apos;neighbor:&apos;,self.neighbor)
+        self.CurrentDate=&apos;&apos;     #
+if __name__==&apos;__main__&apos;:
+    parser=xml.sax.make_parser()     #创建一个xml读取器
+    parser.setFeature(xml.sax.handler.feature_namespaces,0)
+    handler=countryHandler()         #
+    parser.setContentHandler(handler)
+    parser.parse(&apos;countrys.xml&apos;)     #解析文档
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/13/python之XML/" data-id="cjtof2r5w004szgwv2ejx7r7u" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Redis数据库入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/13/Redis数据库入门/" class="article-date">
+  <time datetime="2018-03-13T09:29:25.000Z" itemprop="datePublished">2018-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/13/Redis数据库入门/">Redis数据库入门</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Redis数据库入门</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>NoSql(Not Only Sql)概念</h6><p></p>
+<ul>
+<li>NoSql是非关系型数据库的集合，如Redis、MongoDB、HBase…</li>
+<li>NoSql产生背景，为解决三高而产生：数据库高并发大写；海量数据下的效率；高扩展和可用性</li>
+<li>NoSQL优点：扩展方便，读写快速高效，数据类型灵活</li>
+<li>NoSQL缺点：不支持sql语句</li>
+</ul>
+<p></p><h6>Redis简介</h6><p></p>
+<ul>
+<li>由c语言编写，基于内存运行的并支持持久化，存储形式为key-value型</li>
+<li>单进程运行<ul>
+<li>redis服务程序是单进程运行，当多个客户端同时访问时，服务器的处理能力是会有一定的下降的。面对这种场景，我们可能会考虑在同一台服务器上开启多个Redis进程，Redis会对CPU存在竞争</li>
+</ul>
+</li>
+<li>Redis部署<ul>
+<li>1.将redis安装包（此时最新版本是3.2.11）放入Linux服务器中</li>
+<li>2.解压redis，进入redis解压目录</li>
+<li>3.make</li>
+<li>4.make install，可指定安装目录，如<code>make PREFIX=&quot;/opt/redis3&quot; install</code></li>
+<li>5.之后安装目录中出现了bin目录，再将解压目录中的redis.conf放在与bin目录同级的目录下</li>
+<li>6.进入bin目录下，运行redis-server,出现层状方形小时运行成功 </li>
+</ul>
+</li>
+<li>在redis的bin目录下：<ul>
+<li>redis-server用来启动redis的工具，关闭该工具命令为<code>shutdown</code></li>
+<li>redis-benchmark检测redis在本机运行效率</li>
+<li>redis-check-aof修复AOF持久化</li>
+<li>redis-check-rdb修复RDB持久化文件</li>
+<li>redis-cli命令行工具</li>
+</ul>
+</li>
+<li>Redis的多数据库（16个数据库：0-15 ）<ul>
+<li>Redis的多数据库在一定程度上是独立的,不支持自定义数据库名称，不能为每一个数据库设置独立密码</li>
+<li>切换数据库命令：select [dbindex]</li>
+<li>多数据库间移动数据：mv [key] [dbindex]</li>
+<li>清除数据库内数据：<ul>
+<li>清空当前数据库数据：flushdb</li>
+<li>清空所有数据库数据：flushALL</li>
+</ul>
+</li>
+<li>查看数据库内数据的数量：Dbsize</li>
+</ul>
+</li>
+<li>redis常用场景<ul>
+<li>缓存</li>
+<li>排行榜类的应用</li>
+<li>实时分析系统</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>Redis参数配置</h6><p></p>
+<ul>
+<li>config命令：<ul>
+<li>动态取出参数配置config get 参数名称，如config get port</li>
+<li>动态设置参数配置config set 参数名称</li>
+</ul>
+</li>
+<li>配置分类：通用部分、快照、复制、安全、限制、追加、Lua脚本、慢日志、事件通知、高级配置、引入</li>
+<li>Redis的基础配置（redis.conf）<ul>
+<li>notework:<ul>
+<li>bind: 指定要绑定的IP地址</li>
+<li>protected-mode：询问是否开启保护模式；如不开启，bind会不起作用，密码也不起作用    </li>
+<li>port： 端口号，默认是6379，如果想开启多个Redis进程，需要指定不同的端口号        </li>
+<li>tcp-backlog：设置tcp的backlog的连接队列，即tcp的三次握手，未完成三次握手和已完成三次握手的队列总和</li>
+<li>timeout：连接超时时间，默认是0</li>
+<li>tcp-keepalive：检测keepalive的值，即健康检查，默认单位是秒。HA，默认值是0，表示不检测，建议设置为60秒    </li>
+</ul>
+</li>
+<li>通用配置：<ul>
+<li>daemonize：是否以后台进程的方式运行</li>
+<li>pidfile: 指定pid存储的路径和文件，在正式使用时，一定会使用pidfile指定路径</li>
+</ul>
+</li>
+<li>日志相关：<ul>
+<li>loglevel:四个级别</li>
+<li>logfile：指定log日志文件位置,/dev/null</li>
+</ul>
+</li>
+<li>databases: <ul>
+<li>Redis启动后有多少个数据库            </li>
+</ul>
+</li>
+<li>Redis限制部分配置[limits]<ul>
+<li>maxclients:客户端最大连接数，默认是10000</li>
+<li>maxmemory：最大内存数，实际工作时，最大内存数一般都是50%左右的内存，一定不能超过70%</li>
+<li>maxmemory-samples：样例数量</li>
+<li>maxmemory-policy：设置内存的移除规则<ul>
+<li>volatile-lru：LRU算法进行移除，只针对设置了过期时间的值</li>
+<li>allkeys-lru ：LRU算法</li>
+<li>volatile-random：在过期集合中移除随机的key</li>
+<li>allkeys-random：移除随机的key</li>
+<li>volatile-ttl ：移除TTL最小的key，即数据的生命期</li>
+<li>noeviction ：默认值，不进行移除</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>key操作</h6><p></p>
+<ul>
+<li>keys ：获得符合规则的键值列表，keys *</li>
+<li>exists: 检测key是否存在，exists key名称    </li>
+<li>del: 单条删除key操作，del key名称</li>
+<li>type:获取key对应的value值类型，type key名称</li>
+<li>rename语句： rename oldKey newKey 不管新的key有没有都改名</li>
+<li>renamenx: renamenx oldkey newkey  如果新的key存在，则不改名</li>
+</ul>
+<p></p><h6>数据类型</h6><p></p>
+<ul>
+<li>String类型<ul>
+<li>string是redis最基本的类型,可以包含任何数据。比如jpg图片或者序列化的对象</li>
+</ul>
+</li>
+<li>List类型<ul>
+<li>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）</li>
+</ul>
+</li>
+<li>Set类型<ul>
+<li>Redis的Set是string类型的无序集合。集合是通过哈希表实现的，所以添加，删除，查找的复杂度都是O(1)</li>
+</ul>
+</li>
+<li>Hash类型<ul>
+<li>Redis hash 是一个键值(key=&gt;value)对集合，是一个string类型的field和value的映射表，hash特别适合用于存储对象</li>
+</ul>
+</li>
+<li>Zset类型<ul>
+<li>Redis zset 和 set 一样也是string类型元素的集合,且不允许重复的成员。不同的是每个元素都会关联一个double类型的分数。redis正是通过分数来为集合中的成员进行从小到大的排序</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/13/Redis数据库入门/" data-id="cjtof2r0p002qzgwvmkpepmyk" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-Git高级" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -198,7 +552,7 @@ git config --global color.status false
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjtmzvkxl001060wvext0gmpz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjtof2quq000uzgwv9nttnglb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -245,7 +599,7 @@ git config --global color.status false
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习/" data-id="cjtmzvkuh000d60wvnhxll81b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习/" data-id="cjtof2qt9000dzgwvg9r0dxhc" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -380,7 +734,7 @@ print(result.group(1))       #result:20180101
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjtmzvl9q004e60wveccoppd3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjtof2r54004gzgwv2lsgfytk" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -547,7 +901,7 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjtmzvkzh001l60wvu7iomzn9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjtof2qv4000xzgwv62daid68" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -623,7 +977,7 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjtmzvl8k004460wvx7mbnfw6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjtof2r4k0048zgwvmcf5qa7b" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -729,7 +1083,7 @@ print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="cjtmzvl44002y60wvvvomfrpd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="cjtof2r4g0046zgwv1apr6u1d" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -858,7 +1212,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjtmzvl0s002060wvy1gke0h4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjtof2r0l002ozgwvwu3tod0a" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -985,223 +1339,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjtmzvl20002c60wvnn7mfr20" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-SQL注入" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/10/SQL注入/" class="article-date">
-  <time datetime="2018-03-10T14:12:52.000Z" itemprop="datePublished">2018-03-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/10/SQL注入/">SQL注入</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>SQL注入</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>概念</h6><p></p>
-<ul>
-<li>攻击者之所以可以利用自己输入的数据来达到攻击网站的目的，原因就在于SQL语言作为一种解释型语言，它的数据其实是由程序员编写的代码和用户提交的数据共同组成的。正是这个原因，攻击者可以构造对自己有利的数据，利用网站的一些SQL漏洞来达到恶意的目的</li>
-<li>SQL注入，就是指攻击者将恶意的字符串或者语句等信息作为参数输入，服务器在验证这个字段的时候，读取攻击者输入的数据，将其作为正常的值参与SQL语句的查询，试想，如果攻击者输入了一个字符串，在SQL语句执行之后，可以导致删除表等操作，对于一个应用来说，影响是很大的</li>
-<li>通过网页的输入项来注入SQL查询或命令是一种技巧。许多网页会从用户那里获取参数，并构建SQL查询来访问数据库。以用户登录为例，页面收集用户名和密码然后构建SQL去查询数据库，来校验用户名和密码的有效性。</li>
-</ul>
-<p></p><h6>简单实例</h6><p></p>
-<ul>
-<li>某网站的登录功能，用户登录页面需要填写用户名和密码，假设如果其中一个用户名和密码是admin和123456，当用户在相应的表单中输入正确的用户名和密码之后，此应用的相应函数执行一定的验证（验证用户名和密码是否匹配），服务器执行SQL语句（表名是user）：<code>select * from user where username=’username’ and pwd=’password’</code>，逻辑是如果这个查询语句返回结果不为0，则认为是验证通过，即可以登录成功的用户</li>
-<li>如果某用户输入admin和123456，即执行语句：select * from user where username=’admin’ and pwd=’123456’,执行结果不为0，所以用户登录成功</li>
-<li>如果一个用户输入test’ or 1=’1和111111，即执行语句：select * from user where username=’test’ or 1=’1’ and pwd=’111111’，因为此查询语句中1=’1’的结果为1，or 1=’1’使查询条件始终返回1，因此此语句的查询结果不为0，这样，此用户没有使用正确的用户名和密码也可以登录成功，这就是SQL注入的一个简单实例</li>
-</ul>
-<p></p><h6>SQL注入一般会出现在哪些地方</h6><p></p>
-<ul>
-<li>含有输入数据表单的页面（登录界面、查询界面、反馈界面等），即使是hidden的表单也有可能存在这个问题</li>
-<li>含有用户信息、ID等的URL（类似于<code>http://XXX/index.asp?ID=155</code>），可以操作ID后的参数数据</li>
-</ul>
-<p></p><h6>SQL注入的防范措施</h6><p></p>
-<ul>
-<li>从开发者的角度来说，防范措施如下<ul>
-<li>转义敏感字符及字符串<br>SQL的敏感字符包括： “exec”, “xp<em>”, “sp</em>”, “declare”, “cmd”, “Union”, “+”, “//”,              ”..”, “;”, “’”, “–”, “%”, “0x”, “&gt;&lt;=!-*/()|” ,和空格</li>
-<li>屏蔽出错信息：阻止攻击者知道攻击的结果</li>
-<li>在服务端正式处理之前提交数据的合法性(合法性检查主要包括三 项:数据类型,数据长度,敏感字符的校验)进行检查等。最根本的解决手段,在确认客 户端的输入合法之前,服务端拒绝进行关键性的处理操作</li>
-</ul>
-</li>
-<li>从测试人员的角度来说，防范措施是<ul>
-<li>在程序开发前(即需求阶段),我们就应该有意识的将安全性检查应用到需求测试中,例如对一个表单需求进行检查时,我们一般检验以下几项安全性问题:需求中应说明表单中某一field的类型,长度,以及取值范围(主要作用就是禁止输入敏感字符)；需求中应说明如果超出表单规定的类型,长度,以及取值范围的,应用程序应给出不包含任何代码或数据库信息的错误提示等</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjtmzvl3a002p60wv4n0in1ef" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-基本安全测试" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/10/基本安全测试/" class="article-date">
-  <time datetime="2018-03-10T08:10:50.000Z" itemprop="datePublished">2018-03-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/10/基本安全测试/">基本安全测试</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>基本安全测试</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>用户权限测试</h6><p></p>
-<ul>
-<li>用户权限控制<ul>
-<li>用户权限控制主要是对一些有权限控制的功能进行验证</li>
-<li>用户A才能进行的操作，B是否能够进行操作</li>
-<li>只能有A条件的用户才能查看的页面，是否B能够查看（可直接敲URL访问）</li>
-</ul>
-</li>
-<li>页面权限控制<ul>
-<li>必须有登陆权限的页面，是否能够在不登陆情况下进行访问</li>
-<li>必须经过A——B——C的页面，是否能够直接由A——C？</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>URL安全测试</h6><p></p>
-<ul>
-<li>适用范围： URL中含有参数，也就是通过GET方式传递的HTTP请求</li>
-<li>什么叫GET方式<ul>
-<li>GET方式在客户端通过URL提交数据，数据在URL中可以看到</li>
-<li>POST方式，数据放置在HTML HEADER内提交，数据在URL中看不到</li>
-<li>GET只能传输比较少的数据，安全性较低，POST传输数据较多，安全性也比GET高</li>
-</ul>
-</li>
-<li><p>测试关注点</p>
-<ul>
-<li>URL 参数检查<ul>
-<li>对URL中参数信息检查是否正确，如：URL中的订单号、金额允许显示出来的话，需要验证其是否正确</li>
-<li>对于一些重要的参数信息，不应该在URL中显示出来，如：用户登陆时登录名、密码是否被显示出来了</li>
-</ul>
-</li>
-<li>URL参数值篡改<ul>
-<li>修改URL中的数据，看程序是否能识别，对于URL中包含金额参数的，修改金额看是否能够提交成功（可能导致用户把2元金额改成1元金额能提交），还有修改订单号等重要信息看是否会报错</li>
-</ul>
-</li>
-<li><p>URL中参数修改进行XSS注入</p>
-<ul>
-<li><p>XSS的全称是Cross Site Script（跨站点脚本），XSS的原理很简单，即进行脚本注入，URL执行时即把此脚本进行了执行，一般都是JavaScript脚本</p>
-<pre><code>如“http://www.cnblogs.com/javame/index.asp?IDClass=2&amp;ClassName=abc”
-
-改成“http://www.cnblogs.com/javame/index.asp?IDClass=2&amp;ClassName=abc&lt;script&gt;alert(&quot;hello&quot;);&lt;/script&gt;”
-
-看看有没弹出对话框显示hello，有的话就有跨站漏洞
-</code></pre></li>
-</ul>
-</li>
-<li><p>URL参数中进行SQL注入</p>
-<ul>
-<li>SQL注入全称是SQL Injection ，当应用程序使用输入内容来构造动态sql语句以访问数据库时，会发生sql注入攻击，如查询、插入数据时</li>
-<li>测试方法： URL中写入SQL注入语句，看是否被执行<br>如：www.cnblogs.com/javame这个网站中，选择登陆设置用户名为 admin ‘ or ‘1’=’1 密码为任意数字 ，点击登录就可以登陆。一般情况下要进行SQL注入攻击，需要对数据库类型、表名、判断逻辑、查询语句等比较清楚才能够写出有效的SQL注入语句</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>表单提交安全测试</h6><p></p>
-<ul>
-<li>适用范围：有表单提交的地方、有HTTP请求的地方</li>
-<li>测试关注点<ul>
-<li>表单中注入XSS脚本<ul>
-<li>即在表单填写框中直接注入JS脚本如在表单中输入XSS脚本，程序是不应该让脚本执行的</li>
-</ul>
-</li>
-<li>表单中注入SQL 脚本<ul>
-<li>与URL中参数进行XSS注入类似，就是在表单中写入SQL注入脚本提交看是否会有问题</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>Session测试</h6><p></p>
-<ul>
-<li>Session是客户端与服务器端建立的会话，总是放在服务器上的，服务器会为每次会话建立一个sessionId，每个客户会跟一个sessionID对应，并不是关闭浏览器就结束了本次会话，通常是用户执行“退出”操作或者会话超时时才会结束</li>
-<li>测试关注点<ul>
-<li>Session互窜<ul>
-<li>Session互窜即用户A的操作被用户B执行了</li>
-<li>验证Session互窜，其原理还是基于权限控制，如某笔订单只能是A进行操作，或者只能是A才能看到的页面，但是B的session窜进来却能够获得A的订单详情等</li>
-<li>Session互窜方法<ul>
-<li>多TAB浏览器，在两个TAB页中都保留的是用户A的session记录，然后在其中一个TAB页执行退出操作，登陆用户B，此时两个TAB页都是B的session，然后在另一个A的页面执行操作，查看是否能成功。预期结果：有权限控制的操作，B不能执行A页面的操作，应该报错，没有权限控制的操作，B执行了A页面操作后，数据记录是B的而不是A的</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Session超时<ul>
-<li>基于Session原理，需要验证系统session是否有超时机制，还需要验证session超时后功能是否还能继续走下去</li>
-<li>测试方法：<ul>
-<li>打开一个页面，等着10分钟session超时时间到了，然后对页面进行操作，查看效果</li>
-<li>多TAB浏览器，在两个TAB页中都保留的是用户A的session记录，然后在其中一个TAB页执行退出操作，马上在另外一个页面进行要验证的操作，查看是能继续到下一步还是到登录页面</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjtmzvlgh005i60wv1u97layw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjtof2r14002xzgwvbhgydr8n" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -1219,7 +1357,7 @@ f.close()
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/9/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1233,7 +1371,7 @@ f.close()
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -1243,16 +1381,16 @@ f.close()
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15.56px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.78px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.22px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14.44px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1260,9 +1398,17 @@ f.close()
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/03/25/MySQL数据库主从复制/">MySQL数据库主从复制</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/24/清理内存缓存与交换空间/">清理内存缓存与交换空间</a>
+          </li>
         
           <li>
             <a href="/2019/03/23/Nginx转发SSH代理-Stream模块/">Nginx转发SSH代理-Stream模块</a>
@@ -1274,14 +1420,6 @@ f.close()
         
           <li>
             <a href="/2019/03/12/批量添加用户，并设置sudo权限/">批量添加用户，并设置sudo权限</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/12/Centos中同时部署两个以上的Tomcat/">Centos中同时部署两个以上的Tomcat</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/01/安装部署Tomcat9/">安装部署Tomcat9</a>
           </li>
         
       </ul>

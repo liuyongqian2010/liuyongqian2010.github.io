@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,288 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-DML和DQL" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/02/DML和DQL/" class="article-date">
+  <time datetime="2018-03-02T08:50:44.000Z" itemprop="datePublished">2018-03-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/02/DML和DQL/">DML和DQL</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>DML和DQL</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>DML</h6><p></p>
+<ul>
+<li><p>存储引擎</p>
+<ul>
+<li><p>存储引擎的类型：MyISAM、InnoDB、Memory、CSV等9种</p>
+<ul>
+<li>默认InnoDB，支持事务处理、数据行锁定、外键约束，表空间较大</li>
+<li>MyISAM，支持全文索引，表空间较小，以查询访问为主</li>
+<li>查看当前默认存储引擎<code>show variables like &#39;storage_engine%&#39;</code></li>
+<li>可以在配置文件my.ini中修改存储引擎<code>default-storage-engine=?</code></li>
+<li><p>设置表的存储引擎</p>
+<pre><code>create table 表名(
+    省略代码
+)engine=存储引擎
+</code></pre></li>
+</ul>
+</li>
+<li>MyISAM类型表文件<ul>
+<li>*.frm：表结构定义文件</li>
+<li>*.MYD：数据文件</li>
+<li>*.MYI：索引文件</li>
+</ul>
+</li>
+<li>InnoDB类型表文件<ul>
+<li>*.frm：表结构定义文件</li>
+<li>ibdata1文件</li>
+</ul>
+</li>
+<li>存储位置，可查my.ini中的<code>datadir</code></li>
+</ul>
+</li>
+<li><p>DML语句</p>
+<ul>
+<li><p>插入单条数据记录</p>
+<pre><code>insert into 表名(字段1,字段2,字段3...) values(值1,值2,值3...)
+#如果插入所有字段可省略字段名，如果是部分数据，字段名与值需要一一对应
+</code></pre></li>
+<li><p>插入多条数据记录</p>
+<pre><code>insert into 表名(字段1,字段2,字段3...) values(值1,值2,...),(值3,值4,...),(值5,值6,...)
+</code></pre></li>
+<li><p>将查询结果插入新表</p>
+<pre><code>create table 新表(        #自动创建一个新表
+    select 字段1,字段2 from 表名
+)
+</code></pre></li>
+<li><p>更新数据记录</p>
+<pre><code>update 表名 set 字段1=值1,字段2=值2,... where 条件
+</code></pre></li>
+<li><p>删除数据记录</p>
+<pre><code>delete from 表名 where 条件
+truncate table 表名   #该语句删除后将重置自增列，表结构及其字段、约束、索引保持不变，执行速度比delete语句快
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>DQL</h6><p></p>
+<ul>
+<li><p>什么是查询<br>查询产生一个虚拟表，看到的是表形式显示的结果，但结果并不真正存储，每次执行查询只是从数据表中提取数据，并按照表的形式显示出来</p>
+<pre><code>SELECT    &lt;列名|表达式|函数|常量&gt; 
+FROM      &lt;表名&gt; 
+[WHERE    &lt;查询条件表达式&gt;] 
+[ORDER BY &lt;排序的列名&gt;[ASC或DESC]]
+
+select studentNo as &apos;学生编号&apos;,studentName as &apos;学生姓名&apos;
+from student 
+where sex=&apos;男&apos; and gradeID=1 
+order by studentNo desc
+</code></pre></li>
+<li><p>聚合函数</p>
+<pre><code>avg() 返回某字段的平均值
+count()返回某字段的行数
+max()返回某字段的最大值
+min()返回某字段的最小值
+sum()返回某字段的和
+
+select avg(studentResult) from result
+</code></pre></li>
+<li><p>字符串函数</p>
+<pre><code>字符串连接concat(str1,str2,...)
+select CONCAT(&apos;Liu&apos;,&apos;Yong&apos;,&apos;qian&apos;,2018)  #result:LiuYongqian2018
+
+字符串替换insert(str,start,length,newstr)
+select INSERT(&apos;ABCDEFGHIJK&apos;,3,5,&apos;9&apos;)     #result:AB9HIJK
+
+将字符串转为小写lower(str)
+select lower(&apos;LIUYONGQIAN&apos;)                #result:liuyongqian
+
+将字符串转为大写upper(str)
+select upper(&apos;liuyongqian&apos;)                #result:LIUYONGQIAN
+
+字符串截取substring(str,start,length)
+select SUBSTRING(&apos;LiuYongqian&apos;,4,4)      #result:Yong
+</code></pre></li>
+<li><p>时间日期函数</p>
+<pre><code>curdate()获取当前日期
+select curdate()      #result:2018-01-01
+
+curtime() 获取当前时间
+select curtime()      #result:12:12:12
+
+now()获取当前日期和时间
+select now()          #result:2018-03-01 12:44:24
+
+week(date) 返回日期date为一年中的第几周
+select week(now())    #result:2
+
+year(date)返回日期date的年份
+select year(now())     #result:2018
+
+hour(time)返回时间time的小时值
+select hour(now())     #result:19
+
+minute(time)返回时间time的分钟值
+select minute(now())   #result:48
+
+datediff(date1,date2)返回参数之间相隔的天数
+select datediff(now(),&apos;2008-8-8&apos;)  #result:3493
+
+adddate(date，n)计算日期date加上n天后的日期
+select adddate(now(),5)  #result:2018-03-30 19:48:44
+</code></pre></li>
+<li><p>数学函数</p>
+<pre><code>ceil(x)返回大于或等于数值x的最小整数 
+select ceil(2.3)      #result:3
+
+floor(x)返回小于或等于数值x的最大整数
+select floor(2.3)     #result:2
+
+rand()返回0-1之间的随机数
+select rand()         #result:0.8155794216465013
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjtof2qsw0009zgwv7xn88317" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-自动化测试模型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/01/自动化测试模型/" class="article-date">
+  <time datetime="2018-02-28T23:44:01.000Z" itemprop="datePublished">2018-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/01/自动化测试模型/">自动化测试模型</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>自动化测试模型</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>概述</h6><p></p>
+<ul>
+<li>自动化测试模型可以看作自动化测试框架与工具设计的思想。自动化测试不仅仅是单纯写写脚本运行就可以了，还需要考虑到如何使脚本运行效率提高，代码复用、参数化等问题</li>
+<li>自动化测试模型分为四大类：线性模型，模块化驱动测试、数据驱动、关键词驱动</li>
+</ul>
+<p></p><h6>线性模型</h6><p></p>
+<ul>
+<li>线性脚本中每个脚本都相互独立，且不会产生其他依赖与调用，其实就是简单模拟用户某个操作流程的脚本</li>
+</ul>
+<p></p><h6>模块化驱动测试</h6><p></p>
+<ul>
+<li>线性模型虽然每个用例都可以拿出来独立运行，但是用例之间重复代码很多，开发、维护成本高。其实把重复的操作代码封装为独立的公共模块，当用例执行时需要用到这部分，直接调用即可，这就是模块驱动的方式。比如登录系统、退出登录、截图函数等等</li>
+</ul>
+<p></p><h6>数据驱动测试</h6><p></p>
+<ul>
+<li>模块驱动的模型虽然解决了脚本的重复问题，但是需要测试不同数据的用例时，模块驱动的方式就不很适合了。数据驱动就是数据的改变从而驱动自动化测试的执行，最终引起测试结果的改变</li>
+<li><p>装载数据的方式可以是列表、字典或是外部文件（txt、csv、xml、excel），目的就是实现数据和脚本的分离</p>
+<pre><code>#文件名：login.py
+#coding:utf-8
+from selenium import webdriver
+from time import sleep
+class Login():
+    def user_login(self,driver,username,password):
+        driver.find_element_by_name(&apos;username&apos;).clear()
+        driver.find_element_by_name(&apos;username&apos;).send_keys(username)
+        driver.find_element_by_name(&apos;password&apos;).clear()
+        driver.find_element_by_name(&apos;password&apos;).send_keys(password)
+        driver.find_element_by_name(&apos;Submit&apos;).click()
+    def user_logout(self,driver):
+        driver.find_element_by_link_text(&apos;退出&apos;).click()
+        sleep(2)
+        driver.switch_to_alert().accept()
+
+    #模块化与参数化
+    from login import *
+    from time import sleep
+    from selenium import webdriver
+
+    driver=webdriver.Firefox()
+    driver.get(&apos;http://localhost&apos;)
+
+    Login().user_login(driver,&apos;51zxw&apos;,&apos;123456&apos;)
+    sleep(5)
+    Login().user_logout(driver)
+    sleep(5)
+
+    Login().user_login(driver,&apos;52zxw&apos;,&apos;123456&apos;)
+    sleep(5)
+    Login().user_logout(driver)
+    sleep(2)
+
+    driver.quit()
+</code></pre></li>
+</ul>
+<p></p><h6>关键字驱动测试</h6><p></p>
+<ul>
+<li>通过关键字的改变引起测试结果的改变叫关键字驱动测试。 selenium IDE也是一种传统的关键字驱动的自动化工具，Robot Framework 是一个功能更强大的关键字驱动测试框架</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjtof2rcp007mzgwvq6ra78p3" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-Jmeter基础" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -180,7 +462,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjtmzvky0001460wvdqty2jhq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjtof2qxo001yzgwv3pvk7hb5" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -325,7 +607,7 @@ alert table 表名 add constraint 外键名 foreign key (外键字段) reference
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjtmzvled005460wvbe8fbi72" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjtof2r71005azgwv0wu24wze" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -449,7 +731,7 @@ clearInterval取消由setInterval()设置的timeout
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjtmzvkvl000h60wvwohmcqcf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjtof2qw1001azgwvg74iqrod" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -568,7 +850,7 @@ div.appendChild(img)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjtmzvkw0000m60wv0gqxbowh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjtof2quy000wzgwvv174dni8" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -716,7 +998,7 @@ nextSibling      获取下一个兄弟节点
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjtmzvld0004w60wvbbc5mxy5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjtof2r7p005kzgwvm8cwbqra" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -867,7 +1149,7 @@ a()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjtmzvldb004y60wvp4tjc9w3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjtof2r6x0058zgwvibsyu9cc" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1006,7 +1288,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjtmzvlna006o60wvljowo2x1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjtof2rbc0072zgwvjnne747b" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1203,412 +1485,10 @@ print(guodi())
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjtmzvlpt007460wvzeu422kg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjtof2rcf007izgwvldhroih9" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Js对象" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/23/Js对象/" class="article-date">
-  <time datetime="2018-02-23T12:38:06.000Z" itemprop="datePublished">2018-02-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/Js对象/">Js对象</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>JS对象</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>内置对象</h6><p></p>
-<ul>
-<li>内置对象就是ECMAScript标准中已经定义好的，由浏览器厂商已经实现的标准对象！内置对象中封装了专门的数据和操作数据常用的API</li>
-<li>JavaScript中内置对象列表：String、Boolean、Number、Array、Date、RegExp、Math、Error、Function、Object、Global</li>
-</ul>
-<p></p><h6>String对象</h6><p></p>
-<ul>
-<li><p>String对象用于处理文本字符串,JavaScript中字符串的内容都是不可变的</p>
-<pre><code>创建原始类型字符串变量：
-var ename = &apos;Tom&apos;;
-创建引用类型字符串对象：
-var stuName = new String(&apos;Hello World&apos;)
-</code></pre></li>
-<li><p>String对象的所用方法，返回的都是一个全新的对象，而不是修改原始字符串内容</p>
-<pre><code>toLowerCase()方法返回字符串的小写;
-toUpperCase()方法返回字符串的大写;
-charAt()方法用于获取指定下标的字符;
-charCodeAt()方法用于获取指定下标的字符的Unicode码;
-indexOf()返回第一次出现指定子串的下标;
-lastIndexOf()返回最后一次出现指定子串的下标;
-slice(start,[end])返回从start到end-1范围内的子串;
-substring(start,[end])返回从start到end-1范围内的子串;
-split()使用指定分隔符对字符串进行拆分，返回数组
-concat()用于拼接两个或多个字符串
-replace()方法用于在字符串中用一些字符替换特定的字符，或替换一个与正则表达式匹配的子串
-match()方法可在字符串内检索指定的值，或找到一个或多个与正则表达式匹配的子串
-search()方法用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。
-返回第一个与regexp相匹配的子串的起始位置；如果没有找到任何匹配的子串，则返回-1
-
-var str=&quot;老鹰来了&quot;
-var s=&quot;&quot;                          //编码
-function fn1(){
-    for(var i=0;i&lt;str.length;i++){
-            s+=str.charCodeAt(i);
-    }
-    console.log(s)
-}
-fn1()
-function fn2(){                      //解码
-    for(var i=0;i&lt;s.length;i+=5){
-        var n=s.slice(i,i+5);
-        var num=Number(n);
-        var s1=String.fromCharCode(num);
-        console.log(s1)
-    }
-}
-fn2()
-</code></pre></li>
-</ul>
-<p></p><h6>Math对象</h6><p></p>
-<ul>
-<li>Math对象是ECMAScript提供的一个全局对象，它主要封装了一些常用的数学函数和常数<br>Math对象没有构造函数，无法创建它的实例；调用其属性和方法时，直接使用Math对象名即可</li>
-<li><p>Math对象具有如下成员属性：</p>
-<pre><code>E  返回算术常量e，即自然对数的底数（约等于2.718）
-PI 返回圆周率（约等于3.14159）
-</code></pre></li>
-<li><p>Math对象具有如下方法：</p>
-<pre><code>abs(x)   返回数的绝对值
-ceil(x)  对数进行上舍入
-floor(x) 对数进行下舍入
-max(x,y) 返回x和y中的最高值
-min(x,y) 返回x和y中的最低值
-pow(x,y) 返回x的y次幂
-round(x) 把数四舍五入为最接近的整数
-sqrt(x)  返回数的平方根
-</code></pre></li>
-<li><p>随机数</p>
-<pre><code>console.log(Math.random())//0-1之间的随机数，不包括1
-console.log(Math.random()*100)//0-99随机整数
-console.log(Math.random()*90+10)//10-99之间的随机整数
-</code></pre></li>
-</ul>
-<p></p><h6>Date对象</h6><p></p>
-<ul>
-<li><p>Date对象用于对时期和时间进行存储和计算</p>
-<pre><code>var date=new Date()
-date.getDate()            //日期
-date.getMonth()           //月份0-11
-date.getMinutes()        //分钟
-date.getSeconds()        //秒
-date.getMilliseconds()    //毫秒
-date.getHours()            //小时
-
-date.toString()                //返回Date对象的字符串形式
-date.toLocaleString()        //基于本地时间格式，返回Date对象的字符串形式
-date.toLocaleTimeString()    //基于本地时间格式返回Date对象“时间”部分（时分秒）的字符串形式
-date.toGMTString()            //基于GMT时间格式，返回Date对象的字符串形式
-date.toUTCString()            //基于UTC时间格式，返回Date对象的字符串形式
-</code></pre></li>
-</ul>
-<p></p><h6>Number对象</h6><p></p>
-<ul>
-<li><p>Number对象表示数值数据和数字常数，主要用于对数字进行指定格式的输出</p>
-<pre><code>//构造新的Number对象----引用类型的变量
-var num1 = new Number(5);         //[Number:5]
-var num2 = new Number(“5”)        //[Number:5]
-var num3 = new Number(“hello”)    //[Number:NaN]
-//将数据转换为Number数据类型-----值类型的变量
-var num4 = Number(“123”);         //123
-</code></pre></li>
-</ul>
-<p></p><h6>Error对象</h6><p></p>
-<ul>
-<li><p>六种错误对象：</p>
-<pre><code>1、Error：  广泛意义上的错误
-2、SyntaxError： 语法错误      var x = 10; x+++;
-3、ReferenceError:  引用错误     var userName = &apos;tom&apos;;  console.log(uName);
-4、TypeError:  类型错误     console.abc();
-5、EvalError:  eval()函数执行错误    
-6、RangeError：范围错误     var n = 123.456;    console.log( n.toFixed(20) );
-7、URIError:  URI解析错误
-</code></pre></li>
-<li><p>try/catch<br><br>ECMAScript中使用try…catch…finally…结构来执行异常处理功能，捕捉由系统生成或程序创建并抛出的Error对象，对错误情形加以处理。它的基本语法如下：</p>
-<pre><code>try{
-     //此处是主业务功能代码
-     //主业务功能代码中肯能产生并抛出错误
-}catch(error){
-     //此处是负责错误处理的代码
-}[finally{
-     //此处是出口语句，不论错误发生与否都要执行
-}]
-</code></pre></li>
-</ul>
-<p></p><h6>Function对象</h6><p></p>
-<ul>
-<li><p>在JavaScript中，函数也是以对象的形式存在的。每个函数都是一个Function对象实例</p>
-<pre><code>function add(){
-}
-console.log(typeof add);      //function 
-//函数名，本质也是一个变量名，是指向某个Function对象的引用
-</code></pre></li>
-</ul>
-<p></p><h6>arguments对象</h6><p></p>
-<ul>
-<li>每个函数对象都有一个arguments属性；此属性只能在函数执行体内使用<br>arguments属性中保存着当前函数接受到的所有实际参数，故可以使用arguments属性处理可变数量的参数</li>
-<li><p>arguments对象具有如下属性：</p>
-<pre><code>length：返回实际传入的参数的个数
-callee：返回当前函数的引用
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cjtmzvky5001660wv6vbg5knz" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Js数组、正则" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/23/Js数组、正则/" class="article-date">
-  <time datetime="2018-02-23T12:37:41.000Z" itemprop="datePublished">2018-02-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/Js数组、正则/">Js数组、正则</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>数组、二维数组、正则表达</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>数组</h6><p></p>
-<ul>
-<li><p>什么是数组</p>
-<ul>
-<li>多个元素组成的集合；可以通过元素所在位置的顺序号（下标）做标识来访问每一个元素（下标从0开始，最大到元素的个数-1）</li>
-<li><p>数组中的元素可以在定义时初始化</p>
-<pre><code>var arr1=[1,2,3];
-var arr2=new Array(&apos;苹果&apos;,&apos;橘子&apos;,&apos;西瓜&apos;)
-</code></pre></li>
-</ul>
-</li>
-<li><p>数组是引用类型的对象</p>
-<ul>
-<li><p>引用类型：数据保存在堆中，栈中只有内存的编号，要通过此编号到堆中查找真正的数据，如：</p>
-<pre><code>var arr=new Array(&apos;北京&apos;,&apos;哈尔滨&apos;);
-</code></pre></li>
-<li><p>值类型：保存在栈中，速度快</p>
-<pre><code>var n=100;
-</code></pre></li>
-<li><p>js中的对象，保存了相关的数据和对数据的常用操作方法,对象都是用new关键字创建的。(new专门用于在内存中开辟一块储存空间，然后返回存储空间的地址,使用new创建出的都是引用类型的对象。)</p>
-</li>
-<li><p>null与undefined：</p>
-<pre><code>共同点：都是原始类型，保存在栈中变量本地
-不同点：
-undefined：表示变量声明过但未赋值。是所有未赋值变量的默认值。一般不主动使用。例如 var a; //a被自动赋值为undefined
-null：表示一个变量将来可能指向一个对象，但目前暂时什么都没指向。一般用于主动释放指向对象的引用。
-例如：var emps =[“Tom”,”Marray”];
- emps=null;//释放指向数组的引用，清空掉栈中的编号，对中的数据没人用，被回收
-</code></pre></li>
-<li><p>使用length属性获取数组中元素的个数，既数组的长度</p>
-</li>
-</ul>
-</li>
-<li><p>遍历数组元素</p>
-<ul>
-<li><p>遍历数组元素，通过选择for循环语句，元素的下标做循环变量</p>
-<pre><code>var arr1 = [10,20,30,40];
-for(var i = 0 ; i&lt;arr1.length ; i++){
-    console.log(arr1[i]);
-}
-#for...in遍历数组
-var nums = [10,21,32,24];
-for(var i  in  nums ){
-    console.log(nums[i]);
-}
-</code></pre></li>
-</ul>
-</li>
-<li><p>数组的常用方法</p>
-<pre><code>toString()把数组转换成字符串
-toLocaleString()把数组转换成本地字符串
-join(拼接参数)返回一个拼接的字符串
-concat(arr)拼接多个数组
-splice(start,count,e1,e2,……)从数组删除部分元素，添加部分元素；返回被删除的项目,start为起始位置，count为删除数
-slice(start,end)返回现有数组的一个子数组，2为起始位置，4为结束位置但不包括该位置
-indexOf(a,b)查询数据第一次出现的位置，即下标；a为查询数据，b为查询范围
-lastIndexOf()查询最后一次出现的位置
-reverse()颠倒数组中元素的顺序
-sort()默认按照数值的第一位数进行由小到大排序
-unshift(x)在数组头部添加新的元素，并返回新的长度
-shift()删除并返回数组头部的元素
-push(x)在数组尾部添加新的元素，并返回新的长度
-pop()删除并返回数组尾部的元素
-</code></pre></li>
-</ul>
-<p></p><h6>二维数组</h6><p></p>
-<ul>
-<li>从整体上来看，是一个数组，只是其中的每个元素又是一个数组，既数组的数组</li>
-<li>遍历二维数组中的每一个元素—-循环嵌套<pre><code>var arr=[[1,2,3],[4,5,6],[7,8,9]]
-for (var i = 0; i &lt; arr.length; i++) {
-    for (var j = 0; j &lt; arr[i].length; j++) {
-        document.write(arr[i][j]+&quot;&amp;nbsp;&quot;);
-    }
-    document.write(&quot;&lt;br/&gt;&quot;);
-}
-</code></pre></li>
-</ul>
-<p></p><h6>正则表达</h6><p></p>
-<ul>
-<li>正则表达式常用于在一段文本中搜索、匹配或替换特定形式的文本。如：词语出现频率统计、验证字符串是否符合邮箱格式、屏蔽一篇帖子中的限制性词语等</li>
-<li><p>正则表达式使用如下语法匹配一个范围内的字符</p>
-<pre><code>[abc]  匹配指定集合内的任一个字符
-[^abc] 匹配不在指定集合内的任一个字符
-[0-9]  匹配任一个数字
-[a-z]  匹配任一个小写字符
-[A-Z]  匹配任一个大写字符
-[A-z]  匹配大写A到小写z的所有字符
-</code></pre></li>
-<li><p>正则表达式中可以使用如下元字符引用来进行简化</p>
-<pre><code>\d    匹配一个数字
-\D    匹配一个非数字
-.     匹配除了回车和换行外的任何单个字符
-\s    匹配一个空白符
-\S    匹配一个非空白符
-</code></pre></li>
-<li><p>正则表达式中可以使用如下特殊字符定义字符的出现频次–量词元字符</p>
-<pre><code>n?     匹配零次或一次字符n
-n*     匹配零次或多次字符n
-n+     匹配一次或多次字符n
-n{x}   匹配字符n出现x次
-n{x,y} 匹配字符n出现x到y次
-n{x,}  匹配字符n的出现次数&gt;=x次
-</code></pre></li>
-<li><p>正则表达式使用如下语法定义子表达式 分组或选择</p>
-<pre><code>exp1|exp2   使用|进行条件选择
-(exp1)   使用()指定分组--每个分组自动获得分组号如：1、2、3、的分组号
-
-&lt;script&gt;
-    var str1=&apos;三原色：red yellow green&apos;;
-    document.write(str1)
-    document.write(&apos;&lt;hr/&gt;&apos;)
-    var reg=/(red|yellow|green)/g;
-    str2=str1.replace(reg,&apos;&lt;span style=&quot;color:$1&quot;&gt;$1&lt;/span&gt;&apos;)
-    document.write(str2)
-&lt;/script&gt;
-
-&lt;script&gt;
-    var student=&apos;a1234&apos;;
-    var reg4=/([abc])(\d{4})/;
-    console.log(reg4.test(student));    //result：true  
-    console.log(RegExp.$1)              //result：a
-    console.log(RegExp.$2)              //result：1234
-&lt;/script&gt;
-</code></pre></li>
-<li><p>可以使用如下字符进行指定位置的匹配</p>
-<pre><code>^   匹配字符串的开头           $  匹配字符串的结尾
-\b  匹配单词的边界            \B  匹配单词的非边界
-?=x 匹配其后紧接x的字符串     ?!x  匹配其后没有紧接x的字符串
-</code></pre></li>
-<li><p>RegExp对象具有如下方法</p>
-<pre><code>compile()   重新编译正则表达式，加快执行速度
-exec()      检索字符串中指定的值。返回找到的值，并确定其位置
-test()         检索字符串中指定的值。返回true或false
-</code></pre></li>
-<li><p>小练习</p>
-<pre><code>&lt;body&gt;
-    账号：&lt;input type=&quot;text&quot;/&gt;
-      &lt;button onclick=&quot;fn1()&quot;&gt;验证&lt;/button&gt;&lt;span&gt;&lt;/span&gt;
-    &lt;script&gt;
-        var regex=/asd/;
-        function fn1(){
-            var inp=document.getElementsByTagName(&apos;input&apos;)[0];
-            var span=document.getElementsByTagName(&apos;span&apos;)[0];
-            if (regex.test(inp.value))
-            {
-                span.innerHTML=&quot;通过&quot;
-            }else{
-                span.innerHTML=&quot;&lt;font color=&apos;red&apos;&gt;输入有误！&lt;/font&gt;&quot;
-            }
-        }
-
-        //手机验证
-        var tel1=&apos;18841845636&apos;
-        var reg2=/^1[34578][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/; 
-        /*
-        reg2=/^1[34578]\d\d\d\d\d\d\d\d\d\d$/
-        */
-        /*
-        reg2=/^1[34578]\d{9}$/
-        */
-        console.log(reg2.test(tel1))
-
-        //邮箱验证
-        var email=&apos;bnsj5116156@163.com&apos;; 
-        var reg3=/^.{6,18}@163\.com$/;
-        console.log(reg3.test(email))
-    &lt;/script&gt;
-&lt;/body&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js数组、正则/" data-id="cjtmzvl02001s60wvhbo4voo5" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
 
     </footer>
   </div>
@@ -1623,7 +1503,7 @@ test()         检索字符串中指定的值。返回true或false
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/9/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/11/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/11/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1637,7 +1517,7 @@ test()         检索字符串中指定的值。返回true或false
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">20</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -1647,16 +1527,16 @@ test()         检索字符串中指定的值。返回true或false
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15.56px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.78px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12.22px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14.44px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1664,9 +1544,17 @@ test()         检索字符串中指定的值。返回true或false
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/03/25/MySQL数据库主从复制/">MySQL数据库主从复制</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/24/清理内存缓存与交换空间/">清理内存缓存与交换空间</a>
+          </li>
         
           <li>
             <a href="/2019/03/23/Nginx转发SSH代理-Stream模块/">Nginx转发SSH代理-Stream模块</a>
@@ -1678,14 +1566,6 @@ test()         检索字符串中指定的值。返回true或false
         
           <li>
             <a href="/2019/03/12/批量添加用户，并设置sudo权限/">批量添加用户，并设置sudo权限</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/12/Centos中同时部署两个以上的Tomcat/">Centos中同时部署两个以上的Tomcat</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/01/安装部署Tomcat9/">安装部署Tomcat9</a>
           </li>
         
       </ul>
