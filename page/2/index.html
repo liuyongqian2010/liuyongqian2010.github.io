@@ -70,6 +70,107 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-安装部署Nginx" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/01/安装部署Nginx/" class="article-date">
+  <time datetime="2019-03-01T09:58:30.000Z" itemprop="datePublished">2019-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/01/安装部署Nginx/">安装部署Nginx</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>安装部署Nginx</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>依赖安装包</h6><p></p>
+<ul>
+<li><p>nginx编译依赖gcc环境</p>
+<pre><code>yum install gcc-c++
+</code></pre></li>
+<li><p>nginx的http模块使用pcre来解析正则表达式</p>
+<pre><code>yum install -y pcre pcre-devel
+</code></pre></li>
+<li><p>nginx使用zlib对http包的内容进行gzip</p>
+<pre><code>yum install -y zlib zlib-devel
+</code></pre></li>
+<li><p>nginx需要一个强大的安全套接字层密码库</p>
+<pre><code>yum install -y openssl openssl-devel
+</code></pre></li>
+</ul>
+<p></p><h6>目前版本</h6><p></p>
+<ul>
+<li>目前版本：nginx-1.14.2</li>
+</ul>
+<p></p><h6>安装步骤</h6><p></p>
+<ul>
+<li><p>1.将安装包放置在/usr/local下并解压：</p>
+<pre><code>tar -zvxf nginx-1.14.2.tar.gz
+</code></pre></li>
+<li><p>2.进入解压后的文件夹内执行如下配置编译命令：</p>
+<pre><code>cd nginx-1.14.2
+如果使用Nginx1.9之后的stream模块的话，执行：
+./configure --with-stream
+不需要的话，执行：
+./configure
+</code></pre></li>
+<li><p>3.编译安装，分别执行：</p>
+<pre><code>make
+make install
+</code></pre></li>
+</ul>
+<p></p><h6>启动停止nginx</h6><p></p>
+<ul>
+<li><p>查询</p>
+<pre><code>ps aux|grep nginx
+</code></pre></li>
+<li><p>启动</p>
+<pre><code>cd /usr/local/nginx/sbin/后执行：
+./nginx
+</code></pre></li>
+<li><p>待nginx进程处理任务完毕进行停止</p>
+<pre><code>./nginx -s quit
+</code></pre></li>
+<li><p>先查出nginx进程id再使用kill命令强制杀掉进程</p>
+<pre><code>./nginx -s stop
+</code></pre></li>
+<li><p>如果nginx.conf 修改后需要重启nginx使用</p>
+<pre><code>./nginx -s reload
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Nginx/" data-id="cjtpvb95o007mtswvxpc5et9f" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-安装部署mysql5.7" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/03/01/安装部署mysql5.7/" class="article-date">
@@ -231,7 +332,7 @@ export MYSQL_HOME PATH
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署mysql5.7/" data-id="cjtof2r940066zgwvt77rrzan" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署mysql5.7/" data-id="cjtpvb91w005stswv15t278f7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -306,7 +407,7 @@ java -version
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/linux中部署JDK1.8/" data-id="cjtof2r3x0042zgwv9pzkv99e" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/linux中部署JDK1.8/" data-id="cjtpvb8yc004atswv06npclfd" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -375,7 +476,7 @@ ONBOOT=yes
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/linux网络ip配置/" data-id="cjtof2r30003ozgwvsq0u3361" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/linux网络ip配置/" data-id="cjtpvb8wf003itswvq6ifr6x6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -457,7 +558,7 @@ date 061814162014.30（2014年6月18日14点16分30-MMDDhhmmYYYY.ss）
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/11/时间设置与配置查询/" data-id="cjtof2rac006ozgwvxi1hfwl6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/01/11/时间设置与配置查询/" data-id="cjtpvb93b006gtswv6ryfrea8" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -565,7 +666,7 @@ net.netfilter.nf_conntrack_tcp_timeout_fin_wait = 120
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/11/linux系统常见优化配置01/" data-id="cjtof2r3n003yzgwvvsmkm5xq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/01/11/linux系统常见优化配置01/" data-id="cjtpvb8x7003utswvpnssoble" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -680,7 +781,7 @@ flush privileges;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/12/mysql数据库安装/" data-id="cjtof2r3j003wzgwvel7i0ekt" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/12/12/mysql数据库安装/" data-id="cjtpvb8x2003stswvk2ectn4t" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -801,7 +902,7 @@ b.重启防火墙：firewall-cmd --reload
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/30/测试过程中遇到的问题/" data-id="cjtof2rau006uzgwvrx9kwcex" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/11/30/测试过程中遇到的问题/" data-id="cjtpvb93o006mtswv8bv71fft" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -865,7 +966,7 @@ id mysql              #查看
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/" data-id="cjtof2qry0001zgwva1f61l2y" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/" data-id="cjtpvb8nc0003tswvwetd3pxo" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -943,67 +1044,10 @@ rm /etc/my.cnf
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/15/CentOS下彻底删除MySQL-删除系统自带的MySQL程序/" data-id="cjtof2qt3000bzgwvl56cx8pr" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/11/15/CentOS下彻底删除MySQL-删除系统自带的MySQL程序/" data-id="cjtpvb8qg000ytswvwntrcnaq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Linu系统连接外网" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/11/15/Linu系统连接外网/" class="article-date">
-  <time datetime="2018-11-15T02:57:12.000Z" itemprop="datePublished">2018-11-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/15/Linu系统连接外网/">Linu系统连接外网</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Linux设置外网连接</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>1.设置主要网卡信息</h6><br>找到网卡地址文件，修改网卡信息、DNS服务信息，命令为<code>vi /etc/sysconfig/network-scripts/ifcfg-eth32</code>，注意eth32为第一块网卡地址，每台电脑的网卡地址文件不一样的哦<p></p>
-<pre><code>DEVICE=eth0                  #物理设备名
-IPADDR=192.168.110.X         #设置为IP地址（此处用于静态IP，如果是动态分配则不用设置）
-NETMASK=255.255.255.0        #掩码
-GATEWAY=192.168.110.1        #网关地址（请根据具体情况设置，如子网为192.168.110.X，一般网关为192.168.110.1）
-ONBOOT=yes
-BOOTPROTO=static             #静态分配，如果是动态选择dhcp,如果是BOOTP选用bootp，如果是不使用协议选择none
-DNS1=202.106.0.20            #可以在网卡信息中设置DNS服务地址
-</code></pre><p></p><h6>2.修改DNS</h6><br>输入命令：<code>vi /etc/resolv.conf</code><p></p>
-<pre><code>nameserver 202.106.0.20        #主DNS
-</code></pre><p></p><h6>3.查看服务器的DNS</h6><br>输入命令:<code>cat /etc/resolv.conf</code><p></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/15/Linu系统连接外网/" data-id="cjtof2qwd001fzgwv8cashry4" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
 
     </footer>
   </div>
@@ -1032,7 +1076,7 @@ DNS1=202.106.0.20            #可以在网卡信息中设置DNS服务地址
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -1042,7 +1086,7 @@ DNS1=202.106.0.20            #可以在网卡信息中设置DNS服务地址
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14px;">软件工具</a>
     </div>
   </div>
 
@@ -1051,7 +1095,7 @@ DNS1=202.106.0.20            #可以在网卡信息中设置DNS服务地址
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1062,6 +1106,10 @@ DNS1=202.106.0.20            #可以在网卡信息中设置DNS服务地址
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
+          </li>
         
           <li>
             <a href="/2019/03/25/MySQL数据库主从复制/">MySQL数据库主从复制</a>
@@ -1077,10 +1125,6 @@ DNS1=202.106.0.20            #可以在网卡信息中设置DNS服务地址
         
           <li>
             <a href="/2019/03/20/tomcat使用apr模式运行/">tomcat使用apr模式运行</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/12/批量添加用户，并设置sudo权限/">批量添加用户，并设置sudo权限</a>
           </li>
         
       </ul>

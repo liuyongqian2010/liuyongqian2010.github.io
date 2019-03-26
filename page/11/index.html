@@ -70,6 +70,203 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-闭包、装饰、冒泡" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/24/闭包、装饰、冒泡/" class="article-date">
+  <time datetime="2018-02-24T07:19:11.000Z" itemprop="datePublished">2018-02-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/24/闭包、装饰、冒泡/">闭包、装饰、冒泡</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>闭包、装饰、冒泡</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>冒泡</h6><p></p>
+<ul>
+<li><p>执行机制：两两相比，外侧循环n-1,控制比较多少轮;内侧循环n-1-i，控制每轮比较多少次</p>
+<pre><code>m=[3,4,5,1,2,6]            #升序
+for i in range(len(m)-1):
+    for j in range(len(m)-1-i):
+        if m[j]&gt;m[j+1]:
+            m[j],m[j+1]=m[j+1],m[j]
+            &apos;&apos;&apos;
+            n=m[j]
+            m[j]=m[j+1]
+            m[j+1]=n
+            &apos;&apos;&apos;
+&apos;&apos;&apos;
+for i in range(len(m)):     #插入数据不改变排列顺序
+    if m[i]&gt;3:
+        m.insert(i,7)
+        break
+&apos;&apos;&apos;        
+print(m)                    #result:[1, 2, 3, 4, 5, 6]
+</code></pre></li>
+</ul>
+<p></p><h6>闭包</h6><p></p>
+<ul>
+<li>如果在一个内部函数里，对在外部作用域（但不是在全局作用域）的变量进行引用，那么内部函数就被认为是闭包（closure）。一个闭包就是你调用了一个函数A，这个函数A返回了一个函数B给你。这个返回的函数B就叫做闭包</li>
+<li><p>构成闭包的三个条件：</p>
+<ul>
+<li>1.必须有一个内嵌函数</li>
+<li>2.内嵌函数必须引用一个定义在闭合范围外的变量，内部函数引用外部变量但非全局变量</li>
+<li><p>3.外部函数必须返回内嵌函数</p>
+<pre><code>def A():
+    num = 10
+    def B():
+        nonlocal num        # nonlocal 声明变量位置是闭包
+        num = num + 5
+        return 39
+    return B                #函数名后边加小括号的是立即调用，不带小括号的是引用，还没有执行
+A()
+print(A)                    #result:&lt;function A at 0x000001D42CA47F28&gt;
+print(A().__name__)         #result:B
+print(A()())                #result:39
+
+def funcx(x):
+    def funcy(y):
+        return x*y
+    return funcy
+m=funcx(3)
+n1=m(9)
+n2=m(6)
+print(n1)                    #result:27
+print(n2)                    #result:18
+
+def test(a,b,fun):
+    return fun(a,b)
+func=input(&apos;请输入一个函数：&apos;) #lambda a,b:a+b
+m=test(3,9,eval(func))       #eval函数将字符串当成有效python表达式来求值，并返回计算结果
+print(m)                     #result:12
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>装饰器</h6><p></p>
+<ul>
+<li><p>装饰器函数传入被装饰函数，返回内层函数，就是闭包函数，它起到装饰给定函数的作用</p>
+<pre><code>def outter(fun):             #成为装饰器必须有一个参数
+    def inner():
+        print(&apos;I Like You!&apos;)
+        fun()                #有这个，被装饰的函数才会执行
+    return inner
+
+@outter
+def index():
+    print(&apos;I Hate You!&apos;)
+index()                      #result:I Like You!     I Hate You!
+
+def coat(fun):
+    print(&apos;穿上衣服&apos;)
+    return fun
+def bag(fun):
+    print(&apos;带着书包&apos;)
+    return fun
+def bybus(fun):
+    print(&apos;坐着校车&apos;)
+    return fun
+@bybus
+@bag                          #靠近函数的装饰器最先执行，从下往上执行
+@coat                         #student函数和print打包作为参数传给装饰器bag，以此类推
+def student():
+    print(&apos;学生去上课！&apos;)
+student()                     #result:穿上衣服 带着书包 坐着校车 学生去上课！
+
+#火锅店
+def yangrou(fun):
+    sum=30+fun()
+    print(&apos;肥羊肉&apos;)
+    return sum
+def zhangliao(fun):
+    print(&apos;芝麻酱&apos;)
+    return 5+fun
+
+@zhangliao
+@yangrou
+def guodi():
+    print(&apos;微辣底料&apos;)
+    return 12
+print(guodi)
+
+#火锅店变形
+import types
+def yangrou(fun):
+    sum=0
+    if type(fun)==types.FunctionType:
+        sum=30+fun()
+    else:
+        sum=30+fun
+    print(&apos;肥羊肉&apos;)
+    return sum
+def zhangliao(fun):
+    sum = 0
+    if type(fun) == types.FunctionType:
+        sum =5 + fun()
+    else:
+        sum =5 + fun
+    print(&apos;芝麻酱&apos;)
+    return sum
+@zhangliao
+@yangrou
+def guodi():
+    print(&apos;微辣底料&apos;)
+    return 12
+print(guodi)
+
+#火锅店变形
+def yangrou(fun):
+    def caidan1():
+        print(&apos;肥羊肉&apos;)
+        return 30+fun()
+    return caidan1
+def zhangliao(fun):
+    def caidan3():
+        print(&apos;芝麻酱&apos;)
+        return 5+fun()
+    return caidan3
+@zhangliao
+@yangrou
+def guodi():
+    print(&apos;微辣底料&apos;)
+    return 12
+print(guodi())
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjtpvb94z007atswvfqv5ib9s" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-Js对象" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/02/23/Js对象/" class="article-date">
@@ -242,7 +439,7 @@ callee：返回当前函数的引用
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cjtof2qvu0017zgwvd4pfeb7c" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cjtpvb8sl001stswv6k92ptou" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -458,7 +655,7 @@ test()         检索字符串中指定的值。返回true或false
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js数组、正则/" data-id="cjtof2qzq002ezgwvy1nu9cda" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/Js数组、正则/" data-id="cjtpvb8rs001ftswv8f94pj69" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -612,7 +809,7 @@ while(i&lt;10){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js基础、函数、循环/" data-id="cjtof2qvp0015zgwv7784aaxz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/Js基础、函数、循环/" data-id="cjtpvb8rm001dtswvift3ddee" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -818,7 +1015,7 @@ background-color：颜色参数
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/21/CSS全析/" data-id="cjtof2qsi0005zgwvszqrjosq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/21/CSS全析/" data-id="cjtpvb8ns0008tswvnz718vow" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -997,7 +1194,7 @@ void    不显示表格边框
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/21/表格、表单/" data-id="cjtof2rbh0074zgwvgbzyox6s" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/21/表格、表单/" data-id="cjtpvb94s0076tswvb8wlciey" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1241,7 +1438,7 @@ align            等于left right center top middle bottom
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/21/标签、链接、列表、框架/" data-id="cjtof2rai006qzgwv9u3zevey" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/21/标签、链接、列表、框架/" data-id="cjtpvb948006wtswvzyase4r0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1382,7 +1579,7 @@ print(m)                        #result:[[1, 2, 3], [2, 4, 5], [3, 6, 7], [4, 8,
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/05/推导/" data-id="cjtof2ra7006mzgwvs2hc1rpb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/05/推导/" data-id="cjtpvb92t0068tswvcjyj5na9" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1486,7 +1683,7 @@ print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/随机数Random/" data-id="cjtof2rcy007qzgwvgv706rop" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/随机数Random/" data-id="cjtpvb960007stswvo4nvm5oy" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1673,166 +1870,7 @@ logobj = Logger(&apos;008&apos;,logging.ERROR,logging.DEBUG)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/日志Logging/" data-id="cjtof2rb4006yzgwvkgfirg70" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-迭代器、生成器、异常" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/01/迭代器、生成器、异常/" class="article-date">
-  <time datetime="2018-02-01T13:05:40.000Z" itemprop="datePublished">2018-02-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/01/迭代器、生成器、异常/">迭代器、生成器、异常</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>迭代器、生成器、异常</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>初识迭代器</h6><p></p>
-<ul>
-<li><p>容器，是一种把多个元素组织在一起的数据结构，容器中的元素可以逐个的迭代获取，可以用in，not in关键字判断元素是否包含在容器中<br>通常这类数据结构把所有的元素存储在内存中（也有特例，并不是所有的元素都放在内存中，比如迭代器、生成器对象）<br>在Python中，常见的容器对象有：list、set、dict、tuple、str、file、sockets等，这些对象都可以看作是容器，容器都可以迭代，因此它们被称为可迭代对象</p>
-<pre><code>m=(&apos;a&apos;,1,2,&apos;b&apos;)        #询问某元素是否在元组中，这个元组可以认为是一个容器
-print(&apos;a&apos; in m)        #result:True
-</code></pre></li>
-<li><p>可迭代对象，可直接作用于for循环的对象统称为可迭代对象，即iterable。可迭代对象实现了__iter__方法，该方法返回一个迭代器对象</p>
-</li>
-<li><p>迭代器，被next()函数调用并不断返回下一个值（直到没有数据时抛出StopIteration错误）的对象称为迭代器，即iterator<br>迭代器内部持有一个状态，该状态用于记录当前迭代所在的位置，以便下次迭代时获取正确的元素</p>
-<pre><code>m=[1,2,3]            #m为可迭代对象
-print(type(m))       #result:&lt;class &apos;list&apos;&gt;
-m=iter(m)            #iter(可迭代对象)，将可迭代对象转换成迭代器
-n=iter(m)            #m与n是两个独立的迭代器，每转换一次就生成一次迭代器
-print(type(m))       #result:&lt;class &apos;list_iterator&apos;&gt;
-print(next(m))       #result:1
-print(next(m))       #result:2  两个next()之间可以增加其他逻辑，但不会影响迭代器输出结果
-</code></pre></li>
-</ul>
-<p></p><h6>详细了解迭代器</h6><p></p>
-<ul>
-<li>它是一个带状态的对象，它能在你调用next()方法的时候返回容器中的下一个值，任何实现了__iter__和__next__()方法的对象都是迭代器<br>__iter__返回迭代器自身，__next__返回容器中的下一个值，如果容器中没有更多的值，则抛出StopIteration异常<br>迭代器就是实现了工厂模式的对象，它在你每次你询问要下一个值的时候给你返回</li>
-<li><p>自己创建一个迭代器，以斐波那契数列为例</p>
-<pre><code>#第一个版本，复用性较差
-def Fibo(max):          #输出斐波那契数列前N个数
-    n,a,b=0,0,1
-    while n&lt;max:
-        print(b)
-        a,b=b,a+b
-        n+=1
-Fibo(5)                 #result:1  1  2  3  5
-
-#第二个版本，要提高复用性最好不要直接打印出数列，而是返回一个数列
-def Fibo(max):
-    n,a,b=0,0,1
-    L=[]
-    while n&lt;max:
-        L.append(b)
-        a,b=b,a+b
-        n+=1
-    return L           #返回一个数列
-for i in Fibo(5):
-    print(i)           #result:1  1  2  3  5
-#第三个版本，返回数列能满足复用性的需求，但是运行时占用的内存会随着参数max的增大而增大，如果要控制内存占用，最好不要用List来保存中间结果，而是通过iterable对象来迭代
-
-class Fibo(object):
-    def __init__(self,max):
-        self.max=max
-        self.n,self.a,self.b=0,0,1
-    def __iter__(self):
-        return self
-    def __next__(self):
-        if self.n&lt;self.max:
-            r=self.b
-            self.a,self.b=self.b,self.a+self.b
-            self.n+=1
-            return r
-        raise StopIteration()
-f=Fibo(5)
-for i in f:
-    print(i)            #result:1  1  2  3  5
-</code></pre></li>
-<li><p>生成器（generator）<br>生成器是一种特殊的迭代器，不需要写__iter__()和__next__()方法，只需要一个关键字yield<br>任何生成器都是以一种懒加载的模式生成值</p>
-<pre><code>#第四个版本，如果既要简洁，又要获得iterable的效果，yield就派上用场了
-def Fibo(max):
-    n,a,b=0,0,1
-    while n&lt;max:
-        yield b         #使用yield返回值
-        a,b=b,a+b
-        n+=1
-f = Fibo(5)
-for i in f:
-    print(i)            # result:1  1  2  3  5
-</code></pre></li>
-</ul>
-<p></p><h6>异常</h6><p></p>
-<ul>
-<li><p>异常：运行时异常，编译时异常，逻辑错误</p>
-<pre><code>#运行时异常
-a=100
-c=0
-try:                            #有可能发生异常的代码
-    b=int(input(&apos;请输入除数:&apos;))
-    c=a/b
-    print(c)   
-except ZeroDivisionError as m:  #Exception（异常类型1，异常类型2），常见的有ZeroDivisionError、ValueError
-    print(m)                    #捕获并处理异常   #result:如果除数为0，则抛出division by zero
-except ValueError as n:
-    print(n)                    #result:如果除数为字符，则抛出invalid literal for int()
-except Exception as p:
-    print(p)
-else:                           #没有异常才会执行的代码
-    print(&apos;程序正常执行!&apos;)
-finally:                        #最终要执行的代码，释放资源的作用
-    try:                        #异常可以嵌套
-        del a,b,c
-    except Exception as q:
-        print(q)
-    print(&apos;程序最终执行完成!&apos;)
-
-#自定义异常
-class SexException(Exception):
-    pass
-def inputSex():
-    sex=input(&apos;请输入性别:&apos;)
-    if sex!=&apos;男&apos; and sex!=&apos;女&apos;:
-        raise SexException(&apos;性别只能是男或者女&apos;)
-    print(&apos;输入的性别为&apos;,sex)
-try:
-    inputSex()
-except SexException as m:
-    print(m)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/01/迭代器、生成器、异常/" data-id="cjtof2rcs007ozgwvotwo5n65" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/日志Logging/" data-id="cjtpvb931006ctswvsdltyrrr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1864,7 +1902,7 @@ except SexException as m:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -1874,7 +1912,7 @@ except SexException as m:
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14px;">软件工具</a>
     </div>
   </div>
 
@@ -1883,7 +1921,7 @@ except SexException as m:
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1894,6 +1932,10 @@ except SexException as m:
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
+          </li>
         
           <li>
             <a href="/2019/03/25/MySQL数据库主从复制/">MySQL数据库主从复制</a>
@@ -1909,10 +1951,6 @@ except SexException as m:
         
           <li>
             <a href="/2019/03/20/tomcat使用apr模式运行/">tomcat使用apr模式运行</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/12/批量添加用户，并设置sudo权限/">批量添加用户，并设置sudo权限</a>
           </li>
         
       </ul>

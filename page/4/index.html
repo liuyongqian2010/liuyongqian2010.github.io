@@ -70,6 +70,228 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-大数据的一些函数-02" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/24/大数据的一些函数-02/" class="article-date">
+  <time datetime="2018-04-24T14:51:09.000Z" itemprop="datePublished">2018-04-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>大数据的一些函数-02</h5><p></p>
+<hr>
+<hr>
+<ul>
+<li><p>parallelize</p>
+<pre><code>from pyspark import SparkContext,SparkConf
+
+conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+#用 python list 初始化
+data =[1,2,3,4,5,6,7,8,9]
+rdd = sc.parallelize(data,numSlices=4)       #parallelize并行化数据，转化为RDD;numSlices为分块数目，根据集群数进行分块
+print(rdd.collect())             #collect返回RDD所有元素
+print(rdd.getNumPartitions())    #返回分块数
+print(rdd.glom().collect())      #glom，说明rdd中的元素已经变成了分片映射的列表
+print(rdd.first())
+sc.stop()
+---------------------------------
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+4
+[[1, 2], [3, 4], [5, 6], [7, 8, 9]]
+1
+</code></pre></li>
+<li><p>读取一个文本文件</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+
+#读取一个文本文件
+rdd = sc.textFile(&quot;file:///home/hadoop/data1.txt&quot;)
+print(rdd.collect())
+print(rdd.getNumPartitions())
+print(rdd.glom().collect())
+#执行Map运算
+rdda=rdd.map(lambda x:len(x))
+print(rdda.collect())
+sc.stop()
+-----------------------------------
+[&apos;Hello, Spark&apos;, &apos;textfile&apos;, &apos;end&apos;]
+2
+[[&apos;Hello, Spark&apos;], [&apos;textfile&apos;, &apos;end&apos;]]
+[12, 8, 3]
+</code></pre></li>
+<li><p>读取所有文本文件</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+
+#读取所有文本文件
+rdd = sc.wholeTextFiles(&quot;file:///Users/chuzhengkai/Desktop/*.txt&quot;)
+a=rdd.collect()
+for b in a:
+    #b是一个元组(文件名,内容)
+    print(b[0])
+sc.stop()
+-------------------------------------
+file:/Users/chuzhengkai/Desktop/test0.txt
+file:/Users/chuzhengkai/Desktop/test.txt
+</code></pre></li>
+<li><p>map,filter</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+#用 python list 初始化
+data =[x for x in range(10)]
+rdd = sc.parallelize(data)
+print(rdd.collect())
+def pf(x):
+    return x**2
+def ou(x):
+    return x%2==0
+#map运算
+xrdd = rdd.map(pf)
+print(xrdd.collect())
+#filter运算
+xrdd = rdd.map(pf).filter(ou)
+print(xrdd.collect())
+sc.stop()
+-------------------------------------------
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+[0, 4, 16, 36, 64]
+</code></pre></li>
+<li><p>map,flatmap</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+#用 python list 初始化
+data =[&apos;Hello guys&apos;,&apos;My name is David&apos;,&apos;Welcome to USA&apos;]
+rdd = sc.parallelize(data)
+print(rdd.collect())
+def fg(x):
+    return x.split(&apos; &apos;)
+
+#map操作
+xrdd = rdd.map(fg)
+print(xrdd.collect())
+
+#flatMap
+xrdd = rdd.flatMap(fg)
+print(xrdd.collect())
+sc.stop()
+-----------------------------------------
+[&apos;Hello guys&apos;, &apos;My name is David&apos;, &apos;Welcome to USA&apos;]
+[[&apos;Hello&apos;, &apos;guys&apos;], [&apos;My&apos;, &apos;name&apos;, &apos;is&apos;, &apos;David&apos;], [&apos;Welcome&apos;, &apos;to&apos;, &apos;USA&apos;]]
+[&apos;Hello&apos;, &apos;guys&apos;, &apos;My&apos;, &apos;name&apos;, &apos;is&apos;, &apos;David&apos;, &apos;Welcome&apos;, &apos;to&apos;, &apos;USA&apos;]
+</code></pre></li>
+<li><p>词频统计</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+#读取一个文本文件
+rdd = sc.textFile(&quot;file:///Users/chuzhengkai/Desktop/test0.txt&quot;)
+print(rdd.collect())
+def wmap(x):
+    return (x,1)
+
+def wreduce(x,y):
+    return x+y
+
+#执行Map运算
+rddm=rdd.map(wmap)
+print(rddm.collect())
+#执行reduce运算
+rddr=rddm.reduceByKey(wreduce)
+print(rddr.collect())
+sc.stop()
+------------------------------------------------------
+[&apos;good&apos;, &apos;day&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;is&apos;, &apos;good&apos;, &apos;day&apos;]
+[(&apos;good&apos;, 1), (&apos;day&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;is&apos;, 1), (&apos;good&apos;, 1), (&apos;day&apos;, 1)]
+[(&apos;good&apos;, 4), (&apos;weather&apos;, 2), (&apos;is&apos;, 1), (&apos;day&apos;, 2), (&apos;has&apos;, 2), (&apos;today&apos;, 2)]
+</code></pre></li>
+<li><p>去重复</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+
+#读取一个文本文件
+rdd = sc.textFile(&quot;file:///Users/chuzhengkai/Desktop/test0.txt&quot;)
+print(rdd.collect())
+print(rdd.distinct().collect())
+sc.stop()
+--------------------------------------------------
+[&apos;good&apos;, &apos;day&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;is&apos;, &apos;good&apos;, &apos;day&apos;]
+[&apos;good&apos;, &apos;weather&apos;, &apos;is&apos;, &apos;day&apos;, &apos;has&apos;, &apos;today&apos;]
+</code></pre></li>
+<li><p>排序</p>
+<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
+sc = SparkContext.getOrCreate(conf)
+
+#读取一个文本文件
+rdd = sc.textFile(&quot;file:///Users/chuzhengkai/Desktop/test0.txt&quot;)
+print(rdd.collect())
+def wmap(x):
+    return (x,1)
+def wreduce(x,y):
+    return x+y
+def px(x):
+    return x[1]
+#执行Map运算
+rddm=rdd.map(wmap)
+print(rddm.collect())
+#执行reduce运算
+rddr=rddm.reduceByKey(wreduce)
+print(rddr.collect())
+#对结果执行按词频排序
+rdds=rddr.sortBy(px,ascending=False)
+print(rdds.collectAsMap())
+#取前三名
+print(rdds.take(3))
+#按key排序
+print(rddr.sortByKey().collect())
+#按key分组
+print(rddm.groupByKey().map(lambda x:{x[0]:[y for y in x[1]]}).collect())
+sc.stop()
+----------------------------------------------------------
+[&apos;good&apos;, &apos;day&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;is&apos;, &apos;good&apos;, &apos;day&apos;]
+[(&apos;good&apos;, 1), (&apos;day&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;is&apos;, 1), (&apos;good&apos;, 1), (&apos;day&apos;, 1)]
+[(&apos;good&apos;, 4), (&apos;weather&apos;, 2), (&apos;is&apos;, 1), (&apos;day&apos;, 2), (&apos;has&apos;, 2), (&apos;today&apos;, 2)]
+{&apos;good&apos;: 4, &apos;weather&apos;: 2, &apos;day&apos;: 2, &apos;has&apos;: 2, &apos;today&apos;: 2, &apos;is&apos;: 1}
+[(&apos;good&apos;, 4), (&apos;weather&apos;, 2), (&apos;day&apos;, 2)]
+[(&apos;day&apos;, 2), (&apos;good&apos;, 4), (&apos;has&apos;, 2), (&apos;is&apos;, 1), (&apos;today&apos;, 2), (&apos;weather&apos;, 2)]
+[{&apos;good&apos;: [1, 1, 1, 1]}, {&apos;weather&apos;: [1, 1]}, {&apos;is&apos;: [1]}, {&apos;day&apos;: [1, 1]}, {&apos;has&apos;: [1, 1]}, {&apos;today&apos;: [1, 1]}]
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-02/" data-id="cjtpvb929005ytswv0jx6wzvs" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-大数据的一些函数-01" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/24/大数据的一些函数-01/" class="article-date">
@@ -210,7 +432,7 @@ sc.stop()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-01/" data-id="cjtof2r7j005izgwvmedhxk8o" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-01/" data-id="cjtpvb91r005qtswva2bl7l89" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -345,7 +567,7 @@ GRANT OPTION;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/Centos7安装MySQL5.6/" data-id="cjtof2qtj000gzgwvx4s5x07u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/16/Centos7安装MySQL5.6/" data-id="cjtpvb8ph000mtswv6hlcql9m" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -450,7 +672,7 @@ print(result)               #result:[1, 3, 5, 7, 9]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/python之Map、Reduce、Filte/" data-id="cjtof2r4o004azgwv6ya4p5go" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/16/python之Map、Reduce、Filte/" data-id="cjtpvb8xg003ytswvgxkzqsil" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -523,7 +745,7 @@ PATH=$PATH:$SPARK_HOME/bin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/安装python3-6、spark/" data-id="cjtof2r8v0062zgwvgvmmbfew" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/16/安装python3-6、spark/" data-id="cjtpvb938006etswv2q1n0nm9" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -596,7 +818,7 @@ PATH=$PATH:$SPARK_HOME/bin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/使用hadoop里面的MapReduce/" data-id="cjtof2r61004uzgwvdzqxamg5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/16/使用hadoop里面的MapReduce/" data-id="cjtpvb8zv004ytswv22ecohbu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -759,7 +981,7 @@ export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjtof2rbx007azgwvmw6z3rsq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/14/虚拟机centos上部署hadoop/" data-id="cjtpvb94k0072tswv6ltup8d8" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -919,7 +1141,7 @@ print([link.url for link in links])   #打印出html2中a标签中的3个链接
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/14/使用LinkExtractor提取链接/" data-id="cjtof2r6a004yzgwvbola78sx" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/14/使用LinkExtractor提取链接/" data-id="cjtpvb8zr004wtswvhw1n59r6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1033,7 +1255,7 @@ bzip2查看：tar  -jcvf  filename.tar.bz2　
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjtof2r2p003jzgwvquimfa57" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/12/linux文件的打包、压缩/" data-id="cjtpvb8wj003ktswvxfqv6r6z" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -1116,121 +1338,7 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/11/jdk部署/" data-id="cjtof2r29003dzgwvkn4jtgr8" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-chmod" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/09/chmod/" class="article-date">
-  <time datetime="2018-04-09T10:05:31.000Z" itemprop="datePublished">2018-04-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/09/chmod/">chmod</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>chmod</h5><p></p>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>chmod(Change mode) 用来将每个文件的模式更改为指定值。Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他<ul>
-<li>u:目录或者文件的当前的用户</li>
-<li>g:目录或者文件的当前的群组</li>
-<li>o:除了目录或者文件的当前用户或者群组之外的用户或者群组</li>
-<li>a:所有的用户和群组</li>
-</ul>
-</li>
-<li>Linux的文件基本上分为三个属性：可读(r)，可写(w)，可执行(x)<ul>
-<li>权限对文件的重要性<ul>
-<li>r (read) 4：可读取此文件的实际内容，如读取文本文件的文字内容等 </li>
-<li>w (write) 2：可以编辑、新增或者是修改该文件的内容(但不含删除该文件)</li>
-<li>x (execute) 1：该文件具有可以被系统执行的权限。linux下文件是否可以执行和扩展名无关</li>
-</ul>
-</li>
-<li>权限对目录的重要性<ul>
-<li>r：表示具有读取目录结构列表的权限，可以查询该目录下的文件名数据，可以利用 ls 这个指令将该目录的内容列表显示出来</li>
-<li>w：表示具有移动该目录结构列表的权限，也就是这些权限：<ul>
-<li>建立新的文件与目录</li>
-<li>删除已经存在的文件与目录(不论该文件的权限为何！) </li>
-<li>将已存在的文件或目录进行更名</li>
-<li>搬移该目录内的文件、目录位置</li>
-</ul>
-</li>
-<li>x：目录不可以被执行，目录的x代表的是用户能否进入该目录成为工作目录的用途！ 所谓的工作目录(work directory)就是你目前所在的目录！举例来说，当你登入Linux时， 你所在的家目录就是你当下的工作目录</li>
-</ul>
-</li>
-<li>以rwx(Owner)r-x(Group)r-x(Other)为例：这个例子表示的权限是：使用者自己可读，可写，可执行;同一组的用户可读，不可写，可执行;其它用户可读，不可写，可执行</li>
-</ul>
-</li>
-<li>使用权限 : 所有使用者</li>
-</ul>
-<p></p><h6>使用</h6><p></p>
-<ul>
-<li>文字设定法<ul>
-<li>chmod [u、g、o、a] [+（加入）、-（除去）、=（设定）] [r、w、x] [文件或者目录]</li>
-</ul>
-</li>
-<li>数字设定法<ul>
-<li>按照顺序（u）（g）（o），将权限转换成3个从0到7的八进制数字，如若要rwx属性则4+2+1=7 ; 若要rw-属性则4+2=6</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>示例</h6><p></p>
-<ul>
-<li><p>查看权限ll</p>
-<pre><code>-rw-r--r-- 1 root root 0 4月  24 15:24 backup.sh
-</code></pre></li>
-<li><p>将backup.sh设定为只有该档案拥有者可以执行</p>
-<pre><code>chmod u+x backup.sh
-</code></pre></li>
-<li><p>同时修改不同用户权限</p>
-<pre><code>chmod ug+w,o-x backup.sh
-</code></pre></li>
-<li><p>删除文件权限</p>
-<pre><code>chmod a-x backup.sh
-</code></pre></li>
-<li><p>使用“=”设置权限</p>
-<pre><code>chmod u=x backup.sh
-</code></pre></li>
-<li><p>根据数字修改权限</p>
-<pre><code>chmod 745 backup.sh
-</code></pre></li>
-<li><p>将目前目录下的所有档案与子目录皆设为任何人可读取</p>
-<pre><code>chmod -R a+r *
-</code></pre></li>
-</ul>
-<p>##参考大神佳作<a href="https://www.cnblogs.com/xqzt/p/5433022.html" target="_blank" rel="noopener">每天一个linux命令:chmod</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjtof2r1z0039zgwvfzbkziu8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/11/jdk部署/" data-id="cjtpvb8w1003btswvdah7ix6p" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -1262,7 +1370,7 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -1272,7 +1380,7 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14px;">软件工具</a>
     </div>
   </div>
 
@@ -1281,7 +1389,7 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1292,6 +1400,10 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
+          </li>
         
           <li>
             <a href="/2019/03/25/MySQL数据库主从复制/">MySQL数据库主从复制</a>
@@ -1307,10 +1419,6 @@ tar -zvxf jdk-8u152-linux-x64.tar.gz -C /home/hadoop/opt
         
           <li>
             <a href="/2019/03/20/tomcat使用apr模式运行/">tomcat使用apr模式运行</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/12/批量添加用户，并设置sudo权限/">批量添加用户，并设置sudo权限</a>
           </li>
         
       </ul>

@@ -70,6 +70,63 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Linu系统连接外网" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/15/Linu系统连接外网/" class="article-date">
+  <time datetime="2018-11-15T02:57:12.000Z" itemprop="datePublished">2018-11-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/15/Linu系统连接外网/">Linu系统连接外网</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Linux设置外网连接</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1.设置主要网卡信息</h6><br>找到网卡地址文件，修改网卡信息、DNS服务信息，命令为<code>vi /etc/sysconfig/network-scripts/ifcfg-eth32</code>，注意eth32为第一块网卡地址，每台电脑的网卡地址文件不一样的哦<p></p>
+<pre><code>DEVICE=eth0                  #物理设备名
+IPADDR=192.168.110.X         #设置为IP地址（此处用于静态IP，如果是动态分配则不用设置）
+NETMASK=255.255.255.0        #掩码
+GATEWAY=192.168.110.1        #网关地址（请根据具体情况设置，如子网为192.168.110.X，一般网关为192.168.110.1）
+ONBOOT=yes
+BOOTPROTO=static             #静态分配，如果是动态选择dhcp,如果是BOOTP选用bootp，如果是不使用协议选择none
+DNS1=202.106.0.20            #可以在网卡信息中设置DNS服务地址
+</code></pre><p></p><h6>2.修改DNS</h6><br>输入命令：<code>vi /etc/resolv.conf</code><p></p>
+<pre><code>nameserver 202.106.0.20        #主DNS
+</code></pre><p></p><h6>3.查看服务器的DNS</h6><br>输入命令:<code>cat /etc/resolv.conf</code><p></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/11/15/Linu系统连接外网/" data-id="cjtpvb8se001ptswv0obcgt9t" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-mysql5-6压缩版的安装配置" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/09/21/mysql5-6压缩版的安装配置/" class="article-date">
@@ -146,7 +203,7 @@ mysql&gt;flush privileges;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/21/mysql5-6压缩版的安装配置/" data-id="cjtof2r3e003uzgwvvyi1jxx1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/09/21/mysql5-6压缩版的安装配置/" data-id="cjtpvb8wo003mtswvktfgghg8" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -228,7 +285,7 @@ C:\Program Files\Java\jdk1.8.0_181\lib\tools.jar
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/18/Windows下JDK的安装部署/" data-id="cjtof2r1v0037zgwvqj3ux4ml" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/09/18/Windows下JDK的安装部署/" data-id="cjtpvb8vp0035tswv6w0flptp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -319,7 +376,7 @@ cp nmon_x86_64_centos7 /usr/local/bin/nmon
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/18/nmon工具的使用/" data-id="cjtof2r39003szgwv8lmopzup" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/09/18/nmon工具的使用/" data-id="cjtpvb8wy003qtswvrpr3kcc6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -374,7 +431,7 @@ cp nmon_x86_64_centos7 /usr/local/bin/nmon
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/11/破解IDEA2018-1/" data-id="cjtof2rbn0076zgwvozyhwlbq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/09/11/破解IDEA2018-1/" data-id="cjtpvb95s007otswvcbvpcs56" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -480,7 +537,7 @@ sudo kill 进程
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/17/Redis安装与部署/" data-id="cjtof2r0y002uzgwvua2wt8rh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/08/17/Redis安装与部署/" data-id="cjtpvb8uc002jtswvtstgz0k9" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis数据库/">Redis数据库</a></li></ul>
@@ -589,7 +646,7 @@ sudo ./bin/startup.sh
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/04/JAVA项目更新部署/" data-id="cjtof2qwl001hzgwv5lbsseim" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/08/04/JAVA项目更新部署/" data-id="cjtpvb8r30016tswv4otbzem3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -787,7 +844,7 @@ redis.port=6379
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/13/Linux上部署java项目/" data-id="cjtof2qw7001czgwvdl7uqvfe" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/07/13/Linux上部署java项目/" data-id="cjtpvb8t0001ytswvrijal8co" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -834,7 +891,7 @@ redis.port=6379
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/07/linux下mysql基本操作/" data-id="cjtof2r2f003fzgwvrgk4zvde" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/07/linux下mysql基本操作/" data-id="cjtpvb8vt0037tswvlje3h3xg" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -934,232 +991,10 @@ redis.port=6379
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/" data-id="cjtof2qwr001kzgwvx46v25e5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/" data-id="cjtpvb8sb001ntswvudtosvw7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-大数据的一些函数-02" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/24/大数据的一些函数-02/" class="article-date">
-  <time datetime="2018-04-24T14:51:09.000Z" itemprop="datePublished">2018-04-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/24/大数据的一些函数-02/">大数据的一些函数-02</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>大数据的一些函数-02</h5><p></p>
-<hr>
-<hr>
-<ul>
-<li><p>parallelize</p>
-<pre><code>from pyspark import SparkContext,SparkConf
-
-conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
-sc = SparkContext.getOrCreate(conf)
-#用 python list 初始化
-data =[1,2,3,4,5,6,7,8,9]
-rdd = sc.parallelize(data,numSlices=4)       #parallelize并行化数据，转化为RDD;numSlices为分块数目，根据集群数进行分块
-print(rdd.collect())             #collect返回RDD所有元素
-print(rdd.getNumPartitions())    #返回分块数
-print(rdd.glom().collect())      #glom，说明rdd中的元素已经变成了分片映射的列表
-print(rdd.first())
-sc.stop()
----------------------------------
-[1, 2, 3, 4, 5, 6, 7, 8, 9]
-4
-[[1, 2], [3, 4], [5, 6], [7, 8, 9]]
-1
-</code></pre></li>
-<li><p>读取一个文本文件</p>
-<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
-sc = SparkContext.getOrCreate(conf)
-
-#读取一个文本文件
-rdd = sc.textFile(&quot;file:///home/hadoop/data1.txt&quot;)
-print(rdd.collect())
-print(rdd.getNumPartitions())
-print(rdd.glom().collect())
-#执行Map运算
-rdda=rdd.map(lambda x:len(x))
-print(rdda.collect())
-sc.stop()
------------------------------------
-[&apos;Hello, Spark&apos;, &apos;textfile&apos;, &apos;end&apos;]
-2
-[[&apos;Hello, Spark&apos;], [&apos;textfile&apos;, &apos;end&apos;]]
-[12, 8, 3]
-</code></pre></li>
-<li><p>读取所有文本文件</p>
-<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
-sc = SparkContext.getOrCreate(conf)
-
-#读取所有文本文件
-rdd = sc.wholeTextFiles(&quot;file:///Users/chuzhengkai/Desktop/*.txt&quot;)
-a=rdd.collect()
-for b in a:
-    #b是一个元组(文件名,内容)
-    print(b[0])
-sc.stop()
--------------------------------------
-file:/Users/chuzhengkai/Desktop/test0.txt
-file:/Users/chuzhengkai/Desktop/test.txt
-</code></pre></li>
-<li><p>map,filter</p>
-<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
-sc = SparkContext.getOrCreate(conf)
-#用 python list 初始化
-data =[x for x in range(10)]
-rdd = sc.parallelize(data)
-print(rdd.collect())
-def pf(x):
-    return x**2
-def ou(x):
-    return x%2==0
-#map运算
-xrdd = rdd.map(pf)
-print(xrdd.collect())
-#filter运算
-xrdd = rdd.map(pf).filter(ou)
-print(xrdd.collect())
-sc.stop()
--------------------------------------------
-[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
-[0, 4, 16, 36, 64]
-</code></pre></li>
-<li><p>map,flatmap</p>
-<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
-sc = SparkContext.getOrCreate(conf)
-#用 python list 初始化
-data =[&apos;Hello guys&apos;,&apos;My name is David&apos;,&apos;Welcome to USA&apos;]
-rdd = sc.parallelize(data)
-print(rdd.collect())
-def fg(x):
-    return x.split(&apos; &apos;)
-
-#map操作
-xrdd = rdd.map(fg)
-print(xrdd.collect())
-
-#flatMap
-xrdd = rdd.flatMap(fg)
-print(xrdd.collect())
-sc.stop()
------------------------------------------
-[&apos;Hello guys&apos;, &apos;My name is David&apos;, &apos;Welcome to USA&apos;]
-[[&apos;Hello&apos;, &apos;guys&apos;], [&apos;My&apos;, &apos;name&apos;, &apos;is&apos;, &apos;David&apos;], [&apos;Welcome&apos;, &apos;to&apos;, &apos;USA&apos;]]
-[&apos;Hello&apos;, &apos;guys&apos;, &apos;My&apos;, &apos;name&apos;, &apos;is&apos;, &apos;David&apos;, &apos;Welcome&apos;, &apos;to&apos;, &apos;USA&apos;]
-</code></pre></li>
-<li><p>词频统计</p>
-<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
-sc = SparkContext.getOrCreate(conf)
-#读取一个文本文件
-rdd = sc.textFile(&quot;file:///Users/chuzhengkai/Desktop/test0.txt&quot;)
-print(rdd.collect())
-def wmap(x):
-    return (x,1)
-
-def wreduce(x,y):
-    return x+y
-
-#执行Map运算
-rddm=rdd.map(wmap)
-print(rddm.collect())
-#执行reduce运算
-rddr=rddm.reduceByKey(wreduce)
-print(rddr.collect())
-sc.stop()
-------------------------------------------------------
-[&apos;good&apos;, &apos;day&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;is&apos;, &apos;good&apos;, &apos;day&apos;]
-[(&apos;good&apos;, 1), (&apos;day&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;is&apos;, 1), (&apos;good&apos;, 1), (&apos;day&apos;, 1)]
-[(&apos;good&apos;, 4), (&apos;weather&apos;, 2), (&apos;is&apos;, 1), (&apos;day&apos;, 2), (&apos;has&apos;, 2), (&apos;today&apos;, 2)]
-</code></pre></li>
-<li><p>去重复</p>
-<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
-sc = SparkContext.getOrCreate(conf)
-
-#读取一个文本文件
-rdd = sc.textFile(&quot;file:///Users/chuzhengkai/Desktop/test0.txt&quot;)
-print(rdd.collect())
-print(rdd.distinct().collect())
-sc.stop()
---------------------------------------------------
-[&apos;good&apos;, &apos;day&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;is&apos;, &apos;good&apos;, &apos;day&apos;]
-[&apos;good&apos;, &apos;weather&apos;, &apos;is&apos;, &apos;day&apos;, &apos;has&apos;, &apos;today&apos;]
-</code></pre></li>
-<li><p>排序</p>
-<pre><code>conf=SparkConf().setAppName(&apos;demoPrj&apos;).setMaster(&apos;local[*]&apos;)
-sc = SparkContext.getOrCreate(conf)
-
-#读取一个文本文件
-rdd = sc.textFile(&quot;file:///Users/chuzhengkai/Desktop/test0.txt&quot;)
-print(rdd.collect())
-def wmap(x):
-    return (x,1)
-def wreduce(x,y):
-    return x+y
-def px(x):
-    return x[1]
-#执行Map运算
-rddm=rdd.map(wmap)
-print(rddm.collect())
-#执行reduce运算
-rddr=rddm.reduceByKey(wreduce)
-print(rddr.collect())
-#对结果执行按词频排序
-rdds=rddr.sortBy(px,ascending=False)
-print(rdds.collectAsMap())
-#取前三名
-print(rdds.take(3))
-#按key排序
-print(rddr.sortByKey().collect())
-#按key分组
-print(rddm.groupByKey().map(lambda x:{x[0]:[y for y in x[1]]}).collect())
-sc.stop()
-----------------------------------------------------------
-[&apos;good&apos;, &apos;day&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;has&apos;, &apos;good&apos;, &apos;weather&apos;, &apos;today&apos;, &apos;is&apos;, &apos;good&apos;, &apos;day&apos;]
-[(&apos;good&apos;, 1), (&apos;day&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;has&apos;, 1), (&apos;good&apos;, 1), (&apos;weather&apos;, 1), (&apos;today&apos;, 1), (&apos;is&apos;, 1), (&apos;good&apos;, 1), (&apos;day&apos;, 1)]
-[(&apos;good&apos;, 4), (&apos;weather&apos;, 2), (&apos;is&apos;, 1), (&apos;day&apos;, 2), (&apos;has&apos;, 2), (&apos;today&apos;, 2)]
-{&apos;good&apos;: 4, &apos;weather&apos;: 2, &apos;day&apos;: 2, &apos;has&apos;: 2, &apos;today&apos;: 2, &apos;is&apos;: 1}
-[(&apos;good&apos;, 4), (&apos;weather&apos;, 2), (&apos;day&apos;, 2)]
-[(&apos;day&apos;, 2), (&apos;good&apos;, 4), (&apos;has&apos;, 2), (&apos;is&apos;, 1), (&apos;today&apos;, 2), (&apos;weather&apos;, 2)]
-[{&apos;good&apos;: [1, 1, 1, 1]}, {&apos;weather&apos;: [1, 1]}, {&apos;is&apos;: [1]}, {&apos;day&apos;: [1, 1]}, {&apos;has&apos;: [1, 1]}, {&apos;today&apos;: [1, 1]}]
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-02/" data-id="cjtof2r87005szgwvmvf2xvy4" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
 
     </footer>
   </div>
@@ -1188,7 +1023,7 @@ sc.stop()
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTP协议/">HTTP协议</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">21</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -1198,7 +1033,7 @@ sc.stop()
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/HTTP协议/" style="font-size: 10px;">HTTP协议</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18px;">MySQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17px;">爬虫学习</a> <a href="/tags/自动化测试/" style="font-size: 12px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/Linux学习/" style="font-size: 19px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14px;">软件工具</a>
     </div>
   </div>
 
@@ -1207,7 +1042,7 @@ sc.stop()
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -1218,6 +1053,10 @@ sc.stop()
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
+          </li>
         
           <li>
             <a href="/2019/03/25/MySQL数据库主从复制/">MySQL数据库主从复制</a>
@@ -1233,10 +1072,6 @@ sc.stop()
         
           <li>
             <a href="/2019/03/20/tomcat使用apr模式运行/">tomcat使用apr模式运行</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/12/批量添加用户，并设置sudo权限/">批量添加用户，并设置sudo权限</a>
           </li>
         
       </ul>
