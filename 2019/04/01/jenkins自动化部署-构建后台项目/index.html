@@ -5,20 +5,20 @@
   
 
   
-  <title>jemkins自动化部署--后台项目构建 | LiuYongQian</title>
+  <title>jenkins自动化部署--构建后台项目 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="jemkins自动化部署–后台项目构建   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目；监控外部调用执行的工作。  也就是自动化部署2. 部署准备 2.1 maven      安装执行：yum install maven     验证版本：mvn -v  2.2 git     安装执行：yum install git3. 部署jenkins">
+  <meta name="description" content="jenkins自动化部署–构建后台项目   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。2. 部署准备  2.1 maven的安装            安装执行：yum install maven            验证版本：mvn -v 2.2 git安装            安装执行：yum install git3. 部署jenk">
 <meta name="keywords" content="JAVA项目部署">
 <meta property="og:type" content="article">
-<meta property="og:title" content="jemkins自动化部署--后台项目构建">
-<meta property="og:url" content="http://yoursite.com/2019/04/01/jemkins自动化部署-后台项目构建/index.html">
+<meta property="og:title" content="jenkins自动化部署--构建后台项目">
+<meta property="og:url" content="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="jemkins自动化部署–后台项目构建   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目；监控外部调用执行的工作。  也就是自动化部署2. 部署准备 2.1 maven      安装执行：yum install maven     验证版本：mvn -v  2.2 git     安装执行：yum install git3. 部署jenkins">
+<meta property="og:description" content="jenkins自动化部署–构建后台项目   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。2. 部署准备  2.1 maven的安装            安装执行：yum install maven            验证版本：mvn -v 2.2 git安装            安装执行：yum install git3. 部署jenk">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-01T14:37:42.439Z">
+<meta property="og:updated_time" content="2019-04-01T14:52:05.603Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="jemkins自动化部署--后台项目构建">
-<meta name="twitter:description" content="jemkins自动化部署–后台项目构建   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目；监控外部调用执行的工作。  也就是自动化部署2. 部署准备 2.1 maven      安装执行：yum install maven     验证版本：mvn -v  2.2 git     安装执行：yum install git3. 部署jenkins">
+<meta name="twitter:title" content="jenkins自动化部署--构建后台项目">
+<meta name="twitter:description" content="jenkins自动化部署–构建后台项目   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。2. 部署准备  2.1 maven的安装            安装执行：yum install maven            验证版本：mvn -v 2.2 git安装            安装执行：yum install git3. 部署jenk">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -70,10 +70,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-jemkins自动化部署-后台项目构建" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-jenkins自动化部署-构建后台项目" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/04/01/jemkins自动化部署-后台项目构建/" class="article-date">
-  <time datetime="2019-04-01T14:01:27.000Z" itemprop="datePublished">2019-04-01</time>
+    <a href="/2019/04/01/jenkins自动化部署-构建后台项目/" class="article-date">
+  <time datetime="2019-04-01T14:42:25.000Z" itemprop="datePublished">2019-04-01</time>
 </a>
     
   </div>
@@ -84,7 +84,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      jemkins自动化部署--后台项目构建
+      jenkins自动化部署--构建后台项目
     </h1>
   
 
@@ -95,16 +95,15 @@
       
 	  
 	  
-        <p></p><h5>jemkins自动化部署–后台项目构建</h5><p></p>
+        <p></p><h5>jenkins自动化部署–构建后台项目</h5><p></p>
 <hr>
 <hr>
-<h6>1. 简介</h6><br><em> Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目；监控外部调用执行的工作。
-</em> 也就是自动化部署<br><br><h6>2. 部署准备</h6><br><em> 2.1 maven
-    </em> 安装执行：yum install maven<br>    <em> 验证版本：mvn -v
-</em> 2.2 git<br>    <em> 安装执行：yum install git<br><br><h6>3. 部署jenkins</h6>
-</em> 3.1 目前版本：jenkins-2.164.1-1.1.noarch.rpm<br><em> 3.2 将rpm包放在/usr下，安装执行：<br><br>        sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm<br><br>        安装完毕之后，出现四个文件<br>        /usr/lib/jenkins/jenkins.war    WAR包<br>        /etc/sysconfig/jenkins          配置文件<br>        /var/lib/jenkins/               默认的JENKINS_HOME目录<br>        /var/log/jenkins/jenkins.log    Jenkins日志文件
+<h6>1. 简介</h6><br><em> Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。<br><br><h6>2. 部署准备</h6>
+</em> 2.1 maven的安装<br><br>            安装执行：yum install maven<br><br>            验证版本：mvn -v<br><br><em> 2.2 git安装<br><br>            安装执行：yum install git<br><br><h6>3. 部署jenkins</h6>
+</em> 3.1 目前版本：jenkins-2.164.1-1.1.noarch.rpm<br><em> 3.2 将rpm包放在/usr下，安装执行：<br><br>            sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm<br><br>            安装完毕之后，出现四个文件<br>            /usr/lib/jenkins/jenkins.war    WAR包<br>            /etc/sysconfig/jenkins          配置文件<br>            /var/lib/jenkins/               默认的JENKINS_HOME目录<br>            /var/log/jenkins/jenkins.log    Jenkins日志文件
 
-</em> 3.3 启动<br><br>        启动：sudo service jenkins start<br>        停止：sudo service jenkins stop<br>        查看：systemctl status jenkins.service<br><br><em> 3.4 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于<code>/var/lib/jenkins/secrets/</code>下的<code>initialAdminPassword</code>文件中。
+</em> 3.3 启动<br><br>            启动：sudo service jenkins start<br>            停止：sudo service jenkins stop<br>            查看：systemctl status jenkins.service<br><br><em> 3.4 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于<code>/var/lib/jenkins/secrets/</code>下的<code>initialAdminPassword</code>文件中。<br>
+
 </em> 3.5 插件推荐安装完之后进入创建管理员用户的界面，可以使用已有的admin账号密码（密码可以修改）。<br><br><h6>4. 赋予jenkins运行命令的权限</h6>
 
 <pre><code>vi /etc/sudoers后增加如下命令：
@@ -148,7 +147,7 @@ fi
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/01/jemkins自动化部署-后台项目构建/" data-id="cjtygkhix003k0cwvbo37ia9q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cjtyh7xcj003jgkwvdfmt265o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -215,7 +214,7 @@ fi
       <ul>
         
           <li>
-            <a href="/2019/04/01/jemkins自动化部署-后台项目构建/">jemkins自动化部署--后台项目构建</a>
+            <a href="/2019/04/01/jenkins自动化部署-构建后台项目/">jenkins自动化部署--构建后台项目</a>
           </li>
         
           <li>
