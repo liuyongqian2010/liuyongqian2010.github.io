@@ -7,18 +7,18 @@
   
   <title>jenkins自动化部署--构建后台项目 | LiuYongQian</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="jenkins自动化部署–构建后台项目   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。2. 部署准备  2.1 maven的安装            安装执行：yum install maven            验证版本：mvn -v 2.2 git安装            安装执行：yum install git3. 部署jenk">
+  <meta name="description" content="jenkins自动化部署–构建后台项目   1. 简介   Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。  2. 部署准备   2.1 maven的安装 安装执行：yum install maven&amp;lt;br/&amp;gt; 验证版本：mvn -v  2.2 git的安装 安装执行：yum install git   3. 部署 jenkins   3.1 将">
 <meta name="keywords" content="JAVA项目部署">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jenkins自动化部署--构建后台项目">
 <meta property="og:url" content="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/index.html">
 <meta property="og:site_name" content="LiuYongQian">
-<meta property="og:description" content="jenkins自动化部署–构建后台项目   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。2. 部署准备  2.1 maven的安装            安装执行：yum install maven            验证版本：mvn -v 2.2 git安装            安装执行：yum install git3. 部署jenk">
+<meta property="og:description" content="jenkins自动化部署–构建后台项目   1. 简介   Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。  2. 部署准备   2.1 maven的安装 安装执行：yum install maven&amp;lt;br/&amp;gt; 验证版本：mvn -v  2.2 git的安装 安装执行：yum install git   3. 部署 jenkins   3.1 将">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-01T15:09:15.792Z">
+<meta property="og:updated_time" content="2019-04-01T15:22:06.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jenkins自动化部署--构建后台项目">
-<meta name="twitter:description" content="jenkins自动化部署–构建后台项目   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。2. 部署准备  2.1 maven的安装            安装执行：yum install maven            验证版本：mvn -v 2.2 git安装            安装执行：yum install git3. 部署jenk">
+<meta name="twitter:description" content="jenkins自动化部署–构建后台项目   1. 简介   Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。  2. 部署准备   2.1 maven的安装 安装执行：yum install maven&amp;lt;br/&amp;gt; 验证版本：mvn -v  2.2 git的安装 安装执行：yum install git   3. 部署 jenkins   3.1 将">
   
     <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
   
@@ -98,18 +98,50 @@
         <p></p><h5>jenkins自动化部署–构建后台项目</h5><p></p>
 <hr>
 <hr>
-<h6>1. 简介</h6><br><em> Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。<br><br><h6>2. 部署准备</h6>
-</em> 2.1 maven的安装<br><br>            安装执行：yum install maven<br><br>            验证版本：mvn -v<br><br><em> 2.2 git安装<br><br>            安装执行：yum install git<br><br><h6>3. 部署jenkins</h6>
-</em> 3.1 将jenkins-2.164.1-1.1.noarch.rpm包放在/usr下，安装执行：sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm<br><br>        安装完毕之后，出现四个文件<br>        /usr/lib/jenkins/jenkins.war    WAR包<br>        /etc/sysconfig/jenkins          配置文件<br>        /var/lib/jenkins/               默认的JENKINS_HOME目录<br>        /var/log/jenkins/jenkins.log    Jenkins日志文件<br><br><em> 3.2 启动 jenkins<br><br>        启动：sudo service jenkins start<br>        停止：sudo service jenkins stop<br>        查看：systemctl status jenkins.service<br>        <br>
+<h6>1. 简介</h6>
 
-</em> 3.4 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于/var/lib/jenkins/secrets/下的initialAdminPassword文件中。<br>* 3.5 插件推荐安装完之后进入创建管理员用户的界面，可以使用已有的admin账号密码（密码可以修改）。<br><br><h6>4. 赋予jenkins运行命令的权限</h6>
+<ul>
+<li>Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。</li>
+</ul>
+<h6>2. 部署准备</h6>
+
+<ul>
+<li><p>2.1 maven的安装</p>
+<pre><code>安装执行：yum install maven&lt;br/&gt;
+验证版本：mvn -v
+</code></pre></li>
+<li><p>2.2 git的安装</p>
+<pre><code>安装执行：yum install git
+</code></pre></li>
+</ul>
+<h6>3. 部署 jenkins</h6>
+
+<ul>
+<li><p>3.1 将 jenkins-2.164.1-1.1.noarch.rpm包放在/usr下，安装执行：sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm</p>
+<pre><code>安装完毕之后，出现四个文件如下所示：
+/usr/lib/jenkins/jenkins.war------WAR包
+/etc/sysconfig/jenkins------------配置文件
+/var/lib/jenkins/-----------------默认的JENKINS_HOME目录
+/var/log/jenkins/jenkins.log------Jenkins日志文件            
+</code></pre></li>
+<li><p>3.2 启动 jenkins</p>
+<pre><code>启动：sudo service jenkins start
+停止：sudo service jenkins stop
+查看：systemctl status jenkins.service
+&lt;br/&gt;
+</code></pre></li>
+<li><p>3.3 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于/var/lib/jenkins/secrets/下的initialAdminPassword文件中。</p>
+</li>
+<li>3.4 插件推荐安装完之后进入创建管理员用户的界面，可以使用已有的admin账号密码（密码可以修改）。</li>
+</ul>
+<h6>4. 赋予 jenkins运行命令的权限</h6>
 
 <pre><code>vi /etc/sudoers后增加如下命令：
 
 ## Allow root to run any commands anywhere 
 root    ALL=(ALL)     ALL
 jenkins    ALL=NOPASSWD: ALL
-</code></pre><p></p><h6>5. 使用jenkins构建后天台项目</h6><p></p>
+</code></pre><p></p><h6>5. 使用 jenkins构建后天台项目</h6><p></p>
 <ul>
 <li>5.1 新建任务（输入一个任务名称，选择“构建一个自由风格的软件项目”）</li>
 <li>5.2 源码管理（选择“Git”，输入仓库URL和git账号）</li>
@@ -145,7 +177,7 @@ fi
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cjtyhpzcb003irgwvybsf4oll" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cjtyi5lss003kbswve32luqs8" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
