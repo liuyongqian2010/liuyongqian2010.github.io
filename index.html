@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -100,9 +100,9 @@
 <hr>
 <h6>1. 简介</h6><br><em> Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。<br><br><h6>2. 部署准备</h6>
 </em> 2.1 maven的安装<br><br>            安装执行：yum install maven<br><br>            验证版本：mvn -v<br><br><em> 2.2 git安装<br><br>            安装执行：yum install git<br><br><h6>3. 部署jenkins</h6>
-</em> 3.1 将jenkins-2.164.1-1.1.noarch.rpm包放在/usr下，安装执行：<br><br>        sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm<br><br>        安装完毕之后，出现四个文件<br>        /usr/lib/jenkins/jenkins.war    WAR包<br>        /etc/sysconfig/jenkins          配置文件<br>        /var/lib/jenkins/               默认的JENKINS_HOME目录<br>        /var/log/jenkins/jenkins.log    Jenkins日志文件<br><br><em> 3.2 启动 jenkins<br><br>        启动：sudo service jenkins start<br>        停止：sudo service jenkins stop<br>        查看：systemctl status jenkins.service<br>        <br>
+</em> 3.1 将jenkins-2.164.1-1.1.noarch.rpm包放在/usr下，安装执行：sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm<br><br>        安装完毕之后，出现四个文件<br>        /usr/lib/jenkins/jenkins.war    WAR包<br>        /etc/sysconfig/jenkins          配置文件<br>        /var/lib/jenkins/               默认的JENKINS_HOME目录<br>        /var/log/jenkins/jenkins.log    Jenkins日志文件<br><br><em> 3.2 启动 jenkins<br><br>        启动：sudo service jenkins start<br>        停止：sudo service jenkins stop<br>        查看：systemctl status jenkins.service<br>        <br>
 
-</em> 3.4 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于/var/lib/jenkins/secrets/下的initialAdminPassword文件中。<br><br>* 3.5 插件推荐安装完之后进入创建管理员用户的界面，可以使用已有的admin账号密码（密码可以修改）。<br><br><h6>4. 赋予jenkins运行命令的权限</h6>
+</em> 3.4 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于/var/lib/jenkins/secrets/下的initialAdminPassword文件中。<br>* 3.5 插件推荐安装完之后进入创建管理员用户的界面，可以使用已有的admin账号密码（密码可以修改）。<br><br><h6>4. 赋予jenkins运行命令的权限</h6>
 
 <pre><code>vi /etc/sudoers后增加如下命令：
 
@@ -145,7 +145,7 @@ fi
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cjtyhkxsf004c2gwv4jio4azq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cjtyhpzcb003irgwvybsf4oll" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -273,7 +273,7 @@ mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&a
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="cjtyhkxof001y2gwvr7dxxmgh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="cjtyhpza10020rgwvkedo0r5s" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -375,7 +375,7 @@ select * from tb_test;查看表中是否one test数据存在，证明同步数�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="cjtyhkxo9001v2gwvuhiuothj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="cjtyhpz9u001vrgwvoue57tb9" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -474,7 +474,7 @@ echo 3 &gt; /proc/sys/vm/drop_caches
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="cjtyhkxwd00702gwvhdn8ok90" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="cjtyhpzhn0070rgwvr3wg2x80" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -580,7 +580,7 @@ server {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="cjtyhkxos00252gwv1hwqdr41" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="cjtyhpza50022rgwvxwak3dt2" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
@@ -645,7 +645,7 @@ JAVA_OPTS=&quot;$JAVA_OPTS -Djava.library.path=/usr/local/apr/lib&quot;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/20/tomcat使用apr模式运行/" data-id="cjtyhkxt7004s2gwvpquv8mcu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/20/tomcat使用apr模式运行/" data-id="cjtyhpzer004urgwv4hizb8mf" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -730,7 +730,7 @@ liuyongqian     ALL=(ALL)   ALL
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/12/批量添加用户，并设置sudo权限/" data-id="cjtyhkxvt006m2gwvc7t8cfr3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/12/批量添加用户，并设置sudo权限/" data-id="cjtyhpzh6006mrgwvcjvfeb8g" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -815,7 +815,7 @@ export CATALINA02_BASE CATALINA02_HOME TOMCAT02_HOME
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/12/Centos中同时部署两个以上的Tomcat/" data-id="cjtyhkxls000d2gwv7pzrxpze" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/12/Centos中同时部署两个以上的Tomcat/" data-id="cjtyhpz7i000crgwvmsndeaa7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -894,7 +894,7 @@ export PATH CLASSPATH CATALINA_HOME
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Tomcat9/" data-id="cjtyhkxv500662gwv11yjc3ar" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Tomcat9/" data-id="cjtyhpzgi0064rgwvsp5tyglf" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -1016,7 +1016,7 @@ mongod -f mongodb.conf   或
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="cjtyhkxuw00602gwvdvkr1ien" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="cjtyhpzg9005yrgwv0q6sakfh" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
@@ -1034,7 +1034,7 @@ mongod -f mongodb.conf   或
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1065,7 +1065,7 @@ mongod -f mongodb.conf   或
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
     </div>
@@ -1075,7 +1075,7 @@ mongod -f mongodb.conf   或
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
