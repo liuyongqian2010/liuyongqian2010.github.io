@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>jemkins自动化部署--后台项目构建 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="jemkins自动化部署–后台项目构建   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目；监控外部调用执行的工作。2. 部署准备  2.1 maven        安装执行：yum install maven        验证版本：mvn -v 2.2 git        安装执行：yum install git3. 部署jenkins">
+<meta name="keywords" content="JAVA项目部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jemkins自动化部署--后台项目构建">
+<meta property="og:url" content="http://yoursite.com/2019/04/01/jemkins自动化部署-后台项目构建/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="jemkins自动化部署–后台项目构建   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目；监控外部调用执行的工作。2. 部署准备  2.1 maven        安装执行：yum install maven        验证版本：mvn -v 2.2 git        安装执行：yum install git3. 部署jenkins">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-01T14:15:15.617Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jemkins自动化部署--后台项目构建">
+<meta name="twitter:description" content="jemkins自动化部署–后台项目构建   1. 简介 Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目；监控外部调用执行的工作。2. 部署准备  2.1 maven        安装执行：yum install maven        验证版本：mvn -v 2.2 git        安装执行：yum install git3. 部署jenkins">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jemkins自动化部署-后台项目构建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/01/jemkins自动化部署-后台项目构建/" class="article-date">
+  <time datetime="2019-04-01T14:01:27.000Z" itemprop="datePublished">2019-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jemkins自动化部署--后台项目构建
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>jemkins自动化部署–后台项目构建</h5><p></p>
+<hr>
+<hr>
+<h6>1. 简介</h6><br><em> Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目；监控外部调用执行的工作。<br><br><h6>2. 部署准备</h6>
+</em> 2.1 maven<br><br>        安装执行：yum install maven<br>        验证版本：mvn -v<br><br><em> 2.2 git<br><br>        安装执行：yum install git<br><br><h6>3. 部署jenkins</h6>
+</em> 3.1 目前版本：jenkins-2.164.1-1.1.noarch.rpm<br><em> 3.2 将rpm包放在/usr下，安装执行：<code>sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm</code>
+</em> 3.3 安装完毕之后，出现四个文件<br><br>        /usr/lib/jenkins/jenkins.war    WAR包<br>        /etc/sysconfig/jenkins          配置文件<br>        /var/lib/jenkins/               默认的JENKINS_HOME目录<br>        /var/log/jenkins/jenkins.log    Jenkins日志文件<br><br><em> 3.4 启动<br><br>        启动：sudo service jenkins start<br>        停止：sudo service jenkins stop<br>        查看：systemctl status jenkins.service
+
+</em> 3.5 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于<code>/var/lib/jenkins/secrets/initialAdminPassword</code><br>* 3.6 插件推荐安装完之后进入创建管理员用户的界面，可以使用已有的admin账号密码（密码可以修改）。<br><br><h6>4. 赋予jenkins运行命令的权限</h6>
+
+<pre><code>vi /etc/sudoers后增加如下命令：
+## Allow root to run any commands anywhere 
+root    ALL=(ALL)     ALL
+jenkins    ALL=NOPASSWD: ALL
+</code></pre><p></p><h6>5. 使用jenkins构建后天台项目</h6><p></p>
+<ul>
+<li>5.1 新建任务（输入一个任务名称，选择“构建一个自由风格的软件项目”）</li>
+<li>5.2 源码管理（选择“Git”，输入仓库URL和git账号）</li>
+<li><p>5.3 构建</p>
+<ul>
+<li>调用顶层Maven目标，目标：clean package -Dmaven.test.skip=true</li>
+<li><p>执行shell，通过脚本进行远程部署，输入执行shell的命令，如：<code>sudo sh /usr/deploy_cmp.sh</code>。shell脚本可以参考如下所示：</p>
+<pre><code>#!/bin/bash
+export BUILD_ID=dontkillme
+TOMCATTHREAD=`ps aux | grep &apos;tomcat-test&apos; | grep -v grep`
+if test -z &quot;$TOMCATTHREAD&quot;
+then 
+    echo &quot;TOMCAT NOT START&quot;
+else  
+    THREADLIST=(${TOMCATTHREAD// / })
+    PID=${THREADLIST[1]}   
+    kill -9 $PID   
+    sleep 5s
+fi  
+    cd /usr/tomcat-test/webapps/   
+    rm -f cmp.war  
+    rm -rf cmp 
+    cp /var/lib/jenkins/workspace/testing001/target/cmp.war /usr/tomcat-test/webapps/
+    cd /usr/tomcat-test/bin
+    ./startup.sh
+    sleep 5s
+</code></pre></li>
+</ul>
+</li>
+<li>5.4 项目构建位置：<code>/var/lib/jenkins/</code></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/01/jemkins自动化部署-后台项目构建/" data-id="cjtyfrvpq00350owv1cfl3pb0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/25/MySQL数据库读写分离/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">MySQL数据库读写分离</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 13.33px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15.56px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.78px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.22px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14.44px;">软件工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/01/jemkins自动化部署-后台项目构建/">jemkins自动化部署--后台项目构建</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/25/MySQL数据库主从复制/">MySQL数据库主从复制</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/24/清理内存缓存与交换空间/">清理内存缓存与交换空间</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/23/Nginx转发SSH代理-Stream模块/">Nginx转发SSH代理-Stream模块</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
