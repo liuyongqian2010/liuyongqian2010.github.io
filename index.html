@@ -98,20 +98,17 @@
         <p></p><h5>jemkins自动化部署–后台项目构建</h5><p></p>
 <hr>
 <hr>
-<h6>1. 简介</h6><br><em> Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目；监控外部调用执行的工作。<br><h6>2. 部署准备</h6>
-</em> 2.1 maven<br>    <em> 安装执行：yum install maven
-    </em> 验证版本：mvn -v<br><em> 2.2 git
-    </em> 安装执行：yum install git<br><h6>3. 部署jenkins</h6><br><em> 3.1 目前版本：jenkins-2.164.1-1.1.noarch.rpm
-</em> 3.2 将rpm包放在/usr下，安装执行：<code>sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm</code><br><br><em> 3.3 安装完毕之后，出现四个文件
-    </em> /usr/lib/jenkins/jenkins.war    WAR包<br>    <em> /etc/sysconfig/jenkins          配置文件
-    </em> /var/lib/jenkins/               默认的JENKINS_HOME目录<br>    <em> /var/log/jenkins/jenkins.log    Jenkins日志文件
+<h6>1. 简介</h6><br><em> Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目；监控外部调用执行的工作。
+</em> 也就是自动化部署<br><br><h6>2. 部署准备</h6><br><em> 2.1 maven
+    </em> 安装执行：yum install maven<br>    <em> 验证版本：mvn -v
+</em> 2.2 git<br>    <em> 安装执行：yum install git<br><br><h6>3. 部署jenkins</h6>
+</em> 3.1 目前版本：jenkins-2.164.1-1.1.noarch.rpm<br><em> 3.2 将rpm包放在/usr下，安装执行：<br><br>        sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm<br><br>        安装完毕之后，出现四个文件<br>        /usr/lib/jenkins/jenkins.war    WAR包<br>        /etc/sysconfig/jenkins          配置文件<br>        /var/lib/jenkins/               默认的JENKINS_HOME目录<br>        /var/log/jenkins/jenkins.log    Jenkins日志文件
 
-</em> 3.4 启动<br>    <em> 启动：sudo service jenkins start
-    </em> 停止：sudo service jenkins stop<br>    <em> 查看：systemctl status jenkins.service
-
-</em> 3.5 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于<code>/var/lib/jenkins/secrets/initialAdminPassword</code><br><br>* 3.6 插件推荐安装完之后进入创建管理员用户的界面，可以使用已有的admin账号密码（密码可以修改）。<br><br><h6>4. 赋予jenkins运行命令的权限</h6>
+</em> 3.3 启动<br><br>        启动：sudo service jenkins start<br>        停止：sudo service jenkins stop<br>        查看：systemctl status jenkins.service<br><br><em> 3.4 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于<code>/var/lib/jenkins/secrets/</code>下的<code>initialAdminPassword</code>文件中。
+</em> 3.5 插件推荐安装完之后进入创建管理员用户的界面，可以使用已有的admin账号密码（密码可以修改）。<br><br><h6>4. 赋予jenkins运行命令的权限</h6>
 
 <pre><code>vi /etc/sudoers后增加如下命令：
+
 ## Allow root to run any commands anywhere 
 root    ALL=(ALL)     ALL
 jenkins    ALL=NOPASSWD: ALL
@@ -151,7 +148,7 @@ fi
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/01/jemkins自动化部署-后台项目构建/" data-id="cjtyg84co003k4gwvqg23b71k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/01/jemkins自动化部署-后台项目构建/" data-id="cjtygkhix003k0cwvbo37ia9q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -279,7 +276,7 @@ mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&a
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="cjtyg849u00244gwvkn4nzonk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="cjtygkhgc00240cwvb3p1f3m8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -381,7 +378,7 @@ select * from tb_test;查看表中是否one test数据存在，证明同步数�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="cjtyg849m001z4gwvf21zo54h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="cjtygkhg4001z0cwvlp9tshs5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -480,7 +477,7 @@ echo 3 &gt; /proc/sys/vm/drop_caches
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="cjtyg84ii00704gwv3qubhwda" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="cjtygkhow006y0cwvfhpwoeqw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -586,7 +583,7 @@ server {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="cjtyg849p00214gwvewm3y3c9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="cjtygkhg700210cwvzlt7atbv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
@@ -651,7 +648,7 @@ JAVA_OPTS=&quot;$JAVA_OPTS -Djava.library.path=/usr/local/apr/lib&quot;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/20/tomcat使用apr模式运行/" data-id="cjtyg84ew004u4gwvx39drnm5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/20/tomcat使用apr模式运行/" data-id="cjtygkhl7004s0cwvaaoaruyg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -736,7 +733,7 @@ liuyongqian     ALL=(ALL)   ALL
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/12/批量添加用户，并设置sudo权限/" data-id="cjtyg84hs006k4gwv7lzzx813" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/12/批量添加用户，并设置sudo权限/" data-id="cjtygkho7006i0cwvsrzgeo2x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -821,7 +818,7 @@ export CATALINA02_BASE CATALINA02_HOME TOMCAT02_HOME
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/12/Centos中同时部署两个以上的Tomcat/" data-id="cjtyg846s000e4gwvuh8vdxyj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/12/Centos中同时部署两个以上的Tomcat/" data-id="cjtygkhda000e0cwvpweotrxf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -900,7 +897,7 @@ export PATH CLASSPATH CATALINA_HOME
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Tomcat9/" data-id="cjtyg84h300664gwv683jgg9f" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Tomcat9/" data-id="cjtygkhnl00660cwv6e8pmz2i" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -1022,7 +1019,7 @@ mongod -f mongodb.conf   或
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="cjtyg84gw00624gwv967js9xy" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="cjtygkhnf00620cwvxmf5adf1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a></li></ul>
