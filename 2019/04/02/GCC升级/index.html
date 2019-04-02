@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>GCC升级 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="GCC升级   1. 选择升级版本  Linux系统默认安装的gcc版本均在4.9以下，一些软件比如NodeJS的编译需要比较高的版本 选择需要升级的版本，http://mirror.koddos.net/gcc/releases/ ，当前选择版本为：gcc-7.4.0.tar.gz  2. 解压源码包  将压缩包放在/usr/local下，进行解压：tar -zvxf gcc-7.4.0.tar">
+<meta name="keywords" content="JAVA项目部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCC升级">
+<meta property="og:url" content="http://yoursite.com/2019/04/02/GCC升级/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="GCC升级   1. 选择升级版本  Linux系统默认安装的gcc版本均在4.9以下，一些软件比如NodeJS的编译需要比较高的版本 选择需要升级的版本，http://mirror.koddos.net/gcc/releases/ ，当前选择版本为：gcc-7.4.0.tar.gz  2. 解压源码包  将压缩包放在/usr/local下，进行解压：tar -zvxf gcc-7.4.0.tar">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-02T14:43:32.220Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GCC升级">
+<meta name="twitter:description" content="GCC升级   1. 选择升级版本  Linux系统默认安装的gcc版本均在4.9以下，一些软件比如NodeJS的编译需要比较高的版本 选择需要升级的版本，http://mirror.koddos.net/gcc/releases/ ，当前选择版本为：gcc-7.4.0.tar.gz  2. 解压源码包  将压缩包放在/usr/local下，进行解压：tar -zvxf gcc-7.4.0.tar">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-GCC升级" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/02/GCC升级/" class="article-date">
+  <time datetime="2019-04-02T13:45:35.000Z" itemprop="datePublished">2019-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      GCC升级
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>GCC升级</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 选择升级版本</h6><p></p>
+<ul>
+<li>Linux系统默认安装的gcc版本均在4.9以下，一些软件比如NodeJS的编译需要比较高的版本</li>
+<li>选择需要升级的版本，<a href="http://mirror.koddos.net/gcc/releases/" target="_blank" rel="noopener">http://mirror.koddos.net/gcc/releases/</a> ，当前选择版本为：gcc-7.4.0.tar.gz</li>
+</ul>
+<p></p><h6>2. 解压源码包</h6><p></p>
+<ul>
+<li>将压缩包放在/usr/local下，进行解压：tar -zvxf gcc-7.4.0.tar.gz</li>
+<li>装备bzip2软件，之后的编译需要，执行：yum install bzip2</li>
+</ul>
+<p></p><h6>3. 开始编译安装</h6><p></p>
+<ul>
+<li><p>下载供编译需要的依赖项</p>
+<pre><code>cd /usr/local/gcc-7.4.0/ 后执行命令：
+./contrib/download_prerequisites
+</code></pre></li>
+<li><p>编译安装</p>
+<pre><code>mkdir build  新建一个文件夹存放编译文件
+cd build     后进行编译：
+../configure --enable-languages=c,c++ --enable-checking=release  -disable-multilib  仅安装64位执行
+make         生成Makefile文件，该过程可能会很耗时，起码90分钟
+make install 之后执行安装命令
+</code></pre></li>
+</ul>
+<p></p><h6>4. 解决运行程序gcc出现’GLIBCXX_3.4.21’ not found</h6><p></p>
+<ul>
+<li><p>4.1 具体错误</p>
+<pre><code>/usr/node-v10.15.3/out/Release/torque: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.20&apos; not found (required by /usr/node-v10.15.3/out/Release/torque)
+</code></pre></li>
+<li><p>4.2 问题原因：升级gcc时，生成的动态库没有替换老版本 gcc 动态库导致</p>
+</li>
+<li><p>4.3 解决方案：将gcc最新版本的动态库替换系统中老版本的动态库。</p>
+<ul>
+<li><p>查找编译gcc时生成的最新动态库 </p>
+<pre><code>find / -name &quot;libstdc++.so*&quot;，
+最新动态库为：/usr/local/gcc-7.4.0/build/stage1-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24
+</code></pre></li>
+<li><p>将找到的动态库libstdc++.so.6.0.24复制到/usr/lib64下</p>
+<pre><code>cp /usr/local/gcc-7.4.0/build/stage1-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24 /usr/lib64
+</code></pre></li>
+<li><p>切换工作目录至/usr/lib64，删除原来的软连接，将默认库的软连接指向最新动态库。</p>
+<pre><code>cd /usr/lib64
+rm -rf libstdc++.so.6
+ln -s libstdc++.so.6.0.24 libstdc++.so.6
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>5. 重启服务器，验证版本</h6><p></p>
+<ul>
+<li>执行命令：gcc -v</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/02/GCC升级/" data-id="cjtzwbqm9000ldwwvrwcw38ru" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/02/编译部署NodeJS/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          编译部署NodeJS
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/01/jenkins自动化部署-构建后台项目/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">jenkins自动化部署--构建后台项目</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.25px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.75px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.25px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.25px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.75px;">软件工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/02/jenkins自动化部署-构建前端项目/">jenkins自动化部署--构建前端项目</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/02/编译部署NodeJS/">编译部署NodeJS</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/02/GCC升级/">GCC升级</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/01/jenkins自动化部署-构建后台项目/">jenkins自动化部署--构建后台项目</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -70,6 +70,424 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-HTML DOM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/HTML DOM/" class="article-date">
+  <time datetime="2018-02-27T09:35:14.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/27/HTML DOM/">HTML DOM</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>HTML DOM</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>标准DOM与HTML DOM</h6><p></p>
+<ul>
+<li>标准DOM提供了统一的操作接口<ul>
+<li>createElement</li>
+<li>appendChild</li>
+<li>setAttribute</li>
+<li>…</li>
+</ul>
+</li>
+<li>HTML DOM提供了封装好的各种对象<ul>
+<li>Image</li>
+<li>Select</li>
+<li>Option…</li>
+</ul>
+</li>
+<li><p>标准DOM的实现方式</p>
+<pre><code>var newNode = document.createElement(&apos;img&apos;);
+</code></pre></li>
+<li><p>HTML DOM的实现方式</p>
+<pre><code>var newNode = new Image();
+</code></pre></li>
+<li>标准DOM操作适合于：<ul>
+<li>操作节点，创建，删除，查找等</li>
+</ul>
+</li>
+<li>HTML DOM操作适合于：<ul>
+<li>操作属性，如读取或者修改属性的值</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>常用HTML DOM对象</h6><p></p>
+<ul>
+<li><p>Image对象</p>
+<ul>
+<li>Image对象代表嵌入的图像</li>
+<li>img标签每出现一次，一个Image对象就会被创建</li>
+<li>也可以使用new Image()创建一个新的对象</li>
+<li><p>常用属性：src,height,width</p>
+<pre><code>var div=document.createElement(&apos;div&apos;)
+document.body.appendChild(div)
+var img=new Image()
+img.src=&quot;001.jpg&quot;
+div.appendChild(img)
+</code></pre></li>
+</ul>
+</li>
+<li><p>Table对象</p>
+<pre><code>var arr=[
+ [&apos;tom1&apos;,&apos;23&apos;,&apos;python&apos;],
+ [&apos;tom2&apos;,&apos;23&apos;,&apos;python&apos;],
+ [&apos;tom3&apos;,&apos;23&apos;,&apos;python&apos;],
+ [&apos;tom4&apos;,&apos;23&apos;,&apos;python&apos;]
+ ]
+ var table=document.createElement(&apos;table&apos;)
+ table.width=300
+ table.border=1
+ document.body.appendChild(table)
+ for (var i in arr )
+ {
+     var tr=table.insertRow()
+     for(var j in arr[i]){
+        var td=tr.insertCell()
+        td.innerHTML=arr[i][j]
+     }
+ }
+ console.log(table.rows)//属性rows，返回表格的行
+ table.insertRow(4)//在表格第五行创建一行
+ table.deleteRow(4)//删除第五行
+
+ console.log(table.rows[0].cells)//属性cells,获取所在行所有单元格
+ console.log(table.rows[0].rowIndex)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjtzwbqn10010dwwva9o0bdl6" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-初识DOM与BOM" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/初识DOM与BOM/" class="article-date">
+  <time datetime="2018-02-27T09:34:33.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/27/初识DOM与BOM/">初识DOM与BOM</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>DOM与BOM</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>DHTML</h6><p></p>
+<ul>
+<li>动态HTML,是一种将目前已有的网页技术、语言标准整合运用，制作出能在下载后仍然能实时变换页面元素效果的网页设计概念</li>
+<li>DHTML的功能:动态改变页面元素；与用户进行交互<br>DHTML对象模型包括DOM和BOM</li>
+<li>DOM：Document Object Model，文档对象模型，用来操作文档<ul>
+<li>定义了访问和操作HTML文档的标准方法</li>
+<li>通过对DOM树的操作，实现对HTML文档内容的操作</li>
+</ul>
+</li>
+<li>BOM：Browser Object Model，浏览器对象模型，用来访问和操做浏览器窗口，使JavaScript有能力与浏览器“对话”<ul>
+<li>通过使用BOM，可移动窗口，更改状态文本，执行其它与页面内容发生直接联系的操作</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>DOM</h6><p></p>
+<ul>
+<li>W3C DOM标准被分为3个不同的部分：<ul>
+<li>核心DOM 针对任何结构化文档的标准模型</li>
+<li>XML DOM 针对XML文档的标准模型</li>
+<li>HTML DOM针对HTML文档的标准模型（下面说这个）</li>
+</ul>
+</li>
+<li>document对象<ul>
+<li>文档中的所有节点组成了一个文档树，document对象是一颗文档树的根</li>
+<li>浏览器内置的JS解释器会为载入的每个HTML文档创建一个对应的document对象</li>
+<li>通过使用document对象，可以从脚本中对HTML页面中的所有元素进行访问</li>
+</ul>
+</li>
+<li><p>DOM节点树</p>
+<ul>
+<li>文档中的元素、属性、文本、注释等都被看作一个节点</li>
+<li><p>上下层节点：</p>
+<pre><code>parentNode  获取父节点
+childNodes  获取子节点集合
+firstChild  获取第一个子节点
+lastChild   获取最后一个子节点
+</code></pre></li>
+<li><p>平行层节点</p>
+<pre><code>previousSibling  获取上一个兄弟节点
+nextSibling      获取下一个兄弟节点
+</code></pre></li>
+<li>节点名称、类型、值<ul>
+<li>nodeName、nodeType、nodeValue</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>元素节点属性</p>
+<ul>
+<li>innerHTML 读取或设置元素节点中的HTML内容</li>
+<li>textContent 用于读取或设置元素节点中的文本内容</li>
+<li><p>attributes 返回节点的属性集合，即一个类数组对象</p>
+<ul>
+<li><p>读取属性</p>
+<pre><code>（1）element.attributes[下标].value
+（2）element.attributes[&apos;属性名&apos;].value
+（3）element.getAttributeNode(&apos;属性名&apos;).value
+（4）element.getAttribute(&apos;属性名&apos;)
+</code></pre></li>
+<li><p>设置属性</p>
+<pre><code>（1）element.setAttribute(name,value);
+（2）element.setAttributeNode(attrNode)
+</code></pre></li>
+<li><p>移除属性</p>
+<pre><code>（1）element.removeAttribute(&apos;属性名&apos;);
+（2）element.removeAttributeNode(attrNode)
+</code></pre></li>
+<li><p>判断属性</p>
+<pre><code>element.hasAttribute(&apos;属性名&apos;);//true或false
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>动态创建DIV</p>
+<pre><code>&lt;body&gt;
+    &lt;button onclick=&quot;createDiv()&quot;&gt;创建DIV&lt;/button&gt;
+    &lt;h1 style=&quot;clear:both&quot;&gt;&lt;/h1&gt;
+    &lt;script&gt;
+        function createDiv(){
+            var div=document.createElement(&apos;div&apos;)
+            div.setAttribute(&apos;style&apos;,&apos;width:100px;height:100px;background:&apos;+roundColor()+&apos;;margin:20px;float:left&apos;)
+            document.body.appendChild(div)
+            div.onclick=removeDiv
+        }
+        function roundColor(){
+            var str=&apos;1234657890abcdef;
+            var s=&apos;#&apos;;
+            for (var i=0; i&lt;6; i++)
+            {
+                var n=parseInt(Math.random()*str.length)
+                s+=str.charAt(n)
+            }
+            return s;
+        }
+        function removeDiv(){
+            document.body.removeChild(this);
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjtzwbqv9005hdwwvg3lqxsqt" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-匿名函数、封装继承" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/匿名函数、封装继承/" class="article-date">
+  <time datetime="2018-02-27T04:21:32.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/27/匿名函数、封装继承/">匿名函数、封装继承</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>匿名函数、封装继承</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>匿名函数</h6><p></p>
+<ul>
+<li><p>JavaScript中创建函数的三种方式</p>
+<pre><code>//使用function关键字声明命名函数
+function functionName{
+    functionBody;
+}
+//使用直接量方式命名函数
+var functionName = function(){
+    functionBody;
+}
+//使用Function对象构造方法创建函数
+var functionName = new Function(arg1,arg2,functionBody)
+</code></pre></li>
+<li><p>匿名函数，就是定义时未直接指定名称的函数，仅在调用时，才临时创建函数对象和作用域链对象，调用完，立刻释放；所以，匿名函数比非匿名函数更节省内存空间</p>
+<pre><code>function(num1,num2){
+    console.log(num1+num2);
+}
+
+var fn1=function(){
+    console.log(&quot;sad&quot;)
+}();                //隐式匿名函数；匿名函数只能调用一次，调用完立即释放
+fn1()                //sad
+fn1()                //fn1 is not a function
+
+function a(fn){
+    var num=fn()
+    console.log(num)
+}
+a(function(){          //回调函数，将一个函数作为另一个函数的参数
+    return 10+3
+})                  //13
+</code></pre></li>
+</ul>
+<p></p><h6>闭包</h6><p></p>
+<ul>
+<li><p>函数套函数，该函数能使用函数外定义的变量</p>
+<pre><code>function a(){
+    function b(){
+        console.log(1)  //闭包；函数套函数；就是一种访问局部变量的特殊方式
+    }
+    b()
+}
+a()
+</code></pre></li>
+<li><p>闭包的主要作用是：</p>
+<ul>
+<li>1.提供可共享的局部变量</li>
+<li>2.保护共享的局部变量。提供专门的读写变量的函数</li>
+<li>3.避免全局污染</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>封装继承</h6><p></p>
+<ul>
+<li>封装：把相关的信息（无论数据或方法）存储在对象中<br>继承：从其它对象获得属性和方法<br>多态：能以多种不同的形式运行函数或方法<br>原型：在JavaScript中，函数本身也是一个包含了方法和属性的对象，每个函数都有一个prototype属性，该属性引用的是原型对象；原型对象是保存共享属性值和共享方法的对象</li>
+<li>JavaScript中主要通过原型实现继承，通过原型实现继承主要有以下两中方式：<ul>
+<li>1.修改构造函数的原型，为该构造函数创建的对象指定统一的父级对象<br>语法：构造函数.prototype = 父级对象；</li>
+<li>2.单独修改一个对象的原型，而不影响其它对象的原型<br>语法：Object.setPrototypeOf(子对象,父级对象)</li>
+</ul>
+</li>
+<li><p>说明</p>
+<pre><code>&lt;script&gt;
+    function emp(ename,age){                //工厂函数
+        this.ename=ename;                   //谁调用this，this就指向谁;运用在函数中,this为当前对象
+        this.age=age;
+        console.log(this);
+    }
+    //为原型添加属性，子对象自动继承原型（父对象）所有的属性和方法
+    emp.prototype.jineng=&quot;我们都会HTML&quot;      //prototype是构造函数的方法，扩展共享属性值
+    var obj1=new emp(&apos;Tom&apos;,&apos;30&apos;)            //实例化对象
+    obj1.job=function(){                    //自有属性/方法
+        console.log(&apos;JAVA&apos;)
+    }
+    obj1.job()                              //JAVA
+    var obj2=new emp(&apos;Array&apos;,&apos;28&apos;)
+    obj2.work=function(){
+        console.log(&apos;Python&apos;)
+    }
+    Object.setPrototypeOf(obj2,obj1)        //修改单个对象的原型,前子后父
+    obj2.job()                              //JAVA
+    obj2.work()                             //Python
+    console.log(obj1.jineng)                //我们都会HTML
+    console.log(obj2.jineng)                //我们都会HTML
+
+    function a(){
+        this.ename=&quot;Tom&quot;
+    }
+    function b(){
+        this.age=&quot;29&quot;
+    }
+    b.prototype=new a()            //修改原型父对象,只有函数名能调用prototype
+    var obj=new b()
+    console.log(obj.age)        //29
+    console.log(obj.ename)      //Tom
+
+    var heihei={age:25}            //直接量创建对象
+    var obj={name:123};
+    Object.setPrototypeOf(obj,heihei)
+    //console.log(obj)             //打印出来是undefined,其原型是Object
+    console.log(Object.getPrototypeOf(obj))     //获取原型
+    console.log(heihei.isPrototypeOf(obj))      //isPrototypeOf()方法用于判定一个prototype对象是否存在于另一个对象的原型链中
+&lt;/script&gt;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjtzwbqvh005ldwwv4v5y2akt" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-模块、包、枚举" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/02/26/模块、包、枚举/" class="article-date">
@@ -195,7 +613,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjtyi5lxu006wbswvk1mv0t91" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjtzwbqy20073dwwvof99p6fm" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -392,7 +810,7 @@ print(guodi())
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjtyi5lz9007sbswvjmmtzkk3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjtzwbqzj007xdwwvplw7pfqi" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -578,7 +996,7 @@ callee：返回当前函数的引用
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cjtyi5loz001dbswvfyd4bjsb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cjtzwbqnx001gdwwvr3afetf1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -794,7 +1212,7 @@ test()         检索字符串中指定的值。返回true或false
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js数组、正则/" data-id="cjtyi5lp5001hbswvpwj0pw2f" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/Js数组、正则/" data-id="cjtzwbqo5001ldwwv6frysya7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -948,7 +1366,7 @@ while(i&lt;10){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js基础、函数、循环/" data-id="cjtyi5lp2001fbswvatui72ge" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/Js基础、函数、循环/" data-id="cjtzwbqns001ddwwv0vzho88a" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1154,7 +1572,7 @@ background-color：颜色参数
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/21/CSS全析/" data-id="cjtyi5ln40004bswvaow9vi07" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/21/CSS全析/" data-id="cjtzwbqk90000dwwvq60lss7a" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1333,499 +1751,10 @@ void    不显示表格边框
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/21/表格、表单/" data-id="cjtyi5lyq007gbswvmritnuu1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/21/表格、表单/" data-id="cjtzwbqyw007ldwwv1cmbgnpo" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-标签、链接、列表、框架" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/21/标签、链接、列表、框架/" class="article-date">
-  <time datetime="2018-02-21T01:28:48.000Z" itemprop="datePublished">2018-02-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/21/标签、链接、列表、框架/">标签、链接、列表、框架</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>标签、链接、列表、框架</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>标签</h6><p></p>
-<ul>
-<li><p>文本格式化标签<br>格式化标签是使用一些标签来改变字体的形态和式样，以便产生一些浏览者习惯的或约定的显示效果，放在标签之间的文字受其控制</p>
-<pre><code>&lt;b&gt;            定义粗体文本     
-&lt;i&gt;            定义斜体字
-&lt;del&gt;        定义删除字       
-&lt;sub&gt;        定义下标字
-&lt;sup&gt;        定义上标字       
-&lt;small&gt;     定义小号字
-&lt;strong&gt;    定义加重语气字    
-&lt;em&gt;        定义着重文
-&lt;ins&gt;        定义插入字
-</code></pre></li>
-<li><p>引用输出标签</p>
-<pre><code>&lt;code&gt;            定义计算机代码        
-&lt;pre&gt;            定义预格式文本
-&lt;address&gt;        定义地址          
-&lt;q&gt;                  定义短的引用
-&lt;bdo dir=&apos;rtl&apos;&gt;    定义文字方向
-</code></pre></li>
-<li><p>字符实体<br>在 HTML 文档中，有些字符没办法直接显示出来，需要用一些代码来表示它们</p>
-<pre><code>空格      &amp;nbsp
-&lt;        &amp;lt                
-&gt;        &amp;gt
-&amp;        &amp;amp            
-&quot;        &amp;quot
-®        &amp;reg            
-TM         &amp;trade
-Ⓒ        &amp;copy            
-×        &amp;times
-÷        &amp;divide
-</code></pre></li>
-<li><p>html常用标签</p>
-<pre><code>&lt;!DOCTYPE html/&gt;
-&lt;html&gt;
-&lt;head lang=&quot;en&quot;&gt;
-    &lt;meta charset=&quot;utf-8&quot;/gb2312&gt;      
-    &lt;meta name=&quot;Author&quot; content=&quot;Liu&quot;&gt; #&lt;meta&gt; 定义网页的基本信息（供搜索引擎抓取）
-    &lt;title&gt;document&lt;/title&gt;            #定义网页标题（唯一）
-    &lt;link ...&gt;                         #导入外部文件
-    &lt;script&gt;...&lt;/script&gt;               #定义JS脚本语言
-    &lt;style&gt;...&lt;/style&gt;                 #定义CSS样式
-&lt;/head&gt;
-    &lt;body&gt;
-          &lt;hn&gt;...&lt;/hn&gt;                   #标题标签
-        &lt;p&gt;...&lt;/p&gt;                     #段落标签
-        &lt;br/&gt;                          #换行标签
-        &lt;hr/&gt;                          #水平线标签
-        &lt;span&gt;...&lt;/span&gt;               #无语义标签
-        &lt;div&gt;...&lt;/div&gt;
-        &lt;img src=&apos;图片路径&apos;&gt;            #图片标签
-        &lt;!--注释内容--&gt;                 #注释
-    &lt;/body&gt;
-&lt;/html&gt;
-</code></pre></li>
-<li>元素归纳<ul>
-<li>块状元素（独占一行，可设置宽高）：address blockquote center div ul ol dl form hn  hr p pre table </li>
-<li>内联元素（只可设置水平方向的margin padding）：a b br code em font i img input label q select small span strong sub sup textarea u下划线 strike中划线</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>链接</h6><p></p>
-<ul>
-<li><p>超链接</p>
-<pre><code>#超链接语法
-&lt;a href=&quot;资源地址&quot; target=&quot;窗口名称&quot; title=&quot;鼠标指向连接显示的文字&quot;&gt;超链接名称&lt;/a&gt;
-注：target,  _blank在新窗口打开    _self在同一个窗口打开    _top在浏览器的整个窗口中打开
-
-&lt;a href=&quot;基本标签.html&quot; title=&quot;这是跳转基本标签的超链接&quot; target=&quot;_blank&quot;&gt;这是第一个网页&lt;/a&gt;
-&lt;a href=&quot;pictures/大山.jpg&quot; &gt;这里是下载图片的链接&lt;/a&gt;
-</code></pre></li>
-<li><p>锚链接</p>
-<ul>
-<li><p>1.在同一个页面要使用链接</p>
-<pre><code>#语法：
-&lt;a href=&quot;#书签名称&quot; target=&quot;窗口名称&quot;&gt;超链接标题名称&lt;/a&gt;
-
-&lt;h1 align=&quot;center&quot; colour=&quot;blue&quot;&gt;三国演义&lt;/h1&gt;
-&lt;center&gt;
-    &lt;a href=&quot;#s1&quot;&gt;第一回&lt;/a&gt;&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp;
-    &lt;a href=&quot;#s2&quot;&gt;第二回&lt;/a&gt;&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp;
-    &lt;a href=&quot;#s3&quot;&gt;第三回&lt;/a&gt;&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp&amp;nbsp;
-&lt;/center&gt;
-&lt;div&gt;
-    &lt;a name=&quot;s1&quot;&gt;&lt;/a&gt;
-    &lt;h3&gt;第一回 宴桃园豪杰三结义  斩黄巾英雄首立功&lt;/h3&gt;
-    &lt;p&gt;话说天下大势，分久必合，合久必分&lt;/p&gt;
-&lt;/div&gt;
-&lt;div&gt;
-    &lt;a name=&quot;s2&quot;&gt;&lt;/a&gt;
-    &lt;h3&gt;第二回 张翼德怒鞭督邮  何国舅谋诛宦竖&lt;/h3&gt;
-    &lt;p&gt;话说天下大势，分久必合，合久必分&lt;/p&gt;
-&lt;/div&gt;
-&lt;div&gt;
-    &lt;a name=&quot;s3&quot;&gt;&lt;/a&gt;
-    &lt;h3&gt;第三回 议温明董卓叱丁原 馈金珠李肃说吕布&lt;/h3&gt;
-    &lt;p&gt;话说天下大势，分久必合，合久必分&lt;/p&gt;
-&lt;/div&gt;
-</code></pre></li>
-<li><p>2.在不同页面要使用链接</p>
-<pre><code>#语法：
-&lt;a href=&quot; URL地址 #书签名称&quot; target=&quot;窗口名称&quot;&gt;超链接标题名称&lt;/a&gt;
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>列表</h6><p></p>
-<ul>
-<li><p>无序列表</p>
-<pre><code>&lt;ul type=&quot;square&quot;&gt;
-    &lt;li&gt;小方块&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul type=&quot;circle&quot;&gt;
-    &lt;li&gt;空心圆&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul type=&quot;disc&quot;&gt;
-    &lt;li&gt;默认实心圆&lt;/li&gt;
-&lt;/ul&gt;
-</code></pre></li>
-<li><p>有序列表<br>顺序编号的设置是由两个属性type和start 来完成的</p>
-<pre><code>#语法：
-&lt;ol type=A  start=A&gt;           #type用于编号的类型，可以为数字、大小写字母、大小写罗马数字
-    &lt;li&gt;......&lt;/li&gt; 
-    &lt;li  value=&quot;n&quot;&gt;....&lt;/li&gt;   #value 改变列表行项目的特定编号
-&lt;/ol&gt;
-
-&lt;ol type=1 start=3&gt;
-    &lt;li&gt;仓库&lt;/li&gt;
-    &lt;li&gt;仓库&lt;/li&gt;
-    &lt;li&gt;仓库&lt;/li&gt;
-&lt;/ol&gt;
-</code></pre></li>
-<li><p>嵌套列表</p>
-<pre><code>&lt;ol type=A&gt;
-    &lt;li&gt;名次&lt;/li&gt;
-    &lt;ul&gt;
-        &lt;li type=&quot;circle&quot;&gt;姓名&lt;/li&gt;
-    &lt;/ul&gt;
-&lt;/ol&gt;
-</code></pre></li>
-<li><p>自定义列表</p>
-<pre><code>#默认两个层次，第一层为列表项标签&lt;dt&gt;,第二层为注释项标签&lt;dd&gt;
-&lt;dl&gt;
-    &lt;dt&gt;第一项&lt;/dt&gt;&lt;dd&gt;注释一&lt;/dd&gt;
-    &lt;dt&gt;第二项&lt;dd&gt;注释二
-    &lt;dt&gt;第三项&lt;dd&gt;注释三
-&lt;/dl&gt;
-</code></pre></li>
-</ul>
-<p></p><h6>框架</h6><p></p>
-<ul>
-<li>框架就是把一个浏览器窗口划分为若干个小窗口，每个窗口可以显示不同的 URL 网页。使用框架可以非常方便的在浏览器中同时浏览不同的页面效果，也可以非常方便的完成导航工作<br>而所有的框架标记要放在一个html文档中。html页面的文档体标签<body>被框架集标签frameset所取代，然后通过frameset的子窗口标签frame定义每一个子窗口和子窗口的页面属性</body></li>
-<li><p>框架集frameset控制</p>
-<ul>
-<li><p>框架结构可以根据框架集标签frameset的分割属性分为3种：左右分割、上下分割、嵌套分割</p>
-<pre><code>border                设置边框粗细，默认是5px
-bordercolor            设置边框颜色
-frameborder            指定是否显示边框，0表示不显示，1表示显示
-cols                可用像素、百分比
-rows                可用像素、百分比
-framespacing=&quot;5&quot;    表示框架间保留空白的距离
-</code></pre></li>
-</ul>
-</li>
-<li><p>子窗口frame标签的设定</p>
-<ul>
-<li><p>frame是个单标签,frame标签要放在框架集frameset中,frameset设置了几个子窗口就必须对应几个frame标签，而且每一个frame标签内还必须设定一个网页文件src=”*.html”,其常用属性有:</p>
-<pre><code>src                指定加载的URL文件地址
-bordercolor        设定边框颜色
-frameborder        指定是否需要边框，1显示边框，0不显示
-border            设置边框粗细
-name            指示框架名称，是连接标记的target所要的参数
-scorlling        指示是否需要滚动条，auto yes no
-marginwidth        设置内容与窗口左右边缘的距离，默认为1
-marginheight    设置内容与窗口上下边缘的距离，默认为1
-width            框窗的宽及高，默认width-100，height-100
-align            等于left right center top middle bottom
-</code></pre></li>
-</ul>
-</li>
-<li><p>比如</p>
-<pre><code>&lt;!doctype html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-    &lt;head&gt;
-        &lt;meta charset=&quot;UTF-8&quot;&gt;
-        &lt;title&gt;框架&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;frameset cols=&quot;25%,50%,25%&quot;&gt;
-        &lt;frame src=&quot;基本标签.html&quot;&gt;
-        &lt;frame src=&quot;列表表格.html&quot;&gt;
-        &lt;frame src=&quot;......&quot;&gt;
-        &lt;noframes&gt;                #这对标签的作用是避免浏览器版本太旧而无法显示时会弹出提示语，而不是一片空白
-            &lt;body&gt;您的浏览器无法处理框架&lt;/body&gt;
-        &lt;/noframes&gt;    
-    &lt;/frameset&gt;
-&lt;/html&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/21/标签、链接、列表、框架/" data-id="cjtyi5lxr006ubswvcfkvm80o" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-推导" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/05/推导/" class="article-date">
-  <time datetime="2018-02-05T14:52:41.000Z" itemprop="datePublished">2018-02-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/05/推导/">推导</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>推导</h5><p></p>
-<hr>
-<hr>
-<h6>三元表达式</h6>
-
-<ul>
-<li><p>类似C语言的三元条件表达式condition ? true_part : false_part，虽然Python没有三目运算符(?:)，但也有类似的替代方案，那就是true_part if condition else false_part</p>
-<pre><code>m=&apos;Fire&apos; if True else &apos;Water&apos;
-print(m)
-</code></pre></li>
-</ul>
-<h6>推导</h6>
-
-<ul>
-<li>推导式是Python中很强大的、很受欢迎的特性，具有语言简洁，速度快等优点</li>
-<li><p>列表推导式</p>
-<pre><code>list1=[]                       #例子1：10之内整除3的数
-for i in range(10):
-    if i%3==0:
-        list1.append(i)
-print(list1)                   #result:[0, 3, 6, 9]
-
-n=[i for i in range(10) if i%3==0]   #使用推导
-print(n)                             #result:[0, 3, 6, 9]
-
-def squared(x):                #例子2,10之内整除3的数的平方
-    return x*x
-list2=[]
-for i in range(10):
-    if i%3==0:
-        list2.append(squared(i))
-print(list2)                   #result:[0, 9, 36, 81]
-
-n=[squared(i) for i in range(10) if i%3==0]  #使用推导
-print(n)                                     #result:[0, 9, 36, 81]
-
-m=(squared(i) for i in range(10) if i%3==0)  #使用()生成generator将俩表推导式的[]改成()即可得到生成器
-print(type(m))                 #result:&lt;class &apos;generator&apos;&gt;
-print(next(m))                 #result:0
-print(next(m))                 #result:9
-</code></pre></li>
-<li><p>字典推导式<br>字典推导和列表推导的使用方法是类似的，只不过中括号改成大括号</p>
-<pre><code>dict1={&apos;a&apos;:1,&apos;b&apos;:2,&apos;c&apos;:3}
-for k,v in dict1.items():
-    print(k,v)                 #result:b 2     c 3     a 1
-
-n={(k,v) for k,v in dict1.items()}  #(k,v)可以写成k:v,就是要保证是一个值
-print(n)                            #result:{(&apos;c&apos;, 3), (&apos;a&apos;, 1), (&apos;b&apos;, 2)}
-</code></pre></li>
-<li><p>集合推导式<br>跟列表推导式也是类似的，唯一的区别在于它使用大括号{}</p>
-<pre><code>#用集合推导获取字符串长度的集合
-set1=[&apos;a&apos;,&apos;is&apos;,&apos;with&apos;,&apos;if&apos;,&apos;file&apos;,&apos;exception&apos;]
-m={len(i) for i in set1}
-print(m)                        #result:{1, 2, 4, 9}
-</code></pre></li>
-</ul>
-<h6>小练习</h6>
-
-<pre><code>#练习1,0--9的次方
-n={i*i for i in range(10)}
-print(n)                        #result:{0, 1, 64, 4, 36, 9, 16, 49, 81, 25}
-
-#练习2,将单词长度大于3的转化为大写输出
-n={&apos;Liu&apos;,&apos;yong&apos;,&apos;qian&apos;,&apos;is&apos;,&apos;a&apos;,&apos;engineer&apos;}
-m=[i.upper() for i in n if len(i)&gt;3]
-print(m)                        #result:[&apos;YONG&apos;, &apos;ENGINEER&apos;, &apos;QIAN&apos;]
-
-#练习3,求(x,y)其中x是0-5之间的偶数，y是0-5之间的奇数组成的元祖列表
-n=[(x,y) for x in range(0,6,2) for y in range(1,6,2)]
-print(n)                        #result:[(0, 1), (0, 3), (0, 5), (2, 1), (2, 3), (2, 5), (4, 1), (4, 3), (4, 5)]
-
-#练习4,求n中3,6,9组成的列表，斜线1,5,9组成的列表
-n=[[1,2,3],[4,5,6],[7,8,9]]
-m=[i[2] for i in n]
-print(m)                        #result:[3, 6, 9]
-
-m=[n[i][i] for i in range(len(n))]
-print(m)                        #result:[1, 5, 9]
-
-#练习5,求m,n中矩阵元素的乘积
-n=[[1,2,3],[4,5,6],[7,8,9]]
-m=[[2,2,2],[3,3,3],[4,4,4]]
-
-a=[n[i][j]*m[i][j] for i in range(len(n)) for j in range(len(n[i]))]
-print(a)                        #result:[2, 4, 6, 12, 15, 18, 28, 32, 36]
-
-#练习6,组成不重复数字的3位数组合
-a=[1,2,3,4]
-b=[1,2,3,4]
-c=[1,2,3,4]
-
-m=[i*100+j*10+k for i in a for j in b for k in c if i!=j and i!=k and j!=k]
-print(m)
-
-#练习7
-n=[[1,2,3,4],[2,4,6,8],[3,5,7,9]]
-m=[[n[i][j] for i in range(3)] for j in range(4)]
-print(m)                        #result:[[1, 2, 3], [2, 4, 5], [3, 6, 7], [4, 8, 9]]
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/05/推导/" data-id="cjtyi5lxf006mbswvs0nylv6h" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-随机数Random" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/02/随机数Random/" class="article-date">
-  <time datetime="2018-02-02T11:11:33.000Z" itemprop="datePublished">2018-02-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/02/随机数Random/">随机数Random</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Random随机数</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>常用函数</h6><p></p>
-<ul>
-<li><p>random() 用于生成一个0到1的随机浮点数</p>
-<pre><code>print(random.random())                  #result:0.3319445476632338
-</code></pre></li>
-<li><p>uniform(x,y) 用于生成指定该范围内的随机浮点数，两个参数其中一个是上限，一个是下限，可以不考虑先后顺序</p>
-<pre><code>print(random.uniform(1,9))              #result:6.238616035651107
-</code></pre></li>
-<li><p>randint(x,y) 用于生成一个指定范围内的整数，两个参数其中x为下限，y为上限</p>
-<pre><code>print(random.randint(1,9))              #result:8
-</code></pre></li>
-<li><p>randrange(start,stop,step) 从指定范围内，按指定基数递增的集合中，获取一个随机数</p>
-<pre><code>print(random.randrange(1,9,2))          #相当于从[1,3,5,7]序列中获取一个随机数
-</code></pre></li>
-<li><p>choice() 从序列中获取一个随机元素</p>
-<pre><code>print(random.choice(&apos;LiuYongqian&apos;))     #result:Y
-</code></pre></li>
-<li><p>shuffle() 用于将一个列表中的元素打乱</p>
-<pre><code>m=[&apos;Liu&apos;,&apos;Yong&apos;,&apos;Qian&apos;]
-random.shuffle(m)
-print(m)                                #result:[&apos;Yong&apos;, &apos;Liu&apos;, &apos;Qian&apos;]
-</code></pre></li>
-<li><p>sample() 从指定序列中随机获取指定长度的片断，该函数不会修改原有序列</p>
-<pre><code>m=[0,1,2,3,4,5,6,7,8,9]
-n=random.sample(m,5)
-print(n)                                #result:[2, 8, 5, 1, 3]
-</code></pre></li>
-</ul>
-<p></p><h6>双色球</h6><p></p>
-<ul>
-<li><p>运用sample()函数实现</p>
-<pre><code>import random
-list1,list2=range(1,34),range(1,17)
-blue=random.sample(list1,6)
-blue.sort()
-red=random.sample(list2,1)
-
-ball=blue+red
-print(ball)                             #result:[3, 5, 9, 11, 31, 32, 10]
-</code></pre></li>
-<li><p>运用递归实现</p>
-<pre><code>import random
-list1,list2=range(1,34),range(1,17)
-ball=[]
-def getBlueNum():
-    m=random.choice(list1)
-    if m not in ball:
-        ball.append(m)
-    else:
-        getBlueNum()
-
-for i in range(6):
-    getBlueNum()
-rednum=random.sample(list2,1)
-ball.append(rednum)
-print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/随机数Random/" data-id="cjtyi5lzc007ubswvmc6ty83h" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1854,7 +1783,7 @@ print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MongoDB数据库/">MongoDB数据库</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis数据库/">Redis数据库</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">7</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1864,7 +1793,7 @@ print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 13.33px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MongoDB数据库/" style="font-size: 12.22px;">MongoDB数据库</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Redis数据库/" style="font-size: 15.56px;">Redis数据库</a> <a href="/tags/Web前端/" style="font-size: 16.67px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15.56px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.78px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.22px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 14.44px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.25px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.75px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.25px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.25px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.75px;">软件工具</a>
     </div>
   </div>
 
@@ -1873,7 +1802,7 @@ print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1886,23 +1815,23 @@ print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
       <ul>
         
           <li>
+            <a href="/2019/04/02/jenkins自动化部署-构建前端项目/">jenkins自动化部署--构建前端项目</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/02/编译部署NodeJS/">编译部署NodeJS</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/02/GCC升级/">GCC升级</a>
+          </li>
+        
+          <li>
             <a href="/2019/04/01/jenkins自动化部署-构建后台项目/">jenkins自动化部署--构建后台项目</a>
           </li>
         
           <li>
             <a href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/25/MySQL数据库主从复制/">MySQL数据库主从复制</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/24/清理内存缓存与交换空间/">清理内存缓存与交换空间</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/23/Nginx转发SSH代理-Stream模块/">Nginx转发SSH代理-Stream模块</a>
           </li>
         
       </ul>
