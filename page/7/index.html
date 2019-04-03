@@ -70,6 +70,150 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-pyquery模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/23/pyquery模块/" class="article-date">
+  <time datetime="2018-03-23T15:15:27.000Z" itemprop="datePublished">2018-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/23/pyquery模块/">pyquery模块</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>pyquery模块</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>PyQuery库也是一个非常强大又灵活的网页解析库，是 Python 仿照 jQuery 的严格实现</li>
+<li><p>初始化<br>初始化的时候一般有三种传入方式：传入字符串，传入url,传入文件</p>
+<pre><code>from pyquery import PyQuery as pq
+html=&apos;&apos;&apos;
+    &lt;div id=&quot;container&quot;&gt;
+        &lt;ul class=&quot;list&quot;&gt;
+             &lt;li class=&quot;item-0&quot;&gt;first item&lt;/li&gt;
+             &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
+             &lt;li class=&quot;item-0 active&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;&lt;span class=&quot;bold&quot;&gt;third item&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+             &lt;li class=&quot;item-1 active&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
+             &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt;&lt;/li&gt;
+             &lt;p&gt;This is a paragraph.&lt;/p&gt;        
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&apos;&apos;&apos;
+###字符串初始化
+doc=pq(html)      #doc其实就是一个pyquery对象
+print(doc(&apos;li&apos;))  #doc(标签名)就可以获取所有的该标签的内容
+print(doc(&apos;.item-0&apos;))  #doc(&apos;.class_name&apos;)，doc(&apos;#id_name&apos;)
+###URL初始化
+url=&apos;http://www.baidu.com&apos;
+doc=pq(url,encoding=&apos;utf-8&apos;)
+print(doc(&apos;head&apos;))
+###文件初始化
+在pq()这里可以传入url参数也可以传入文件参数，当然这里的文件通常是一个html文件，例如：pq(filename=&apos;index.html&apos;)
+</code></pre></li>
+</ul>
+<p></p><h6>查找元素</h6><p></p>
+<ul>
+<li><p>子元素（children,find）</p>
+<pre><code>doc=pq(html)
+items=doc(&apos;.list&apos;)
+lis=items.find(&apos;li&apos;)   #lis=items.children()可以实现同样的效果
+print(lis)
+</code></pre></li>
+<li><p>父元素（parent,parents）</p>
+<pre><code>doc=pq(html)
+items=doc(&apos;.list&apos;)
+cont=items.parent() #可以找到父元素的所有内容
+#cont=items.parents()返回两部分内容，一个是父节点信息，一个是父节点的父节点的信息即祖先节点的信息
+print(cont)
+</code></pre></li>
+<li><p>兄弟元素（siblings）</p>
+<pre><code>doc=pq(html)
+li=doc(&apos;.list .item-0.active&apos;)
+print(li.siblings())
+</code></pre></li>
+<li><p>遍历</p>
+<pre><code>doc=pq(html)
+lis=doc(&apos;li&apos;).items()
+print(type(lis))     #&lt;class &apos;generator&apos;&gt;
+for li in lis:
+    print(li)        #通过for循环得到的每个元素依然是一个pyquery对象
+</code></pre></li>
+</ul>
+<p></p><h6>获取信息</h6><p></p>
+<ul>
+<li><p>获取属性值–pyquery对象.attr(属性名)</p>
+<pre><code>doc=pq(html)
+a=doc(&apos;.list .item-1 a&apos;)
+print(a.attr(&apos;href&apos;))
+</code></pre></li>
+<li><p>获取文本–pyquery对象.text()</p>
+<pre><code>doc=pq(html)
+a=doc(&apos;.list .item-0.active a&apos;)
+print(a.text())
+</code></pre></li>
+<li><p>获取html–puquery对象.html()获取当前标签所包含的html信息</p>
+<pre><code>doc=pq(html)
+a=doc(&apos;.list .item-0.active a&apos;)
+print(a.html())
+</code></pre></li>
+</ul>
+<p></p><h6>DOM操作</h6><p></p>
+<ul>
+<li><p>addClass、removeClass添加和删除属性值</p>
+<pre><code>doc=pq(html)
+ul=doc(&apos;.list&apos;)
+ul.addClass(&apos;2018&apos;)
+ul.removeClass(&apos;2018&apos;)
+print(ul)
+</code></pre></li>
+<li><p>attr,css给标签添加和修改属性</p>
+<pre><code>doc=pq(html)
+ul=doc(&apos;.list&apos;)
+ul.attr(&apos;id&apos;,&apos;201803&apos;)
+ul.css(&apos;font-size&apos;,&apos;15px&apos;)
+print(ul)         #&lt;ul class=&quot;list&quot; id=&quot;201803&quot; style=&quot;font-size: 15px&quot;&gt;
+</code></pre></li>
+<li><p>remove将无用的或者干扰的标签直接删除</p>
+<pre><code>doc=pq(html)
+ul=doc(&apos;.list&apos;)
+ul.find(&apos;p&apos;).remove()
+print(ul.text())
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="cju1a264b00503wwvyjqclyc9" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-beautifulsoup模块" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/23/beautifulsoup模块/" class="article-date">
@@ -219,7 +363,7 @@ for li in soup.select(&apos;li&apos;):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="cjtzwkw6a0037hkwvucuacsda" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="cju1a260500393wwvnyvft0br" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -338,7 +482,7 @@ for li in soup.select(&apos;li&apos;):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="cjtzwkw7w0042hkwvcntz2o29" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="cju1a2617003v3wwvk3ub1la3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -502,7 +646,7 @@ print(response.status_code)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="cjtzwkw8r004khkwv2x0n89vr" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="cju1a2648004y3wwvfl3mi905" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -701,7 +845,7 @@ with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cjtzwkw9f004yhkwv8jh1y4p8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cju1a265d005o3wwve1qchcoj" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -805,7 +949,7 @@ b/s--&gt;browser/server 浏览器与服务器交互
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjtzwkw21000khkwvk3n8b6w8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cju1a25v0000k3wwv86mecdc1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -988,7 +1132,7 @@ db.myinfo.find({$or:[{&apos;name&apos;:&apos;liuyongqian&apos;},{&apos;age&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjtzwkw4d0020hkwvbseujgug" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cju1a25xc001p3wwvpxyz4zg5" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1110,7 +1254,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjtzwkw54002ihkwvqyng19f4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cju1a25yi002d3wwvz4g3v5jt" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1184,7 +1328,7 @@ zlexcount mykey [one [three #result:1
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjtzwkw660034hkwvaqvl5ozh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cju1a25zy00343wwvay6ahivy" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1283,111 +1427,7 @@ smembers key4      #result:a b c
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjtzwkw5o002uhkwvheostng9" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-List类型操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/16/List类型操作/" class="article-date">
-  <time datetime="2018-03-16T09:21:37.000Z" itemprop="datePublished">2018-03-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/16/List类型操作/">List类型操作</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>List类型操作</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>01</h6><p></p>
-<ul>
-<li><p>lpush key_name value1 value2…将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行lpush操作</p>
-<pre><code>lpush mylist hello world
-</code></pre></li>
-<li><p>lpushx key_name value1 value2…将一个值插入到已存在的列表头部，列表不存在时操作无效</p>
-</li>
-<li>rpush key_name value1 value2…用于将一个或多个值插入到列表的尾部(最右边)</li>
-<li>rpushx key_name value1 value2…用于将一个值插入到已存在的列表尾部(最右边)。如果列表不存在，操作无效</li>
-<li>lpop key移出并获取列表的第一个元素</li>
-<li>rpop key移出并获取列表的最后一个元素</li>
-</ul>
-<p></p><h6>02</h6><p></p>
-<ul>
-<li>lrange key_name start stop将一个值插入到已存在的列表头部，列表不存在时操作无效</li>
-<li><p>lrem key_name count value根据参数 COUNT 的值，移除列表中与参数 VALUE 相等的元素</p>
-<ul>
-<li><p>count的值可以是以下几种：</p>
-<ul>
-<li>count &gt; 0 : 从表头开始向表尾搜索，移除与value相等的元素，数量为value</li>
-<li>count &lt; 0 : 从表尾开始向表头搜索，移除与value相等的元素，数量为value的绝对值</li>
-<li><p>count = 0 : 移除表中所有与value相等的值</p>
-<pre><code>lrem mylist -2 hell0
-</code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>rpoplpush用于移除列表的最后一个元素，并将该元素添加到另一个列表并返回</p>
-</li>
-<li><p>brpoplpush list1 another_list timeout从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
-<pre><code>brpoplpush msg reciver 500 #如在指定时间内没有任何元素被弹出，则返回一个 nil 和等待时长。 反之，返回一个含有两个元素的列表，第一个元素是被弹出元素的值，第二个元素是等待时长
-</code></pre></li>
-<li><p>blpop list1 list2…timeout移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
-<pre><code>blpop list1 100          #如果列表为空，返回一个 nil 。 
-                        否则，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，
-                        第二个元素是被弹出元素的值 
-</code></pre></li>
-<li><p>brpop list1 list2…timeout移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
-<pre><code>brpop list 100           #假如在指定时间内没有任何元素被弹出，则返回一个 nil 和等待时长。         
-                        反之，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，
-                            第二个元素是被弹出元素的值
-</code></pre></li>
-</ul>
-<p></p><h6>03</h6><p></p>
-<ul>
-<li>lset key_name index value过索引来设置元素的值</li>
-<li>ltrim key_name start stop 对一个列表进行修剪(trim)，让列表只保留指定区间内的元素</li>
-<li><p>lindex kye_name index用于通过索引获取列表中的元素</p>
-<pre><code>lpush mylist hello world
-lindex mylist 1        #列表中下标为指定索引值的元素
-</code></pre></li>
-<li><p>linsert key_name before exist_value new_value用于在列表的元素前或者后插入元素。 当指定元素不存在于列表中时，不执行任何操作</p>
-<pre><code>linsert mylist before hello 2018
-</code></pre></li>
-<li><p>llen key_name用于返回列表的长度</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjtzwkw3w001qhkwvexuk62m7" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cju1a25zj002x3wwvboc0y40g" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1419,7 +1459,7 @@ lindex mylist 1        #列表中下标为指定索引值的元素
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1429,7 +1469,7 @@ lindex mylist 1        #列表中下标为指定索引值的元素
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.25px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.75px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.25px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.25px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.75px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.5px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.75px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.25px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.25px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.75px;">软件工具</a>
     </div>
   </div>
 
@@ -1438,7 +1478,7 @@ lindex mylist 1        #列表中下标为指定索引值的元素
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1449,6 +1489,10 @@ lindex mylist 1        #列表中下标为指定索引值的元素
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
+          </li>
         
           <li>
             <a href="/2019/04/02/jenkins自动化部署-构建前端项目/">jenkins自动化部署--构建前端项目</a>
@@ -1464,10 +1508,6 @@ lindex mylist 1        #列表中下标为指定索引值的元素
         
           <li>
             <a href="/2019/04/01/jenkins自动化部署-构建后台项目/">jenkins自动化部署--构建后台项目</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
           </li>
         
       </ul>

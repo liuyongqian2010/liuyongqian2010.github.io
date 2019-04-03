@@ -70,6 +70,110 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-jenkins自动化部署-部署war包到远程服务器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" class="article-date">
+  <time datetime="2019-04-03T13:40:36.000Z" itemprop="datePublished">2019-04-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>jenkins自动化部署–部署war包到远程服务器</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. Jenkins插件安装</h6><p></p>
+<ul>
+<li>在系统管理—插件管理下，安装Publish over SSH插件</li>
+<li><p>在系统管理—系统设置下，配置SSH插件信息</p>
+<pre><code>#只填写必要信息
+SSH Server
+
+    Name       testing-yuancheng（随意一个名字即可）
+    Hostname   192.168.110.74（需要部署的远程服务器IP）
+    Username   root（登录远程服务器的用户名）
+    Remote Directory  /usr/tomcat/webapps/（远程服务器工作目录）
+    √ Use password authentication, or use a different key
+    Passphrase / Password  （输入远程服务器登录密码）
+    Port           22
+    Timeout (ms)   300000
+</code></pre></li>
+</ul>
+<p></p><h6>2. 构建项目</h6><p></p>
+<ul>
+<li>2.1 新建任务（输入一个任务名称，如testing001，选择“构建一个自由风格的软件项目”）</li>
+<li>2.2 源码管理（选择“Git”，输入仓库URL和git账号）</li>
+<li>2.3 构建<ul>
+<li>调用顶层Maven目标,目标：clean package -Dmaven.test.skip=true</li>
+</ul>
+</li>
+<li><p>2.4 构建后操作</p>
+<ul>
+<li><p>选择“Send build artifacts over SSH”</p>
+<pre><code>Transfer Set
+
+    Source files        target/*.war
+    Remove prefix         target/
+    Remote directory    #可不写，默认系统设置项/usr/tomcat/webapps/
+    Exec command    sudo sh /usr/deploy_cmp.sh
+</code></pre></li>
+<li><p>deploy_cmp.sh，执行远程部署war包的命令，shell内容可以参考如下：</p>
+<pre><code>#!/bin/bash
+export BUILD_ID=dontkillme
+TOMCATTHREAD=`ps aux | grep &apos;tomcat&apos; | grep -v grep`
+if test -z &quot;$TOMCATTHREAD&quot;
+then 
+    echo &quot;TOMCAT NOT START&quot;
+else  
+    THREADLIST=(${TOMCATTHREAD// / })
+    PID=${THREADLIST[1]}   
+    kill -9 $PID   
+    sleep 5s
+fi  
+    cd /usr/tomcat/webapps/   
+    rm -f cmp.war  
+    rm -rf cmp 
+    cd /usr/tomcat/bin
+    ./startup.sh
+    sleep 5s
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" data-id="cju1a260j003h3wwv1nxwy2o9" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-jenkins自动化部署-构建前端项目" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/02/jenkins自动化部署-构建前端项目/" class="article-date">
@@ -149,7 +253,7 @@ cp -R /var/lib/jenkins/workspace/qianduan001/dist/* /usr/local/nginx/qianduan001
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/jenkins自动化部署-构建前端项目/" data-id="cjtzwkw6v003jhkwvysb400rg" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/02/jenkins自动化部署-构建前端项目/" data-id="cju1a260f003e3wwvw33pmvkv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -222,7 +326,7 @@ make install       部署
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/编译部署NodeJS/" data-id="cjtzwkwd7007chkwv4u4jn8dr" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/02/编译部署NodeJS/" data-id="cju1a268o007o3wwvgiqt3r2w" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -320,7 +424,7 @@ ln -s libstdc++.so.6.0.24 libstdc++.so.6
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/GCC升级/" data-id="cjtzwkw2a000qhkwvgke4hhg0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/02/GCC升级/" data-id="cju1a25us000g3wwv3bxcg0n7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -459,7 +563,7 @@ fi
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cjtzwkw6y003lhkwvd8z4inpk" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cju1a261c003y3wwv096l4q2f" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -587,7 +691,7 @@ mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&a
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="cjtzwkw4i0023hkwvhbi2zhbh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="cju1a25y900283wwvvl2hh14s" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -689,7 +793,7 @@ select * from tb_test;查看表中是否one test数据存在，证明同步数�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="cjtzwkw4a001yhkwv35qa6pn7" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="cju1a25xm001v3wwvhvbqlsw2" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -788,7 +892,7 @@ echo 3 &gt; /proc/sys/vm/drop_caches
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="cjtzwkwcu0074hkwvcae6kfk5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="cju1a2689007e3wwvp71tbsw6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -894,7 +998,7 @@ server {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="cjtzwkw4p0028hkwvzozpw5ug" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="cju1a25xv00203wwvjsq02czs" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
@@ -959,95 +1063,10 @@ JAVA_OPTS=&quot;$JAVA_OPTS -Djava.library.path=/usr/local/apr/lib&quot;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/20/tomcat使用apr模式运行/" data-id="cjtzwkw9b004whkwvl5qhsigi" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/20/tomcat使用apr模式运行/" data-id="cju1a264l00563wwvnz5toq2u" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-批量添加用户，并设置sudo权限" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/12/批量添加用户，并设置sudo权限/" class="article-date">
-  <time datetime="2019-03-12T09:46:11.000Z" itemprop="datePublished">2019-03-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/12/批量添加用户，并设置sudo权限/">批量添加用户，并设置sudo权限</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>批量添加用户，并设置sudo权限</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>批量添加用户</h6><p></p>
-<ul>
-<li><p>1.首先创建一个名称为<code>users.list</code>的文件，将用户名写入进去。</p>
-<pre><code>vi user.list  后按照如下格式添加用户名称即可
-zhangsan  lisi wangwu zhaoliu zhangqi wangba chujiu genshi
-</code></pre></li>
-<li><p>2.编写批量增加用户的脚本，密码设置为用户名加123</p>
-<pre><code>#!/bin/bash
-#
-#add users with file called users.list
-#
-for username in $(more users.list)
-do
-if [ -n $username ]
-then
-    useradd -m $username
-    echo
-    echo $username&quot;123&quot;  | passwd --stdin $username
-    echo
-    echo &quot;User $username&apos;s password is changed!&quot;
-else
-    echo &quot;The username is null!&quot;
-fi
-done
-</code></pre></li>
-</ul>
-<p></p><h6>赋予普通用户sudo权限</h6><p></p>
-<ul>
-<li>1.root用户为sudo文件增加写权限，默认是读权限：<code>chmod u+w /etc/sudoers</code></li>
-<li><p>2.打开文件<code>vi /etc/sudoers</code>，在<code>root ALL=(ALL) ALL</code>这一行下面添加普通用户，如下所示</p>
-<pre><code>## Allow root to run any commands anywhere 
-root    ALL=(ALL)     ALL
-liuyongqian     ALL=(ALL)   ALL
-</code></pre></li>
-<li><p>3.再次取消sudo文件的写权限：<code>chmod u-w /etc/sudoers</code></p>
-</li>
-<li>4.普通用户sudo时输入的密码是普通用户自己的密码</li>
-<li>5.可能需要安装一下sudo，有的系统版本不需要：<code>yum install sudo</code></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/12/批量添加用户，并设置sudo权限/" data-id="cjtzwkwc4006ohkwvd90bhuoo" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
 
     </footer>
   </div>
@@ -1076,7 +1095,7 @@ liuyongqian     ALL=(ALL)   ALL
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1086,7 +1105,7 @@ liuyongqian     ALL=(ALL)   ALL
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.25px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.75px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.25px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.25px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.75px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.5px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.75px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.25px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.25px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.75px;">软件工具</a>
     </div>
   </div>
 
@@ -1095,7 +1114,7 @@ liuyongqian     ALL=(ALL)   ALL
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1106,6 +1125,10 @@ liuyongqian     ALL=(ALL)   ALL
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
+          </li>
         
           <li>
             <a href="/2019/04/02/jenkins自动化部署-构建前端项目/">jenkins自动化部署--构建前端项目</a>
@@ -1121,10 +1144,6 @@ liuyongqian     ALL=(ALL)   ALL
         
           <li>
             <a href="/2019/04/01/jenkins自动化部署-构建后台项目/">jenkins自动化部署--构建后台项目</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
           </li>
         
       </ul>

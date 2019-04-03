@@ -70,6 +70,147 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-发布及文件上传" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/01/发布及文件上传/" class="article-date">
+  <time datetime="2018-04-01T09:47:40.000Z" itemprop="datePublished">2018-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/01/发布及文件上传/">发布及文件上传</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>发布及文件上传</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>发布博客</h6><p></p>
+<ul>
+<li><p>用户登录之后，点击“发布博客”即可进入发布博客页面，在这儿需要在登录的欢迎页面增加一下这个发布博客链接</p>
+<pre><code>&lt;a href=&quot;/pyblogA/fabu&quot;&gt;发布博客&lt;a/&gt;
+</code></pre></li>
+<li><p>之后编辑发布博客的前端页面</p>
+<pre><code>&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;欢迎发布博客&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;欢迎{{ user.username }}发布博客...&lt;/h2&gt;
+    &lt;span style=&quot;color:red&quot;&gt;{{ msg }}&lt;/span&gt;
+    &lt;form action=&quot;/pyblogA/fabu&quot; method=&quot;post&quot;&gt;
+        {% csrf_token %}
+        &lt;p&gt;标题：&lt;input type=&quot;text&quot; name=&apos;title&apos; style=&quot;width:300px&quot;&gt;&lt;/p&gt;
+        &lt;p&gt;内容：&lt;textarea  name=&apos;context&apos; style=&quot;width:300px;height:200px&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;确认发布&quot;&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></li>
+<li><p>在该app的models中编辑与数据库的映射</p>
+<pre><code>from django.db import models
+from bloguser.models import BlogUser
+class Blog(models.Model):
+    title=models.CharField(max_length=30,null=True)
+    context=models.CharField(max_length=500,null=True)
+    createDate=models.DateTimeField(null=True)    #默认当前时间
+    BlogUser=models.ForeignKey(&apos;bloguser.BlogUser&apos;,on_delete=None)   #app下的名字
+</code></pre></li>
+<li><p>需要在项目的settings.py下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;pyblogA/&apos;,include(&apos;pyblogA.urls&apos;)),
+]
+</code></pre></li>
+<li><p>接着在该app的urls下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;fabu&apos;, fabu),
+]
+</code></pre></li>
+<li><p>接下来编辑该appviews内容</p>
+<pre><code>from django.shortcuts import render,redirect,reverse
+from .models import *
+from django.http import HttpResponse
+import time,datetime,os
+
+def fabu(request):
+    user = request.session.get(&apos;user&apos;, None)
+    if request.method==&apos;GET&apos;:
+        if user is not None:
+            return render(request,&apos;fabu.html&apos;,{&apos;user&apos;: request.session.get(&apos;user&apos;, None)})
+        else:
+            return render(request,&apos;login.html&apos;)
+    elif request.method==&apos;POST&apos;:
+        blogA=Blog()
+        blogA.title=request.POST.get(&apos;title&apos;)
+        blogA.context=request.POST.get(&apos;context&apos;)
+        blogA.createDate=datetime.datetime.now()
+
+        uid=request.session.get(&apos;user&apos;)[&apos;id&apos;]
+        bloguserset=BlogUser.objects.filter(pk=uid).all()
+        blogA.BlogUser=bloguserset.first()
+
+        blogA.save()
+        ret={&apos;msg&apos;:&apos;发布成功！&apos;,&apos;user&apos;:request.session.get(&apos;user&apos;)}
+        return render(request,&apos;fabu.html&apos;,ret)
+</code></pre></li>
+</ul>
+<p></p><h6>文件上传</h6><p></p>
+<ul>
+<li><p>创建一个html文件用于上传文件</p>
+<pre><code>&lt;form method=&quot;post&quot; action=&quot;/pyblogA/upload&quot; enctype=&quot;multipart/form-data&quot;&gt;
+    {% csrf_token %}
+    选择文件：&lt;input type=&quot;file&quot; name=&quot;myfile&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;上传&quot;&gt;
+&lt;/form&gt;
+</code></pre></li>
+<li><p>在该app下设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;upload&apos;, upload),
+]
+</code></pre></li>
+<li><p>在该app的views中编辑业务逻辑</p>
+<pre><code>def upload(request):
+    myfile=request._files.get(&apos;myfile&apos;)  #获取上传的文件
+    file_path=os.path.join(&apos;file&apos;,myfile.name)  #配置存放路径为file
+    file=open(file_path,&apos;wb+&apos;)           #打开并写入
+    for row in myfile.chunks():      #循环chunks(),里面包含用户上传的文件
+        file.write(row)              #写入到我们创建的那个文件中
+    file.close()
+    return HttpResponse(&apos;上传成功！&apos;)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cju1a265s005w3wwv8k69icpp" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-HTTP报文" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/01/HTTP报文/" class="article-date">
@@ -280,7 +421,7 @@ Last-Modified 　 这个实体最后一次被修改的日期和时间
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjtzwkw300016hkwv2ivun4cs" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cju1a25xs001y3wwvciwjz5rr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络基础知识/">网络基础知识</a></li></ul>
@@ -439,7 +580,7 @@ ITEM_PIPELINES = {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjtzwkw90004qhkwv5bkn80c7" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cju1a264f00523wwvv287nx72" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -527,7 +668,7 @@ free -m 显示内存使用情况
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjtzwkwda007ehkwvkhxucirj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cju1a268e007i3wwv1otz004m" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -629,7 +770,7 @@ Ctrl+r    恢复撤销
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjtzwkw9m0052hkwvqx5stu4f" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cju1a265a005m3wwv5kx5vob6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -782,7 +923,7 @@ tail -n 数字 文件名      #规定显示最后几行
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjtzwkw78003thkwvdmk1ibtq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cju1a263o004m3wwvmk4kids3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -874,7 +1015,7 @@ def login(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjtzwkw97004uhkwvlkt7ob0l" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cju1a264y005e3wwv8rbzm9cv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -1011,7 +1152,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjtzwkwdq007ohkwvueg1y4gn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cju1a269700803wwv99veelin" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -1115,7 +1256,7 @@ class Handler(BaseHandler):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjtzwkw88004ahkwv8aecgnji" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cju1a261s00463wwv12bwrngq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1223,151 +1364,7 @@ print(logo.size)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cjtzwkw94004shkwvocmy0zqj" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-pyquery模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/23/pyquery模块/" class="article-date">
-  <time datetime="2018-03-23T15:15:27.000Z" itemprop="datePublished">2018-03-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/pyquery模块/">pyquery模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>pyquery模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>PyQuery库也是一个非常强大又灵活的网页解析库，是 Python 仿照 jQuery 的严格实现</li>
-<li><p>初始化<br>初始化的时候一般有三种传入方式：传入字符串，传入url,传入文件</p>
-<pre><code>from pyquery import PyQuery as pq
-html=&apos;&apos;&apos;
-    &lt;div id=&quot;container&quot;&gt;
-        &lt;ul class=&quot;list&quot;&gt;
-             &lt;li class=&quot;item-0&quot;&gt;first item&lt;/li&gt;
-             &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
-             &lt;li class=&quot;item-0 active&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;&lt;span class=&quot;bold&quot;&gt;third item&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-             &lt;li class=&quot;item-1 active&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
-             &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt;&lt;/li&gt;
-             &lt;p&gt;This is a paragraph.&lt;/p&gt;        
-        &lt;/ul&gt;
-    &lt;/div&gt;
-&apos;&apos;&apos;
-###字符串初始化
-doc=pq(html)      #doc其实就是一个pyquery对象
-print(doc(&apos;li&apos;))  #doc(标签名)就可以获取所有的该标签的内容
-print(doc(&apos;.item-0&apos;))  #doc(&apos;.class_name&apos;)，doc(&apos;#id_name&apos;)
-###URL初始化
-url=&apos;http://www.baidu.com&apos;
-doc=pq(url,encoding=&apos;utf-8&apos;)
-print(doc(&apos;head&apos;))
-###文件初始化
-在pq()这里可以传入url参数也可以传入文件参数，当然这里的文件通常是一个html文件，例如：pq(filename=&apos;index.html&apos;)
-</code></pre></li>
-</ul>
-<p></p><h6>查找元素</h6><p></p>
-<ul>
-<li><p>子元素（children,find）</p>
-<pre><code>doc=pq(html)
-items=doc(&apos;.list&apos;)
-lis=items.find(&apos;li&apos;)   #lis=items.children()可以实现同样的效果
-print(lis)
-</code></pre></li>
-<li><p>父元素（parent,parents）</p>
-<pre><code>doc=pq(html)
-items=doc(&apos;.list&apos;)
-cont=items.parent() #可以找到父元素的所有内容
-#cont=items.parents()返回两部分内容，一个是父节点信息，一个是父节点的父节点的信息即祖先节点的信息
-print(cont)
-</code></pre></li>
-<li><p>兄弟元素（siblings）</p>
-<pre><code>doc=pq(html)
-li=doc(&apos;.list .item-0.active&apos;)
-print(li.siblings())
-</code></pre></li>
-<li><p>遍历</p>
-<pre><code>doc=pq(html)
-lis=doc(&apos;li&apos;).items()
-print(type(lis))     #&lt;class &apos;generator&apos;&gt;
-for li in lis:
-    print(li)        #通过for循环得到的每个元素依然是一个pyquery对象
-</code></pre></li>
-</ul>
-<p></p><h6>获取信息</h6><p></p>
-<ul>
-<li><p>获取属性值–pyquery对象.attr(属性名)</p>
-<pre><code>doc=pq(html)
-a=doc(&apos;.list .item-1 a&apos;)
-print(a.attr(&apos;href&apos;))
-</code></pre></li>
-<li><p>获取文本–pyquery对象.text()</p>
-<pre><code>doc=pq(html)
-a=doc(&apos;.list .item-0.active a&apos;)
-print(a.text())
-</code></pre></li>
-<li><p>获取html–puquery对象.html()获取当前标签所包含的html信息</p>
-<pre><code>doc=pq(html)
-a=doc(&apos;.list .item-0.active a&apos;)
-print(a.html())
-</code></pre></li>
-</ul>
-<p></p><h6>DOM操作</h6><p></p>
-<ul>
-<li><p>addClass、removeClass添加和删除属性值</p>
-<pre><code>doc=pq(html)
-ul=doc(&apos;.list&apos;)
-ul.addClass(&apos;2018&apos;)
-ul.removeClass(&apos;2018&apos;)
-print(ul)
-</code></pre></li>
-<li><p>attr,css给标签添加和修改属性</p>
-<pre><code>doc=pq(html)
-ul=doc(&apos;.list&apos;)
-ul.attr(&apos;id&apos;,&apos;201803&apos;)
-ul.css(&apos;font-size&apos;,&apos;15px&apos;)
-print(ul)         #&lt;ul class=&quot;list&quot; id=&quot;201803&quot; style=&quot;font-size: 15px&quot;&gt;
-</code></pre></li>
-<li><p>remove将无用的或者干扰的标签直接删除</p>
-<pre><code>doc=pq(html)
-ul=doc(&apos;.list&apos;)
-ul.find(&apos;p&apos;).remove()
-print(ul.text())
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="cjtzwkw8a004chkwvolsxh4xj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cju1a2645004w3wwvg7frl1r7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1399,7 +1396,7 @@ print(ul.text())
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1409,7 +1406,7 @@ print(ul.text())
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.25px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.75px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.25px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.25px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.75px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.5px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.75px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.25px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.25px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.75px;">软件工具</a>
     </div>
   </div>
 
@@ -1418,7 +1415,7 @@ print(ul.text())
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1429,6 +1426,10 @@ print(ul.text())
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
+          </li>
         
           <li>
             <a href="/2019/04/02/jenkins自动化部署-构建前端项目/">jenkins自动化部署--构建前端项目</a>
@@ -1444,10 +1445,6 @@ print(ul.text())
         
           <li>
             <a href="/2019/04/01/jenkins自动化部署-构建后台项目/">jenkins自动化部署--构建后台项目</a>
-          </li>
-        
-          <li>
-            <a href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
           </li>
         
       </ul>
