@@ -70,6 +70,152 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-nmon工具的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/18/nmon工具的使用/" class="article-date">
+  <time datetime="2018-09-18T05:42:50.000Z" itemprop="datePublished">2018-09-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/18/nmon工具的使用/">nmon工具的使用</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>nmon工具的使用</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>Nmon简介</h6><p></p>
+<ul>
+<li>Nmon (Nigel’s Monitor)是由IBM 提供、免费监控 AIX 系统与 Linux 系统资源的工具。该工具可将服务器系统资源耗用情况收集起来并输出一个特定的文件,并可利用 excel 分析工具（nmon analyser）进行数据的统计分析</li>
+<li>nmon 工具可以为 AIX 和 Linux 性能专家提供监视和分析性能数据的功能，其中包括：<ul>
+<li>CPU 使用率、内存使用情况、内核统计信息和运行队列信息、磁盘 I/O 速度、传输和读/写比率</li>
+<li>文件系统中的可用空间、磁盘适配器、网络 I/O 速度及传输和读/写比率</li>
+<li>页面空间和页面速度、CPU 和 AIX 规范、消耗资源最多的进程、IBM HTTP Web 缓存</li>
+<li>计算机详细信息和资源、网络文件系统 (NFS)</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>nmon安装使用</h6><p></p>
+<ul>
+<li>nmon下载：<a href="http://nmon.sourceforge.net/pmwiki.php?n=Site.Download" target="_blank" rel="noopener">http://nmon.sourceforge.net/pmwiki.php?n=Site.Download</a></li>
+<li><p>nmon安装：我的系统是centos7，下载的版本是nmon16e_mpginc.tar.gz。解压后，根据不同平台初始化对应平台的nmon工具，初始化命令如下</p>
+<pre><code>chmod u+x nmon_x86_64_centos7
+cp nmon_x86_64_centos7 /usr/local/bin/nmon
+</code></pre></li>
+<li><p>nmon使用：在任意目录下运行’nmon’即可，采集数据的命令如下</p>
+<pre><code>nmon -s10 -c60 -f -m /home/
+参数解释：
+-s10          每 10 秒采集一次数据
+-c60          采集 60 次，即为采集十分钟的数据
+-f            生成的数据文件名中包含文件创建的时间。
+-m            生成的数据文件的存放目
+</code></pre></li>
+</ul>
+<p></p><h6>nmon analyser安装使用</h6><p></p>
+<ul>
+<li>nmon analyser下载：<a href="https://www.ibm.com/developerworks/community/wikis/home?lang=en#!/wiki/Power%20Systems/page/nmon_analyser" target="_blank" rel="noopener">https://www.ibm.com/developerworks/community/wikis/home?lang=en#!/wiki/Power%20Systems/page/nmon_analyser</a></li>
+<li>nmon analyser使用：<ul>
+<li>当前所下载的版本是nmon analyser v55.zip，解压后放在windows系统任意目录下即可</li>
+<li>将之前生成的 nmon 数据文件传到 Windows 机器上，用 Excel 打开分析工具nmon analyser v55.xlsm 。点击 Excel 文件中的 “Analyze nmon data” 按钮，选择 nmon 数据文件，这样就会生成一个分析后的结果文件</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>其他</h6><p></p>
+<ul>
+<li>本文参照博客<a href="https://www.cnblogs.com/yangxia-test/p/4836063.html" target="_blank" rel="noopener">Linux下安装使用NMON监控、分析系统性能</a></li>
+<li>关于nmon结果分析可以参照这两篇不错的博客<ul>
+<li><a href="http://www.sohu.com/a/219012698_151779" target="_blank" rel="noopener">一篇文章学会使用nmon</a></li>
+<li><a href="https://www.aliyun.com/jiaocheng/128182.html?spm=5176.100033.2.10.56aa50b2zWnXak" target="_blank" rel="noopener">Nmon结果文件分析</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/18/nmon工具的使用/" data-id="cjucq8o36003zzswv4y6aw699" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-破解IDEA2018-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/11/破解IDEA2018-1/" class="article-date">
+  <time datetime="2018-09-11T07:30:20.000Z" itemprop="datePublished">2018-09-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/11/破解IDEA2018-1/">破解IDEA2018.1</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>破解IDEA2018.1</h5><p></p>
+<hr>
+<hr>
+<h6>1.下载安装idea</h6><br><em> 地址：<a href="https://www.jetbrains.com/idea/download" target="_blank" rel="noopener">https://www.jetbrains.com/idea/download</a>
+</em> 目前个人安装的版本：ideaIU-2018.1.5<br><br><h6>2.下载破解（crack）jar包</h6><br><em> 地址：<a href="http://idea.lanyus.com" target="_blank" rel="noopener">http://idea.lanyus.com</a>
+</em> 目前个人下载的版本：JetbrainsCrack-2.9-release-enc.jar<br><br><h6>3.将 crack jar包 放到 idea 的 bin 目录下</h6>
+
+<h6>4.修改文件配置</h6><br><em> 1.在idea的bin目录下，配置idea.exe.vmoptions 和 idea64.exe.vmoptions 这两个文件，均在文件末尾追加 crack jar的绝对路径，比如<br><br>        -javaagent:C:\idea\IntelliJ IDEA 2018.1.5\bin\JetbrainsCrack-2.9-release-enc.jar<br><br><br>
+</em> 2.在 hosts 文件里面添加如下配置<br><br>        0.0.0.0 account.jetbrains.com<br><br><h6>5.打开 idea，输入如下激活码:（如果失效，去这里获取最新的注册码 <a href="http://idea.lanyus.com/getkey" target="_blank" rel="noopener">http://idea.lanyus.com/getkey</a> ）</h6>
+
+<pre><code>K71U8DBPNE-eyJsaWNlbnNlSWQiOiJLNzFVOERCUE5FIiwibGljZW5zZWVOYW1lIjoibGFuIHl1IiwiYXNzaWduZWVOYW1lIjoiIiwiYXNzaWduZWVFbWFpbCI6IiIsImxpY2Vuc2VSZXN0cmljdGlvbiI6IkZvciBlZHVjYXRpb25hbCB1c2Ugb25seSIsImNoZWNrQ29uY3VycmVudFVzZSI6ZmFsc2UsInByb2R1Y3RzIjpbeyJjb2RlIjoiSUkiLCJwYWlkVXBUbyI6IjIwMTktMDUtMDQifSx7ImNvZGUiOiJSUzAiLCJwYWlkVXBUbyI6IjIwMTktMDUtMDQifSx7ImNvZGUiOiJXUyIsInBhaWRVcFRvIjoiMjAxOS0wNS0wNCJ9LHsiY29kZSI6IlJEIiwicGFpZFVwVG8iOiIyMDE5LTA1LTA0In0seyJjb2RlIjoiUkMiLCJwYWlkVXBUbyI6IjIwMTktMDUtMDQifSx7ImNvZGUiOiJEQyIsInBhaWRVcFRvIjoiMjAxOS0wNS0wNCJ9LHsiY29kZSI6IkRCIiwicGFpZFVwVG8iOiIyMDE5LTA1LTA0In0seyJjb2RlIjoiUk0iLCJwYWlkVXBUbyI6IjIwMTktMDUtMDQifSx7ImNvZGUiOiJETSIsInBhaWRVcFRvIjoiMjAxOS0wNS0wNCJ9LHsiY29kZSI6IkFDIiwicGFpZFVwVG8iOiIyMDE5LTA1LTA0In0seyJjb2RlIjoiRFBOIiwicGFpZFVwVG8iOiIyMDE5LTA1LTA0In0seyJjb2RlIjoiR08iLCJwYWlkVXBUbyI6IjIwMTktMDUtMDQifSx7ImNvZGUiOiJQUyIsInBhaWRVcFRvIjoiMjAxOS0wNS0wNCJ9LHsiY29kZSI6IkNMIiwicGFpZFVwVG8iOiIyMDE5LTA1LTA0In0seyJjb2RlIjoiUEMiLCJwYWlkVXBUbyI6IjIwMTktMDUtMDQifSx7ImNvZGUiOiJSU1UiLCJwYWlkVXBUbyI6IjIwMTktMDUtMDQifV0sImhhc2giOiI4OTA4Mjg5LzAiLCJncmFjZVBlcmlvZERheXMiOjAsImF1dG9Qcm9sb25nYXRlZCI6ZmFsc2UsImlzQXV0b1Byb2xvbmdhdGVkIjpmYWxzZX0=-Owt3/+LdCpedvF0eQ8635yYt0+ZLtCfIHOKzSrx5hBtbKGYRPFDrdgQAK6lJjexl2emLBcUq729K1+ukY9Js0nx1NH09l9Rw4c7k9wUksLl6RWx7Hcdcma1AHolfSp79NynSMZzQQLFohNyjD+dXfXM5GYd2OTHya0zYjTNMmAJuuRsapJMP9F1z7UTpMpLMxS/JaCWdyX6qIs+funJdPF7bjzYAQBvtbz+6SANBgN36gG1B2xHhccTn6WE8vagwwSNuM70egpahcTktoHxI7uS1JGN9gKAr6nbp+8DbFz3a2wd+XoF3nSJb/d2f/6zJR8yJF8AOyb30kwg3zf5cWw==-MIIEPjCCAiagAwIBAgIBBTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBMB4XDTE1MTEwMjA4MjE0OFoXDTE4MTEwMTA4MjE0OFowETEPMA0GA1UEAwwGcHJvZDN5MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxcQkq+zdxlR2mmRYBPzGbUNdMN6OaXiXzxIWtMEkrJMO/5oUfQJbLLuMSMK0QHFmaI37WShyxZcfRCidwXjot4zmNBKnlyHodDij/78TmVqFl8nOeD5+07B8VEaIu7c3E1N+e1doC6wht4I4+IEmtsPAdoaj5WCQVQbrI8KeT8M9VcBIWX7fD0fhexfg3ZRt0xqwMcXGNp3DdJHiO0rCdU+Itv7EmtnSVq9jBG1usMSFvMowR25mju2JcPFp1+I4ZI+FqgR8gyG8oiNDyNEoAbsR3lOpI7grUYSvkB/xVy/VoklPCK2h0f0GJxFjnye8NT1PAywoyl7RmiAVRE/EKwIDAQABo4GZMIGWMAkGA1UdEwQCMAAwHQYDVR0OBBYEFGEpG9oZGcfLMGNBkY7SgHiMGgTcMEgGA1UdIwRBMD+AFKOetkhnQhI2Qb1t4Lm0oFKLl/GzoRykGjAYMRYwFAYDVQQDDA1KZXRQcm9maWxlIENBggkA0myxg7KDeeEwEwYDVR0lBAwwCgYIKwYBBQUHAwEwCwYDVR0PBAQDAgWgMA0GCSqGSIb3DQEBCwUAA4ICAQC9WZuYgQedSuOc5TOUSrRigMw4/+wuC5EtZBfvdl4HT/8vzMW/oUlIP4YCvA0XKyBaCJ2iX+ZCDKoPfiYXiaSiH+HxAPV6J79vvouxKrWg2XV6ShFtPLP+0gPdGq3x9R3+kJbmAm8w+FOdlWqAfJrLvpzMGNeDU14YGXiZ9bVzmIQbwrBA+c/F4tlK/DV07dsNExihqFoibnqDiVNTGombaU2dDup2gwKdL81ua8EIcGNExHe82kjF4zwfadHk3bQVvbfdAwxcDy4xBjs3L4raPLU3yenSzr/OEur1+jfOxnQSmEcMXKXgrAQ9U55gwjcOFKrgOxEdek/Sk1VfOjvS+nuM4eyEruFMfaZHzoQiuw4IqgGc45ohFH0UUyjYcuFxxDSU9lMCv8qdHKm+wnPRb0l9l5vXsCBDuhAGYD6ss+Ga+aDY6f/qXZuUCEUOH3QUNbbCUlviSz6+GiRnt1kA9N2Qachl+2yBfaqUqr8h7Z2gsx5LcIf5kYNsqJ0GavXTVyWh7PYiKX4bs354ZQLUwwa/cG++2+wNWP+HtBhVxMRNTdVhSm38AknZlD+PTAsWGu9GyLmhti2EnVwGybSD2Dxmhxk3IPCkhKAK+pl0eWYGZWG3tJ9mZ7SowcXLWDFAk0lRJnKGFMTggrWjV8GYpw5bq23VmIqqDLgkNzuoog==
+</code></pre><h6>6.查看“help–about”，已经注册到了2099年</h6>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/11/破解IDEA2018-1/" data-id="cjucq8ob0007dzswv41bu19bp" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-Redis安装与部署" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/08/17/Redis安装与部署/" class="article-date">
@@ -162,7 +308,7 @@ sudo kill 进程
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/17/Redis安装与部署/" data-id="cju1a25yz002n3wwvyoma8i8e" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/08/17/Redis安装与部署/" data-id="cjucq8o0u002mzswv0hgtfrc4" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -271,7 +417,7 @@ sudo ./bin/startup.sh
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/04/JAVA项目更新部署/" data-id="cju1a25x1001k3wwvcwohcxih" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/08/04/JAVA项目更新部署/" data-id="cjucq8ny50018zswvv9eqmn35" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -469,7 +615,7 @@ redis.port=6379
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/13/Linux上部署java项目/" data-id="cju1a25wy001i3wwvf1d5aeey" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/07/13/Linux上部署java项目/" data-id="cjucq8nyu001nzswvziyktjvv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -516,7 +662,7 @@ redis.port=6379
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/07/linux下mysql基本操作/" data-id="cju1a260m003j3wwv36wuycyc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/07/linux下mysql基本操作/" data-id="cjucq8o2c003izswvam2ddlfp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -616,7 +762,7 @@ redis.port=6379
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/" data-id="cju1a25xk001u3wwvj3ut0pc4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/" data-id="cjucq8nzz0027zswvl69m0qo4" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -838,7 +984,7 @@ sc.stop()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-02/" data-id="cju1a266n006e3wwv8wyexoms" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-02/" data-id="cjucq8o8c0069zswvgvzxp8z4" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -992,7 +1138,7 @@ sc.stop()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-01/" data-id="cju1a2675006q3wwvhbi2ef4c" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-01/" data-id="cjucq8o820063zswvklx569lc" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -1127,185 +1273,7 @@ GRANT OPTION;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/Centos7安装MySQL5.6/" data-id="cju1a25ub00093wwv71doah63" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-python之Map、Reduce、Filte" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/16/python之Map、Reduce、Filte/" class="article-date">
-  <time datetime="2018-04-16T15:38:13.000Z" itemprop="datePublished">2018-04-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/16/python之Map、Reduce、Filte/">python之Map、Reduce、Filte</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>python之Map、Reduce、Filte</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>Map</h6><p></p>
-<ul>
-<li>简介<ul>
-<li>map()函数接收两个及以上参数，一个是函数对象本身，一个是序列，map将传入的函数依次作用到序列的每个元素，并把结果作为新的list返回</li>
-<li>在Python2里，直接使用map就可以打印结果；但是在Python3里，map返回的结果是迭代器(iterator)，需要先转换为列表list</li>
-</ul>
-</li>
-<li><p>计算列表中每个元素的的平方并输出</p>
-<pre><code>def f(x):
-    return x*x
-list1=[1,2,3,4,5,6]
-第一种方法：循环
-list2=[]
-for n in list1:
-    list2.append(f(n))
-print(list2)              #result:[1, 4, 9, 16, 25, 36]
-
-第二种方法：map
-list3=list(map(f,list1))
-print(list3)              #result:[1, 4, 9, 16, 25, 36]
-</code></pre></li>
-<li><p>map()作为高阶函数，事实上它把运算规则抽象了，因此，我们不但可以计算简单的f(x)=x*x，还可以计算任意复杂的函数，比如，把这个list1所有数字转为字符串</p>
-<pre><code>list4=list(map(str,list1))
-print(list4)             #result:[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;, &apos;5&apos;, &apos;6&apos;]
-</code></pre></li>
-</ul>
-<p></p><h6>Reduce</h6><p></p>
-<ul>
-<li>简介<ul>
-<li>reduce把一个函数作用在一个序列[x1, x2, x3…]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算</li>
-<li>reduce可以有initial参数</li>
-</ul>
-</li>
-<li><p>示例</p>
-<pre><code>from functools import reduce
-#没有initial参数
-sum1=reduce(lambda x,y:x+y,[1,2,3,4,5,6])    #（（（1+2）+3+）+4...）
-print(sum1)             #result:21
-
-#有initial参数
-sum2=reduce(lambda x,y:x+y,[1,2,3,4,5,6],10)  #（（（（10+1）+2）+3）+4...）
-print(sum2)             #result:31
-</code></pre></li>
-</ul>
-<p></p><h6>Filte</h6><p></p>
-<ul>
-<li>简介<ul>
-<li>filter函数对指定的序列进行过滤操作</li>
-<li>filter()也接收一个函数和一个序列，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素</li>
-</ul>
-</li>
-<li><p>示例</p>
-<pre><code>list4=[1,2,3,4,5,6,7,8,9]
-def is_odd(x):
-    return x%2==1
-result=list(filter(is_odd,list4))
-print(result)               #result:[1, 3, 5, 7, 9]
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/python之Map、Reduce、Filte/" data-id="cju1a263u004o3wwvchukx65p" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-安装python3-6、spark" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/16/安装python3-6、spark/" class="article-date">
-  <time datetime="2018-04-16T11:13:35.000Z" itemprop="datePublished">2018-04-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/16/安装python3-6、spark/">安装python3.6、spark</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>安装python3.6、spark</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>安装python3.6,，并可以通过页面进行编程</h6><p></p>
-<ul>
-<li><p>1.普通用户（hadoop用户）将文件Anaconda3-5.0.1-Linux-x86_64.sh放在工作目录下</p>
-</li>
-<li><p>2.切换root用户安装bzip2：<code>yum -y install bzip2</code></p>
-</li>
-<li>3.hadoop用户执行命令：<code>bash Anaconda3-5.0.1-Linux-x86_64.sh</code>，该命令执行过程中有一步可以自动配置环境变量，注意查看并输入yes进行确认</li>
-<li>4.刷新<code>source .bashrc</code>后，输入<code>python</code>后输出了python的最新版本信息</li>
-<li>5.hadoop用户执行：<code>jupyter-notebook --ip python333</code>（该命令必须启动yarn，我的主机名叫python333）后，提示：<br><code>http://python333:8888/?token=b528b9bf6f867f2471ee75ac04be8b46d30c957e2c76cadf</code><br><br>在浏览器新开窗口中输入该url后即打开了<code>http://python333:8888/tree</code>页面</li>
-<li>6.在打开的jupyter页面中，“New”一个新的notebook，开始编辑代码吧</li>
-</ul>
-<p></p><h6>安装spark</h6><p></p>
-<ul>
-<li>利用spark中的MapReduce比使用hadoop中的MapReduce运行速度快近100倍，但是spark不能建立集群文件，需要依赖hadoop</li>
-<li><p>开始安装</p>
-<ul>
-<li>1.普通用户（hadoop用户）将文件spark-2.2.1-bin-hadoop2.7.tgz放在工作目录下，并解压：<code>tar -zvxf spark-2.2.1-bin-hadoop2.7.tgz -C opt/</code></li>
-<li><p>2.还是在该工作目录下，<code>vi .bashrc</code>后追加如下变量：</p>
-<pre><code>SPARK_HOME=/home/hadoop/opt/spark-2.2.1-bin-hadoop2.7
-PATH=$PATH:$SPARK_HOME/bin
-</code></pre></li>
-<li><p>3.刷新<code>source .bashrc</code></p>
-</li>
-<li>4.现在可以在任意的目录下输入spark-shell,之后显示图标并进入scala命令行</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/安装python3-6、spark/" data-id="cju1a2678006s3wwvhrp49pc9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/16/Centos7安装MySQL5.6/" data-id="cjucq8nw30005zswvl1xemr66" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -1337,7 +1305,7 @@ PATH=$PATH:$SPARK_HOME/bin
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1347,7 +1315,7 @@ PATH=$PATH:$SPARK_HOME/bin
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.5px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.75px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.25px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.25px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.75px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.78px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.56px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.67px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.33px;">软件工具</a>
     </div>
   </div>
 
@@ -1356,7 +1324,7 @@ PATH=$PATH:$SPARK_HOME/bin
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1369,6 +1337,14 @@ PATH=$PATH:$SPARK_HOME/bin
       <ul>
         
           <li>
+            <a href="/2019/04/11/robotframework-基于python27/">robotframework---基于python27</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/04/jenkins自动化部署-远程部署前端vue项目/">jenkins自动化部署--远程部署前端vue项目</a>
+          </li>
+        
+          <li>
             <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
           </li>
         
@@ -1378,14 +1354,6 @@ PATH=$PATH:$SPARK_HOME/bin
         
           <li>
             <a href="/2019/04/02/编译部署NodeJS/">编译部署NodeJS</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/02/GCC升级/">GCC升级</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/01/jenkins自动化部署-构建后台项目/">jenkins自动化部署--构建后台项目</a>
           </li>
         
       </ul>

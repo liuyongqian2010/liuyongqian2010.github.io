@@ -70,6 +70,185 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-scrapy选择器css、xpath" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/02/scrapy选择器css、xpath/" class="article-date">
+  <time datetime="2018-04-02T13:33:47.000Z" itemprop="datePublished">2018-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/02/scrapy选择器css、xpath/">scrapy选择器css、xpath</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>scrapy选择器css、xpath</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>Scrapy自带了提取数据的机制。它们称为选择器，因为它们“选择”由XPath或CSS表达式指定的HTML文档的某些部分</li>
+<li>XPath是用于选择XML文档中的节点的语言，其也可以与HTML一起使用</li>
+<li>CSS是一种用于将样式应用于HTML文档的语言。它定义了选择器以将这些样式与特定的HTML元素相关联</li>
+<li>Scrapy选择器构建在lxml库之上，这意味着它们的速度和解析精度非常相似</li>
+</ul>
+<p></p><h6>使用选择器</h6><p></p>
+<ul>
+<li><p>为了解释如何使用选择器，我们将使用Scrapy shell（提供交互式测试）和位于Scrapy文档服务器中的示例页面：<a href="http://doc.scrapy.org/en/latest/_static/selectors-sample1.html" target="_blank" rel="noopener">http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</a></p>
+<pre><code>#打开shell
+scrapy shell http://doc.scrapy.org/en/latest/_static/selectors-sample1.html 
+#使用XPath和CSS选择标题标签中的文本:
+response.xpath(&apos;//title/text()&apos;)
+&gt;&gt;&gt;[&lt;Selector xpath=&apos;//title/text()&apos; data=&apos;Example website&apos;&gt;]
+response.css(&apos;title::text&apos;)
+&gt;&gt;&gt;[&lt;Selector xpath=&apos;descendant-or-self::title/text()&apos; data=&apos;Example website&apos;&gt;]
+#.css()方法返回一个 SelectorList实例，它是新的选择列表。此API可用于快速选择嵌套数据：
+response.css(&apos;img&apos;).xpath(&apos;@src&apos;).extract()
+#要实际提取文本数据，必须调用选择器.extract() 方法,如果只想提取第一个匹配的元素，可以调用选择器 .extract_first()
+response.xpath(&apos;//title/text()&apos;).extract()
+response.xpath(&apos;//div[@id=&quot;images&quot;]/a/text()&apos;).extract_first()
+#可以提供默认返回值作为参数
+response.xpath(&apos;//div[@id=&quot;not-exists&quot;]/text()&apos;).extract_first(default=&apos;not-found&apos;)
+</code></pre></li>
+<li><p>Xpath选择器常用方法</p>
+<pre><code>nodeName    选取此节点的所有节点
+/           从根节点选取
+//          从匹配选择的当前节点选择文档中的节点，不考虑它们的位置
+.           选择当前节点
+..          选取当前节点的父节点
+@           选取属性
+*           匹配任何元素节点
+@*          匹配任何属性节点
+Node()      匹配任何类型的节点
+</code></pre></li>
+<li><p>CSS选择器常用方法</p>
+<pre><code>.class              .color              选择class=”color”的所有元素
+#id                 #info               选择id=”info”的所有元素
+*                   *                   选择所有元素
+element             p                   选择所有的p元素
+element,element     div,p               选择所有div元素和所有p元素
+element element     div p               选择div标签内部的所有p元素
+[attribute]         [target]            选择带有targe属性的所有元素
+[arrtibute=value]   [target=_blank]     选择target=”_blank”的所有元素
+</code></pre></li>
+<li><p>获取基本URL和一些图像链接</p>
+<pre><code>response.xpath(&apos;//base/@href&apos;).extract()
+response.css(&apos;base::attr(href)&apos;).extract()
+
+response.xpath(&apos;//a[contains(@href, &quot;image&quot;)]/@href&apos;).extract()
+response.css(&apos;a[href*=&quot;image&quot;]::attr(href)&apos;).extract()
+#其中a[href*=&quot;image&quot;]表示href的属性值包含“image”的所有a元素
+
+response.xpath(&apos;//a[contains(@href, &quot;image&quot;)]/img/@src&apos;).extract()
+response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
+</code></pre></li>
+</ul>
+<h3 id="参考大神佳作Scrapy爬虫入门教程五-Selectors（选择器）"><a href="#参考大神佳作Scrapy爬虫入门教程五-Selectors（选择器）" class="headerlink" title="参考大神佳作Scrapy爬虫入门教程五 Selectors（选择器）"></a>参考大神佳作<a href="https://blog.csdn.net/Inke88/article/details/60589170" target="_blank" rel="noopener">Scrapy爬虫入门教程五 Selectors（选择器）</a></h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjucq8o670053zswvu1y8n6x4" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-scrapy命令行详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/02/scrapy命令行详解/" class="article-date">
+  <time datetime="2018-04-02T11:08:41.000Z" itemprop="datePublished">2018-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/02/scrapy命令行详解/">scrapy命令行详解</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>scrapy命令行详解</h5><p></p>
+<hr>
+<hr>
+<ul>
+<li><p>创建项目<code>scrapy startproject 项目名</code></p>
+<pre><code>#测试网站：http://quotes.toscrape.com/
+scrapy startproject quotetutorial
+</code></pre></li>
+<li><p>创建爬虫<code>scrapy genspider spider文件名 网站域名</code></p>
+<pre><code>cd quotetutorial         进入项目
+scrapy genspider quotes quotes.toscrape.com   创建爬虫
+</code></pre></li>
+<li><p>运行爬虫<code>scrapy crawl 爬虫文件名</code></p>
+<pre><code>scrapy crawl quotes
+scrapy crawl quotes -o quotes.json   保存爬取数据为json格式,还有其他格式如.jl、.csv、.xml、.pickle、.marshal等等
+</code></pre></li>
+<li><p>在项目中常用的其他命令（局部命令）</p>
+<pre><code>scrapy check   检查spider文件有无语法错误
+scrapy list    列出spider路径下的spider文件
+scrapy bench   测试电脑当前爬取速度性能，即基准测试
+</code></pre></li>
+</ul>
+<ul>
+<li><p>全局命令</p>
+<pre><code>scrapy fetch &lt;url&gt;  将网页内容下载下来，然后在终端打印当前返回的内容
+scrapy view &lt;url&gt;   将网页内容保存下来，并在浏览器中打开当前网页内容，直观呈现要爬取网页的内容（发现这个与上述命令效果一样啊）
+scrapy shell [url]  打开 scrapy 显示台，进入命令行交互模式
+可以用来做测试,（exit()退出模式）
+scrapy version [-v]  显示scrapy版本，后面加 -v 可以显示scrapy依赖库的版本
+scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中的爬虫，而不必创建一个项目
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjucq8o5t004vzswv19tqs840" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-发布及文件上传" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/01/发布及文件上传/" class="article-date">
@@ -197,7 +376,7 @@ def fabu(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cju1a265s005w3wwv8k69icpp" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjucq8o79005pzswvxjambr71" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -421,7 +600,7 @@ Last-Modified 　 这个实体最后一次被修改的日期和时间
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cju1a25xs001y3wwvciwjz5rr" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjucq8nxp000zzswvdbsgr958" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络基础知识/">网络基础知识</a></li></ul>
@@ -580,7 +759,7 @@ ITEM_PIPELINES = {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cju1a264f00523wwvv287nx72" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjucq8o61004zzswvmylz2kiz" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -668,7 +847,7 @@ free -m 显示内存使用情况
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cju1a268e007i3wwv1otz004m" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjucq8ob3007fzswvnvn9xta4" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -770,7 +949,7 @@ Ctrl+r    恢复撤销
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cju1a265a005m3wwv5kx5vob6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjucq8o6x005hzswvaqsxp0gq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -923,7 +1102,7 @@ tail -n 数字 文件名      #规定显示最后几行
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cju1a263o004m3wwvmk4kids3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjucq8o5a004mzswvg6vubzns" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -1015,7 +1194,7 @@ def login(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cju1a264y005e3wwv8rbzm9cv" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjucq8o6h0059zswvh7hb40hb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -1152,222 +1331,10 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cju1a269700803wwv99veelin" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjucq8oc1007zzswvlv2ideeg" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-pyspider框架" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/24/pyspider框架/" class="article-date">
-  <time datetime="2018-03-24T10:41:19.000Z" itemprop="datePublished">2018-03-24</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/24/pyspider框架/">pyspider框架</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>pyspider框架</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>pyspider 是一个用python实现的功能强大的网络爬虫系统，能在浏览器界面上进行脚本的编写，功能的调度和爬取结果的实时查看，后端使用常用的数据库进行爬取结果的存储，还能定时设置任务与任务优先级等</li>
-<li>PhantomJS 是一个基于 WebKit 的服务器端 JavaScript API。它全面支持web而不需浏览器支持，其快速、原生支持各种Web标准：DOM 处理、CSS 选择器、JSON、Canvas 和 SVG。 PhantomJS 可以用于页面自动化、网络监测、网页截屏以及无界面测试等</li>
-<li>安装完pyspider、phantomJS后，在命令行输入<code>pyspider all</code>启动pyspider所有服务组件…然后浏览器访问 <a href="http://localhost:5000，如果正常出现" target="_blank" rel="noopener">http://localhost:5000，如果正常出现</a> PySpider 的页面，那证明一切OK</li>
-<li>pyspider的架构主要分为 scheduler（调度器）, fetcher（抓取器）, processor（脚本执行）,以及一个监控组件，当启动服务组件的时候，这些程序均开始运行了…<ul>
-<li>1.各个组件间使用消息队列连接，除了scheduler是单点的，fetcher 和 processor 都是可以多实例分布式部署的。 scheduler 负责整体的调度控制</li>
-<li>2.任务由 scheduler 发起调度，fetcher 抓取网页内容， processor 执行预先编写的python脚本，输出结果或产生新的提链任务（发往 scheduler），形成闭环</li>
-<li>3.每个脚本可以灵活使用各种python库对页面进行解析，使用框架API控制下一步抓取动作，通过设置回调控制解析动作</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>页面内容解析</h6><p></p>
-<ul>
-<li>拿www.reeoo.com这个网页，爬取上面的数据</li>
-<li>创建新项目页面：<ul>
-<li>Project Name：任务的名字</li>
-<li>Start URL(s)：爬取任务开始的地址</li>
-</ul>
-</li>
-<li><p>创建后的页面</p>
-<pre><code>from pyspider.libs.base_handler import *
-class Handler(BaseHandler):
-    crawl_config = {
-    }
-
-    @every(minutes=24 * 60)
-    #@every(minutes=24 * 60) 通知 scheduler（框架的模块） 每天运行一次
-    def on_start(self):
-    #on_start(self) 程序的入口，当点击左侧绿色区域右上角的 run 按钮时首先会调用这个函数
-        self.crawl(&apos;https://reeoo.com/&apos;, callback=self.index_page)
-    #self.crawl(url, callback) pyspider库主要的API，用于创建一个爬取任务，url 为目标地址，这里为我们刚刚创建任务指定的起始地址，callback 为抓取到数据后的回调函数
-
-    @config(age=10 * 24 * 60 * 60)
-    #@config(age=10 * 24 * 60 * 60) 设置任务的有效期限，在这个期限内目标爬取的网页被认为不会进行修改
-    def index_page(self, response):
-    #index_page(self, response) 参数为 Response 对象，response.doc 为 pyquery 对象，主要用来方便地抓取返回的html文档中对应标签的数据
-        for each in response.doc(&apos;a[href^=&quot;http&quot;]&apos;).items():
-            self.crawl(each.attr.href, callback=self.detail_page)
-
-    @config(priority=2)
-    #@config(priority=2) 设定任务优先级
-    def detail_page(self, response):
-    #detail_page(self, response) 返回一个 dict 对象作为结果，结果会自动保存到默认的 resultdb 中，也可以通过重载方法来将结果数据存储到指定的数据库
-        return {
-            &quot;url&quot;: response.url,
-            &quot;title&quot;: response.doc(&apos;title&apos;).text(),
-        }
-</code></pre></li>
-<li><p>运行代码后时出现 HTTP 599: SSL certificate problem: unable to get local issuer certificate错误时：<br><br>使用 self.crawl(url, callback=self.index_page, validate_cert=False)</p>
-</li>
-<li>运行<br>1.点击左边绿色区域右上角的 run 按钮，运行之后页面下册的 follows 按钮出现红色角标<br>2.选中 follows 按钮，看到 index_page 行，点击行右侧的运行按钮<br>3.运行完成后显示 www.reeoo.com 页面上所有的url<br>4.此时任意选择一个结果运行，此时调用的是 detail_page 方法，返回结果为json格式的数据，这里我们保存的是网页的 title 和 url，见左侧黑色的区域<br>5.回到主页面，此时看到任务列表显示刚刚创建的任务，设置 status 为 running，然后点击 Run 按钮执行<br>6.执行过程中可以看到整个过程的打印输出<br>7.执行完成后，点击 Results 按钮，进入到爬取结果的页面<br>8.右上方的按钮选择将结果数据保存成对应的格式，例如：JSON格式的数据</li>
-</ul>
-<p></p><h6>查找文件路径</h6><p></p>
-<ul>
-<li>由于配置了windows的环境变量，所以习惯性的打开CMD后就直接敲命令行执行 pyspider语句，但找不到pyspider存储的数据在哪里</li>
-<li>后来才发现，pyspider命令行执行的时候，数据库data文件会自动在当前目录生成，即在<code>C:\Users\DELL&gt;</code>下，<code>C:\Users\DELL\data</code></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cju1a261s00463wwv12bwrngq" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-selenium模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/23/selenium模块/" class="article-date">
-  <time datetime="2018-03-23T15:15:47.000Z" itemprop="datePublished">2018-03-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/23/selenium模块/">selenium模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>selenium模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>selenium 是一套完整的web应用程序测试系统，Selenium的核心Selenium Core基于JsUnit，完全由JavaScript编写，因此可以用于任何支持JavaScript的浏览器上，爬虫中主要用来解决JavaScript渲染问题</li>
-<li>Selenium.Webdriver支持的浏览器中，比较重要的PhantomJS,PhantomJS是一个基于WebKit的服务端JavaScript API,支持Web而不需要浏览器支持，其快速、原生支持各种Web标准：Dom处理，CSS选择器，JSON等等。PhantomJS可用于页面自动化、网络监测、网页截屏，以及无界面测试</li>
-</ul>
-<p></p><h6>查找元素</h6><p></p>
-<ul>
-<li><p>单个元素和多个元素的查找，用法基本一致</p>
-<pre><code>from selenium import webdriver
-from selenium.webdriver.common.by import By
-from time import sleep
-
-browser=webdriver.Chrome()
-browser.get(&apos;http://www.baidu.com&apos;)  #声明浏览器对象
-#print(browser.page_source)       #打印百度首页的源代码
-input=browser.find_element(By.ID,&apos;kw&apos;)
-input.clear()
-input.send_keys(&apos;selenium&apos;)
-button=browser.find_element(By.CSS_SELECTOR,&apos;#su&apos;)
-button.click()
-sleep(3)
-browser.close()
-</code></pre></li>
-<li><p>这里列举一下常用的查找元素方法：</p>
-<pre><code>find_element_by_name
-find_element_by_id
-find_element_by_xpath
-find_element_by_link_text
-find_element_by_partial_link_text
-find_element_by_tag_name
-find_element_by_class_name
-find_element_by_css_selector
-</code></pre></li>
-</ul>
-<p></p><h6>执行JavaScript</h6><p></p>
-<ul>
-<li><p>这是一个非常有用的方法，这里就可以直接调用js方法来实现一些操作，下面的例子是通过登录知乎然后通过js翻到页面底部，并弹框提示</p>
-<pre><code>from selenium import webdriver
-
-browser=webdriver.Chrome()
-browser.get(&apos;http://www.zhihu.com/explore&apos;)  #声明浏览器对象
-browser.execute_script(&apos;window.scrollTo(0,document.body.scrollHeight)&apos;)
-browser.execute_script(&apos;alert(&quot;Hello World!&quot;)&apos;)
-</code></pre></li>
-</ul>
-<p></p><h6>01</h6><p></p>
-<ul>
-<li><p>获取属性值、文本值</p>
-<pre><code>from selenium import webdriver
-from selenium.webdriver.common.by import By
-
-browser=webdriver.Chrome()
-browser.get(&apos;https://www.zhihu.com/explore&apos;)
-logo=browser.find_element(By.ID,&apos;zh-top-link-logo&apos;)
-print(logo.get_attribute(&apos;class&apos;))    #获取元素的属性值
-print(logo.text)                      #获取文本值
-print(logo.id)
-print(logo.location)                  #获取位置
-print(logo.tag_name)                  #获取标签名
-print(logo.size)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cju1a2645004w3wwvg7frl1r7" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
 
     </footer>
   </div>
@@ -1396,7 +1363,7 @@ print(logo.size)
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1406,7 +1373,7 @@ print(logo.size)
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.5px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.5px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.75px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.75px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.25px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 16.25px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.75px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.25px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 17.5px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 12.5px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.75px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.78px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.56px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.67px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.33px;">软件工具</a>
     </div>
   </div>
 
@@ -1415,7 +1382,7 @@ print(logo.size)
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1428,6 +1395,14 @@ print(logo.size)
       <ul>
         
           <li>
+            <a href="/2019/04/11/robotframework-基于python27/">robotframework---基于python27</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/04/jenkins自动化部署-远程部署前端vue项目/">jenkins自动化部署--远程部署前端vue项目</a>
+          </li>
+        
+          <li>
             <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
           </li>
         
@@ -1437,14 +1412,6 @@ print(logo.size)
         
           <li>
             <a href="/2019/04/02/编译部署NodeJS/">编译部署NodeJS</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/02/GCC升级/">GCC升级</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/01/jenkins自动化部署-构建后台项目/">jenkins自动化部署--构建后台项目</a>
           </li>
         
       </ul>

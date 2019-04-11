@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>jenkins自动化部署--远程部署前端vue项目 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="jenkins自动化部署–远程部署前端vue项目   1. Jenkins插件安装  在系统管理—插件管理下，安装Publish over SSH插件 在系统管理—系统设置下，配置SSH插件信息 #只填写必要信息 SSH Server      Name               front-web（随意一个名字即可）     Hostname           192.168.110.**（">
+<meta name="keywords" content="JAVA项目部署">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jenkins自动化部署--远程部署前端vue项目">
+<meta property="og:url" content="http://yoursite.com/2019/04/04/jenkins自动化部署-远程部署前端vue项目/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="jenkins自动化部署–远程部署前端vue项目   1. Jenkins插件安装  在系统管理—插件管理下，安装Publish over SSH插件 在系统管理—系统设置下，配置SSH插件信息 #只填写必要信息 SSH Server      Name               front-web（随意一个名字即可）     Hostname           192.168.110.**（">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-04T13:48:19.250Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jenkins自动化部署--远程部署前端vue项目">
+<meta name="twitter:description" content="jenkins自动化部署–远程部署前端vue项目   1. Jenkins插件安装  在系统管理—插件管理下，安装Publish over SSH插件 在系统管理—系统设置下，配置SSH插件信息 #只填写必要信息 SSH Server      Name               front-web（随意一个名字即可）     Hostname           192.168.110.**（">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jenkins自动化部署-远程部署前端vue项目" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/04/jenkins自动化部署-远程部署前端vue项目/" class="article-date">
+  <time datetime="2019-04-04T13:27:50.000Z" itemprop="datePublished">2019-04-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jenkins自动化部署--远程部署前端vue项目
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>jenkins自动化部署–远程部署前端vue项目</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. Jenkins插件安装</h6><p></p>
+<ul>
+<li>在系统管理—插件管理下，安装Publish over SSH插件</li>
+<li><p>在系统管理—系统设置下，配置SSH插件信息</p>
+<pre><code>#只填写必要信息
+SSH Server
+
+    Name               front-web（随意一个名字即可）
+    Hostname           192.168.110.**（需要部署的远程服务器IP）
+    Username           root（登录远程服务器的用户名）
+    Remote Directory      /usr/local/nginx/front-web（远程nginx服务器放置前端项目的目录）
+    √ Use password authentication, or use a different key
+    Passphrase / Password  （输入远程服务器登录密码）
+    Port               22
+    Timeout (ms)       300000
+</code></pre></li>
+</ul>
+<p></p><h6>2. 构建项目</h6><p></p>
+<ul>
+<li>2.1 新建任务（输入一个任务名称，如front-web，选择“构建一个自由风格的软件项目”）</li>
+<li>2.2 源码管理（选择“Git”，输入仓库URL和git账号）</li>
+<li><p>2.3 构建—执行shell，命令框中输入以下内容：</p>
+<pre><code>node -v
+npm -v
+
+cd /var/lib/jenkins/workspace/front-web
+rm -rvf dist
+npm install
+npm run build
+</code></pre></li>
+<li><p>2.4 构建后操作—选择“Send build artifacts over SSH”，配置如下</p>
+<pre><code>Transfer Set
+
+    Source files        dist/css/,dist/fonts/,dist/img/,dist/js/,dist/*
+    Remove prefix       dist
+    Remote directory    #可不写，默认系统设置项/usr/local/nginx/front-web
+    Exec command        #不需要命令，直接每次覆盖原来文件
+</code></pre></li>
+</ul>
+<p></p><h6>3. Nginx配置</h6><p></p>
+<ul>
+<li><p>Nginx配置文件具体配置部分如下所示</p>
+<pre><code>server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            root   front-web;      #前端资源目录
+            index  index.html index.htm;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+        location /api {
+            proxy_pass http://192.168.110.**:8080/cmp;   #后台接口
+        }
+    }
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/04/jenkins自动化部署-远程部署前端vue项目/" data-id="cjucq8o28003gzswv15n270vm" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/04/11/robotframework-基于python27/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          robotframework---基于python27
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">jenkins自动化部署--部署war包到远程服务器</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.78px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.56px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.67px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.33px;">软件工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/04/11/robotframework-基于python27/">robotframework---基于python27</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/04/jenkins自动化部署-远程部署前端vue项目/">jenkins自动化部署--远程部署前端vue项目</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/02/jenkins自动化部署-构建前端项目/">jenkins自动化部署--构建前端项目</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/02/编译部署NodeJS/">编译部署NodeJS</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
