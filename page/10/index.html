@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,349 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-XSS注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/10/XSS注入/" class="article-date">
+  <time datetime="2018-03-10T15:44:11.000Z" itemprop="datePublished">2018-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/10/XSS注入/">XSS注入</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>XSS注入</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>概念</h6><p></p>
+<ul>
+<li>跨站脚本攻击(Cross Site Script为了区别于CSS简称为XSS)指的是恶意攻击者往Web页面里插入恶意html代码，当用户浏览该页之时，嵌入其中Web里面的html代码会被执行，从而达到恶意用户的特殊目的</li>
+<li>例子，某个论坛或者页面上有个广告，网址是zhengpin.taobao.com，你点击进去，你看是购物网站，又是淘宝的，你就进去购买了，其实呢，他会redirect到另一个攻击者自己的网站，你在购买的时候，使用的是攻击者的接口进行付款，很可能就会被盗取个人信息及财产等</li>
+</ul>
+<p></p><h6>寻找跨站漏洞</h6><p></p>
+<ul>
+<li>如果有代码的话，我们主要看代码里对用户输入的地方和变量有没有做长度和对”&lt;”,”&gt;”,”;”,”’”等字符是否做过滤</li>
+<li>还有要注意的是对于标签的闭合，像测试QQ群跨站漏洞的时候，你在标题处输入，这样就可以弹出一个test的框</li>
+</ul>
+<p></p><h6>XSS漏洞的后果</h6><p></p>
+<ul>
+<li>XSS漏洞可能造成的后果包括窃取用户会话，窃取敏感信息，重写Web页面，重定向用户到钓鱼网站等，尤为严重的是，XSS漏洞可能使得攻击者能够安装XSS代理，从而攻击者能够观察到该网站上所有用户的行为，并能操控用户访问其他的恶意网站</li>
+</ul>
+<p></p><h6>XSS漏洞的常见解决措施</h6><p></p>
+<ul>
+<li>第一种就是消除漏洞，简而言之就是在输出页面上不提供任何用户的输入信息</li>
+<li>另外一种就是想办法来抵御这种漏洞，可以采用对所有用户的输入编码后再输出（可以用OWASP的ESAPI），也可以对所有用户输入进行“白名单”验证，另外，OWASP还提供了AntiSamy对HTML页面做优化以消除这个漏洞</li>
+</ul>
+<p></p><h6>XSS的分类及测试方法</h6><p></p>
+<ul>
+<li>Stored XSS，即存储式跨站攻击<ul>
+<li>存储式跨站攻击简单来说就是攻击者提交给网站的数据会提交并永久保存到服务器的数据库或者是文件系统等其他地方，之后不做任何编码操作就会显示在web页面上。这是最厉害的攻击方式<ul>
+<li>例如1:在一个网站的一些留言板或者新闻等可以输入的地方，输入一下代码<code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code>，因为这个是留言板上或者评论等的内容，会被读取并且存储到服务器上，如果不作任何处理，当其他用户访问这个网页的时候，就会弹出一个关于cookie的警告信息</li>
+<li>在评论的时候输入<code>&lt;script type=&quot;text/javascript&quot;&gt;alert(&quot;you are a foolish person&quot;)&lt;/script&gt;</code>，如果不进行处理，这个信息会被当做正常的留言存储到服务器，那个接下来每个访问这个页面的用户都会收到you are a foolish person的alert信息，会造成很大的影响。（可用于窃取密码，用户信息等）</li>
+</ul>
+</li>
+<li>Reflected XSS，即反射跨站脚本攻击,这是最常见的攻击方式<ul>
+<li>所谓反射，就是等着服务器所给的返回。我们在进行测试时依据的就是在自己页面上的简单注入。在web客户端提交了数据后，服务端马上给这个请求生成返回结果页，如果结果中包含了未验证的客户端输入数据，那就表示会允许客户端脚本直接注入到页面里，也就出现了这样一个漏洞</li>
+<li>简单举个例子，在搜索引擎里边，我们如果搜索了一个包含html代码的字符串，如果返回的字符串仍然没被编码，那么搜索的内容就不是整个html代码了，而是只想过这个html代码，那就是存在XSS漏洞了</li>
+</ul>
+</li>
+<li>Dom-Base XSS，即基于DOM的XSS攻击<ul>
+<li>它是修改页面DOM节点数据信息而形成的XSS跨站脚本攻击，该漏洞多见于客户端脚本，意思就是如果一个js访问需要参数的url，并且需要把信息作用于自己当前的页面，信息又未被编码，就会出现该漏洞</li>
+<li>例如：好多网站在网址后边带个参数（？XXX的），当看到这种情况时候，我们可以在参数后边加个，如果加了这个参数之后，这段script代码不被编码就输出，那就证明它具有这么一个漏洞</li>
+<li>例如：某网站的url中含有？，我们输入<a href="http://application.com/xxx.jsp?，如果这个脚本执行了，那么我们就说这是一个XSS漏洞" target="_blank" rel="noopener">http://application.com/xxx.jsp?，如果这个脚本执行了，那么我们就说这是一个XSS漏洞</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>完善的输入检查是预防XSS的重要措施</h6><p></p>
+<ul>
+<li><p>防范反射型XSS和存储型XSS</p>
+<ul>
+<li>输入检查在大多数的时候都是对可信字符的检查或输入数据格式的检查，如用户输入的注册账号信息中只允许包括字母、数字、下划线和汉字等，对于输入的一切非白名单内的字符均认为是非法输入。数据格式如输入的IP地址、电话号码、邮件地址、日期等数据都具有一定的格式规范，只有符合数据规范的输入信息才允许通过检查</li>
+<li>输出检查主要是针对数据展示过程中，应该对数据信息进行HTML编码处理，将可能存在导致XSS跨站脚本攻击的恶意字符进行编码，在不影响正常数据显示的前提条件下，过滤恶意字符</li>
+<li><p>常见的可能造成XSS跨站脚本攻击的字符及其HTML编码如下：</p>
+<pre><code>“ &amp;quot;
+‘ &amp;apos;
+&amp; &amp;amp;
+&lt; &amp;lt;
+&gt;  &amp;gt;
+</code></pre></li>
+</ul>
+</li>
+<li><p>防范基于DOM的XSS</p>
+<ul>
+<li>从基于DOM的XSS的定义及其触发方式我们发现，当基于DOM的XSS跨站脚本攻击发生时，恶意数据的格式与传统的XSS跨站脚本攻击数据格式有一定的差异，甚至可以在不经过服务器端的处理和相应的情况下，直接对客户端实施攻击行为，因此上述我们应用于防范反射型XSS和存储型XSS的方法并不适用于防范基于DOM的XSS跨站脚本攻击</li>
+<li><p>针对基于DOM的XSS防范的输入检查方法，我们发现在客户端部署相应的安全检测代码的过滤效果要比在服务器端检测的效果更加明显。例如，我们可以通过如下客户端检测代码来保证用户输入的数据只包含字母、数字和空格，代码如下：</p>
+<pre><code>&lt;script&gt;
+    var str = document.URL;
+    str = str.substring(str.indexOf(&quot;username=&quot;)+9, str.length);
+    str = unescape(str);
+    var regex=/^([A-Za-z0-9+\s])*$/;
+    if (regex.test(str))
+    document.write(str);
+&lt;/script&gt;
+</code></pre></li>
+<li><p>同样，我们也可以通过在服务端实现类似上述数据检查的功能，如在服务器端检测URL参数是否为预定的参数username,并对username参数的内容进行检测，确认数据内容是否为只包含数字、字母和空格符，实现服务端的数据过滤。但是，由于客户端数据的可控性，这种服务端检测的效果要明显弱于客户端检测</p>
+</li>
+<li><p>基于DOM的XSS输出检查与反射型XSS漏洞输出检查的方法相似，在将用户可控的DOM数据内容插入到文档之前，Web应用程序应对提交的数据进行HTML编码处理，将用户提交的数据中可能存在的各种危险字符和表达式进行过滤以安全的方式插入到文档中进行展现，如可以通过如下函数实现在客户端javascript中执行HTML编码处理</p>
+<pre><code>function jsEncode(str){
+    var d = document.createElement(&apos;div&apos;);
+    d.appendChild(document.createTextNode(str));
+    return d.innerHTML;
+}
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjuy6fk9m002z64wv8rp167i6" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-SQL注入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/10/SQL注入/" class="article-date">
+  <time datetime="2018-03-10T14:12:52.000Z" itemprop="datePublished">2018-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/10/SQL注入/">SQL注入</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>SQL注入</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>概念</h6><p></p>
+<ul>
+<li>攻击者之所以可以利用自己输入的数据来达到攻击网站的目的，原因就在于SQL语言作为一种解释型语言，它的数据其实是由程序员编写的代码和用户提交的数据共同组成的。正是这个原因，攻击者可以构造对自己有利的数据，利用网站的一些SQL漏洞来达到恶意的目的</li>
+<li>SQL注入，就是指攻击者将恶意的字符串或者语句等信息作为参数输入，服务器在验证这个字段的时候，读取攻击者输入的数据，将其作为正常的值参与SQL语句的查询，试想，如果攻击者输入了一个字符串，在SQL语句执行之后，可以导致删除表等操作，对于一个应用来说，影响是很大的</li>
+<li>通过网页的输入项来注入SQL查询或命令是一种技巧。许多网页会从用户那里获取参数，并构建SQL查询来访问数据库。以用户登录为例，页面收集用户名和密码然后构建SQL去查询数据库，来校验用户名和密码的有效性。</li>
+</ul>
+<p></p><h6>简单实例</h6><p></p>
+<ul>
+<li>某网站的登录功能，用户登录页面需要填写用户名和密码，假设如果其中一个用户名和密码是admin和123456，当用户在相应的表单中输入正确的用户名和密码之后，此应用的相应函数执行一定的验证（验证用户名和密码是否匹配），服务器执行SQL语句（表名是user）：<code>select * from user where username=’username’ and pwd=’password’</code>，逻辑是如果这个查询语句返回结果不为0，则认为是验证通过，即可以登录成功的用户</li>
+<li>如果某用户输入admin和123456，即执行语句：select * from user where username=’admin’ and pwd=’123456’,执行结果不为0，所以用户登录成功</li>
+<li>如果一个用户输入test’ or 1=’1和111111，即执行语句：select * from user where username=’test’ or 1=’1’ and pwd=’111111’，因为此查询语句中1=’1’的结果为1，or 1=’1’使查询条件始终返回1，因此此语句的查询结果不为0，这样，此用户没有使用正确的用户名和密码也可以登录成功，这就是SQL注入的一个简单实例</li>
+</ul>
+<p></p><h6>SQL注入一般会出现在哪些地方</h6><p></p>
+<ul>
+<li>含有输入数据表单的页面（登录界面、查询界面、反馈界面等），即使是hidden的表单也有可能存在这个问题</li>
+<li>含有用户信息、ID等的URL（类似于<code>http://XXX/index.asp?ID=155</code>），可以操作ID后的参数数据</li>
+</ul>
+<p></p><h6>SQL注入的防范措施</h6><p></p>
+<ul>
+<li>从开发者的角度来说，防范措施如下<ul>
+<li>转义敏感字符及字符串<br>SQL的敏感字符包括： “exec”, “xp<em>”, “sp</em>”, “declare”, “cmd”, “Union”, “+”, “//”,              ”..”, “;”, “’”, “–”, “%”, “0x”, “&gt;&lt;=!-*/()|” ,和空格</li>
+<li>屏蔽出错信息：阻止攻击者知道攻击的结果</li>
+<li>在服务端正式处理之前提交数据的合法性(合法性检查主要包括三 项:数据类型,数据长度,敏感字符的校验)进行检查等。最根本的解决手段,在确认客 户端的输入合法之前,服务端拒绝进行关键性的处理操作</li>
+</ul>
+</li>
+<li>从测试人员的角度来说，防范措施是<ul>
+<li>在程序开发前(即需求阶段),我们就应该有意识的将安全性检查应用到需求测试中,例如对一个表单需求进行检查时,我们一般检验以下几项安全性问题:需求中应说明表单中某一field的类型,长度,以及取值范围(主要作用就是禁止输入敏感字符)；需求中应说明如果超出表单规定的类型,长度,以及取值范围的,应用程序应给出不包含任何代码或数据库信息的错误提示等</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjuy6fk9r003164wv7cudmvid" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-基本安全测试" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/10/基本安全测试/" class="article-date">
+  <time datetime="2018-03-10T08:10:50.000Z" itemprop="datePublished">2018-03-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/10/基本安全测试/">基本安全测试</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>基本安全测试</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>用户权限测试</h6><p></p>
+<ul>
+<li>用户权限控制<ul>
+<li>用户权限控制主要是对一些有权限控制的功能进行验证</li>
+<li>用户A才能进行的操作，B是否能够进行操作</li>
+<li>只能有A条件的用户才能查看的页面，是否B能够查看（可直接敲URL访问）</li>
+</ul>
+</li>
+<li>页面权限控制<ul>
+<li>必须有登陆权限的页面，是否能够在不登陆情况下进行访问</li>
+<li>必须经过A——B——C的页面，是否能够直接由A——C？</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>URL安全测试</h6><p></p>
+<ul>
+<li>适用范围： URL中含有参数，也就是通过GET方式传递的HTTP请求</li>
+<li>什么叫GET方式<ul>
+<li>GET方式在客户端通过URL提交数据，数据在URL中可以看到</li>
+<li>POST方式，数据放置在HTML HEADER内提交，数据在URL中看不到</li>
+<li>GET只能传输比较少的数据，安全性较低，POST传输数据较多，安全性也比GET高</li>
+</ul>
+</li>
+<li><p>测试关注点</p>
+<ul>
+<li>URL 参数检查<ul>
+<li>对URL中参数信息检查是否正确，如：URL中的订单号、金额允许显示出来的话，需要验证其是否正确</li>
+<li>对于一些重要的参数信息，不应该在URL中显示出来，如：用户登陆时登录名、密码是否被显示出来了</li>
+</ul>
+</li>
+<li>URL参数值篡改<ul>
+<li>修改URL中的数据，看程序是否能识别，对于URL中包含金额参数的，修改金额看是否能够提交成功（可能导致用户把2元金额改成1元金额能提交），还有修改订单号等重要信息看是否会报错</li>
+</ul>
+</li>
+<li><p>URL中参数修改进行XSS注入</p>
+<ul>
+<li><p>XSS的全称是Cross Site Script（跨站点脚本），XSS的原理很简单，即进行脚本注入，URL执行时即把此脚本进行了执行，一般都是JavaScript脚本</p>
+<pre><code>如“http://www.cnblogs.com/javame/index.asp?IDClass=2&amp;ClassName=abc”
+
+改成“http://www.cnblogs.com/javame/index.asp?IDClass=2&amp;ClassName=abc&lt;script&gt;alert(&quot;hello&quot;);&lt;/script&gt;”
+
+看看有没弹出对话框显示hello，有的话就有跨站漏洞
+</code></pre></li>
+</ul>
+</li>
+<li><p>URL参数中进行SQL注入</p>
+<ul>
+<li>SQL注入全称是SQL Injection ，当应用程序使用输入内容来构造动态sql语句以访问数据库时，会发生sql注入攻击，如查询、插入数据时</li>
+<li>测试方法： URL中写入SQL注入语句，看是否被执行<br>如：www.cnblogs.com/javame这个网站中，选择登陆设置用户名为 admin ‘ or ‘1’=’1 密码为任意数字 ，点击登录就可以登陆。一般情况下要进行SQL注入攻击，需要对数据库类型、表名、判断逻辑、查询语句等比较清楚才能够写出有效的SQL注入语句</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>表单提交安全测试</h6><p></p>
+<ul>
+<li>适用范围：有表单提交的地方、有HTTP请求的地方</li>
+<li>测试关注点<ul>
+<li>表单中注入XSS脚本<ul>
+<li>即在表单填写框中直接注入JS脚本如在表单中输入XSS脚本，程序是不应该让脚本执行的</li>
+</ul>
+</li>
+<li>表单中注入SQL 脚本<ul>
+<li>与URL中参数进行XSS注入类似，就是在表单中写入SQL注入脚本提交看是否会有问题</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>Session测试</h6><p></p>
+<ul>
+<li>Session是客户端与服务器端建立的会话，总是放在服务器上的，服务器会为每次会话建立一个sessionId，每个客户会跟一个sessionID对应，并不是关闭浏览器就结束了本次会话，通常是用户执行“退出”操作或者会话超时时才会结束</li>
+<li>测试关注点<ul>
+<li>Session互窜<ul>
+<li>Session互窜即用户A的操作被用户B执行了</li>
+<li>验证Session互窜，其原理还是基于权限控制，如某笔订单只能是A进行操作，或者只能是A才能看到的页面，但是B的session窜进来却能够获得A的订单详情等</li>
+<li>Session互窜方法<ul>
+<li>多TAB浏览器，在两个TAB页中都保留的是用户A的session记录，然后在其中一个TAB页执行退出操作，登陆用户B，此时两个TAB页都是B的session，然后在另一个A的页面执行操作，查看是否能成功。预期结果：有权限控制的操作，B不能执行A页面的操作，应该报错，没有权限控制的操作，B执行了A页面操作后，数据记录是B的而不是A的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Session超时<ul>
+<li>基于Session原理，需要验证系统session是否有超时机制，还需要验证session超时后功能是否还能继续走下去</li>
+<li>测试方法：<ul>
+<li>打开一个页面，等着10分钟session超时时间到了，然后对页面进行操作，查看效果</li>
+<li>多TAB浏览器，在两个TAB页中都保留的是用户A的session记录，然后在其中一个TAB页执行退出操作，马上在另外一个页面进行要验证的操作，查看是能继续到下一步还是到登录页面</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjuy6fki5006564wvm14lutrx" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-事务视图索引备份" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -207,7 +550,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjucq8o6s005fzswvqrmuk474" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjuy6fkfy005b64wv5d04wato" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -306,7 +649,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjucq8o2g003kzswv81nsy0jz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjuy6fkae003b64wvuv4bw2hl" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -391,7 +734,7 @@ chown 命令会更改由符号链接引用的目录的用户标识（和组标�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="cjucq8o25003ezswv7s2wpuf5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="cjuy6fka9003964wvry24fj1t" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -514,7 +857,7 @@ driver.quit()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjucq8o11002qzswvfj63bmsl" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjuy6fk8c002f64wve6lyi771" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -630,7 +973,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjucq8oad006zzswvjkhg22uu" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjuy6fkk7007164wvcekks95c" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -731,7 +1074,7 @@ and kcm=&apos;QTP&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjucq8ocj0089zswvkxhylhcg" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjuy6fkn9008d64wv78odveuv" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -862,488 +1205,7 @@ print(&apos;End send email...&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjucq8o7h005tzswvj81al9w1" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-单元测试框架" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/04/单元测试框架/" class="article-date">
-  <time datetime="2018-03-04T14:12:42.000Z" itemprop="datePublished">2018-03-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/04/单元测试框架/">单元测试框架</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>单元测试框架</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>单元测试（unit testing）是指对软件中的最小可测试单元进行检查和验证，单元就是人为规定的最小的被测功能模块</li>
-<li>单元测试框架提供了一种统一的编程模型，可以将测试定义为一些简单的类，这些类中的方法可以调用希望测试的应用程序代码。</li>
-<li>不同编程语言有不同的单元测试框架，如Java 的Junit, TestNg, c#的 Nunit,Python的unittest,Pyunit,testtools, subunit….</li>
-</ul>
-<p></p><h6>unittest</h6><p></p>
-<ul>
-<li>unittest单元测试框架不仅适用于单元测试，还适用WEB自动化测试用例的开发与执行，该测试框架可组织执行测试用例，并且提供了丰富的断言方法，判断测试用例是否通过，最终生成测试结果</li>
-<li>unittest核心要素<ul>
-<li>TestCase<br>一个TestCase的实例就是一个测试用例。什么是测试用例呢？就是一个完整的测试流程，包括测试前准备环境的搭建(setUp)，执行测试代码(run)，以及测试后环境的还原(tearDown)。单元测试(unit test)的本质也就在这里，一个测试用例是一个完整的测试单元，通过运行这个测试单元，可以对某一个问题进行验证</li>
-<li>TestSuite<br>而多个测试用例集合在一起，就是TestSuite，而且TestSuite也可以嵌套TestSuite。 TestLoader是用来加载TestCase到TestSuite中的，其中有几个loadTestsFrom__()方法，就是从各个地方寻找TestCase，创建它们的实例，然后add到TestSuite中，再返回一个TestSuite实例</li>
-<li>TextTestRunner<br>TextTestRunner是来执行测试用例的，其中的run(test)会执行TestSuite/TestCase中的run(result)方法。测试的结果会保存到TextTestResult实例中，包括运行了多少测试用例，成功了多少，失败了多少等信息</li>
-<li>Fixture<br>对一个测试用例环境的搭建和销毁，是一个fixture</li>
-</ul>
-</li>
-<li><p>unittest案例</p>
-<pre><code>#cal.py #加减法运算方法的实现
-class Math:
-    def __init__(self,a,b):
-        self.a=int(a)
-        self.b=int(b)
-    def add(self):
-        return self.a+self.b
-    def sub(self):
-        return self.a-self.b
-#startend.py #SetUp与TearDown管理
-import unittest
-class StartEnd(unittest.TestCase):
-    def setUp(self):
-        print(&apos;开始测试！&apos;)
-    def tearDown(self):
-        print(&apos;测试结束！&apos;)
-#test_add.py #加法测试用例
-from cal import *
-from startend import *
-class Test_add(StartEnd):
-    def test_add(self):
-        j=Math(6,9)
-        self.assertEqual(j.add(),15)
-    def test_add1(self):
-        k=Math(5,7)
-        self.assertEqual(k.add(),12)
-#test_sub.py #减法测试用例
-from cal import *
-from startend import *
-class Test_sub(StartEnd):
-    def test_sub(self):
-        j=Math(6,9)
-        self.assertEqual(j.sub(),-3)
-    def test_sub1(self):
-        k=Math(5,7)
-        self.assertEqual(k.sub(),-2)
-#runtest.py #用例执行管理
-import unittest
-dir=&apos;./&apos;
-discovery=unittest.defaultTestLoader.discover(dir,pattern=&apos;test*.py&apos;)
-if __name__==&apos;__main__&apos;:
-    runner=unittest.TextTestRunner()
-    runner.run(discovery)
-</code></pre></li>
-<li><p>断言<br>断言内容是自动化脚本的重要内容，正确设置断言以后才能帮助我们判断测试用例执行结果</p>
-<pre><code>assertEqual(a, b) 判断a==b
-assertNotEqual(a, b) 判断a！=b
-assertTrue(x) bool(x) is True
-assertFalse(x) bool(x) is False
-assertIs(a, b) a is b
-assertIsNot(a, b) a is not b
-assertIsNone(x) x is None
-assertIsNotNone(x) x is not None
-assertIn(a, b) a in b
-assertNotIn(a, b) a not in b
-assertIsInstance(a, b) isinstance(a, b)
-assertNotIsInstance(a, b) not isinstance(a, b)
-</code></pre></li>
-<li><p>跳过测试和预期失败</p>
-<pre><code>unittest.skip() 直接跳过测试
-unittest.skipIf() 条件为真，跳过测试
-unittest.skipUnless 条件为假，跳过测试
-unittest.expectedFailure 预期设置失败
-
-import unittest
-class test1(unittest.TestCase):
-    def setUp(self):
-        print(&apos;测试开始!&apos;)
-    def test_b(self):
-        print(&apos;test_b&apos;)
-    @unittest.skipIf(3&lt;4,&apos;skip test_c&apos;)
-    def test_c(self):
-        print(&apos;test_c&apos;)
-    def tearDown(self):
-        print(&apos;测试结束!&apos;)
-@unittest.skip(&apos;skip test2&apos;)
-class test2(unittest.TestCase):
-    def setUp(self):
-        print(&apos;测试开始！&apos;)
-    def test_d(self):
-        print(&apos;test_d&apos;)
-    def test_a(self):
-        print(&apos;test_a&apos;)
-    def tearDown(self):
-        print(&apos;测试结束!&apos;)
-if __name__==&apos;__main__&apos;:
-    unittest.main()
-</code></pre></li>
-</ul>
-<p></p><h6>编写Web测试用例</h6><p></p>
-<ul>
-<li><p>案例：百度搜索关键词：“Selenium自学网” 并打开课程页面</p>
-<pre><code>#test_baidu.py
-from selenium import webdriver
-import unittest
-from time import sleep
-class TestBaidu(unittest.TestCase):
-    def setUp(self):
-        self.driver=webdriver.Firefox()
-        #self.driver.implicitly_wait(10)
-        self.driver.get(&apos;http://www.baidu.com/&apos;)
-    def test_baidu(self):
-        driver=self.driver
-        driver.find_element_by_id(&apos;kw&apos;).clear()
-        driver.find_element_by_id(&apos;kw&apos;).send_keys(&apos;selenium自学网&apos;)
-        driver.find_element_by_id(&apos;su&apos;).click()
-        sleep(3)
-        title=driver.title
-        self.assertEqual(title,&apos;selenium自学网_百度搜索&apos;)
-        driver.find_element_by_partial_link_text(&apos;Selenium自动化&apos;).click()
-        sleep(5)
-    def tearDown(self):
-        self.driver.quit()
-if __name__==&apos;__main__&apos;:
-    unittest.main()
-#runtest.py
-import unittest
-#from HTMLTestRunner import HTMLTestRunner
-from BSTestRunner import BSTestRunner
-import time
-
-test_dir=&apos;./test_case&apos;          #定义测试用例路径
-discovery=unittest.defaultTestLoader.discover(test_dir,pattern=&apos;test*.py&apos;)
-
-if __name__==&apos;__main__&apos;:
-    report_dir=&apos;./test_report&apos;  #存放报告的文件夹
-    now=time.strftime(&apos;%Y-%m-%d %H_%M_%S&apos;)       #报告命名时间格式化
-    report_name=report_dir+&apos;/&apos;+now+&apos;result.html&apos; #报告文件完整路径
-    #打开文件在报告文件中写入测试结果
-    with open(report_name,&apos;wb&apos;) as f:
-        #runer=HTMLTestRunner(stream=f,title=&apos;Test Report&apos;,description=&apos;Test case result&apos;)
-        runner=BSTestRunner(stream=f,title=&apos;Test Report&apos;,description=&apos;Test case result&apos;)
-        runner.run(discovery)
-    f.close()
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjucq8o7j005vzswvmh7pkllq" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-DML和DQL" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/02/DML和DQL/" class="article-date">
-  <time datetime="2018-03-02T08:50:44.000Z" itemprop="datePublished">2018-03-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/02/DML和DQL/">DML和DQL</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>DML和DQL</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>DML</h6><p></p>
-<ul>
-<li><p>存储引擎</p>
-<ul>
-<li><p>存储引擎的类型：MyISAM、InnoDB、Memory、CSV等9种</p>
-<ul>
-<li>默认InnoDB，支持事务处理、数据行锁定、外键约束，表空间较大</li>
-<li>MyISAM，支持全文索引，表空间较小，以查询访问为主</li>
-<li>查看当前默认存储引擎<code>show variables like &#39;storage_engine%&#39;</code></li>
-<li>可以在配置文件my.ini中修改存储引擎<code>default-storage-engine=?</code></li>
-<li><p>设置表的存储引擎</p>
-<pre><code>create table 表名(
-    省略代码
-)engine=存储引擎
-</code></pre></li>
-</ul>
-</li>
-<li>MyISAM类型表文件<ul>
-<li>*.frm：表结构定义文件</li>
-<li>*.MYD：数据文件</li>
-<li>*.MYI：索引文件</li>
-</ul>
-</li>
-<li>InnoDB类型表文件<ul>
-<li>*.frm：表结构定义文件</li>
-<li>ibdata1文件</li>
-</ul>
-</li>
-<li>存储位置，可查my.ini中的<code>datadir</code></li>
-</ul>
-</li>
-<li><p>DML语句</p>
-<ul>
-<li><p>插入单条数据记录</p>
-<pre><code>insert into 表名(字段1,字段2,字段3...) values(值1,值2,值3...)
-#如果插入所有字段可省略字段名，如果是部分数据，字段名与值需要一一对应
-</code></pre></li>
-<li><p>插入多条数据记录</p>
-<pre><code>insert into 表名(字段1,字段2,字段3...) values(值1,值2,...),(值3,值4,...),(值5,值6,...)
-</code></pre></li>
-<li><p>将查询结果插入新表</p>
-<pre><code>create table 新表(        #自动创建一个新表
-    select 字段1,字段2 from 表名
-)
-</code></pre></li>
-<li><p>更新数据记录</p>
-<pre><code>update 表名 set 字段1=值1,字段2=值2,... where 条件
-</code></pre></li>
-<li><p>删除数据记录</p>
-<pre><code>delete from 表名 where 条件
-truncate table 表名   #该语句删除后将重置自增列，表结构及其字段、约束、索引保持不变，执行速度比delete语句快
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>DQL</h6><p></p>
-<ul>
-<li><p>什么是查询<br>查询产生一个虚拟表，看到的是表形式显示的结果，但结果并不真正存储，每次执行查询只是从数据表中提取数据，并按照表的形式显示出来</p>
-<pre><code>SELECT    &lt;列名|表达式|函数|常量&gt; 
-FROM      &lt;表名&gt; 
-[WHERE    &lt;查询条件表达式&gt;] 
-[ORDER BY &lt;排序的列名&gt;[ASC或DESC]]
-
-select studentNo as &apos;学生编号&apos;,studentName as &apos;学生姓名&apos;
-from student 
-where sex=&apos;男&apos; and gradeID=1 
-order by studentNo desc
-</code></pre></li>
-<li><p>聚合函数</p>
-<pre><code>avg() 返回某字段的平均值
-count()返回某字段的行数
-max()返回某字段的最大值
-min()返回某字段的最小值
-sum()返回某字段的和
-
-select avg(studentResult) from result
-</code></pre></li>
-<li><p>字符串函数</p>
-<pre><code>字符串连接concat(str1,str2,...)
-select CONCAT(&apos;Liu&apos;,&apos;Yong&apos;,&apos;qian&apos;,2018)  #result:LiuYongqian2018
-
-字符串替换insert(str,start,length,newstr)
-select INSERT(&apos;ABCDEFGHIJK&apos;,3,5,&apos;9&apos;)     #result:AB9HIJK
-
-将字符串转为小写lower(str)
-select lower(&apos;LIUYONGQIAN&apos;)                #result:liuyongqian
-
-将字符串转为大写upper(str)
-select upper(&apos;liuyongqian&apos;)                #result:LIUYONGQIAN
-
-字符串截取substring(str,start,length)
-select SUBSTRING(&apos;LiuYongqian&apos;,4,4)      #result:Yong
-</code></pre></li>
-<li><p>时间日期函数</p>
-<pre><code>curdate()获取当前日期
-select curdate()      #result:2018-01-01
-
-curtime() 获取当前时间
-select curtime()      #result:12:12:12
-
-now()获取当前日期和时间
-select now()          #result:2018-03-01 12:44:24
-
-week(date) 返回日期date为一年中的第几周
-select week(now())    #result:2
-
-year(date)返回日期date的年份
-select year(now())     #result:2018
-
-hour(time)返回时间time的小时值
-select hour(now())     #result:19
-
-minute(time)返回时间time的分钟值
-select minute(now())   #result:48
-
-datediff(date1,date2)返回参数之间相隔的天数
-select datediff(now(),&apos;2008-8-8&apos;)  #result:3493
-
-adddate(date，n)计算日期date加上n天后的日期
-select adddate(now(),5)  #result:2018-03-30 19:48:44
-</code></pre></li>
-<li><p>数学函数</p>
-<pre><code>ceil(x)返回大于或等于数值x的最小整数 
-select ceil(2.3)      #result:3
-
-floor(x)返回小于或等于数值x的最大整数
-select floor(2.3)     #result:2
-
-rand()返回0-1之间的随机数
-select rand()         #result:0.8155794216465013
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjucq8nwc000azswvidzbl4k3" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-自动化测试模型" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/01/自动化测试模型/" class="article-date">
-  <time datetime="2018-02-28T23:44:01.000Z" itemprop="datePublished">2018-03-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/01/自动化测试模型/">自动化测试模型</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>自动化测试模型</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>概述</h6><p></p>
-<ul>
-<li>自动化测试模型可以看作自动化测试框架与工具设计的思想。自动化测试不仅仅是单纯写写脚本运行就可以了，还需要考虑到如何使脚本运行效率提高，代码复用、参数化等问题</li>
-<li>自动化测试模型分为四大类：线性模型，模块化驱动测试、数据驱动、关键词驱动</li>
-</ul>
-<p></p><h6>线性模型</h6><p></p>
-<ul>
-<li>线性脚本中每个脚本都相互独立，且不会产生其他依赖与调用，其实就是简单模拟用户某个操作流程的脚本</li>
-</ul>
-<p></p><h6>模块化驱动测试</h6><p></p>
-<ul>
-<li>线性模型虽然每个用例都可以拿出来独立运行，但是用例之间重复代码很多，开发、维护成本高。其实把重复的操作代码封装为独立的公共模块，当用例执行时需要用到这部分，直接调用即可，这就是模块驱动的方式。比如登录系统、退出登录、截图函数等等</li>
-</ul>
-<p></p><h6>数据驱动测试</h6><p></p>
-<ul>
-<li>模块驱动的模型虽然解决了脚本的重复问题，但是需要测试不同数据的用例时，模块驱动的方式就不很适合了。数据驱动就是数据的改变从而驱动自动化测试的执行，最终引起测试结果的改变</li>
-<li><p>装载数据的方式可以是列表、字典或是外部文件（txt、csv、xml、excel），目的就是实现数据和脚本的分离</p>
-<pre><code>#文件名：login.py
-#coding:utf-8
-from selenium import webdriver
-from time import sleep
-class Login():
-    def user_login(self,driver,username,password):
-        driver.find_element_by_name(&apos;username&apos;).clear()
-        driver.find_element_by_name(&apos;username&apos;).send_keys(username)
-        driver.find_element_by_name(&apos;password&apos;).clear()
-        driver.find_element_by_name(&apos;password&apos;).send_keys(password)
-        driver.find_element_by_name(&apos;Submit&apos;).click()
-    def user_logout(self,driver):
-        driver.find_element_by_link_text(&apos;退出&apos;).click()
-        sleep(2)
-        driver.switch_to_alert().accept()
-
-    #模块化与参数化
-    from login import *
-    from time import sleep
-    from selenium import webdriver
-
-    driver=webdriver.Firefox()
-    driver.get(&apos;http://localhost&apos;)
-
-    Login().user_login(driver,&apos;51zxw&apos;,&apos;123456&apos;)
-    sleep(5)
-    Login().user_logout(driver)
-    sleep(5)
-
-    Login().user_login(driver,&apos;52zxw&apos;,&apos;123456&apos;)
-    sleep(5)
-    Login().user_logout(driver)
-    sleep(2)
-
-    driver.quit()
-</code></pre></li>
-</ul>
-<p></p><h6>关键字驱动测试</h6><p></p>
-<ul>
-<li>通过关键字的改变引起测试结果的改变叫关键字驱动测试。 selenium IDE也是一种传统的关键字驱动的自动化工具，Robot Framework 是一个功能更强大的关键字驱动测试框架</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjucq8obb007jzswv3ab2cpst" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjuy6fkhn005x64wvd5rkcbli" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -1361,7 +1223,7 @@ class Login():
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/9/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/11/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1373,9 +1235,9 @@ class Login():
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1383,18 +1245,18 @@ class Login():
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.78px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.56px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.67px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.33px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19.09px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.45px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.45px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10.91px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.36px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1402,9 +1264,21 @@ class Login():
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/04/26/完全备份与还原-mysqldump备份/">完全备份与还原---mysqldump备份</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
+          </li>
         
           <li>
             <a href="/2019/04/11/robotframework-基于python27/">robotframework---基于python27</a>
@@ -1412,18 +1286,6 @@ class Login():
         
           <li>
             <a href="/2019/04/04/jenkins自动化部署-远程部署前端vue项目/">jenkins自动化部署--远程部署前端vue项目</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/02/jenkins自动化部署-构建前端项目/">jenkins自动化部署--构建前端项目</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/02/编译部署NodeJS/">编译部署NodeJS</a>
           </li>
         
       </ul>
@@ -1454,7 +1316,7 @@ class Login():
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

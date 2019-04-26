@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,335 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-MySQL数据库读写分离" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/25/MySQL数据库读写分离/" class="article-date">
+  <time datetime="2019-03-25T14:01:07.000Z" itemprop="datePublished">2019-03-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>MySQL数据库读写分离</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>通过mysql-proxy实现读写分离之前需要lua脚本实现的，现在mysql-proxy里面已经集成了lua，无需另外安装lua。</li>
+<li>目前mysql-proxy的版本：mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit。</li>
+</ul>
+<p></p><h6>2. 安装</h6><p></p>
+<ul>
+<li>将安装包上传到/usr/local/目录下，并解压：<code>tar -zvxf mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit.tar.gz</code></li>
+<li>重新命名解压后的安装包：<code>mv mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit/ mysql-proxy</code></li>
+</ul>
+<p></p><h6>3. 配置mysql-proxy</h6><p></p>
+<ul>
+<li><p>3.1 主配置文件</p>
+<pre><code>cd /usr/local/mysql-proxy/
+mkdir lua        #创建脚本存放目录
+mkdir logs       #创建日志目录
+cp share/doc/mysql-proxy/rw-splitting.lua ./lua     #复制读写分离配置文件
+cp share/doc/mysql-proxy/admin-sql.lua ./lua        #复制管理脚本
+vi /etc/mysql-proxy.cnf              #创建配置文件
+
+[mysql-proxy]
+user=root                            #运行mysql-proxy用户
+admin-username=mysql                 #主从mysql数据库共有的用户
+admin-password=123456                #用户的密码
+proxy-address=192.168.110.72:4040    #mysql-proxy运行ip和端口，端口默认4040
+proxy-read-only-backend-addresses=192.168.110.74:3306      #指定后端从slave数据库读取数据
+proxy-backend-addresses=192.168.110.73:3306                       #指定后端从主master数据库写入数据
+proxy-lua-script=/usr/local/mysql-proxy/lua/rw-splitting.lua     #指定读写分离配置文件位置
+admin-lua-script=/usr/local/mysql-proxy/lua/admin-sql.lua      #指定管理脚本
+log-file=/usr/local/mysql-proxy/logs/mysql-proxy.log              #日志位置
+log-level=info                         #定义log日志级别，由高到低分别有(error|warning|info|message|debug)
+daemon=true                            #以守护进程方式运行
+keepalive=true                         #mysql-proxy崩溃时，尝试重启
+
+保存退出后，
+赋予配置文件权限：chmod 660 /etc/mysql-proxy.cnf
+</code></pre></li>
+<li><p>3.2 读写分离配置文件</p>
+<pre><code>vi /usr/local/mysql-proxy/lua/rw-splitting.lua
+
+if not proxy.global.config.rwsplit then
+ proxy.global.config.rwsplit = {
+  min_idle_connections = 1,            #默认超过4个连接数时，才开始读写分离，改为1
+  max_idle_connections = 1,            #默认8，改为1
+  is_debug = false
+ }
+end
+
+#注意：mysql-proxy会检测客户端连接，当连接没有超过min_idle_connections预设值时, 不会进行读写分离, 即查询操作会发生到Master上。
+</code></pre></li>
+</ul>
+<p></p><h6>4. 启动mysql-proxy</h6><p></p>
+<ul>
+<li>启动命令：<code>/usr/local/mysql-proxy/bin/mysql-proxy --defaults-file=/etc/mysql-proxy.cnf</code></li>
+<li>查看命令：<code>netstat -tupln | grep 4040</code>   或者  <code>netstat -antpl|grep mysql</code></li>
+<li>关闭命令：<code>sudo kill 进程号</code></li>
+</ul>
+<p></p><h6>5. 打开防火墙的4040端口</h6><p></p>
+<ul>
+<li>执行命令：<code>/sbin/iptables -I INPUT -p tcp --dport 4040 -j ACCEPT</code></li>
+</ul>
+<p></p><h6>6. 测试读写分离</h6><p></p>
+<ul>
+<li><p>6.1 在主数据库服务器创建用于mysql-proxy连接使用的用户密码：mysqlproxy 123456，从服务器也会同步这个操作。</p>
+<pre><code>需要进入主数据库，执行：
+grant all on *.* to &apos;mysqlproxy&apos;@&apos;192.168.110.72&apos; identified by &apos;123456&apos;;
+刷新执行：
+flush privileges;
+</code></pre></li>
+<li><p>6.2 使用客户端连接mysql-proxy</p>
+<pre><code>命令：mysql -h 192.168.110.72 -P 4040 -u mysqlproxy -p123456
+
+创建数据库和表，这时的数据只写入主mysql，然后再同步从slave。
+mysql&gt; create table work_user (number INT(10),name VARCHAR(50));
+mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&apos;);
+</code></pre></li>
+<li><p>6.3 登录主从mysq数据库查看新写入的两条数据</p>
+</li>
+<li>6.4 再登录到mysql-proxy，查询数据，可以正常查询</li>
+<li>6.5 登录从数据库服务器关闭mysql同步进程：<code>stop slave;</code>，这时再登录mysql-proxy会发现能看到表，但是查询不出数据，会报错：<code>Table &#39;*****&#39; doesn&#39;t exist</code></li>
+<li>6.6 到此实现了读写分离的效果</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="cjuy6fk7b002064wvz4h3933y" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-MySQL数据库主从复制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/25/MySQL数据库主从复制/" class="article-date">
+  <time datetime="2019-03-25T13:39:13.000Z" itemprop="datePublished">2019-03-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/25/MySQL数据库主从复制/">MySQL数据库主从复制</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>MySQL数据库主从复制</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>主服务器：开启二进制日志；配置唯一的server-id；获得master二进制日志文件名及位置；创建一个用于slave和master通信的用户账号。</li>
+<li>从服务器：启动中继日志；配置唯一的server-id；使用master分配的用户账号读取master二进制日志；启用slave服务。</li>
+</ul>
+<p></p><h6>主数据库配置</h6><p></p>
+<ul>
+<li><p>在数据库配置文件中增加配置</p>
+<pre><code>vi /etc/my.cnf后在[mysqld]模块中增加如下部分
+[mysqld]
+server-id =1                  //数据库ID号，为1到2^32–1之间的一个正整数值，且唯一。 
+log_bin=master-bin            //启用二进制日志；mysql-bin可以自定义，也可以加上路径
+log_bin_index=master-bin.index
+binlog-do-db=practice       //需要同步的二进制数据库名；
+slave-skip-errors=1062,1053,1064,1146   //跳过错误，继续执行复制；slave-skip-errors有四个可选值，off、all、ddl_exist_errors和错误代码，没有则默认为off
+explicit_defaults_for_timestamp=true    //这是为了取消TIMESTAMP的警告
+</code></pre></li>
+<li><p>之后重启服务<code>service mysqld restart</code>，进入mysql数据库，创建从数据库有复制权限的用户：replication slave，命令如下：</p>
+<pre><code>grant replication slave on *.* to &apos;mysql&apos;@&apos;192.168.110.%&apos; identified by &apos;123456&apos;;
+//该命令中的192.168.110.%通配符，表示0-255的IP都可访问主服务器，正式环境需要配置指定从服务器IP
+flush privileges; //刷新权限
+
+运行show global variables like &apos;%log%&apos;;    查看二进制日志是否开启
+运行show master status;                    查看主数据库的master状态
+运行show global variables like &apos;%server%&apos;; 查看主节点的server id
+
+需要注意：确保主服务器的iptables没有阻断3306的访问端口。
+</code></pre></li>
+</ul>
+<p></p><h6>从数据库配置</h6><p></p>
+<ul>
+<li><p>在数据库配置文件中增加配置</p>
+<pre><code>server-id=2                              //指定唯一的server_id
+relay_log=slave-relay-bin               //配置中继日志
+relay-log-index=slave-relay-bin.index   //中继日志的索引文件
+</code></pre></li>
+<li><p>之后重启服务<code>service mysqld restart</code>，进入mysql数据库，连接master主服务器，命令如下：</p>
+<pre><code>change master to master_host=&apos;192.168.110.73&apos;,master_port=3306,master_user=&apos;mysql&apos;,master_password=&apos;123456&apos;,master_log_file=&apos;master-bin.000001&apos;,master_log_pos=1778;
+//master_log_file与master_log_pos分别对应show master status显示的file列与position列
+
+运行start slave;        启动slave数据同步
+运行show slave status\G;以竖行显示slave信息，Slave_IO_Running和Slave_SQL_Running都为yes，则表示同步成功。
+</code></pre></li>
+</ul>
+<p></p><h6>测试主从复制</h6><p></p>
+<ul>
+<li><p>1.在主服务器上登陆mysql，在数据库<code>practice</code>下创建新的表，如tb_test表：</p>
+<pre><code>create table tb_test(ID varchar(10) primary key comment &apos;主键ID&apos;,MEMO varchar(500) not null comment &apos;信息&apos;);
+ 插入一条数据:
+insert into tb_test(ID,MEMO) values(&apos;1&apos;,&apos;one test&apos;);
+</code></pre></li>
+<li><p>2.在从服务器上登陆mysql，且进入<code>practice</code>数据库</p>
+<pre><code>show tables;查看是否出现了tb_test表，
+select * from tb_test;查看表中是否one test数据存在，证明同步数据成功。
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="cjuy6fk75001x64wvwxzqmd5c" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-清理内存缓存与交换空间" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/24/清理内存缓存与交换空间/" class="article-date">
+  <time datetime="2019-03-24T14:22:55.000Z" itemprop="datePublished">2019-03-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/24/清理内存缓存与交换空间/">清理内存缓存与交换空间</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>清理内存缓存与交换空间</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. Linux的内存分配方式</h6><p></p>
+<ul>
+<li>Linux服务器为提高效率，会提前申请内存，即使这些内存没有被具体应用使用，Linux也会提前申请这些内存，然后利用这些内存做缓存使用，即将刚打开的文件系统存入cache中，这样对应的服务器free值会越来越少，buffers和cached会越来越大，因此给大家表象就是内存越来越少了；其实，Linux服务器在发现内存不足时，会自动清理cached区域，释放内存，然后继续增大cache，free继续减少。因此，下面这些手动降低内存使用率的方法，其实就是图一时之快。<h6>2. 查看内存使用情况</h6></li>
+<li><p>free -h 或者 free  -m/g</p>
+<pre><code>-h：用辨识度较高的单位显示。
+-m/g：用mB或者gB为单位显示。
+total：内存总大小。
+used：使用了多少内存。
+free：除了buff/cache剩余了多少内存。
+shared：共享内存。
+buff/cache：缓冲、缓存区内存数。
+available：真实剩余的可用内存数。
+关系：total = used + free + buff/cache
+关系：available 包含 free 和 buff/cache 剩余部分，则是真实剩余内存。
+</code></pre></li>
+</ul>
+<p></p><h6>3. 清理缓存</h6><p></p>
+<ul>
+<li>3.1 清理缓存准备<ul>
+<li>在清理缓存前应该先<code>sync</code>一下，因为系统在操作过程中，会将要操作到的文件资料先保存到buffer中去，以免操作过程中因断电等原因遗失数据，所以在操作过程中会把文件资料先缓存处理。</li>
+<li>/proc是一个虚拟文件系统，我们可以通过对它的读写操作作为与kernel实体间进行通信的一种手段。也就是说可以通过修改/proc中的文件，来对当前kernel的行为做出调整。也就是说我们可以通过调整/proc/sys/vm/drop_caches来释放内存。</li>
+</ul>
+</li>
+<li><p>3.2 开始清理缓存</p>
+<pre><code>echo 0 &gt; /proc/sys/vm/drop_caches    
+#不释放缓存
+echo 1 &gt; /proc/sys/vm/drop_caches    
+#释放页面缓存，清空最近访问过的文件页面缓存
+echo 2 &gt; /proc/sys/vm/drop_caches    
+#释放dentries和inodes缓存，清空文件节点缓存和目录项缓存
+echo 3 &gt; /proc/sys/vm/drop_caches    
+#释放1和2中的提及的所有缓存，清空1和2所有内容的缓存
+</code></pre></li>
+<li><p>3.3 常用命令组合</p>
+<ul>
+<li><p>只清除页面缓存</p>
+<pre><code>sync; echo 1 &gt; /proc/sys/vm/drop_caches
+</code></pre></li>
+<li><p>清除目录项和inode</p>
+<pre><code>sync; echo 2 &gt; /proc/sys/vm/drop_caches
+</code></pre></li>
+<li><p>清除页面缓存、目录项和i节点</p>
+<pre><code>sync; echo 3 &gt; /proc/sys/vm/drop_caches
+</code></pre></li>
+<li><p>上述命令的解释：</p>
+<ul>
+<li>sync命令将刷新文件系统缓冲区。分号（；）分隔的命令依次执行。在执行序列中的下一个命令之前，shell等待每个命令终止。如内核文档中提到的，写入drop_cache将清除缓存而不会终止任何应用程序或服务。echo命令正在做的任务就是写入文件。</li>
+<li>如果你必须清除磁盘缓存，在企业和生产环境中第一个命令（“…echo 1&gt;…”）是最安全的，它将仅仅只清除页面缓存。生产环境中不推荐使用上述第三个选项（”…echo 3 &gt;…”），直到你知道你正在做什么。因为它会清除页面缓存，目录项和i节点。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="cjuy6fkkx007d64wvvgzqyqlk" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-Nginx转发SSH代理-Stream模块" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -162,7 +491,7 @@ server {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="cjucq8o08002czswv6f8m006i" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="cjuy6fk7n002564wvb6gl8asx" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
@@ -204,13 +533,28 @@ server {
         <p></p><h5>tomcat使用apr模式运行</h5><p></p>
 <hr>
 <hr>
-<h6>1.安装apr</h6><br><em> 1.1 在/usr/local解压并进入apr-1.6.5后执行：<code>./configure --prefix=/usr/local/apr</code>
-</em> 1.2 make<br><em> 1.3 make install<br><br><h6>2.安装 apr-iconv</h6>
-</em> 2.1 在/usr/local解压并进入apr-iconv-1.2.2后执行：<code>./configure --prefix=/usr/local/apr-iconv --with-apr=/usr/local/apr</code><br><em> 2.2 make
-</em> 2.3 make install<br><br><h6>3.安装apr-util</h6><br><em> 3.0需要安装expat库：yum install -y  expat-devel
-</em> 3.1 在/usr/local解压并进入apr-util-1.6.1后执行：<code>./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/apr --with-apr-iconv=/usr/local/apr-iconv/bin/apriconv</code><br><em> 3.2 make
-</em> 3.3 make install<br><br><h6>4. 安装tomcat-native（Tomcat自带tomcat-native.tar.gz，在bin下）</h6><br><em> 4.1在tomcat/bin下解压并进入tomcat-native-1.2.21-src/native后执行：<code>./configure --with-apr=/usr/local/apr</code>
-</em> 4.2 make<br>* 4.3 make install<br><br><h6>5.配置APR本地库到系统共享库搜索路径中</h6>
+<h6>1.安装apr</h6>
+
+<pre><code>1.1 在/usr/local解压并进入apr-1.6.5后执行：`./configure --prefix=/usr/local/apr`
+1.2 make
+1.3 make install
+</code></pre><h6>2.安装 apr-iconv</h6>
+
+<pre><code>2.1 在/usr/local解压并进入apr-iconv-1.2.2后执行：`./configure --prefix=/usr/local/apr-iconv --with-apr=/usr/local/apr`
+2.2 make
+2.3 make install
+</code></pre><h6>3.安装apr-util</h6>
+
+<pre><code>3.0需要安装expat库：yum install -y  expat-devel
+3.1 在/usr/local解压并进入apr-util-1.6.1后执行：`./configure --prefix=/usr/local/apr-util --with-apr=/usr/local/apr --with-apr-iconv=/usr/local/apr-iconv/bin/apriconv`
+3.2 make
+3.3 make install
+</code></pre><h6>4. 安装tomcat-native（Tomcat自带tomcat-native.tar.gz，在bin下）</h6>
+
+<pre><code>4.1在tomcat/bin下解压并进入tomcat-native-1.2.21-src/native后执行：`./configure --with-apr=/usr/local/apr`
+4.2 make
+4.3 make install
+</code></pre><h6>5.配置APR本地库到系统共享库搜索路径中</h6>
 
 <pre><code>vi tomcat/bin/catalina.sh 在虚拟机启动参数JAVA_OPTS中添加java.library.path参数，指定apr库的路径：
 # Register custom URL handlers
@@ -227,7 +571,7 @@ JAVA_OPTS=&quot;$JAVA_OPTS -Djava.library.path=/usr/local/apr/lib&quot;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/20/tomcat使用apr模式运行/" data-id="cjucq8o6b0055zswvxvi9hxyf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/20/tomcat使用apr模式运行/" data-id="cjuy6fkf7005164wvqkknel05" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -312,7 +656,7 @@ liuyongqian     ALL=(ALL)   ALL
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/12/批量添加用户，并设置sudo权限/" data-id="cjucq8o9z006rzswvo70j0tt9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/12/批量添加用户，并设置sudo权限/" data-id="cjuy6fkjx006x64wv201h9v4l" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -363,8 +707,7 @@ liuyongqian     ALL=(ALL)   ALL
 ##########first tomcat###########
 CATALINA01_BASE=/usr/tomcat01
 CATALINA01_HOME=/usr/tomcat01
-TOMCAT01_HOME=/usr/tomcat
-01
+TOMCAT01_HOME=/usr/tomcat01
 export CATALINA01_BASE CATALINA01_HOME TOMCAT01_HOME
 ##########second tomcat##########
 CATALINA02_BASE=/usr/tomcat02
@@ -397,7 +740,7 @@ export CATALINA02_BASE CATALINA02_HOME TOMCAT02_HOME
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/12/Centos中同时部署两个以上的Tomcat/" data-id="cjucq8nwz000mzswvbcv4r2yf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/12/Centos中同时部署两个以上的Tomcat/" data-id="cjuy6fk3l000h64wvp9uhwaoi" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -476,7 +819,7 @@ export PATH CLASSPATH CATALINA_HOME
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Tomcat9/" data-id="cjucq8o8g006dzswvvpdnjbn4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Tomcat9/" data-id="cjuy6fkix006h64wv8sqevxvn" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -598,7 +941,7 @@ mongod -f mongodb.conf   或
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="cjucq8o9k006jzswvujgvk9hj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="cjuy6fkio006d64wv0ze49ge7" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -676,361 +1019,10 @@ cd /opt/zbox/auth
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署禅道11.2/" data-id="cjucq8oau0079zswvdte0twmm" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署禅道11.2/" data-id="cjuy6fkj5006l64wvlb9clpcu" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-安装部署Nginx" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/01/安装部署Nginx/" class="article-date">
-  <time datetime="2019-03-01T09:58:30.000Z" itemprop="datePublished">2019-03-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/01/安装部署Nginx/">安装部署Nginx</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>安装部署Nginx</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>依赖安装包</h6><p></p>
-<ul>
-<li><p>nginx编译依赖gcc环境</p>
-<pre><code>yum install gcc-c++
-</code></pre></li>
-<li><p>nginx的http模块使用pcre来解析正则表达式</p>
-<pre><code>yum install -y pcre pcre-devel
-</code></pre></li>
-<li><p>nginx使用zlib对http包的内容进行gzip</p>
-<pre><code>yum install -y zlib zlib-devel
-</code></pre></li>
-<li><p>nginx需要一个强大的安全套接字层密码库</p>
-<pre><code>yum install -y openssl openssl-devel
-</code></pre></li>
-</ul>
-<p></p><h6>目前版本</h6><p></p>
-<ul>
-<li>目前版本：nginx-1.14.2</li>
-</ul>
-<p></p><h6>安装步骤</h6><p></p>
-<ul>
-<li><p>1.将安装包放置在/usr/local下并解压：</p>
-<pre><code>tar -zvxf nginx-1.14.2.tar.gz
-</code></pre></li>
-<li><p>2.进入解压后的文件夹内执行如下配置编译命令：</p>
-<pre><code>cd nginx-1.14.2
-如果使用Nginx1.9之后的stream模块的话，执行：
-./configure --with-stream
-不需要的话，执行：
-./configure
-</code></pre></li>
-<li><p>3.编译安装，分别执行：</p>
-<pre><code>make
-make install
-</code></pre></li>
-</ul>
-<p></p><h6>启动停止nginx</h6><p></p>
-<ul>
-<li><p>查询</p>
-<pre><code>ps aux|grep nginx
-</code></pre></li>
-<li><p>启动</p>
-<pre><code>cd /usr/local/nginx/sbin/后执行：
-./nginx
-</code></pre></li>
-<li><p>待nginx进程处理任务完毕进行停止</p>
-<pre><code>./nginx -s quit
-</code></pre></li>
-<li><p>先查出nginx进程id再使用kill命令强制杀掉进程</p>
-<pre><code>./nginx -s stop
-</code></pre></li>
-<li><p>如果nginx.conf 修改后需要重启nginx使用</p>
-<pre><code>./nginx -s reload
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Nginx/" data-id="cjucq8o9g006izswvvdbu3i2y" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-安装部署mysql5.7" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/01/安装部署mysql5.7/" class="article-date">
-  <time datetime="2019-03-01T09:42:20.000Z" itemprop="datePublished">2019-03-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/01/安装部署mysql5.7/">安装部署mysql5.7</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>安装部署mysql5.7</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>删除centos7.4自带的mysql分支mariadb</h6><p></p>
-<ul>
-<li><p>查看删除</p>
-<pre><code>查看：rpm -qa | grep mariadb
-删除1：yum -y remove mari*
-删除2：rpm -e --nodeps ****
-find / -name mysql
-rm -rf *****
-rm -f /etc/my.cnf
-rm -rf /etc/init.d/mysql.server
-userdel mysql         #删除
-id mysql              #查看
-</code></pre></li>
-</ul>
-<p></p><h6>目前版本</h6><p></p>
-<ul>
-<li>目前安装版本是mysql-5.7.25-linux-glibc2.12-x86_64</li>
-</ul>
-<p></p><h6>解压安装包</h6><p></p>
-<ul>
-<li><p>解压并重命名为mysql</p>
-<pre><code>将安装包放置于/usr/local/下并解压：
-tar -zvxf mysql-5.7.25-linux-glibc2.12-x86_64.tar.gz
-重新命名：
-mv mysql-5.7.25-linux-glibc2.12-x86_64 mysql
-</code></pre></li>
-</ul>
-<p></p><h6>安装依赖包</h6><p></p>
-<ul>
-<li><p>执行</p>
-<pre><code>yum -y install libaio
-</code></pre></li>
-</ul>
-<p></p><h6>初始化环境并配置文件</h6><p></p>
-<ul>
-<li><p>1.创建mysql用户和组</p>
-<pre><code>groupadd mysql
-useradd -r -g mysql -s /bin/false mysql
-chown -R mysql.mysql /usr/local/mysql
-</code></pre></li>
-<li><p>2.创建data文件夹</p>
-<pre><code>在/usr/local/mysql下执行命令：
-cd /usr/local/mysql
-mkdir data
-</code></pre></li>
-<li><p>3.修改my.cnf</p>
-<pre><code>vi /etc/my.cnf后写入文件内容如下：
-
-[mysqld]
-port=3306
-character-set-server=utf8
-basedir=/usr/local/mysql
-datadir=/usr/local/mysql/data
-#innodb_buffer_pool_size=128M
-explicit_defaults_for_timestamp=true
-[mysqld_safe]
-log-error=/usr/local/mysql/data/error.log
-pid-file=/usr/local/mysql/data/mysql.pid
-tmpdir = /tmp
-[client]
-default-character-set=utf8
-[mysql]
-default-character-set=utf8
-</code></pre></li>
-<li><p>4.将mysql放入系统服务，并修改对应文件</p>
-<pre><code>cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
-vi /etc/init.d/mysqld  后修改文件路径:(3处)
-
-# If you change base dir, you must also change datadir. These may get
-# overwritten by settings in the MySQL configuration files.
-
-basedir=/usr/local/mysql
-datadir=/usr/local/mysql/data
-
-# Default value, in seconds, afterwhich the script should timeout waiting
-# for server start. 
-# Value here is overriden by value in my.cnf. 
-# 0 means don&apos;t wait at all
-# Negative numbers mean to wait indefinitely
-service_startup_timeout=900
-
-# Lock directory for RedHat / SuSE.
-lockdir=&apos;/var/lock/subsys&apos;
-lock_file_path=&quot;$lockdir/mysql&quot;
-
-# The following variables are only set for letting mysql.server find things.
-
-# Set some defaults
-mysqld_pid_file_path=/usr/local/mysql/data/mysql.pid
-</code></pre></li>
-<li><p>5.初始化mysql</p>
-<pre><code>cd /usr/local/mysql后执行：
-./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
-</code></pre></li>
-</ul>
-<p></p><h6>修改root密码并设置远程连接</h6><p></p>
-<ul>
-<li><p>启动mysql：<code>service mysqld start</code>后依次执行</p>
-<pre><code>cd /usr/local/mysql后执行：./bin/mysql -u root -p
-输入初始化时生成的默认密码
-修改密码：SET PASSWORD FOR &apos;root&apos;@localhost=&apos;123456&apos;;
-
-允许远程连接：
-use mysql;
-update user set host=&apos;%&apos; where user=&apos;root&apos; limit 1;
-flush privileges;
-</code></pre></li>
-</ul>
-<p></p><h6>配置环境变量</h6><p></p>
-<ul>
-<li><p>依次执行</p>
-<pre><code>vi /etc/profile后增加如下内容：
-
-MYSQL_HOME=/usr/local/mysql
-PATH=$PATH:$MYSQL_HOME/bin
-export MYSQL_HOME PATH 
-</code></pre></li>
-<li><p>使配置文件生效执行</p>
-<pre><code>source /etc/profile
-</code></pre></li>
-</ul>
-<p></p><h6>添加需要监听的端口</h6><p></p>
-<ul>
-<li><p>执行</p>
-<pre><code>/sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
-</code></pre></li>
-</ul>
-<p><em>参考<a href="https://blog.csdn.net/IsJiangWei/article/details/82875118" target="_blank" rel="noopener">Centos7.5安装mysql5.7.23-二进制包方式安装-完美安装,一步到位</a></em></p>
-<p><em>参考<a href="https://blog.csdn.net/zml3721/article/details/79090983" target="_blank" rel="noopener">Centos7.4 安装MySQL 5.7.21 (通用二进制包)</a></em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署mysql5.7/" data-id="cjucq8oaq0077zswvhl05qkuy" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-linux中部署JDK1.8" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/01/linux中部署JDK1.8/" class="article-date">
-  <time datetime="2019-03-01T09:32:56.000Z" itemprop="datePublished">2019-03-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/01/linux中部署JDK1.8/">linux中部署JDK1.8</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>linux中部署JDK1.8</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>目前版本</h6><p></p>
-<ul>
-<li>目前版本：jdk-8u201-linux-x64</li>
-</ul>
-<p></p><h6>安装步骤</h6><p></p>
-<ul>
-<li><p>解压并且重命名</p>
-<pre><code>把jdk安装包放/usr下并解压：
-tar -zvxf jdk-8u201-linux-x64.tar.gz
-重命名文件夹：
-mv jdk1.8.0_201 java
-</code></pre></li>
-<li><p>设置环境变量</p>
-<pre><code>vi /etc/profile在文件尾部添加如下内容：
-
-JAVA_HOME=/usr/java
-PATH=$PATH:$JAVA_HOME/bin
-CLASSPATH=.:$JAVA_HOME/lib
-export JAVA_HOME PATH CLASSPATH
-</code></pre></li>
-<li><p>重新加载</p>
-<pre><code>之后重新加载配置文件，使其生效，命令为：
-source /etc/profile
-</code></pre></li>
-<li><p>查看版本</p>
-<pre><code>查看是否安装成功，命令为：
-java -version
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/linux中部署JDK1.8/" data-id="cjucq8o2r003rzswvj6wplmc2" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
 
     </footer>
   </div>
@@ -1045,7 +1037,7 @@ java -version
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1057,9 +1049,9 @@ java -version
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1067,18 +1059,18 @@ java -version
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.78px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.56px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.67px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.33px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19.09px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.45px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.45px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10.91px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.36px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1086,9 +1078,21 @@ java -version
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/04/26/完全备份与还原-mysqldump备份/">完全备份与还原---mysqldump备份</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
+          </li>
         
           <li>
             <a href="/2019/04/11/robotframework-基于python27/">robotframework---基于python27</a>
@@ -1096,18 +1100,6 @@ java -version
         
           <li>
             <a href="/2019/04/04/jenkins自动化部署-远程部署前端vue项目/">jenkins自动化部署--远程部署前端vue项目</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/02/jenkins自动化部署-构建前端项目/">jenkins自动化部署--构建前端项目</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/02/编译部署NodeJS/">编译部署NodeJS</a>
           </li>
         
       </ul>
@@ -1138,7 +1130,7 @@ java -version
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

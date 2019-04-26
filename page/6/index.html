@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,472 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-chmod" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/09/chmod/" class="article-date">
+  <time datetime="2018-04-09T10:05:31.000Z" itemprop="datePublished">2018-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/09/chmod/">chmod</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>chmod</h5><p></p>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>chmod(Change mode) 用来将每个文件的模式更改为指定值。Linux/Unix 的档案调用权限分为三级 : 档案拥有者、群组、其他<ul>
+<li>u:目录或者文件的当前的用户</li>
+<li>g:目录或者文件的当前的群组</li>
+<li>o:除了目录或者文件的当前用户或者群组之外的用户或者群组</li>
+<li>a:所有的用户和群组</li>
+</ul>
+</li>
+<li>Linux的文件基本上分为三个属性：可读(r)，可写(w)，可执行(x)<ul>
+<li>权限对文件的重要性<ul>
+<li>r (read) 4：可读取此文件的实际内容，如读取文本文件的文字内容等 </li>
+<li>w (write) 2：可以编辑、新增或者是修改该文件的内容(但不含删除该文件)</li>
+<li>x (execute) 1：该文件具有可以被系统执行的权限。linux下文件是否可以执行和扩展名无关</li>
+</ul>
+</li>
+<li>权限对目录的重要性<ul>
+<li>r：表示具有读取目录结构列表的权限，可以查询该目录下的文件名数据，可以利用 ls 这个指令将该目录的内容列表显示出来</li>
+<li>w：表示具有移动该目录结构列表的权限，也就是这些权限：<ul>
+<li>建立新的文件与目录</li>
+<li>删除已经存在的文件与目录(不论该文件的权限为何！) </li>
+<li>将已存在的文件或目录进行更名</li>
+<li>搬移该目录内的文件、目录位置</li>
+</ul>
+</li>
+<li>x：目录不可以被执行，目录的x代表的是用户能否进入该目录成为工作目录的用途！ 所谓的工作目录(work directory)就是你目前所在的目录！举例来说，当你登入Linux时， 你所在的家目录就是你当下的工作目录</li>
+</ul>
+</li>
+<li>以rwx(Owner)r-x(Group)r-x(Other)为例：这个例子表示的权限是：使用者自己可读，可写，可执行;同一组的用户可读，不可写，可执行;其它用户可读，不可写，可执行</li>
+</ul>
+</li>
+<li>使用权限 : 所有使用者</li>
+</ul>
+<p></p><h6>使用</h6><p></p>
+<ul>
+<li>文字设定法<ul>
+<li>chmod [u、g、o、a] [+（加入）、-（除去）、=（设定）] [r、w、x] [文件或者目录]</li>
+</ul>
+</li>
+<li>数字设定法<ul>
+<li>按照顺序（u）（g）（o），将权限转换成3个从0到7的八进制数字，如若要rwx属性则4+2+1=7 ; 若要rw-属性则4+2=6</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>示例</h6><p></p>
+<ul>
+<li><p>查看权限ll</p>
+<pre><code>-rw-r--r-- 1 root root 0 4月  24 15:24 backup.sh
+</code></pre></li>
+<li><p>将backup.sh设定为只有该档案拥有者可以执行</p>
+<pre><code>chmod u+x backup.sh
+</code></pre></li>
+<li><p>同时修改不同用户权限</p>
+<pre><code>chmod ug+w,o-x backup.sh
+</code></pre></li>
+<li><p>删除文件权限</p>
+<pre><code>chmod a-x backup.sh
+</code></pre></li>
+<li><p>使用“=”设置权限</p>
+<pre><code>chmod u=x backup.sh
+</code></pre></li>
+<li><p>根据数字修改权限</p>
+<pre><code>chmod 745 backup.sh
+</code></pre></li>
+<li><p>将目前目录下的所有档案与子目录皆设为任何人可读取</p>
+<pre><code>chmod -R a+r *
+</code></pre></li>
+</ul>
+<p>##参考大神佳作<a href="https://www.cnblogs.com/xqzt/p/5433022.html" target="_blank" rel="noopener">每天一个linux命令:chmod</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/09/chmod/" data-id="cjuy6fkav003g64wvom0zqr0q" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-爬虫之Mongodb常用命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/08/爬虫之Mongodb常用命令/" class="article-date">
+  <time datetime="2018-04-08T00:16:31.000Z" itemprop="datePublished">2018-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/08/爬虫之Mongodb常用命令/">爬虫之Mongodb常用命令</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>爬虫之Mongodb常用命令</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>连接数据库</h6><p></p>
+<ul>
+<li>连接数据库，参数为空的话默认ip为localhost，端口为27017</li>
+<li><p>一下三种结果都一样</p>
+<pre><code>from pymongo import MongoClient
+import datetime
+client=MongoClient()
+client=MongoClient(&apos;localhost&apos;,27017)
+client=MongoClient(&apos;mongodb://localhost:27017/&apos;)  #使用url格式连接数据库
+</code></pre></li>
+<li><p>连接指定的数据库</p>
+<pre><code>db=client.firstdb
+db=client[&apos;firstdb&apos;]
+</code></pre></li>
+<li><p>连接指定的集合</p>
+<pre><code>test1=db.student
+test1=db[&apos;student&apos;]
+</code></pre></li>
+</ul>
+<p></p><h6>插入文档</h6><p></p>
+<ul>
+<li><p>插入单条文档</p>
+<pre><code>data1={
+    &apos;name&apos;:&apos;gouzenggong&apos;,
+    &apos;text&apos;:&apos;MY first blog post&apos;,
+    &apos;tags&apos;:[&apos;mongo&apos;,&apos;python&apos;,&apos;pymongo&apos;],
+    &apos;date&apos;:datetime.datetime.now()
+    }
+test1.insert_one(data1)
+</code></pre></li>
+<li><p>查找单条文档</p>
+<pre><code>test1.find_one()
+test1.find_one({&apos;name&apos;:&apos;gouzenggong&apos;})   #指定条件查询，如果未查到，返回空
+
+#如果指定id查询，则需要这样做
+from bson.objectid import ObjectId
+test1.find_one({&apos;_id&apos;:ObjectId(&apos;5ac8df4eb09c061dfc517988&apos;)})
+</code></pre></li>
+<li><p>插入多条文档</p>
+<pre><code>data2=[
+    {
+    &apos;name&apos;:&apos;zhangsan&apos;,
+    &apos;text&apos;:&apos;MY second blog post&apos;,
+    &apos;tags&apos;:[&apos;python&apos;,&apos;pymongo&apos;],
+    &apos;date&apos;:datetime.datetime.now()
+    },
+    {
+    &apos;name&apos;:&apos;gouzenggong&apos;,
+    &apos;text&apos;:&apos;MY three blog post&apos;,
+    &apos;tags&apos;:[&apos;mongo&apos;,&apos;pymongo&apos;],
+    &apos;date&apos;:datetime.datetime.now()
+    }
+]
+test1.insert_many(data2)
+</code></pre></li>
+<li><p>查找多条文档</p>
+<pre><code>#查询所有结果
+for i in test1.find():
+    print(i)
+
+#查询指定结果
+for i in test1.find({&apos;name&apos;:&apos;gouzenggong&apos;}):
+    print(i)
+
+#查询总数
+test1.count()
+
+#查询指定的条数
+test1.find({&apos;name&apos;:&apos;gouzenggong&apos;}).count()
+</code></pre></li>
+</ul>
+<p></p><h6>更新文档</h6><p></p>
+<ul>
+<li><p>如果有找到x=1，则改成x=3，否则插入{‘x’:3}，单条</p>
+<pre><code>test2=db.teacher    #连接一个新的集合
+data3=[
+    {&apos;x&apos;:1},{&apos;x&apos;:1},{&apos;x&apos;:1}
+]
+test2.insert_many(data3)
+
+test2.update_one({&apos;x&apos;:1},{&apos;$set&apos;:{&apos;x&apos;:3}},upsert=True) #可以发现已经把其中一条改为x=3
+</code></pre></li>
+<li><p>如果找到x=4，则改成x=333，否则插入{‘x’:333}，单条</p>
+<pre><code>#文档中是没有x=4的
+test2.update_one({&apos;x&apos;:4},{&apos;$set&apos;:{&apos;x&apos;:333}},upsert=True) #可以发现新增了一条{&apos;x&apos;:333}
+</code></pre></li>
+<li><p>如果找到x=1，则改成x=’many’，否则插入{‘x’:’many’}，多条</p>
+<pre><code>test2.update_many({&apos;x&apos;:1},{&apos;$set&apos;:{&apos;x&apos;:&apos;many&apos;}},upsert=True) #可以发现已经把所有x=1改成了x=many
+</code></pre></li>
+<li><p>如果找到x=4，则改成{‘x’:1,’y’；2}，否则插入{‘x’:1,’y’:2}，多条</p>
+<pre><code>#文档中是没有x=4的
+test2.update_many({&apos;x&apos;:4},{&apos;$set&apos;:{&apos;x&apos;:1,&apos;y&apos;:2}},upsert=True) #可以发现新增一条文档
+</code></pre></li>
+</ul>
+<p></p><h6>小结</h6><p></p>
+<ul>
+<li>爬虫常用到的三条插入语句：（以test2为集合名）<ul>
+<li>test2.insert_one(data)  插入一条文档</li>
+<li>test2.insert_many(data-list) 插入多条文档</li>
+<li>test2.update_one({‘x’:1},{‘$set’:{‘x’:3}},upsert=True)一般会在防止重复性的数据被存放到数据库内要用的</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/08/爬虫之Mongodb常用命令/" data-id="cjuy6fklb007j64wv27fvdw4y" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-富文本、分页" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/03/富文本、分页/" class="article-date">
+  <time datetime="2018-04-03T00:05:22.000Z" itemprop="datePublished">2018-04-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/03/富文本、分页/">富文本、分页</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>富文本、分页</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>富文本</h6><p></p>
+<ul>
+<li>1.下载链接:  <a href="http://ueditor.baidu.com/website/download.html#ueditor,目前最新版本是ueditor-1.4.3.3" target="_blank" rel="noopener">http://ueditor.baidu.com/website/download.html#ueditor,目前最新版本是ueditor-1.4.3.3</a></li>
+<li>2.将下载的文件全部存放在我们的django项目里面，路径为static/ueditor/下</li>
+<li>3.将uecontroller.py文件放在与项目同名的文件夹下，该文件为格式文本请求地址，请求资源；需要将其中的依据引用代码稍做修改<code>import pyblog.settings as settings</code>，即引入项目的设置</li>
+<li><p>4.在于项目同名的文件夹下的urls.py中设置路由</p>
+<pre><code>from .uecontroller import handler
+urlpatterns = [
+    path(&apos;uecontroller&apos;,handler),
+]
+</code></pre></li>
+<li><p>5.将ueditor/jsp/config.json文件复制到项目根目录下</p>
+</li>
+<li><p>6.将文件ueditor/_example/submitFormDemo.html中的部分script内容复制到前端页面fabu.html中，并且修改路径，其中博客页面中的内容标签需要加id，serverUrl</p>
+<pre><code>&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;欢迎发布博客&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; src=&quot;/static/ueditor/ueditor.config.js&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; charset=&quot;utf-8&quot; src=&quot;/static/ueditor/_examples/editor_api.js&quot;&gt;&lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+        body{
+            font-size:14px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;欢迎{{ user.username }}发布博客...&lt;/h2&gt;
+    &lt;span style=&quot;color:red&quot;&gt;{{ msg }}&lt;/span&gt;
+    &lt;form action=&quot;/pyblogA/fabu&quot; method=&quot;post&quot;&gt;
+        {% csrf_token %}
+        &lt;p&gt;标题：&lt;input type=&quot;text&quot; name=&apos;title&apos; style=&quot;width:500px&quot;&gt;&lt;/p&gt;
+        &lt;p&gt;内容：&lt;textarea  id=&quot;myEditor&quot; name=&apos;context&apos; style=&quot;width:600px;height:400px&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;
+        &lt;input type=&quot;submit&quot; value=&quot;确认发布&quot;&gt;
+    &lt;/form&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        var editor_a = UE.getEditor(&apos;myEditor&apos;,{initialFrameHeight:300,serverUrl:&apos;/uecontroller&apos;});
+    &lt;/script&gt;
+&lt;/body&gt;
+</code></pre></li>
+<li><p>7.打开文件ueditor/_examples/editor_api.js，将baseURL的路径改为当前_src的路径，即<code>baseURL = &#39;/static/ueditor/_src/&#39;;</code></p>
+</li>
+<li><p>8.新建上传文件存储路径为static/upload/imgs/，并修改uecontroller.py中的代码</p>
+<pre><code>try:
+    #重新定义上传图片的名字
+    truelyName = buildFileName(filename)
+    webUrl = config.SavePath+ truelyName
+    print(webUrl)
+    #!!!!!!!!!!!!
+    savePath =R&apos;static/upload/imgs/&apos;+webUrl
+    # savePath =ROOT+webUrl
+    print(&apos;savePath&apos;,savePath)
+    f = codecs.open(savePath,&quot;wb+&quot;)
+    for chunk in buf.chunks():
+        f.write(chunk)
+    f.flush()
+    f.close()
+    result.state = &quot;SUCCESS&quot;
+    #返回富文本显示的图片路径
+    result.url =&apos;/static/upload/imgs/&apos;+truelyName# truelyName
+    print(&apos;truelyName&apos;, truelyName)
+    result.title = truelyName
+    result.original = truelyName
+    response = HttpResponse(buildJsonResult(result))
+    response[&quot;Content-Type&quot;] = &quot;text/plain&quot;
+    return response
+</code></pre></li>
+</ul>
+<p></p><h6>在登录成功欢迎页面显示博客列表，并链接进入博客页面</h6><p></p>
+<ul>
+<li><p>1.在发布博客的views.py中写入getAll函数</p>
+<pre><code>def getAll():
+    Blogset=Blog.objects.values(&apos;id&apos;,&apos;title&apos;,&apos;createDate&apos;,&apos;BlogUser__username&apos;).all()
+    return Blogset
+</code></pre></li>
+<li><p>2.在用户的views.py中</p>
+<pre><code>from pyblogA.views import getAll
+def welcome(request):
+    Blogset=getAll()
+    return render(request, &apos;welcome.html&apos;,
+                  {&apos;user&apos;: request.session.get(&apos;user&apos;, None),
+                   &apos;Blogset&apos;:Blogset
+                   })
+</code></pre></li>
+<li><p>3.在登录欢迎页面welcome.html页面</p>
+<pre><code>{% for foo in Blogset %}
+		        <li>{{ foo.id }}&nbsp;&nbsp;
+		            <a href="/pyblogA/showOne?id={{ foo.id }}">{{ foo.title }}</a>&nbsp;&nbsp;
+		            {{ foo.createDate|date:'Y-m-d H:i:s' }}&nbsp;&nbsp;{{ foo.BlogUser__username }}
+		        </li>
+		{% endfor %}
+</code></pre></li>
+<li><p>4.接下来是链接进入博客页面，设置博客显示页面b.html</p>
+<pre><code>&lt;body&gt;
+    登录用户/非登录用户都可见
+    &lt;!--某个文档的显示页面--&gt;
+    &lt;h2&gt;标题：{{ blog.title }}&lt;/h2&gt;
+    &lt;h3&gt;发布时间：{{ blog.createDate|date:'Y-m-d H:i:s' }}&lt;/h3&gt;
+    &lt;h3&gt;作者：{{ blog.BlogUser__username }}&lt;/h3&gt;
+    &lt;h2&gt;内容：&lt;/h2&gt;
+    &lt;div style=&quot;width:85%;margin:0 auto&quot;&gt;
+        {% autoescape off %}  #转义，否则显示编码
+		            {{ blog.context }}
+		        {% endautoescape %}
+    &lt;/div&gt;
+&lt;/body&gt;
+</code></pre></li>
+<li><p>5.在发布博客的urls中设置路径</p>
+<pre><code>urlpatterns = [
+    path(&apos;showOne&apos;,showOne),
+]
+</code></pre></li>
+<li><p>6.在发布博客的views中定义showOne函数</p>
+<pre><code>def showOne(request):
+    id=request.GET.get(&apos;id&apos;,None)
+    if id is None:
+        return render(request,&apos;welcome.html&apos;)
+    else:
+        blog=Blog.objects.\
+            values(&apos;id&apos;,&apos;title&apos;,&apos;createDate&apos;,&apos;context&apos;,&apos;BlogUser__username&apos;).\
+            filter(pk=id).all()
+        return render(request,&apos;b.html&apos;,{&apos;blog&apos;:blog.first()})
+</code></pre></li>
+</ul>
+<p></p><h6>分页</h6><p></p>
+<ul>
+<li><p>1.设置发布博客的views中的getAll函数</p>
+<pre><code>from django.core.paginator import Paginator
+def getAll(num):
+    Blogset=Blog.objects.values(&apos;id&apos;,&apos;title&apos;,&apos;createDate&apos;,&apos;BlogUser__username&apos;).all()
+    paginator = Paginator(Blogset,5)  # 创建分页器
+    page=paginator.get_page(num)
+    return page,paginator
+</code></pre></li>
+<li><p>2.在用户的views.py中</p>
+<pre><code>def welcome(request):
+    num=request.GET.get(&apos;num&apos;,1)
+    Blogset=getAll(num)[0]
+    paginator=getAll(num)[1]
+    return render(request, &apos;welcome.html&apos;,
+                  {&apos;user&apos;: request.session.get(&apos;user&apos;, None),
+                   &apos;Blogset&apos;:Blogset,
+                   &apos;paginator&apos;:paginator
+                   })
+</code></pre></li>
+<li><p>3.在登录欢迎页面welcome.html页面中</p>
+<pre><code>&lt;body&gt;
+    {% if Blogset.has_previous %}
+		        <a href="?num=1">首页</a>
+		        <a href="?num={{ Blogset.previouse_page_number }}">上一页</a>
+		    {% endif %}
+    {% if Blogset.has_next %}
+		        <a href="?num={{ Blogset.next_page_number }}">下一页</a>
+		        <a href="?num={{ paginator.num_pages }}">尾页</a>
+		    {% endif %}
+&lt;/body&gt;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/03/富文本、分页/" data-id="cjuy6fkjg006p64wvowrxs7l0" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-scrapy选择器css、xpath" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -160,7 +626,7 @@ response.css(&apos;a[href*=image] img::attr(src)&apos;).extract()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjucq8o670053zswvu1y8n6x4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy选择器css、xpath/" data-id="cjuy6fken004t64wvow6613hj" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -235,7 +701,7 @@ scrapy runspider &lt;spider_file.py&gt;  运行一个自包含在Python文件中
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjucq8o5t004vzswv19tqs840" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/02/scrapy命令行详解/" data-id="cjuy6fkex004x64wv2svt2943" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -376,7 +842,7 @@ def fabu(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjucq8o79005pzswvxjambr71" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/发布及文件上传/" data-id="cjuy6fkhs005z64wv18vsaj48" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -600,7 +1066,7 @@ Last-Modified 　 这个实体最后一次被修改的日期和时间
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjucq8nxp000zzswvdbsgr958" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/HTTP报文/" data-id="cjuy6fk52001264wvfxav3mtc" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络基础知识/">网络基础知识</a></li></ul>
@@ -759,7 +1225,7 @@ ITEM_PIPELINES = {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjucq8o61004zzswvmylz2kiz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjuy6fkei004r64wvj1unh62a" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -847,7 +1313,7 @@ free -m 显示内存使用情况
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjucq8ob3007fzswvnvn9xta4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjuy6fklm007n64wva24u5o3f" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -949,392 +1415,10 @@ Ctrl+r    恢复撤销
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjucq8o6x005hzswvaqsxp0gq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjuy6fkfd005364wvzsy4nn7q" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-linux常用命令" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/28/linux常用命令/" class="article-date">
-  <time datetime="2018-03-28T09:05:54.000Z" itemprop="datePublished">2018-03-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/28/linux常用命令/">linux常用命令</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>linux常用命令</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>常见的系统目录结构</h6><p></p>
-<ul>
-<li><p>根目录下</p>
-<pre><code>[root@localhost ~]# ls /
-bin   dev  ftp   lib    media  opt   root  sbin  sys  usr
-boot  etc  home  lib64  mnt    proc  run   srv   tmp  var
-</code></pre><ul>
-<li>bin：Binary的缩写, 这个目录存放着最经常使用的命令</li>
-<li>boot：这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件</li>
-<li>dev：Device(设备)的缩写, 该目录下存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的</li>
-<li>etc：这个目录用来存放所有的系统管理所需要的配置文件和子目录</li>
-<li>home：用户的主目录，在Linux中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的</li>
-<li>lib：这个目录里存放着系统最基本的动态连接共享库，其作用类似于Windows里的DLL文件。几乎所有的应用程序都需要用到这些共享库</li>
-<li>media：linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下</li>
-<li>mnt：系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在/mnt/上，然后进入该目录就可以查看光驱里的内容了</li>
-<li>opt：这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的</li>
-<li>proc：这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息</li>
-<li>root：该目录为系统管理员，也称作超级权限者的用户主目录</li>
-<li>tmp：这个目录是用来存放一些临时文件的</li>
-<li>usr：这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录</li>
-<li>var：这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>终端</h6><p></p>
-<ul>
-<li><p>用户</p>
-<pre><code>新建用户：useradd &lt;name&gt;  系统自动在/home下创建与此用户同名的文件夹
-         passwd &lt;name&gt;
-删除用户：userdel &lt;name&gt;
-切换用户：su &lt;name&gt;
-退出当前用户：logout (普通用户)
-             exit  （管理用户）
-</code></pre></li>
-<li><p>前缀</p>
-<pre><code>[root@localhost ~]# 
-
-1.root 表示登录的用户名
-2.localhost 表示登录的主机，服务器地址
-3.~ 表示当前用户的所在路径，即/root；主目录，当前用户的主目录
-4.# 表示超管用户，$ 表示普通用户
-</code></pre></li>
-<li><p>开机关机<br>不管是重启系统还是关闭系统，首先要运行sync命令，把内存中的数据写到磁盘中</p>
-<pre><code>sync 将数据由内存同步到硬盘中
-shutdown -h now 离开关机
-shutdown -h +10 10分钟后关机
-shutdown -h 10:10 系统会在今天的10:10关机
-reboot 系统重启
-halt 关闭系统
-</code></pre></li>
-</ul>
-<p></p><h6>目录/文件命令</h6><p></p>
-<ul>
-<li><p>新建目录</p>
-<pre><code>mkdir &lt;目录名&gt;                        创建单个目录
-mkdir -p &lt;目录名1&gt;/&lt;目录名2&gt;/&lt;目录名3&gt; 创建多层目录
-mkdir -m *** &lt;目录名&gt;                 创建目录时指定权限，三颗星代表rwx的数字码
-</code></pre></li>
-<li><p>新建文件</p>
-<pre><code>touch 文件名
-</code></pre></li>
-<li><p>删除目录</p>
-<pre><code>rmdir &lt;目录名&gt;        删除空的目录
-rm -r &lt;目录名&gt;        递归删除整个目录树,非空
-rm &lt;文件名或者目录名&gt;        删除文件
-rm -i &lt;文件名或者目录名&gt;     互动模式，在删除前会询问是否动作
-rm -f &lt;文件名&gt;        强制删除文件，没有提示
-</code></pre></li>
-<li><p>查看目录</p>
-<pre><code>ls 表示查看当前目录下的文件或者文件夹
-ls -a 表示查看当前目录下的所有内容，包括隐藏文件
-ls -l 表示查看当前目录下内容的详细信息
-ls -al 表示查看当前目录下所有内容的详细内容
-</code></pre></li>
-<li><p>切换目录</p>
-<pre><code>cd [相对路径或绝对路径] .表示当前路径  ..表示上层路径
-</code></pre></li>
-<li><p>复制目录/文件</p>
-<pre><code>cp 源文件 /目的地址
-cp -i 源文件 /目的地址     若目标档已存在，在覆盖时会先询问动作的进行
-</code></pre></li>
-<li><p>剪切目录/文件</p>
-<pre><code>mv 文件名/目录名 目的地
-</code></pre></li>
-<li><p>重命名</p>
-<pre><code>mv 文件名/目录名 新的文件名/目录名
-</code></pre></li>
-</ul>
-<p></p><h6>文件内容查看</h6><p></p>
-<ul>
-<li><p>cat、more、head</p>
-<pre><code>cat 文件名      #正序查看，由第一行开始显示文件内容
-cat -n 文件名   #连同空白行也会显示行号
-
-tac 文件名      #倒序查看
-tac -n 文件名   #连同空白行也会显示行号
-
-more 文件名     #查看大文件，显示百分比；空白键代表向下翻页，Enter键表示向下翻行
-less 文件夹     #查看大文件，不显示百分比；空白键代表向下翻页，[pgup][pgdn]代表向上向下翻页
-
-head 文件名             #默认显示前10行
-head -n 数字 文件名       #规定显示前几行
-
-tail 文件名               #默认显示最后10行
-tail -n 数字 文件名      #规定显示最后几行
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjucq8o5a004mzswvg6vubzns" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-session会话" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/28/session会话/" class="article-date">
-  <time datetime="2018-03-28T09:01:57.000Z" itemprop="datePublished">2018-03-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/28/session会话/">session会话</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>session会话</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>在我们登录成功之后，我们需要把用户信息显示在页面上，并且在跳转到别的页面的时候，这个用户依然是已经登录的状态浏览器可以识别，这就需要session 会话作用域</li>
-<li>django session的设计原理<ul>
-<li>a、如果用户是第一次请求（就看客户端ie是否保存了sessionId的cookie）<br>创建session model <br>生成一个key sessionId 随机的一个字符串（uuid使id永远也不会重复）<br>保存到你session_engine指定位置<br>保存到cookie中，在客户的浏览器中</li>
-<li>b、如果第二次以上的请求，客户端ie都会自动提交cookie到django中，django中利用你配置的SessionMiddleware中间件激活session利用cookie中的sessionID到session_engine指定位置读取session model，并设置到request的session属性上<br>正是因为这样才能在view里面通过request.session使用session</li>
-<li>session只能储存json也就是字典类型的数据; session本身就是一个dict字段;session在存数据时数据必须支持序列化json</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>步骤</h6><p></p>
-<ul>
-<li><p>1.installed_apps</p>
-<pre><code>#settings.py
-INSTALLED_APPS = [
-    &apos;django.contrib.sessions&apos;,
-]
-</code></pre></li>
-<li><p>2.中间件（帮我们启用session）</p>
-<pre><code>#settings.py
-MIDDLEWARE = [
-   &apos;django.contrib.sessions.middleware.SessionMiddleware&apos;,
-]
-</code></pre></li>
-<li><p>3.设置存储形式（储存在设置数据库中）</p>
-<pre><code>makemigrations sessions
-migrate
-</code></pre></li>
-<li><p>4.引用 request.session</p>
-<pre><code>#views.py
-def login(request):
-    if request.method==&quot;GET&quot;:
-        return render(request,&apos;login.html&apos;,{})
-    else:
-        username=request.POST.get(&apos;username&apos;)
-        pwd=request.POST.get(&apos;pwd&apos;)
-        BlogUserSet = BlogUser.objects.filter(username=username,pwd=pwd)
-        if len(BlogUserSet)==1:
-            session=request.session
-            session[&apos;user&apos;]={&apos;username&apos;:BlogUserSet.first().username}
-            return redirect(reverse(&apos;user:welcome&apos;))
-            #return redirect(reverse(&apos;user:welcome&apos;,args=[BlogUserSet.first().id]))
-        else:
-            return render(request,&apos;login.html&apos;,{&apos;username&apos;:username,&apos;error&apos;:&apos;用户名或者密码错误！&apos;})
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjucq8o6h0059zswvh7hb40hb" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-转发与重定向" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/27/转发与重定向/" class="article-date">
-  <time datetime="2018-03-27T03:50:35.000Z" itemprop="datePublished">2018-03-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/27/转发与重定向/">转发与重定向</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>转发与重定向</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>重定向</h6><p></p>
-<ul>
-<li>数据库虽然已经添加了数据，但如果继续刷新浏览器数据库会保存重复的数据,这就需要重定向</li>
-<li>转发：一次请求和响应，请求的地址没有发生变化，请求的数据被服务器内部的资源共享，如果此时刷新页面就会出现重做现象（服务器响应给客户的是转发）</li>
-<li>重定向：一次以上的请求和响应，请求地址发生一次以上的变化。如果此时刷新页面不会出现重做现象（指向虚拟的网址页面）</li>
-<li><p>需要在views.py里面导入redirect和reverse模块，然后需要在我们刷新的时候跳转到另一个页面,代码如下：</p>
-<pre><code>#在bloguser/urls.py添加路径
-app_name=&apos;user&apos;
-urlpatterns = [
-    path(&apos;register&apos;, register),
-    path(&apos;welcome/&lt;int:id&gt;&apos;, welcome,name=&apos;welcome&apos;),
-]
-
-#在bloguser/views.py
-def register(request):
-    if request.method==&apos;GET&apos;:
-        return render(request,&apos;register.html&apos;)
-    elif request.method==&apos;POST&apos;:
-        bloguser=BlogUser()
-        bloguser.username=request.POST.get(&apos;username&apos;)
-        bloguser.pwd=request.POST.get(&apos;pwd&apos;)
-        bloguser.save()
-        return redirect(reverse(&apos;user:welcome&apos;,args=[bloguser.id]))   #user,虚拟的命名空间，welcome，执行的函数,
-def welcome(request,id):
-    bloguser=BlogUser.objects.get(pk=id)
-    return render(request, &apos;welcome.html&apos;, {&apos;bloguser&apos;: bloguser})
-
-#在pyblog/urls.py下
-urlpatterns = [
-    path(&apos;admin/&apos;, admin.site.urls),
-    path(&apos;bloguser/&apos;,include(&apos;bloguser.urls&apos;)),
-    path(&apos;user/&apos;,include(&apos;bloguser.urls&apos;,namespace=&apos;user&apos;)),
-]
-</code></pre></li>
-</ul>
-<p></p><h6>重名</h6><p></p>
-<ul>
-<li>如果使用<code>unique=True</code>，我们必须点击提交才会告诉我们用户名重复，应该在我们输入密码的时候就告诉我们用户名重复</li>
-<li><p>这时候我们需要使用ajax(ajax: jquery 是一种静态资源),不需要我们提交，当我们输入密码的时候就可以告诉我们用户名已重复</p>
-<ul>
-<li>1.在pyblog里面创建一个static的文件夹，接着创建js的文件夹，把jquery-3.3.1放进去</li>
-<li><p>2.接着需要在setings.py里面添加static文件</p>
-<pre><code>STATIC_URL = &apos;/static/&apos;
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,  &apos;static&apos;)
-]
-</code></pre></li>
-<li><p>3.在register.html中加上javascript</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;/static/js/jquery-3.3.1.js&quot;&gt;&lt;/script&gt;
-&lt;script &gt;
-    $(function(){
-        $(&apos;input[name=&quot;username&quot;]&apos;).blur(function(){
-            uname=$(&apos;input[name=&quot;username&quot;]&apos;).val()
-            CSRF=$(&quot;input[name=&apos;csrfmiddlewaretoken&apos;]&quot;).val()
-            $.ajax({
-                url:&apos;/bloguser/getUser&apos;,
-                data:{&apos;uname&apos;:uname,&apos;csrfmiddlewaretoken&apos;:CSRF},
-                type:&apos;POST&apos;,
-                success:function(dat){
-                    if(dat==&apos;True&apos;){
-                        $(&apos;span&apos;).html(&apos;用户名已经存在！&apos;)
-                    }
-                    else{
-                        $(&apos;span&apos;).html(&apos;用户名可以使用！&apos;)
-                    }
-                }
-            })
-        })
-    })
-&lt;/script&gt;
-</code></pre></li>
-<li><p>4.在views.py定义一个getUser(),同时需要导入HttpResponse模块，用来判断用户名有没有重复</p>
-<pre><code>def getUser(request):
-    uname=request.POST.get(&apos;uname&apos;)
-    BlogUserSet=BlogUser.objects.filter(username=uname)
-    if len(BlogUserSet)==1:
-        return HttpResponse(&apos;True&apos;)
-    else:
-        return HttpResponse(&apos;False&apos;)
-</code></pre></li>
-<li><p>5.然后在bloguser\urls.py配置一下路径</p>
-<pre><code>app_name=&apos;user&apos;
-urlpatterns = [
-    path(&apos;register&apos;, register),
-    path(&apos;getUser&apos;, getUser),
-    path(&apos;welcome/&lt;int:id&gt;&apos;, welcome,name=&apos;welcome&apos;),
-]
-</code></pre></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjucq8oc1007zzswvlv2ideeg" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
 
     </footer>
   </div>
@@ -1349,7 +1433,7 @@ urlpatterns = [
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/5/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/7/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/7/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1361,9 +1445,9 @@ urlpatterns = [
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1371,18 +1455,18 @@ urlpatterns = [
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12.22px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.78px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.56px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13.33px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11.11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.67px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13.33px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19.09px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.45px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.45px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10.91px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.36px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1390,9 +1474,21 @@ urlpatterns = [
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/04/26/完全备份与还原-mysqldump备份/">完全备份与还原---mysqldump备份</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
+          </li>
         
           <li>
             <a href="/2019/04/11/robotframework-基于python27/">robotframework---基于python27</a>
@@ -1400,18 +1496,6 @@ urlpatterns = [
         
           <li>
             <a href="/2019/04/04/jenkins自动化部署-远程部署前端vue项目/">jenkins自动化部署--远程部署前端vue项目</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/02/jenkins自动化部署-构建前端项目/">jenkins自动化部署--构建前端项目</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/02/编译部署NodeJS/">编译部署NodeJS</a>
           </li>
         
       </ul>
@@ -1442,7 +1526,7 @@ urlpatterns = [
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
