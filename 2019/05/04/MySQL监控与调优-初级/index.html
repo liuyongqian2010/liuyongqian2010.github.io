@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>MySQL监控与调优--初级 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="MySQL监控与调优–初级   1. 简介  1.1 为了保证数据库的平稳运行，可以主动监控以下三个与性能及资源利用率相关的指标：连接情况、缓冲池使用情况、查询执行性能 1.2 本篇笔记讨论的一些监控策略只适用于 MySQL 5.6 与 5.7 版本  2. 连接情况  2.1 监控客户端连接情况相当重要，因为一旦可用连接耗尽，新的客户端连接就会遭到拒绝。MySQL 默认的连接数限制为 151，可">
+<meta name="keywords" content="性能测试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL监控与调优--初级">
+<meta property="og:url" content="http://yoursite.com/2019/05/04/MySQL监控与调优-初级/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="MySQL监控与调优–初级   1. 简介  1.1 为了保证数据库的平稳运行，可以主动监控以下三个与性能及资源利用率相关的指标：连接情况、缓冲池使用情况、查询执行性能 1.2 本篇笔记讨论的一些监控策略只适用于 MySQL 5.6 与 5.7 版本  2. 连接情况  2.1 监控客户端连接情况相当重要，因为一旦可用连接耗尽，新的客户端连接就会遭到拒绝。MySQL 默认的连接数限制为 151，可">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-04T11:31:58.249Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL监控与调优--初级">
+<meta name="twitter:description" content="MySQL监控与调优–初级   1. 简介  1.1 为了保证数据库的平稳运行，可以主动监控以下三个与性能及资源利用率相关的指标：连接情况、缓冲池使用情况、查询执行性能 1.2 本篇笔记讨论的一些监控策略只适用于 MySQL 5.6 与 5.7 版本  2. 连接情况  2.1 监控客户端连接情况相当重要，因为一旦可用连接耗尽，新的客户端连接就会遭到拒绝。MySQL 默认的连接数限制为 151，可">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-MySQL监控与调优-初级" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/04/MySQL监控与调优-初级/" class="article-date">
+  <time datetime="2019-05-04T02:44:04.000Z" itemprop="datePublished">2019-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySQL监控与调优--初级
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>MySQL监控与调优–初级</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>1.1 为了保证数据库的平稳运行，可以主动监控以下三个与性能及资源利用率相关的指标：连接情况、缓冲池使用情况、查询执行性能</li>
+<li>1.2 本篇笔记讨论的一些监控策略只适用于 MySQL 5.6 与 5.7 版本</li>
+</ul>
+<p></p><h6>2. 连接情况</h6><p></p>
+<ul>
+<li><p>2.1 监控客户端连接情况相当重要，因为一旦可用连接耗尽，新的客户端连接就会遭到拒绝。MySQL 默认的连接数限制为 151，可通过下面的查询加以验证：</p>
+<pre><code>mysql命令行：SHOW VARIABLES LIKE &apos;max_connections&apos;;
+</code></pre></li>
+<li><p>2.2 常规情况下，Linux应该能够支持 500 到 1000 个同时连接。如果可用的 RAM 较大，且每个连接的工作量较低或目标响应时间较为宽松，则最多可处理 10000 个连接。而 Windows 能处理的连接数一般不超过 2048 个，这是由于该平台上使用的 Posix 兼容层。</p>
+</li>
+<li><p>2.3 修改连接数</p>
+<pre><code>第一种方式：（可在系统运行时进行调整，服务器重启时恢复为默认值）
+mysql命令行：SET GLOBAL max_connections = 200;
+
+第二种方式：（可在my.cnf配置文件中添加配置，永久地改变连接数限制）
+max_connections = 200
+</code></pre></li>
+<li><p>2.4 监控连接使用率</p>
+<pre><code>查看当前打开的连接数
+show status like &apos;%Threads_connected%&apos;;
+</code></pre></li>
+</ul>
+<p></p><h6>3. 缓冲池使用情况</h6><p></p>
+<ul>
+<li><p>3.1 存储引擎层：InnoDB_Buffer_Pool</p>
+<ul>
+<li>3.1.1 MySQL 默认的存储引擎 InnoDB 使用了一片称为缓冲池的内存区域，用于缓存数据表与索引的数据。缓冲池指标属于资源指标，而非工作指标。如果数据库性能开始下滑，而磁盘 I/O 在不断攀升，扩大缓冲池往往能带来性能回升。</li>
+<li>3.1.2 默认设置下，缓冲池的大小通常相对较小，为 128MiB。不过，MySQL 建议可将其扩大至专用数据库服务器物理内存的 80% 大小。</li>
+<li><p>3.1.3 缓冲池大小调整操作是分块进行的，缓冲池的大小必须为块的大小乘以实例的数目再乘以某个倍数。</p>
+<pre><code>innodb_buffer_pool_size = N * innodb_buffer_pool_chunk_size * innodb_buffer_pool_instances
+以上两个参数的值都可以通过如下方式进行检查：
+SHOW GLOBAL VARIABLES LIKE &quot;innodb_buffer_pool_chunk_size&quot;;
+SHOW GLOBAL VARIABLES LIKE &quot;innodb_buffer_pool_instances&quot;;
+如果 innodb_buffer_pool_chunk_size 查询没有返回结果，则表示在你使用的 MySQL 版本中此参数无法更改，其值为 128 MiB。
+</code></pre></li>
+<li><p>3.1.4 查询验证</p>
+<pre><code>查看 InnoDB_Buffer_Pool 大小：
+SHOW VARIABLES LIKE &apos;%innoDB_buffer_pool%&apos;;
+查询 InnoDB_buffer_pool 当前使用情况：
+SHOW STATUS LIKE &apos;%InnoDB_buffer_pool %&apos;;
+</code></pre></li>
+<li><p>3.1.5 调优参考计算方法</p>
+<pre><code>show global status like &apos;Innodb_buffer_pool_pages_data&apos;;
+show global status like &apos;Innodb_buffer_pool_pages_total&apos;;
+
+val = Innodb_buffer_pool_pages_data / Innodb_buffer_pool_pages_total * 100%
+
+val &gt; 95% 则考虑增大 innodb_buffer_pool_size， 建议使用物理内存的75%
+
+val &lt; 95% 则考虑减小 innodb_buffer_pool_size， 建议设置为：Innodb_buffer_pool_pages_data * Innodb_page_size * 1.05 / (1024*1024*1024)
+</code></pre></li>
+</ul>
+</li>
+<li><p>3.2 mysql层：查询缓存 Query Cache</p>
+<ul>
+<li>3.2.1 该缓存存储select的完整结果，当有同样的查询，则跳过解析，优化和执行的阶段，直接返回结果，当这条缓存select语句相关的表有变化时，此缓存失效。开启可以提高性能，但是对于读写增加了开销，读的时候要先检查缓存，对于写，写入之后要更新缓存。但是一般这种开销比较小，但是也要根据业务特征权衡。</li>
+<li><p>3.2.2 在my.cnf中设置</p>
+<pre><code>query_cache_type=on        on 开启      off 关闭
+query_cache_size=200M      一般建议不超过256M
+query_cache_limit=1M       限制储存结果的大小，如果查出来的结果比这个大，就不会被缓存
+</code></pre></li>
+<li><p>3.2.3 查询验证</p>
+<pre><code>查询quache大小：
+SHOW VARIABLES LIKE &apos;%query_cache%&apos;;
+查询quache当前使用情况：
+SHOW STATUS LIKE &apos;%Qcache%&apos;;
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>4. 查询执行性能</h6><p></p>
+<ul>
+<li><p>4.1 QPS:每秒的查询数</p>
+<pre><code>QPS计算方法
+Questions = SHOW GLOBAL STATUS LIKE &apos;Questions&apos;;
+Uptime = SHOW GLOBAL STATUS LIKE &apos;Uptime&apos;;
+
+QPS=Questions/Uptime
+</code></pre></li>
+<li><p>4.2 TPS:每秒的事物量（commit与rollback的之和）</p>
+<pre><code>TPS计算方法
+Com_commit = SHOW GLOBAL STATUS LIKE &apos;Com_commit&apos;;
+Com_rollback = SHOW GLOBAL STATUS LIKE &apos;Com_rollback&apos;;
+Uptime = SHOW GLOBAL STATUS LIKE &apos;Uptime&apos;;
+
+TPS=(Com_commit + Com_rollback)/Uptime
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/05/04/MySQL监控与调优-初级/" data-id="cjv9ki5cr002bagwvbdz87oru" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/05/04/MySQL慢日志查询/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          MySQL慢日志查询
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/04/26/完全备份与还原-mysqldump备份/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">完全备份与还原---mysqldump备份</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19.09px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.45px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.45px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10.91px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.36px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/04/MySQL监控与调优-初级/">MySQL监控与调优--初级</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/完全备份与还原-mysqldump备份/">完全备份与还原---mysqldump备份</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

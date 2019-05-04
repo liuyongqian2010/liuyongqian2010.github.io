@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,267 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-MySQL慢日志查询" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/04/MySQL慢日志查询/" class="article-date">
+  <time datetime="2019-05-04T11:33:34.000Z" itemprop="datePublished">2019-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>MySQL慢日志查询</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>1.1 MySQL的慢查询日志是MySQL提供的一种日志记录，用来记录在MySQL中响应时间超过long_query_time值的语句。long_query_time的默认值为10，意思是运行10S以上的语句。</li>
+<li>1.2 默认情况下，MySQL数据库并不启动慢查询日志，需要手动来设置这个参数。如果不是调优需要的话，一般不建议启动该参数，因为开启慢查询日志会或多或少带来一定的性能影响。</li>
+<li>1.3 慢查询日志支持将日志记录写入文件，也支持将日志记录写入数据库表。</li>
+</ul>
+<p></p><h6>2. 查询</h6><p></p>
+<ul>
+<li><p>slow_query_log</p>
+<pre><code>mysql&gt; show variables like &apos;%slow_query_log%&apos;;
+注：
+slow_query_log   是否开启慢查询日志，1表示开启，0表示关闭；默认为OFF
+slow-query-log-file    MySQL数据库慢查询日志存储路径。可不设置该参数，系统默认host_name-slow.log
+</code></pre></li>
+<li><p>long_query_time</p>
+<pre><code>mysql&gt; show variables like &apos;long_query_time&apos;;
+注：
+long_query_time    慢查询阈值，当查询时间多于设定的阈值时，开始记录日志。默认值为10秒
+</code></pre></li>
+<li><p>log_output</p>
+<pre><code>mysql&gt; show variables like &apos;%log_output%&apos;;
+注：
+log_output 指定日志的存储方式。&apos;FILE&apos;表示将日志存入文件，默认值是&apos;FILE&apos;。&apos;TABLE&apos;表示将日志存入数据库的mysql.slow_log表中
+</code></pre></li>
+<li><p>log_queries_not_using_indexes</p>
+<pre><code>mysql&gt; show variables like &apos;log_queries_not_using_indexes&apos;;
+注：
+log_queries_not_using_indexes   1表示开启，0表示关闭；默认为OFF。未使用索引的查询也被记录到慢查询日志中；如果调优的话，建议开启这个选项。另外，开启了这个参数，其实使用full index scan的sql也会被记录到慢查询日志
+</code></pre></li>
+<li><p>log_slow_admin_statements</p>
+<pre><code>mysql&gt; show variables like &apos;log_slow_admin_statements&apos;;
+注：
+log_slow_admin_statements   1表示开启，0表示关闭；默认为OFF。是否将慢管理语句例如ANALYZE TABLE和ALTER TABLE等记入慢查询日志
+</code></pre></li>
+<li><p>slow_queries</p>
+<pre><code>mysql&gt; show global status like &apos;%slow_queries%&apos;;
+注：
+查询有多少条慢查询记录，可以使用系统变量slow_queries
+</code></pre></li>
+</ul>
+<p></p><h6>3. 配置</h6><p></p>
+<ul>
+<li><p>修改my.cnf文件，增加或修改参数后，然后重启MySQL服务器，如下所示:</p>
+<pre><code>slow_query_log=1
+slow_query_log_file=/usr/local/mysql/data/localhost-slow.log
+long_query_time=5
+log_output=&apos;FILE&apos;    #可以不设置，出于性能考虑，默认即可
+log_queries_not_using_indexes=1   可选项
+</code></pre></li>
+</ul>
+<p></p><h6>4. 日志分析工具mysqldumpslow</h6><p></p>
+<ul>
+<li>4.1 在实际生产环境中，如果要手工分析日志，查找、分析SQL，显然是个体力活，MySQL提供了日志分析工具mysqldumpslow</li>
+<li><p>4.2 常用参数</p>
+<pre><code>-s, 是表示按照何种方式排序，有下面7种方式
+    c: 访问计数
+    l: 锁定时间
+    r: 返回记录
+    t: 查询时间
+    al:平均锁定时间
+    ar:平均返回记录数
+    at:平均查询时间
+-t, 是top n的意思，即为返回前面多少条的数据；
+-g, 后边可以写一个正则匹配模式，大小写不敏感的
+</code></pre></li>
+<li><p>4.3 常用命令</p>
+<pre><code>得到返回记录集最多的10个SQL。
+mysqldumpslow -s r -t 10 /database/mysql/mysql01_slow.log
+
+得到访问次数最多的10个SQL
+mysqldumpslow -s c -t 10 /database/mysql/mysql01_slow.log
+
+得到按照时间排序的前10条里面含有左连接的查询语句。
+mysqldumpslow -s t -t 10 -g “left join” /database/mysql/mysql06_slow.log
+
+另外建议在使用这些命令时结合 | 和more 使用 ，否则有可能出现刷屏的情况。
+mysqldumpslow -s r -t 20 /mysql/mysql06-slow.log | more
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/05/04/MySQL慢日志查询/" data-id="cjv9ki5c30024agwvnsrzr5i8" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-MySQL监控与调优-初级" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/04/MySQL监控与调优-初级/" class="article-date">
+  <time datetime="2019-05-04T02:44:04.000Z" itemprop="datePublished">2019-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/04/MySQL监控与调优-初级/">MySQL监控与调优--初级</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>MySQL监控与调优–初级</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>1.1 为了保证数据库的平稳运行，可以主动监控以下三个与性能及资源利用率相关的指标：连接情况、缓冲池使用情况、查询执行性能</li>
+<li>1.2 本篇笔记讨论的一些监控策略只适用于 MySQL 5.6 与 5.7 版本</li>
+</ul>
+<p></p><h6>2. 连接情况</h6><p></p>
+<ul>
+<li><p>2.1 监控客户端连接情况相当重要，因为一旦可用连接耗尽，新的客户端连接就会遭到拒绝。MySQL 默认的连接数限制为 151，可通过下面的查询加以验证：</p>
+<pre><code>mysql命令行：SHOW VARIABLES LIKE &apos;max_connections&apos;;
+</code></pre></li>
+<li><p>2.2 常规情况下，Linux应该能够支持 500 到 1000 个同时连接。如果可用的 RAM 较大，且每个连接的工作量较低或目标响应时间较为宽松，则最多可处理 10000 个连接。而 Windows 能处理的连接数一般不超过 2048 个，这是由于该平台上使用的 Posix 兼容层。</p>
+</li>
+<li><p>2.3 修改连接数</p>
+<pre><code>第一种方式：（可在系统运行时进行调整，服务器重启时恢复为默认值）
+mysql命令行：SET GLOBAL max_connections = 200;
+
+第二种方式：（可在my.cnf配置文件中添加配置，永久地改变连接数限制）
+max_connections = 200
+</code></pre></li>
+<li><p>2.4 监控连接使用率</p>
+<pre><code>查看当前打开的连接数
+show status like &apos;%Threads_connected%&apos;;
+</code></pre></li>
+</ul>
+<p></p><h6>3. 缓冲池使用情况</h6><p></p>
+<ul>
+<li><p>3.1 存储引擎层：InnoDB_Buffer_Pool</p>
+<ul>
+<li>3.1.1 MySQL 默认的存储引擎 InnoDB 使用了一片称为缓冲池的内存区域，用于缓存数据表与索引的数据。缓冲池指标属于资源指标，而非工作指标。如果数据库性能开始下滑，而磁盘 I/O 在不断攀升，扩大缓冲池往往能带来性能回升。</li>
+<li>3.1.2 默认设置下，缓冲池的大小通常相对较小，为 128MiB。不过，MySQL 建议可将其扩大至专用数据库服务器物理内存的 80% 大小。</li>
+<li><p>3.1.3 缓冲池大小调整操作是分块进行的，缓冲池的大小必须为块的大小乘以实例的数目再乘以某个倍数。</p>
+<pre><code>innodb_buffer_pool_size = N * innodb_buffer_pool_chunk_size * innodb_buffer_pool_instances
+以上两个参数的值都可以通过如下方式进行检查：
+SHOW GLOBAL VARIABLES LIKE &quot;innodb_buffer_pool_chunk_size&quot;;
+SHOW GLOBAL VARIABLES LIKE &quot;innodb_buffer_pool_instances&quot;;
+如果 innodb_buffer_pool_chunk_size 查询没有返回结果，则表示在你使用的 MySQL 版本中此参数无法更改，其值为 128 MiB。
+</code></pre></li>
+<li><p>3.1.4 查询验证</p>
+<pre><code>查看 InnoDB_Buffer_Pool 大小：
+SHOW VARIABLES LIKE &apos;%innoDB_buffer_pool%&apos;;
+查询 InnoDB_buffer_pool 当前使用情况：
+SHOW STATUS LIKE &apos;%InnoDB_buffer_pool %&apos;;
+</code></pre></li>
+<li><p>3.1.5 调优参考计算方法</p>
+<pre><code>show global status like &apos;Innodb_buffer_pool_pages_data&apos;;
+show global status like &apos;Innodb_buffer_pool_pages_total&apos;;
+
+val = Innodb_buffer_pool_pages_data / Innodb_buffer_pool_pages_total * 100%
+
+val &gt; 95% 则考虑增大 innodb_buffer_pool_size， 建议使用物理内存的75%
+
+val &lt; 95% 则考虑减小 innodb_buffer_pool_size， 建议设置为：Innodb_buffer_pool_pages_data * Innodb_page_size * 1.05 / (1024*1024*1024)
+</code></pre></li>
+</ul>
+</li>
+<li><p>3.2 mysql层：查询缓存 Query Cache</p>
+<ul>
+<li>3.2.1 该缓存存储select的完整结果，当有同样的查询，则跳过解析，优化和执行的阶段，直接返回结果，当这条缓存select语句相关的表有变化时，此缓存失效。开启可以提高性能，但是对于读写增加了开销，读的时候要先检查缓存，对于写，写入之后要更新缓存。但是一般这种开销比较小，但是也要根据业务特征权衡。</li>
+<li><p>3.2.2 在my.cnf中设置</p>
+<pre><code>query_cache_type=on        on 开启      off 关闭
+query_cache_size=200M      一般建议不超过256M
+query_cache_limit=1M       限制储存结果的大小，如果查出来的结果比这个大，就不会被缓存
+</code></pre></li>
+<li><p>3.2.3 查询验证</p>
+<pre><code>查询quache大小：
+SHOW VARIABLES LIKE &apos;%query_cache%&apos;;
+查询quache当前使用情况：
+SHOW STATUS LIKE &apos;%Qcache%&apos;;
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>4. 查询执行性能</h6><p></p>
+<ul>
+<li><p>4.1 QPS:每秒的查询数</p>
+<pre><code>QPS计算方法
+Questions = SHOW GLOBAL STATUS LIKE &apos;Questions&apos;;
+Uptime = SHOW GLOBAL STATUS LIKE &apos;Uptime&apos;;
+
+QPS=Questions/Uptime
+</code></pre></li>
+<li><p>4.2 TPS:每秒的事物量（commit与rollback的之和）</p>
+<pre><code>TPS计算方法
+Com_commit = SHOW GLOBAL STATUS LIKE &apos;Com_commit&apos;;
+Com_rollback = SHOW GLOBAL STATUS LIKE &apos;Com_rollback&apos;;
+Uptime = SHOW GLOBAL STATUS LIKE &apos;Uptime&apos;;
+
+TPS=(Com_commit + Com_rollback)/Uptime
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/05/04/MySQL监控与调优-初级/" data-id="cjv9ki5cr002bagwvbdz87oru" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-完全备份与还原-mysqldump备份" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -155,7 +416,7 @@ mysqldump -u root -p test_oa userinfo workinfo&gt; /root/bat_test_oa_uw.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/完全备份与还原-mysqldump备份/" data-id="cjuy6fkjb006n64wv7qc3z55h" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/04/26/完全备份与还原-mysqldump备份/" data-id="cjv9ki5xg006wagwvt3ocah1d" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -263,7 +524,7 @@ cnpm install -g appium --no-cache
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/Appium的部署安装/" data-id="cjuy6fk1o000064wvef8yscba" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/04/26/Appium的部署安装/" data-id="cjv9ki51l0001agwvl66y2shr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -336,7 +597,7 @@ cnpm install -g appium --no-cache
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/使用JvisualVM远程监控JVM/" data-id="cjuy6fkfi005564wvx7zsf88r" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/04/26/使用JvisualVM远程监控JVM/" data-id="cjv9ki5r8005iagwvfino1qgm" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -423,7 +684,7 @@ cnpm install -g appium --no-cache
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/11/robotframework-基于python27/" data-id="cjuy6fked004p64wv323xs43u" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/04/11/robotframework-基于python27/" data-id="cjv9ki5p0004yagwvwv0ojwz1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -531,7 +792,7 @@ npm run build
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/04/jenkins自动化部署-远程部署前端vue项目/" data-id="cjuy6fkb4003j64wvoon3vkt7" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/04/04/jenkins自动化部署-远程部署前端vue项目/" data-id="cjv9ki5jo003wagwvry2gwy30" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -635,7 +896,7 @@ fi
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" data-id="cjuy6fkc5003v64wvydwed1s7" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" data-id="cjv9ki5jx003yagwvinhecomu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -732,7 +993,7 @@ cp -R /var/lib/jenkins/workspace/qianduan001/dist/* /usr/local/nginx/qianduan001
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/jenkins自动化部署-构建前端项目/" data-id="cjuy6fkan003e64wvmt5cgu2z" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/04/02/jenkins自动化部署-构建前端项目/" data-id="cjv9ki5j7003ragwvb4mw2i8s" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -805,244 +1066,7 @@ make install       部署
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/编译部署NodeJS/" data-id="cjuy6fkn0008964wvbhrrvmfi" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-GCC升级" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/02/GCC升级/" class="article-date">
-  <time datetime="2019-04-02T13:45:35.000Z" itemprop="datePublished">2019-04-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/02/GCC升级/">GCC升级</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>GCC升级</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>1. 选择升级版本</h6><p></p>
-<ul>
-<li>Linux系统默认安装的gcc版本均在4.9以下，一些软件比如NodeJS的编译需要比较高的版本</li>
-<li>选择需要升级的版本，<a href="http://mirror.koddos.net/gcc/releases/" target="_blank" rel="noopener">http://mirror.koddos.net/gcc/releases/</a> ，当前选择版本为：gcc-7.4.0.tar.gz</li>
-</ul>
-<p></p><h6>2. 解压源码包</h6><p></p>
-<ul>
-<li>将压缩包放在/usr/local下，进行解压：tar -zvxf gcc-7.4.0.tar.gz</li>
-<li>装备bzip2软件，之后的编译需要，执行：yum install bzip2</li>
-</ul>
-<p></p><h6>3. 开始编译安装</h6><p></p>
-<ul>
-<li><p>下载供编译需要的依赖项</p>
-<pre><code>cd /usr/local/gcc-7.4.0/ 后执行命令：
-./contrib/download_prerequisites
-</code></pre></li>
-<li><p>编译安装</p>
-<pre><code>mkdir build  新建一个文件夹存放编译文件
-cd build     后进行编译：
-../configure --enable-languages=c,c++ --enable-checking=release  -disable-multilib  仅安装64位执行
-make         生成Makefile文件，该过程可能会很耗时，起码90分钟
-make install 之后执行安装命令
-</code></pre></li>
-</ul>
-<p></p><h6>4. 解决运行程序gcc出现’GLIBCXX_3.4.21’ not found</h6><p></p>
-<ul>
-<li><p>4.1 具体错误</p>
-<pre><code>/usr/node-v10.15.3/out/Release/torque: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.20&apos; not found (required by /usr/node-v10.15.3/out/Release/torque)
-</code></pre></li>
-<li><p>4.2 问题原因：升级gcc时，生成的动态库没有替换老版本 gcc 动态库导致</p>
-</li>
-<li><p>4.3 解决方案：将gcc最新版本的动态库替换系统中老版本的动态库。</p>
-<ul>
-<li><p>查找编译gcc时生成的最新动态库 </p>
-<pre><code>find / -name &quot;libstdc++.so*&quot;，
-最新动态库为：/usr/local/gcc-7.4.0/build/stage1-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24
-</code></pre></li>
-<li><p>将找到的动态库libstdc++.so.6.0.24复制到/usr/lib64下</p>
-<pre><code>cp /usr/local/gcc-7.4.0/build/stage1-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24 /usr/lib64
-</code></pre></li>
-<li><p>切换工作目录至/usr/lib64，删除原来的软连接，将默认库的软连接指向最新动态库。</p>
-<pre><code>cd /usr/lib64
-rm -rf libstdc++.so.6
-ln -s libstdc++.so.6.0.24 libstdc++.so.6
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>5. 重启服务器，验证版本</h6><p></p>
-<ul>
-<li>执行命令：gcc -v</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/GCC升级/" data-id="cjuy6fk44000p64wvc23ihowj" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-jenkins自动化部署-构建后台项目" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/01/jenkins自动化部署-构建后台项目/" class="article-date">
-  <time datetime="2019-04-01T14:42:25.000Z" itemprop="datePublished">2019-04-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/01/jenkins自动化部署-构建后台项目/">jenkins自动化部署--构建后台项目</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>jenkins自动化部署–构建后台项目</h5><p></p>
-<hr>
-<hr>
-<h6>1. 简介</h6>
-
-<ul>
-<li>Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。</li>
-</ul>
-<h6>2. 部署准备</h6>
-
-<ul>
-<li><p>2.1 maven的安装</p>
-<pre><code>安装执行：yum install maven&lt;br/&gt;
-验证版本：mvn -v
-</code></pre></li>
-<li><p>2.2 git的安装</p>
-<pre><code>安装执行：yum install git
-</code></pre></li>
-</ul>
-<h6>3. 部署 jenkins</h6>
-
-<ul>
-<li><p>3.1 将 jenkins-2.164.1-1.1.noarch.rpm包放在/usr下，安装执行：sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm</p>
-<pre><code>安装完毕之后，出现四个文件如下所示：
-/usr/lib/jenkins/jenkins.war------WAR包
-/etc/sysconfig/jenkins------------配置文件
-/var/lib/jenkins/-----------------默认的JENKINS_HOME目录
-/var/log/jenkins/jenkins.log------Jenkins日志文件            
-</code></pre></li>
-<li><p>3.2 启动 jenkins</p>
-<pre><code>启动：sudo service jenkins start
-停止：sudo service jenkins stop
-查看：systemctl status jenkins.service
-&lt;br/&gt;
-</code></pre></li>
-<li><p>3.3 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于/var/lib/jenkins/secrets/下的initialAdminPassword文件中。</p>
-</li>
-<li>3.4 插件推荐安装完之后进入创建管理员用户的界面，可以使用已有的admin账号密码（密码可以修改）。</li>
-</ul>
-<h6>4. 赋予 jenkins运行命令的权限</h6>
-
-<pre><code>vi /etc/sudoers后增加如下命令：
-
-## Allow root to run any commands anywhere 
-root    ALL=(ALL)     ALL
-jenkins    ALL=NOPASSWD: ALL
-</code></pre><p></p><h6>5. 使用 jenkins构建后台项目</h6><p></p>
-<ul>
-<li>5.1 新建任务（输入一个任务名称，如testing001，选择“构建一个自由风格的软件项目”）</li>
-<li>5.2 源码管理（选择“Git”，输入仓库URL和git账号）</li>
-<li><p>5.3 修改maven配置文件</p>
-<pre><code>cd /usr/share/maven/conf/
-vi settings.xml后修改如下内容：（有两处）
-
-&lt;mirror&gt;
-      &lt;id&gt;mirrorId&lt;/id&gt;
-      &lt;mirrorOf&gt;repositoryId&lt;/mirrorOf&gt;
-      &lt;name&gt;Human Readable Name for this Mirror.&lt;/name&gt;
-      &lt;url&gt;http://my.repository.com/repo/path&lt;/url&gt;
-    &lt;/mirror&gt;
-
-&lt;mirror&gt;
-      &lt;id&gt;mirrorId&lt;/id&gt;
-      &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;
-      &lt;name&gt;Human Readable Name for this Mirror.&lt;/name&gt;
-      &lt;url&gt;http://192.168.110.67:8090/nexus/content/groups/public/&lt;/url&gt;
-    &lt;/mirror&gt;
-</code></pre></li>
-<li><p>5.4 构建</p>
-<ul>
-<li>调用顶层Maven目标，目标：clean package -Dmaven.test.skip=true</li>
-<li><p>执行shell，通过脚本进行部署，输入执行shell的命令，如：<code>sudo sh /usr/deploy_cmp.sh</code>。shell脚本可以参考如下所示：</p>
-<pre><code>#!/bin/bash
-export BUILD_ID=dontkillme
-TOMCATTHREAD=`ps aux | grep &apos;tomcat-test&apos; | grep -v grep`
-if test -z &quot;$TOMCATTHREAD&quot;
-then 
-    echo &quot;TOMCAT NOT START&quot;
-else  
-    THREADLIST=(${TOMCATTHREAD// / })
-    PID=${THREADLIST[1]}   
-    kill -9 $PID   
-    sleep 5s
-fi  
-    cd /usr/tomcat-test/webapps/   
-    rm -f cmp.war  
-    rm -rf cmp 
-    cp /var/lib/jenkins/workspace/testing001/target/cmp.war /usr/tomcat-test/webapps/
-    cd /usr/tomcat-test/bin
-    ./startup.sh
-    sleep 5s
-</code></pre></li>
-</ul>
-</li>
-<li>5.5 项目构建位置：/var/lib/jenkins/</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cjuy6fkb9003l64wvh3cnyn23" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/04/02/编译部署NodeJS/" data-id="cjv9ki60u007sagwvy0rwen4a" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -1060,7 +1084,7 @@ fi
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">Suivant &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1072,9 +1096,9 @@ fi
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1082,7 +1106,7 @@ fi
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19.09px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.45px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.45px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10.91px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.36px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
     </div>
@@ -1091,9 +1115,9 @@ fi
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1101,9 +1125,17 @@ fi
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/04/MySQL监控与调优-初级/">MySQL监控与调优--初级</a>
+          </li>
         
           <li>
             <a href="/2019/04/26/完全备份与还原-mysqldump备份/">完全备份与还原---mysqldump备份</a>
@@ -1115,14 +1147,6 @@ fi
         
           <li>
             <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/11/robotframework-基于python27/">robotframework---基于python27</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/04/jenkins自动化部署-远程部署前端vue项目/">jenkins自动化部署--远程部署前端vue项目</a>
           </li>
         
       </ul>
@@ -1153,7 +1177,7 @@ fi
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

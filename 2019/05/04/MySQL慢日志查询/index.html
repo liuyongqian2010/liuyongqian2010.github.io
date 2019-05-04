@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>MySQL慢日志查询 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="MySQL慢日志查询   1. 简介  1.1 MySQL的慢查询日志是MySQL提供的一种日志记录，用来记录在MySQL中响应时间超过long_query_time值的语句。long_query_time的默认值为10，意思是运行10S以上的语句。 1.2 默认情况下，MySQL数据库并不启动慢查询日志，需要手动来设置这个参数。如果不是调优需要的话，一般不建议启动该参数，因为开启慢查询日志会或多">
+<meta name="keywords" content="MySQL学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL慢日志查询">
+<meta property="og:url" content="http://yoursite.com/2019/05/04/MySQL慢日志查询/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="MySQL慢日志查询   1. 简介  1.1 MySQL的慢查询日志是MySQL提供的一种日志记录，用来记录在MySQL中响应时间超过long_query_time值的语句。long_query_time的默认值为10，意思是运行10S以上的语句。 1.2 默认情况下，MySQL数据库并不启动慢查询日志，需要手动来设置这个参数。如果不是调优需要的话，一般不建议启动该参数，因为开启慢查询日志会或多">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-04T13:46:59.005Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL慢日志查询">
+<meta name="twitter:description" content="MySQL慢日志查询   1. 简介  1.1 MySQL的慢查询日志是MySQL提供的一种日志记录，用来记录在MySQL中响应时间超过long_query_time值的语句。long_query_time的默认值为10，意思是运行10S以上的语句。 1.2 默认情况下，MySQL数据库并不启动慢查询日志，需要手动来设置这个参数。如果不是调优需要的话，一般不建议启动该参数，因为开启慢查询日志会或多">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-MySQL慢日志查询" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/04/MySQL慢日志查询/" class="article-date">
+  <time datetime="2019-05-04T11:33:34.000Z" itemprop="datePublished">2019-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySQL慢日志查询
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>MySQL慢日志查询</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>1.1 MySQL的慢查询日志是MySQL提供的一种日志记录，用来记录在MySQL中响应时间超过long_query_time值的语句。long_query_time的默认值为10，意思是运行10S以上的语句。</li>
+<li>1.2 默认情况下，MySQL数据库并不启动慢查询日志，需要手动来设置这个参数。如果不是调优需要的话，一般不建议启动该参数，因为开启慢查询日志会或多或少带来一定的性能影响。</li>
+<li>1.3 慢查询日志支持将日志记录写入文件，也支持将日志记录写入数据库表。</li>
+</ul>
+<p></p><h6>2. 查询</h6><p></p>
+<ul>
+<li><p>slow_query_log</p>
+<pre><code>mysql&gt; show variables like &apos;%slow_query_log%&apos;;
+注：
+slow_query_log   是否开启慢查询日志，1表示开启，0表示关闭；默认为OFF
+slow-query-log-file    MySQL数据库慢查询日志存储路径。可不设置该参数，系统默认host_name-slow.log
+</code></pre></li>
+<li><p>long_query_time</p>
+<pre><code>mysql&gt; show variables like &apos;long_query_time&apos;;
+注：
+long_query_time    慢查询阈值，当查询时间多于设定的阈值时，开始记录日志。默认值为10秒
+</code></pre></li>
+<li><p>log_output</p>
+<pre><code>mysql&gt; show variables like &apos;%log_output%&apos;;
+注：
+log_output 指定日志的存储方式。&apos;FILE&apos;表示将日志存入文件，默认值是&apos;FILE&apos;。&apos;TABLE&apos;表示将日志存入数据库的mysql.slow_log表中
+</code></pre></li>
+<li><p>log_queries_not_using_indexes</p>
+<pre><code>mysql&gt; show variables like &apos;log_queries_not_using_indexes&apos;;
+注：
+log_queries_not_using_indexes   1表示开启，0表示关闭；默认为OFF。未使用索引的查询也被记录到慢查询日志中；如果调优的话，建议开启这个选项。另外，开启了这个参数，其实使用full index scan的sql也会被记录到慢查询日志
+</code></pre></li>
+<li><p>log_slow_admin_statements</p>
+<pre><code>mysql&gt; show variables like &apos;log_slow_admin_statements&apos;;
+注：
+log_slow_admin_statements   1表示开启，0表示关闭；默认为OFF。是否将慢管理语句例如ANALYZE TABLE和ALTER TABLE等记入慢查询日志
+</code></pre></li>
+<li><p>slow_queries</p>
+<pre><code>mysql&gt; show global status like &apos;%slow_queries%&apos;;
+注：
+查询有多少条慢查询记录，可以使用系统变量slow_queries
+</code></pre></li>
+</ul>
+<p></p><h6>3. 配置</h6><p></p>
+<ul>
+<li><p>修改my.cnf文件，增加或修改参数后，然后重启MySQL服务器，如下所示:</p>
+<pre><code>slow_query_log=1
+slow_query_log_file=/usr/local/mysql/data/localhost-slow.log
+long_query_time=5
+log_output=&apos;FILE&apos;    #可以不设置，出于性能考虑，默认即可
+log_queries_not_using_indexes=1   可选项
+</code></pre></li>
+</ul>
+<p></p><h6>4. 日志分析工具mysqldumpslow</h6><p></p>
+<ul>
+<li>4.1 在实际生产环境中，如果要手工分析日志，查找、分析SQL，显然是个体力活，MySQL提供了日志分析工具mysqldumpslow</li>
+<li><p>4.2 常用参数</p>
+<pre><code>-s, 是表示按照何种方式排序，有下面7种方式
+    c: 访问计数
+    l: 锁定时间
+    r: 返回记录
+    t: 查询时间
+    al:平均锁定时间
+    ar:平均返回记录数
+    at:平均查询时间
+-t, 是top n的意思，即为返回前面多少条的数据；
+-g, 后边可以写一个正则匹配模式，大小写不敏感的
+</code></pre></li>
+<li><p>4.3 常用命令</p>
+<pre><code>得到返回记录集最多的10个SQL。
+mysqldumpslow -s r -t 10 /database/mysql/mysql01_slow.log
+
+得到访问次数最多的10个SQL
+mysqldumpslow -s c -t 10 /database/mysql/mysql01_slow.log
+
+得到按照时间排序的前10条里面含有左连接的查询语句。
+mysqldumpslow -s t -t 10 -g “left join” /database/mysql/mysql06_slow.log
+
+另外建议在使用这些命令时结合 | 和more 使用 ，否则有可能出现刷屏的情况。
+mysqldumpslow -s r -t 20 /mysql/mysql06-slow.log | more
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/05/04/MySQL慢日志查询/" data-id="cjv9ki5c30024agwvnsrzr5i8" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/05/04/MySQL监控与调优-初级/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">MySQL监控与调优--初级</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19.09px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.45px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.45px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10.91px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.36px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/04/MySQL监控与调优-初级/">MySQL监控与调优--初级</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/完全备份与还原-mysqldump备份/">完全备份与还原---mysqldump备份</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
+          </li>
+        
+          <li>
+            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

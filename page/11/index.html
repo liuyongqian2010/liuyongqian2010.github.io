@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,238 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-高级查询" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/06/高级查询/" class="article-date">
+  <time datetime="2018-03-06T12:16:05.000Z" itemprop="datePublished">2018-03-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/06/高级查询/">高级查询</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>高级查询</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>其他查询</h6><p></p>
+<ul>
+<li><p>IN，NOT IN（可返回多条记录）</p>
+<pre><code>#查询学号为009最低分的课程名
+select kcm from kcb
+where kch in(
+    select kch from cjb
+    where cj in(
+        select MIN(cj) from cjb
+        where xh=&apos;009&apos;
+    )and xh=&apos;009&apos;
+)
+</code></pre></li>
+<li><p>LIMIT m,n<br>m表示从m+1条开始取值，n表示条数（在语句末尾取记录）</p>
+</li>
+<li><p>IS NULL，IS NOT NULL</p>
+<pre><code>select kch from cjb 
+where cj is not nul
+</code></pre></li>
+</ul>
+<p></p><h6>分组查询</h6><p></p>
+<ul>
+<li><p>GROUP BY … HAVING…</p>
+<pre><code>#统计每个班级人数且人数在30人以上的
+select bj as &apos;班级&apos;,count(*) as &apos;人数&apos;
+from xsb
+group by bj
+having count(*)&gt;30 
+</code></pre></li>
+<li><p>在SELECT语句中，WHERE、GROUP BY、HAVING子句的执行次序如下：</p>
+<pre><code>* 1、WHERE子句从数据源中去掉不符合其搜索条件的数据
+* 2、GROUP BY子句搜集数据行到各个组中
+* 3、HAVING子句去掉不符合其组搜索条件的各组数据行
+</code></pre></li>
+</ul>
+<p></p><h6>多表查询</h6><p></p>
+<ul>
+<li><p>等值连接（先连接后判断）</p>
+<pre><code>#查询张三的数据库的成绩
+select xm,kcm,cj
+from xsb,kcb,cjb
+where xsb.xh=cjb.xh and kcb.kch=cjb.kch
+#主表1.主键=从表.外键，主表2.主键=从表.外键
+and xm=&apos;张三&apos; and kcm=&apos;数据库&apos;
+</code></pre></li>
+<li>注：查询显示字段或者其他条件中字段在几张表内有重复，需要在字段前加上表名，表名.字段名</li>
+<li><p>内连接（先判断再连接）</p>
+<pre><code>#查询不是北京、上海的学生的QTP成绩
+select kcm,cj,jg
+from xsb inner join cjb on xsb.xh=cjb.xh
+inner join kcb on kcb.kch=cjb.kch
+and jg not in(&apos;北京&apos;,&apos;上海&apos;)
+and kcm=&apos;QTP&apos;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjv9ki63y008gagwvveh1xpbd" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-发送邮件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/05/发送邮件/" class="article-date">
+  <time datetime="2018-03-05T02:06:34.000Z" itemprop="datePublished">2018-03-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/05/发送邮件/">发送邮件</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>发送邮件</h5><p></p>
+<hr>
+<hr>
+<h6>python里的smtplib</h6>
+
+<ul>
+<li>SMTP(Simple Mail Transfer Protocol)<ul>
+<li>即简单邮件传输协议。它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP 协议属于TCP/IP协议簇，它帮助每台计算机在发送或中转信件时找到下一个目的地。SMTP 服务器就是遵循 SMTP 协议的发送邮件服务器</li>
+</ul>
+</li>
+<li>SMTP 认证<ul>
+<li>简单地说就是要求必须在提供了账户名和密码之后才可以登录 SMTP 服务器，这就使得那些垃圾邮件的散播者无可乘之机</li>
+</ul>
+</li>
+<li>smtplib模块<ul>
+<li>Python内置对SMTP的支持，可以发送纯文本邮件、HTML邮件以及带附件的邮件</li>
+<li>Python对SMTP支持有smtplib和email两个模块，email负责构造邮件，smtplib负责发送邮件</li>
+<li>使用前需要开启SMTP服务</li>
+</ul>
+</li>
+</ul>
+<h6>使用163邮箱来结合smtp模块发送邮件</h6>
+
+<pre><code>import smtplib                         #发送邮件模块
+from email.mime.text import MIMEText   #定义邮件内容
+from email.header import Header        #定义邮件标题
+
+smtpserver=&apos;smtp.163.com&apos;              #发送邮箱服务器
+user=&apos;www_liuyongqian@163.com&apos;         #发送邮箱用户的账号和授权密码
+password=&apos;*********&apos;
+
+sender=&apos;www_liuyongqian@163.com&apos;       #发送邮箱
+receive=&apos;272501447@qq.com&apos;             #接收邮箱
+
+content=&apos;&lt;html&gt;&lt;h1 style=&quot;color:red&quot;&gt;这个就是我，不一样的模样&lt;/h1&gt;&lt;/html&gt;&apos;
+subject=&apos;Web 自动化测试报告&apos;
+msg=MIMEText(content,&apos;html&apos;,&apos;utf-8&apos;)   #发送邮件内容
+#MIMEText三个参数：第一个为文本内容，第二个设置文本格式，第三个设置编码
+msg[&apos;Subject&apos;]=Header(subject,&apos;utf-8&apos;) #发送邮件标题
+msg[&apos;From&apos;]=sender                     #发送人
+msg[&apos;To&apos;]=receive                      #收件人
+
+smtp=smtplib.SMTP_SSL(smtpserver,465)  #SSL协议端口要是用465
+smtp.helo(smtpserver)                  #helo向服务器标识用户身份
+smtp.ehlo(smtpserver)                  #服务器返回结果确认
+smtp.login(user,password)              #登录邮箱服务器的账号和授权密码
+
+print(&apos;Start send eamil...&apos;)
+smtp.sendmail(sender,receive,msg.as_string())
+#sendmail的三个参数：邮件发送者地址，邮件接收地址可为列表，发送消息
+smtp.quit()
+print(&apos;Send email end...&apos;)
+</code></pre><h6>发送带附件的邮件</h6>
+
+<pre><code>import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart   #用于传输附件
+
+smtpserver=&apos;smtp.163.com&apos;
+user=&apos;www_liuyongqian@163.com&apos;
+password=&apos;39a39b39c&apos;
+
+sender=&apos;www_liuyongqian@163.com&apos;
+receives=[&apos;272501447@qq.com&apos;,&apos;liuyongqian51@163.com&apos;]
+
+subject=&apos;web自动化测试报告0308&apos;
+content=&apos;&lt;html&gt;&lt;p&gt;这个里面写测试结果内容！&lt;/p&gt;&lt;/html&gt;&apos;
+
+send_file=open(r&apos;E:\selenium prt\test.jpg&apos;,&apos;rb&apos;).read()  #构造附件内容
+att=MIMEText(send_file,&apos;base64&apos;,&apos;utf-8&apos;)
+att[&apos;Content-Type&apos;]=&apos;application/octet-stream&apos;
+att[&apos;Content-Disposition&apos;]=&apos;attachment;filename=&quot;test.jpg&quot;&apos;
+
+msgRoot=MIMEMultipart()                             #构建发送与接收信息
+msgRoot.attach(MIMEText(content,&apos;html&apos;,&apos;utf-8&apos;))
+msgRoot[&apos;Subject&apos;]=subject
+msgRoot[&apos;From&apos;]=sender
+msgRoot[&apos;To&apos;]=&apos;,&apos;.join(receives)
+msgRoot.attach(att)
+
+smtp=smtplib.SMTP_SSL(smtpserver,465)
+smtp.helo(smtpserver)
+smtp.ehlo(smtpserver)
+smtp.login(user,password)
+print(&apos;Start send email...&apos;)
+smtp.sendmail(sender,receives,msgRoot.as_string())
+smtp.quit()
+print(&apos;End send email...&apos;)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjv9ki5ug0066agwv3dx4omfr" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-单元测试框架" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -255,7 +487,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjuy6fkhe005t64wviihztibm" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjv9ki5tw0060agwvpgmnrboy" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -433,7 +665,7 @@ select rand()         #result:0.8155794216465013
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjuy6fk37000d64wvq8hlwjbk" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjv9ki553000iagwv6vg0m832" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -537,7 +769,7 @@ class Login():
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjuy6fklq007p64wvemi946fv" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjv9ki619007wagwvv1ilr52n" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -661,7 +893,7 @@ class Login():
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjuy6fk5m001a64wvyziai38k" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjv9ki58t001fagwvnei0dw79" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -806,7 +1038,7 @@ alert table 表名 add constraint 外键名 foreign key (外键字段) reference
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjuy6fkha005r64wv3eszr0pu" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjv9ki5t2005wagwv7u5yaeg0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -930,7 +1162,7 @@ clearInterval取消由setInterval()设置的timeout
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjuy6fk2b000364wvcjx4dnof" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjv9ki52f0003agwvntktx5ep" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1049,7 +1281,7 @@ div.appendChild(img)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjuy6fk4v000z64wv3mh77dcm" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjv9ki57o0014agwvmrnjt2yg" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1197,300 +1429,10 @@ nextSibling      获取下一个兄弟节点
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjuy6fkh1005n64wvwde3qagz" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjv9ki5sr005uagwv30qmaegi" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-匿名函数、封装继承" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/27/匿名函数、封装继承/" class="article-date">
-  <time datetime="2018-02-27T04:21:32.000Z" itemprop="datePublished">2018-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/27/匿名函数、封装继承/">匿名函数、封装继承</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>匿名函数、封装继承</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>匿名函数</h6><p></p>
-<ul>
-<li><p>JavaScript中创建函数的三种方式</p>
-<pre><code>//使用function关键字声明命名函数
-function functionName{
-    functionBody;
-}
-//使用直接量方式命名函数
-var functionName = function(){
-    functionBody;
-}
-//使用Function对象构造方法创建函数
-var functionName = new Function(arg1,arg2,functionBody)
-</code></pre></li>
-<li><p>匿名函数，就是定义时未直接指定名称的函数，仅在调用时，才临时创建函数对象和作用域链对象，调用完，立刻释放；所以，匿名函数比非匿名函数更节省内存空间</p>
-<pre><code>function(num1,num2){
-    console.log(num1+num2);
-}
-
-var fn1=function(){
-    console.log(&quot;sad&quot;)
-}();                //隐式匿名函数；匿名函数只能调用一次，调用完立即释放
-fn1()                //sad
-fn1()                //fn1 is not a function
-
-function a(fn){
-    var num=fn()
-    console.log(num)
-}
-a(function(){          //回调函数，将一个函数作为另一个函数的参数
-    return 10+3
-})                  //13
-</code></pre></li>
-</ul>
-<p></p><h6>闭包</h6><p></p>
-<ul>
-<li><p>函数套函数，该函数能使用函数外定义的变量</p>
-<pre><code>function a(){
-    function b(){
-        console.log(1)  //闭包；函数套函数；就是一种访问局部变量的特殊方式
-    }
-    b()
-}
-a()
-</code></pre></li>
-<li><p>闭包的主要作用是：</p>
-<ul>
-<li>1.提供可共享的局部变量</li>
-<li>2.保护共享的局部变量。提供专门的读写变量的函数</li>
-<li>3.避免全局污染</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>封装继承</h6><p></p>
-<ul>
-<li>封装：把相关的信息（无论数据或方法）存储在对象中<br>继承：从其它对象获得属性和方法<br>多态：能以多种不同的形式运行函数或方法<br>原型：在JavaScript中，函数本身也是一个包含了方法和属性的对象，每个函数都有一个prototype属性，该属性引用的是原型对象；原型对象是保存共享属性值和共享方法的对象</li>
-<li>JavaScript中主要通过原型实现继承，通过原型实现继承主要有以下两中方式：<ul>
-<li>1.修改构造函数的原型，为该构造函数创建的对象指定统一的父级对象<br>语法：构造函数.prototype = 父级对象；</li>
-<li>2.单独修改一个对象的原型，而不影响其它对象的原型<br>语法：Object.setPrototypeOf(子对象,父级对象)</li>
-</ul>
-</li>
-<li><p>说明</p>
-<pre><code>&lt;script&gt;
-    function emp(ename,age){                //工厂函数
-        this.ename=ename;                   //谁调用this，this就指向谁;运用在函数中,this为当前对象
-        this.age=age;
-        console.log(this);
-    }
-    //为原型添加属性，子对象自动继承原型（父对象）所有的属性和方法
-    emp.prototype.jineng=&quot;我们都会HTML&quot;      //prototype是构造函数的方法，扩展共享属性值
-    var obj1=new emp(&apos;Tom&apos;,&apos;30&apos;)            //实例化对象
-    obj1.job=function(){                    //自有属性/方法
-        console.log(&apos;JAVA&apos;)
-    }
-    obj1.job()                              //JAVA
-    var obj2=new emp(&apos;Array&apos;,&apos;28&apos;)
-    obj2.work=function(){
-        console.log(&apos;Python&apos;)
-    }
-    Object.setPrototypeOf(obj2,obj1)        //修改单个对象的原型,前子后父
-    obj2.job()                              //JAVA
-    obj2.work()                             //Python
-    console.log(obj1.jineng)                //我们都会HTML
-    console.log(obj2.jineng)                //我们都会HTML
-
-    function a(){
-        this.ename=&quot;Tom&quot;
-    }
-    function b(){
-        this.age=&quot;29&quot;
-    }
-    b.prototype=new a()            //修改原型父对象,只有函数名能调用prototype
-    var obj=new b()
-    console.log(obj.age)        //29
-    console.log(obj.ename)      //Tom
-
-    var heihei={age:25}            //直接量创建对象
-    var obj={name:123};
-    Object.setPrototypeOf(obj,heihei)
-    //console.log(obj)             //打印出来是undefined,其原型是Object
-    console.log(Object.getPrototypeOf(obj))     //获取原型
-    console.log(heihei.isPrototypeOf(obj))      //isPrototypeOf()方法用于判定一个prototype对象是否存在于另一个对象的原型链中
-&lt;/script&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjuy6fkh6005p64wvd2j8bhdk" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-模块、包、枚举" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/26/模块、包、枚举/" class="article-date">
-  <time datetime="2018-02-26T10:56:37.000Z" itemprop="datePublished">2018-02-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/26/模块、包、枚举/">模块、包、枚举</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>模块、包、枚举</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>模块</h6><p></p>
-<ul>
-<li>Python 模块(Module)，是一个 Python文件，以.py 结尾，包含了Python对象定义和Python语句</li>
-<li><p>1.使用 python 标准库中模块</p>
-<pre><code>import datetime                 #引入 python 标准库中的 sys.py 模块；这是引入某一模块的方法
-print(datetime.datetime.now())  #显示当前时间
-print(datetime.datetime.now()+datetime.timedelta(3))  #显示当前时间+3天
-</code></pre></li>
-<li><p>2.import语句,想使用 Python 源文件，只需在另一个源文件里执行 import 语句</p>
-<pre><code>先定义一个名为test1.py的模块
-#!/usr/bin/env python      #这行注释可以让这个文件直接在Unix/Linux/Mac上运行
-#__author__:LiuYongqian
-&apos; a test module &apos;          #表示模块的文档注释，任何模块代码的第一个字符串都被视为模块的文档注释
-def print_mes(x):
-    print(&apos;Hello:&apos;,x)
-def add(x,y):
-    print(x+y)
-
-在test2.py中引入test1模块
-#!/usr/bin/env python
-#__author__:LiuYongqian
-import test1             #导入模块，下面可以调用模块里的函数了
-test1.print_mes(&apos;2018&apos;)  #result: Hello: 2018
-test1.add(3,6)           #result:9
-</code></pre></li>
-<li><p>3.from … import语句，from语句让你从模块中导入一个指定的部分到当前命名空间</p>
-<pre><code>from test1 import print_mes
-print_mes(&apos;2018&apos;)        #result:Hello: 2018
-</code></pre></li>
-</ul>
-<p></p><h6>包</h6><p></p>
-<ul>
-<li>目录只有包含一个叫做__init__.py 的文件才会被认作是一个包，主要是为了避免一些滥俗的名字（比如叫做 string）不小心的影响搜索路径中的有效模块</li>
-</ul>
-<p></p><h6>枚举</h6><p></p>
-<ul>
-<li>枚举类型可以看作是一种标签或是一系列常量的集合，通常用于表示某些特定的有限集合，例如星期、月份、状态等</li>
-<li><p>为何要用枚举</p>
-<pre><code>当我们需要定义常量时，一个办法是用大写变量通过整数来定义，例如星期：
-MON,TUE,WED,THI,FRI,STA,SUN=1,2,3,4,5,6,7
-这样定义的好处是简单，缺点是类型是整型，仍然是变量，更好的办法是为这样的枚举类型定义一个class类型，每个常量都是class的一个唯一实例。Python提供了Enum类来实现这个功能：
-from enum import Enum
-Week=Enum(&apos;Week&apos;,(&apos;Mon&apos;,&apos;Tue&apos;,&apos;Wed&apos;,&apos;Thi&apos;,&apos;Fri&apos;,&apos;Sta&apos;,&apos;Sun&apos;))
-这样我们就获得了Week类型的枚举类，可以直接使用Week.Mon来引用一个常量，或者枚举它的所有成员：
-print(Week[&apos;Wed&apos;])       #通过成员的名称来获取成员   #result:Week.Wed
-print(Week(3))           #通过成员的值来获取成员     #result:Week.Wed
-mem=Week.Wed             #通过成员，来获取它的名称和值
-print(mem.name)          #result:Wed
-print(mem.value)         #result:3
-for name,member in Week.__members__.items():  #值重复的成员也遍历出来，要用枚举的一个特殊属性__members__
-    print(name,&apos;=&gt;&apos;,member,&apos;-&apos;,member.value)  #value属性是自动赋给成员的int常量，默认从1开始计数
-#result:
-Mon =&gt; Week.Mon - 1         
-......
-Sun =&gt; Week.Sun - 7
-</code></pre></li>
-<li><p>如果需要更加精确的控制枚举类型，可以从Enum派生出自定义类</p>
-<pre><code>from enum import Enum,unique
-@unique              #该装饰器可以帮助我们检查保证没有重复值。
-class Week(Enum):    #用于定义枚举的class和定义类的class是有区别的
-    Mon = 1
-    Tue = 2
-    Wed = 3
-    Thu = 4
-    Fri = 5
-    Sat = 6
-    sun = 7
-print(Week[&apos;Thu&apos;])           #result:Week.Thu
-print(Week(4))               #result:Week.Thu
-for week in Week:
-    print(week)
-#result:
-Week.Mon
-......
-Week.sun
-</code></pre></li>
-<li><p>小练习：把Student的gender属性改造为枚举类型，可以避免使用字符串</p>
-<pre><code>from enum import Enum,unique
-class Gender(Enum):
-    Female=0
-    Male=1
-class Student():
-    def __init__(self,name,gender):
-        self.name=name
-        self.gender=gender
-mm=Student(&apos;LiuYongqian&apos;,Gender.Male)
-if mm.gender==Gender.Male:
-    print(&apos;信息正确!&apos;)
-else:
-    print(&apos;信息错误！&apos;)
-#result: 信息正确!
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjuy6fkkp007964wvygy6731q" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1505,7 +1447,7 @@ else:
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/10/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/12/">Suivant &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/10/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/12/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1517,9 +1459,9 @@ else:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1527,7 +1469,7 @@ else:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
       <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19.09px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.45px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.45px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10.91px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.36px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
     </div>
@@ -1536,9 +1478,9 @@ else:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1546,9 +1488,17 @@ else:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/04/MySQL监控与调优-初级/">MySQL监控与调优--初级</a>
+          </li>
         
           <li>
             <a href="/2019/04/26/完全备份与还原-mysqldump备份/">完全备份与还原---mysqldump备份</a>
@@ -1560,14 +1510,6 @@ else:
         
           <li>
             <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/11/robotframework-基于python27/">robotframework---基于python27</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/04/jenkins自动化部署-远程部署前端vue项目/">jenkins自动化部署--远程部署前端vue项目</a>
           </li>
         
       </ul>
@@ -1598,7 +1540,7 @@ else:
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
