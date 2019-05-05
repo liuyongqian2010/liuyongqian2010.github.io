@@ -70,6 +70,165 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-集合" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/19/集合/" class="article-date">
+  <time datetime="2018-01-19T12:24:25.000Z" itemprop="datePublished">2018-01-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/19/集合/">集合</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>集合</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>定义</h6><p></p>
+<ul>
+<li><p>集合是一个无序不重复元素的集；如果要创建空集合，须用set()</p>
+<pre><code>#第一种方法
+s=set()                 #空集合,如果只有一个值，需要加逗号，如s=set(&apos;liu&apos;,)
+s1={&apos;name&apos;,2018.01,28,False,(12,22)}
+
+#第二种方法
+s2=set({&apos;name&apos;,2018.01,28,False,(12,22)})
+s2=set([&apos;name&apos;,2018.01,28,False,(12,22)])
+s2=set((&apos;name&apos;,2018.01,28,False,(12,22)))
+
+#注意
+s2=set({&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:23})
+print(type(s2))         #result:&lt;class &apos;set&apos;&gt;
+print(s2)               #result:{&apos;name&apos;, &apos;age&apos;}
+</code></pre></li>
+</ul>
+<p></p><h6>增删改查</h6><p></p>
+<ul>
+<li><p>add()增加</p>
+<pre><code>s3={1,2,3,4,5}
+s4={4,5,6,7,8}
+s3.add(999)
+print(s3)               #result:{1, 2, 3, 4, 5, 999}
+</code></pre></li>
+<li><p>remove()删除</p>
+<pre><code>s3.remove(1)
+print(s3)               #result:{2, 3, 4, 5}
+</code></pre></li>
+<li><p>pop()随机返回并删除一个值,没有参数</p>
+<pre><code>s3.pop()
+print(s3)               #result:{2, 3, 4, 5}
+</code></pre></li>
+<li><p>clear()清空</p>
+<pre><code>s3.clear()
+print(s3)               #result:set()
+</code></pre></li>
+</ul>
+<p></p><h6>并、交、差、对称差集</h6><p></p>
+<ul>
+<li><p>并集</p>
+<pre><code>print(s3|s4)            #result:{1, 2, 3, 4, 5, 6, 7, 8}
+</code></pre></li>
+<li><p>交集</p>
+<pre><code>print(s3&amp;s4)            #result:{4, 5}
+</code></pre></li>
+<li><p>差</p>
+<pre><code>print(s3-s4)            #result:{1, 2, 3}
+</code></pre></li>
+<li><p>对称差集</p>
+<pre><code>print(s3^s4)            #result:{1, 2, 3, 6, 7, 8}
+</code></pre></li>
+<li><p>update()将字符串或集合中的数据联合</p>
+<pre><code>s3.update(s4)
+print(s3)               #result:{1, 2, 3, 4, 5, 6, 7, 8}
+</code></pre><p></p><h6>遍历</h6><p></p>
+<pre><code>s5=set((&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;))
+for i in s5:
+    print(i,end=&apos;&apos;)     #result:eacdb
+</code></pre></li>
+</ul>
+<p></p><h6>小练习</h6><p></p>
+<ul>
+<li><p>通讯录管理系统</p>
+<pre><code>print(&quot;=======通讯录管理系统=======&quot;)
+print(&quot;1.增加姓名和手机&quot;)
+print(&quot;2.删除姓名&quot;)
+print(&quot;3.修改手机&quot;)
+print(&quot;4.查询所有用户&quot;)
+print(&quot;5.根据姓名查找手机号&quot;)
+print(&quot;6.退出&quot;)
+print(&quot;============================&quot;)
+User={}
+while True:
+    i=int(input(&apos;请输入操作项：&apos;))
+    if i==1:
+        name=input(&apos;请输入姓名：&apos;)
+        phone=input(&apos;请输入手机：&apos;)
+        User[name]=phone
+    elif i==2:
+        name=input(&apos;请输入要删除的姓名：&apos;)
+        if name in User:
+            del User[name]
+            print(&apos;删除成功！&apos;)
+        else:
+            print(&apos;姓名不存在！&apos;)
+    elif i==3:
+        name = input(&apos;请输入要修改的姓名：&apos;)
+        if name in User:
+            new_phone=input(&quot;请输入修改后的手机号：&quot;)
+            User[name]=new_phone
+            print(&apos;修改成功！&apos;)
+        else:
+            print(&apos;姓名不存在！&apos;)
+    elif i==4:
+        if User is None:
+            print(&apos;通讯录无记录！&apos;)
+        else:
+            for k,v in User.items():
+                print(k,v)
+    elif i==5:
+        name = input(&apos;请输入要查询的姓名：&apos;)
+        if name in User:
+            print(name,&apos;的手机号为&apos;,User[name])
+        else:
+            print(&apos;姓名不存在！&apos;)
+    elif i==6:
+         break
+    else:
+         print(&apos;请重新输入操作项！&apos;)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjvayqc5o008hg0wvn8hnlxul" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-通讯录管理系统" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/17/通讯录管理系统/" class="article-date">
@@ -241,7 +400,7 @@ print(&quot;谢谢使用！&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjv9ki63a008aagwvz9xrotc1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjvayqc5c008bg0wvsnmebz68" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -404,7 +563,7 @@ print(d)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjv9ki5s1005oagwvd4n9iob1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjvayqc0p005ng0wvw7pf7lwr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -581,7 +740,7 @@ print(nums)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjv9ki5sh005sagwvwdubo2qb" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjvayqc0s005pg0wvdiftl6nj" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -829,7 +988,7 @@ while i&lt;10:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjv9ki5xv0070agwvm6005mod" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjvayqc370075g0wvf3u3x82e" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1040,7 +1199,7 @@ print(&apos;d&apos; not in str2)       #result:False
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjv9ki5vn006gagwviugi2hn4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjvayqc1z006fg0wvutpnb7e6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1128,7 +1287,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjv9ki5u90064agwvvkp0uo7c" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjvayqc1i0065g0wvm539k683" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1220,7 +1379,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cjv9ki50u0000agwvnagcb1m3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cjvayqbrt000xg0wvmaa9ud7x" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1284,7 +1443,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjv9ki62l0084agwvj9lyf70u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjvayqc550087g0wv2pinaqx3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -1501,91 +1660,10 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjv9ki55x000pagwvp3xmeazp" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjvayqbr5000lg0wvgd5455ew" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-CentOS7安装Redis3-2遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/" class="article-date">
-  <time datetime="2017-12-17T00:55:52.000Z" itemprop="datePublished">2017-12-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/">CentOS7安装Redis3.2遇到的问题</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <hr>
-<hr>
-<p>###到<a href="https://redis.io/" target="_blank" rel="noopener">redis官网</a>下载安装包，如”redis-3.2.8.tar.gz”；将下载的安装包放到 /opt下，分别使用：</p>
-<ul>
-<li>tar -zvxf redis-3.2.8.tar.gz 解压安装包</li>
-<li>cd redis-3.2.8 进入安装包</li>
-<li>make 编译<br><h6>出现错误:</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: gcc：命令未找到</span><br><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: *** [net.<span class="keyword">o</span>] 错误 <span class="number">127</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/deps/hiredis”</span><br><span class="line"><span class="keyword">make</span>[<span class="number">2</span>]: *** [hiredis] 错误 <span class="number">2</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">2</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/deps”</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: [persist-settings] 错误 <span class="number">2</span> (忽略)</span><br><span class="line">    CC adlist.<span class="keyword">o</span></span><br><span class="line">/bin/<span class="keyword">sh</span>: <span class="keyword">cc</span>: 未找到命令</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [adlist.<span class="keyword">o</span>] 错误 <span class="number">127</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [<span class="keyword">all</span>] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p></p><h6>解决方法：安装gcc</h6><p></p>
-<ul>
-<li>yum -y install gcc automake autoconf libtool make 安装</li>
-<li>make 运行<br><h6>出现错误：</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 进入目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line">    CC adlist.<span class="keyword">o</span></span><br><span class="line">In <span class="keyword">file</span> included from adlist.<span class="keyword">c</span>:<span class="number">34</span>:<span class="number">0</span>:</span><br><span class="line">zmalloc.h:<span class="number">50</span>:<span class="number">31</span>: **致命错误**：jemalloc/jemalloc.h：没有那个文件或目录</span><br><span class="line"> #include &lt;jemalloc/jemalloc.h&gt;</span><br><span class="line">                               ^</span><br><span class="line">编译中断。</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [adlist.<span class="keyword">o</span>] 错误 <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [<span class="keyword">all</span>] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p></p><h6>解决方法：make改为make MALLOC=libc</h6><p></p>
-<ul>
-<li>make MALLOC=libc</li>
-<li>make test 运行<br><h6>出现错误：</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 进入目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line">You need <span class="keyword">tcl</span> <span class="number">8.5</span> <span class="built_in">or</span> newer in order <span class="keyword">to</span> run the Redis test</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [test] 错误 <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [test] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p></p><h6>解决方法：升级tcl版本</h6><p></p>
-<ul>
-<li>yum install -y wget 安装wget</li>
-<li>wget <a href="http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz" target="_blank" rel="noopener">http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz</a>  </li>
-<li>sudo tar xzvf tcl8.6.1-src.tar.gz  -C /usr/local/  </li>
-<li>cd  /usr/local/tcl8.6.1/unix/  </li>
-<li>sudo ./configure  </li>
-<li>sudo make  </li>
-<li>sudo make install</li>
-<li>重新解压redis安装包并运行make进行编译</li>
-<li>进入src目录，./redis-server，如果出现虚线盒子界面表示运行成功</li>
-<li>可另起一个界面，运行 ./redis-cli来启动客户端</li>
-<li>可运行ps -ef|grep redis检测redis进程</li>
-<li>可运行netstat -Intp|grep 6379检测端口</li>
-<li>到此安装就结束了，我运用的远程控制软件是”SSH Secure Shell Client”</li>
-</ul>
-<p><em>小白参考大神佳作<a href="http://www.jianshu.com/p/cc403be7f80d" target="_blank" rel="noopener">centos7 安装redis 3.2.8 踩的那些坑</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjv9ki52z0005agwvuzbjj2cs" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
 
     </footer>
   </div>
@@ -1614,7 +1692,7 @@ urlpatterns = [
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1633,7 +1711,7 @@ urlpatterns = [
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1644,6 +1722,10 @@ urlpatterns = [
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
+          </li>
         
           <li>
             <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
@@ -1659,10 +1741,6 @@ urlpatterns = [
         
           <li>
             <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
           </li>
         
       </ul>

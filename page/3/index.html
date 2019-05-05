@@ -70,6 +70,85 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-安装部署Tomcat9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/01/安装部署Tomcat9/" class="article-date">
+  <time datetime="2019-03-01T10:45:02.000Z" itemprop="datePublished">2019-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/01/安装部署Tomcat9/">安装部署Tomcat9</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>安装部署Tomcat9</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>目前版本</h6><p></p>
+<ul>
+<li>目前的版本是：apache-tomcat-9.0.16</li>
+</ul>
+<p></p><h6>安装步骤</h6><p></p>
+<ul>
+<li><p>1.把Tomcat安装包放到/usr文件夹下并解压</p>
+<pre><code>cd /usr下执行
+解压：
+tar -zvxf apache-tomcat-9.0.16.tar.gz
+重命名：
+mv  apache-tomcat-9.0.16 tomcat
+</code></pre></li>
+<li><p>2.配置环境变量</p>
+<pre><code>vi /etc/profile，增加内容如下：
+
+CATALINA_HOME=/usr/tomcat
+PATH=$PATH:$JAVA_HOME/bin:$CATALINA_HOME/bin
+CLASSPATH=.:$JAVA_HOME/lib:$CATALINA_HOME/lib
+export PATH CLASSPATH CATALINA_HOME 
+</code></pre></li>
+<li><p>3.之后重新加载，使其生效</p>
+<pre><code>source /etc/profile
+</code></pre></li>
+<li><p>4.启动Tomcat，并查看日志</p>
+<pre><code>cd /usr/tomcat  后执行
+./bin/startup.sh
+</code></pre></li>
+<li><p>5.关闭tomcat</p>
+<pre><code>ps -ef |grep tomcat  
+查看进程后杀掉进程sudo kill ***
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Tomcat9/" data-id="cjvayqc2d006ng0wvzkavq5sh" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-安装部署Mongodb4" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/03/01/安装部署Mongodb4/" class="article-date">
@@ -178,7 +257,7 @@ mongod -f mongodb.conf   或
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="cjv9ki5w3006kagwvy4cp78a8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="cjvayqc26006jg0wvspno9my6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -256,7 +335,7 @@ cd /opt/zbox/auth
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署禅道11.2/" data-id="cjv9ki5wz006sagwvoeh6b7st" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署禅道11.2/" data-id="cjvayqc2q006vg0wvciahgu59" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -357,7 +436,7 @@ make install
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Nginx/" data-id="cjv9ki5w8006magwv5lwug9cn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Nginx/" data-id="cjvayqc2a006lg0wveyezksyp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
@@ -532,7 +611,7 @@ export MYSQL_HOME PATH
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署mysql5.7/" data-id="cjv9ki5ws006qagwvd8mo3614" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署mysql5.7/" data-id="cjvayqc2h006pg0wvplsxlslp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -607,7 +686,7 @@ java -version
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/linux中部署JDK1.8/" data-id="cjv9ki5ko0042agwvjvfagzur" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/linux中部署JDK1.8/" data-id="cjvayqbxy0041g0wv1n7hdc1p" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -676,7 +755,7 @@ ONBOOT=yes
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/linux网络ip配置/" data-id="cjv9ki5ls004aagwvr2oexdgu" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/linux网络ip配置/" data-id="cjvayqbyb0049g0wv1yz7zxuz" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -758,7 +837,7 @@ date 061814162014.30（2014年6月18日14点16分30-MMDDhhmmYYYY.ss）
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/11/时间设置与配置查询/" data-id="cjv9ki5z5007cagwvdj1eodle" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/01/11/时间设置与配置查询/" data-id="cjvayqc3q007dg0wvzzupa2db" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -866,7 +945,7 @@ net.netfilter.nf_conntrack_tcp_timeout_fin_wait = 120
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/11/linux系统常见优化配置01/" data-id="cjv9ki5kx0044agwvbe8u3h39" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/01/11/linux系统常见优化配置01/" data-id="cjvayqby80047g0wvcmklqnqt" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -981,131 +1060,10 @@ flush privileges;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/12/mysql数据库安装/" data-id="cjv9ki5mf004gagwv4n65pryj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/12/12/mysql数据库安装/" data-id="cjvayqbyp004fg0wvjfqafxjr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-测试过程中遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/11/30/测试过程中遇到的问题/" class="article-date">
-  <time datetime="2018-11-30T02:05:09.000Z" itemprop="datePublished">2018-11-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/30/测试过程中遇到的问题/">测试过程中遇到的问题</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>测试过程中遇到的问题</h5><p></p>
-<hr>
-<hr>
-<h6></h6>
-
-<p></p><h6>jmeter报错“java.net.BindException: Address already in use: connect”解决办法</h6><p></p>
-<ul>
-<li>1.在cmd中，用regedit命令打开注册表 </li>
-<li>2.找到并到达HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters下　</li>
-<li>3.右击parameters，添加一个新的DWORD，名字为MaxUserPort 　　</li>
-<li>4.然后双击MaxUserPort，输入数值数据为65534，基数选择十进制（如果是分布式运行的话，控制机器和负载机器都需要这样操作） </li>
-<li>5.修改配置完毕之后重启电脑</li>
-</ul>
-<p></p><h6>使用sourceTree拉取代码过程中报错“fatal: Authentication failed for”解决办法</h6><p></p>
-<ul>
-<li>1.控制面板—用户账户—凭证管理器—windows凭证</li>
-<li>2.在“普通凭证”中删除相关联的git库</li>
-<li>3.重新拉取代码，会提示你重新输入用户名和密码。</li>
-<li>4.基本问题就解决了</li>
-</ul>
-<p></p><h6>关于数据库方面的设置</h6><p></p>
-<ul>
-<li><p>1.可以修改mysql的连接数，使用该办法如果重启mysql服务将失效；需要修改配置文件</p>
-<pre><code>SET GLOBAL max_connections=1500;
-SHOW VARIABLES LIKE &quot;%max_connections%&quot;;
-</code></pre></li>
-<li><p>2.可以修改数据库连接池的大小，在配置文件<code>jeeplus.properties</code>中的<code>#pool settings</code></p>
-<pre><code>jdbc.pool.init=20
-jdbc.pool.minIdle=20
-jdbc.pool.maxActive=1000
-</code></pre></li>
-<li><p>3.查看mysql执行情况</p>
-<pre><code>show processlist;
-show full processlist;
-show variables like &apos;%log%&apos;;
-show variables like &apos;%log_bin%&apos;;
-show variables like &apos;%server%&apos;;
-show variables like &apos;%time%&apos;;
-show master status;
-</code></pre></li>
-<li><p>日志</p>
-<pre><code>查看日志
-SHOW VARIABLES LIKE &quot;general_log%&quot;; 
-启用日志
-SET GLOBAL general_log = &apos;ON&apos;;
-set global slow_query_log=on;
-</code></pre></li>
-<li><p>异常</p>
-<ul>
-<li><p>如：2003-Can’t connect to MySQL_server on ‘192.168.110.66’(10060”Unknown error”)解决办法：</p>
-<pre><code>a.开启mysql端口：firewall-cmd --zone=public --add-port=3306/tcp --permanent
-b.重启防火墙：firewall-cmd --reload
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>关于其他方面的设置</h6><p></p>
-<ul>
-<li>1.配置文件<code>jeeplus.properties</code>中，<code>jdbc.url</code>中的外网地址与本地地址的区别：如果是本地地址的话，不需要经过外网</li>
-<li>2.在Jmeter脚本中，发送请求时如果请求域名，而非ip地址时，该请求需要过两关，一个是域名服务器，一个是nigix服务；可改成ip地址访问</li>
-</ul>
-<p></p><h6>如果出现连接redis失败的情况</h6><br>如果出现连接redis失败的情况（tomcat连不到redis,redis-cli能连上的情况），解决步骤：<p></p>
-<pre><code>1.输入命令：redis-cli，连接成功后输入命令：info
-2.拷贝info信息并保存下来，输入命令exit退出
-3.输入命令：tcpdump -i lo port 6379 -w /home/liuyongqian/2018-11-08.cap（记录失败情况）
-4.等到tomcat再次（两次以上）抛出异常后Ctrl+c停止
-5.关闭redis：sudo kill -9 *****
-6.重启redis：sudo nohup redis-server /etc/redis.conf
-</code></pre><p></p><h6>关于tomcat的设置</h6><p></p>
-<ul>
-<li>1.修改tomcat连接数，在server.xml中设置connector区块中的acceptCount数值</li>
-</ul>
-<p></p><h6>KCL003_签章系统文件数据非法问题</h6><p></p>
-<ul>
-<li>1.通过“程序卸载安装”将该iSignature签章软件卸载</li>
-<li>2.<code>win+r</code>后输入<code>regedit</code>进入注册表编辑页面，<code>Ctrl+f</code>后搜索iSignature，将关联注册表删除</li>
-<li>3.重新安装“iSignature签章软件”32位即可</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/30/测试过程中遇到的问题/" data-id="cjv9ki5zv007iagwvl6evg01k" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
 
     </footer>
   </div>
@@ -1134,7 +1092,7 @@ b.重启防火墙：firewall-cmd --reload
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1153,7 +1111,7 @@ b.重启防火墙：firewall-cmd --reload
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1164,6 +1122,10 @@ b.重启防火墙：firewall-cmd --reload
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
+          </li>
         
           <li>
             <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
@@ -1179,10 +1141,6 @@ b.重启防火墙：firewall-cmd --reload
         
           <li>
             <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
           </li>
         
       </ul>

@@ -70,6 +70,122 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-整合测试报告发送" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/07/整合测试报告发送/" class="article-date">
+  <time datetime="2018-03-07T01:13:05.000Z" itemprop="datePublished">2018-03-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/07/整合测试报告发送/">整合测试报告发送</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>整合测试报告发送</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>将生成的最新测试报告发送到指定邮箱</h6><p></p>
+<ul>
+<li>文件路径如下：<ul>
+<li>文件夹test_baidu<ul>
+<li>文件夹test_case<ul>
+<li>test_baidu.py</li>
+</ul>
+</li>
+<li>文件夹test_report</li>
+<li>文件send_test_email.py</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>send_test_email.py</p>
+<pre><code>import unittest,time,smtplib,os
+from BSTestRunner import BSTestRunner
+from email.mime.text import MIMEText
+from email.header import Header
+
+def latest_report(report_dir):      #获取最新生成的测试报告
+    lists=os.listdir(report_dir)
+    lists.sort(key=lambda fn:os.path.getatime(report_dir+&apos;\\&apos;+fn))
+    file=os.path.join(report_dir,lists[-1])
+    return file
+def send_mail(latest_report):       #发送邮件
+    f=open(latest_report,&apos;rb&apos;)
+    mail_content=f.read()
+    f.close()
+
+    smtpserver=&apos;smtp.163.com&apos;
+    user=&apos;www_liuyongqian@163.com&apos;
+    password=&apos;39a39b39c&apos;
+
+    sender=&apos;www_liuyongqian@163.com&apos;
+    receives=[&apos;272501447@qq.com&apos;,&apos;liuyongqian51@163.com&apos;]
+
+    subject=&apos;Web 自动化测试结果&apos;
+
+    msg=MIMEText(mail_content,&apos;html&apos;,&apos;utf-8&apos;)     #邮件正文
+    msg[&apos;Subject&apos;]=Header(subject,&apos;utf-8&apos;)
+    msg[&apos;From&apos;]=sender
+    msg[&apos;To&apos;]=&apos;,&apos;.join(receives)
+
+    smtp=smtplib.SMTP_SSL(smtpserver,465)
+    smtp.helo(smtpserver)
+    smtp.ehlo(smtpserver)
+    smtp.login(user,password)
+
+    print(&apos;Start send eamil...&apos;)
+    smtp.sendmail(sender,receives,msg.as_string())
+    smtp.quit()
+    print(&apos;Send email end...&apos;)
+
+if __name__==&apos;__main__&apos;:
+    test_dir=&apos;./test_case&apos;
+    report_dir=&apos;./test_report&apos;
+    discovery=unittest.defaultTestLoader.discover(test_dir,pattern=&apos;test*.py&apos;)
+    now=time.strftime(&apos;%Y-%m-%d %H_%M_%S&apos;)
+    report_name=report_dir+&apos;/&apos;+now+&apos;result.html&apos;
+
+    with open(report_name,&apos;wb&apos;) as f:
+        runner=BSTestRunner(stream=f,title=&apos;Test Report&apos;,description=&apos;baidu search&apos;)
+        runner.run(discovery)
+    f.close()
+
+    latest_report=latest_report(report_dir)  #获取最新测试报告
+    send_mail(latest_report)                 #发送邮件报告
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjvayqc3i0079g0wv6nimm72o" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-高级查询" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/06/高级查询/" class="article-date">
@@ -157,7 +273,7 @@ and kcm=&apos;QTP&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjv9ki63y008gagwvveh1xpbd" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjvayqc6e008qg0wv5dtg9e4f" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -288,7 +404,7 @@ print(&apos;End send email...&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjv9ki5ug0066agwv3dx4omfr" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjvayqc1f0063g0wv4rrlwbg3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -487,7 +603,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjv9ki5tw0060agwvpgmnrboy" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjvayqc19005zg0wvypqnqxp9" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -665,7 +781,7 @@ select rand()         #result:0.8155794216465013
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjv9ki553000iagwv6vg0m832" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjvayqbqv000gg0wvqsa44z9x" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -769,7 +885,7 @@ class Login():
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjv9ki619007wagwvv1ilr52n" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjvayqc4n007xg0wvtcqfk1s2" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -893,7 +1009,7 @@ class Login():
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjv9ki58t001fagwvnei0dw79" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjvayqbsu001fg0wvpl47jngb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -1038,7 +1154,7 @@ alert table 表名 add constraint 外键名 foreign key (外键字段) reference
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjv9ki5t2005wagwv7u5yaeg0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjvayqc11005vg0wv6qtguh1s" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -1162,7 +1278,7 @@ clearInterval取消由setInterval()设置的timeout
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjv9ki52f0003agwvntktx5ep" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjvayqbq50008g0wvtaprs4wr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1281,155 +1397,7 @@ div.appendChild(img)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjv9ki57o0014agwvmrnjt2yg" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-初识DOM与BOM" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/27/初识DOM与BOM/" class="article-date">
-  <time datetime="2018-02-27T09:34:33.000Z" itemprop="datePublished">2018-02-27</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/27/初识DOM与BOM/">初识DOM与BOM</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>DOM与BOM</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>DHTML</h6><p></p>
-<ul>
-<li>动态HTML,是一种将目前已有的网页技术、语言标准整合运用，制作出能在下载后仍然能实时变换页面元素效果的网页设计概念</li>
-<li>DHTML的功能:动态改变页面元素；与用户进行交互<br>DHTML对象模型包括DOM和BOM</li>
-<li>DOM：Document Object Model，文档对象模型，用来操作文档<ul>
-<li>定义了访问和操作HTML文档的标准方法</li>
-<li>通过对DOM树的操作，实现对HTML文档内容的操作</li>
-</ul>
-</li>
-<li>BOM：Browser Object Model，浏览器对象模型，用来访问和操做浏览器窗口，使JavaScript有能力与浏览器“对话”<ul>
-<li>通过使用BOM，可移动窗口，更改状态文本，执行其它与页面内容发生直接联系的操作</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>DOM</h6><p></p>
-<ul>
-<li>W3C DOM标准被分为3个不同的部分：<ul>
-<li>核心DOM 针对任何结构化文档的标准模型</li>
-<li>XML DOM 针对XML文档的标准模型</li>
-<li>HTML DOM针对HTML文档的标准模型（下面说这个）</li>
-</ul>
-</li>
-<li>document对象<ul>
-<li>文档中的所有节点组成了一个文档树，document对象是一颗文档树的根</li>
-<li>浏览器内置的JS解释器会为载入的每个HTML文档创建一个对应的document对象</li>
-<li>通过使用document对象，可以从脚本中对HTML页面中的所有元素进行访问</li>
-</ul>
-</li>
-<li><p>DOM节点树</p>
-<ul>
-<li>文档中的元素、属性、文本、注释等都被看作一个节点</li>
-<li><p>上下层节点：</p>
-<pre><code>parentNode  获取父节点
-childNodes  获取子节点集合
-firstChild  获取第一个子节点
-lastChild   获取最后一个子节点
-</code></pre></li>
-<li><p>平行层节点</p>
-<pre><code>previousSibling  获取上一个兄弟节点
-nextSibling      获取下一个兄弟节点
-</code></pre></li>
-<li>节点名称、类型、值<ul>
-<li>nodeName、nodeType、nodeValue</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>元素节点属性</p>
-<ul>
-<li>innerHTML 读取或设置元素节点中的HTML内容</li>
-<li>textContent 用于读取或设置元素节点中的文本内容</li>
-<li><p>attributes 返回节点的属性集合，即一个类数组对象</p>
-<ul>
-<li><p>读取属性</p>
-<pre><code>（1）element.attributes[下标].value
-（2）element.attributes[&apos;属性名&apos;].value
-（3）element.getAttributeNode(&apos;属性名&apos;).value
-（4）element.getAttribute(&apos;属性名&apos;)
-</code></pre></li>
-<li><p>设置属性</p>
-<pre><code>（1）element.setAttribute(name,value);
-（2）element.setAttributeNode(attrNode)
-</code></pre></li>
-<li><p>移除属性</p>
-<pre><code>（1）element.removeAttribute(&apos;属性名&apos;);
-（2）element.removeAttributeNode(attrNode)
-</code></pre></li>
-<li><p>判断属性</p>
-<pre><code>element.hasAttribute(&apos;属性名&apos;);//true或false
-</code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>动态创建DIV</p>
-<pre><code>&lt;body&gt;
-    &lt;button onclick=&quot;createDiv()&quot;&gt;创建DIV&lt;/button&gt;
-    &lt;h1 style=&quot;clear:both&quot;&gt;&lt;/h1&gt;
-    &lt;script&gt;
-        function createDiv(){
-            var div=document.createElement(&apos;div&apos;)
-            div.setAttribute(&apos;style&apos;,&apos;width:100px;height:100px;background:&apos;+roundColor()+&apos;;margin:20px;float:left&apos;)
-            document.body.appendChild(div)
-            div.onclick=removeDiv
-        }
-        function roundColor(){
-            var str=&apos;1234657890abcdef;
-            var s=&apos;#&apos;;
-            for (var i=0; i&lt;6; i++)
-            {
-                var n=parseInt(Math.random()*str.length)
-                s+=str.charAt(n)
-            }
-            return s;
-        }
-        function removeDiv(){
-            document.body.removeChild(this);
-        }
-    &lt;/script&gt;
-&lt;/body&gt;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjv9ki5sr005uagwv30qmaegi" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjvayqbs60014g0wva0vra8th" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1461,7 +1429,7 @@ nextSibling      获取下一个兄弟节点
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1480,7 +1448,7 @@ nextSibling      获取下一个兄弟节点
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1491,6 +1459,10 @@ nextSibling      获取下一个兄弟节点
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
+          </li>
         
           <li>
             <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
@@ -1506,10 +1478,6 @@ nextSibling      获取下一个兄弟节点
         
           <li>
             <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
           </li>
         
       </ul>

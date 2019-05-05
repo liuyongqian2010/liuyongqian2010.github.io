@@ -70,6 +70,147 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-推导" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/05/推导/" class="article-date">
+  <time datetime="2018-02-05T14:52:41.000Z" itemprop="datePublished">2018-02-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/05/推导/">推导</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>推导</h5><p></p>
+<hr>
+<hr>
+<h6>三元表达式</h6>
+
+<ul>
+<li><p>类似C语言的三元条件表达式condition ? true_part : false_part，虽然Python没有三目运算符(?:)，但也有类似的替代方案，那就是true_part if condition else false_part</p>
+<pre><code>m=&apos;Fire&apos; if True else &apos;Water&apos;
+print(m)
+</code></pre></li>
+</ul>
+<h6>推导</h6>
+
+<ul>
+<li>推导式是Python中很强大的、很受欢迎的特性，具有语言简洁，速度快等优点</li>
+<li><p>列表推导式</p>
+<pre><code>list1=[]                       #例子1：10之内整除3的数
+for i in range(10):
+    if i%3==0:
+        list1.append(i)
+print(list1)                   #result:[0, 3, 6, 9]
+
+n=[i for i in range(10) if i%3==0]   #使用推导
+print(n)                             #result:[0, 3, 6, 9]
+
+def squared(x):                #例子2,10之内整除3的数的平方
+    return x*x
+list2=[]
+for i in range(10):
+    if i%3==0:
+        list2.append(squared(i))
+print(list2)                   #result:[0, 9, 36, 81]
+
+n=[squared(i) for i in range(10) if i%3==0]  #使用推导
+print(n)                                     #result:[0, 9, 36, 81]
+
+m=(squared(i) for i in range(10) if i%3==0)  #使用()生成generator将俩表推导式的[]改成()即可得到生成器
+print(type(m))                 #result:&lt;class &apos;generator&apos;&gt;
+print(next(m))                 #result:0
+print(next(m))                 #result:9
+</code></pre></li>
+<li><p>字典推导式<br>字典推导和列表推导的使用方法是类似的，只不过中括号改成大括号</p>
+<pre><code>dict1={&apos;a&apos;:1,&apos;b&apos;:2,&apos;c&apos;:3}
+for k,v in dict1.items():
+    print(k,v)                 #result:b 2     c 3     a 1
+
+n={(k,v) for k,v in dict1.items()}  #(k,v)可以写成k:v,就是要保证是一个值
+print(n)                            #result:{(&apos;c&apos;, 3), (&apos;a&apos;, 1), (&apos;b&apos;, 2)}
+</code></pre></li>
+<li><p>集合推导式<br>跟列表推导式也是类似的，唯一的区别在于它使用大括号{}</p>
+<pre><code>#用集合推导获取字符串长度的集合
+set1=[&apos;a&apos;,&apos;is&apos;,&apos;with&apos;,&apos;if&apos;,&apos;file&apos;,&apos;exception&apos;]
+m={len(i) for i in set1}
+print(m)                        #result:{1, 2, 4, 9}
+</code></pre></li>
+</ul>
+<h6>小练习</h6>
+
+<pre><code>#练习1,0--9的次方
+n={i*i for i in range(10)}
+print(n)                        #result:{0, 1, 64, 4, 36, 9, 16, 49, 81, 25}
+
+#练习2,将单词长度大于3的转化为大写输出
+n={&apos;Liu&apos;,&apos;yong&apos;,&apos;qian&apos;,&apos;is&apos;,&apos;a&apos;,&apos;engineer&apos;}
+m=[i.upper() for i in n if len(i)&gt;3]
+print(m)                        #result:[&apos;YONG&apos;, &apos;ENGINEER&apos;, &apos;QIAN&apos;]
+
+#练习3,求(x,y)其中x是0-5之间的偶数，y是0-5之间的奇数组成的元祖列表
+n=[(x,y) for x in range(0,6,2) for y in range(1,6,2)]
+print(n)                        #result:[(0, 1), (0, 3), (0, 5), (2, 1), (2, 3), (2, 5), (4, 1), (4, 3), (4, 5)]
+
+#练习4,求n中3,6,9组成的列表，斜线1,5,9组成的列表
+n=[[1,2,3],[4,5,6],[7,8,9]]
+m=[i[2] for i in n]
+print(m)                        #result:[3, 6, 9]
+
+m=[n[i][i] for i in range(len(n))]
+print(m)                        #result:[1, 5, 9]
+
+#练习5,求m,n中矩阵元素的乘积
+n=[[1,2,3],[4,5,6],[7,8,9]]
+m=[[2,2,2],[3,3,3],[4,4,4]]
+
+a=[n[i][j]*m[i][j] for i in range(len(n)) for j in range(len(n[i]))]
+print(a)                        #result:[2, 4, 6, 12, 15, 18, 28, 32, 36]
+
+#练习6,组成不重复数字的3位数组合
+a=[1,2,3,4]
+b=[1,2,3,4]
+c=[1,2,3,4]
+
+m=[i*100+j*10+k for i in a for j in b for k in c if i!=j and i!=k and j!=k]
+print(m)
+
+#练习7
+n=[[1,2,3,4],[2,4,6,8],[3,5,7,9]]
+m=[[n[i][j] for i in range(3)] for j in range(4)]
+print(m)                        #result:[[1, 2, 3], [2, 4, 5], [3, 6, 7], [4, 8, 9]]
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/05/推导/" data-id="cjvayqc3d0077g0wvjn63648p" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-随机数Random" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/02/02/随机数Random/" class="article-date">
@@ -160,7 +301,7 @@ print(ball)                             #result:[8, 18, 30, 31, 20, 11, [16]]
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/随机数Random/" data-id="cjv9ki63j008cagwv58w9vset" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/随机数Random/" data-id="cjvayqc5f008dg0wvy0csnh32" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -347,7 +488,7 @@ logobj = Logger(&apos;008&apos;,logging.ERROR,logging.DEBUG)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/日志Logging/" data-id="cjv9ki5ys0078agwv17vvrsu0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/日志Logging/" data-id="cjvayqc3n007bg0wvf4260lpr" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -506,7 +647,7 @@ except SexException as m:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/01/迭代器、生成器、异常/" data-id="cjv9ki62u0086agwv29cbg6d7" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/01/迭代器、生成器、异常/" data-id="cjvayqc580089g0wvj58uzpzx" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -701,7 +842,7 @@ print(callable(stu))         #result:True
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/01/工厂类、单例、其他/" data-id="cjv9ki5y40072agwv5ypy2xw5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/01/工厂类、单例、其他/" data-id="cjvayqc300071g0wvmiucuwt2" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -789,7 +930,7 @@ if __name__==&apos;__main__&apos;:             #程序从这里启动
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/31/计算器/" data-id="cjv9ki646008iagwvbqz5ftvk" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/31/计算器/" data-id="cjvayqc4y0083g0wvrrz2vt67" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -926,7 +1067,7 @@ manager.Menu()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjv9ki55c000lagwv0j4k0pml" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjvayqbt4001kg0wvc6ule2tz" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1070,7 +1211,7 @@ doctor.jiuzhen(xiaoming)    #result:兽医出诊，给宠物看病..   给人类
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjv9ki5xm006yagwv8kbouynk" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjvayqc2u006xg0wvyxp3ju8s" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1312,7 +1453,7 @@ print(id(n))                  #result:1832993647864
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjv9ki60l007qagwvefz4zn0u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjvayqc4d007rg0wvfljguvds" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1537,166 +1678,7 @@ print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjv9ki5s9005qagwvvc4welya" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-集合" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/19/集合/" class="article-date">
-  <time datetime="2018-01-19T12:24:25.000Z" itemprop="datePublished">2018-01-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/19/集合/">集合</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>集合</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>定义</h6><p></p>
-<ul>
-<li><p>集合是一个无序不重复元素的集；如果要创建空集合，须用set()</p>
-<pre><code>#第一种方法
-s=set()                 #空集合,如果只有一个值，需要加逗号，如s=set(&apos;liu&apos;,)
-s1={&apos;name&apos;,2018.01,28,False,(12,22)}
-
-#第二种方法
-s2=set({&apos;name&apos;,2018.01,28,False,(12,22)})
-s2=set([&apos;name&apos;,2018.01,28,False,(12,22)])
-s2=set((&apos;name&apos;,2018.01,28,False,(12,22)))
-
-#注意
-s2=set({&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:23})
-print(type(s2))         #result:&lt;class &apos;set&apos;&gt;
-print(s2)               #result:{&apos;name&apos;, &apos;age&apos;}
-</code></pre></li>
-</ul>
-<p></p><h6>增删改查</h6><p></p>
-<ul>
-<li><p>add()增加</p>
-<pre><code>s3={1,2,3,4,5}
-s4={4,5,6,7,8}
-s3.add(999)
-print(s3)               #result:{1, 2, 3, 4, 5, 999}
-</code></pre></li>
-<li><p>remove()删除</p>
-<pre><code>s3.remove(1)
-print(s3)               #result:{2, 3, 4, 5}
-</code></pre></li>
-<li><p>pop()随机返回并删除一个值,没有参数</p>
-<pre><code>s3.pop()
-print(s3)               #result:{2, 3, 4, 5}
-</code></pre></li>
-<li><p>clear()清空</p>
-<pre><code>s3.clear()
-print(s3)               #result:set()
-</code></pre></li>
-</ul>
-<p></p><h6>并、交、差、对称差集</h6><p></p>
-<ul>
-<li><p>并集</p>
-<pre><code>print(s3|s4)            #result:{1, 2, 3, 4, 5, 6, 7, 8}
-</code></pre></li>
-<li><p>交集</p>
-<pre><code>print(s3&amp;s4)            #result:{4, 5}
-</code></pre></li>
-<li><p>差</p>
-<pre><code>print(s3-s4)            #result:{1, 2, 3}
-</code></pre></li>
-<li><p>对称差集</p>
-<pre><code>print(s3^s4)            #result:{1, 2, 3, 6, 7, 8}
-</code></pre></li>
-<li><p>update()将字符串或集合中的数据联合</p>
-<pre><code>s3.update(s4)
-print(s3)               #result:{1, 2, 3, 4, 5, 6, 7, 8}
-</code></pre><p></p><h6>遍历</h6><p></p>
-<pre><code>s5=set((&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;))
-for i in s5:
-    print(i,end=&apos;&apos;)     #result:eacdb
-</code></pre></li>
-</ul>
-<p></p><h6>小练习</h6><p></p>
-<ul>
-<li><p>通讯录管理系统</p>
-<pre><code>print(&quot;=======通讯录管理系统=======&quot;)
-print(&quot;1.增加姓名和手机&quot;)
-print(&quot;2.删除姓名&quot;)
-print(&quot;3.修改手机&quot;)
-print(&quot;4.查询所有用户&quot;)
-print(&quot;5.根据姓名查找手机号&quot;)
-print(&quot;6.退出&quot;)
-print(&quot;============================&quot;)
-User={}
-while True:
-    i=int(input(&apos;请输入操作项：&apos;))
-    if i==1:
-        name=input(&apos;请输入姓名：&apos;)
-        phone=input(&apos;请输入手机：&apos;)
-        User[name]=phone
-    elif i==2:
-        name=input(&apos;请输入要删除的姓名：&apos;)
-        if name in User:
-            del User[name]
-            print(&apos;删除成功！&apos;)
-        else:
-            print(&apos;姓名不存在！&apos;)
-    elif i==3:
-        name = input(&apos;请输入要修改的姓名：&apos;)
-        if name in User:
-            new_phone=input(&quot;请输入修改后的手机号：&quot;)
-            User[name]=new_phone
-            print(&apos;修改成功！&apos;)
-        else:
-            print(&apos;姓名不存在！&apos;)
-    elif i==4:
-        if User is None:
-            print(&apos;通讯录无记录！&apos;)
-        else:
-            for k,v in User.items():
-                print(k,v)
-    elif i==5:
-        name = input(&apos;请输入要查询的姓名：&apos;)
-        if name in User:
-            print(name,&apos;的手机号为&apos;,User[name])
-        else:
-            print(&apos;姓名不存在！&apos;)
-    elif i==6:
-         break
-    else:
-         print(&apos;请重新输入操作项！&apos;)
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjv9ki63o008eagwvsml5bqw2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjvayqc0z005tg0wvibuybisz" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1728,7 +1710,7 @@ while True:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1747,7 +1729,7 @@ while True:
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1758,6 +1740,10 @@ while True:
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
+          </li>
         
           <li>
             <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
@@ -1773,10 +1759,6 @@ while True:
         
           <li>
             <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
           </li>
         
       </ul>

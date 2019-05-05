@@ -70,6 +70,125 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-mongodb排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/mongodb排序/" class="article-date">
+  <time datetime="2018-03-22T10:47:37.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/22/mongodb排序/">mongodb排序</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>mongodb排序</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>排序<h6><p></p>
+<ul>
+<li>sort()方法对数据进行排序，sort()方法可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列</li>
+<li><p>语法：db.COLLECTION_NAME.find().sort({KEY:1})</p>
+<pre><code># 插入数据库的数据如下：
+{
+    title: &quot;PHP 教程&quot;, 
+    description: &quot;PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。&quot;, 
+    by: &quot;菜鸟教程&quot;, 
+    url: &quot;http://www.runoob.com&quot;, 
+    tags: [ &quot;php&quot; ], 
+    likes: 200 
+}
+{  
+    title: &quot;Java 教程&quot;, 
+    description: &quot;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&quot;, 
+    by: &quot;菜鸟教程&quot;, 
+    url: &quot;http://www.runoob.com&quot;, 
+    tags: [ &quot;java&quot; ], 
+    likes: 150 
+}
+{   title: &quot;MongoDB 教程&quot;, 
+    description: &quot;MongoDB 是一个 Nosql 数据库&quot;, 
+    by: &quot;菜鸟教程&quot;, 
+    url: &quot;http://www.runoob.com&quot;, 
+    tags: [ &quot;mongodb&quot; ], 
+    likes : 100 
+}
+
+》》db.getCollection(&apos;teacher&apos;).find({},{&apos;title&apos;:1,_id:0}).sort({&apos;likes&apos;:1})
+/* 1 */
+{
+    &quot;title&quot; : &quot;MongoDB 教程&quot;
+}
+/* 2 */
+{
+    &quot;title&quot; : &quot;Java 教程&quot;
+}
+/* 3 */
+{
+    &quot;title&quot; : &quot;PHP 教程&quot;
+}
+</code></pre></li>
+</ul>
+<p></p><h6>Limit</h6><p></p>
+<ul>
+<li>需要在MongoDB中读取指定数量的数据记录，可以使用MongoDB的Limit方法</li>
+<li>limit()方法接受一个数字参数，该参数指定从MongoDB中读取的记录条数</li>
+<li><p>语法为：db.COLLECTION_NAME.find().limit(NUMBER)</p>
+<pre><code>》》db.getCollection(&apos;teacher&apos;).find({},{&apos;title&apos;:1,_id:0}).limit(2)
+/* 1 */
+{
+    &quot;title&quot; : &quot;PHP 教程&quot;
+}
+/* 2 */
+{
+    &quot;title&quot; : &quot;Java 教程&quot;
+}
+</code></pre></li>
+</ul>
+<p></p><h6>Skip</h6><p></p>
+<ul>
+<li>使用skip()方法来跳过指定数量的数据，skip方法同样接受一个数字参数作为跳过的记录条数</li>
+<li><p>语法：db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER)</p>
+<pre><code>》》db.getCollection(&apos;teacher&apos;).find({},{&apos;title&apos;:1,_id:0}).limit(1).skip(1)
+/* 1 */
+{
+    &quot;title&quot; : &quot;Java 教程&quot;
+}
+</code></pre></li>
+<li><p>sort(), limilt(),skip() 三个放在一起执行的时候，执行的顺序是先 sort(), 然后是 skip()，最后是显示的 limit()</p>
+</li>
+</ul>
+</h6></h6>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="cjvayqbyh004dg0wvhd5w8zcu" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-requests模块" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/22/requests模块/" class="article-date">
@@ -220,7 +339,7 @@ print(response.status_code)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="cjv9ki5oi004uagwveho4u2ie" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="cjvayqbzc004tg0wvxmwzay6d" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -419,7 +538,7 @@ with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cjv9ki5qj005cagwvzuhmts07" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cjvayqc04005bg0wvfluwphfm" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -523,7 +642,7 @@ b/s--&gt;browser/server 浏览器与服务器交互
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjv9ki55j000nagwvvo98l1qd" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjvayqbr0000ig0wvoat2ed2n" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -706,7 +825,7 @@ db.myinfo.find({$or:[{&apos;name&apos;:&apos;liuyongqian&apos;},{&apos;age&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjv9ki5b2001wagwve4lde6tt" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjvayqbtp001xg0wv52ajwvw7" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -828,7 +947,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjv9ki5ej002qagwvgdyrhfqi" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjvayqbvc002tg0wvelkq7b89" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -902,7 +1021,7 @@ zlexcount mykey [one [three #result:1
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjv9ki5hc003aagwv33ltair5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjvayqbwk003gg0wv0chej34k" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1001,7 +1120,7 @@ smembers key4      #result:a b c
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjv9ki5g90033agwvvspoltv7" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjvayqbvz0035g0wvt1yindb5" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1105,7 +1224,7 @@ lindex mylist 1        #列表中下标为指定索引值的元素
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjv9ki5as001uagwvb3oqa10e" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjvayqbtt001zg0wvusqym1ni" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1205,142 +1324,7 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjv9ki58d001bagwvq1p4ajwi" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-String类型操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/15/String类型操作/" class="article-date">
-  <time datetime="2018-03-15T10:49:02.000Z" itemprop="datePublished">2018-03-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/15/String类型操作/">String类型操作</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>String类型操作</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>01</h6><p></p>
-<ul>
-<li><p>1.set key value设置指定key的值</p>
-<pre><code>set myname liuyongqian
-set age 108
-</code></pre></li>
-<li><p>2.get key获取指定key的值</p>
-<pre><code>get myname
-</code></pre></li>
-<li><p>3.getset key_name value用于设置指定key的值，并返回key的旧值，当key 没有旧值返回 nil</p>
-<pre><code>getset myname lailai     #result:&apos;liuyongqian&apos;
-</code></pre></li>
-<li><p>4.getrange key_name start end获取存储在指定key中字符串的子字符串</p>
-<pre><code>set myname liuyongqian
-getrange myname 0,2      #result:&apos;liu&apos;
-</code></pre></li>
-<li><p>5.setrange key_name offset value用指定的字符串覆盖给定 key 所储存的字符串值，覆盖的位置从偏移量offset开始</p>
-<pre><code>setrange job 5 manager
-get job               #result:code-manager
-</code></pre></li>
-<li><p>6.strlen key_name 用于获取指定 key 所储存的字符串值的长度。当 key 储存的不是字符串值时，返回一个错误</p>
-<pre><code>strlen job             #result:12
-</code></pre></li>
-</ul>
-<p></p><h6>02</h6><p></p>
-<ul>
-<li><p>7.mset key1 value1 key2 value2 …用于同时设置一个或多个 key-value 对</p>
-<pre><code>mset k1 hello k2 world     #result:OK
-</code></pre></li>
-<li><p>8.setnx key_name value在指定的key不存在时，为key设置指定的值；若key存在，则设置失败，覆盖也失败</p>
-<pre><code>exists job            #result:0
-setnx job code-farmer #result:1
-</code></pre></li>
-<li><p>9.msetnx key1 value1 key2 value2 …用于所有给定 key 都不存在时，同时设置一个或多个 key-value 对,若某个键已存在，则设置失败</p>
-</li>
-<li><p>10.mget key1 key2 … 返回所有(一个或多个)给定 key 的值。 如果给定的 key 里面，有某个 key 不存在，那么这个 key 返回特殊值 nil </p>
-<pre><code>mget myname age         #result:&apos;lailai&apos;&apos;108&apos;
-</code></pre></li>
-</ul>
-<p></p><h6>03</h6><p></p>
-<ul>
-<li><p>11.getbit keyname offset对key所储存的字符串值，获取指定偏移量上的位(bit),当偏移量offset比字符串值的长度大，或者key不存在时，返回0 </p>
-<pre><code>set mynum a  #&apos;a&apos;的ASCII码是 97,转换为二进制是：1100001。offset的学名叫做“偏移” 。
-             #二进制中的每一位就是offset值，比如在这里ffset 1等于&apos;1&apos; ,offset2等于&apos;1&apos;,offset 7 等于&apos;1&apos; ，offset是从左往右计数的
-getbit mynum 2           #result:1
-</code></pre></li>
-<li><p>12.setbit key_name offset value 用于对key所储存的字符串值，设置或清除指定偏移量上的位(bit)</p>
-<pre><code>#将mynum的值a变成b，也就是将01100001变成01100010（b的ASCII码是98），
-#即将&apos;a&apos;中的offset 6从0变成1，将offset 7从1变成0
-setbit mynum 6 1
-setbit mynum 7 0
-get mynum            #result:&apos;b&apos;
-</code></pre></li>
-</ul>
-<p></p><h6>04</h6><p></p>
-<ul>
-<li><p>13.setex key_name timeout value为指定的key设置值及其过期时间，单位为秒。如果 key 已经存在，将会替换旧的值</p>
-<pre><code>setex mymemory 8 loveyou         #待8秒后mymemory的值为空
-</code></pre></li>
-<li><p>14.psetex key_name timeout value以毫秒为单位设置 key 的生存时间</p>
-</li>
-</ul>
-<p></p><h6>05</h6><p></p>
-<ul>
-<li><p>15.incr key_name将key中储存的数字值增一<br>如果key不存在，那么 key的值会先被初始化 0，然后再执行incr操作<br>如果值包含错误的类型，或字符串类型的值不能表示为数字，那么返回一个错误</p>
-<pre><code>set page 108
-incr page
-get page          #result:109
-</code></pre></li>
-<li><p>16.incrby key_name value将key中储存的数字加上指定的增量值</p>
-<pre><code>set rank 110
-incrby rank 50
-get rank          #result:160
-</code></pre></li>
-<li><p>17.incrbyfloat key_name value为key中所储存的值加上指定的浮点数增量值</p>
-<pre><code>set price 3.14
-incrbyfloat price 0.01
-get price         #result:3.15
-</code></pre></li>
-<li><p>18.decr key_name将key中储存的数字值减一</p>
-</li>
-<li>19.decrby key_name value将key所储存的值减去指定的减量值</li>
-<li><p>20.append key_name new_value 用于为指定的key追加值<br><br>如果 key 已经存在并且是一个字符串，append命令将value追加到 key 原来的值的末尾<br>如果key不存在，append就简单地将给定key设为 value ，就像执行set key value 一样</p>
-<pre><code>exists myname       #result:0
-append myname  liu
-append myname  yongqian
-get myname          #result:liuyongqian
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjv9ki5gl0035agwvrolypb15" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjvayqbsp001dg0wvjijw49nj" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1372,7 +1356,7 @@ get myname          #result:liuyongqian
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1391,7 +1375,7 @@ get myname          #result:liuyongqian
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1402,6 +1386,10 @@ get myname          #result:liuyongqian
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
+          </li>
         
           <li>
             <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
@@ -1417,10 +1405,6 @@ get myname          #result:liuyongqian
         
           <li>
             <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
           </li>
         
       </ul>

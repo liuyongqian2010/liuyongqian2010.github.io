@@ -70,6 +70,165 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-scrapy基础了解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/29/scrapy基础了解/" class="article-date">
+  <time datetime="2018-03-29T01:25:36.000Z" itemprop="datePublished">2018-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/29/scrapy基础了解/">scrapy基础了解</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>scrapy基础了解</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中</li>
+<li>依赖包<ul>
+<li>1.wheel      安装该文件后就可以安装.whl的依赖文件</li>
+<li>2.lxml       解析页面 </li>
+<li>3.PyOpenssl</li>
+<li>4.Twisted</li>
+<li>5.Pywin32，pypiwin32</li>
+<li>6.Scrapy </li>
+</ul>
+</li>
+<li>基本思路:<img src="../scrapy.jpg" alt="Scrapy基本思路"><ul>
+<li>1.Scrapy Engine: 引擎，负责Spiders、ItemPipeline、Downloader、Scheduler中间的通讯，信号、数据传递等等！</li>
+<li>2.Scheduler(调度器): 它负责接受引擎发送过来的requests请求，并按照一定的方式进行整理排列，入队、并等待Scrapy Engine(引擎)来请求时，交给引擎</li>
+<li>3.Downloader（下载器）：负责下载Scrapy Engine(引擎)发送的所有Requests请求，并将其获取到的Responses交还给Scrapy Engine(引擎)，由引擎交给Spiders来处理</li>
+<li>4.Spiders：它负责处理所有Responses,从中分析提取数据，获取Item字段需要的数据，并将需要跟进的URL提交给引擎，再次进入Scheduler(调度器)</li>
+<li>5.Item Pipeline：它负责处理Spiders中获取到的Item，并进行处理，比如去重，持久化存储（存数据库，写入文件，总之就是保存数据用的）</li>
+</ul>
+</li>
+<li>测试网站：<a href="http://quotes.toscrape.com/" target="_blank" rel="noopener">http://quotes.toscrape.com/</a></li>
+</ul>
+<p></p><h6>详解</h6><p></p>
+<ul>
+<li><p>1.进入要放置项目的目录，shift+右键的shell，输入命令：<code>scrapy startproject quotetutorial</code>，创建项目</p>
+<ul>
+<li>spiders    #这个目录放置爬虫</li>
+<li>items.py   #这个文件定义我们需要获取的字段</li>
+<li>pipelines.py    #这个文件用来定义数据存储</li>
+<li>settings.py        #这个文件用来设置</li>
+</ul>
+</li>
+<li><p>2.进入项目，<code>cd quotetutorial</code>,创建爬虫：<code>scrapy genspider quotes quotes.toscrape.com</code> </p>
+</li>
+<li><p>3.在spiders文件夹下的quotes中编写自己的爬虫</p>
+<pre><code>import scrapy
+from quotetutorial.items import QuoteItem
+class QuotesSpider(scrapy.Spider):
+    name = &apos;quotes&apos;
+    allowed_domains = [&apos;quotes.toscrape.com&apos;]
+    start_urls = [&apos;http://quotes.toscrape.com/&apos;]
+
+    def parse(self, response):
+        quotes=response.css(&apos;.quote&apos;)
+        for quote in quotes:
+            item=QuoteItem() #先声明一个对象，然后赋值
+            text=quote.css(&apos;.text::text&apos;).extract_first()
+            author=quote.css(&apos;.author::text&apos;).extract_first()
+            tags=quote.css(&apos;.tags .tag::text&apos;).extract()
+            item[&apos;text&apos;]=text
+            item[&apos;author&apos;]=author
+            item[&apos;tags&apos;]=tags
+            yield item #做下一步的存储操作
+        next=response.css(&apos;.pager .next a::attr(href)&apos;).extract_first()
+        url=response.urljoin(next)
+        yield scrapy.Request(url=url,callback=self.parse)
+</code></pre></li>
+<li><p>4.在items.py文件中定义一些字段，这些字段用来临时存储需要保存的数据。方便后面保存数据到其他地方，比如数据库或者本地文本之类的</p>
+<pre><code>import scrapy
+class QuoteItem(scrapy.Item):
+    text=scrapy.Field()
+    author=scrapy.Field()
+    tags=scrapy.Field()
+</code></pre></li>
+<li><p>5.在Terminal中运行爬虫<code>scrapy crawl quotes</code>;运行并且保存爬取数据为json格式<code>scrapy crawl quotes -o quotes.json</code> </p>
+</li>
+<li><p>6.保存数据到Mongodb中</p>
+<ul>
+<li><p>6.1在pipelines.py编写连接</p>
+<pre><code>from scrapy.exceptions import DropItem
+import pymongo
+class TextPipeline(object):
+    def __init__(self):
+        self.limit=50
+    def process_item(self, item, spider):
+        if item[&apos;text&apos;]:
+            if len(item[&apos;text&apos;])&gt;self.limit:
+                item[&apos;text&apos;]=item[&apos;text&apos;][0:self.limit].rstrip()+&apos;...&apos;
+            return item
+        else:
+            return DropItem(&apos;Missing Text&apos;)   #如果text不存在，则抛出异常
+class MongoPipeline(object):
+    def __init__(self,mongo_uri,mongo_db):
+        self.mongo_uri=mongo_uri
+        self.mongo_db=mongo_db
+    @classmethod
+    def from_crawler(cls,crawler):
+        return cls(
+            mongo_uri=crawler.settings.get(&apos;MONGO_URI&apos;),
+            mongo_db=crawler.settings.get(&apos;MONGO_DB&apos;)
+        )
+    def open_spider(self,spider):
+        self.client=pymongo.MongoClient(self.mongo_uri)
+        self.db=self.client[self.mongo_db]
+    def process_item(self,item,spider):
+        name=item.__class__.__name__
+        self.db[name].insert(dict(item))
+        return item
+    def close_spider(self,spider):
+        self.client.close()  
+</code></pre></li>
+<li><p>6.2在settings中设置</p>
+<pre><code>MONGO_URI=&apos;localhost:27017&apos;
+MONGO_DB=&apos;quotetutorial&apos;
+
+ITEM_PIPELINES = {
+   &apos;quotetutorial.pipelines.TextPipeline&apos;: 300,
+   &apos;quotetutorial.pipelines.MongoPipeline&apos;: 1000,
+}
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="cjvayqbzo0051g0wv0xhm70sg" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-网络配置、系统查看" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/28/网络配置、系统查看/" class="article-date">
@@ -144,7 +303,7 @@ free -m 显示内存使用情况
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjv9ki60z007uagwvdmwae0tc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="cjvayqc4k007vg0wvz8cso5ry" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -246,7 +405,7 @@ Ctrl+r    恢复撤销
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjv9ki5qo005eagwvxbkyvcme" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="cjvayqc07005dg0wv5jcfs5kb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -399,7 +558,7 @@ tail -n 数字 文件名      #规定显示最后几行
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjv9ki5li0048agwvo81g0e8p" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="cjvayqby10043g0wvou8bg1m4" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -491,7 +650,7 @@ def login(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjv9ki5q20058agwv20ysm2kp" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="cjvayqbzv0055g0wvzg3k9fuv" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -628,7 +787,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjv9ki6290082agwvf3f7mnxa" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="cjvayqc510085g0wvs2gpkjwt" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -732,7 +891,7 @@ class Handler(BaseHandler):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjv9ki5nj004magwva3rddqui" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjvayqbz0004lg0wvh2gx4ahx" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -840,7 +999,7 @@ print(logo.size)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cjv9ki5pw0056agwvk89nt6zl" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cjvayqbzy0057g0wva4xegmyp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -984,7 +1143,7 @@ print(ul.text())
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="cjv9ki5n6004kagwvy9h8qjqu" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="cjvayqbys004hg0wvq8anuzfz" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1147,129 +1306,10 @@ for li in soup.select(&apos;li&apos;):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="cjv9ki5hy003fagwv6zmnmhdn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="cjvayqbwh003eg0wvh4xad1me" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-mongodb排序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/22/mongodb排序/" class="article-date">
-  <time datetime="2018-03-22T10:47:37.000Z" itemprop="datePublished">2018-03-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/22/mongodb排序/">mongodb排序</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>mongodb排序</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>排序<h6><p></p>
-<ul>
-<li>sort()方法对数据进行排序，sort()方法可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列</li>
-<li><p>语法：db.COLLECTION_NAME.find().sort({KEY:1})</p>
-<pre><code># 插入数据库的数据如下：
-{
-    title: &quot;PHP 教程&quot;, 
-    description: &quot;PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。&quot;, 
-    by: &quot;菜鸟教程&quot;, 
-    url: &quot;http://www.runoob.com&quot;, 
-    tags: [ &quot;php&quot; ], 
-    likes: 200 
-}
-{  
-    title: &quot;Java 教程&quot;, 
-    description: &quot;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&quot;, 
-    by: &quot;菜鸟教程&quot;, 
-    url: &quot;http://www.runoob.com&quot;, 
-    tags: [ &quot;java&quot; ], 
-    likes: 150 
-}
-{   title: &quot;MongoDB 教程&quot;, 
-    description: &quot;MongoDB 是一个 Nosql 数据库&quot;, 
-    by: &quot;菜鸟教程&quot;, 
-    url: &quot;http://www.runoob.com&quot;, 
-    tags: [ &quot;mongodb&quot; ], 
-    likes : 100 
-}
-
-》》db.getCollection(&apos;teacher&apos;).find({},{&apos;title&apos;:1,_id:0}).sort({&apos;likes&apos;:1})
-/* 1 */
-{
-    &quot;title&quot; : &quot;MongoDB 教程&quot;
-}
-/* 2 */
-{
-    &quot;title&quot; : &quot;Java 教程&quot;
-}
-/* 3 */
-{
-    &quot;title&quot; : &quot;PHP 教程&quot;
-}
-</code></pre></li>
-</ul>
-<p></p><h6>Limit</h6><p></p>
-<ul>
-<li>需要在MongoDB中读取指定数量的数据记录，可以使用MongoDB的Limit方法</li>
-<li>limit()方法接受一个数字参数，该参数指定从MongoDB中读取的记录条数</li>
-<li><p>语法为：db.COLLECTION_NAME.find().limit(NUMBER)</p>
-<pre><code>》》db.getCollection(&apos;teacher&apos;).find({},{&apos;title&apos;:1,_id:0}).limit(2)
-/* 1 */
-{
-    &quot;title&quot; : &quot;PHP 教程&quot;
-}
-/* 2 */
-{
-    &quot;title&quot; : &quot;Java 教程&quot;
-}
-</code></pre></li>
-</ul>
-<p></p><h6>Skip</h6><p></p>
-<ul>
-<li>使用skip()方法来跳过指定数量的数据，skip方法同样接受一个数字参数作为跳过的记录条数</li>
-<li><p>语法：db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER)</p>
-<pre><code>》》db.getCollection(&apos;teacher&apos;).find({},{&apos;title&apos;:1,_id:0}).limit(1).skip(1)
-/* 1 */
-{
-    &quot;title&quot; : &quot;Java 教程&quot;
-}
-</code></pre></li>
-<li><p>sort(), limilt(),skip() 三个放在一起执行的时候，执行的顺序是先 sort(), 然后是 skip()，最后是显示的 limit()</p>
-</li>
-</ul>
-</h6></h6>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="cjv9ki5m1004cagwv0k2g3ctg" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
 
     </footer>
   </div>
@@ -1298,7 +1338,7 @@ for li in soup.select(&apos;li&apos;):
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1317,7 +1357,7 @@ for li in soup.select(&apos;li&apos;):
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1328,6 +1368,10 @@ for li in soup.select(&apos;li&apos;):
     <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
+          </li>
         
           <li>
             <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
@@ -1343,10 +1387,6 @@ for li in soup.select(&apos;li&apos;):
         
           <li>
             <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
           </li>
         
       </ul>
