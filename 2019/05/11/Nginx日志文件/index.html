@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Nginx日志文件 | LiuYongQian</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Nginx日志文件   1. 简介  1.1 通过访问日志access log，可以得到用户地域来源、跳转来源、使用终端、某个URL访问量等相关信息；通过错误日志error log，可以得到系统某个服务或server的性能瓶颈等 1.2 如果配置日志部分，日志生成到Nginx根目录logs/access.log文件中，默认使用“main”日志格式，也可以自定义格式。  2.日志类型  2.1 ac">
+<meta name="keywords" content="Nginx学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx日志文件">
+<meta property="og:url" content="http://yoursite.com/2019/05/11/Nginx日志文件/index.html">
+<meta property="og:site_name" content="LiuYongQian">
+<meta property="og:description" content="Nginx日志文件   1. 简介  1.1 通过访问日志access log，可以得到用户地域来源、跳转来源、使用终端、某个URL访问量等相关信息；通过错误日志error log，可以得到系统某个服务或server的性能瓶颈等 1.2 如果配置日志部分，日志生成到Nginx根目录logs/access.log文件中，默认使用“main”日志格式，也可以自定义格式。  2.日志类型  2.1 ac">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-11T00:57:07.590Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx日志文件">
+<meta name="twitter:description" content="Nginx日志文件   1. 简介  1.1 通过访问日志access log，可以得到用户地域来源、跳转来源、使用终端、某个URL访问量等相关信息；通过错误日志error log，可以得到系统某个服务或server的性能瓶颈等 1.2 如果配置日志部分，日志生成到Nginx根目录logs/access.log文件中，默认使用“main”日志格式，也可以自定义格式。  2.日志类型  2.1 ac">
+  
+    <link rel="alternate" href="/atom.xml" title="LiuYongQian" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">LiuYongQian</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">永远相信美好的事情将要发生！</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Nginx日志文件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/11/Nginx日志文件/" class="article-date">
+  <time datetime="2019-05-11T00:55:01.000Z" itemprop="datePublished">2019-05-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Nginx日志文件
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Nginx日志文件</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>1.1 通过访问日志access log，可以得到用户地域来源、跳转来源、使用终端、某个URL访问量等相关信息；通过错误日志error log，可以得到系统某个服务或server的性能瓶颈等</li>
+<li>1.2 如果配置日志部分，日志生成到Nginx根目录logs/access.log文件中，默认使用“main”日志格式，也可以自定义格式。</li>
+</ul>
+<p></p><h6>2.日志类型</h6><p></p>
+<ul>
+<li><p>2.1 access.log</p>
+<pre><code>$remote_addr    客户端的ip地址(代理服务器，显示代理服务ip)
+$remote_user    用于记录远程客户端的用户名称（一般为“-”）
+$time_local    用于记录访问时间和时区
+$request        用于记录请求的url以及请求方法
+$status        响应状态码，例如：200成功、404页面找不到等。
+$body_bytes_sent    给客户端发送的文件主体内容字节数
+$http_referer    可以记录用户是从哪个链接访问过来的
+$http_user_agent    用户所使用的代理（一般为浏览器）
+$http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记录客户端的ip地址
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/05/11/Nginx日志文件/" data-id="cjvit7rb9002b7owvkk86so3v" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/05/11/mysql日志文件/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          mysql日志文件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/05/11/Tomcat日志文件/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Tomcat日志文件</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 11px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 14px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13px;">软件工具</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/11/Tomcat日志文件/">Tomcat日志文件</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">About</h3>
+    <div class="widget">
+       Email:<a>liuyongqian51@163.com</a><br />
+          QQ:<a>272501447</a><br />
+	  Github:<a></a>
+    </div>
+  </div>
+
+  
+  
+
+</aside>
+
+
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 刘永前<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

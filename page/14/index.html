@@ -70,6 +70,617 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-封装、继承、多态" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/28/封装、继承、多态/" class="article-date">
+  <time datetime="2018-01-28T08:40:03.000Z" itemprop="datePublished">2018-01-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/28/封装、继承、多态/">封装、继承、多态</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>封装、继承、多态</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>封装</h6><p></p>
+<ul>
+<li><p>隐藏内部实现，提供外部接口<br>两个步骤：属性私有化——set\get函数写方法</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    @property
+    def age(self):
+        return self.__age
+    @age.setter
+    def age(self,value):
+        if value&lt;0 or value&gt;100:
+            self.__age=18
+        else:
+            self.__age=value
+m=Student(&apos;刘桑&apos;,25)
+m.age=100
+print(m.age)              #result:100
+</code></pre></li>
+</ul>
+<p></p><h6>继承</h6><p></p>
+<ul>
+<li><p>继承：子类继承父类，子类可以使用父类的属性和方法，简化代码<br>子类继承父类，父类派生子类（父类又叫基类，子类又叫派生类）<br>继承指出两个类符合“A是B”的关系</p>
+<pre><code>class Vehicle:         #交通工具类
+    def __init__(self,name):
+        self.name=name
+        print(&apos;交通工具被初始化！&apos;)
+    def run(self):
+        print(&apos;交通工具在行驶...&apos;)
+    def show(self):
+        print(&apos;车的名字是%s&apos;%self.name)
+class Truck(Vehicle):    #卡车，属性：载重
+    #当子类继承父类时，子类的构造方法应该包含父类和子类共有的属性，如name
+    #在子类的初始化方法中，将父类的属性传递给父类，子类的属性赋值给子类
+    #在子类的初始化方法中，调用父类的属性有四种方法：
+    # 1，父类名.属性 2，self.属性 3，父类名.__init__(self,属性) 4，super(子类名,self).__init__(属性)
+    def __init__(self,name,weight):
+        #Vehicle.name=name                 #1，父类名.属性
+        #self.name=name                    #2，self.属性
+        #Vehicle.__init__(self,name)       #3，父类名.__init__(self,属性)
+        super(Truck,self).__init__(name)   #4，super(子类名,self).__init__(属性)
+        self.weight=weight
+        print(&apos;卡车被初始化！&apos;)
+    def run(self):        #卡车，重写行驶方法
+        #super().show() #调用父类方法
+        #Vehicle.show(self)
+        super(Truck,self).show()
+        print(&apos;%s卡车载重%d吨在行驶...&apos;%(self.name,self.weight))
+class Train(Vehicle):     #火车，属性：车厢个数
+    def __init__(self,name,nums):
+        self.nums=nums
+    def run(self):        #火车，重写行驶方法
+        print(&apos;火车在轨道行驶...&apos;)
+
+t=Truck(&apos;解放&apos;,25)
+t.run()
+</code></pre></li>
+<li><p>三代继承：子类初始化方法需祖父、父类及自己的属性，可以调用父类的初始化方法传参，可以重写父类的方法，构造的顺序依然先构造祖父类，再构造父类，最后构造自己</p>
+</li>
+<li><p>多继承：一个类同时继承多个父类，class(A,B),当AB均有相同方法，而子类又重写时，调用子类的方法；如果子类没有方法，则调用优先继承的类</p>
+<h6>多态</h6></li>
+<li>封装可以隐藏实现细节，使得代码模块化；继承可以扩展已存在的代码模块（类）；它们的目的都是为了——代码重用。而多态则是为了实现另一个目的——接口重用！多态的作用，就是为了类在继承和派生的时候，保证使用“家谱”中任一类的实例的某一属性时的正确调用</li>
+<li><p>多态就是多种表现形态的意思。它是一种机制、一种能力，而非某个关键字。它在类的继承中得以实现，在类的方法调用中得以体现。多态意味着变量并不知道引用的对象是什么，根据引用对象的不同表现不同的行为方式</p>
+<pre><code>class Pet:
+    def look(self):
+        print(&apos;给宠物看病...&apos;)
+class cat(Pet):
+    def look(self):
+        print(&apos;给猫咪吃药、打针...&apos;)
+class dog(Pet):
+    def look(self):
+        print(&apos;给小狗打针、输液...&apos;)
+class bird(Pet):
+    def look(self):
+        print(&apos;给小鸟输液、疗养...&apos;)
+class Doctor:
+    def jiuzhen(self,Pet):        #传参的时候达到了多态
+        print(&apos;兽医出诊，给宠物看病...&apos;)
+        Pet.look()
+class person:
+    def look(self):
+        print(&apos;给人类看病...&apos;)
+
+longmao=cat()
+dahu=dog()
+yingwu=bird()
+xiaoming=person()
+#longmao.look()
+#dahu.look()
+#yingwu.look()
+doctor=Doctor()
+doctor.jiuzhen(longmao)     #result:兽医出诊，给宠物看病..   给猫咪吃药、打针...
+doctor.jiuzhen(dahu)        #result:兽医出诊，给宠物看病..   给小狗打针、输液...
+doctor.jiuzhen(yingwu)      #result:兽医出诊，给宠物看病..   给小鸟输液、疗养...
+doctor.jiuzhen(xiaoming)    #result:兽医出诊，给宠物看病..   给人类看病...
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjvit7rup00777owvlh2z7g3k" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-类与对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/22/类与对象/" class="article-date">
+  <time datetime="2018-01-22T09:23:16.000Z" itemprop="datePublished">2018-01-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/22/类与对象/">类与对象</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>类与对象</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>基础定义</h6><p></p>
+<ul>
+<li><p>在python中，一个对象的特征也称为属性（attribute），它所具有的行为也称为方法（method），把具有相同属性和方法的对象归为一个类（class）。即类就是具有相同属性和方法的对象的集合</p>
+<pre><code>class Student:
+    &apos;&apos;&apos;
+    学生类             #文档说明，可通过类名.__doc__访问
+    &apos;&apos;&apos;
+    #类的成员：特性  行为
+    pass              #保证语义的完整
+</code></pre></li>
+<li><p>类名规范：首字母大写，以大写字母分割单词，不使用下划线;不允许使用数字、关键字、除下划线以外的特殊字符开头<br><br>属性名规范：使用名词，首字母小写，以大写字母分割单词<br><br>方法名规范：使用谓词（动词+对象），首字母小写，以大写字母分割单词<br></p>
+<pre><code>class Student:
+    def __init__(self,name,age):    
+    #__init__()这个方法会在创建对象时完成初始化，并把类的属性绑上去
+        self.name=name           #创建对象属性
+        self.age=age
+    def showName(self):   #self对象的载体
+        print(&apos;我叫{}!&apos;.format(self.name))        
+m=Student(&apos;张三&apos;,27)
+m.showName()
+</code></pre></li>
+<li><p>属性分归属：对象属性、类属性<br>对象属性有两种创建方式</p>
+<pre><code>#第一种方式，初始化时添加对象属性
+class Student:
+    def __init__(self,name,age):    
+        self.name=name           #创建对象属性
+        self.age=age
+    def showName(self):   
+        print(&apos;我叫{}!&apos;.format(self.name))        
+m=Student(&apos;张三&apos;,27)
+m.showName()
+
+#第二种方式，赋值的形式
+class Student:
+    def showName(self):
+        print(&apos;我叫{}!&apos;.format(self.name))
+n=Student()
+n.name=&apos;李四&apos;                    #对象名.属性 
+n.showName()
+</code></pre></li>
+<li><p>类属性的创建、修改</p>
+<pre><code>#类属性，属于类的成员，对象共有的,类属性也可以如下创建
+class Student:
+    ablity=&apos;study&apos;             #在类里直接写：attr=value
+#类属性修改方式：类名.类属性=xxx  或者 实例对象.__class__类属性=xxx
+</code></pre><p>  <em>关于类属性与对象属性的区别可参考<a href="http://python.jobbole.com/85100/" target="_blank" rel="noopener">关于Python类属性与实例属性的讨论</a></em></p>
+</li>
+<li><p>__new__()<br>定义一个类时，如果使用__init__函数来设置类具有的属性，实际上最先执行__new__函数，通过该函数，返回一个类的实例，故而init函数才有self参数</p>
+<pre><code>class Student:
+    def __new__(cls, *args, **kwargs):
+        return object.__new__(cls)
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+    def showName(self):
+        print(&apos;我叫{}!&apos;.format(self.name))
+m=Student(&apos;张三&apos;,27)
+m.showName()
+</code></pre></li>
+<li><p>对象属性的公有、私有<br>如果有一些属性不想给外部权限来访问或者修改，可以在属性或者方法的名字前加双下划线，声明为私有属性；私有属性只能在当前类中使用</p>
+<pre><code>#如只给外部访问的权限，不给修改的权限，可以在类里定义一个返回属性的函数
+class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age         #在属性名字前加双下划线，声明为私有属性
+    def get_Age(self):
+        return self.__age
+m=Student(&apos;刘桑&apos;,25)
+print(m.get_Age())              #result:25
+&apos;&apos;&apos;
+#给与外部访问与修改权限，但修改值应按照设计的范围来
+class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age         #在属性名字前加双下划线，声明为私有属性
+    def get_Age(self):
+        return self.__age
+    def set_Age(self,age):
+        if age&lt;0 or age&gt;100:
+            self.__age=18   #给一个默认值
+        else:
+            self.__age=age
+m=Student(&apos;刘桑&apos;,25)
+m.set_Age(100)
+print(m.get_Age())              #result:100
+</code></pre></li>
+<li><p>注解@property的使用<br>它的作用是将一个函数作为类的一个属性来访问，或者把一个getter方法变成属性，@属性名.setter把setter方法变成属性赋值</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    #先定义两个函数，函数名为属性名，第一个函数返回属性值，第二个函数修改属性值
+    @property               #在第一个函数头上写@property
+    def age(self):
+        return self.__age
+    @age.setter             #在第二个函数头上写@属性名.setter
+    def age(self,value):
+        if value&lt;0 or value&gt;100:
+            self.__age=18   #给一个默认值
+        else:
+            self.__age=value
+m=Student(&apos;刘桑&apos;,25)
+m.age=100
+print(m.age)              #result:100
+</code></pre></li>
+<li><p>对象方法的公有、私有<br>私有方法在方法前加双下划线；私有方法只能在当前类中使用</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    def __showInfo(self):    #私有方法在方法前加双下划线
+        return &apos;My name is&apos;+self.name
+m=Student(&apos;刘桑&apos;,100)
+print(m.__showInfo())       #result:AttributeError
+</code></pre></li>
+<li><p>类方法、静态方法<br>类方法，在方法前添加@classmethod装饰器，可通过类、对象调用<br>静态方法，在方法前添加@staticmethod，参数没有要求，与类、对象没有关系，但可通过类、对象调用</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+    def instance_method(self):   #实例方法
+        print(&apos;实例方法&apos;)
+    @classmethod
+    def class_method(cls):       #类方法：第一个参数会自动接收类对象，一般用cls
+        print(&apos;类方法&apos;)
+    @staticmethod
+    def static_method():         #静态方法，参数没有要求
+        print(&apos;静态方法&apos;)
+m=Student(&apos;刘桑&apos;,100)
+Student.class_method()           #通过类名调用类方法
+m.class_method()                 #通过实例调用类方法
+
+Student.static_method()          #通过类名调用静态方法
+m.static_method()                #通过实例调用静态方法
+</code></pre></li>
+<li><p>__str__()<br>这个方法告诉python在打印一个对象时,具体显示什么内容</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    def __str__(self):    #可以重写
+        return &apos;My name is&apos;+self.name
+m=Student(&apos;刘桑&apos;,100)
+print(m)                  #result:My name is刘桑
+</code></pre></li>
+<li><p>__del__()<br>自动销毁，当对象没有引用或者程序结束的时候，程序自动调用该方法</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+    def __str__(self):    #可以重写
+        return &apos;My name is&apos;+self.name
+    def __del__(self):
+        print(self.name+&apos;被销毁！&apos;)
+m=Student(&apos;刘桑&apos;,100)
+                          #result:刘桑被销毁！
+
+#也可以直接使用del m
+</code></pre></li>
+<li><p>__dir__()<br>用来展示一个类、对象的属性和方法</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+m=Student(&apos;刘桑&apos;,100)
+print(m.__dir__())
+</code></pre></li>
+<li><p>getrefcount()可返回一个对象有多少个引用，返回2，从2开始</p>
+<pre><code>import sys
+class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age        
+m=Student(&apos;刘桑&apos;,25)
+mm=m
+print(sys.getrefcount(m))      #result:3
+</code></pre></li>
+<li><p>_类名__属性名,通过该方式可访问私有属性，一般不建议</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.__age=age
+m=Student(&apos;刘桑&apos;,25)
+print(m._Student__age)
+</code></pre></li>
+<li><p>id()<br>对一个对象的引用调用id()函数，可得到该对象的标识符dentity，该标识符是一个int，它保证在该对象的生命周期内是唯一恒定的，具有不重叠生命周期的两个对象具有不同的id值</p>
+<pre><code>class Student:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+m=Student(&apos;刘桑&apos;,25)
+n=Student(&apos;宮某&apos;,25)
+print(id(m))                  #result:1832993645624
+print(id(n))                  #result:1832993647864
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjvit7ry500817owvpqmtgebs" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-函数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/19/函数/" class="article-date">
+  <time datetime="2018-01-19T13:47:47.000Z" itemprop="datePublished">2018-01-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/19/函数/">函数</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>函数</h5><p></p>
+<hr>
+<hr>
+<h6>定义</h6>
+
+<ul>
+<li>高复用、低耦合</li>
+<li><p>语法</p>
+<pre><code>def add(a,b):        #def 函数名(参数列表):
+                     #函数体
+    return a+b       #可以返回多个值，返回的多个值组成元组；返回值加上中括号，返回列表      
+ret=add(1,2)
+print(&apos;返回值&apos;,ret)           #result:返回值 3
+</code></pre></li>
+<li><p>可更改与不可更改对象</p>
+<pre><code>def fun(a):
+    a=10
+    print(&apos;函数内部a为&apos;,a)
+a=5
+print(&apos;调用前&apos;,a)      #result:调用前 5
+fun(a)                #result:函数内部a为 10
+print(&apos;调用后&apos;,a)      #result:调用后 5
+#在python中，string,tuples,numbers是不可更改的对象，list,dict则是可以修改的对象
+#不可变类型：变量赋值a=5后再次赋值a=10，这里实际是新生成一个int值对象10，再让a指向它，而5被丢弃，不是改变a的值；相当于新生成了a
+#不可变类型：值传递（复制副本），如fun(a),传递的只是a的值，没有影响a对象本身；如在fun(a)内部修改a的值，只是修改另一个复制的对象，不会影响a本身
+
+def fun(b):
+    b[0]=&apos;刘备&apos;
+    b[1]=&apos;刘禅&apos;
+b=[&apos;刘邦&apos;,&apos;刘秀&apos;]
+print(&apos;调用前&apos;,b)      #result:调用前 [&apos;刘邦&apos;, &apos;刘秀&apos;]
+fun(b)
+print(&apos;调用后&apos;,b)      #result:调用后 [&apos;刘备&apos;, &apos;刘禅&apos;]
+#可变类型：变量赋值b=[1,2,3]后再次赋值b[2]=5则是将b的第三个元素值更改，本身b没有动，只是其内部的一部分值被修改了
+#可变类型：引用传递(实质是值传递，传递可变类型-可以改变内容，但不可以改变原地址)，如fun(b)，则是将b真正的传过去，修改后fun外部的b也会受影响
+
+def fun(b):
+    b=[&apos;刘备&apos;,&apos;刘禅&apos;]
+    print(&apos;函数内部b为&apos;,b)
+b=[&apos;刘邦&apos;,&apos;刘秀&apos;]
+print(&apos;调用前&apos;,b)      #result:调用前 [&apos;刘邦&apos;, &apos;刘秀&apos;]
+fun(b)                   #result:函数内部b为 [&apos;刘备&apos;, &apos;刘禅&apos;]
+print(&apos;调用后&apos;,b)      #result:调用后 [&apos;刘邦&apos;, &apos;刘秀&apos;]
+#相当于不可变类型
+</code></pre></li>
+</ul>
+<h6>参数类型</h6>
+
+<ul>
+<li>在Python中定义函数,可用必选参数、默认参数、可变参数、关键字参数、命名关键字参数；除了可变参数无法和命名关键字参数组合使用外，其他均可组合使用；参数定义的顺序必须是：必选参数、默认参数、可变参数/命名关键字参数和关键字参数</li>
+<li><p>必选参数（形参与实参的个数、类型、顺序一一对应）</p>
+<pre><code>def fun1(a,b):              #形参：定义方法
+    &apos;&apos;&apos;
+    :param a:               第一个加数
+    :param b:               第二个加数
+    :return:                和
+    &apos;&apos;&apos;
+    return a+b
+h=fun1(33,66)               #实参：调用方法
+print(fun1.__doc__)         #调看文档
+print(h)                    #result:99
+</code></pre></li>
+<li><p>默认参数（缺省参数）须写在后面，可以不指定参数名，但是顺序要正确，否则需要指定参数名</p>
+<pre><code>def fun2(a,b=3):
+    return a+b
+h=fun2(4)
+print(h)                    #result:7
+</code></pre></li>
+<li><p>可变参数（不定长参数）该参数允许传入0个或者任意个参数，这些参数在函数调用时组装为一个tuple</p>
+<pre><code>def getSum(*nums):
+    sum=0
+    for i in nums:
+        sum+=i
+    return sum
+m=[1,2,3,4,5]
+n=(1,2,3,4,5)
+print(getSum())                  #result:0
+print(getSum(1,2,3,4,5,6,7))     #result:28
+print(getSum(*m))                #result:15
+print(getSum(*n))                #result:15
+</code></pre></li>
+<li><p>命名关键字参数  该参数允许传入0个或者任意个参数，这些参数在函数内部自动组装为一个dict;一旦以name=value的的传参数的形式存在，之后都要以这种形式存在，但不要求顺序</p>
+<pre><code>def show(name,age,score=90):
+    print(&apos;姓名{} 年龄{} 成绩{}&apos;.format(name,age,score))
+show(name=&apos;Liu&apos;,age=27,score=135)      #result:姓名Liu 年龄27 成绩135
+</code></pre></li>
+<li><p>关键字参数 该参数允许传入0个或者任意个参数，这些参数在函数内部自动组装为一个dic</p>
+<pre><code>def student(name,age,**hobby):
+    print(&apos;姓名{} 年龄{} 爱好{}&apos;.format(name,age,hobby))
+dic={&apos;一&apos;:111,&apos;二&apos;:222,&apos;三&apos;:333}
+student(&apos;Liu&apos;,30,hobby=&apos;Footboll&apos;)     #result:姓名Liu 年龄30 爱好{&apos;hobby&apos;: &apos;Footboll&apos;}
+student(&apos;Liu&apos;,30,**dic)                #result:姓名Liu 年龄30 爱好{&apos;三&apos;: 333, &apos;二&apos;: 222, &apos;一&apos;: 111}
+</code></pre></li>
+<li><p>组合参数 包括若干种参数</p>
+<pre><code>def fun1(a,b,c=9,*args,**kw):
+    print(&apos;a=&apos;,a,&apos;b=&apos;,b,&apos;c=&apos;,c,&apos;args=&apos;,args,&apos;kw=&apos;,kw)
+#*args是可变参数，会这个分割args 逐个对应形参列表
+#**kw只能对应到形参列表的**kw
+m=(1,2,3,4,5)
+n={&apos;一&apos;:111,&apos;二&apos;:222}
+fun1(&apos;A&apos;,&apos;B&apos;)                      #result:a= A b= B c= 9 args= () kw= {}
+fun1(*m)                           #result:a= 1 b= 2 c= 3 args= (4, 5) kw= {}
+fun1(*m,**n)                       #result:a= 1 b= 2 c= 3 args= (4, 5) kw= {&apos;二&apos;: 222, &apos;一&apos;: 111}
+</code></pre></li>
+</ul>
+<h6>变量作用域</h6>
+
+<ul>
+<li><p>当全局和局部同名时，优先局部变量</p>
+<pre><code>a=10           #全局变量
+def changeNum():
+    global a
+    a=5        #局部变量
+    print(&apos;函数内部a为&apos;,a)
+print(&apos;调用前a为&apos;,a)              #result:10
+changeNum()                      #result:5
+print(&apos;调用后a为&apos;,a)              #result:5
+</code></pre></li>
+</ul>
+<h6>匿名函数（lambda）</h6>
+
+<pre><code>sum=lambda a,b:a+b               #定义函数
+s=sum(3,9)                       #执行函数
+print(s)                         #result:12
+
+def add(a,b,fun):
+    &apos;&apos;&apos;
+    :param a:
+    :param b:
+    :param fun:        传递过来的函数
+    :return:
+    &apos;&apos;&apos;
+    print(fun(a,b))              #委托
+add(11,22,lambda a,b:a+b)        #result:33
+
+m=int(input(&apos;请输入一个操作数：&apos;))
+n=int(input(&apos;请输入一个操作数：&apos;))
+fun1=input(&apos;请输入一个函数：&apos;)     #lambda a,b:a+b
+fun1=eval(fun1)                  #eval函数将字符串当成有效Python表达式来求值，并返回计算结果
+print(fun1(n,m))
+</code></pre><p></p><h6>内置函数</h6><p></p>
+<ul>
+<li><p>filter()通过表达式返回true时保留符合条件的信息</p>
+<pre><code>#filter(函数,列表、元组、字典、可迭代的)
+foo=[2,18,9,22,17,24,8,12,27]
+result=filter(lambda x:x%3==0,foo)
+print(list(result))              #result:[18, 9, 24, 12, 27]
+</code></pre></li>
+<li><p>map()函数接收两个参数，一个是函数，一个是序列，该函数将序列的每个元素传入函数中执行，并把结果作为新的list返回</p>
+<pre><code>foo=[1,2,3,4,5]
+result=map(lambda x:x+4,foo)
+print(list(result))              #result:[5, 6, 7, 8, 9]
+</code></pre></li>
+<li><p>reduce()对于序列内所有元素进行累计操作，先对序列中的第1、2个数据进行操作，得到的结果再与第三个数据运算，最后得到一个结果；python内置了求和函数sum(),一般用reduce()</p>
+</li>
+</ul>
+<pre><code>import functools            #reduce()函数现在放置在了functools模块里了
+foo=[1,2,3,4,5,6,7]
+m=functools.reduce(lambda a,b:a+b,foo)
+print(m)                    #result:28
+
+foo=[1,2,3,4,5,6,7]
+m=functools.reduce(lambda a,b:a+b,foo,100)    #可以接受第三个参数
+print(m)                    #result:128
+
+foo=[1,2,3,4,5,6,7]
+print(sum(foo))             #result:28
+</code></pre><ul>
+<li><p>sorted()排序函数，排序时不影响原数据，产生新的排序数据  </p>
+<pre><code>ol=[1,3,9,5,2,4]
+ul=sorted(ol,reverse=False)
+print(ul)            #result:[1, 2, 3, 4, 5, 9]
+
+ol=[1,3,9,5,2,4]
+ul=sorted(ol,reverse=True)
+print(ul)            #result:[9, 5, 4, 3, 2, 1]
+
+ol=[(&apos;Abot&apos;,98),(&apos;Tom&apos;,57),(&apos;Honey&apos;,77)]
+ul=sorted(ol,key=lambda s:s[1],reverse=True)  #key,依据什么来进行排序
+print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (&apos;Tom&apos;, 57)]
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjvit7rpq005x7owvkle7ujoz" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-集合" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/19/集合/" class="article-date">
@@ -215,7 +826,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjvayqc5o008hg0wvn8hnlxul" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjvit7s19008p7owv5h4se8v1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -400,7 +1011,7 @@ print(&quot;谢谢使用！&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjvayqc5c008bg0wvsnmebz68" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjvit7s02008j7owv9h6nldmp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -563,7 +1174,7 @@ print(d)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjvayqc0p005ng0wvw7pf7lwr" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjvit7rpj005v7owvfahdpelu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -740,7 +1351,7 @@ print(nums)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjvayqc0s005pg0wvdiftl6nj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjvit7rpz005z7owviha62y7c" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -988,7 +1599,7 @@ while i&lt;10:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjvayqc370075g0wvf3u3x82e" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjvit7rv1007b7owv9ai0ltq0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1199,7 +1810,7 @@ print(&apos;d&apos; not in str2)       #result:False
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjvayqc1z006fg0wvutpnb7e6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjvit7rsk006n7owveg4vdc1n" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1287,383 +1898,10 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjvayqc1i0065g0wvm539k683" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjvit7rrg006d7owvcnp26o37" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Ajax回顾" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/01/Ajax回顾/" class="article-date">
-  <time datetime="2018-01-01T07:28:10.000Z" itemprop="datePublished">2018-01-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/01/Ajax回顾/">Ajax回顾</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p>Ajax回顾</p>
-<hr>
-<hr>
-<h4>简介</h4><br>Asynchronous Javascript And XML，异步的JavaScript和XML。通过在后台与服务器进行少量数据交换，AJAX可以使网页实现异步更新。即在不重新加载整个网页的情况下，对网页的某部分进行更新。<br><h4>以封装一个请求为例</h4>
-
-<pre><code>function ajax(url,funSucc,funFail){
-    //1.创建ajax对象
-    var xhr=new XMLHttpRequest()
-    ////兼容IE6，IE5
-    if(window.XMLHttpRequest){
-        var xhr=new XMLHttpRequest()
-    }else{
-        var xhr=new ActiveXObject(&quot;Microsoft.XMLHttp&quot;)    
-    }
-    //2.连接服务器，open(请求类型,文件路径,是否异步)
-    //如果是post请求，则需要手动设置请求消息头，如下
-    xhr.open(&apos;post&apos;,url,true);
-    xhr.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
-    //如果是get请求，如下
-    xhr.open(&apos;get&apos;,url,true)
-    //3.发送请求，send方法内传递的是提交参数，没有可为null
-    xhr.send(null)
-    //4.接收数据，为Ajax对象的onreadystatechange事件设定响应函数
-    xhr.onreadystatechange=function(){
-        //readyState 请求状态:
-            0尚未初始化
-            1正在发送请求
-            2请求完成
-            3请求成功，正在接受数据
-            4接收数据成功
-        if(xhr.readyState==4){
-            //status 服务器返回的http请求响应值常用的有：
-                200表示请求成功
-                202请求被接受但处理未完成
-                400错误的请求
-                404资源未找到
-                500内部服务器错误
-
-            if(xhr.status==200){
-                //responseText 服务器返回的文本
-                funSucc(xhr.responseText)
-            }else{
-                //statusText 服务器返回的请求响应文本
-                funFail(xhr.statusText)
-            }
-        }
-    }
-}
-</code></pre><p><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cjvayqbrt000xg0wvmaa9ud7x" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-进程与线程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/30/进程与线程/" class="article-date">
-  <time datetime="2017-12-30T13:28:24.000Z" itemprop="datePublished">2017-12-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/30/进程与线程/">进程与线程</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p>进程与线程</p>
-<hr>
-<hr>
-<p><em>在刚开始学习性能工具LR时，常听到进程与线程；但不得具体是什么意思，或者比较抽象；然后在网络上找到了比较形象的解释</em></p>
-<ol>
-<li>计算机的核心是CPU，它承担了所有的计算任务。它就像一座工厂，时刻在运行。</li>
-<li>假定工厂的电力有限，一次只能供给一个车间使用。也就是说，一个车间开工的时候，其他车间都必须停工。背后的含义就是，单个CPU一次只能运行一个任务。</li>
-<li>进程就好比工厂的车间，它代表CPU所能处理的单个任务。任一时刻，CPU总是运行一个进程，其他进程处于非运行状态。</li>
-<li>一个车间里，可以有很多工人。他们协同完成一个任务。</li>
-<li>线程就好比车间里的工人。一个进程可以包括多个线程。</li>
-<li>车间的空间是工人们共享的，比如许多房间是每个工人都可以进出的。这象征一个进程的内存空间是共享的，每个线程都可以使用这些共享内存。</li>
-<li>可是，每间房间的大小不同，有些房间最多只能容纳一个人，比如厕所。里面有人的时候，其他人就不能进去了。这代表一个线程使用某些共享内存时，其他线程必须等它结束，才能使用这一块内存。</li>
-<li>一个防止他人进入的简单方法，就是门口加一把锁。先到的人锁上门，后到的人看到上锁，就在门口排队，等锁打开再进去。这就叫”互斥锁”（Mutual exclusion，缩写 Mutex），防止多个线程同时读写某一块内存区域。</li>
-<li>还有些房间，可以同时容纳n个人，比如厨房。也就是说，如果人数大于n，多出来的人只能在外面等着。这好比某些内存区域，只能供给固定数目的线程使用。</li>
-<li>这时的解决方法，就是在门口挂n把钥匙。进去的人就取一把钥匙，出来时再把钥匙挂回原处。后到的人发现钥匙架空了，就知道必须在门口排队等着了。这种做法叫做”信号量”（Semaphore），用来保证多个线程不会互相冲突。<br><br>不难看出，mutex是semaphore的一种特殊情况（n=1时）。也就是说，完全可以用后者替代前者。但是，因为mutex较为简单，且效率高，所以在必须保证资源独占的情况下，还是采用这种设计。</li>
-</ol>
-<hr>
-<ul>
-<li>操作系统的设计，因此可以归结为三点：<br><br>（1）以多进程形式，允许多个任务同时运行；<br><br>（2）以多线程形式，允许单个任务分成不同的部分运行；<br><br>（3）提供协调机制，一方面防止进程之间和线程之间产生冲突，另一方面允许进程之间和线程之间共享资源。</li>
-</ul>
-<p><em>小白参考大神佳作<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">进程与线程的一个简单解释</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjvayqc550087g0wv2pinaqx3" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Django连接MySQL" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/18/Django连接MySQL/" class="article-date">
-  <time datetime="2017-12-18T13:33:37.000Z" itemprop="datePublished">2017-12-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/18/Django连接MySQL/">Django连接MySQL</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <hr>
-<hr>
-<p> </p><h5>1.创建数据库</h5><br><em>请先确保已安装pymsql，命令：<code>pip3 install pymysql</code></em><p></p>
-<p><em>文章中，执行项目类的命令均可在powershell窗口中进行</em></p>
-<ul>
-<li>通过root用户密码登录，比如密码为123456，命令：<code>mysql -u root -p 123456</code></li>
-<li>创建名为“store”的数据库，命令：<code>create database store</code></li>
-<li>给数据库“store”添加用户名liu，密码为liu，命令：<code>grant all on store.* liu@localhost identified by &#39;liu&#39;</code>；此步骤也可以省略</li>
-</ul>
-<p></p><h5>2.新建store app模块</h5><p></p>
-<ul>
-<li>在项目文件夹D:/test/mysite下新建名字为“store”的app模块，命令：<code>python manage.py startapp store</code></li>
-<li>新建后可在pycharm上查看目录结构，在dos中也可查看，命令：<code>tree  store /f</code></li>
-<li><p>在pycharm中的/mysite/setting.py文件中配置store，如下所示：</p>
-<pre><code>INSTALLED_APPS = [
-    &apos;django.contrib.admin&apos;,
-    &apos;django.contrib.auth&apos;,
-    &apos;django.contrib.contenttypes&apos;,
-    &apos;django.contrib.sessions&apos;,
-    &apos;django.contrib.messages&apos;,
-    &apos;django.contrib.staticfiles&apos;,
-    &apos;testapp&apos;,
-    &apos;store&apos;, #添加store app
-]
-</code></pre></li>
-</ul>
-<p></p><h5>3.配置数据库信息与生成表</h5><p></p>
-<ul>
-<li><p>在pycharm中的/mysite/setting.py文件中配置数据库连接信息，如下所示：</p>
-<pre><code># Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    &apos;default&apos;: {
-        &apos;ENGINE&apos;: &apos;django.db.backends.mysql&apos;,
-        &apos;NAME&apos;: &apos;store&apos;, #数据库名称
-        &apos;USER&apos;: &apos;yuan&apos;, #连接用户名
-        &apos;PASSWORD&apos;: &apos;yuan&apos;,#连接密码
-        &apos;HOST&apos;: &apos;localhost&apos;,
-        &apos;PORT&apos;: &apos;3306&apos;
-    }
-}
-</code></pre></li>
-<li><p>在pycharm中的store/__init__.py文件中配置如下信息：</p>
-<pre><code>import pymysql
-pymysql.install_as_MySQLdb()
-</code></pre></li>
-<li><p>在项目文件夹D:/test/mysite下生成数据表，命令：<code>python manage.py migrate</code></p>
-</li>
-<li>可登录数据库store查看自动生成的Django自带app数据库表，命令：<code>use store;</code>，<code>show tables;</code></li>
-</ul>
-<p></p><h5>4.实现查询功能</h5><br>需求：<br><br>商店：name , address <br><br>增 ： 添加 商店信息<br><br>查 ： 显示所有 <br><br>删 ： 删除商店信息<p></p>
-<p></p><h6>4.1编辑model.py</h6><p></p>
-<ul>
-<li><p>在store/model.py中定义实体，对应数据库表，如下所示：</p>
-<pre><code>from django.db import models
-
-# Create your models here.
-# 这里注意:需要继承 models.Model ，不然没办法生成表的哈
-class StoreInfo（models.Model）:
-    name = models.CharField(max_length=20, default=&apos;&apos;) #name属性，字段
-    address = models.CharField(max_length=50, default=&quot;China&quot;) #address属性，字段
-
-    #此方法在print对象的时候，可以打印字符串，类似java中的toString()方法
-    def __str__(self):
-        return self.name + self.address
-</code></pre></li>
-<li><p>在项目文件夹D:/test/mysite下生成数据表，命令：<code>python manage.py makemigrations</code>、<code>python manage.py migrate</code>应用到数据库</p>
-</li>
-<li>在dos窗口中可查看所有表，命令：<code>use store;</code>、<code>show tables;</code></li>
-<li>在dos窗口中可查看storeinfo表结构，命令：<code>show columns from store_storeinfo;</code></li>
-<li><p>在项目文件夹D:/test/mysite下输入命令<code>python manage.py shell</code>打开Terminal添加如下数据：</p>
-<pre><code>In [1]: from store.models import StoreInfo #1.引入刚才创建的 Model
-
-In [2]: store_list=StoreInfo.objects.all() #2.查询操作
-
-In [3]: print(store_list) #3.打印查询结果
-&lt;QuerySet []&gt;
-
-In [4]: create=StoreInfo.objects.create(name=&apos;LMP&apos;,address=&quot;ShangHai&quot;) #4.添加数据操作
-
-In [5]: print(create)#5.打印添加后的返回值
-LMPShangHai
-</code></pre></li>
-</ul>
-<p></p><h6>4.2编辑views.py</h6><p></p>
-<ul>
-<li><p>需要显示所有信息，则需要在store/views.py中定义如下：</p>
-<pre><code>from django.http import HttpResponse
-from django.shortcuts import render
-
-from store.models import StoreInfo
-
-# Create your views here.
-
-# 查下store全部信息 
-def select_store_list(request):
-    store_list = StoreInfo.objects.all() #查询所有的信息
-    print(type(store_list), store_list)  #打印结果类型与结果值
-    return render(request, &quot;store_list.html&quot;, {&quot;content&quot;: store_list}) #返回界面
-</code></pre></li>
-<li><p>上面需要将查询结果在store_list.html中进行填充，如下所示：</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;title&gt;Store&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;table border=&quot;1&quot;&gt;
-    &lt;thead&gt;
-    &lt;tr&gt;
-        &lt;th&gt;名称&lt;/th&gt;
-        &lt;th&gt;地址&lt;/th&gt;
-        &lt;th&gt;操作&lt;/th&gt;
-    &lt;/tr&gt;
-    &lt;/thead&gt;
-    &lt;tbody&gt;
-    #这里是模板语言，for循环，最后需要 endfor
-    {% for foo in content %}
-		        <tr>
-		            <td>{{ foo.name }}</td>
-		            <td>{{ foo.address }}</td>
-		            <td></td>
-		        </tr>
-		    {% endfor %}
-    &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre></li>
-<li><p>在store app下即store/下新建templates文件夹存放store_list.html文件</p>
-</li>
-<li><p>在pycharm中的/mysite/setting.py文件中配置templates,如下所示：</p>
-<pre><code>TEMPLATES = [
-    {
-        &apos;BACKEND&apos;: &apos;django.template.backends.django.DjangoTemplates&apos;,
-        &apos;DIRS&apos;: [
-            BASE_DIR + &quot;/store/templates&quot;, #在这里进行配置，默认是空的list
-        ],
-        &apos;APP_DIRS&apos;: True,
-        &apos;OPTIONS&apos;: {
-            &apos;context_processors&apos;: [
-                &apos;django.template.context_processors.debug&apos;,
-                &apos;django.template.context_processors.request&apos;,
-                &apos;django.contrib.auth.context_processors.auth&apos;,
-                &apos;django.contrib.messages.context_processors.messages&apos;,
-            ],
-        },
-    },
-]
-</code></pre></li>
-<li><p>在store app下即store/下新建url.py文件，如下所示：</p>
-<pre><code>from django.conf.urls import url
-
-from store import views
-
-urlpatterns = [
-    url(r&apos;^list$&apos;, views.select_store_list),
-]
-</code></pre></li>
-<li><p>在pycharm中的/mysite/urls.py文件中配置store app urls，如下所示：（此方法无效的话，按照在store app中路径设置方法）</p>
-<pre><code>urlpatterns = [
-    url(r&apos;^admin/&apos;, admin.site.urls),
-    url(r&apos;^test/&apos;, include(&apos;testapp.urls&apos;)),
-    url(r&apos;^store/&apos;, include(&apos;store.urls&apos;)), # store的urls
-]
-</code></pre></li>
-<li><p>在项目文件夹D:/test/mysite下输入命令<code>python manage.py runserver 8080</code></p>
-</li>
-</ul>
-<p><em>小白参考大神佳作<a href="http://blog.csdn.net/LABLENET/article/details/53321260" target="_blank" rel="noopener">Django-Mysql结合 基本配置操作并实现查询功能</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjvayqbr5000lg0wvgd5455ew" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
 
     </footer>
   </div>
@@ -1692,7 +1930,7 @@ urlpatterns = [
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">10</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1702,7 +1940,7 @@ urlpatterns = [
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19.09px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.45px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15.45px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10.91px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16.36px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 11px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 14px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13px;">软件工具</a>
     </div>
   </div>
 
@@ -1711,7 +1949,7 @@ urlpatterns = [
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1724,23 +1962,23 @@ urlpatterns = [
       <ul>
         
           <li>
+            <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/11/Tomcat日志文件/">Tomcat日志文件</a>
+          </li>
+        
+          <li>
             <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
           </li>
         
           <li>
             <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/04/MySQL监控与调优-初级/">MySQL监控与调优--初级</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/26/完全备份与还原-mysqldump备份/">完全备份与还原---mysqldump备份</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
           </li>
         
       </ul>
