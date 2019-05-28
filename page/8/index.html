@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,110 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-pyspider框架" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/24/pyspider框架/" class="article-date">
+  <time datetime="2018-03-24T10:41:19.000Z" itemprop="datePublished">2018-03-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/24/pyspider框架/">pyspider框架</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>pyspider框架</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>pyspider 是一个用python实现的功能强大的网络爬虫系统，能在浏览器界面上进行脚本的编写，功能的调度和爬取结果的实时查看，后端使用常用的数据库进行爬取结果的存储，还能定时设置任务与任务优先级等</li>
+<li>PhantomJS 是一个基于 WebKit 的服务器端 JavaScript API。它全面支持web而不需浏览器支持，其快速、原生支持各种Web标准：DOM 处理、CSS 选择器、JSON、Canvas 和 SVG。 PhantomJS 可以用于页面自动化、网络监测、网页截屏以及无界面测试等</li>
+<li>安装完pyspider、phantomJS后，在命令行输入<code>pyspider all</code>启动pyspider所有服务组件…然后浏览器访问 <a href="http://localhost:5000，如果正常出现" target="_blank" rel="noopener">http://localhost:5000，如果正常出现</a> PySpider 的页面，那证明一切OK</li>
+<li>pyspider的架构主要分为 scheduler（调度器）, fetcher（抓取器）, processor（脚本执行）,以及一个监控组件，当启动服务组件的时候，这些程序均开始运行了…<ul>
+<li>1.各个组件间使用消息队列连接，除了scheduler是单点的，fetcher 和 processor 都是可以多实例分布式部署的。 scheduler 负责整体的调度控制</li>
+<li>2.任务由 scheduler 发起调度，fetcher 抓取网页内容， processor 执行预先编写的python脚本，输出结果或产生新的提链任务（发往 scheduler），形成闭环</li>
+<li>3.每个脚本可以灵活使用各种python库对页面进行解析，使用框架API控制下一步抓取动作，通过设置回调控制解析动作</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>页面内容解析</h6><p></p>
+<ul>
+<li>拿www.reeoo.com这个网页，爬取上面的数据</li>
+<li>创建新项目页面：<ul>
+<li>Project Name：任务的名字</li>
+<li>Start URL(s)：爬取任务开始的地址</li>
+</ul>
+</li>
+<li><p>创建后的页面</p>
+<pre><code>from pyspider.libs.base_handler import *
+class Handler(BaseHandler):
+    crawl_config = {
+    }
+
+    @every(minutes=24 * 60)
+    #@every(minutes=24 * 60) 通知 scheduler（框架的模块） 每天运行一次
+    def on_start(self):
+    #on_start(self) 程序的入口，当点击左侧绿色区域右上角的 run 按钮时首先会调用这个函数
+        self.crawl(&apos;https://reeoo.com/&apos;, callback=self.index_page)
+    #self.crawl(url, callback) pyspider库主要的API，用于创建一个爬取任务，url 为目标地址，这里为我们刚刚创建任务指定的起始地址，callback 为抓取到数据后的回调函数
+
+    @config(age=10 * 24 * 60 * 60)
+    #@config(age=10 * 24 * 60 * 60) 设置任务的有效期限，在这个期限内目标爬取的网页被认为不会进行修改
+    def index_page(self, response):
+    #index_page(self, response) 参数为 Response 对象，response.doc 为 pyquery 对象，主要用来方便地抓取返回的html文档中对应标签的数据
+        for each in response.doc(&apos;a[href^=&quot;http&quot;]&apos;).items():
+            self.crawl(each.attr.href, callback=self.detail_page)
+
+    @config(priority=2)
+    #@config(priority=2) 设定任务优先级
+    def detail_page(self, response):
+    #detail_page(self, response) 返回一个 dict 对象作为结果，结果会自动保存到默认的 resultdb 中，也可以通过重载方法来将结果数据存储到指定的数据库
+        return {
+            &quot;url&quot;: response.url,
+            &quot;title&quot;: response.doc(&apos;title&apos;).text(),
+        }
+</code></pre></li>
+<li><p>运行代码后时出现 HTTP 599: SSL certificate problem: unable to get local issuer certificate错误时：<br><br>使用 self.crawl(url, callback=self.index_page, validate_cert=False)</p>
+</li>
+<li>运行<br>1.点击左边绿色区域右上角的 run 按钮，运行之后页面下册的 follows 按钮出现红色角标<br>2.选中 follows 按钮，看到 index_page 行，点击行右侧的运行按钮<br>3.运行完成后显示 www.reeoo.com 页面上所有的url<br>4.此时任意选择一个结果运行，此时调用的是 detail_page 方法，返回结果为json格式的数据，这里我们保存的是网页的 title 和 url，见左侧黑色的区域<br>5.回到主页面，此时看到任务列表显示刚刚创建的任务，设置 status 为 running，然后点击 Run 按钮执行<br>6.执行过程中可以看到整个过程的打印输出<br>7.执行完成后，点击 Results 按钮，进入到爬取结果的页面<br>8.右上方的按钮选择将结果数据保存成对应的格式，例如：JSON格式的数据</li>
+</ul>
+<p></p><h6>查找文件路径</h6><p></p>
+<ul>
+<li>由于配置了windows的环境变量，所以习惯性的打开CMD后就直接敲命令行执行 pyspider语句，但找不到pyspider存储的数据在哪里</li>
+<li>后来才发现，pyspider命令行执行的时候，数据库data文件会自动在当前目录生成，即在<code>C:\Users\DELL&gt;</code>下，<code>C:\Users\DELL\data</code></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="cjw7vie44004qqswv20kz9wke" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-selenium模块" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -164,7 +268,7 @@ print(logo.size)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cjvit7rnt005d7owvot1wziiw" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="cjw7vie4l0052qswvzbbojila" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -308,7 +412,7 @@ print(ul.text())
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="cjvit7rlj004r7owv1ep15r9u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="cjw7vie3j004cqswveedtt0g1" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -471,7 +575,7 @@ for li in soup.select(&apos;li&apos;):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="cjvit7rgk003h7owvkutshoed" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="cjw7vie1s003fqswv10kbapvw" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -590,7 +694,7 @@ for li in soup.select(&apos;li&apos;):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="cjvit7rkc004h7owvzi7pey2c" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="cjw7vie340042qswvh7mtgf93" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -754,7 +858,7 @@ print(response.status_code)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="cjvit7rmd004z7owv4nrwom1o" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="cjw7vie3s004iqswvirbjou68" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -953,7 +1057,7 @@ with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cjvit7ro8005h7owvvnob6iie" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="cjw7vie4s0056qswvyryhin23" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1057,7 +1161,7 @@ b/s--&gt;browser/server 浏览器与服务器交互
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjvit7r3y000n7owvsu2k7m62" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="cjw7vidws000tqswvu62sqfl5" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -1240,7 +1344,7 @@ db.myinfo.find({$or:[{&apos;name&apos;:&apos;liuyongqian&apos;},{&apos;age&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjvit7r9a001w7owvuwugetgc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjw7vidyr001tqswvofdw5jzw" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1362,84 +1466,10 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjvit7rd0002t7owv4jj5t409" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjw7vie0p002tqswvkbzp7tmu" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Zset类型操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/16/Zset类型操作/" class="article-date">
-  <time datetime="2018-03-16T09:23:30.000Z" itemprop="datePublished">2018-03-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/16/Zset类型操作/">Zset类型操作</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Zset类型操作</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>01</h6><p></p>
-<ul>
-<li><p>1.zadd key_name score1 value1 score2 value2 …用于将一个或多个成员元素及其分数值加入到有序集当中,分数值可以是整数值或双精度浮点数</p>
-<pre><code>zadd mykey 1 one 2 two 3 three  #返回被成功添加的新成员的数量，不包括那些被更新的、已经存在的成员
-</code></pre></li>
-<li><p>2.zcard key_name用于计算集合中元素的数量</p>
-<pre><code>zcard mykey         #result:3
-</code></pre></li>
-<li><p>3.zcount key_name min max用于计算有序集合中指定分数区间的成员数量</p>
-<pre><code>zcount mykey  1 3  #result:3
-</code></pre></li>
-<li><p>4.zincrby key_name increment member对有序集合中指定成员的分数加上增量 </p>
-<pre><code>zincrby mykey 1 three    #返回member 成员的新分数值，以字符串形式表示
-zrange mykey 0 -1 withscores
-</code></pre></li>
-<li><p>5.zinterstore destination keysnum key1 key2计算给定的一个或多个有序集的交集，其中给定 key 的数量必须以 numkeys 参数指定，并将该交集(结果集)储存到 destination </p>
-<pre><code>zadd test1 11 tom 12 jerry 13 john
-zadd test2 11 tom 14 oven 15 honey
-zinterstore test3 2 test1 test2
-</code></pre></li>
-<li><p>6.zlexcount key_name min max 计算有序集合中指定字典区间内成员数量</p>
-<pre><code>zlexcount mykey - +   #返回所有成员数量
-zlexcount mykey [one [three #result:1
-</code></pre></li>
-<li><p>7.zrange key_name start stop返回指定区间内的成员,其中成员的位置按分数值递增(从小到大)来排序<br>zrevrange命令则递减排序</p>
-<pre><code>zrange mykey 0 -1     #one two three
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjvit7rgv003k7owv6viw498f" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
 
     </footer>
   </div>
@@ -1454,7 +1484,7 @@ zlexcount mykey [one [three #result:1
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/7/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/9/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/9/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1466,9 +1496,9 @@ zlexcount mykey [one [three #result:1
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1476,18 +1506,18 @@ zlexcount mykey [one [three #result:1
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 11px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 14px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 14.44px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1495,9 +1525,13 @@ zlexcount mykey [one [three #result:1
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/28/读书乱纪01/">读书乱纪01</a>
+          </li>
         
           <li>
             <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
@@ -1513,10 +1547,6 @@ zlexcount mykey [one [three #result:1
         
           <li>
             <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
           </li>
         
       </ul>
@@ -1547,7 +1577,7 @@ zlexcount mykey [one [three #result:1
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

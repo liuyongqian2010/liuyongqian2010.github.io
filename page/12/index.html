@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,130 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Jmeter基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/28/Jmeter基础/" class="article-date">
+  <time datetime="2018-02-28T15:10:23.000Z" itemprop="datePublished">2018-02-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/28/Jmeter基础/">Jmeter基础</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Jmeter基础</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>Jmeter简介</h6><p></p>
+<ul>
+<li>Apache Jmeter是Apache组织的开放源代码项目，是一个纯Java桌面应用，用于分析不同压力条件下的总体性能情况，也可以使用Jmeter提供的图形化界面分析性能指标或者在高负载情况下测试服务器、脚本、对象</li>
+<li>Jmeter与LR的主要区别在于Jmeter不提供IP欺骗技术</li>
+<li>Jmeter安装配置<ul>
+<li>安装配置好jdk后，解压apache-jmeter-4.0，运行bin目录下的ApacheJMeter.jar</li>
+</ul>
+</li>
+<li>Jmeter文件目录介绍<ul>
+<li>bin可执行文件目录<ul>
+<li>jmeter.bat windows的启动文件</li>
+<li>jmeter.sh linux的启动文件</li>
+<li>jmeter.properties 系统配置文件</li>
+<li>jmeter-server.bat Windows分布式测试要用到的服务器配置</li>
+<li>jmeter-server linux分布式测试要用到的服务器配置</li>
+</ul>
+</li>
+<li>docs接口文档目录</li>
+<li>lib所用到的插件目录</li>
+<li>License Jmeter证书目录</li>
+<li>printable_docs用户使用手册</li>
+</ul>
+</li>
+<li>功能概要<ul>
+<li>Jmeter工具组成部分<ul>
+<li>资源生成器：用于生成测试过程中服务器、负载机的资源代码（VuGen）</li>
+<li>用户运行器：根据脚本要求模拟指定的用户行为（Controller）</li>
+<li>报表生成器：根据测试中实时的数据生成报表，提供可视化的数据显示形式（Analysis）</li>
+<li>负载发生器：用于产生负载，通常以多线程、多进程的方式模拟用户行为（Load Generater）</li>
+<li>测试计划：相当于lr的一个测试场景</li>
+</ul>
+</li>
+<li>Threads(Users)线程  用户<ul>
+<li>a.setup thread group,可用于执行预测试操作，类似lr的init()</li>
+<li>b.teardown thread group，可用于执行测试后动作，类似lr的end()</li>
+<li>c.Thread group，这个就是通常运行的线程，类似lr的action()</li>
+</ul>
+</li>
+<li>线程组的8类可执行文件<ul>
+<li>配置元件（cinfig element）用于提供对静态数据配置的支持</li>
+<li>定时器（Timer）类似于lr中的思考时间</li>
+<li>前置处理器（per processors）用于在实际的请求发出前对即将发出的请求进行特殊处理</li>
+<li>后置处理器（post processors）类似于lr中的关联概念</li>
+<li>断言（assertions）用于检查测试中得到的相应数据是否符合预期</li>
+<li>监听器（listener）用来对测试结果数据进行处理和可视化展示的一系列元件，这个监听器可不是用来监听系统资源的元件</li>
+<li>取样器（sample）是性能测试中向服务器发送请求，记录相应信息，记录响应时间的最小单元</li>
+<li>逻辑控制器（logic controller）包括两类元件，一类是用于控制测试计划中sampler节点发送请求的逻辑顺序控制器，常用的有if控制器、循环控制器等，另一类是用来组织可控制sampler节点的，如事务控制器，吞吐量控制器</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>脚本录制</h6><p></p>
+<ul>
+<li>Badboy脚本录制完成后，导出为Export to jmeter</li>
+<li>Badboy检查点设置</li>
+<li>Badboy参数化</li>
+</ul>
+<p></p><h6>元件作用域、执行顺序</h6><p></p>
+<ul>
+<li>元件作用域<ul>
+<li>8类可被执行的元件（测试计划与线程组不属于可执行元件），这些元件中，取样器是典型的不与其他元件发生交互作用的元件，逻辑控制器只对其子节点的取样器有效，而其他元件需要与取样器等元件交互</li>
+<li>在Jmeter中，元件的作用域是靠测试计划的树型结构中元件的父子关系来确定的，作用域的原则是：<ul>
+<li>a，取样器元件不和其他元件相互作用，因此不存在作用域的问题</li>
+<li>b，逻辑控制器元件只对其子节点中的取样器和逻辑控制器作用</li>
+<li>c，除取样器和逻辑控制器元件外，其他6类元件，如果是某个取样器的子节点，则该元件对其父子节点起作用，如果其父节点不是取样器，则其作用域是该元件父节点下的其他所有后代节点（包括子节点，子节点的子节点等）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>元件执行顺序<ul>
+<li>配置元件–前置处理程序–定时器–取样器–后置处理程序–断言–监听器<ul>
+<li>注意：前置处理器、后置处理器和断言等元件功能对取样器作用，因此，如果在他们的作用域内没有任何取样器，则不会被执行；如果在同一作用域内有多个同一类型的元件，则这些元件按照他们在测试计划中的上下顺序依次执行</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjw7vidyo001rqswvzgz6y5xq" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-初识MySQL" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -201,7 +325,7 @@ alert table 表名 add constraint 外键名 foreign key (外键字段) reference
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjvit7rqc00637owve4k5jnlz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/28/初识MySQL/" data-id="cjw7vie6p006eqswv4lxz1icl" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -325,7 +449,7 @@ clearInterval取消由setInterval()设置的timeout
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjvit7r1700047owv5cs5lfcp" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/27/BOM/" data-id="cjw7vidsn0000qswvmb0skch4" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -444,7 +568,7 @@ div.appendChild(img)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjvit7r6200147owvypaoiucs" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/27/HTML DOM/" data-id="cjw7vidx50011qswv6w50wdcc" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -592,7 +716,7 @@ nextSibling      获取下一个兄弟节点
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjvit7rq700617owvkx0od61w" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/27/初识DOM与BOM/" data-id="cjw7vie5m005qqswvqelkug3g" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -743,7 +867,7 @@ a()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjvit7rqk00657owv41xhc4eo" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/27/匿名函数、封装继承/" data-id="cjw7vie660064qswvxdogt7kr" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -882,7 +1006,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjvit7rwn007n7owvy53mm7p6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/26/模块、包、枚举/" data-id="cjw7vie990080qswv24xadcd6" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1079,7 +1203,7 @@ print(guodi())
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjvit7s0a008l7owvm2qdb6e9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/24/闭包、装饰、冒泡/" data-id="cjw7vie9x008eqswv6lvwyos3" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1265,7 +1389,7 @@ callee：返回当前函数的引用
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cjvit7r7w001k7owvh741ylso" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/Js对象/" data-id="cjw7vidyb001kqswvvi1jg2b1" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1481,161 +1605,7 @@ test()         检索字符串中指定的值。返回true或false
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js数组、正则/" data-id="cjvit7r84001m7owvsq538w1q" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Js基础、函数、循环" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/23/Js基础、函数、循环/" class="article-date">
-  <time datetime="2018-02-23T12:36:14.000Z" itemprop="datePublished">2018-02-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/23/Js基础、函数、循环/">Js基础、函数、循环</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h6>基础</h6><p></p>
-<ul>
-<li>js是一种广泛应用于客户端网页开发的脚本语言，是基于对象的弱类型语言，无需编译，由JavaScript引擎解释执行<br>其核心部分只包括基本的语法构造（比如操作符、控制结构、语法）和标准库（一系列具有各种功能的对象如Maths、Date等）<br>完整的js包括三部分：核心（ECMAScript)、BOM、DOM</li>
-<li>js数据类型<br>基本数据类型包括：原始类型：string、number、boolean、undefined、bull，引用类型：object、function、date、number、string、boolean</li>
-<li><p>运用js的三种方式：<br>第一种，要执行的脚本语句直接编写在body中，如：</p>
-<pre><code>&lt;body&gt;
-    &lt;button onclick=&quot;console.log(&apos;hello world&apos;)&quot;&gt;打印&lt;/button&gt;
-&lt;/body&gt;
-</code></pre><p>第二种，外部，内部脚本块中可以执行多条语句：</p>
-<pre><code>&lt;script&gt;
-    document.write(&apos;&lt;b&gt;你好&lt;/b&gt;&apos;);
-    console.log(&apos;脚本执行完成&apos;);
-&lt;/script&gt;
-</code></pre><p>第三种，将JavaScript代码写入一个后缀名为js的文件中并在<head>中引入：</head></p>
-<pre><code>&lt;script src=&quot;js文件.js&quot;&gt;&lt;/script&gt;
-</code></pre></li>
-<li><p>js语法规范<br><br>语句中大小写敏感，使用分号或者换行结束；<br><br>单行注释：//                 多行注释：/<em>  </em>/<br><br>基本输出语句：</p>
-<pre><code>console.log();//控制台输出
-document.write();//页面输出
-window.alert();//弹出提示框
-</code></pre></li>
-<li>变量<br>存储信息的容器，使用关键字var，用=为变量赋值，没有初始化的变量自动取值为underfined；一条语句中可声明多个变量，如：<code>var name1,name2,name3=liu</code>,<br>不允许使用语言关键字和保留字变量名<br><br>标准关键字:<br>break，case，catch，continue，deflault，delete，do，else，false，finally，or，function，if，in，instanceof，new，null，return，switch，this，throw，true，try，typeof，var，with，undefined<br><br>标识符命名规范：可以包含字母、数字、下划线、美元符号；不能以数字开头</li>
-<li>常量<br>是值不能改变的量，使用const关键字声明变量，一般常量名使用纯大写形式，如 <code>const PI=3.15</code></li>
-</ul>
-<p></p><h6>函数</h6><p></p>
-<ul>
-<li><p>运算符</p>
-<pre><code>算数运算：加（+）、减（-）、乘（*）除（/）求余（%）
-关系运算：“&gt;”(大于)，“&lt;”(小于)，“&gt;=”(大于等于)，“&lt;=”(小于等于)，“==”(等于)，“!=”(不等于)，===（类型、数值全等），!==（类型、数值全不等）
-逻辑运算：&amp;&amp;（与）、||（或）、!（非）
-赋值运算：+=（先运算后赋值） =+（先赋值后运算）   -=   *=   /=   %=
-字符连接： +
-
-三目运算：表达式1？表达式2：表达式3  举例：var age = 20；  var msg = age&gt;18?”成年人”:”未成年”
-</code></pre></li>
-<li><p>数据类型转换函数</p>
-<pre><code>Number()
-把一个string解析为number，如果包含非法字符，则返回NaN
-parseFloat()
-解析出一个string或number的浮点数部分，如果没有可转换的部分，则返回NaN
-parseInt()
-解析出一个string或number的整数部分，如果没有可转换的部分，则返回NaN
-toString()
-转换成字符串，所有数据类型均可转换为string类型
-</code></pre></li>
-<li><p>函数</p>
-<ul>
-<li>函数是一段定义好，并可以被反复使用的代码块，其中以包含多条可执行语句；函数本质上是功能完整的对象</li>
-<li><p>如</p>
-<pre><code>function add(ename,epwd){
-  console.log(&apos;用户名&apos;+ename+&apos;密码&apos;+epwd);
- }
-add(&apos;Marry&apos;,&apos;123&apos;)
-</code></pre></li>
-<li><p>ECMAScript中预定义全局函数，可直接应用，如：<br>encodeURI函数用于对统一资源标识符（URI）进行编码，返回编码后的URI字符串<br>decodeURI函数用于对使用encodeURI编码之后的字符串进行解码，举例：</p>
-<pre><code>var ur=”http://www.baidu.com/name/web/前端”;
-var encoded = encodeURI(ur);
-var decoded = decodeURI(encoded);
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>分支结构</h6><p></p>
-<ul>
-<li>if语句</li>
-<li>if-else语句</li>
-<li><p>switch-case语句</p>
-<pre><code>&lt;body&gt;
-&lt;button onclick=&quot;fn3()&quot;&gt;Switch&lt;/button&gt;
-&lt;script&gt;
-function fn3(){
-    var m1=Number(prompt(&quot;Please input a value:&quot;));
-    switch (m1)
-    {
-        case 1:
-            console.log(&quot;游戏人生&quot;);
-            break;
-        case 2:
-            console.log(&quot;奋斗人生&quot;);
-            break;
-    }
-}
-&lt;/script&gt;
-&lt;/body&gt;
-</code></pre></li>
-<li><p>switch-case在实现分支功能时和if–else的主要区别在于：<br><br>if…else…可以判定相等或不等的情况，适用性广<br><br>switch…case…结构更清晰、效率更高;但是一般只用于指定变量相等于某个范围内的某个特定的值</p>
-</li>
-</ul>
-<p></p><h6>循环结构</h6><p></p>
-<ul>
-<li><p>while语句</p>
-<pre><code>var i = 0;
-while(i&lt;10){
-    console.log(i);
-    i++;            //循环条件每执行一次就改变一次
-}
-</code></pre></li>
-<li><p>do-while语句</p>
-<pre><code>do{
-    可执行语句;
-}while(boolean表达式);
-</code></pre></li>
-<li>while和do-while的区别<br><br>while循环  “先判断再执行”<br><br>do-while循环 “先执行再判断”<br><br>当初始情况不满足循环条件时，while循环一次都不会执行；do-while循环不管任何情况至少执行一次。</li>
-<li><p>for 语句</p>
-<pre><code>for(表达式1;表达式2;表达式3){
-    循环体语句;
-}
-</code></pre></li>
-<li>break用于循环，可使程序终止循环而执行循环后面的语句，常常与条件语句一起使用</li>
-<li>continue关键字只能用于循环中，作用为跳过本次循环体中剩余语句而执行下一次循环</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/23/Js基础、函数、循环/" data-id="cjvit7r7l001i7owvnomqzpus" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/23/Js数组、正则/" data-id="cjw7vidy6001hqswvlvjidlz0" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -1653,7 +1623,7 @@ while(i&lt;10){
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/11/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/13/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/11/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/13/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1665,9 +1635,9 @@ while(i&lt;10){
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1675,18 +1645,18 @@ while(i&lt;10){
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 11px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 14px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 14.44px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1694,9 +1664,13 @@ while(i&lt;10){
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/28/读书乱纪01/">读书乱纪01</a>
+          </li>
         
           <li>
             <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
@@ -1712,10 +1686,6 @@ while(i&lt;10){
         
           <li>
             <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
           </li>
         
       </ul>
@@ -1746,7 +1716,7 @@ while(i&lt;10){
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

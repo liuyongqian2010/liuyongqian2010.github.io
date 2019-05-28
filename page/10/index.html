@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,148 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Git高级" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/13/Git高级/" class="article-date">
+  <time datetime="2018-03-13T02:21:05.000Z" itemprop="datePublished">2018-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/13/Git高级/">Git高级</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Git高级</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>分支管理</h6><p></p>
+<ul>
+<li><p>Git会串成一条时间线，这条时间线就是分支， 默认就是master<br>HEAD并不是指向提交，而是指向master，指向最新版本</p>
+<pre><code>v1  ==&gt;  v2  ==&gt; v3
+                 |
+                 master
+                  |
+                  HEAD
+如果创建了新的分支，head将指向新的分支，如下
+                        master
+                          |
+v1  ==&gt;  v2  ==&gt; v3  ==&gt; v4
+                          |
+                        dev
+                          |
+                        HEAD
+</code></pre></li>
+<li><p>基本命令</p>
+<ul>
+<li>查看分支：git branch（*表示你当前所处的branch是哪个）</li>
+<li>创建分支：git branch 分支名</li>
+<li>切换分支： git checkout 分支名</li>
+<li>创建并切换分支：git checkout -b 分支名</li>
+<li>合并分支：git merge 分支名 （需要切换到主分支或者依附分支再执行该命令）</li>
+<li>删除分支： git branch -d 分支名</li>
+<li>分支合并图：git log –graph  –pretty=oneline  –abbrev-commit</li>
+</ul>
+</li>
+<li><p>解决冲突</p>
+<ul>
+<li><p>先在feature1 分支:  a.txt中新增并提交‘AND simple’；<br>后在master 分支:  a.txt 中新增提交‘&amp; simple’ <br>在master和分支上分别对a.txt做了不同修改之后，合并分支出现以下错误：</p>
+<pre><code>git merge feature1
+Auto-merging a.txt
+CONFLICT (content): Merge conflict in a.txt
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre></li>
+<li><p>当Git无法自动合并分支时，就必须首先解决冲突，再提交，最后merge</p>
+</li>
+</ul>
+</li>
+<li><p>分支管理策略：</p>
+<ul>
+<li>1）master分支： 代码是稳定的，平时不能在上面干活的，仅仅是用来发布新版本用</li>
+<li>2）其他分支：是不稳定的，bug、feature可以创建新的分支进行开发，最后再合并到master即可</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>标签管理</h6><p></p>
+<ul>
+<li>标签（tag），是版本库的一个快照；发布一个新版本时，通常先在版本库中打一个标签，无论在将来什么时候，取某个标签的版本即可</li>
+<li><p>基本命令</p>
+<pre><code>git tag &lt;tagname&gt;创建标签
+git tag查看所有标签
+git tag -a &lt;tagname&gt; -m &lt;desc&gt;创建带有说明的标签
+git show &lt;tagname&gt;查看标签的说明
+git tag -d &lt;tagname&gt;删除标签
+
+git push origin &lt;tagname&gt;推送一个本地标签
+git push origin --tags推送全部未推送的本地标签
+
+#如果tag已经推送到远程，要删除远程标签分2步：
+1）删除本地tag:  git tag -d 本地标签名
+2）git push origin :refs/tags/本地标签名
+</code></pre></li>
+</ul>
+<p></p><h6>多人协作</h6><p></p>
+<ul>
+<li>开源项目肯定都是很多人参与到社区中，通过协作完成</li>
+<li>多人协作常用操作<ul>
+<li>克隆远程仓库：git clone xxxxxxx</li>
+<li>查看远程信息：git remove (-v)</li>
+<li>创建自己的分支：git branch xxxxxx</li>
+<li>推送分支：git push origin <branch-name></branch-name></li>
+<li>创建Pull Request</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>其他操作</h6><p></p>
+<ul>
+<li><p>git颜色设置</p>
+<pre><code>Git控制台颜色设置
+git config --global color.diff auto
+git config --global color.status auto
+git config --global color.branch auto
+
+颜色设置关闭
+git config --global color.status false
+</code></pre></li>
+<li><p>忽略某些特殊文件不提交</p>
+<ul>
+<li>1）只需要在git项目的根目录下创建一个.gitignore</li>
+<li>2) 把需要提交的文件或者目录名称写到.gitignore</li>
+<li>3）如果你真正想提交的文件已经被包含在.gitignore里面了，那么就需要使用-f进行强制提交</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/13/Git高级/" data-id="cjw7vidz1001yqswv84jyr60p" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-Fiddler学习" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -103,7 +245,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习/" data-id="cjvit7r4m000r7owv2git2y0k" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/12/Fiddler学习/" data-id="cjw7vidxj0018qswv42zvbq6y" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -238,7 +380,7 @@ print(result.group(1))       #result:20180101
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjvit7rmr00537owvp8phhif6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="cjw7vie5d005kqswv2q2u4idw" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -405,7 +547,7 @@ git reflog：查看命令历史，以便确定要回到未来/过去的哪个版
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjvit7r5i00107owvuesb9j0u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="cjw7vidxe0015qswvn9nsz14b" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -481,7 +623,7 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjvit7rlq004t7owvuqyuhydw" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="cjw7vie3y004mqswvy2sw8she" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -587,7 +729,7 @@ print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="cjvit7rct002q7owv58cjnprl" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="cjw7vidzx002eqswvkqboc0e4" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -716,7 +858,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjvit7rcm002o7owvvn2rcynw" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="cjw7vie140032qswvqjo7ge8x" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -843,7 +985,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjvit7rgc003f7owvr0zl0rll" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="cjw7vie1a0036qswv6c72qm2r" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -919,7 +1061,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjvit7rex00337owvc0actips" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="cjw7vie2l003oqswvxfwrxql4" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -1059,161 +1201,10 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjvit7rry006h7owvcerbsf56" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="cjw7vie6j006aqswvq5t9eme8" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-事务视图索引备份" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/09/事务视图索引备份/" class="article-date">
-  <time datetime="2018-03-09T10:10:58.000Z" itemprop="datePublished">2018-03-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/09/事务视图索引备份/">事务视图索引备份</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>事务视图索引备份</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>事务</h6><p></p>
-<ul>
-<li><p>事务是一个不可分割的工作逻辑单元 </p>
-<pre><code>begin;   #开始事务（指定事务从此处开始，后续的SQL语句都是一个整体）
-update bank set currentMoney=currentMoney-1000 
-where customerName=&apos;张三&apos;;
-update bank set currentMoney=currentMoney+1000 
-where customerName=&apos;李四&apos;;
-commit;  #提交事务，事务结束
-
-begin;
-update bank set currentMoney=currentMoney-1000 
-where customerName=&apos;张三&apos;;
-update bank set currentMoney=currentMoney+1000 
-where customerName=&apos;李四&apos;;
-rollback;  #回滚事务，数据恢复到原始状态
-
-#转账过程就是一个整体它需要两条UPDATE语句来完成，
-这两条语句是一个整体如果其中任一条出现错误，
-则整个转账业务也应取消，
-两个账户中的余额应恢复到原来的数据，
-从而确保转账前和转账后的余额不变，即都是1001元
-</code></pre></li>
-<li><p>事务必须具备以下四个属性，简称ACID 属性</p>
-<ul>
-<li>原子性（Atomicity）<ul>
-<li>事务是一个完整的操作，事务的各步操作是不可分的(原子的)，要么都执行，要么都不执行</li>
-</ul>
-</li>
-<li>一致性（Consistency）<ul>
-<li>当事务完成时，数据必须处于一致状态</li>
-</ul>
-</li>
-<li>隔离性（Isolation）<ul>
-<li>并发事务之间彼此隔离、独立，它不应以任何方式依赖于或影响其他事务</li>
-</ul>
-</li>
-<li>持久性（Durability）<ul>
-<li>事务完成后,它对数据库的修改被永久保持</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>事务关闭<ul>
-<li>默认情况下，每条单独的SQL语句视为一个事务，默认开启，即autocommit=1</li>
-<li>关闭开启自动提交状态 set autocommit=0|1,0为关闭自动提交</li>
-<li>关闭自动提交后，从下一条SQL语句开始则开启新事务，需使用commit或者rollback语句结束该事</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>视图</h6><p></p>
-<ul>
-<li>视图是一张虚拟表<ul>
-<li>表示一张表的部分数据或多张表的综合数据</li>
-<li>其结构和数据是建立在对表的查询基础上</li>
-</ul>
-</li>
-<li>视图中不存放数据<ul>
-<li>数据存放在视图所引用的原始表中</li>
-</ul>
-</li>
-<li>一个原始表，根据不同用户的不同需求，可以创建不同的视图</li>
-<li><p>对视图数据进行添加、更新和删除操作直接影响所引用表中的数据</p>
-<pre><code>#删除视图
-drop view if exists view_name;
-#创建视图
-create view view_name(
-    select ......
-)
-#查看视图
-select ... from view_name;
-</code></pre></li>
-</ul>
-<p></p><h6>索引</h6><p></p>
-<ul>
-<li>索引是一种有效组合数据的方式，为快速查找到指定记录</li>
-<li>作用<ul>
-<li>大大提高数据库的检索速度</li>
-<li>改善数据库性能</li>
-</ul>
-</li>
-<li><p>一般用的最多的就是主键索引和唯一索引</p>
-<ul>
-<li>一个主键将自动创建主键索引</li>
-<li><p>索引列数据不重复UNIQUE</p>
-<pre><code>create [UNIQUE] index index_stuName 
-on student(studentName)
-
-drop index index_name on table_name
-#删除表时，该表的所有索引同时会被删除
-
-show index from table_name   #查看索引
-</code></pre></li>
-</ul>
-</li>
-</ul>
-<p></p><h6>备份</h6><p></p>
-<ul>
-<li><p>mysqldump是DOS系统下的命令，<br>在使用时无须进入mysql命令行，否则将无法执行</p>
-<pre><code>mysqldump -uroot -p123456 mybank bank &gt;D:\Python\0309.sql
-#备份
-mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
-#还原
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjvit7ros005n7owvgnc3yofu" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
 
     </footer>
   </div>
@@ -1228,7 +1219,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/9/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/11/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1240,9 +1231,9 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1250,18 +1241,18 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 11px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 14px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 14.44px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1269,9 +1260,13 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/28/读书乱纪01/">读书乱纪01</a>
+          </li>
         
           <li>
             <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
@@ -1287,10 +1282,6 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
         
           <li>
             <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
           </li>
         
       </ul>
@@ -1321,7 +1312,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

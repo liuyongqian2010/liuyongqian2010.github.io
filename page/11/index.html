@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,157 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-事务视图索引备份" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/09/事务视图索引备份/" class="article-date">
+  <time datetime="2018-03-09T10:10:58.000Z" itemprop="datePublished">2018-03-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/09/事务视图索引备份/">事务视图索引备份</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>事务视图索引备份</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>事务</h6><p></p>
+<ul>
+<li><p>事务是一个不可分割的工作逻辑单元 </p>
+<pre><code>begin;   #开始事务（指定事务从此处开始，后续的SQL语句都是一个整体）
+update bank set currentMoney=currentMoney-1000 
+where customerName=&apos;张三&apos;;
+update bank set currentMoney=currentMoney+1000 
+where customerName=&apos;李四&apos;;
+commit;  #提交事务，事务结束
+
+begin;
+update bank set currentMoney=currentMoney-1000 
+where customerName=&apos;张三&apos;;
+update bank set currentMoney=currentMoney+1000 
+where customerName=&apos;李四&apos;;
+rollback;  #回滚事务，数据恢复到原始状态
+
+#转账过程就是一个整体它需要两条UPDATE语句来完成，
+这两条语句是一个整体如果其中任一条出现错误，
+则整个转账业务也应取消，
+两个账户中的余额应恢复到原来的数据，
+从而确保转账前和转账后的余额不变，即都是1001元
+</code></pre></li>
+<li><p>事务必须具备以下四个属性，简称ACID 属性</p>
+<ul>
+<li>原子性（Atomicity）<ul>
+<li>事务是一个完整的操作，事务的各步操作是不可分的(原子的)，要么都执行，要么都不执行</li>
+</ul>
+</li>
+<li>一致性（Consistency）<ul>
+<li>当事务完成时，数据必须处于一致状态</li>
+</ul>
+</li>
+<li>隔离性（Isolation）<ul>
+<li>并发事务之间彼此隔离、独立，它不应以任何方式依赖于或影响其他事务</li>
+</ul>
+</li>
+<li>持久性（Durability）<ul>
+<li>事务完成后,它对数据库的修改被永久保持</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>事务关闭<ul>
+<li>默认情况下，每条单独的SQL语句视为一个事务，默认开启，即autocommit=1</li>
+<li>关闭开启自动提交状态 set autocommit=0|1,0为关闭自动提交</li>
+<li>关闭自动提交后，从下一条SQL语句开始则开启新事务，需使用commit或者rollback语句结束该事</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>视图</h6><p></p>
+<ul>
+<li>视图是一张虚拟表<ul>
+<li>表示一张表的部分数据或多张表的综合数据</li>
+<li>其结构和数据是建立在对表的查询基础上</li>
+</ul>
+</li>
+<li>视图中不存放数据<ul>
+<li>数据存放在视图所引用的原始表中</li>
+</ul>
+</li>
+<li>一个原始表，根据不同用户的不同需求，可以创建不同的视图</li>
+<li><p>对视图数据进行添加、更新和删除操作直接影响所引用表中的数据</p>
+<pre><code>#删除视图
+drop view if exists view_name;
+#创建视图
+create view view_name(
+    select ......
+)
+#查看视图
+select ... from view_name;
+</code></pre></li>
+</ul>
+<p></p><h6>索引</h6><p></p>
+<ul>
+<li>索引是一种有效组合数据的方式，为快速查找到指定记录</li>
+<li>作用<ul>
+<li>大大提高数据库的检索速度</li>
+<li>改善数据库性能</li>
+</ul>
+</li>
+<li><p>一般用的最多的就是主键索引和唯一索引</p>
+<ul>
+<li>一个主键将自动创建主键索引</li>
+<li><p>索引列数据不重复UNIQUE</p>
+<pre><code>create [UNIQUE] index index_stuName 
+on student(studentName)
+
+drop index index_name on table_name
+#删除表时，该表的所有索引同时会被删除
+
+show index from table_name   #查看索引
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>备份</h6><p></p>
+<ul>
+<li><p>mysqldump是DOS系统下的命令，<br>在使用时无须进入mysql命令行，否则将无法执行</p>
+<pre><code>mysqldump -uroot -p123456 mybank bank &gt;D:\Python\0309.sql
+#备份
+mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
+#还原
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="cjw7vie5g005mqswvmw00juz6" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-httpwatch" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -155,7 +306,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjvit7rhg003r7owvqms2s1ht" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="cjw7vie1o003dqswvqoinlem8" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -240,7 +391,7 @@ chown 命令会更改由符号链接引用的目录的用户标识（和组标�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="cjvit7rh9003p7owvefwbsuf3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="cjw7vie2c003kqswv3uz64xt3" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -363,7 +514,7 @@ driver.quit()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjvit7rbo002g7owvsfkvib6z" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="cjw7vie1k003bqswv1rzm4lmk" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -479,7 +630,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjvit7rvs007h7owvrp4kz5f9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="cjw7vie810078qswvl5vimp58" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -580,7 +731,7 @@ and kcm=&apos;QTP&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjvit7s1k008r7owvtqh6zit5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="cjw7viea3008iqswvq5fztt2f" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -711,7 +862,7 @@ print(&apos;End send email...&apos;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjvit7rr7006b7owvkmuk6vd8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="cjw7vie600060qswvd81atd1d" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -910,7 +1061,7 @@ if __name__==&apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjvit7rqr00677owvbv8mdaza" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/04/单元测试框架/" data-id="cjw7vie5s005uqswvq3wgdajp" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -1088,7 +1239,7 @@ select rand()         #result:0.8155794216465013
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjvit7r3j000i7owvzphngd2n" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/02/DML和DQL/" data-id="cjw7vidw9000jqswv2sx7incq" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -1192,134 +1343,10 @@ class Login():
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjvit7rym00857owv0z160oub" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/01/自动化测试模型/" data-id="cjw7viead008oqswvbuczlnbn" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Jmeter基础" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/28/Jmeter基础/" class="article-date">
-  <time datetime="2018-02-28T15:10:23.000Z" itemprop="datePublished">2018-02-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/28/Jmeter基础/">Jmeter基础</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Jmeter基础</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>Jmeter简介</h6><p></p>
-<ul>
-<li>Apache Jmeter是Apache组织的开放源代码项目，是一个纯Java桌面应用，用于分析不同压力条件下的总体性能情况，也可以使用Jmeter提供的图形化界面分析性能指标或者在高负载情况下测试服务器、脚本、对象</li>
-<li>Jmeter与LR的主要区别在于Jmeter不提供IP欺骗技术</li>
-<li>Jmeter安装配置<ul>
-<li>安装配置好jdk后，解压apache-jmeter-4.0，运行bin目录下的ApacheJMeter.jar</li>
-</ul>
-</li>
-<li>Jmeter文件目录介绍<ul>
-<li>bin可执行文件目录<ul>
-<li>jmeter.bat windows的启动文件</li>
-<li>jmeter.sh linux的启动文件</li>
-<li>jmeter.properties 系统配置文件</li>
-<li>jmeter-server.bat Windows分布式测试要用到的服务器配置</li>
-<li>jmeter-server linux分布式测试要用到的服务器配置</li>
-</ul>
-</li>
-<li>docs接口文档目录</li>
-<li>lib所用到的插件目录</li>
-<li>License Jmeter证书目录</li>
-<li>printable_docs用户使用手册</li>
-</ul>
-</li>
-<li>功能概要<ul>
-<li>Jmeter工具组成部分<ul>
-<li>资源生成器：用于生成测试过程中服务器、负载机的资源代码（VuGen）</li>
-<li>用户运行器：根据脚本要求模拟指定的用户行为（Controller）</li>
-<li>报表生成器：根据测试中实时的数据生成报表，提供可视化的数据显示形式（Analysis）</li>
-<li>负载发生器：用于产生负载，通常以多线程、多进程的方式模拟用户行为（Load Generater）</li>
-<li>测试计划：相当于lr的一个测试场景</li>
-</ul>
-</li>
-<li>Threads(Users)线程  用户<ul>
-<li>a.setup thread group,可用于执行预测试操作，类似lr的init()</li>
-<li>b.teardown thread group，可用于执行测试后动作，类似lr的end()</li>
-<li>c.Thread group，这个就是通常运行的线程，类似lr的action()</li>
-</ul>
-</li>
-<li>线程组的8类可执行文件<ul>
-<li>配置元件（cinfig element）用于提供对静态数据配置的支持</li>
-<li>定时器（Timer）类似于lr中的思考时间</li>
-<li>前置处理器（per processors）用于在实际的请求发出前对即将发出的请求进行特殊处理</li>
-<li>后置处理器（post processors）类似于lr中的关联概念</li>
-<li>断言（assertions）用于检查测试中得到的相应数据是否符合预期</li>
-<li>监听器（listener）用来对测试结果数据进行处理和可视化展示的一系列元件，这个监听器可不是用来监听系统资源的元件</li>
-<li>取样器（sample）是性能测试中向服务器发送请求，记录相应信息，记录响应时间的最小单元</li>
-<li>逻辑控制器（logic controller）包括两类元件，一类是用于控制测试计划中sampler节点发送请求的逻辑顺序控制器，常用的有if控制器、循环控制器等，另一类是用来组织可控制sampler节点的，如事务控制器，吞吐量控制器</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>脚本录制</h6><p></p>
-<ul>
-<li>Badboy脚本录制完成后，导出为Export to jmeter</li>
-<li>Badboy检查点设置</li>
-<li>Badboy参数化</li>
-</ul>
-<p></p><h6>元件作用域、执行顺序</h6><p></p>
-<ul>
-<li>元件作用域<ul>
-<li>8类可被执行的元件（测试计划与线程组不属于可执行元件），这些元件中，取样器是典型的不与其他元件发生交互作用的元件，逻辑控制器只对其子节点的取样器有效，而其他元件需要与取样器等元件交互</li>
-<li>在Jmeter中，元件的作用域是靠测试计划的树型结构中元件的父子关系来确定的，作用域的原则是：<ul>
-<li>a，取样器元件不和其他元件相互作用，因此不存在作用域的问题</li>
-<li>b，逻辑控制器元件只对其子节点中的取样器和逻辑控制器作用</li>
-<li>c，除取样器和逻辑控制器元件外，其他6类元件，如果是某个取样器的子节点，则该元件对其父子节点起作用，如果其父节点不是取样器，则其作用域是该元件父节点下的其他所有后代节点（包括子节点，子节点的子节点等）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>元件执行顺序<ul>
-<li>配置元件–前置处理程序–定时器–取样器–后置处理程序–断言–监听器<ul>
-<li>注意：前置处理器、后置处理器和断言等元件功能对取样器作用，因此，如果在他们的作用域内没有任何取样器，则不会被执行；如果在同一作用域内有多个同一类型的元件，则这些元件按照他们在测试计划中的上下顺序依次执行</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/28/Jmeter基础/" data-id="cjvit7r7c001f7owv7gvjt1op" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
 
     </footer>
   </div>
@@ -1334,7 +1361,7 @@ class Login():
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/10/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/12/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/10/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/12/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1346,9 +1373,9 @@ class Login():
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1356,18 +1383,18 @@ class Login():
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 11px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 14px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 14.44px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1375,9 +1402,13 @@ class Login():
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/28/读书乱纪01/">读书乱纪01</a>
+          </li>
         
           <li>
             <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
@@ -1393,10 +1424,6 @@ class Login():
         
           <li>
             <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
           </li>
         
       </ul>
@@ -1427,7 +1454,7 @@ class Login():
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

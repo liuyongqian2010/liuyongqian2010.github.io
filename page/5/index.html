@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,97 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-nmon工具的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/18/nmon工具的使用/" class="article-date">
+  <time datetime="2018-09-18T05:42:50.000Z" itemprop="datePublished">2018-09-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/18/nmon工具的使用/">nmon工具的使用</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>nmon工具的使用</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>Nmon简介</h6><p></p>
+<ul>
+<li>Nmon (Nigel’s Monitor)是由IBM 提供、免费监控 AIX 系统与 Linux 系统资源的工具。该工具可将服务器系统资源耗用情况收集起来并输出一个特定的文件,并可利用 excel 分析工具（nmon analyser）进行数据的统计分析</li>
+<li>nmon 工具可以为 AIX 和 Linux 性能专家提供监视和分析性能数据的功能，其中包括：<ul>
+<li>CPU 使用率、内存使用情况、内核统计信息和运行队列信息、磁盘 I/O 速度、传输和读/写比率</li>
+<li>文件系统中的可用空间、磁盘适配器、网络 I/O 速度及传输和读/写比率</li>
+<li>页面空间和页面速度、CPU 和 AIX 规范、消耗资源最多的进程、IBM HTTP Web 缓存</li>
+<li>计算机详细信息和资源、网络文件系统 (NFS)</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>nmon安装使用</h6><p></p>
+<ul>
+<li>nmon下载：<a href="http://nmon.sourceforge.net/pmwiki.php?n=Site.Download" target="_blank" rel="noopener">http://nmon.sourceforge.net/pmwiki.php?n=Site.Download</a></li>
+<li><p>nmon安装：我的系统是centos7，下载的版本是nmon16e_mpginc.tar.gz。解压后，根据不同平台初始化对应平台的nmon工具，初始化命令如下</p>
+<pre><code>chmod u+x nmon_x86_64_centos7
+cp nmon_x86_64_centos7 /usr/local/bin/nmon
+</code></pre></li>
+<li><p>nmon使用：在任意目录下运行’nmon’即可，采集数据的命令如下</p>
+<pre><code>nmon -s10 -c60 -f -m /home/
+参数解释：
+-s10          每 10 秒采集一次数据
+-c60          采集 60 次，即为采集十分钟的数据
+-f            生成的数据文件名中包含文件创建的时间。
+-m            生成的数据文件的存放目
+</code></pre></li>
+</ul>
+<p></p><h6>nmon analyser安装使用</h6><p></p>
+<ul>
+<li>nmon analyser下载：<a href="https://www.ibm.com/developerworks/community/wikis/home?lang=en#!/wiki/Power%20Systems/page/nmon_analyser" target="_blank" rel="noopener">https://www.ibm.com/developerworks/community/wikis/home?lang=en#!/wiki/Power%20Systems/page/nmon_analyser</a></li>
+<li>nmon analyser使用：<ul>
+<li>当前所下载的版本是nmon analyser v55.zip，解压后放在windows系统任意目录下即可</li>
+<li>将之前生成的 nmon 数据文件传到 Windows 机器上，用 Excel 打开分析工具nmon analyser v55.xlsm 。点击 Excel 文件中的 “Analyze nmon data” 按钮，选择 nmon 数据文件，这样就会生成一个分析后的结果文件</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>其他</h6><p></p>
+<ul>
+<li>本文参照博客<a href="https://www.cnblogs.com/yangxia-test/p/4836063.html" target="_blank" rel="noopener">Linux下安装使用NMON监控、分析系统性能</a></li>
+<li>关于nmon结果分析可以参照这两篇不错的博客<ul>
+<li><a href="http://www.sohu.com/a/219012698_151779" target="_blank" rel="noopener">一篇文章学会使用nmon</a></li>
+<li><a href="https://www.aliyun.com/jiaocheng/128182.html?spm=5176.100033.2.10.56aa50b2zWnXak" target="_blank" rel="noopener">Nmon结果文件分析</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/09/18/nmon工具的使用/" data-id="cjw7vie3g004aqswvoq8flpv8" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-破解IDEA2018-1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -111,7 +202,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/11/破解IDEA2018-1/" data-id="cjvit7rxo007x7owv28gmoqom" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/09/11/破解IDEA2018-1/" data-id="cjw7vie90007uqswvam2t8gsk" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -217,7 +308,7 @@ sudo kill 进程
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/17/Redis安装与部署/" data-id="cjvit7rdl002y7owvsnwrok79" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/08/17/Redis安装与部署/" data-id="cjw7vie0e002mqswvvglieyss" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -326,7 +417,7 @@ sudo ./bin/startup.sh
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/08/04/JAVA项目更新部署/" data-id="cjvit7r72001d7owvmc4ls1uh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/08/04/JAVA项目更新部署/" data-id="cjw7vidyf001mqswvodn3y7er" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -524,7 +615,7 @@ redis.port=6379
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/07/13/Linux上部署java项目/" data-id="cjvit7r8k001r7owvs9eqr2uy" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/07/13/Linux上部署java项目/" data-id="cjw7vidyx001wqswv181trthn" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -571,7 +662,7 @@ redis.port=6379
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/07/linux下mysql基本操作/" data-id="cjvit7rj100457owvf4heyv4m" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/07/linux下mysql基本操作/" data-id="cjw7vie2r003sqswvud1smat7" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -671,7 +762,7 @@ redis.port=6379
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/" data-id="cjvit7ra600217owvaqmrcrog" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/29/MongoDB的备份、还原、导入、导出/" data-id="cjw7vie04002gqswv0zsr7hqo" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -893,7 +984,7 @@ sc.stop()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-02/" data-id="cjvit7rsb006l7owv17jac8qg" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-02/" data-id="cjw7vie71006mqswvv34o7zgr" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -1047,7 +1138,7 @@ sc.stop()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-01/" data-id="cjvit7rs5006j7owv6dmdqnpv" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/24/大数据的一些函数-01/" data-id="cjw7vie6m006cqswvo9blw95r" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
@@ -1182,115 +1273,10 @@ GRANT OPTION;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/Centos7安装MySQL5.6/" data-id="cjvit7r2t000e7owvxy6iwkaz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/16/Centos7安装MySQL5.6/" data-id="cjw7vidwf000mqswv1algz50b" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/大数据/">大数据</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-python之Map、Reduce、Filte" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/16/python之Map、Reduce、Filte/" class="article-date">
-  <time datetime="2018-04-16T15:38:13.000Z" itemprop="datePublished">2018-04-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/16/python之Map、Reduce、Filte/">python之Map、Reduce、Filte</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>python之Map、Reduce、Filte</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>Map</h6><p></p>
-<ul>
-<li>简介<ul>
-<li>map()函数接收两个及以上参数，一个是函数对象本身，一个是序列，map将传入的函数依次作用到序列的每个元素，并把结果作为新的list返回</li>
-<li>在Python2里，直接使用map就可以打印结果；但是在Python3里，map返回的结果是迭代器(iterator)，需要先转换为列表list</li>
-</ul>
-</li>
-<li><p>计算列表中每个元素的的平方并输出</p>
-<pre><code>def f(x):
-    return x*x
-list1=[1,2,3,4,5,6]
-第一种方法：循环
-list2=[]
-for n in list1:
-    list2.append(f(n))
-print(list2)              #result:[1, 4, 9, 16, 25, 36]
-
-第二种方法：map
-list3=list(map(f,list1))
-print(list3)              #result:[1, 4, 9, 16, 25, 36]
-</code></pre></li>
-<li><p>map()作为高阶函数，事实上它把运算规则抽象了，因此，我们不但可以计算简单的f(x)=x*x，还可以计算任意复杂的函数，比如，把这个list1所有数字转为字符串</p>
-<pre><code>list4=list(map(str,list1))
-print(list4)             #result:[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;4&apos;, &apos;5&apos;, &apos;6&apos;]
-</code></pre></li>
-</ul>
-<p></p><h6>Reduce</h6><p></p>
-<ul>
-<li>简介<ul>
-<li>reduce把一个函数作用在一个序列[x1, x2, x3…]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算</li>
-<li>reduce可以有initial参数</li>
-</ul>
-</li>
-<li><p>示例</p>
-<pre><code>from functools import reduce
-#没有initial参数
-sum1=reduce(lambda x,y:x+y,[1,2,3,4,5,6])    #（（（1+2）+3+）+4...）
-print(sum1)             #result:21
-
-#有initial参数
-sum2=reduce(lambda x,y:x+y,[1,2,3,4,5,6],10)  #（（（（10+1）+2）+3）+4...）
-print(sum2)             #result:31
-</code></pre></li>
-</ul>
-<p></p><h6>Filte</h6><p></p>
-<ul>
-<li>简介<ul>
-<li>filter函数对指定的序列进行过滤操作</li>
-<li>filter()也接收一个函数和一个序列，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素</li>
-</ul>
-</li>
-<li><p>示例</p>
-<pre><code>list4=[1,2,3,4,5,6,7,8,9]
-def is_odd(x):
-    return x%2==1
-result=list(filter(is_odd,list4))
-print(result)               #result:[1, 3, 5, 7, 9]
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/16/python之Map、Reduce、Filte/" data-id="cjvit7rm5004x7owv0pna8tn8" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1305,7 +1291,7 @@ print(result)               #result:[1, 3, 5, 7, 9]
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/4/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/6/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/6/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1317,9 +1303,9 @@ print(result)               #result:[1, 3, 5, 7, 9]
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1327,18 +1313,18 @@ print(result)               #result:[1, 3, 5, 7, 9]
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 11px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 14px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 14.44px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1346,9 +1332,13 @@ print(result)               #result:[1, 3, 5, 7, 9]
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/28/读书乱纪01/">读书乱纪01</a>
+          </li>
         
           <li>
             <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
@@ -1364,10 +1354,6 @@ print(result)               #result:[1, 3, 5, 7, 9]
         
           <li>
             <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
           </li>
         
       </ul>
@@ -1398,7 +1384,7 @@ print(result)               #result:[1, 3, 5, 7, 9]
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

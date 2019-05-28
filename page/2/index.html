@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,93 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-robotframework-基于python27" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/11/robotframework-基于python27/" class="article-date">
+  <time datetime="2019-04-11T14:08:25.000Z" itemprop="datePublished">2019-04-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/11/robotframework-基于python27/">robotframework---基于python27</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>robotframework—基于python27</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>1.1 robotFramework是一个web-UI的自动化测试框架，它具有易于使用的表格测试数据和关键字测试驱动方法，其测试功能可通过实现与python或java的测试库进行扩展，同时，对于测试人员来说，通过robotframework，可以实现创建测试与关键字相同的自动化的case。</li>
+<li>1.2 所需软件<ul>
+<li>Python 2.x   这是最基本的语言环境，RF框架是基于Python语言的，且WxPython只能支持到2.x的Python，所以此处不能下载最新的Python版本。</li>
+<li>WxPython  这是Python语言的一套优秀的GUI图形库，用于支持Python图形化界面的库。RIDE就是基于此库开发的。</li>
+<li>Robot framework   这是一款用Python编写的用来写自动化测试用例的框架（或平台），UI和API都可以。</li>
+<li>RIDE  是一个图形化界面， 用于创建、组织和运行测试用例的软件</li>
+<li>Robot framework-selenium2library   可以看作RF版的selenium库。</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>2. 安装框架</h6><p></p>
+<ul>
+<li>2.0 安装python<ul>
+<li>环境变量配置的时候，需要将pip所在的目录也要加入环境变量，即python安装目录下的Scripts目录</li>
+<li>目前安装的是Python 2.7.16</li>
+</ul>
+</li>
+<li>2.1 安装wxPython<ul>
+<li>到wxPython的下载地址：<a href="https://sourceforge.net/projects/wxpython/files/wxPython/2.8.12.1/" target="_blank" rel="noopener">https://sourceforge.net/projects/wxpython/files/wxPython/2.8.12.1/</a>    </li>
+<li>目前安装的是wxPython2.8-win64-unicode-2.8.12.1-py27</li>
+</ul>
+</li>
+<li>2.2 安装robotframework<ul>
+<li>pip install robotframework</li>
+<li>目前安装的是robotframework-3.1.1</li>
+</ul>
+</li>
+<li>2.3 安装robotframework-ride<ul>
+<li>pip install robotframework-ride</li>
+<li>目前安装的是robotframework-ride-1.7.3.1</li>
+<li>注意,可能会自动安装wxPython最新版，需要卸载最新版的wxPython：pip uninstall wxPython</li>
+</ul>
+</li>
+<li>2.4 安装selenium2library扩展包<ul>
+<li>pip install  robotframework-selenium2library</li>
+<li>目前安装的是robotframework-selenium2library-3.0.0</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/11/robotframework-基于python27/" data-id="cjw7vie4d004wqswvkwuk4pye" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-jenkins自动化部署-远程部署前端vue项目" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -164,7 +251,7 @@ npm run build
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/04/jenkins自动化部署-远程部署前端vue项目/" data-id="cjvit7rij00417owvt9smsn8g" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/04/jenkins自动化部署-远程部署前端vue项目/" data-id="cjw7vie2u003uqswvfv0h796v" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -268,7 +355,7 @@ fi
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" data-id="cjvit7rir00437owvzq11xg2y" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" data-id="cjw7vie2o003qqswv3phbccrr" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -365,7 +452,7 @@ cp -R /var/lib/jenkins/workspace/qianduan001/dist/* /usr/local/nginx/qianduan001
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/jenkins自动化部署-构建前端项目/" data-id="cjvit7rhz003w7owvwq3zntho" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/02/jenkins自动化部署-构建前端项目/" data-id="cjw7vie3a0046qswv3dk0mbni" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -438,7 +525,7 @@ make install       部署
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/编译部署NodeJS/" data-id="cjvit7rxu007z7owv305b8u9p" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/02/编译部署NodeJS/" data-id="cjw7vie8q007oqswvnvffmq6y" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -536,7 +623,7 @@ ln -s libstdc++.so.6.0.24 libstdc++.so.6
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/GCC升级/" data-id="cjvit7r55000w7owv14s4rlk5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/02/GCC升级/" data-id="cjw7vidwx000wqswvnlvetu0s" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -675,7 +762,7 @@ fi
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cjvit7ri9003z7owvnx70zt29" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cjw7vie1v003hqswvtk61jggs" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -803,7 +890,7 @@ mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&a
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="cjvit7rb100297owv5f2ke3na" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="cjw7vidz50021qswvlj04uazf" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -905,7 +992,7 @@ select * from tb_test;查看表中是否one test数据存在，证明同步数�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="cjvit7rat00267owv1bgrncse" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="cjw7vidzq002aqswvxptmwslq" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -949,7 +1036,10 @@ select * from tb_test;查看表中是否one test数据存在，证明同步数�
 <hr>
 <p></p><h6>1. Linux的内存分配方式</h6><p></p>
 <ul>
-<li>Linux服务器为提高效率，会提前申请内存，即使这些内存没有被具体应用使用，Linux也会提前申请这些内存，然后利用这些内存做缓存使用，即将刚打开的文件系统存入cache中，这样对应的服务器free值会越来越少，buffers和cached会越来越大，因此给大家表象就是内存越来越少了；其实，Linux服务器在发现内存不足时，会自动清理cached区域，释放内存，然后继续增大cache，free继续减少。因此，下面这些手动降低内存使用率的方法，其实就是图一时之快。<h6>2. 查看内存使用情况</h6></li>
+<li>Linux服务器为提高效率，会提前申请内存，即使这些内存没有被具体应用使用，Linux也会提前申请这些内存，然后利用这些内存做缓存使用，即将刚打开的文件系统存入cache中，这样对应的服务器free值会越来越少，buffers和cached会越来越大，因此给大家表象就是内存越来越少了；其实，Linux服务器在发现内存不足时，会自动清理cached区域，释放内存，然后继续增大cache，free继续减少。因此，下面这些手动降低内存使用率的方法，其实就是图一时之快。</li>
+</ul>
+<p></p><h6>2. 查看内存使用情况</h6><p></p>
+<ul>
 <li><p>free -h 或者 free  -m/g</p>
 <pre><code>-h：用辨识度较高的单位显示。
 -m/g：用mB或者gB为单位显示。
@@ -1004,116 +1094,10 @@ echo 3 &gt; /proc/sys/vm/drop_caches
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="cjvit7rxa007t7owvwoh5song" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="cjw7vie87007cqswvg9p9adt9" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Nginx转发SSH代理-Stream模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/23/Nginx转发SSH代理-Stream模块/" class="article-date">
-  <time datetime="2019-03-23T12:32:47.000Z" itemprop="datePublished">2019-03-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/23/Nginx转发SSH代理-Stream模块/">Nginx转发SSH代理-Stream模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Nginx转发SSH代理-Stream模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>使用案例</h6><p></p>
-<ul>
-<li>公司的测试主机在内网，外网不能直接访问，可以使用nginx做个tcp代理(使用stream模块)做个端口映射达到可以在本地直接通过外网（可能是已绑定的域名）访问内网测试主机的目的，这里主要做ssh映射。</li>
-</ul>
-<p></p><h6>1.确定内网主机的SSHD服务开启</h6><p></p>
-<ul>
-<li><p>sshd为secure shell的简称，可以通过网络在主机中开机shell的服务默认情况下，sshd服务是开机时自启动的。默认配置文件在<code>/etc/ssh/sshd_config</code></p>
-<pre><code>#查看服务
-systemctl status sshd.service
-#重启服务
-systemctl restart sshd.service
-</code></pre></li>
-</ul>
-<p></p><h6>2.网络防火墙</h6><p></p>
-<ul>
-<li>(略)</li>
-</ul>
-<p></p><h6>3.Nginx中stream模块的配置</h6><p></p>
-<ul>
-<li>3.1 stream模块简介<br><br>nginx从1.9.0开始，新增加了一个stream模块，用来实现四层协议的转发、代理或者负载均衡等。使用nginx中的该模块做ssh转发可以连接到外网无法访问的内网主机。</li>
-<li>3.2 stream模块编译<br><br>stream模块默认没有编译到nginx， 编译nginx时候需要注意将该模块编译进去：<code>./configure –with-stream</code>即可。</li>
-<li><p>3.3 配置ssh内网转发</p>
-<pre><code>stream {    #stream模块与http模块处于同一级；stream模块编译后需要手动添加；这两个模块可以共存。
-    upstream remote01{    
-        server 192.168.110.101:22;       #内网服务器101，端口为sshd默认的22
-    }
-    upstream remote02{
-        server 192.168.110.102:22;       #内网服务器102，端口为sshd默认的22
-    }
-
-    server {
-        listen 2201;                    #监听代理主机的2201端口，通过该端口映射到内网的22端口
-        proxy_connect_timeout 1h;
-        proxy_timeout 1h;
-        proxy_pass remote01;            #转向内网服务器101
-    }
-    server {
-        listen 2202;                    ##监听代理主机的2202端口，通过该端口映射到内网的22端口
-        proxy_connect_timeout 1h;
-        proxy_timeout 1h;
-        proxy_pass remote02;            ##转向内网服务器102
-    }
-}
-
-注意1：server里面不能够使用location这种语句，否则报错；语法虽与http模块类似，但是有区别的。
-注意2：如果与代理主机绑定多个二级域名，在server虚拟机中不可以具体指向二级域名，只需要指明需要监听的代理主机的端口即可，比如上述中的server主机如下设置的话，连接会失败。
-server {
-        listen ns01.testing.com:2201;   #ns01.testing.com为绑定代理主机的二级域名，通过该域名对应访问内网服务器           
-        ......
-        proxy_pass remote01;            
-    }
-    server {
-        listen ns02.testing.com:2202;  ##ns02.testing.com为绑定代理主机的二级域名，通过该域名对应访问内网服务器                             
-        ......
-        proxy_pass remote02;   
-    }    
-</code></pre></li>
-<li><p>3.4 使用shell远程工具通过二级域名访问内网主机时，需要注意填写的端口是代理服务器监听的端口，不是内网服务器sshd默认的22端口。</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="cjvit7rca002l7owvmrxdstl9" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
 
     </footer>
   </div>
@@ -1128,7 +1112,7 @@ server {
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/3/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1140,9 +1124,9 @@ server {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1150,18 +1134,18 @@ server {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 12px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 19px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 11px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 15px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 13px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 11px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 15px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 16px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 14px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 13px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 14.44px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1169,9 +1153,13 @@ server {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/28/读书乱纪01/">读书乱纪01</a>
+          </li>
         
           <li>
             <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
@@ -1187,10 +1175,6 @@ server {
         
           <li>
             <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/04/MySQL慢日志查询/">MySQL慢日志查询</a>
           </li>
         
       </ul>
@@ -1221,7 +1205,7 @@ server {
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
