@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,187 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-磁盘挂载" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/06/磁盘挂载/" class="article-date">
+  <time datetime="2019-08-06T15:04:03.000Z" itemprop="datePublished">2019-08-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>磁盘挂载</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 是否能够挂载</h6><p></p>
+<ul>
+<li><p>如下所示</p>
+<pre><code>fdisk -l          查看硬盘，发现没有 /dev/*vdb 表明云服务无数据盘，无需进行挂载
+</code></pre></li>
+</ul>
+<p></p><h6>2. 如何挂载数据盘</h6><p></p>
+<ul>
+<li><p>如下所示</p>
+<pre><code>a. 执行 fdisk -S 56 /dev/xvdb 命令，对数据盘进行分区
+b. 依次输入“n”、“p”、“1”，两次回车，“wq”，分区就开始了
+c. 执行 echo &apos;/dev/xvdb1 /mnt ext3 defaults 0 0&apos; &gt;&gt; /etc/fstab （“/mnt”就是要把数据盘挂载到的文件夹）命令写入新分区信息。
+d. 使用 cat /etc/fstab 命令查看，出现信息（“defaults 0 0”）就表示写入成功。
+</code></pre></li>
+</ul>
+<p></p><h6>3. 其他命令</h6><p></p>
+<ul>
+<li><p>如下所示</p>
+<pre><code>blkid                     查看已经存在哪些盘
+fuser -kvm /dev/vda1    查看使用情况
+ls /mnt 
+umount /dev/sdb1          解除挂载
+mount /dev/sdb1            挂载
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/08/06/磁盘挂载/" data-id="cjyzyo0zj007r3cwvwv3cyyg1" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-配置MongoDB访问账号-密码" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/08/06/配置MongoDB访问账号-密码/" class="article-date">
+  <time datetime="2019-08-06T14:45:15.000Z" itemprop="datePublished">2019-08-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/08/06/配置MongoDB访问账号-密码/">配置MongoDB访问账号&amp;密码</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>配置MongoDB访问账号&amp;密码</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 为什么？</h6><p></p>
+<ul>
+<li>MongoDB默认安装完成后，只允许本地连接，同时不需要使用任何账号密码就可直接连接MongoDB，这样容易被攻击，比如让支付一些比特币，所以为了避免这些不必要的麻烦，需要给Mongo设置一个账号密码</li>
+</ul>
+<p></p><h6>2. 创建管理员用户</h6><p></p>
+<ul>
+<li><p>步骤如下所示</p>
+<pre><code>cd /usr/local/mongodb/bin/    进入MongoDB的bin目录下
+mongod -f mongodb.conf        启动MongoDB服务
+/sbin/iptables -I INPUT -p tcp --dport 27017 -j ACCEPT       开放端口
+./mongo                                   连接MongoDB服务
+
+&gt;use admin
+&gt;db.createUser({user:&quot;admin&quot;,pwd:&quot;123456&quot;,roles:[{role:&quot;userAdminAnyDatabase&quot;,db:&quot;admin&quot;}]})
+</code></pre></li>
+<li><p>认证管理员用户</p>
+<pre><code>ps -ef|grep mongodb    sudo kill ****          关闭MongoDB服务 
+mongod -f mongodb.conf --auth                  启动MongoDB服务，启用用户认证
+./mongo                                        连接MongoDB服务
+
+&gt;use admin
+&gt;db.auth(&quot;admin&quot;, &quot;123456&quot;)                    结果返回“1”，表示成功
+</code></pre></li>
+</ul>
+<p></p><h6>3. 创建数据库用户（以myinfo数据库为例）</h6><p></p>
+<ul>
+<li><p>单个数据库赋予最大权限</p>
+<pre><code>&gt;use myinfo
+&gt;db.createUser({user:&quot;max&quot;,pwd:&quot;123456&quot;,roles:[{role:&quot;dbOwner&quot;,db:&quot;myinfo&quot;}]})
+&gt;db.auth(&quot;max&quot;, &quot;123456&quot;)
+</code></pre></li>
+<li><p>单个数据赋予读写权限</p>
+<pre><code>&gt;use myinfo
+&gt;db.createUser({user:&quot;min&quot;,pwd:&quot;123456&quot;,roles:[{role:&quot;readWrite&quot;,db:&quot;myinfo&quot;}]})
+&gt;db.auth(&quot;min&quot;, &quot;123456&quot;)
+</code></pre></li>
+</ul>
+<p></p><h6>4. 删除某个用户（以myinfo数据库为例，删除max用户）</h6><p></p>
+<ul>
+<li><p>如下所示</p>
+<pre><code>&gt;use muinfo
+&gt;db.dropUser(&quot;max&quot;)        结果返回“true”，表示成功
+</code></pre></li>
+</ul>
+<p></p><h6>5. 角色权限说明</h6><p></p>
+<ul>
+<li><p>如下所示</p>
+<pre><code>Read：                    允许用户读取指定数据库
+readWrite：                允许用户读写指定数据库
+dbAdmin：                允许用户在指定数据库中执行管理函数，如索引增删，查看统计或访问system.profile
+dbOwner：                单数据库最大权限
+userAdmin：                允许用户向system.users集合写入，可找指定数据库里增删和管理用户
+clusterAdmin：            只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限
+readAnyDatabase：        只在admin数据库中可用，赋予用户所有数据库的读权限
+readWriteAnyDatabase：    只在admin数据库中可用，赋予用户所有数据库的读写权限
+userAdminAnyDatabase：    只在admin数据库中可用，赋予用户所有数据库的userAdmin权限
+dbAdminAnyDatabase：        只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限
+root：                    只在admin数据库中可用，超级账号，超级权限
+</code></pre></li>
+</ul>
+<p></p><h6>疑问</h6><p></p>
+<ul>
+<li>要不要在配置文件中加<code>auth = true</code>呢</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/08/06/配置MongoDB访问账号-密码/" data-id="cjyzyo10v008d3cwvhekj2nj9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-读书乱纪01" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -84,7 +265,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/28/读书乱纪01/">读书乱纪01</a>
+      <a class="article-title" href="/2019/05/28/读书乱纪01/">笔记01</a>
     </h1>
   
 
@@ -95,7 +276,7 @@
       
 	  
 	  
-        <p></p><h5>读书乱纪01</h5><p></p>
+        <p></p><h5>笔记01</h5><p></p>
 <hr>
 <hr>
 <p></p><h6>01</h6><p></p>
@@ -110,19 +291,19 @@
 <li>交换机识别Mac地址（物理地址），路由器识别IP地址</li>
 <li>SSL为安全套接层   SSH为远程登录提供的安全协议</li>
 <li>ls -al的结果中，文件大小单位默认为比特bytes</li>
-<li><p>改变</p>
-<pre><code>chgrp    改变所属群组    chgrp  新组名  文件名
-chown    改变文件拥有者    chown  用户名  文件名
-chmod    改变文件的权限    chmod  三数字  文件名
-</code></pre></li>
-<li><p>查看文件<br><br>more   一页一页显示内容（space 向下翻一页，Enter向下一行）<br><br>less   从后往前翻页（pagedown   pageup）</p>
+<li>改变<ul>
+<li>chgrp    改变所属群组    chgrp  新组名  文件名</li>
+<li>chown    改变文件拥有者    chown  用户名  文件名</li>
+<li>chmod    改变文件的权限    chmod  三数字  文件名</li>
+</ul>
 </li>
+<li>查看文件<br><br>more   一页一页显示内容（space 向下翻一页，Enter向下一行）<br><br>less   从后往前翻页（pagedown   pageup）</li>
 </ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/28/读书乱纪01/" data-id="cjw7vie92007wqswvnohe7ktz" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/05/28/读书乱纪01/" data-id="cjyzyo10700833cwvb47ll9v1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络基础知识/">网络基础知识</a></li></ul>
@@ -200,7 +381,7 @@ chmod    改变文件的权限    chmod  三数字  文件名
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/11/mysql日志文件/" data-id="cjw7vie3v004kqswvy99daz42" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/05/11/mysql日志文件/" data-id="cjyzyo0ti004a3cwvlgbb0my2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -265,7 +446,7 @@ $http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/11/Nginx日志文件/" data-id="cjw7vie0i002pqswvbf9gw6uy" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/05/11/Nginx日志文件/" data-id="cjyzyo0pt002a3cwvxo4gk976" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
@@ -339,7 +520,7 @@ $http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/11/Tomcat日志文件/" data-id="cjw7vie170034qswvxu5io47q" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/05/11/Tomcat日志文件/" data-id="cjyzyo0rt003f3cwvkuo2ed7j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -488,7 +669,7 @@ mysqldump -h$mysql_host -u$mysql_user -p$mysql_pwd $backup_database &gt; /root/t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/05/定时任务crontab命令/" data-id="cjw7vie8d007gqswv03vu6zd8" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/05/05/定时任务crontab命令/" data-id="cjyzyo0xk006u3cwv4mfi0oan" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -613,7 +794,7 @@ mysqldumpslow -s r -t 20 /mysql/mysql06-slow.log | more
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/04/MySQL慢日志查询/" data-id="cjw7vidzk0028qswv0uvrokq9" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/05/04/MySQL慢日志查询/" data-id="cjyzyo0ph00243cwveloyv4d2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -677,6 +858,12 @@ max_connections = 200
 <li><p>2.4 监控连接使用率</p>
 <pre><code>查看当前打开的连接数
 show status like &apos;%Threads_connected%&apos;;
+</code></pre></li>
+<li><p>2.5 同一个ip在短时间内产生太多（超过mysql数据库max_connection_errors的最大值）中断的数据库连接而导致的阻塞，可以设置该max_connection_errors的数值</p>
+<pre><code>max_connect_errors=1000
+</code></pre></li>
+<li><p>2.6 MySQL会根据配置文件会限制server接受的数据包的大小。如果写入大数据时，因为默认的配置太小，插入和更新操作会因为 max_allowed_packet 参数限制，而导致失败</p>
+<pre><code>max_allowed_packet=100M
 </code></pre></li>
 </ul>
 <p></p><h6>3. 缓冲池使用情况</h6><p></p>
@@ -759,7 +946,7 @@ TPS=(Com_commit + Com_rollback)/Uptime
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/04/MySQL监控与调优-初级/" data-id="cjw7vidz90023qswvi59ov6pk" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/05/04/MySQL监控与调优-初级/" data-id="cjyzyo0pl00263cwvhlu0uvgm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -858,191 +1045,10 @@ mysqldump -u root -p test_oa userinfo workinfo&gt; /root/bat_test_oa_uw.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/完全备份与还原-mysqldump备份/" data-id="cjw7vie8n007mqswv4gc1gmfv" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/04/26/完全备份与还原-mysqldump备份/" data-id="cjyzyo0xh006s3cwvetwd6tzj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Appium的部署安装" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/26/Appium的部署安装/" class="article-date">
-  <time datetime="2019-04-26T14:16:15.000Z" itemprop="datePublished">2019-04-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/26/Appium的部署安装/">Appium的部署安装</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Appium的部署安装</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>1. 简介</h6><p></p>
-<ul>
-<li>1.1 Appium是一款开源测试自动化框架，可用于原生、混合和移动Web应用程序。它使用WebDriver协议驱动iOS，Android和Windows应用程序。重要的是，Appium是“跨平台”的：它允许您使用相同的API针对多个平台（iOS，Android，Windows）编写测试。</li>
-<li>1.2 工作原理：在Windows平台上，通过Python（ Python-client ）编写了一个Appium自动化脚本并执行，请求会首先到 AppiumForWindow.zip（Window下的Appium-Server），Appium-Server通过解析，然后调用Android模拟器或真机相关组件的接口从而驱动Android模拟器或真机来执行Appium自动化脚本。</li>
-</ul>
-<p></p><h6>2. 安装</h6><p></p>
-<ul>
-<li>2.1 先要有一个基础的JAVA环境，即安装并配置好JDK，目前java version “1.8.0_201”。参考另一篇笔记《JDK的安装部署》</li>
-<li><p>2.2 安装Android SDK（安卓软件开发包），测试Android手机必然是要安装Android SDK的。</p>
-<ul>
-<li>下载地址：<a href="http://tools.android-studio.org/index.php/sdk/" target="_blank" rel="noopener">http://tools.android-studio.org/index.php/sdk/</a> ，目前下载installer_r24.4.1-windows.exe</li>
-<li>将安装目录新增至系统环境变量中，添加变量名：ANDROID_HOME 变量值: C:\andriodsdk</li>
-<li><p>双击SDK Manager，选装工具。</p>
-<pre><code>必装：
-Tools：Android SDK Tools、Android SDK Platform-tools、Android SDK Build-tools
-镜像：本人安装的是 Android 5.1.1
-Extras：Google USB Driver、Google Web Driver
-Path环境变量中添加tools、platform-tools、build-tools目录。
-测试：在CMD下执行adb devices（如果已经打开一个安卓虚拟机）查看结果
-</code></pre></li>
-</ul>
-</li>
-<li><p>2.3 安装node.js，由于Appium的server端是node.js编写的所以需要先安装node.js。安装node.js后，可以直接通过npm安装Appium。（注：npm类似于Python的pip，一个非官方包管理器）</p>
-<ul>
-<li>下载地址：<a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">https://nodejs.org/en/download/</a></li>
-<li>目前版本：node-v10.15.3</li>
-</ul>
-</li>
-<li><p>2.4 安装appium服务端，</p>
-<ul>
-<li><p>第一种方式，由于网络问题建议通过cnpm安装appium</p>
-<pre><code>通过npm命令安装cnpm
-npm install -g cnpm --registry=https://registry.npm.taobao.org
-通过cnpm安装appium
-cnpm install -g appium --no-cache
-安装成功后，通过appium -v 查看当前appium版本，直接输入appium则启动appium server端。
-
-可以安装appium-doctor检查appium的所有需求环境，如下：
-安装：npm install -g appium-doctor  
-打开cmd，输入appium-doctor，检查环境是否OK，出现allchecks were successful，说明环境OK
-</code></pre></li>
-<li><p>第二种方式，在Appium官方网站上下载操作系统相应的Appium版本</p>
-<ul>
-<li>下载地址：<a href="https://bitbucket.org/appium/appium.app/downloads/" target="_blank" rel="noopener">https://bitbucket.org/appium/appium.app/downloads/</a></li>
-<li>当前最新版本为 AppiumForWindows_1_4_16_1.zip ，注意这是一个 Windows 版本，如果你的电脑为MAC请下载 appium-1.5.3.dmg 。</li>
-<li>以 Windows 为例，将下载的 AppiumForWindows.zip 进行解压，点击 appium-installer.exe 进行安装。</li>
-<li>根据提示进行安装。最终在会桌面上生成 Appium图标 , 双击启动appium server。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>2.5 安装appium客户端，用于抓取app上定位信息。</p>
-<ul>
-<li>下载地址：<a href="https://github.com/appium/appium-desktop/releases/" target="_blank" rel="noopener">https://github.com/appium/appium-desktop/releases/</a></li>
-<li>当前版本：Appium-windows-1.12.1</li>
-<li>双击安装，安装成功后桌面会有一个appium的快捷方式。</li>
-</ul>
-</li>
-<li><p>2.6 选择一门编程语言，如python，使用Pycharm写代码；安装一个对应的Appium Client，推荐使用pip安装：<code>pip install Appium-Python-Client</code></p>
-</li>
-<li>2.7 选择一个测试运行环境，一个Android模拟器或者一个Android手机或者一台iPhone手机</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/Appium的部署安装/" data-id="cjw7vidvk0009qswvr9b4gk11" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-使用JvisualVM远程监控JVM" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/26/使用JvisualVM远程监控JVM/" class="article-date">
-  <time datetime="2019-04-26T14:11:53.000Z" itemprop="datePublished">2019-04-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/26/使用JvisualVM远程监控JVM/">使用JvisualVM远程监控JVM</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>使用JvisualVM远程监控JVM</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>1. 简介</h6><p></p>
-<ul>
-<li>1.1 JvisualVM是jdk自带的可视化监控工。本篇简述在windows环境下监控远端的Linux系统的java进程</li>
-<li>1.2 windows环境下的jdk版本为：1.8.0_201</li>
-<li>1.3 Linux环境下的jdk版本也为：1.8.0_201</li>
-</ul>
-<p></p><h6>2. 远程Linux配置</h6><p></p>
-<ul>
-<li><p>以tomcat为例，为tomcat 配置 jvm 启动参数。 在 tomcat 的 catalina.sh 中添加如下参数：</p>
-<pre><code>JAVA_OPTS=
-&quot;-Djava.rmi.server.hostname=192.168.110.72
--Dcom.sun.management.jmxremote.port=8901 
--Dcom.sun.management.jmxremote.authenticate=false 
--Dcom.sun.management.jmxremote.ssl=false&quot;
-注： 
--Djava.rmi.server.hostname ：这个是配置 server 的 IP 
--Dcom.sun.management.jmxremote.port ：这个是配置远程 connection 的端口号，要确定此端口未被占用 
--Dcom.sun.management.jmxremote.ssl= 指定了 JMX 是否启用 ssl 
--Dcom.sun.management.jmxremote.authenticate= 指定了JMX 是否启用鉴权（需要用户名，密码鉴权） 
-</code></pre></li>
-</ul>
-<p></p><h6>3. 连接</h6><p></p>
-<ul>
-<li>3.1 在window端找到{JAVA_HOME}/bin/jvisualvm.exe程序，并双击打开</li>
-<li>3.2 添加一个远程主机，在远程主机下，右键添加jmx连接（jmx：java management extensions ，即 Java 管理扩展）</li>
-<li>3.3 添加成功后，双击打开即可</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/使用JvisualVM远程监控JVM/" data-id="cjw7vie54005eqswv86q7hjjq" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
 
     </footer>
   </div>
@@ -1057,7 +1063,7 @@ cnpm install -g appium --no-cache
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/2/">Suivant &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1069,9 +1075,9 @@ cnpm install -g appium --no-cache
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1079,9 +1085,9 @@ cnpm install -g appium --no-cache
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 14.44px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
@@ -1090,7 +1096,7 @@ cnpm install -g appium --no-cache
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1098,12 +1104,20 @@ cnpm install -g appium --no-cache
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2019/05/28/读书乱纪01/">读书乱纪01</a>
+            <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/06/配置MongoDB访问账号-密码/">配置MongoDB访问账号&amp;密码</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/28/读书乱纪01/">笔记01</a>
           </li>
         
           <li>
@@ -1112,14 +1126,6 @@ cnpm install -g appium --no-cache
         
           <li>
             <a href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/Tomcat日志文件/">Tomcat日志文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
           </li>
         
       </ul>
@@ -1150,7 +1156,7 @@ cnpm install -g appium --no-cache
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

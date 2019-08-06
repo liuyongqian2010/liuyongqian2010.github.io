@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,256 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-安装部署mysql5.7" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/01/安装部署mysql5.7/" class="article-date">
+  <time datetime="2019-03-01T09:42:20.000Z" itemprop="datePublished">2019-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/01/安装部署mysql5.7/">安装部署mysql5.7</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>安装部署mysql5.7</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>删除centos7.4自带的mysql分支mariadb</h6><p></p>
+<ul>
+<li><p>查看删除</p>
+<pre><code>查看：rpm -qa | grep mariadb
+删除1：yum -y remove mari*
+删除2：rpm -e --nodeps ****
+find / -name mysql
+rm -rf *****
+rm -f /etc/my.cnf
+rm -rf /etc/init.d/mysql.server
+userdel mysql         #删除
+id mysql              #查看
+</code></pre></li>
+</ul>
+<p></p><h6>目前版本</h6><p></p>
+<ul>
+<li>目前安装版本是mysql-5.7.25-linux-glibc2.12-x86_64</li>
+</ul>
+<p></p><h6>解压安装包</h6><p></p>
+<ul>
+<li><p>解压并重命名为mysql</p>
+<pre><code>将安装包放置于/usr/local/下并解压：
+tar -zvxf mysql-5.7.25-linux-glibc2.12-x86_64.tar.gz
+重新命名：
+mv mysql-5.7.25-linux-glibc2.12-x86_64 mysql
+</code></pre></li>
+</ul>
+<p></p><h6>安装依赖包</h6><p></p>
+<ul>
+<li><p>执行</p>
+<pre><code>yum -y install libaio
+</code></pre></li>
+</ul>
+<p></p><h6>初始化环境并配置文件</h6><p></p>
+<ul>
+<li><p>1.创建mysql用户和组</p>
+<pre><code>groupadd mysql
+useradd -r -g mysql -s /bin/false mysql
+chown -R mysql.mysql /usr/local/mysql
+</code></pre></li>
+<li><p>2.创建data文件夹</p>
+<pre><code>在/usr/local/mysql下执行命令：
+cd /usr/local/mysql
+mkdir data
+</code></pre></li>
+<li><p>3.修改my.cnf</p>
+<pre><code>vi /etc/my.cnf后写入文件内容如下：
+
+[mysqld]
+port=3306
+character-set-server=utf8
+basedir=/usr/local/mysql
+datadir=/usr/local/mysql/data
+#innodb_buffer_pool_size=128M
+explicit_defaults_for_timestamp=true
+[mysqld_safe]
+log-error=/usr/local/mysql/data/error.log
+pid-file=/usr/local/mysql/data/mysql.pid
+tmpdir = /tmp
+[client]
+default-character-set=utf8
+[mysql]
+default-character-set=utf8
+</code></pre></li>
+<li><p>4.将mysql放入系统服务，并修改对应文件</p>
+<pre><code>cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+vi /etc/init.d/mysqld  后修改文件路径:(3处)
+
+# If you change base dir, you must also change datadir. These may get
+# overwritten by settings in the MySQL configuration files.
+
+basedir=/usr/local/mysql
+datadir=/usr/local/mysql/data
+
+# Default value, in seconds, afterwhich the script should timeout waiting
+# for server start. 
+# Value here is overriden by value in my.cnf. 
+# 0 means don&apos;t wait at all
+# Negative numbers mean to wait indefinitely
+service_startup_timeout=900
+
+# Lock directory for RedHat / SuSE.
+lockdir=&apos;/var/lock/subsys&apos;
+lock_file_path=&quot;$lockdir/mysql&quot;
+
+# The following variables are only set for letting mysql.server find things.
+
+# Set some defaults
+mysqld_pid_file_path=/usr/local/mysql/data/mysql.pid
+</code></pre></li>
+<li><p>5.初始化mysql</p>
+<pre><code>cd /usr/local/mysql后执行：
+./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
+</code></pre></li>
+</ul>
+<p></p><h6>修改root密码并设置远程连接</h6><p></p>
+<ul>
+<li><p>启动mysql：<code>service mysqld start</code>后依次执行</p>
+<pre><code>cd /usr/local/mysql后执行：./bin/mysql -u root -p
+输入初始化时生成的默认密码
+修改密码：SET PASSWORD FOR &apos;root&apos;@localhost=&apos;123456&apos;;
+
+允许远程连接：
+use mysql;
+update user set host=&apos;%&apos; where user=&apos;root&apos; limit 1;
+flush privileges;
+</code></pre></li>
+</ul>
+<p></p><h6>配置环境变量</h6><p></p>
+<ul>
+<li><p>依次执行</p>
+<pre><code>vi /etc/profile后增加如下内容：
+
+MYSQL_HOME=/usr/local/mysql
+PATH=$PATH:$MYSQL_HOME/bin
+export MYSQL_HOME PATH 
+</code></pre></li>
+<li><p>使配置文件生效执行</p>
+<pre><code>source /etc/profile
+</code></pre></li>
+</ul>
+<p></p><h6>添加需要监听的端口</h6><p></p>
+<ul>
+<li><p>执行</p>
+<pre><code>/sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
+</code></pre></li>
+</ul>
+<p><em>参考<a href="https://blog.csdn.net/IsJiangWei/article/details/82875118" target="_blank" rel="noopener">Centos7.5安装mysql5.7.23-二进制包方式安装-完美安装,一步到位</a></em></p>
+<p><em>参考<a href="https://blog.csdn.net/zml3721/article/details/79090983" target="_blank" rel="noopener">Centos7.4 安装MySQL 5.7.21 (通用二进制包)</a></em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/01/安装部署mysql5.7/" data-id="cjyzyo0x5006k3cwve08f864b" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-linux中部署JDK1.8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/01/linux中部署JDK1.8/" class="article-date">
+  <time datetime="2019-03-01T09:32:56.000Z" itemprop="datePublished">2019-03-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/01/linux中部署JDK1.8/">linux中部署JDK1.8</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>linux中部署JDK1.8</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>目前版本</h6><p></p>
+<ul>
+<li>目前版本：jdk-8u201-linux-x64</li>
+</ul>
+<p></p><h6>安装步骤</h6><p></p>
+<ul>
+<li><p>解压并且重命名</p>
+<pre><code>把jdk安装包放/usr下并解压：
+tar -zvxf jdk-8u201-linux-x64.tar.gz
+重命名文件夹：
+mv jdk1.8.0_201 java
+</code></pre></li>
+<li><p>设置环境变量</p>
+<pre><code>vi /etc/profile在文件尾部添加如下内容：
+
+JAVA_HOME=/usr/java
+PATH=$PATH:$JAVA_HOME/bin
+CLASSPATH=.:$JAVA_HOME/lib
+export JAVA_HOME PATH CLASSPATH
+</code></pre></li>
+<li><p>重新加载</p>
+<pre><code>之后重新加载配置文件，使其生效，命令为：
+source /etc/profile
+</code></pre></li>
+<li><p>查看版本</p>
+<pre><code>查看是否安装成功，命令为：
+java -version
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/01/linux中部署JDK1.8/" data-id="cjyzyo0sf003u3cwv69w7l7tf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-linux网络ip配置" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -125,7 +375,7 @@ ONBOOT=yes
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/linux网络ip配置/" data-id="cjw7vie320040qswv1lj2o1m8" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/03/01/linux网络ip配置/" data-id="cjyzyo0t700443cwvq8xa72b9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -207,7 +457,7 @@ date 061814162014.30（2014年6月18日14点16分30-MMDDhhmmYYYY.ss）
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/11/时间设置与配置查询/" data-id="cjw7vie7x0076qswv929relhg" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/01/11/时间设置与配置查询/" data-id="cjyzyo0yx007f3cwvmmw1xtpe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -315,7 +565,7 @@ net.netfilter.nf_conntrack_tcp_timeout_fin_wait = 120
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/11/linux系统常见优化配置01/" data-id="cjw7vie3m004eqswv0m93fsy9" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2019/01/11/linux系统常见优化配置01/" data-id="cjyzyo0sp00403cwvymq09rvt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -430,7 +680,7 @@ flush privileges;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/12/mysql数据库安装/" data-id="cjw7vie3q004gqswviqvqyol0" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/12/12/mysql数据库安装/" data-id="cjyzyo0u4004o3cwvpnhblpuj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -551,7 +801,7 @@ b.重启防火墙：firewall-cmd --reload
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/30/测试过程中遇到的问题/" data-id="cjw7vie8g007iqswvg1ke84ys" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/11/30/测试过程中遇到的问题/" data-id="cjyzyo10f00873cwvnq9245u3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -615,7 +865,7 @@ id mysql              #查看
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/" data-id="cjw7vidsy0001qswvhj2yw1ij" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/11/16/CentOS下彻底删除MySQL-卸载二进制包-源码安装方式的MySQL/" data-id="cjyzyo0ma000c3cwv1yj9go77" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -693,7 +943,7 @@ rm /etc/my.cnf
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/15/CentOS下彻底删除MySQL-删除系统自带的MySQL程序/" data-id="cjw7vidvs000cqswvioqyjuvy" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/11/15/CentOS下彻底删除MySQL-删除系统自带的MySQL程序/" data-id="cjyzyo0ls00033cwv1grvhz5s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -750,182 +1000,10 @@ DNS1=202.106.0.20            #可以在网卡信息中设置DNS服务地址
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/11/15/Linu系统连接外网/" data-id="cjw7vidyk001pqswvl3138arb" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/11/15/Linu系统连接外网/" data-id="cjyzyo0p6001y3cwvetibb3nv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-mysql5-6压缩版的安装配置" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/21/mysql5-6压缩版的安装配置/" class="article-date">
-  <time datetime="2018-09-21T06:13:51.000Z" itemprop="datePublished">2018-09-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/21/mysql5-6压缩版的安装配置/">mysql5.6压缩版的安装配置</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>mysql5.6压缩版的安装配置</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>下载</h6><p></p>
-<ul>
-<li>下载地址：<a href="http://ftp.ntu.edu.tw/MySQL/Downloads/MySQL-5.6/" target="_blank" rel="noopener">http://ftp.ntu.edu.tw/MySQL/Downloads/MySQL-5.6/</a></li>
-<li>当前下载版本：mysql-5.6.41-winx64.zip</li>
-</ul>
-<p></p><h6>解压</h6><p></p>
-<ul>
-<li>解压之后可以将该文件夹改名（比如：<code>mysql5.6</code>），放到合适的位置（比如：<code>D:\mysql5.6</code>）</li>
-</ul>
-<p></p><h6>配置</h6><p></p>
-<ul>
-<li>环境变量，在path中增加变量<code>D:\mysql5.6\bin</code></li>
-<li><p>配置文件，mysql-5.6.1X默认的配置文件是在<code>D:\mysql5.6\my-default.ini</code>中，或者自己建立一个my.ini文件，在其中修改或者添加配置信息：</p>
-<pre><code>[mysqld] 
-basedir=D:\mysql5.6（mysql所在目录） 
-datadir=D:\mysql5.6\data （mysql所在目录\data）
-</code></pre></li>
-</ul>
-<p></p><h6>安装</h6><p></p>
-<ul>
-<li>以管理员身份运行cmd，进入mysql的bin目录下（<code>D:\mysql5.6\bin</code>）</li>
-<li>接着输入<code>mysqld -install</code>并回车进行数据库安装</li>
-</ul>
-<p></p><h6>启动</h6><p></p>
-<ul>
-<li>以管理员身份运行cmd，输入<code>net start mysql</code>并回车，服务启动成功</li>
-<li>接着输入<code>mysql -u root -p</code>命令可以进入mysql操作界面</li>
-</ul>
-<p></p><h6>设置密码</h6><p></p>
-<ul>
-<li><p>第一次配置并启动mysql服务时，默认账号是root，密码为空；如果需要设置密码，可以通过下面两种方式进行设置</p>
-<ul>
-<li><p>第一种：用root 进入mysql后</p>
-<pre><code>mysql&gt;set password =password(&apos;你的密码&apos;);
-mysql&gt;flush privileges;
-</code></pre></li>
-<li><p>第二种：进入mysql库修改user表</p>
-<pre><code>mysql&gt;use mysql;
-mysql&gt;update user set password=password(&apos;你的密码&apos;) where user=&apos;root&apos;; 
-mysql&gt;flush privileges;
-</code></pre></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/21/mysql5-6压缩版的安装配置/" data-id="cjw7vie5j005oqswvqaqktlsw" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Windows下JDK的安装部署" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/09/18/Windows下JDK的安装部署/" class="article-date">
-  <time datetime="2018-09-18T09:13:10.000Z" itemprop="datePublished">2018-09-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/09/18/Windows下JDK的安装部署/">JDK的安装部署</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>JDK的安装部署</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>JDK下载</h6><p></p>
-<ul>
-<li>JDK是ORACLE提供免费下载使用的，官网地址：<a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a></li>
-<li>一般选择Java SE版本即可，企业版的选择Java EE。当前下载的版本是jdk-8u181-windows-x64</li>
-</ul>
-<p></p><h6>JDK安装</h6><p></p>
-<ul>
-<li>安装过程中会出现两次安装提示 ：第一次是安装 jdk ，第二次是安装 jre 。建议两个都安装在同一个java文件夹中的不同文件夹中（java文件夹下新建jdk、jre两个文件夹）</li>
-</ul>
-<p></p><h6>JDK配置</h6><p></p>
-<ul>
-<li><p>新建系统变量JAVA_HOME（指向jdk目录，之所以这样命名是因为eclipse、tomcat等均通过java_home变量名寻找jdk目录）</p>
-<pre><code>变量名：JAVA_HOME
-变量值：C:\Program Files\Java\jdk1.8.0_181
-</code></pre></li>
-<li><p>新建系统变量CLASSPATH（类搜索路径，import导入的类均在此路径内;变量值前面有点号和分号，后边结尾也有分号）</p>
-<pre><code>变量名：CLASSPATH
-变量值：.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar；
-</code></pre></li>
-<li><p>添加环境变量到path中（命令搜索路径，javac.exe、java.exe等命令均在此路径内）</p>
-<pre><code>变量值：%JAVA_HOME%\bin；
-</code></pre></li>
-</ul>
-<p></p><h6>JDK测试</h6><p></p>
-<ul>
-<li>Win+R——&gt;输入cmd——&gt;输入java -version或者javac或者java——&gt;回车Enter</li>
-</ul>
-<p></p><h6>重要</h6><p></p>
-<ul>
-<li>我按照上述步骤配置后，输入“javac”提示不是内部命令</li>
-<li><p>后来我直接只在“path”中添加三个变量即可</p>
-<pre><code>C:\Program Files\Java\jdk1.8.0_181\bin
-C:\Program Files\Java\jdk1.8.0_181\lib\dt.jar
-C:\Program Files\Java\jdk1.8.0_181\lib\tools.jar
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/09/18/Windows下JDK的安装部署/" data-id="cjw7vie100030qswvtd87jmeo" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
 
     </footer>
   </div>
@@ -940,7 +1018,7 @@ C:\Program Files\Java\jdk1.8.0_181\lib\tools.jar
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Précédent</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/5/">Suivant &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -952,9 +1030,9 @@ C:\Program Files\Java\jdk1.8.0_181\lib\tools.jar
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -962,9 +1040,9 @@ C:\Program Files\Java\jdk1.8.0_181\lib\tools.jar
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 14.44px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
@@ -973,7 +1051,7 @@ C:\Program Files\Java\jdk1.8.0_181\lib\tools.jar
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -981,12 +1059,20 @@ C:\Program Files\Java\jdk1.8.0_181\lib\tools.jar
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2019/05/28/读书乱纪01/">读书乱纪01</a>
+            <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/06/配置MongoDB访问账号-密码/">配置MongoDB访问账号&amp;密码</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/28/读书乱纪01/">笔记01</a>
           </li>
         
           <li>
@@ -995,14 +1081,6 @@ C:\Program Files\Java\jdk1.8.0_181\lib\tools.jar
         
           <li>
             <a href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/Tomcat日志文件/">Tomcat日志文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
           </li>
         
       </ul>
@@ -1033,7 +1111,7 @@ C:\Program Files\Java\jdk1.8.0_181\lib\tools.jar
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 

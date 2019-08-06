@@ -57,9 +57,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,289 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-工厂类、单例、其他" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/01/工厂类、单例、其他/" class="article-date">
+  <time datetime="2018-02-01T07:33:58.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/01/工厂类、单例、其他/">工厂类、单例、其他</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>工厂类、单例、其他</h5><p></p>
+<hr>
+<hr>
+<h6>工厂类、单例模式</h6>
+
+<ul>
+<li><p>通过专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类 并且重写父类方法</p>
+<pre><code>class  Operation:
+    def __init__(self,numA,numB):
+        self.numA=numA
+        self.numB=numB
+    def getResult(self):
+        print(&apos;计算2个操作数的运算结果&apos;)
+
+class Add(Operation):
+    def __init__(self,numA,numB):
+        super(Add, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA+self.numB
+class Minus(Operation):
+    def __init__(self,numA,numB):
+        super(Minus, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA-self.numB
+
+class Factory:            #根据不同的参数，创建不同的对象的函数
+    def create_class(self,ope,numA,numB):
+        if ope == &apos;+&apos;:
+            q = Add(numA, numB)
+        elif ope == &apos;-&apos;:
+            q = Minus(numA, numB)
+        else:
+            print(&apos;输入错误！&apos;)
+        return q
+
+if __name__==&apos;__main__&apos;:
+    factory=Factory()             #创建一个工厂对象
+    numA=int(input(&apos;请输入第一个数:&apos;))
+    numB=int(input(&apos;请输入第二个数:&apos;))
+    ope=input(&apos;请输入运算符:&apos;)
+    q=factory.create_class(ope,numA,numB)  #代表一个计算器
+    print(&apos;计算结果:&apos;,q.getResult())
+</code></pre></li>
+</ul>
+<h6>单例模式</h6>
+
+<ul>
+<li><p>该模式的主要目的是确保某一个类只有一个实例存在</p>
+<pre><code>class singleton:
+    __instance=None
+    def __new__(cls, *args, **kwargs):   #单例模式，一个对象
+        if cls.__instance==None:
+            cls.__instance=object.__new__(cls)
+            return cls.__instance
+        else:
+            return cls.__instance
+s1=singleton()
+s2=singleton()
+print(id(s1),id(s2))       #result:2489344543992   2489344543992
+</code></pre></li>
+</ul>
+<h6>isinstance()函数</h6>
+
+<ul>
+<li><p>判断是否是继承关系，判断变量的数据类型</p>
+<pre><code>class Pet:
+    def look(self):
+        print(&apos;给宠物看病...&apos;)
+class cat(Pet):
+    def look(self):
+        print(&apos;给猫咪吃药、打针...&apos;)
+kitty=cat()
+print(isinstance(kitty,cat))      #result:True
+print(isinstance(kitty,Pet))      #result:True
+
+a=&apos;Liu&apos;
+print(isinstance(a,str))          #result:True
+</code></pre></li>
+</ul>
+<h6>getattribute\setsttr\hasattr</h6>
+
+<pre><code>class  Operation:
+    numC=333
+    def __init__(self,numA,numB):
+        self.numA=numA
+        self.numB=numB
+    def getResult(self):
+        print(&apos;计算2个操作数的运算结果&apos;)
+q=Operation(3,6)
+print(Operation.numC)                 #result:333
+print(q.__getattribute__(&apos;numC&apos;))     #result:333
+
+q.__setattr__(&apos;numD&apos;,666)
+print(q.__getattribute__(&apos;numD&apos;))     #result:666
+
+setattr(Operation,&apos;numE&apos;,999)
+print(q.numE)                         #result:999
+
+print(hasattr(q,&apos;numC&apos;))              #result:True
+</code></pre><p></p><h6>操作对象的形态</h6><p></p>
+<ul>
+<li><p>给类动态添加方法</p>
+<pre><code>class Student:
+    def __init__(self,name):
+        self.name=name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+def ride(name):
+    print(&apos;%s在骑马...&apos;%name)
+stu1=Student(&apos;刘备&apos;)
+stu1.look()               #result:刘备在看书...
+
+stu1.ride=ride            #给实例添加一个方法
+stu1.ride(stu1.name)      #result:刘备在骑马...
+
+class Student:
+    def __init__(self,name):
+        self.name=name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+def ride(self):
+    print(&apos;%s在骑马...&apos;%self.name)
+Student.ride=ride         #给类动态添加方法
+stu1=Student(&apos;刘备&apos;)
+stu1.look()               #result:刘备在看书...
+stu1.ride()               #result:刘备在骑马...
+</code></pre></li>
+<li><p>为了达到限制的目的，Python允许在定义class的时候，定义一个特殊的__slots__变量，来限制该class实例能添加的属性</p>
+<pre><code>class Student:
+    __slots__=(&apos;name&apos;)   #限制该class实例能添加的属性
+    def __init__(self,name):
+        self.name = name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+stu=Student(&apos;刘禅&apos;)
+stu.look()
+stu.age=25
+print(stu.age)       #AttributeError: &apos;Student&apos; object has no attribute &apos;age&apos;
+</code></pre></li>
+<li><p>__call__,通过callable()函数，可以判断一个对象是否是“可调用”对象</p>
+<pre><code>class Student:
+    def __init__(self,name):
+        self.name = name
+    def look(self):
+        print(&apos;%s在看书...&apos;%self.name)
+    def __call__(self, *args, **kwargs):
+        #print(&apos;AAAAAAAAAAAAA&apos;)
+stu=Student(&apos;刘禅&apos;)
+stu.look()
+print(callable(stu))         #result:True
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/01/工厂类、单例、其他/" data-id="cjyzyo0xr006y3cwvtsphu4bu" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-计算器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/31/计算器/" class="article-date">
+  <time datetime="2018-01-31T09:38:33.000Z" itemprop="datePublished">2018-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/31/计算器/">计算器</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <h5>计算器</h5>
+
+<pre><code>class  Operation:
+    def __init__(self,numA,numB):
+        self.numA=numA
+        self.numB=numB
+    def getResult(self):
+        print(&apos;计算2个操作数的运算结果&apos;)
+
+class Add(Operation):
+    def __init__(self,numA,numB):
+        super(Add, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA+self.numB
+class Minus(Operation):
+    def __init__(self,numA,numB):
+        super(Minus, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA-self.numB
+class Multiply(Operation):
+    def __init__(self,numA,numB):
+        super(Multiply, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA*self.numB
+class Devide(Operation):
+    def __init__(self,numA,numB):
+        super(Devide, self).__init__(numA,numB)
+    def getResult(self):
+        return self.numA//self.numB
+if __name__==&apos;__main__&apos;:             #程序从这里启动
+    numA=int(input(&apos;请输入第一个数:&apos;))
+    numB=int(input(&apos;请输入第二个数:&apos;))
+    ope=input(&apos;请输入运算符:&apos;)
+    q=None      #未赋值的变量，代表一个计算器，类似一个对象
+    if ope==&apos;+&apos;:
+        q=Add(numA,numB)
+    elif ope==&apos;-&apos;:
+        q=Minus(numA,numB)
+    elif ope==&apos;*&apos;:
+        q=Multiply(numA,numB)
+    elif ope==&apos;/&apos;:
+        q=Devide(numA,numB)
+    else:
+        print(&apos;输入错误！&apos;)
+    print(&apos;计算结果:&apos;,q.getResult())
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/31/计算器/" data-id="cjyzyo113008h3cwvuedkuqb6" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-DVD管理系统" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -193,7 +476,7 @@ manager.Menu()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjw7vidwp000rqswvqp9lwhvk" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/01/29/DVD管理系统/" data-id="cjyzyo0ne000z3cwvilz5shei" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -337,7 +620,7 @@ doctor.jiuzhen(xiaoming)    #result:兽医出诊，给宠物看病..   给人类
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjw7vie7j006wqswvcb25ng1h" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/01/28/封装、继承、多态/" data-id="cjyzyo0xn006w3cwv6289y7if" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -579,7 +862,7 @@ print(id(n))                  #result:1832993647864
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjw7vie8j007kqswvi69ujs7w" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/01/22/类与对象/" data-id="cjyzyo0zn007t3cwvhr512ebg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -804,7 +1087,7 @@ print(ul)            #result:[(&apos;Abot&apos;, 98), (&apos;Honey&apos;, 77), (
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjw7vie5x005yqswvh3zmdah0" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/01/19/函数/" data-id="cjyzyo0vx005s3cwvazeden93" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -963,7 +1246,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjw7viea0008gqswvwvjk2bdu" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/01/19/集合/" data-id="cjyzyo11f008n3cwvrigslx2s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1148,7 +1431,7 @@ print(&quot;谢谢使用！&quot;)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjw7viea7008kqswvxle1m5rp" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/01/17/通讯录管理系统/" data-id="cjyzyo12b008u3cwvf87762xt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1311,7 +1594,7 @@ print(d)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjw7vie6a0066qswvskxsukwn" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/01/17/元组、字典/" data-id="cjyzyo0vf005g3cwvejww3i3y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1488,466 +1771,7 @@ print(nums)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjw7vie57005gqswvw6a4oeel" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-循环（while、for）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/15/循环（while、for）/" class="article-date">
-  <time datetime="2018-01-15T11:15:27.000Z" itemprop="datePublished">2018-01-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/15/循环（while、for）/">循环（while、for）</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>循环（while、for）</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>while循环</h6><p></p>
-<ul>
-<li><p>1.输出1-100的奇数和、偶数和</p>
-<pre><code>n=1;sum_even=0;sum_odd=0
-while n&lt;=100:        #判断条件
-    if n%2!=0:       #循环体
-        sum_odd+=n
-    else:
-        sum_even+=n
-    n+=1             #迭代部分，递增
-print(&apos;输出1-100的奇数和为%s&apos;%sum_odd)   #result:输出1-100的奇数和为2500
-print(&apos;输出1-100的偶数和为%s&apos;%sum_even)  #result:输出1-100的偶数和为2550
-</code></pre></li>
-<li><p>2.请用户输入数字，求和，数字直到0退出循环</p>
-<pre><code>n=int(input(&quot;请输入一个整数:&quot;));sum=0
-while n&gt;0:
-    sum+=n
-    n-=1             #迭代部分，递减
-print(sum)
-</code></pre></li>
-<li><p>3.输出1-20中3的倍数、5的倍数及3和5的公倍数</p>
-<pre><code>i=1
-while(i&lt;=20):
-    if(i%3==0 and i%5==0):
-        print(&apos;这个数是3和5的倍数：%s&apos;%i)
-    elif(i%3==0):
-        print(&apos;这个数是3的倍数：%s&apos;%i)
-    elif(i%5==0):
-        print(&apos;这个数是5的倍数：%s&apos;%i)
-    i+=1
-else:               #当循环正常执行结束后，执行else的语句块
-    print(&quot;循环结束，判断完毕！&quot;)
-</code></pre></li>
-</ul>
-<p></p><h6>for循环</h6><p></p>
-<ul>
-<li><p>range()函数,会生成有序数列</p>
-<pre><code>range(7)            #从0到7,不包含7,等同于range(0,7),举例：
-m=[]    定义一个空列表
-for i in range(7):
-    m.append(i)        #遍历并且存入列表中
-print(m)               #result:[0, 1, 2, 3, 4, 5, 6]
-
-range(2,7)          #从2到7，不包括7，举例：
-m=[]    #定义一个空列表
-for i in range(2,7):
-    m.append(i)        #遍历并且存入列表中
-print(m)               #result:[2, 3, 4, 5, 6]
-
-range(2,7,2)        #从2到7，不包括7,步长为2；步长可为负数,举例：
-m=[]    #定义一个空列表
-for i in range(2,7,2):
-    m.append(i)        #遍历并且存入列表中
-print(m)               #result:[2, 4, 6]
-</code></pre></li>
-<li><p>打印一个三角形</p>
-<pre><code>for i in range(0,6):
-    print((&apos;*&apos;*(2*i+1)).center(20,&apos; &apos;))
-else:                  #当循环正常执行结束后，执行else的语句块
-    print(&apos;打印完毕！&apos;)
-#result：
-         *          
-        ***         
-       *****        
-      *******       
-     *********      
-    ***********     
-打印完毕！
-</code></pre></li>
-</ul>
-<p></p><h6>嵌套循环</h6><p></p>
-<ul>
-<li><p>1.输出5行5个*</p>
-<pre><code>for i in range(5):
-    n=0;
-    while n&lt;5:
-        print(&apos;*&apos;,end=&apos;&apos;)
-        n+=1
-    print()
-#result：
-    *****
-    *****
-    *****
-    *****
-    *****
-</code></pre></li>
-<li><p>2.输出一个直角三角形</p>
-<pre><code>for i in range(5):
-    for j in range(i):
-        print(&apos;*&apos;,end=&apos;&apos;)
-    print()
-#result:
-    *
-    **
-    ***
-    ****
-</code></pre></li>
-<li><p>3.输出九九乘法表</p>
-<pre><code>for i in range(1,10):
-    for j in range(1,i+1):
-        print(&apos;%s*%s=%s&apos;%(j,i,i*j),end=&quot;\t&quot;)
-    print()
-#result:
-1*1=1    
-1*2=2    2*2=4    
-1*3=3    2*3=6     3*3=9    
-1*4=4    2*4=8     3*4=12    4*4=16    
-1*5=5    2*5=10    3*5=15    4*5=20    5*5=25    
-1*6=6    2*6=12    3*6=18    4*6=24    5*6=30    6*6=36    
-1*7=7    2*7=14    3*7=21    4*7=28    5*7=35    6*7=42    7*7=49    
-1*8=8    2*8=16    3*8=24    4*8=32    5*8=40    6*8=48    7*8=56    8*8=64    
-1*9=9    2*9=18    3*9=27    4*9=36    5*9=45    6*9=54    7*9=63    8*9=72    9*9=81
-</code></pre></li>
-</ul>
-<p></p><h6>break、continue</h6><p></p>
-<ul>
-<li><p>1.请用户输入0-100间的成绩,统计各区间的人数，若数值不在范围内提示重新输入，若输入正确提示是否继续</p>
-<pre><code>a,b,c=0,0,0                             #初始化各个区间的人数
-while(True):
-    score=int(input(&apos;请输入成绩：&apos;))
-    if score&gt;=90 and score&lt;=100:        #区间：[90,100]
-        a+=1
-    elif score&gt;=60 and score&lt;90:        #区间：[60,90)
-        b+=1
-    elif score&gt;0 and score&lt;60:          #区间：(0,60)
-        c+=1
-    else:
-        print(&apos;Error,请重新输入！&apos;)
-        continue;               #结束本次循环，进入下一次循环，即接着重新输入成绩
-    print(&apos;是否继续，y/n&apos;)
-    inp=input(&apos;是否继续：&apos;)
-    if inp==&apos;n&apos;:
-        break;                  #结束并跳出循环，成绩录入结束，也不会执行else语句块了
-else:
-    print(&apos;成绩录入完成！&apos;)
-print(&apos;晋级线{0} 合格线{1} 不及格{2}&apos;.format(a,b,c))
-</code></pre></li>
-<li><p>2.统计3个班级中，每个班级中3个学生中的成绩大于80的人数</p>
-<pre><code>count=0;
-for i in range(1,4):
-    print(&apos;第{0}个班级的学生成绩&apos;.format(i))
-    for j in range(1,4):
-        print(&apos;第{0}个学生的成绩:&apos;.format(j))
-        score=int(input())
-        if score&gt;80:
-            count+=1
-        elif score&lt;0:
-            print(&apos;Error，停止本班录入!&apos;)
-            break;         #结束内层循环，开始执行外层代码：结束本班学生成绩的录入，进入下一个班级
-print(&apos;大于80的人数为%s&apos;%count)
-==============================================================================================
-count=0;
-for i in range(1,4):
-    print(&apos;第{0}个班级的学生成绩&apos;.format(i))
-    for j in range(1,4):
-        print(&apos;第{0}个学生的成绩:&apos;.format(j))
-        score=int(input())
-        if score&lt;=80:
-            continue;       #结束本次循环，继续下一次循环：继续下一个学生的成绩输入，不管哪个班
-        count+=1
-print(&apos;大于80的人数为%s&apos;%count)
-</code></pre></li>
-</ul>
-<p></p><h6>小练习</h6><p></p>
-<ul>
-<li><p>1.输出菱形</p>
-<pre><code>for i in range(1,8,2):                #1,3,5,7
-    print((&apos;*&apos;*i).center(15,&apos; &apos;))
-for i in range(5,0,-2):               #5,3,1
-    print((&apos;*&apos;*i).center(15,&apos; &apos;))
-#result:
-       *       
-      ***      
-     *****     
-    *******    
-     *****     
-      ***      
-       *    
-</code></pre></li>
-<li><p>2.输出1-30内的所有质数</p>
-<pre><code>#除了1和本身外，不能被小于本身的数整除，就是素数；除了1，从2开始
-num=[];      #定义一个列表，将来存放质数
-i=2
-for i in range(2,31):
-   j=2
-   for j in range(2,i):
-      if(i%j==0):    #被小于本身的数整除，中断内层循环，进入下一个外层循环
-         break；
-   else:
-      num.append(i)
-print(num)           #result:[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-</code></pre></li>
-<li><p>3.输出斐波那切序列：1,1,2,3,5,8,13,21…</p>
-<pre><code>#斐波那契数列:第0项是0，第1项是第一个1。从第三项开始，每一项都等于前两项之和
-i,j=0,1
-while i&lt;10:
-    print(i,end=&apos;&apos;)
-    i,j=j,i+j 
-#这里i,j=j,i+j右边的表达式会在赋值变动之前执行，即先执行右边。
-#比如第一次循环得到j=1,i+j=0+1 然后再执行赋值i,j=1,0+1,执行完这条后i=1,j=1
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjw7vie7s0072qswvo4953nju" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-字符串的定义、切片、格式化、函数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/12/字符串的定义、切片、格式化、函数/" class="article-date">
-  <time datetime="2018-01-12T10:53:24.000Z" itemprop="datePublished">2018-01-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/12/字符串的定义、切片、格式化、函数/">字符串的定义、切片、格式化、函数</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>字符串的定义、切片、格式化、函数</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>定义</h6><p></p>
-<ul>
-<li><p>单引号、双引号都可以定义字符串，三引号允许一个字符串跨多行</p>
-<pre><code>name1=&apos;Honey&apos;  #单引号
-name2=&quot;Tom&quot;    #双引号
-html=&apos;&apos;&apos;       #三引号
-&lt;html&gt;
-&lt;head&gt;&lt;/head&gt;
-&lt;body&gt;
-    &lt;p&gt;你好，2018！&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-&apos;&apos;&apos;
-</code></pre></li>
-</ul>
-<p></p><h6>切片</h6><p></p>
-<ul>
-<li><p>可以使用中括号和下标来获取单个字符或截取字符串，格式为[]、[ : ]、[ : : ]</p>
-<pre><code>str1=&apos;liuyongqian2018@163.com&apos; #先定义一个字符串
-#正序
-a=str1[0] #获取单个字符，取第一个字符      #result:l
-b=str1[len(str1)-1] #取最后一个字符，也可以写成 b=str1[-1],python特有         #result:m
-c=str1[1:5]#获取字符串，取下标为1、2、3、4的字符，不包括最后一位5      #result:iuyo
-d=str1[:]#取所有     #result:liuyongqian2018@163.com
-e=str1[1:]#取从下标为1到最后一个字符     #result:iuyongqian2018@163.com
-f=str1[:5]#取下标为0到4的字符，不包括5         #result:liuy
-g=str1[-5:]#取从-5到结尾的字符     #result:3.com
-h=str1[-5:-2]#取从-5到-3的字符，不包括-2         #result:3.c
-#逆序
-i=str1[ : : ]#取所有，最后一个参数为步长，默认为1     #result:liuyongqian2018@163.com
-j=str1[-1:-7:-2]#取-1到-6的字符，步长为2         #result:mc3
-k=str1[-1: :-3]#取-1到结尾的字符，步长为3         #result:m.11nqoi
-l=str1[-1: :-1]#倒序     #result:moc.361@8102naiqgnoyuil
-m=str1[ : :-1]#倒序         #result:moc.361@8102naiqgnoyuil
-</code></pre></li>
-</ul>
-<p></p><h6>格式化</h6><p></p>
-<ul>
-<li>第一种，%s 字符，%d 整数，%f 浮点型，%.2f 保留2位小数且四舍五入</li>
-<li><p>第二种，.format()格式化,如果以name开头，其后的变量均需以键值的形式出现</p>
-<pre><code>x=&apos;name:{0} age:{1}&apos;.format(&apos;Tom&apos;,33)     #result: name:Tom age:33
-y=&apos;name:{name} age:{age}&apos;.format(name=&quot;Tom&quot;,age=25)      #result: name:Tom age:25
-z1=&apos;name={0}&apos;.format(&quot;Tom&quot;)      #result: name=Tom
-z2=&apos;name={{0}}&apos;.format(&quot;Tom&quot;)       #result: name={0}
-z3=&apos;name={{{0}}}&apos;.format(&quot;Tom&quot;)           #result: name={Tom}
-</code></pre></li>
-<li><p>小练习：以上述两种方式输出结果</p>
-<pre><code>name=input(&quot;请输入NAME：&quot;) #字符型
-print(&quot;NAME:%s&quot; %name)
-age=int(input(&quot;请输入AGE：&quot;))#整型
-print(&quot;AGE:%d&quot; %age)
-work=float(input(&quot;请输入LIMIT：&quot;))#浮点型
-print(&quot;WORK:%f&quot;%work)
-print(&quot;===========================================&quot;)
-print(&quot;NAME:%s AGE:%d WORK:%.2f&quot;%(name,age,work))
-print(&quot;NAME:{0} AGE:{0}&quot;.format(name,age))
-</code></pre></li>
-</ul>
-<p></p><h6>函数</h6><p></p>
-<ul>
-<li><p>len()字符串的长度</p>
-<pre><code>str3=&quot;aabcd efghi jklmn&quot; #先定义一个字符
-print(&apos;str3的长度为{0}&apos;.format(len(str3)))        #result：str3的长度为17
-</code></pre></li>
-<li><p>count(str,start,end)返回指定范围内字符出现数量，范围不包括end</p>
-<pre><code>print(&quot;str3中a出现次数为{0}&quot;.format(str3.count(&apos;a&apos;,0,2)))     #result：str3中a出现次数为2
-</code></pre></li>
-<li><p>capitalize()将字符串的第一个字符转换为大写</p>
-<pre><code>print(str3.capitalize())     #result：Aabcd efghi jklmn
-</code></pre></li>
-<li><p>title()将字符串中每一个单词首字母大写</p>
-<pre><code>print(str3.title())     #result：Aabcd Efghi Jklmn
-</code></pre></li>
-<li><p>find()返回找到的字符串的下标，没有找到则返回-1</p>
-<pre><code>print(&apos;d在str3中的下标为{0}&apos;.format(str3.find(&apos;d&apos;,1)))#表示第一次出现字符d的下标，        #result：d在str3中的下标为4
-</code></pre></li>
-<li><p>rfind(str,start,end)从右边开始找,指定一个范围</p>
-<pre><code>print(&apos;d在str3中的下标为{0}&apos;.format(str3.rfind(&apos;d&apos;,-18,-1)))        #result：d在str3中的下标为4
-</code></pre></li>
-<li><p>index()找下标，没有找到则抛出异常</p>
-<pre><code>print(&apos;d在str3中的下标为{}&apos;.format(str3.index(&apos;d&apos;)))         #result：d在str3中的下标为4
-</code></pre></li>
-<li><p>rindex()从右边开始找，可以指定范围</p>
-<pre><code>print(&apos;d在str3中的下标为{}&apos;.format(str3.index(&apos;d&apos;,-18,-1)))    #result：d在str3中的下标为4
-</code></pre></li>
-<li><p>replace()替换,但是原字符不会改变</p>
-<pre><code>print(&quot;替换str3中的a为{}&quot;.format(str3.replace(&apos;a&apos;,&apos;A&apos;)))        #result:替换str3中的a:AAbcd efghi jklmn
-</code></pre></li>
-<li><p>split(str,num)如果括号内什么都不写，就是将通过\t和空格进行拆分，可设置拆分次数</p>
-<pre><code>print(&quot;str3默认拆分结果为{0}&quot;.format(str3.split()))         #result:str3默认拆分结果为[&apos;aabcd&apos;, &apos;efghi&apos;, &apos;jklmn&apos;]
-</code></pre></li>
-<li><p>startswith(str,start,end)检查是否以str开头，可指定检查范围，返回bool值</p>
-<pre><code>print(str3.startswith(&apos;aa&apos;))    #result:True
-</code></pre></li>
-<li><p>endswith()检查是否以str开头，返回bool值</p>
-<pre><code>print(str3.endswith(&apos;mn&apos;))        #result:True
-</code></pre></li>
-<li><p>lower()忽略大小写的地方，全部转为小写</p>
-<pre><code>print(str3.lower())        #result:aabcd efghi jklmn
-</code></pre></li>
-<li><p>upper()忽略大小写的地方，全部转为大写</p>
-<pre><code>print(str3.upper())        #result:AABCD EFGHI JKLMN
-</code></pre></li>
-<li><p>ljust(num,str),center(num,str),rjust(num,str)字符串输出时怎样对齐，字符串本来长度是5，把它变成长度为10，可用字符填充</p>
-<pre><code>str4=&apos;abcde&apos;#先定义一个字符串，以ljust()为例
-print(str4.ljust(10,&apos;*&apos;))        #result:abcde*****
-</code></pre></li>
-<li><p>lstrip(),strip(),rstrip()去除空格</p>
-<pre><code>str5=&apos;   abcde&apos;#先定义一个字符串，以lstrip()为例
-print(str4.lstrip())        #result:abcde
-</code></pre></li>
-<li><p>partition(str)以此字符串为节点拆分,返回头、分割符、尾三部分</p>
-<pre><code>str6=&apos;hello python-world&apos;#先定义一个字符串
-print(str6.partition(&quot;-&quot;))        #result:(&apos;hello python&apos;, &apos;-&apos;, &apos;world&apos;)
-</code></pre></li>
-<li><p>splitlines(bool keepends)按照换行符进行拆分，如果字符串中有”\n” 结果里是否去掉换行符(‘\r’, ‘\r\n’, \n’)，默认为 False，不包含换行符;如果为True，则保留换行符</p>
-<pre><code>str7=&apos;你好\npython-world&apos;#先定义一个字符串
-print(str7.splitlines())    #result：[&apos;你好&apos;, &apos;python-world&apos;]
-print(str7.splitlines(True))    #result：[&apos;你好\n&apos;, &apos;python-world&apos;]
-</code></pre></li>
-<li><p>isalpha()判断字符串是否全是字母/文字,即非特殊字符，返回bool值</p>
-<pre><code>str8=&apos;你好Pythonworld&apos;#先定义一个字符串
-print(str8.isalpha())        #result：True
-</code></pre></li>
-<li><p>isdigit()判断字符串是否是数字，返回bool值</p>
-<pre><code>print(str8.isdigit())        #result：False
-</code></pre></li>
-<li><p>isalnum()判断是否是数字和字母/文字，返回bool值</p>
-<pre><code>print(str8.isalnum())        #result：True
-</code></pre></li>
-<li><p>join(sequence)将列表组成新的字符串,sequence为要拼接列表的连接项</p>
-<pre><code>str9=(&apos;P&apos;,&apos;y&apos;,&apos;t&apos;,&apos;h&apos;,&apos;o&apos;,&apos;n&apos;)
-str10=&apos;-&apos;
-print(str10.join(str9))        #result:P-y-t-h-o-n
-</code></pre></li>
-<li><p>小练习：验证邮箱是否合法，要求：@在.的前边，如果合法获取用户名部分</p>
-<pre><code>email=input(&quot;请输入邮箱：&quot;)
-a=email.find(&apos;@&apos;) 
-b=email.find(&apos;.&apos;)
-if(a&lt;b and a!=0):
-    print(&quot;该邮箱合法！&quot;)
-    print(&quot;用户名部分：{}&quot;.format(email[:a]))
-else:
-    print(&quot;该邮箱不合法！&quot;)
-</code></pre></li>
-</ul>
-<p></p><h6>其他</h6><p></p>
-<ul>
-<li><p>str()将非字符型转换成字符型</p>
-<pre><code>a=123465
-b=str(aa)
-print(type(b))         #result：&lt;class &apos;str&apos;&gt;
-</code></pre></li>
-<li><p>in:判断是否字符串中存在某字符，返回bool值</p>
-</li>
-<li><p>not in：判断是否不在此字符串中，返回bool值</p>
-<pre><code>str2=&apos;abcdef&apos; #先定义一个字符
-print(&apos;d&apos; in str2)       #result:True
-print(&apos;d&apos; not in str2)       #result:False
-</code></pre></li>
-<li><p>r/R 原样输出字符串，取消特殊性</p>
-<pre><code>print(r&quot;\t代表一个制表符   \n表示换行符&quot;)
-</code></pre></li>
-</ul>
-<p><em>若文中内容有误，希望大家指正，谢谢!</em></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjw7vie6v006iqswvcgzrsbms" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="cjyzyo0vv005q3cwv4p98chrj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1965,7 +1789,7 @@ print(&apos;d&apos; not in str2)       #result:False
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/13/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/15/">Suivant &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/13/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/15/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1977,9 +1801,9 @@ print(&apos;d&apos; not in str2)       #result:False
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">15</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1987,9 +1811,9 @@ print(&apos;d&apos; not in str2)       #result:False
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 14.44px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
@@ -1998,7 +1822,7 @@ print(&apos;d&apos; not in str2)       #result:False
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -2006,12 +1830,20 @@ print(&apos;d&apos; not in str2)       #result:False
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2019/05/28/读书乱纪01/">读书乱纪01</a>
+            <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/06/配置MongoDB访问账号-密码/">配置MongoDB访问账号&amp;密码</a>
+          </li>
+        
+          <li>
+            <a href="/2019/05/28/读书乱纪01/">笔记01</a>
           </li>
         
           <li>
@@ -2020,14 +1852,6 @@ print(&apos;d&apos; not in str2)       #result:False
         
           <li>
             <a href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/Tomcat日志文件/">Tomcat日志文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/05/定时任务crontab命令/">定时任务crontab命令</a>
           </li>
         
       </ul>
@@ -2058,7 +1882,7 @@ print(&apos;d&apos; not in str2)       #result:False
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2019 刘永前<br>
-      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 
