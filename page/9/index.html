@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,110 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Django基本概念" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/22/Django基本概念/" class="article-date">
+  <time datetime="2018-03-21T16:00:42.000Z" itemprop="datePublished">2018-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/22/Django基本概念/">Django基本概念</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Django基本概念</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>Django是一个开放源代码的Web应用框架，由Python写成。采用了MTV的框架模式，即模型M，模板T和视图V</li>
+<li>Django 框架的核心组件有：<ul>
+<li>用于创建模型的对象关系映射</li>
+<li>为最终用户设计的完美管理界面</li>
+<li>一流的 URL 设计</li>
+<li>设计者友好的模板语言</li>
+<li>缓存系统</li>
+</ul>
+</li>
+<li>Django是一个基于MVC构造的框架。但是在Django中，控制器接受用户输入的部分由框架自行处理，所以 Django 里更关注的是模型（Model）、模板(Template)和视图（Views），称为 MTV模式。它们各自的职责如下：<ul>
+<li>模型（Model）即数据存取层<ul>
+<li>处理与数据相关的所有事务： 如何存取、如何验证有效性、包含哪些行为以及数据之间的关系等</li>
+</ul>
+</li>
+<li>视图（View）即表现层<ul>
+<li>处理与表现相关的决定： 如何在页面或其他类型文档中进行显示</li>
+</ul>
+</li>
+<li>模板(Template)即业务逻辑层<ul>
+<li>存取模型及调取恰当模板的相关逻辑。模型与模板的桥梁</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>c/s与b/s的区别</p>
+<pre><code>c/s--&gt;client/server 客户端与服务器交互
+    主要工作在客户端 处理请求  响应请求
+    好：分减服务器压力 用户体验更好，方便
+    坏：下载客户端
+b/s--&gt;browser/server 浏览器与服务器交互
+    主要工作在服务器 处理请求 相应请求
+    好：不需要下载客户端
+    坏：大量的工作精力花销子啊服务端
+</code></pre></li>
+<li><p>目录介绍</p>
+<pre><code>文件夹dj_myschool
+    文件夹dj_myschool
+        __init__.py     #一个空文件，告诉python该目录是一个python包
+        settings.py     #该项目的设置与配置
+        urls.py         #该项目的URL声明，一份由Django驱动的网站目录
+        wsgi.py            #一个WSGI兼容的web服务器的入口，以便运行你的项目
+    文件夹student
+        文件夹migrations
+            __init__.py
+        __init__.py
+        admin.py
+        apps.py
+        models.py      #负责业务对象和数据库的关系映射(ORM)
+        tests.py
+        views.py       #负责业务逻辑并在适当时候调用Models和Templates
+        文件夹
+    文件夹templates    #负责如何把页面展示给用户(html)
+    文件db.sqlite3
+    文件manage.py          #一个实用的命令行工具
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="ck2ormw2w0010i4wvdejx9k31" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-MongoDB基本操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -239,7 +343,7 @@ db.myinfo.find({$or:[{&apos;name&apos;:&apos;liuyongqian&apos;},{&apos;age&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="cjyzyo0p3001w3cwve94cmy2m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="ck2ormw4n001qi4wvqrstdslm" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -361,7 +465,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="cjyzyo0qv002w3cwv8f91svcg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="ck2ormw6w002ri4wvz94i217e" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -435,7 +539,7 @@ zlexcount mykey [one [three #result:1
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="cjyzyo0re00363cwvyv37qn43" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="ck2ormw800039i4wvql7rsfq5" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -534,7 +638,7 @@ smembers key4      #result:a b c
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="cjyzyo0qr002u3cwvihlup1ad" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="ck2ormw72002ui4wvfgg1lth0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -638,7 +742,7 @@ lindex mylist 1        #列表中下标为指定索引值的元素
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="cjyzyo0pa00203cwv529hzrv6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="ck2ormw5e0022i4wvjhjk0s12" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -738,7 +842,7 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="cjyzyo0nt00183cwvcomfx4g3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="ck2ormw3d0016i4wvrd7xj2bc" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -873,7 +977,7 @@ get myname          #result:liuyongqian
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="cjyzyo0r100303cwviwrngqx4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/15/String类型操作/" data-id="ck2ormw8x003oi4wvaf6j2xmw" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1031,7 +1135,7 @@ port=27017   #端口号 默认为27017
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="cjyzyo0oz001t3cwvtfr8a646" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/15/MongoDB基本概念/" data-id="ck2ormw4y001vi4wvr479eav0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1107,195 +1211,10 @@ frag:片段只在客户端使用，不发送到服务器端；
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="cjyzyo0nx001b3cwv42jnz1cq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/14/HTTP协议浅析/" data-id="ck2ormw3i0018i4wvowz659v0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络基础知识/">网络基础知识</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Python的进程与线程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/14/Python的进程与线程/" class="article-date">
-  <time datetime="2018-03-14T04:00:57.000Z" itemprop="datePublished">2018-03-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/Python的进程与线程/">Python的进程与线程</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Python的进程与线程</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>概念</h6><p></p>
-<ul>
-<li>进程：独立（内存独立，cpu使用独立）的所有子任务的集合，启动进程开销大，进程之间很难共享数据和数据通信</li>
-<li>线程：进程中的每个子任务，不能独立存在，cpu执行的最小单位；依赖进程（内存共享）启动开销小，线程之间共享数据容易</li>
-<li><p>实现线程的两种形式</p>
-<ul>
-<li><p>函数方式实现：线程必须依赖函数实现，不能单独运行。单函数结束，线程结束。如果想让线程一致运行，就要想办法让程序不结束，比如在程序最后加一个input()或者死循环</p>
-<pre><code>import threading,time
-thr=threading.current_thread()  #threading.current_thread()返回当前的线程变量
-thr.setName(&apos;主线程&apos;)
-print(&apos;当前线程：&apos;,thr.getName())
-def fun1(t_name):
-    for i in range(1,6):
-        print(t_name,i)
-        time.sleep(2)
-threading._start_new_thread(fun1,(&apos;子线程&apos;,))   #第二个参数类型为元组，为第一个参数传参
-for i in range(1,6):
-    print(thr.name,i)
-    time.sleep(2)
-input()
-</code></pre></li>
-<li><p>类方式实现：</p>
-<ul>
-<li>a继承threading.Thread</li>
-<li>b写构造方法，且必须调用父类的构造方法</li>
-<li>c重写父类的run方法，会在start之后自动调用</li>
-<li><p>d实现开始方法，如果重写了start()方法，一定要调用父类的start()</p>
-<pre><code>import threading,time
-class myThread(threading.Thread):
-    def run(self):
-        for i in range(1,11):
-            print(self.name,i)
-            time.sleep(1)
-thread1=myThread()
-thread1.start()
-thread2=threading.current_thread()
-for i in range(1,11):
-    print(thread2.name,i)
-    if i==3:
-        print(&apos;开始礼让&apos;)
-        thread1.join()
-        #join([time])强制调用某个线程进入执行状态，本线程礼让CPU资源，直至某个线程退出/抛异常/超时，本线程才进入就绪状态
-    time.sleep(1)
-input()
-</code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>资源共享引发的问题—锁</h6><p></p>
-<ul>
-<li>由于并发的问题，需要加锁</li>
-<li>锁有锁定和未锁定两种状态，当一个线程要访问共享数据时，必须要先获得锁定，如果已经有别的线程获得锁定，那么就进入暂停状态，等别的线程把所释放后再进行操作</li>
-<li><p>Conditon：更精确的控制锁，提供了四个方法，上锁-acquire()，等待-wait()，解锁-release()，唤醒-notify()</p>
-<pre><code>import threading,time
-sum=20  #总票数
-count=0  #当前抢到票数
-lock=threading.Lock()             #建锁
-class qiangpiao(threading.Thread):
-    def __init__(self,t_name):
-        threading.Thread.__init__(self)
-        self.name=t_name
-    def run(self):
-        global sum, count
-        while True:
-            lock.acquire()   #上锁
-            if sum&lt;=0:
-                return
-            else:
-                sum-=1
-                count+= 1
-                print(self.name,&apos;抢到了第{0}张票，剩余{1}张票&apos;.format(count,sum))
-            lock.release()    #释放
-            time.sleep(1)
-chuangkou=qiangpiao(&apos;窗口&apos;)
-huangniu=qiangpiao(&apos;黄牛&apos;)
-phone=qiangpiao(&apos;手机&apos;)
-chuangkou.start()
-huangniu.start()
-phone.start()
-</code></pre></li>
-</ul>
-<p></p><h6>多线程互相影响</h6><p></p>
-<ul>
-<li><p>厨师与吃货</p>
-<pre><code>import threading,time
-zhenglong=[]      #蒸笼，存包子资源
-class Cook(threading.Thread):
-    def run(self):
-        while True:
-            chi_cond.acquire()
-            global zhenglong
-            if len(zhenglong)==0:
-                print(&apos;厨师开始蒸包子&apos;)
-                for i in range(1,8):
-                    print(&apos;厨师正在蒸第{0}个包子&apos;.format(i))
-                    zhenglong.append(i)
-                    time.sleep(1)
-                print(&apos;包子蒸完，唤醒吃货......&apos;)
-                chi_cond.notify()
-            chi_cond.release()
-            zheng_cond.acquire()
-            zheng_cond.wait()
-            zheng_cond.release()
-class Chihuo(threading.Thread):
-    def __init__(self,c_name):
-        threading.Thread.__init__(self)
-        self.name=c_name
-    def run(self):
-        while True:
-            chi_cond.acquire()
-            global zhenglong
-            if len(zhenglong) == 0:
-                zheng_cond.acquire()
-                zheng_cond.notify()
-                zheng_cond.release()
-                chi_cond.wait()
-            else:
-                baozi=zhenglong.pop()
-                print(self.name,&apos;吃了第{0}个包子，还剩{1}个包子&apos;.format(baozi,len(zhenglong)))
-                time.sleep(1)
-            chi_cond.release()
-chi=threading.Lock()
-chi_cond=threading.Condition(lock=chi)
-zheng=threading.Lock()
-zheng_cond=threading.Condition(lock=zheng)
-
-cook=Cook()
-aa=Chihuo(&apos;aa&apos;)
-bb=Chihuo(&apos;bb&apos;)
-cc=Chihuo(&apos;cc&apos;)
-cook.start()
-aa.start()
-bb.start()
-cc.start()
-input()
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/Python的进程与线程/" data-id="cjyzyo0qy002y3cwvr5whlfqh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1310,7 +1229,7 @@ input()
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/8/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1324,7 +1243,7 @@ input()
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1334,16 +1253,16 @@ input()
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1351,9 +1270,13 @@ input()
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/11/07/redis中hash基本操作（删改）/">redis中hash基本操作（删、改）</a>
+          </li>
         
           <li>
             <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
@@ -1369,10 +1292,6 @@ input()
         
           <li>
             <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
           </li>
         
       </ul>

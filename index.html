@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,121 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-redis中hash基本操作（删改）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/07/redis中hash基本操作（删改）/" class="article-date">
+  <time datetime="2019-11-07T13:37:12.000Z" itemprop="datePublished">2019-11-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/07/redis中hash基本操作（删改）/">redis中hash基本操作（删、改）</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>redis中hash基本操作（删、改）</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>Redis hash可储存多个键值对，适合储存对象的属性；即一个key中可以存储多个fieldName及其fieldValue。格式为：key filed1 value1 field2 value2 …</li>
+<li>本文中以键“menu_data_and_1563”来进行说明。</li>
+</ul>
+<p></p><h6>2. 检查该“键”是否存在</h6><p></p>
+<ul>
+<li><p>检查该“键”是否存在，执行：</p>
+<pre><code>127.0.0.1:6379&gt;exists menu_data_and_1563
+如果存在该键，返回结果：
+（integer）1
+如果不存在该键，返回结果：
+（integer）0
+</code></pre></li>
+</ul>
+<p></p><h6>3. 检查该“键”是否为哈希类型</h6><p></p>
+<ul>
+<li><p>检查该“键”是否为哈希类型，执行：</p>
+<pre><code>127.0.0.1:6379&gt;type menu_data_and_1563
+如果为哈希，返回结果：
+hash
+</code></pre></li>
+</ul>
+<p></p><h6>4. 查询</h6><p></p>
+<ul>
+<li><p>4.1 查询该键下所有域fieldName，执行：</p>
+<pre><code>127.0.0.1:6379&gt;hkeys menu_data_and_1563
+返回结果：
+1) &quot;597&quot;
+2) &quot;69&quot;
+3) &quot;66&quot;
+4) &quot;87&quot;
+</code></pre></li>
+<li><p>4.2 查询该键下的域87是否存在，执行：</p>
+<pre><code>127.0.0.1:6379&gt;hexists menu_data_and_1563 87
+如果存在该域，返回结果：
+（integer）1
+</code></pre></li>
+<li><p>4.3 查询该键下所有域的fieldValue，执行：</p>
+<pre><code>127.0.0.1:6379&gt;hgetall menu_data_and_1563         或者
+127.0.0.1:6379&gt;hvals menu_data_and_1563
+返回结果：（奇数行为域，偶数行为域值）
+1) &quot;597&quot;
+2) &quot; and  ( t.branch_id = 159 or  t.create_by =1563)&quot;
+3) &quot;69&quot;
+4) &quot; and  ( a.branch_id = 159 or  a.create_by =1563)&quot;
+5) &quot;66&quot;
+6) &quot; and  ( a.branch_id = 159 or  a.create_by =1563)&quot;
+7) &quot;87&quot;
+8) &quot; and  ( ms.branch_id = 159 or  ms.create_by =1563)&quot;
+</code></pre></li>
+<li><p>4.4 查询该键下的域87的值，执行：</p>
+<pre><code>127.0.0.1:6379&gt;hget menu_data_and_1563 87
+返回结果：
+&quot; and  ( ms.branch_id = 159 or  ms.create_by =1563)&quot;
+</code></pre></li>
+</ul>
+<p></p><h6>5. 删除</h6><p></p>
+<ul>
+<li><p>5.1 删除key中的某个域及其值，如删除87这个域，执行</p>
+<pre><code>127.0.0.1:6379&gt;hdel menu_data_and_1563 87
+若删除成功，返回结果：
+（integer）1
+</code></pre></li>
+</ul>
+<p></p><h6>6. 增加</h6><p></p>
+<ul>
+<li>6.1 基本语法：HSET KEY_NAME FIELD VALUE</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/07/redis中hash基本操作（删改）/" data-id="ck2ormwbt004wi4wvbw4oz87g" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-磁盘挂载" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -127,7 +242,7 @@ mount /dev/sdb1            挂载
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/06/磁盘挂载/" data-id="cjyzyo0zj007r3cwvwv3cyyg1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/06/磁盘挂载/" data-id="ck2ormwjg007wi4wvg9uamphh" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -237,7 +352,7 @@ root：                    只在admin数据库中可用，超级账号，超级
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/06/配置MongoDB访问账号-密码/" data-id="cjyzyo10v008d3cwvhekj2nj9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/08/06/配置MongoDB访问账号-密码/" data-id="ck2ormwm6008wi4wv64wseux1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -303,7 +418,7 @@ root：                    只在admin数据库中可用，超级账号，超级
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/28/读书乱纪01/" data-id="cjyzyo10700833cwvb47ll9v1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/05/28/读书乱纪01/" data-id="ck2ormwlg008mi4wv9arwfu57" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络基础知识/">网络基础知识</a></li></ul>
@@ -381,7 +496,7 @@ root：                    只在admin数据库中可用，超级账号，超级
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/11/mysql日志文件/" data-id="cjyzyo0ti004a3cwvlgbb0my2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/05/11/mysql日志文件/" data-id="ck2ormwes0064i4wvuk3rr4ux" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -446,7 +561,7 @@ $http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/11/Nginx日志文件/" data-id="cjyzyo0pt002a3cwvxo4gk976" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/05/11/Nginx日志文件/" data-id="ck2ormw6h002ki4wvp98rkmcd" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
@@ -520,7 +635,7 @@ $http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/11/Tomcat日志文件/" data-id="cjyzyo0rt003f3cwvkuo2ed7j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/05/11/Tomcat日志文件/" data-id="ck2ormw9a003ui4wv6saincil" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -669,7 +784,7 @@ mysqldump -h$mysql_host -u$mysql_user -p$mysql_pwd $backup_database &gt; /root/t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/05/定时任务crontab命令/" data-id="cjyzyo0xk006u3cwv4mfi0oan" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/05/05/定时任务crontab命令/" data-id="ck2ormwhy0078i4wvxpezsi4p" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -794,7 +909,7 @@ mysqldumpslow -s r -t 20 /mysql/mysql06-slow.log | more
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/04/MySQL慢日志查询/" data-id="cjyzyo0ph00243cwveloyv4d2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/05/04/MySQL慢日志查询/" data-id="ck2ormw5w002ai4wvhnfmnw1w" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -946,109 +1061,10 @@ TPS=(Com_commit + Com_rollback)/Uptime
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/04/MySQL监控与调优-初级/" data-id="cjyzyo0pl00263cwvhlu0uvgm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/05/04/MySQL监控与调优-初级/" data-id="ck2ormw66002fi4wvftz9y4em" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-完全备份与还原-mysqldump备份" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/26/完全备份与还原-mysqldump备份/" class="article-date">
-  <time datetime="2019-04-26T14:25:18.000Z" itemprop="datePublished">2019-04-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/26/完全备份与还原-mysqldump备份/">完全备份与还原---mysqldump备份</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>完全备份与还原—mysqldump备份</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>1. 简介</h6><p></p>
-<ul>
-<li>这篇笔记主要描述记录如何使用mysqldump命令来产生导出文件，和如何导入这些导出文件。</li>
-</ul>
-<p></p><h6>2. 备份数据</h6><p></p>
-<ul>
-<li><p>2.1 备份一个数据库</p>
-<pre><code>语法：shell模式下，mysqldump -u [username] -p [dbname] &gt; backupName.sql
-
-例如：（使用root用户备份名为test_oa的数据库）
-mysqldump -u root -p test_oa &gt; /root/bat_test_oa.sql
-其中：
-dbname参数表示需要备份的数据库的名称；
-backupName.sql参数表示备份文件的名称，文件名前面可以加上一个绝对路径。
-</code></pre></li>
-<li><p>2.2 备份数据库中的表</p>
-<pre><code>语法：shell模式下，mysqldump -u [username] -p [dbname] [table1] [table2] ... &gt; backupName.sql
-
-例如：（使用root用户备份名为test_oa的数据库中的userinfo、workinfo两张表）
-mysqldump -u root -p test_oa userinfo workinfo&gt; /root/bat_test_oa_uw.sql
-其中：table1和table2参数表示需要备份的表的名称，为空则整个数据库备份
-</code></pre></li>
-<li><p>2.3 备份多个数据库</p>
-<pre><code>语法：shell模式下，mysqldump -u [username] -p --databases [dbname1] [dbname2] &gt; backupName.sql
-
-其中：dbname1和dbname2参数表示需要备份的数据库的名称
-</code></pre></li>
-<li><p>2.4 备份所有数据库</p>
-<pre><code>语法：shell模式下，mysqldump -u [username] -p --all-databases &gt; backupAll.sql
-</code></pre></li>
-</ul>
-<p></p><h6>3. 还原数据</h6><p></p>
-<ul>
-<li><p>3.1 还原一个数据库</p>
-<ul>
-<li><p>当使用上面的mysqldump语句导出文件的时候未使用到–databases或者–all-databases选项时，需要手动创建数据库</p>
-<pre><code>语法：shell模式下，mysqladmin -u [username] -p create [dbname];
-                 mysql -u [username] -p [dbname] &lt; backupName.sql
-
-例如：mysqladmin -uroot -p create test_oa;
-     mysql -uroot -p test_oa &lt; /root/bat_test_oa.sql
-     其中：在导入文件时需要指定数据库名字
-</code></pre></li>
-</ul>
-</li>
-<li><p>3.2 还原多个数据库</p>
-<ul>
-<li><p>当使用上面的mysqldump语句导出文件的时候使用到了–databases或者–all-databases选项后，文件中已经含有了CREATE DATABASE和USE语句，所以不需要再指定一个数据库，可以直接读入所备份文件</p>
-<pre><code>语法：shell模式下，mysql -u [username] -p &lt; backupName.sql
-</code></pre></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/完全备份与还原-mysqldump备份/" data-id="cjyzyo0xh006s3cwvetwd6tzj" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
 
     </footer>
   </div>
@@ -1063,7 +1079,7 @@ mysqldump -u root -p test_oa userinfo workinfo&gt; /root/bat_test_oa_uw.sql
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1077,7 +1093,7 @@ mysqldump -u root -p test_oa userinfo workinfo&gt; /root/bat_test_oa_uw.sql
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1087,16 +1103,16 @@ mysqldump -u root -p test_oa userinfo workinfo&gt; /root/bat_test_oa_uw.sql
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1104,9 +1120,13 @@ mysqldump -u root -p test_oa userinfo workinfo&gt; /root/bat_test_oa_uw.sql
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/11/07/redis中hash基本操作（删改）/">redis中hash基本操作（删、改）</a>
+          </li>
         
           <li>
             <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
@@ -1122,10 +1142,6 @@ mysqldump -u root -p test_oa userinfo workinfo&gt; /root/bat_test_oa_uw.sql
         
           <li>
             <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
           </li>
         
       </ul>

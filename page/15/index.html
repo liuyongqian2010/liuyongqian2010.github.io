@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,183 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-列表" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/16/列表/" class="article-date">
+  <time datetime="2018-01-16T01:28:02.000Z" itemprop="datePublished">2018-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/16/列表/">列表</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>列表</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>列表的定义</h6><p></p>
+<ul>
+<li><p>列表的数据项不需要具有相同的类型，逗号分隔，方括号括起来</p>
+<pre><code>list1=[&apos;News&apos;,&apos;Git&apos;,2018,1.15,False]
+print(list1[2])             #result:2018
+
+list=[[&apos;a&apos;,&apos;b&apos;],[&apos;A&apos;,&apos;B&apos;],[&apos;a&apos;,&apos;B&apos;]] 
+print(list[1][1])           #二维列表  #result:B
+</code></pre></li>
+</ul>
+<p></p><h6>列表的切片</h6><p></p>
+<ul>
+<li><p>列表也可以使用切片，使用方法与字符串一致</p>
+<pre><code>print(list1[:])  #所有       #result:[&apos;News&apos;, &apos;Git&apos;, 2018, 1.15, False]
+print(list1[1:2])           #result:[&apos;Git&apos;]
+print(list1[1:4:2])         #result:[&apos;Git&apos;, 1.15]
+print(list1[-1])            #result:False
+print(list1[-1:-5:-1])      #result:[False, 1.15, 2018, &apos;Git&apos;]
+print(list1[::-1])             #result:[False, 1.15, 2018, &apos;Git&apos;, &apos;News&apos;]
+</code></pre></li>
+</ul>
+<p></p><h6>列表的编辑</h6><p></p>
+<ul>
+<li><p>增加</p>
+<pre><code>list2=[&apos;Happy&apos;,&apos;New&apos;,&apos;Year&apos;]
+list2.append(&apos;2018&apos;)          #增加到列表尾部
+print(list2)      #result:[&apos;Happy&apos;, &apos;New&apos;, &apos;Year&apos;, &apos;2018&apos;]
+list2.insert(3,&apos;2018&apos;)        #插入到列表相应下标位置,超出范围则在尾部添加
+print(list2)      #result:[&apos;Happy&apos;, &apos;New&apos;, &apos;Year&apos;, &apos;2018&apos;]
+
+list3=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list4=[&apos;李桑&apos;,&apos;雷军&apos;,&apos;马云&apos;] #两个列表可以进行相加 
+print(list3+list4)            #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;, &apos;李桑&apos;, &apos;雷军&apos;, &apos;马云&apos;]
+print(list3)                  #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;]
+
+list3.extend(list4)           #列表1.extend(列表2)，是把列表2迭代后追加到列表1，extend()没有返回值
+print(list3)                  #result:[&apos;百度&apos;, &apos;小米&apos;, &apos;阿里&apos;, &apos;李桑&apos;, &apos;雷军&apos;, &apos;马云&apos;]
+</code></pre></li>
+<li><p>修改</p>
+<pre><code>list5=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list5[1]=&apos;大米&apos;
+print(list5)                  #result:[&apos;百度&apos;, &apos;大米&apos;, &apos;阿里&apos;]
+</code></pre></li>
+<li><p>删除</p>
+<pre><code>list6=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+del list6[1]                  #del
+print(list6)                  #result:[&apos;百度&apos;, &apos;阿里&apos;]
+
+list7=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list7.pop()                   #默认删除最后一个,也可以指定删除的下标，返回删除值
+print(list7)                  #result:[&apos;百度&apos;, &apos;小米&apos;]
+
+list8=[&apos;百度&apos;,&apos;小米&apos;,&apos;阿里&apos;]
+list8.remove(&apos;小米&apos;)          #删除括号中的内容，但只删除一次
+print(list8)                  #result:[&apos;百度&apos;, &apos;阿里&apos;]
+</code></pre></li>
+<li><p>查询</p>
+<pre><code>list9=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+print(list9.index(&apos;c&apos;))       #返回查找到的下标  #result:2
+print(&apos;a&apos; in list9)            #返回bool值       #result:True
+print(&apos;a&apos; not in list9)        #返回bool值       #result:False
+</code></pre></li>
+</ul>
+<p></p><h6>列表的函数</h6><p></p>
+<ul>
+<li><p>len() 列表元素个数</p>
+<pre><code>list1=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+print(len(list1))           #result:5
+</code></pre></li>
+<li><p>max()、min() 返回列表元素最大值、最小值;字母以ASCII为依据</p>
+<pre><code>print(max(list1))           #result:e
+print(min(list1))           #result:a
+</code></pre></li>
+<li><p>list()将元组转换成列表</p>
+<pre><code>a=(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)             #定义一个元组
+print(list(a))              #result:[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]
+</code></pre></li>
+<li><p>append()增加到列表尾部</p>
+</li>
+<li>insert(index,obj)插入到列表相应下标位置,超出范围则在尾部添加</li>
+<li>extend()列表1.extend(列表2)，是把列表2迭代后追加到列表1</li>
+<li>pop()默认删除最后一个,也可以指定删除的下标，返回删除值</li>
+<li>remove()删除括号中的内容，但只删除一次</li>
+<li><p>reverse()反向列表中的元素</p>
+<pre><code>list2=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+list2.reverse()
+print(list2)                  #result:[&apos;e&apos;, &apos;d&apos;, &apos;c&apos;, &apos;b&apos;, &apos;a&apos;]
+</code></pre></li>
+<li><p>sort([func])排序，默认升序</p>
+<pre><code>list3=[5,6,4,2,9]
+list3.sort()
+print(list3)                  #result:[2, 4, 5, 6, 9]
+</code></pre></li>
+<li><p>clear() 清空列表</p>
+<pre><code>list4=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;]
+list4.clear()
+print(list4)                  #result:[]
+</code></pre></li>
+<li><p>copy()复制列表，在内存中又开辟了一个空间；通过等号复制副本，在内存中指向原来的地址</p>
+<pre><code>list5=[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]
+list6=list5.copy()
+print(list6)                  #result:[&apos;a&apos;,&apos;b&apos;,&apos;c&apos;]
+</code></pre></li>
+<li><p>eval()将元组、字典、列表类型的字符串转为元组、字典、列表,可以把list,tuple,dict和string相互转化</p>
+<pre><code>a=&quot;[[1,2], [3,4], [5,6]]&quot;        #字符串转换成列表
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;list&apos;&gt;
+print(m)                        #result:[[1, 2], [3, 4], [5, 6]]
+
+a=&quot;{&apos;name&apos;:&apos;Liu&apos;,&apos;age&apos;:&apos;25&apos;}&quot;   #字符串转换成字典
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;dict&apos;&gt;
+print(m)                        #result:{&apos;name&apos;: &apos;Liu&apos;, &apos;age&apos;: &apos;25&apos;}
+
+a=&quot;(&apos;a&apos;,&apos;b&apos;,&apos;c&apos;)&quot;               #字符串转换成元组
+m=eval(a)
+print(type(m))                  #result:&lt;class &apos;tuple&apos;&gt;
+print(m)                        #result:(&apos;a&apos;, &apos;b&apos;, &apos;c&apos;)
+</code></pre></li>
+</ul>
+<p></p><h6>小练习</h6><p></p>
+<ul>
+<li><p>定义一个列表，让用户动态输入5个值,遍历输出列表的值</p>
+<pre><code>nums=[]
+for i in range(5):
+    nums.append(input(&apos;请输入：&apos;))
+else:
+    print(&apos;输入完毕！&apos;)
+print(nums)
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/16/列表/" data-id="ck2ormwe6005ui4wv9vewl6yj" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-循环（while、for）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -304,7 +481,7 @@ while i&lt;10:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="cjyzyo0z8007l3cwvnacvat2g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/15/循环（while、for）/" data-id="ck2ormwi2007ai4wvl1oakd3z" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -515,7 +692,7 @@ print(&apos;d&apos; not in str2)       #result:False
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="cjyzyo0ws006c3cwvkrop818r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/12/字符串的定义、切片、格式化、函数/" data-id="ck2ormwfo006ii4wvs7cvxp13" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -603,7 +780,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="cjyzyo0wi00663cwvwtdfbwkd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/10/变量、数据类型、运算符、分支/" data-id="ck2ormwfe006ei4wve7urnzbb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -695,7 +872,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="cjyzyo0jj00003cwvozd3ftco" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/01/01/Ajax回顾/" data-id="ck2ormw0u000ai4wv5suxex1r" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web前端/">Web前端</a></li></ul>
@@ -759,7 +936,7 @@ else:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="cjyzyo12e008v3cwvqt02yswl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/30/进程与线程/" data-id="ck2ormwlo008qi4wv2fthit1z" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -976,7 +1153,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="cjyzyo0ms000l3cwvll8157ki" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/18/Django连接MySQL/" data-id="ck2ormw1w000mi4wv0vmvv70i" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -1057,7 +1234,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="cjyzyo0mf000e3cwvbzlhvkvj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="ck2ormw17000fi4wvesgdvqc3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -1130,7 +1307,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="cjyzyo0m600093cwv09hmgnfr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="ck2ormw0m0008i4wvjonhj7wp" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -1353,78 +1530,10 @@ except:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="cjyzyo0q4002h3cwvan371r86" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="ck2ormw77002wi4wvblwwds8h" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-同时安装Python2与python3" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/16/同时安装Python2与python3/" class="article-date">
-  <time datetime="2017-12-16T07:17:27.000Z" itemprop="datePublished">2017-12-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/16/同时安装Python2与python3/">同时安装Python2与python3</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p><em>由于平时学习中需要两种版本不时的替换，索性通过网上查找资料自己配置安装了两个版本，以下是小白整理的一些步骤。</em></p>
-<p></p><h4>Python2安装</h4><p></p>
-<ul>
-<li>1.1到<a href="https://www.python.org/" target="_blank" rel="noopener">Python官网</a>下载Python2安装文件，如：python-2.7.12.amd64.exe</li>
-<li>1.2点击”python-2.7.12.amd64”进行安装后将该安装目录下的python.exe文件重新命名为python2.exe</li>
-<li>1.3在电脑–属性–高级系统设置–高级–环境变量–系统变量–Path–编辑中添加环境变量，如”C:\Python27”，即python2的安装目录</li>
-<li>1.4在Dos窗口中输入<code>python2</code>如出现python2的版本信息即表明安装成功</li>
-<li>1.5到<a href="https://pypi.python.org/pypi/setuptools" target="_blank" rel="noopener">Pip官网</a>下载名称类似”setuptools-28.7.0.zip”的pip依赖包，在cmd中cd到该依赖包解压后的目录下，输入<code>python2 setup.py install</code></li>
-<li>1.6到<a href="https://pypi.python.org/pypi/pip" target="_blank" rel="noopener">Pip官网</a>下载名称类似”pip-8.1.2.tar”的文件并解压，在cmd中cd到该文件解压后的目录下，再次输入<code>python2 setup.py install</code></li>
-<li>1.7在cmd中输入<code>pip2</code>,如果出现”Usage”字样说明安装成功</li>
-<li>1.8测试使用：在cmd中输入<code>pip2 install selenium</code>,如果窗口命令哗哗的下滚，说明可以了；也可下载python其他包，用cmd进入到其解压后的目录下，输入<code>python2 setup.py install</code></li>
-</ul>
-<p></p><h4>Python3安装</h4><p></p>
-<ul>
-<li>1.1到<a href="https://www.python.org/" target="_blank" rel="noopener">Python官网</a>下载Python3安装文件，如：python-3.5.0-amd64.exe</li>
-<li>1.2点击”python-3.5.0-amd64.exe”进行安装后将该安装目录下的python.exe文件重新命名为python2.exe</li>
-<li>1.3在电脑–属性–高级系统设置–高级–环境变量–系统变量–Path–编辑中添加环境变量，如”C:\Python35”，即python3的安装目录</li>
-<li>1.4在Dos窗口中输入<code>python</code>如出现python3.5的版本信息即表明安装成功；由于未修改python3安装目录下的python.exe文件名，此处python就是python3</li>
-<li>1.5在cmd中输入<code>pip3</code>,如果出现”Usage”字样说明自动安装成功；python3自带pip，无需手动安装</li>
-<li>1.6测试使用：在cmd中输入<code>pip3 install selenium</code>,如果窗口命令哗哗的下滚，说明可以了；也可下载python其他包，用cmd进入到其解压后的目录下，输入<code>python setup.py install</code></li>
-</ul>
-<ul>
-<li>该文参考大神的佳作<a href="http://blog.csdn.net/u014285884/article/details/70239511" target="_blank" rel="noopener">在同一台电脑上同时安装Python2和Python3</a></li>
-<li><em>若文中内容有误，希望大家指正，谢谢!</em></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="cjyzyo0wp006a3cwv3mykrfva" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
 
     </footer>
   </div>
@@ -1439,7 +1548,7 @@ except:
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/14/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/16/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/14/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/16/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1453,7 +1562,7 @@ except:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1463,16 +1572,16 @@ except:
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1480,9 +1589,13 @@ except:
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/11/07/redis中hash基本操作（删改）/">redis中hash基本操作（删、改）</a>
+          </li>
         
           <li>
             <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
@@ -1498,10 +1611,6 @@ except:
         
           <li>
             <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
           </li>
         
       </ul>

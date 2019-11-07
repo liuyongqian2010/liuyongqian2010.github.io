@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,105 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-完全备份与还原-mysqldump备份" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/26/完全备份与还原-mysqldump备份/" class="article-date">
+  <time datetime="2019-04-26T14:25:18.000Z" itemprop="datePublished">2019-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/26/完全备份与还原-mysqldump备份/">完全备份与还原---mysqldump备份</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>完全备份与还原—mysqldump备份</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>这篇笔记主要描述记录如何使用mysqldump命令来产生导出文件，和如何导入这些导出文件。</li>
+</ul>
+<p></p><h6>2. 备份数据</h6><p></p>
+<ul>
+<li><p>2.1 备份一个数据库</p>
+<pre><code>语法：shell模式下，mysqldump -u [username] -p [dbname] &gt; backupName.sql
+
+例如：（使用root用户备份名为test_oa的数据库）
+mysqldump -u root -p test_oa &gt; /root/bat_test_oa.sql
+其中：
+dbname参数表示需要备份的数据库的名称；
+backupName.sql参数表示备份文件的名称，文件名前面可以加上一个绝对路径。
+</code></pre></li>
+<li><p>2.2 备份数据库中的表</p>
+<pre><code>语法：shell模式下，mysqldump -u [username] -p [dbname] [table1] [table2] ... &gt; backupName.sql
+
+例如：（使用root用户备份名为test_oa的数据库中的userinfo、workinfo两张表）
+mysqldump -u root -p test_oa userinfo workinfo&gt; /root/bat_test_oa_uw.sql
+其中：table1和table2参数表示需要备份的表的名称，为空则整个数据库备份
+</code></pre></li>
+<li><p>2.3 备份多个数据库</p>
+<pre><code>语法：shell模式下，mysqldump -u [username] -p --databases [dbname1] [dbname2] &gt; backupName.sql
+
+其中：dbname1和dbname2参数表示需要备份的数据库的名称
+</code></pre></li>
+<li><p>2.4 备份所有数据库</p>
+<pre><code>语法：shell模式下，mysqldump -u [username] -p --all-databases &gt; backupAll.sql
+</code></pre></li>
+</ul>
+<p></p><h6>3. 还原数据</h6><p></p>
+<ul>
+<li><p>3.1 还原一个数据库</p>
+<ul>
+<li><p>当使用上面的mysqldump语句导出文件的时候未使用到–databases或者–all-databases选项时，需要手动创建数据库</p>
+<pre><code>语法：shell模式下，mysqladmin -u [username] -p create [dbname];
+                 mysql -u [username] -p [dbname] &lt; backupName.sql
+
+例如：mysqladmin -uroot -p create test_oa;
+     mysql -uroot -p test_oa &lt; /root/bat_test_oa.sql
+     其中：在导入文件时需要指定数据库名字
+</code></pre></li>
+</ul>
+</li>
+<li><p>3.2 还原多个数据库</p>
+<ul>
+<li><p>当使用上面的mysqldump语句导出文件的时候使用到了–databases或者–all-databases选项后，文件中已经含有了CREATE DATABASE和USE语句，所以不需要再指定一个数据库，可以直接读入所备份文件</p>
+<pre><code>语法：shell模式下，mysql -u [username] -p &lt; backupName.sql
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/26/完全备份与还原-mysqldump备份/" data-id="ck2ormwhn0074i4wvzufem8an" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-Appium的部署安装" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -164,7 +263,7 @@ cnpm install -g appium --no-cache
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/Appium的部署安装/" data-id="cjyzyo0lv00043cwvimkupkk9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/26/Appium的部署安装/" data-id="ck2ormw0c0004i4wvagzwjyht" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -237,7 +336,7 @@ cnpm install -g appium --no-cache
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/使用JvisualVM远程监控JVM/" data-id="cjyzyo0vc005e3cwvbn386vcq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/26/使用JvisualVM远程监控JVM/" data-id="ck2ormwcp005ai4wvv66jjztb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -324,7 +423,7 @@ cnpm install -g appium --no-cache
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/11/robotframework-基于python27/" data-id="cjyzyo0uf004u3cwvt48terd8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/11/robotframework-基于python27/" data-id="ck2ormwbl004si4wv9mm0ul90" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -432,7 +531,7 @@ npm run build
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/04/jenkins自动化部署-远程部署前端vue项目/" data-id="cjyzyo0sm003y3cwvqb4yrmxx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/04/jenkins自动化部署-远程部署前端vue项目/" data-id="ck2ormw91003qi4wvfmbpkr92" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -536,7 +635,7 @@ fi
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" data-id="cjyzyo0s9003p3cwv7i8t31w8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" data-id="ck2ormw8t003mi4wvzpn0l4rb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -633,7 +732,7 @@ cp -R /var/lib/jenkins/workspace/qianduan001/dist/* /usr/local/nginx/qianduan001
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/jenkins自动化部署-构建前端项目/" data-id="cjyzyo0tv004i3cwv4pa0hju7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/02/jenkins自动化部署-构建前端项目/" data-id="ck2ormwa60048i4wv0jtz5dm5" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -706,7 +805,7 @@ make install       部署
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/编译部署NodeJS/" data-id="cjyzyo0zq007v3cwvwtkm75oi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/02/编译部署NodeJS/" data-id="ck2ormwjl007yi4wvd5z3k2la" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -804,7 +903,7 @@ ln -s libstdc++.so.6.0.24 libstdc++.so.6
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/GCC升级/" data-id="cjyzyo0n4000s3cwv6tpxd22t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/02/GCC升级/" data-id="ck2ormw2k000vi4wvwdvynivx" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -943,138 +1042,10 @@ fi
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="cjyzyo0s2003l3cwvtdvkee1z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="ck2ormw8o003ki4wvsk6c35yd" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-MySQL数据库读写分离" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/25/MySQL数据库读写分离/" class="article-date">
-  <time datetime="2019-03-25T14:01:07.000Z" itemprop="datePublished">2019-03-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/25/MySQL数据库读写分离/">MySQL数据库读写分离</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>MySQL数据库读写分离</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>1. 简介</h6><p></p>
-<ul>
-<li>通过mysql-proxy实现读写分离之前需要lua脚本实现的，现在mysql-proxy里面已经集成了lua，无需另外安装lua。</li>
-<li>目前mysql-proxy的版本：mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit。</li>
-</ul>
-<p></p><h6>2. 安装</h6><p></p>
-<ul>
-<li>将安装包上传到/usr/local/目录下，并解压：<code>tar -zvxf mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit.tar.gz</code></li>
-<li>重新命名解压后的安装包：<code>mv mysql-proxy-0.8.5-linux-glibc2.3-x86-64bit/ mysql-proxy</code></li>
-</ul>
-<p></p><h6>3. 配置mysql-proxy</h6><p></p>
-<ul>
-<li><p>3.1 主配置文件</p>
-<pre><code>cd /usr/local/mysql-proxy/
-mkdir lua        #创建脚本存放目录
-mkdir logs       #创建日志目录
-cp share/doc/mysql-proxy/rw-splitting.lua ./lua     #复制读写分离配置文件
-cp share/doc/mysql-proxy/admin-sql.lua ./lua        #复制管理脚本
-vi /etc/mysql-proxy.cnf              #创建配置文件
-
-[mysql-proxy]
-user=root                            #运行mysql-proxy用户
-admin-username=mysql                 #主从mysql数据库共有的用户
-admin-password=123456                #用户的密码
-proxy-address=192.168.110.72:4040    #mysql-proxy运行ip和端口，端口默认4040
-proxy-read-only-backend-addresses=192.168.110.74:3306      #指定后端从slave数据库读取数据
-proxy-backend-addresses=192.168.110.73:3306                       #指定后端从主master数据库写入数据
-proxy-lua-script=/usr/local/mysql-proxy/lua/rw-splitting.lua     #指定读写分离配置文件位置
-admin-lua-script=/usr/local/mysql-proxy/lua/admin-sql.lua      #指定管理脚本
-log-file=/usr/local/mysql-proxy/logs/mysql-proxy.log              #日志位置
-log-level=info                         #定义log日志级别，由高到低分别有(error|warning|info|message|debug)
-daemon=true                            #以守护进程方式运行
-keepalive=true                         #mysql-proxy崩溃时，尝试重启
-
-保存退出后，
-赋予配置文件权限：chmod 660 /etc/mysql-proxy.cnf
-</code></pre></li>
-<li><p>3.2 读写分离配置文件</p>
-<pre><code>vi /usr/local/mysql-proxy/lua/rw-splitting.lua
-
-if not proxy.global.config.rwsplit then
- proxy.global.config.rwsplit = {
-  min_idle_connections = 1,            #默认超过4个连接数时，才开始读写分离，改为1
-  max_idle_connections = 1,            #默认8，改为1
-  is_debug = false
- }
-end
-
-#注意：mysql-proxy会检测客户端连接，当连接没有超过min_idle_connections预设值时, 不会进行读写分离, 即查询操作会发生到Master上。
-</code></pre></li>
-</ul>
-<p></p><h6>4. 启动mysql-proxy</h6><p></p>
-<ul>
-<li>启动命令：<code>/usr/local/mysql-proxy/bin/mysql-proxy --defaults-file=/etc/mysql-proxy.cnf</code></li>
-<li>查看命令：<code>netstat -tupln | grep 4040</code>   或者  <code>netstat -antpl|grep mysql</code></li>
-<li>关闭命令：<code>sudo kill 进程号</code></li>
-</ul>
-<p></p><h6>5. 打开防火墙的4040端口</h6><p></p>
-<ul>
-<li>执行命令：<code>/sbin/iptables -I INPUT -p tcp --dport 4040 -j ACCEPT</code></li>
-</ul>
-<p></p><h6>6. 测试读写分离</h6><p></p>
-<ul>
-<li><p>6.1 在主数据库服务器创建用于mysql-proxy连接使用的用户密码：mysqlproxy 123456，从服务器也会同步这个操作。</p>
-<pre><code>需要进入主数据库，执行：
-grant all on *.* to &apos;mysqlproxy&apos;@&apos;192.168.110.72&apos; identified by &apos;123456&apos;;
-刷新执行：
-flush privileges;
-</code></pre></li>
-<li><p>6.2 使用客户端连接mysql-proxy</p>
-<pre><code>命令：mysql -h 192.168.110.72 -P 4040 -u mysqlproxy -p123456
-
-创建数据库和表，这时的数据只写入主mysql，然后再同步从slave。
-mysql&gt; create table work_user (number INT(10),name VARCHAR(50));
-mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&apos;);
-</code></pre></li>
-<li><p>6.3 登录主从mysq数据库查看新写入的两条数据</p>
-</li>
-<li>6.4 再登录到mysql-proxy，查询数据，可以正常查询</li>
-<li>6.5 登录从数据库服务器关闭mysql同步进程：<code>stop slave;</code>，这时再登录mysql-proxy会发现能看到表，但是查询不出数据，会报错：<code>Table &#39;*****&#39; doesn&#39;t exist</code></li>
-<li>6.6 到此实现了读写分离的效果</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="cjyzyo0pq00283cwvls6fpfdr" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
 
     </footer>
   </div>
@@ -1089,7 +1060,7 @@ mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&a
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1103,7 +1074,7 @@ mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&a
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1113,16 +1084,16 @@ mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&a
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 15.56px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1130,9 +1101,13 @@ mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&a
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/11/07/redis中hash基本操作（删改）/">redis中hash基本操作（删、改）</a>
+          </li>
         
           <li>
             <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
@@ -1148,10 +1123,6 @@ mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&a
         
           <li>
             <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
           </li>
         
       </ul>
