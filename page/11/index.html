@@ -70,6 +70,317 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-python之Excel操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/11/python之Excel操作/" class="article-date">
+  <time datetime="2018-03-11T10:09:52.000Z" itemprop="datePublished">2018-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/11/python之Excel操作/">python之Excel操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>python之Excel操作</h5><p></p>
+<hr>
+<hr>
+<h6>使用xlwt module将数据写入Excel表格</h6>
+
+<pre><code>import xlwt
+book=xlwt.Workbook(encoding=&apos;utf-8&apos;,style_compression=0)
+#创建一个Workbook对象，相当于创建了一个Excel文件；有两个参数：第一个设置字符编码，第二个是否压缩
+sheet1=book.add_sheet(&apos;test&apos;,cell_overwrite_ok=True)
+#创建一个sheet对象，一个sheet对象对应Excel文件中的一张表格
+#add_sheet的第一个参数是这张表的名字，第二个参数表示覆盖单元格
+sheet1.write(0,0,&apos;EnglishName&apos;)
+#其中第一个参数表示行，第二个参数表示列，第三个参数表示插入的数据
+sheet1.write(1,0,&apos;Liuyongqian&apos;)
+sheet1.write(0,1,&apos;中文名字&apos;)
+sheet1.write(1,1,&apos;刘永前&apos;)
+book.save(r&apos;e:\test1.xls&apos;)
+#将以上操作保存到指定excel文件中
+</code></pre><h6>使用xlrd module从Excel读取数据</h6>
+
+<pre><code>import xlrd
+file=r&apos;E:\test1.xls&apos;   #打开指定路径下的xls文件
+book=xlrd.open_workbook(file)  #得到excel文件的book对象，实例化对象
+sheet0=book.sheet_by_index(0)  #通过sheet索引获得sheet对象
+sheet_name=book.sheet_names()[0] #获得指定索引的sheet表名字
+&apos;&apos;&apos;
+sheet1=book.sheet_by_name(sheet_name) #通过sheet名字来获取，也可直接指定名字
+&apos;&apos;&apos;
+nrows=sheet0.nrows       #获取总行数
+ncols=sheet0.ncols       #获取总列数
+row_data=sheet0.row_values(1)  #获取第2行的数据列表
+col_data=sheet0.col_values(1)  #获取第2列的数据列表
+cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="ck6c0695z004mu8wv2gjv2iri" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Python之OS操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/11/Python之OS操作/" class="article-date">
+  <time datetime="2018-03-11T00:35:21.000Z" itemprop="datePublished">2018-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/11/Python之OS操作/">Python之OS操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Python之OS操作</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>os 模块在运维工作中是很常用的一个模块。通过os模块调用系统命令</li>
+<li>os模块可以跨平台使用</li>
+<li>在 import os的时候，建议使用import os而非from os import *。这样可以避免os.open()不会覆盖内置函数open()</li>
+</ul>
+<p></p><h6>模块详解</h6><p></p>
+<ul>
+<li><p>os.name()判断系统类型</p>
+<pre><code>import os
+print(os.name)      #linux和Unix系统会返回`posix`;windows 系统会返回`nt`
+</code></pre></li>
+<li><p>os.system()执行系统命令的模块，返回命令执行的状态码，开启一个子shell执行命令</p>
+<pre><code>cmd=&apos;ipconfig&apos;
+retval=os.system(cmd)
+print(retval)          #result: 0,表示命令执行成功，否则为失败
+</code></pre></li>
+<li><p>os.listdir(path)打印指定目录的文件,返回一个列表</p>
+<pre><code>a=os.listdir(&apos;E:\eclipse&apos;)
+print(a)
+</code></pre></li>
+<li><p>os.chdir(new_path)改变当前路径</p>
+<pre><code>print(os.getcwd())          #result:E:\selenium prt\0311
+os.chdir(&apos;E:\\selenium prt\\0312&apos;)
+print(os.getcwd())          #result:E:\selenium prt\0312
+</code></pre></li>
+<li><p>os.getcwd()返回当前绝对路径,返回类型为str</p>
+<pre><code>a=os.getcwd()
+print(a)
+</code></pre></li>
+<li><p>os.mkdir(path[,mode=0755])默认权限是0755，创建目录</p>
+<pre><code>os.mkdir(r&apos;E:\selenium prt\0311\0002&apos;)
+print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
+</code></pre></li>
+<li><p>os.rmdir(path)删除目录，只能删除目录</p>
+<pre><code>os.rmdir(r&apos;E:\selenium prt\0311\0002&apos;)
+print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
+</code></pre></li>
+<li><p>创建名为text的txt文件</p>
+<pre><code>def txt(name,text):
+    a=name+&apos;.txt&apos;
+    file=open(a,&apos;w&apos;)
+    file.write(text)
+    file.close()
+txt(&apos;test&apos;,&apos;Hello，2018！&apos;)
+</code></pre></li>
+<li><p>os.remove(path)删除文件，只能删除文件</p>
+<pre><code>os.remove(r&apos;E:\selenium prt\0311\test.txt&apos;)
+print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
+</code></pre></li>
+<li><p>os.path该模块主要针对路径的操作</p>
+<ul>
+<li>os.path.abspath(‘.’)返回当前绝对路径</li>
+<li>os.path.basename(r’E:\selenium prt\0311’)返回当前文件夹名</li>
+<li>os.path.dirname(r’E:\selenium prt\0311’)返回文件路径，不包含当前文件夹名</li>
+<li>os.path.exists(r’E:\selenium prt\0311’)判断路径是否存在，存在返回True，不存在返回False</li>
+<li>os.path.join(path,name):连接目录与文件名或目录</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="ck6c0693d0035u8wv2jxbvi47" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Python之IO操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/11/Python之IO操作/" class="article-date">
+  <time datetime="2018-03-11T00:28:56.000Z" itemprop="datePublished">2018-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/11/Python之IO操作/">Python之IO操作</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Python之IO操作</h5><p></p>
+<hr>
+<hr>
+<h6>简介</h6>
+
+<ul>
+<li>读写文件是最常见的IO操作。Python内置了读写文件的函数，用法和C是兼容的</li>
+<li>读写文件就是请求操作系统打开一个文件对象（通常称为文件描述符），然后通过操作系统提供的接口从这个文件对象中读取数据（读文件），或者把数据写入这个文件对象（写文件）</li>
+</ul>
+<h6>常用mode</h6>
+
+<pre><code>r:以读方式打开文件（默认）
+r+:打开一个文件用于读写,文件指针将会放在文件的开头
+rb+:以二进制格式打开一个文件用于读写。文件指针将会放在文件的开头
+w:以写方式打开文件，可向文件中写入信息。如果文件存在，会清空文件，再写入新内容
+w+:打开一个文件用于读写,如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件
+wb+:以二进制格式打开一个文件用于读写。如果该文件已存在则将其覆盖。如果该文件不存在，创建新文件
+a:以追加模式打开文件，如果文件不存在就先创建
+a+:打开一个文件用于读写。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写
+ab+:以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写
+</code></pre><p></p><h6>read()</h6><p></p>
+<ul>
+<li><p>为了读取一个文件的内容，调用 f.read(size), 这将读取一定数目的数据, 然后作为字符串或字节对象返回。size 是一个可选的数字类型的参数。 当 size 被忽略了或者为负, 那么该文件的所有内容都将被读取并且返回</p>
+<pre><code>f=open(r&apos;E:\test1.txt&apos;,&apos;r&apos;,encoding=&apos;gbk&apos;)
+#以读的模式打开一个文件对象，使用内置的open()函数，传入文件名和标示符
+a=f.read()
+#调用read()方法可一次读取文件的全部内容，Python把内容读到内存，用一个str对象表示
+print(a)
+f.close()
+#调用close()方法关闭文件。文件使用完毕后须关闭，因为文件对象会占用操作系统的资源，且操作系统同一时间能打开的文件数量有限
+#由于文件读写时都有可能产生IOError，一旦出错，后面的f.close()就不会调用。所以为了保证无论是否出错都能正确地关闭文件,可使用with语句来自动帮我们调用close()方法
+#上述写法可用下边写法替换
+with open(r&apos;E:\test1.txt&apos;,&apos;r&apos;,encoding=&apos;gbk&apos;) as f:
+    print(f.read())
+</code></pre></li>
+</ul>
+<p></p><h6>readline()、readlines()</h6><p></p>
+<ul>
+<li>f.readline() 会从文件中读取单独的一行。换行符为 ‘\n’。f.readline() 如果返回一个空字符串, 说明已经已经读取到最后一行</li>
+<li><p>f.readlines() 将返回该文件中包含的所有行。如果设置可选参数 sizehint, 则读取指定长度的字节, 并且将这些字节按行分割</p>
+<pre><code>with open(r&apos;E:\test1.txt&apos;,&apos;r&apos;,encoding=&apos;gbk&apos;) as f:
+    a=f.readlines()
+    print(a)
+</code></pre></li>
+</ul>
+<p></p><h6>tell()</h6><p></p>
+<ul>
+<li>f.tell() 返回文件对象当前所处的位置, 它是从文件开头开始算起的字节数</li>
+</ul>
+<p></p><h6>seek()</h6><p></p>
+<ul>
+<li>如果要改变文件当前的位置, 可以使用 f.seek(offset, from_what) 函数<ul>
+<li>Offset变量表示要移动的字节数。From变量指定开始移动字节的参考位置。 如果from被设为0，这意味着将文件的开头作为移动字节的参考位置。如果设为1，则使用当前的位置作为参考位置。如果它被设为2，那么该文件的末尾将作为参考位置。例如：<ul>
+<li>seek(x,0) ： 从起始位置即文件首行首字符开始移动 x 个字符</li>
+<li>seek(x,1) ： 表示从当前位置往后移动x个字符</li>
+<li>seek(-x,2)： 表示从文件的结尾往前移动x个字符</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>write()</h6><p></p>
+<ul>
+<li><p>f.write(string) 将 string 写入到文件中, 然后返回写入的字符数</p>
+<pre><code>with open(r&apos;E:\test2.txt&apos;,&apos;w+&apos;) as f:
+    a=f.write(&apos;追加内容&apos;)
+    print(a)          #result:4
+    f.seek(0,0)       #将光标移到文件首
+    b=f.read()        #读取文件内容
+    print(b)
+</code></pre></li>
+</ul>
+<p></p><h6>file-like Object</h6><p></p>
+<ul>
+<li>像open()函数返回的这种有个read()方法的对象，在Python中统称为file-like Object。除了file外，还可以是内存的字节流，网络流，自定义流等等。file-like Object不要求从特定类继承，只要写个read()方法就行。StringIO就是在内存中创建的file-like Object，常用作临时缓冲</li>
+<li><p>二进制文件</p>
+<ul>
+<li><p>前面讲的默认都是读取文本文件，并且是UTF-8编码的文本文件。要读取二进制文件，比如图片、视频等等，用’rb’模式打开文件即可</p>
+<pre><code>f = open(&apos;E:\test.jpg&apos;, &apos;rb&apos;)
+f.read()
+f.close()
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/guqing/p/6084009.html" target="_blank" rel="noopener">Python—-文件的IO操作</a></em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="ck6c0692s002qu8wv4zyncyok" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-XSS注入" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/10/XSS注入/" class="article-date">
@@ -183,7 +494,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="ck2ormw7q0034i4wvtej1gd4o" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="ck6c0693g0037u8wv7oak6kym" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -259,7 +570,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="ck2ormwa10046i4wvjiwkvjqu" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="ck6c0694i003wu8wvge1s2dpx" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -399,7 +710,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="ck2ormwfr006ki4wvkp6nqxqc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="ck6c0699i006lu8wvkk2aoa3g" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -550,7 +861,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="ck2ormwd4005gi4wv95576bpp" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="ck6c0697k005lu8wv6qnb54sz" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -649,7 +960,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="ck2ormw8a003di4wv208x86kd" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="ck6c0693x003iu8wvn84nmokl" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -734,7 +1045,7 @@ chown 命令会更改由符号链接引用的目录的用户标识（和组标�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="ck2ormw8i003hi4wvz08zj278" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="ck6c06946003ou8wvh478l7wm" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -857,355 +1168,7 @@ driver.quit()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="ck2ormw7g0030i4wvcvxc78uq" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-整合测试报告发送" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/07/整合测试报告发送/" class="article-date">
-  <time datetime="2018-03-07T01:13:05.000Z" itemprop="datePublished">2018-03-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/07/整合测试报告发送/">整合测试报告发送</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>整合测试报告发送</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>将生成的最新测试报告发送到指定邮箱</h6><p></p>
-<ul>
-<li>文件路径如下：<ul>
-<li>文件夹test_baidu<ul>
-<li>文件夹test_case<ul>
-<li>test_baidu.py</li>
-</ul>
-</li>
-<li>文件夹test_report</li>
-<li>文件send_test_email.py</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>send_test_email.py</p>
-<pre><code>import unittest,time,smtplib,os
-from BSTestRunner import BSTestRunner
-from email.mime.text import MIMEText
-from email.header import Header
-
-def latest_report(report_dir):      #获取最新生成的测试报告
-    lists=os.listdir(report_dir)
-    lists.sort(key=lambda fn:os.path.getatime(report_dir+&apos;\\&apos;+fn))
-    file=os.path.join(report_dir,lists[-1])
-    return file
-def send_mail(latest_report):       #发送邮件
-    f=open(latest_report,&apos;rb&apos;)
-    mail_content=f.read()
-    f.close()
-
-    smtpserver=&apos;smtp.163.com&apos;
-    user=&apos;www_liuyongqian@163.com&apos;
-    password=&apos;39a39b39c&apos;
-
-    sender=&apos;www_liuyongqian@163.com&apos;
-    receives=[&apos;272501447@qq.com&apos;,&apos;liuyongqian51@163.com&apos;]
-
-    subject=&apos;Web 自动化测试结果&apos;
-
-    msg=MIMEText(mail_content,&apos;html&apos;,&apos;utf-8&apos;)     #邮件正文
-    msg[&apos;Subject&apos;]=Header(subject,&apos;utf-8&apos;)
-    msg[&apos;From&apos;]=sender
-    msg[&apos;To&apos;]=&apos;,&apos;.join(receives)
-
-    smtp=smtplib.SMTP_SSL(smtpserver,465)
-    smtp.helo(smtpserver)
-    smtp.ehlo(smtpserver)
-    smtp.login(user,password)
-
-    print(&apos;Start send eamil...&apos;)
-    smtp.sendmail(sender,receives,msg.as_string())
-    smtp.quit()
-    print(&apos;Send email end...&apos;)
-
-if __name__==&apos;__main__&apos;:
-    test_dir=&apos;./test_case&apos;
-    report_dir=&apos;./test_report&apos;
-    discovery=unittest.defaultTestLoader.discover(test_dir,pattern=&apos;test*.py&apos;)
-    now=time.strftime(&apos;%Y-%m-%d %H_%M_%S&apos;)
-    report_name=report_dir+&apos;/&apos;+now+&apos;result.html&apos;
-
-    with open(report_name,&apos;wb&apos;) as f:
-        runner=BSTestRunner(stream=f,title=&apos;Test Report&apos;,description=&apos;baidu search&apos;)
-        runner.run(discovery)
-    f.close()
-
-    latest_report=latest_report(report_dir)  #获取最新测试报告
-    send_mail(latest_report)                 #发送邮件报告
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/07/整合测试报告发送/" data-id="ck2ormwif007gi4wvxuwl3ypg" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-高级查询" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/06/高级查询/" class="article-date">
-  <time datetime="2018-03-06T12:16:05.000Z" itemprop="datePublished">2018-03-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/06/高级查询/">高级查询</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>高级查询</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>其他查询</h6><p></p>
-<ul>
-<li><p>IN，NOT IN（可返回多条记录）</p>
-<pre><code>#查询学号为009最低分的课程名
-select kcm from kcb
-where kch in(
-    select kch from cjb
-    where cj in(
-        select MIN(cj) from cjb
-        where xh=&apos;009&apos;
-    )and xh=&apos;009&apos;
-)
-</code></pre></li>
-<li><p>LIMIT m,n<br>m表示从m+1条开始取值，n表示条数（在语句末尾取记录）</p>
-</li>
-<li><p>IS NULL，IS NOT NULL</p>
-<pre><code>select kch from cjb 
-where cj is not nul
-</code></pre></li>
-</ul>
-<p></p><h6>分组查询</h6><p></p>
-<ul>
-<li><p>GROUP BY … HAVING…</p>
-<pre><code>#统计每个班级人数且人数在30人以上的
-select bj as &apos;班级&apos;,count(*) as &apos;人数&apos;
-from xsb
-group by bj
-having count(*)&gt;30 
-</code></pre></li>
-<li><p>在SELECT语句中，WHERE、GROUP BY、HAVING子句的执行次序如下：</p>
-<pre><code>* 1、WHERE子句从数据源中去掉不符合其搜索条件的数据
-* 2、GROUP BY子句搜集数据行到各个组中
-* 3、HAVING子句去掉不符合其组搜索条件的各组数据行
-</code></pre></li>
-</ul>
-<p></p><h6>多表查询</h6><p></p>
-<ul>
-<li><p>等值连接（先连接后判断）</p>
-<pre><code>#查询张三的数据库的成绩
-select xm,kcm,cj
-from xsb,kcb,cjb
-where xsb.xh=cjb.xh and kcb.kch=cjb.kch
-#主表1.主键=从表.外键，主表2.主键=从表.外键
-and xm=&apos;张三&apos; and kcm=&apos;数据库&apos;
-</code></pre></li>
-<li>注：查询显示字段或者其他条件中字段在几张表内有重复，需要在字段前加上表名，表名.字段名</li>
-<li><p>内连接（先判断再连接）</p>
-<pre><code>#查询不是北京、上海的学生的QTP成绩
-select kcm,cj,jg
-from xsb inner join cjb on xsb.xh=cjb.xh
-inner join kcb on kcb.kch=cjb.kch
-and jg not in(&apos;北京&apos;,&apos;上海&apos;)
-and kcm=&apos;QTP&apos;
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/高级查询/" data-id="ck2ormwmb008yi4wvynl83kdk" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-发送邮件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/05/发送邮件/" class="article-date">
-  <time datetime="2018-03-05T02:06:34.000Z" itemprop="datePublished">2018-03-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/05/发送邮件/">发送邮件</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>发送邮件</h5><p></p>
-<hr>
-<hr>
-<h6>python里的smtplib</h6>
-
-<ul>
-<li>SMTP(Simple Mail Transfer Protocol)<ul>
-<li>即简单邮件传输协议。它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式。SMTP 协议属于TCP/IP协议簇，它帮助每台计算机在发送或中转信件时找到下一个目的地。SMTP 服务器就是遵循 SMTP 协议的发送邮件服务器</li>
-</ul>
-</li>
-<li>SMTP 认证<ul>
-<li>简单地说就是要求必须在提供了账户名和密码之后才可以登录 SMTP 服务器，这就使得那些垃圾邮件的散播者无可乘之机</li>
-</ul>
-</li>
-<li>smtplib模块<ul>
-<li>Python内置对SMTP的支持，可以发送纯文本邮件、HTML邮件以及带附件的邮件</li>
-<li>Python对SMTP支持有smtplib和email两个模块，email负责构造邮件，smtplib负责发送邮件</li>
-<li>使用前需要开启SMTP服务</li>
-</ul>
-</li>
-</ul>
-<h6>使用163邮箱来结合smtp模块发送邮件</h6>
-
-<pre><code>import smtplib                         #发送邮件模块
-from email.mime.text import MIMEText   #定义邮件内容
-from email.header import Header        #定义邮件标题
-
-smtpserver=&apos;smtp.163.com&apos;              #发送邮箱服务器
-user=&apos;www_liuyongqian@163.com&apos;         #发送邮箱用户的账号和授权密码
-password=&apos;*********&apos;
-
-sender=&apos;www_liuyongqian@163.com&apos;       #发送邮箱
-receive=&apos;272501447@qq.com&apos;             #接收邮箱
-
-content=&apos;&lt;html&gt;&lt;h1 style=&quot;color:red&quot;&gt;这个就是我，不一样的模样&lt;/h1&gt;&lt;/html&gt;&apos;
-subject=&apos;Web 自动化测试报告&apos;
-msg=MIMEText(content,&apos;html&apos;,&apos;utf-8&apos;)   #发送邮件内容
-#MIMEText三个参数：第一个为文本内容，第二个设置文本格式，第三个设置编码
-msg[&apos;Subject&apos;]=Header(subject,&apos;utf-8&apos;) #发送邮件标题
-msg[&apos;From&apos;]=sender                     #发送人
-msg[&apos;To&apos;]=receive                      #收件人
-
-smtp=smtplib.SMTP_SSL(smtpserver,465)  #SSL协议端口要是用465
-smtp.helo(smtpserver)                  #helo向服务器标识用户身份
-smtp.ehlo(smtpserver)                  #服务器返回结果确认
-smtp.login(user,password)              #登录邮箱服务器的账号和授权密码
-
-print(&apos;Start send eamil...&apos;)
-smtp.sendmail(sender,receive,msg.as_string())
-#sendmail的三个参数：邮件发送者地址，邮件接收地址可为列表，发送消息
-smtp.quit()
-print(&apos;Send email end...&apos;)
-</code></pre><h6>发送带附件的邮件</h6>
-
-<pre><code>import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart   #用于传输附件
-
-smtpserver=&apos;smtp.163.com&apos;
-user=&apos;www_liuyongqian@163.com&apos;
-password=&apos;39a39b39c&apos;
-
-sender=&apos;www_liuyongqian@163.com&apos;
-receives=[&apos;272501447@qq.com&apos;,&apos;liuyongqian51@163.com&apos;]
-
-subject=&apos;web自动化测试报告0308&apos;
-content=&apos;&lt;html&gt;&lt;p&gt;这个里面写测试结果内容！&lt;/p&gt;&lt;/html&gt;&apos;
-
-send_file=open(r&apos;E:\selenium prt\test.jpg&apos;,&apos;rb&apos;).read()  #构造附件内容
-att=MIMEText(send_file,&apos;base64&apos;,&apos;utf-8&apos;)
-att[&apos;Content-Type&apos;]=&apos;application/octet-stream&apos;
-att[&apos;Content-Disposition&apos;]=&apos;attachment;filename=&quot;test.jpg&quot;&apos;
-
-msgRoot=MIMEMultipart()                             #构建发送与接收信息
-msgRoot.attach(MIMEText(content,&apos;html&apos;,&apos;utf-8&apos;))
-msgRoot[&apos;Subject&apos;]=subject
-msgRoot[&apos;From&apos;]=sender
-msgRoot[&apos;To&apos;]=&apos;,&apos;.join(receives)
-msgRoot.attach(att)
-
-smtp=smtplib.SMTP_SSL(smtpserver,465)
-smtp.helo(smtpserver)
-smtp.ehlo(smtpserver)
-smtp.login(user,password)
-print(&apos;Start send email...&apos;)
-smtp.sendmail(sender,receives,msgRoot.as_string())
-smtp.quit()
-print(&apos;End send email...&apos;)
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/05/发送邮件/" data-id="ck2ormwew0066i4wvkwrnsmua" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="ck6c0692n002ou8wvo90t1nox" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -1237,7 +1200,7 @@ print(&apos;End send email...&apos;)
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1247,7 +1210,7 @@ print(&apos;End send email...&apos;)
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
@@ -1256,7 +1219,7 @@ print(&apos;End send email...&apos;)
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1269,23 +1232,23 @@ print(&apos;End send email...&apos;)
       <ul>
         
           <li>
-            <a href="/2019/11/07/redis中hash基本操作（删改）/">redis中hash基本操作（删、改）</a>
+            <a href="/2020/02/07/centos7查看、打开和关闭防火墙/">centos7查看、打开和关闭防火墙</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/07/使用netstat、ss、lsof命令查询服务端口/">使用netstat、ss、lsof命令查询服务端口</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/">已经安装nginx情况下添加http_ssl_module模块</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/07/redis中hash基本操作（查、删）/">redis中hash基本操作（查、删）</a>
           </li>
         
           <li>
             <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/06/配置MongoDB访问账号-密码/">配置MongoDB访问账号&amp;密码</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/28/读书乱纪01/">笔记01</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
           </li>
         
       </ul>
@@ -1315,7 +1278,7 @@ print(&apos;End send email...&apos;)
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 刘永前<br>
+      &copy; 2020 刘永前<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

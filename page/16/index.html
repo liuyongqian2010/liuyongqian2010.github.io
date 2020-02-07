@@ -70,6 +70,383 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-CentOS7安装Redis3-2遇到的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/" class="article-date">
+  <time datetime="2017-12-17T00:55:52.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/17/CentOS7安装Redis3-2遇到的问题/">CentOS7安装Redis3.2遇到的问题</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <hr>
+<hr>
+<p>###到<a href="https://redis.io/" target="_blank" rel="noopener">redis官网</a>下载安装包，如”redis-3.2.8.tar.gz”；将下载的安装包放到 /opt下，分别使用：</p>
+<ul>
+<li>tar -zvxf redis-3.2.8.tar.gz 解压安装包</li>
+<li>cd redis-3.2.8 进入安装包</li>
+<li>make 编译<br><h6>出现错误:</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: gcc：命令未找到</span><br><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: *** [net.<span class="keyword">o</span>] 错误 <span class="number">127</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">3</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/deps/hiredis”</span><br><span class="line"><span class="keyword">make</span>[<span class="number">2</span>]: *** [hiredis] 错误 <span class="number">2</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">2</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/deps”</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: [persist-settings] 错误 <span class="number">2</span> (忽略)</span><br><span class="line">    CC adlist.<span class="keyword">o</span></span><br><span class="line">/bin/<span class="keyword">sh</span>: <span class="keyword">cc</span>: 未找到命令</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [adlist.<span class="keyword">o</span>] 错误 <span class="number">127</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [<span class="keyword">all</span>] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><h6>解决方法：安装gcc</h6><p></p>
+<ul>
+<li>yum -y install gcc automake autoconf libtool make 安装</li>
+<li>make 运行<br><h6>出现错误：</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 进入目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line">    CC adlist.<span class="keyword">o</span></span><br><span class="line">In <span class="keyword">file</span> included from adlist.<span class="keyword">c</span>:<span class="number">34</span>:<span class="number">0</span>:</span><br><span class="line">zmalloc.h:<span class="number">50</span>:<span class="number">31</span>: **致命错误**：jemalloc/jemalloc.h：没有那个文件或目录</span><br><span class="line"> #include &lt;jemalloc/jemalloc.h&gt;</span><br><span class="line">                               ^</span><br><span class="line">编译中断。</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [adlist.<span class="keyword">o</span>] 错误 <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [<span class="keyword">all</span>] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><h6>解决方法：make改为make MALLOC=libc</h6><p></p>
+<ul>
+<li>make MALLOC=libc</li>
+<li>make test 运行<br><h6>出现错误：</h6><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 进入目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line">You need <span class="keyword">tcl</span> <span class="number">8.5</span> <span class="built_in">or</span> newer in order <span class="keyword">to</span> run the Redis test</span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: *** [test] 错误 <span class="number">1</span></span><br><span class="line"><span class="keyword">make</span>[<span class="number">1</span>]: 离开目录“/<span class="keyword">opt</span>/redis-<span class="number">3.2</span>.<span class="number">8</span>/src”</span><br><span class="line"><span class="keyword">make</span>: *** [test] 错误 <span class="number">2</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p></p><h6>解决方法：升级tcl版本</h6><p></p>
+<ul>
+<li>yum install -y wget 安装wget</li>
+<li>wget <a href="http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz" target="_blank" rel="noopener">http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz</a>  </li>
+<li>sudo tar xzvf tcl8.6.1-src.tar.gz  -C /usr/local/  </li>
+<li>cd  /usr/local/tcl8.6.1/unix/  </li>
+<li>sudo ./configure  </li>
+<li>sudo make  </li>
+<li>sudo make install</li>
+<li>重新解压redis安装包并运行make进行编译</li>
+<li>进入src目录，./redis-server，如果出现虚线盒子界面表示运行成功</li>
+<li>可另起一个界面，运行 ./redis-cli来启动客户端</li>
+<li>可运行ps -ef|grep redis检测redis进程</li>
+<li>可运行netstat -Intp|grep 6379检测端口</li>
+<li>到此安装就结束了，我运用的远程控制软件是”SSH Secure Shell Client”</li>
+</ul>
+<p><em>小白参考大神佳作<a href="http://www.jianshu.com/p/cc403be7f80d" target="_blank" rel="noopener">centos7 安装redis 3.2.8 踩的那些坑</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/CentOS7安装Redis3-2遇到的问题/" data-id="ck6c068ux000hu8wv2bj0l76h" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Centos7-yum源的配置与使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/16/Centos7-yum源的配置与使用/" class="article-date">
+  <time datetime="2017-12-16T10:54:34.000Z" itemprop="datePublished">2017-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/16/Centos7-yum源的配置与使用/">Centos7 yum源的配置与使用</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <hr>
+<hr>
+<p></p><h5>1.yum简介</h5><p></p>
+<p>yum的理念是使用一个中心仓库(repository)管理一部分甚至一个distribution 的应用程序相互关系，根据计算出来的软件依赖关系进行相关的升级、安装、删除等等操作，减少了Linux 用户一直头痛的dependencies 的问题。这一点上，yum 和apt 相同。apt 原为debian 的deb 类型软件管理所使用，但是现在也能用到RedHat门下的rpm 了。<br><br>yum 主要功能是更方便的添加/删除/更新RPM 包，自动解决包的倚赖性问题，便于管理大量系统的更新问题。<br><br>yum 可以同时配置多个资源库(Repository)，简洁的配置文件（/etc/yum.conf），自动解决增加或删除rpm 包时遇到的依赖性问题，保持与RPM 数据库的一致性。</p><br><h5>2.yum安装</h5><br>CentOS 默认已经安装了yum，不需要另外安装，这里为了实验目的，先将yum 卸载再重新安装。<br><h6>2.1查看系统默认安装</h6><br><code>rpm -qa|grep yum</code><br><br><h6>2.2卸载yum</h6><br><code>rpm -e yum-fastestmirror-1.1.16-14.el5.centos.1 yum-metadata-parser-1.1.2-3.el5.centos yum-3.2.22-33.el5.centos</code><br><br><h6>2.3重新安装yum</h6><br>这里我们挂载系统安装光盘进行安装<br><br>– 在mnt下<code>mkdir /mnt/cdrom</code><br><br>– 挂载系统安装光盘<code>mount -t auto /dev/cdrom /mnt/cdrom</code><br><br>– yum基础安装<br><br><code>rpm -ivh yum-3.2.22-33.el5.centos.noarch.rpm yum-fastestmirror-1.1.16-14.el5.centos.1.noarch.rpm yum-metadata-parser-1.1.2-3.el5.centos.i386.rpm</code> <br><br>– 查看版本<code>yum -v</code><br><br><h6>2.4yum源配置</h6><br><p>–配置yum本地源<code>vi /etc/yum.repos.d/CentOs-Media.repo</code></p>
+
+<pre><code># CentOS-Media.repo
+#
+# This repo is used to mount the default locations for a CDROM / DVD on
+#  CentOS-5.  You can use this repo and yum to install items directly off the
+#  DVD ISO that we release.
+#
+# To use this repo, put in your DVD and use it with the other repos too:
+#  yum --enablerepo=c5-media [command]
+#  
+# or for ONLY the media repo, do this:
+#
+#  yum --disablerepo=\* --enablerepo=c5-media [command]     
+[c5-media]
+name=CentOS-$releasever - Media
+baseurl=file:///media/CentOS/
+        file:///mnt/cdrom/
+        file:///media/cdrecorder/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
+</code></pre><p></p><p>–在baseurl中修改第2个路径为/mnt/cdrom（即为光盘挂载点）将enabled=0改为1<br><br>–禁用默认的yum 网络源<code>mv CentOs-Base.repo CentOs-Base.repo.bak</code><br><br>–运行yum命令<code>yum install postgresql</code></p><p></p>
+<h6>2.5我们就用系统默认的yum源，速度也还是可以的！</h6>
+
+
+<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/mchina/archive/2013/01/04/2842275.html" target="_blank" rel="noopener">CentOS yum 源的配置与使用</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/16/Centos7-yum源的配置与使用/" data-id="ck6c068ty0004u8wvoaaudj3f" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Python3.5连接MySQl数据库" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/16/Python3.5连接MySQl数据库/" class="article-date">
+  <time datetime="2017-12-16T09:32:45.000Z" itemprop="datePublished">2017-12-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/16/Python3.5连接MySQl数据库/">Python3.5连接MySQl数据库</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p><em>PyMySQL是在Pyhton3.x版本中用于连接MySQL数据库的一个库，Python2中则使用mysqldb库</em></p>
+<p>使用<code>pip3 install PyMySQl</code>进行安装PyMySQL库</p><br><h5>数据库连接</h5><br><p>连接数据库前，请先确认以下事项：</p>
+
+<ul>
+<li><p>已经创建了数据库 TESTDB</p>
+</li>
+<li><p>在TESTDB数据库中您已经创建了表 t_table</p>
+</li>
+<li><p>t_table表字段为 FIRST_NAME, LAST_NAME, AGE, SEX 和 INCOME</p>
+</li>
+<li><p>连接数据库testdb使用的用户名为 “testuser” ，密码为 “test123”，你可以自己设定或者直接使用root用户名及其密码</p>
+</li>
+<li>mysql数据库用户授权请使用grant命令</li>
+</ul>
+<p>以下示例是连接MySQL数据库中的TESTDB数据库：</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用 cursor() 方法创建一个游标对象 cursor
+cursor = db.cursor()
+# 使用 execute()  方法执行 SQL 查询 
+cursor.execute(&quot;SELECT VERSION()&quot;)
+# 使用 fetchone() 方法获取单条数据.
+data = cursor.fetchone()
+print (&quot;Database version : %s &quot; % data)
+# 关闭数据库连接
+db.close()
+</code></pre><p></p><h5>操作实例</h5><p></p>
+<h6>创建数据库表</h6>
+
+<p>如果数据库连接存在，可以使用execute()方法为数据库创建表，如下所示创建表t_table</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用 cursor() 方法创建一个游标对象 cursor
+cursor = db.cursor()
+# 使用 execute() 方法执行 SQL，如果表存在则删除
+cursor.execute(&quot;DROP TABLE IF EXISTS t_table&quot;)
+# 使用预处理语句创建表
+sql = &quot;&quot;&quot;CREATE TABLE t_table(
+         FIRST_NAME  CHAR(20) NOT NULL,
+         LAST_NAME  CHAR(20),
+         AGE INT,  
+         SEX CHAR(1),
+         INCOME FLOAT )&quot;&quot;&quot;
+cursor.execute(sql)
+# 关闭数据库连接
+db.close()
+</code></pre><h6>数据库插入操作</h6>
+
+<p>以下示例使用执行SQL insert 语句 向表t_table中插入一条记录：</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 插入语句
+sql = &quot;&quot;&quot;INSERT INTO t_table(FIRST_NAME,
+         LAST_NAME, AGE, SEX, INCOME)
+         VALUES (&apos;Mac&apos;, &apos;Mohan&apos;, 20, &apos;M&apos;, 2000)&quot;&quot;&quot;
+try:
+   # 执行sql语句
+   cursor.execute(sql)
+   # 提交到数据库执行
+   db.commit()
+except:
+   # 如果发生错误则回滚
+   db.rollback()
+# 关闭数据库连接
+db.close()
+</code></pre><h6>数据库查询操作</h6>
+
+<p>Python查询MySQL使用fetchone()方法获取单条记录，使用fetchall()方法获取多条记录</p>
+<ul>
+<li>fetchone()：该方法获取下一个查询结果集，结果集是一个对象</li>
+<li>fetchall():该方法接收全部返回结果集</li>
+<li>fetchnum(n):</li>
+<li><p>rowcount:这是一个只读属性，并返回执行execute()方法后影响的行数</p>
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 查询语句
+sql = &quot;SELECT * FROM t_table \
+       WHERE INCOME &gt; &apos;%d&apos;&quot; % (1000)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 获取所有记录列表
+   results = cursor.fetchall()
+   for row in results:
+      fname = row[0]
+      lname = row[1]
+      age = row[2]
+      sex = row[3]
+      income = row[4]
+       # 打印结果
+      print (&quot;fname=%s,lname=%s,age=%d,sex=%s,income=%d&quot; % \(fname, lname, age, sex, income ))
+except:
+   print (&quot;Error: unable to fecth data&quot;)
+# 关闭数据库连接
+db.close()
+</code></pre></li>
+</ul>
+<ul>
+<li>以上脚本执行结果如下：<br>  fname=Mac, lname=Mohan, age=20, sex=M, income=2000<h6>数据库更新操作</h6>
+
+</li>
+</ul>
+<p>更新操作用于更新数据表的的数据，以下实例将t_table表中的SEX字段全部修改为’M’,AGE字段递增1</p>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 更新语句
+sql = &quot;UPDATE EMPLOYEE SET AGE = AGE + 1
+                          WHERE SEX = &apos;%c&apos;&quot; % (&apos;M&apos;)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 提交到数据库执行
+   db.commit()
+except:
+   # 发生错误时回滚
+   db.rollback()
+# 关闭数据库连接
+db.close()
+</code></pre><h6>删除操作</h6>
+
+<pre><code>#!/usr/bin/python3
+
+import pymysql
+# 打开数据库连接
+db = pymysql.connect(&quot;localhost&quot;,&quot;testuser&quot;,&quot;test123&quot;,&quot;TESTDB&quot; )
+# 使用cursor()方法获取操作游标 
+cursor = db.cursor()
+# SQL 删除语句
+sql = &quot;DELETE FROM t_table WHERE AGE &gt; &apos;%d&apos;&quot; % (20)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 提交修改
+   db.commit()
+except:
+   # 发生错误时回滚
+   db.rollback()
+# 关闭连接
+db.close()
+</code></pre><p></p><h6>执行事务</h6><p></p>
+<p>事务机制可以确保数据一致性。<br><br>事务应该具有4个属性：原子性、一致性、隔离性、持久性,这四个属性通常称为ACID特性。<br><br>- 原子性（atomicity）。一个事务是一个不可分割的工作单位，事务中包括的诸操作要么都做，要么都不做<br><br>- 一致性（consistency）。事务必须是使数据库从一个一致性状态变到另一个一致性状态。一致性与原子性是密切相关的<br><br>- 隔离性（isolation）。一个事务的执行不能被其他事务干扰。即一个事务内部的操作及使用的数据对并发的其他事务是隔离的，并发执行的各个事务之间不能互相干扰<br><br>- 持久性（durability）。持续性也称永久性（permanence），指一个事务一旦提交，它对数据库中数据的改变就应该是永久性的。接下来的其他操作或故障不应该对其有任何影响。<br><br>Python DB API 2.0 的事务提供了两个方法 commit 或 rollback<br></p>
+
+<pre><code># SQL删除记录语句
+sql = &quot;DELETE FROM EMPLOYEE WHERE AGE &gt; &apos;%d&apos;&quot; % (20)
+try:
+   # 执行SQL语句
+   cursor.execute(sql)
+   # 向数据库提交
+   db.commit()
+except:
+   # 发生错误时回滚
+   db.rollback()
+</code></pre><p>对于支持事务的数据库， 在Python数据库编程中，当游标建立之时，就自动开始了一个隐形的数据库事务。<br><br>commit()方法游标的所有更新操作，rollback（）方法回滚当前游标的所有操作。每一个方法都开始了一个新的事务。</p>
+
+<p><em>小白参考大神佳作<a href="https://www.cnblogs.com/lhuan/p/6160023.html" target="_blank" rel="noopener">Python3.5  MySQL 数据库连接</a></em><br><em>若文中内容有误，希望大家指正，谢谢!</em></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/16/Python3.5连接MySQl数据库/" data-id="ck6c0692k002mu8wvm7wfbqjf" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-同时安装Python2与python3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/16/同时安装Python2与python3/" class="article-date">
@@ -124,7 +501,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="ck2ormwf4006ai4wvab5jqgpc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/同时安装Python2与python3/" data-id="ck6c0698k0067u8wvdz8h7h6u" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -193,7 +570,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="ck2ormw320012i4wvjcwdv1l1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/16/Github-Hexo博客更换主题/" data-id="ck6c0690z001yu8wv1xr5aaqt" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -299,7 +676,7 @@ limit: 20
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="ck2ormw2e000ti4wvamhmawre" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/12/15/Git-NodeJS-Hexo创建个人博客/" data-id="ck6c0690p001uu8wveuubamwk" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
@@ -331,7 +708,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -341,7 +718,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
@@ -350,7 +727,7 @@ limit: 20
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -363,23 +740,23 @@ limit: 20
       <ul>
         
           <li>
-            <a href="/2019/11/07/redis中hash基本操作（删改）/">redis中hash基本操作（删、改）</a>
+            <a href="/2020/02/07/centos7查看、打开和关闭防火墙/">centos7查看、打开和关闭防火墙</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/07/使用netstat、ss、lsof命令查询服务端口/">使用netstat、ss、lsof命令查询服务端口</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/">已经安装nginx情况下添加http_ssl_module模块</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/07/redis中hash基本操作（查、删）/">redis中hash基本操作（查、删）</a>
           </li>
         
           <li>
             <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/06/配置MongoDB访问账号-密码/">配置MongoDB访问账号&amp;密码</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/28/读书乱纪01/">笔记01</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
           </li>
         
       </ul>
@@ -409,7 +786,7 @@ limit: 20
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 刘永前<br>
+      &copy; 2020 刘永前<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

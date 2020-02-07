@@ -70,6 +70,316 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-编译部署NodeJS" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/02/编译部署NodeJS/" class="article-date">
+  <time datetime="2019-04-02T14:02:45.000Z" itemprop="datePublished">2019-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/02/编译部署NodeJS/">编译部署NodeJS</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>编译部署NodeJS</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 安装必要的编译软件包</h6><p></p>
+<ul>
+<li><p>执行命令</p>
+<pre><code>yum install -y gcc make gcc-c++ openssl-devel
+</code></pre></li>
+</ul>
+<p></p><h6>2. 升级gcc</h6><p></p>
+<ul>
+<li>2.1 编译nodejs过程中可能会报“ C++ Compiler too old, need g++ 4.9.4 or clang++ 3.4.2 (CXX=g++)”，需要先升级gcc</li>
+<li>2.2 通过命令<code>gcc -v</code>查看系统gcc版本号，如果版本号低于4.9.4，则需要升级gcc</li>
+<li>2.3 gcc升级过程参考另一篇笔记<a href="">《GCC升级》</a></li>
+</ul>
+<p></p><h6>3. 编译部署</h6><p></p>
+<ul>
+<li>将node-v10.15.3.tar.gz安装包放在/usr下，进行解压<br>执行命令：tar -zvxf node-v10.15.3.tar.gz</li>
+<li><p>进入源代码所在路径</p>
+<pre><code>cd /usr/node-v10.15.3/
+./configure        先执行配合脚本
+make               编译,该过程可能会很耗时，起码30分钟
+make install       部署
+</code></pre></li>
+</ul>
+<p></p><h6>4. 验证</h6><p></p>
+<ul>
+<li>查看版本：node -v</li>
+<li>查看版本：npm -v</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/02/编译部署NodeJS/" data-id="ck6c069cf008bu8wvf30i5rja" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-GCC升级" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/02/GCC升级/" class="article-date">
+  <time datetime="2019-04-02T13:45:35.000Z" itemprop="datePublished">2019-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/02/GCC升级/">GCC升级</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>GCC升级</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 选择升级版本</h6><p></p>
+<ul>
+<li>Linux系统默认安装的gcc版本均在4.9以下，一些软件比如NodeJS的编译需要比较高的版本</li>
+<li>选择需要升级的版本，<a href="http://mirror.koddos.net/gcc/releases/" target="_blank" rel="noopener">http://mirror.koddos.net/gcc/releases/</a> ，当前选择版本为：gcc-7.4.0.tar.gz</li>
+</ul>
+<p></p><h6>2. 解压源码包</h6><p></p>
+<ul>
+<li>将压缩包放在/usr/local下，进行解压：tar -zvxf gcc-7.4.0.tar.gz</li>
+<li>装备bzip2软件，之后的编译需要，执行：yum install bzip2</li>
+</ul>
+<p></p><h6>3. 开始编译安装</h6><p></p>
+<ul>
+<li><p>下载供编译需要的依赖项</p>
+<pre><code>cd /usr/local/gcc-7.4.0/ 后执行命令：
+./contrib/download_prerequisites
+</code></pre></li>
+<li><p>编译安装</p>
+<pre><code>mkdir build  新建一个文件夹存放编译文件
+cd build     后进行编译：
+../configure --enable-languages=c,c++ --enable-checking=release  -disable-multilib  仅安装64位执行
+make         生成Makefile文件，该过程可能会很耗时，起码90分钟
+make install 之后执行安装命令
+</code></pre></li>
+</ul>
+<p></p><h6>4. 解决运行程序gcc出现’GLIBCXX_3.4.21’ not found</h6><p></p>
+<ul>
+<li><p>4.1 具体错误</p>
+<pre><code>/usr/node-v10.15.3/out/Release/torque: /lib64/libstdc++.so.6: version `GLIBCXX_3.4.20&apos; not found (required by /usr/node-v10.15.3/out/Release/torque)
+</code></pre></li>
+<li><p>4.2 问题原因：升级gcc时，生成的动态库没有替换老版本 gcc 动态库导致</p>
+</li>
+<li><p>4.3 解决方案：将gcc最新版本的动态库替换系统中老版本的动态库。</p>
+<ul>
+<li><p>查找编译gcc时生成的最新动态库 </p>
+<pre><code>find / -name &quot;libstdc++.so*&quot;，
+最新动态库为：/usr/local/gcc-7.4.0/build/stage1-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24
+</code></pre></li>
+<li><p>将找到的动态库libstdc++.so.6.0.24复制到/usr/lib64下</p>
+<pre><code>cp /usr/local/gcc-7.4.0/build/stage1-x86_64-pc-linux-gnu/libstdc++-v3/src/.libs/libstdc++.so.6.0.24 /usr/lib64
+</code></pre></li>
+<li><p>切换工作目录至/usr/lib64，删除原来的软连接，将默认库的软连接指向最新动态库。</p>
+<pre><code>cd /usr/lib64
+rm -rf libstdc++.so.6
+ln -s libstdc++.so.6.0.24 libstdc++.so.6
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>5. 重启服务器，验证版本</h6><p></p>
+<ul>
+<li>执行命令：gcc -v</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/02/GCC升级/" data-id="ck6c068us000fu8wv96mqannt" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-jenkins自动化部署-构建后台项目" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/04/01/jenkins自动化部署-构建后台项目/" class="article-date">
+  <time datetime="2019-04-01T14:42:25.000Z" itemprop="datePublished">2019-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/04/01/jenkins自动化部署-构建后台项目/">jenkins自动化部署--构建后台项目</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>jenkins自动化部署–构建后台项目</h5><p></p>
+<hr>
+<hr>
+<h6>1. 简介</h6>
+
+<ul>
+<li>Jenkins是基于Java开发的一种持续集成工具，用于持续的软件版本发布/测试项目。</li>
+</ul>
+<h6>2. 部署准备</h6>
+
+<ul>
+<li><p>2.1 maven的安装</p>
+<pre><code>安装执行：yum install maven&lt;br/&gt;
+验证版本：mvn -v
+</code></pre></li>
+<li><p>2.2 git的安装</p>
+<pre><code>安装执行：yum install git
+</code></pre></li>
+</ul>
+<h6>3. 部署 jenkins</h6>
+
+<ul>
+<li><p>3.1 将 jenkins-2.164.1-1.1.noarch.rpm包放在/usr下，安装执行：sudo rpm -ih jenkins-2.164.1-1.1.noarch.rpm</p>
+<pre><code>安装完毕之后，出现四个文件如下所示：
+/usr/lib/jenkins/jenkins.war------WAR包
+/etc/sysconfig/jenkins------------配置文件
+/var/lib/jenkins/-----------------默认的JENKINS_HOME目录
+/var/log/jenkins/jenkins.log------Jenkins日志文件            
+</code></pre></li>
+<li><p>3.2 启动 jenkins</p>
+<pre><code>启动：sudo service jenkins start
+停止：sudo service jenkins stop
+查看：systemctl status jenkins.service
+&lt;br/&gt;
+</code></pre></li>
+<li><p>3.3 启动后在浏览器中输入ip:8080打开jenkins页面，根据提示输入管理员初始密码，该密码一般位于/var/lib/jenkins/secrets/下的initialAdminPassword文件中。</p>
+</li>
+<li>3.4 插件推荐安装完之后进入创建管理员用户的界面，可以使用已有的admin账号密码（密码可以修改）。</li>
+</ul>
+<h6>4. 赋予 jenkins运行命令的权限</h6>
+
+<pre><code>vi /etc/sudoers后增加如下命令：
+
+## Allow root to run any commands anywhere 
+root    ALL=(ALL)     ALL
+jenkins    ALL=NOPASSWD: ALL
+</code></pre><p></p><h6>5. 使用 jenkins构建后台项目</h6><p></p>
+<ul>
+<li>5.1 新建任务（输入一个任务名称，如testing001，选择“构建一个自由风格的软件项目”）</li>
+<li>5.2 源码管理（选择“Git”，输入仓库URL和git账号）</li>
+<li><p>5.3 修改maven配置文件</p>
+<pre><code>cd /usr/share/maven/conf/
+vi settings.xml后修改如下内容：（有两处）
+
+&lt;mirror&gt;
+      &lt;id&gt;mirrorId&lt;/id&gt;
+      &lt;mirrorOf&gt;repositoryId&lt;/mirrorOf&gt;
+      &lt;name&gt;Human Readable Name for this Mirror.&lt;/name&gt;
+      &lt;url&gt;http://my.repository.com/repo/path&lt;/url&gt;
+    &lt;/mirror&gt;
+
+&lt;mirror&gt;
+      &lt;id&gt;mirrorId&lt;/id&gt;
+      &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;
+      &lt;name&gt;Human Readable Name for this Mirror.&lt;/name&gt;
+      &lt;url&gt;http://192.168.110.67:8090/nexus/content/groups/public/&lt;/url&gt;
+    &lt;/mirror&gt;
+</code></pre></li>
+<li><p>5.4 构建</p>
+<ul>
+<li>调用顶层Maven目标，目标：clean package -Dmaven.test.skip=true</li>
+<li><p>执行shell，通过脚本进行部署，输入执行shell的命令，如：<code>sudo sh /usr/deploy_cmp.sh</code>。shell脚本可以参考如下所示：</p>
+<pre><code>#!/bin/bash
+export BUILD_ID=dontkillme
+TOMCATTHREAD=`ps aux | grep &apos;tomcat-test&apos; | grep -v grep`
+if test -z &quot;$TOMCATTHREAD&quot;
+then 
+    echo &quot;TOMCAT NOT START&quot;
+else  
+    THREADLIST=(${TOMCATTHREAD// / })
+    PID=${THREADLIST[1]}   
+    kill -9 $PID   
+    sleep 5s
+fi  
+    cd /usr/tomcat-test/webapps/   
+    rm -f cmp.war  
+    rm -rf cmp 
+    cp /var/lib/jenkins/workspace/testing001/target/cmp.war /usr/tomcat-test/webapps/
+    cd /usr/tomcat-test/bin
+    ./startup.sh
+    sleep 5s
+</code></pre></li>
+</ul>
+</li>
+<li>5.5 项目构建位置：/var/lib/jenkins/</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/04/01/jenkins自动化部署-构建后台项目/" data-id="ck6c06949003qu8wvl47kecnf" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-MySQL数据库读写分离" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/03/25/MySQL数据库读写分离/" class="article-date">
@@ -184,7 +494,7 @@ mysql&gt; insert into work_user values(01,&apos;zhangsan&apos;),(02,&apos;lisi&a
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="ck2ormw5k0025i4wvcb027nr8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库读写分离/" data-id="ck6c0691y002au8wvke8utu71" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -286,7 +596,7 @@ select * from tb_test;查看表中是否one test数据存在，证明同步数�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="ck2ormw53001xi4wvrrx6fe2m" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/25/MySQL数据库主从复制/" data-id="ck6c0691q0028u8wvkh10zv8y" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -388,7 +698,7 @@ echo 3 &gt; /proc/sys/vm/drop_caches
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="ck2ormwku008ei4wv3o62l5lv" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/24/清理内存缓存与交换空间/" data-id="ck6c069bk007ru8wvgf2gghpy" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -494,7 +804,7 @@ server {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="ck2ormw60002ci4wv0x914p2i" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/23/Nginx转发SSH代理-Stream模块/" data-id="ck6c0693t003gu8wv37d2cims" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
@@ -574,7 +884,7 @@ JAVA_OPTS=&quot;$JAVA_OPTS -Djava.library.path=/usr/local/apr/lib&quot;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/20/tomcat使用apr模式运行/" data-id="ck2ormwdk005ki4wvpcbe823d" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/20/tomcat使用apr模式运行/" data-id="ck6c0697w005tu8wvrwet11rs" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -659,7 +969,7 @@ liuyongqian     ALL=(ALL)   ALL
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/12/批量添加用户，并设置sudo权限/" data-id="ck2ormwib007ei4wvu1wzpao4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/12/批量添加用户，并设置sudo权限/" data-id="ck6c069bf007nu8wvkctc55o6" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -743,289 +1053,10 @@ export CATALINA02_BASE CATALINA02_HOME TOMCAT02_HOME
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/12/Centos中同时部署两个以上的Tomcat/" data-id="ck2ormw10000di4wvcgnv8ssk" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/12/Centos中同时部署两个以上的Tomcat/" data-id="ck6c068vd000ru8wvlyj6q57g" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-安装部署Tomcat9" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/01/安装部署Tomcat9/" class="article-date">
-  <time datetime="2019-03-01T10:45:02.000Z" itemprop="datePublished">2019-03-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/01/安装部署Tomcat9/">安装部署Tomcat9</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>安装部署Tomcat9</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>目前版本</h6><p></p>
-<ul>
-<li>目前的版本是：apache-tomcat-9.0.16</li>
-</ul>
-<p></p><h6>安装步骤</h6><p></p>
-<ul>
-<li><p>1.把Tomcat安装包放到/usr文件夹下并解压</p>
-<pre><code>cd /usr下执行
-解压：
-tar -zvxf apache-tomcat-9.0.16.tar.gz
-重命名：
-mv  apache-tomcat-9.0.16 tomcat
-</code></pre></li>
-<li><p>2.配置环境变量</p>
-<pre><code>vi /etc/profile，增加内容如下：
-
-CATALINA_HOME=/usr/tomcat
-PATH=$PATH:$JAVA_HOME/bin:$CATALINA_HOME/bin
-CLASSPATH=.:$JAVA_HOME/lib:$CATALINA_HOME/lib
-export PATH CLASSPATH CATALINA_HOME 
-</code></pre></li>
-<li><p>3.之后重新加载，使其生效</p>
-<pre><code>source /etc/profile
-</code></pre></li>
-<li><p>4.启动Tomcat，并查看日志</p>
-<pre><code>cd /usr/tomcat  后执行
-./bin/startup.sh
-</code></pre></li>
-<li><p>5.关闭tomcat</p>
-<pre><code>ps -ef |grep tomcat  
-查看进程后杀掉进程sudo kill ***
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Tomcat9/" data-id="ck2ormwj1007qi4wv86hybar7" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-安装部署Mongodb4" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/01/安装部署Mongodb4/" class="article-date">
-  <time datetime="2019-03-01T10:20:58.000Z" itemprop="datePublished">2019-03-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/01/安装部署Mongodb4/">安装部署Mongodb4</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>安装部署Mongodb4</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>最新版本</h6><p></p>
-<ul>
-<li>目前最新版本是：mongodb-linux-x86_64-4.0.6</li>
-</ul>
-<p></p><h6>安装步骤</h6><p></p>
-<ul>
-<li><p>1.解压并重命名mongodb</p>
-<pre><code>将安装包放置在/usr/local/下
-解压：
-tar -zvxf mongodb-linux-x86_64-4.0.6.tgz
-重新命名：
-mv mongodb-linux-x86_64-4.0.6 /usr/local/mongodb
-</code></pre></li>
-<li><p>2.在/usr/local/mongodb下创建文件夹</p>
-<pre><code>cd /usr/local/mongodb下
-mkdir -p ./data/db            #创建数据库文件存放路径
-chmod 777 ./data/db
-mkdir ./logs                   #创建日志文件
-cd logs后
-touch mongodb.log
-</code></pre></li>
-<li><p>3.在/usr/local/mongodb/bin下新建配置，创建启动文件</p>
-<pre><code>cd /usr/local/mongodb/bin
-vi mongodb.conf后增加如下内容：
-
-#数据文件存放目录
-dbpath = /usr/local/mongodb/data/db
-#日志文件存放目录
-logpath = /usr/local/mongodb/logs/mongodb.log
-#端口
-port = 27017
-#以守护程序的方式启用，即在后台运行
-fork = true
-
-logappend=true
-maxConns=10000
-bind_ip=0.0.0.0
-</code></pre></li>
-</ul>
-<p></p><h6>配置环境变量</h6><p></p>
-<ul>
-<li><p>1.执行</p>
-<pre><code>vi /etc/profile后增加如下内容：
-
-MONGODB_HOME=/usr/local/mongodb
-PATH=$PATH:$MONGODB_HOME/bin
-export MONGODB_HOME PATH 
-</code></pre></li>
-<li><p>2.使配置文件生效执行</p>
-<pre><code>source /etc/profile
-</code></pre></li>
-</ul>
-<p></p><h6>启动关闭服务</h6><p></p>
-<ul>
-<li><p>在/usr/local/mongodb/bin下执行启动命令</p>
-<pre><code>cd /usr/local/mongodb/bin
-mongod -f mongodb.conf   或 
-./mongod -f mongodb.conf
-</code></pre></li>
-<li><p>执行访问命令</p>
-<pre><code>./mongo
-</code></pre></li>
-<li><p>执行关闭命令</p>
-<pre><code>mongod -f ./mongodb.conf --shutdown  或 
-./mongod -f ./mongodb.conf --shutdown
-</code></pre></li>
-</ul>
-<p></p><h6>开启端口</h6><p></p>
-<ul>
-<li><p>开启端口</p>
-<pre><code>firewall-cmd --zone=public --add-port=27017/tcp --permanent
-</code></pre></li>
-<li><p>查看端口</p>
-<pre><code>firewall-cmd --permanent --query-port=27017/tcp
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="ck2ormwfz006oi4wv781gewx6" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-安装部署禅道11.2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/03/01/安装部署禅道11.2/" class="article-date">
-  <time datetime="2019-03-01T10:07:51.000Z" itemprop="datePublished">2019-03-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/03/01/安装部署禅道11.2/">安装部署禅道11.2</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>安装部署禅道11.2</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>最新版本</h6><p></p>
-<ul>
-<li>目前最新版本：ZenTaoPMS.11.2.stable.zbox_64</li>
-</ul>
-<p></p><h6>安装步骤</h6><p></p>
-<ul>
-<li><p>1.将安装包放在/opt或者任意文件夹下并解压：</p>
-<pre><code>tar -zvxf ZenTaoPMS.11.2.stable.zbox_64.tar.gz
-</code></pre></li>
-<li><p>2.修改集成的mysql和apache端口号</p>
-<pre><code>cd /opt/zbox后一次执行：
-./zbox -mp 3307
-./zbox -ap 90
-</code></pre></li>
-<li><p>3.Apache和Mysql常用命令</p>
-<pre><code>/opt/zbox/zbox start      #命令开启Apache和Mysql
-/opt/zbox/zbox stop       #命令停止Apache和Mysql
-/opt/zbox/zbox restart    #命令重启Apache和Mysql
-</code></pre></li>
-<li><p>4.添加数据库用户</p>
-<pre><code>运行auth下的adduser.sh进行添加数据库用户，依次执行：
-cd /opt/zbox/auth
-./adduser.sh
-可以设置账号密码为root 123456
-</code></pre></li>
-</ul>
-<p></p><h6>访问禅道</h6><p></p>
-<ul>
-<li><p>地址栏输入<code>ip:90</code>，点击开源版，输入默认的用户名admin，密码123456 </p>
-<pre><code>如 192.168.2.112:90
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署禅道11.2/" data-id="ck2ormwg4006qi4wvj0i9rat5" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
 
     </footer>
   </div>
@@ -1054,7 +1085,7 @@ cd /opt/zbox/auth
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1064,7 +1095,7 @@ cd /opt/zbox/auth
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
@@ -1073,7 +1104,7 @@ cd /opt/zbox/auth
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1086,23 +1117,23 @@ cd /opt/zbox/auth
       <ul>
         
           <li>
-            <a href="/2019/11/07/redis中hash基本操作（删改）/">redis中hash基本操作（删、改）</a>
+            <a href="/2020/02/07/centos7查看、打开和关闭防火墙/">centos7查看、打开和关闭防火墙</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/07/使用netstat、ss、lsof命令查询服务端口/">使用netstat、ss、lsof命令查询服务端口</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/">已经安装nginx情况下添加http_ssl_module模块</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/07/redis中hash基本操作（查、删）/">redis中hash基本操作（查、删）</a>
           </li>
         
           <li>
             <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/06/配置MongoDB访问账号-密码/">配置MongoDB访问账号&amp;密码</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/28/读书乱纪01/">笔记01</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
           </li>
         
       </ul>
@@ -1132,7 +1163,7 @@ cd /opt/zbox/auth
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 刘永前<br>
+      &copy; 2020 刘永前<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

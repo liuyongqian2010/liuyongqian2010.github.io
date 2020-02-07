@@ -70,6 +70,355 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-scrapy基础了解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/29/scrapy基础了解/" class="article-date">
+  <time datetime="2018-03-29T01:25:36.000Z" itemprop="datePublished">2018-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/29/scrapy基础了解/">scrapy基础了解</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>scrapy基础了解</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>Scrapy是一个为了爬取网站数据，提取结构性数据而编写的应用框架。 可以应用在包括数据挖掘，信息处理或存储历史数据等一系列的程序中</li>
+<li>依赖包<ul>
+<li>1.wheel      安装该文件后就可以安装.whl的依赖文件</li>
+<li>2.lxml       解析页面 </li>
+<li>3.PyOpenssl</li>
+<li>4.Twisted</li>
+<li>5.Pywin32，pypiwin32</li>
+<li>6.Scrapy </li>
+</ul>
+</li>
+<li>基本思路:<img src="../scrapy.jpg" alt="Scrapy基本思路"><ul>
+<li>1.Scrapy Engine: 引擎，负责Spiders、ItemPipeline、Downloader、Scheduler中间的通讯，信号、数据传递等等！</li>
+<li>2.Scheduler(调度器): 它负责接受引擎发送过来的requests请求，并按照一定的方式进行整理排列，入队、并等待Scrapy Engine(引擎)来请求时，交给引擎</li>
+<li>3.Downloader（下载器）：负责下载Scrapy Engine(引擎)发送的所有Requests请求，并将其获取到的Responses交还给Scrapy Engine(引擎)，由引擎交给Spiders来处理</li>
+<li>4.Spiders：它负责处理所有Responses,从中分析提取数据，获取Item字段需要的数据，并将需要跟进的URL提交给引擎，再次进入Scheduler(调度器)</li>
+<li>5.Item Pipeline：它负责处理Spiders中获取到的Item，并进行处理，比如去重，持久化存储（存数据库，写入文件，总之就是保存数据用的）</li>
+</ul>
+</li>
+<li>测试网站：<a href="http://quotes.toscrape.com/" target="_blank" rel="noopener">http://quotes.toscrape.com/</a></li>
+</ul>
+<p></p><h6>详解</h6><p></p>
+<ul>
+<li><p>1.进入要放置项目的目录，shift+右键的shell，输入命令：<code>scrapy startproject quotetutorial</code>，创建项目</p>
+<ul>
+<li>spiders    #这个目录放置爬虫</li>
+<li>items.py   #这个文件定义我们需要获取的字段</li>
+<li>pipelines.py    #这个文件用来定义数据存储</li>
+<li>settings.py        #这个文件用来设置</li>
+</ul>
+</li>
+<li><p>2.进入项目，<code>cd quotetutorial</code>,创建爬虫：<code>scrapy genspider quotes quotes.toscrape.com</code> </p>
+</li>
+<li><p>3.在spiders文件夹下的quotes中编写自己的爬虫</p>
+<pre><code>import scrapy
+from quotetutorial.items import QuoteItem
+class QuotesSpider(scrapy.Spider):
+    name = &apos;quotes&apos;
+    allowed_domains = [&apos;quotes.toscrape.com&apos;]
+    start_urls = [&apos;http://quotes.toscrape.com/&apos;]
+
+    def parse(self, response):
+        quotes=response.css(&apos;.quote&apos;)
+        for quote in quotes:
+            item=QuoteItem() #先声明一个对象，然后赋值
+            text=quote.css(&apos;.text::text&apos;).extract_first()
+            author=quote.css(&apos;.author::text&apos;).extract_first()
+            tags=quote.css(&apos;.tags .tag::text&apos;).extract()
+            item[&apos;text&apos;]=text
+            item[&apos;author&apos;]=author
+            item[&apos;tags&apos;]=tags
+            yield item #做下一步的存储操作
+        next=response.css(&apos;.pager .next a::attr(href)&apos;).extract_first()
+        url=response.urljoin(next)
+        yield scrapy.Request(url=url,callback=self.parse)
+</code></pre></li>
+<li><p>4.在items.py文件中定义一些字段，这些字段用来临时存储需要保存的数据。方便后面保存数据到其他地方，比如数据库或者本地文本之类的</p>
+<pre><code>import scrapy
+class QuoteItem(scrapy.Item):
+    text=scrapy.Field()
+    author=scrapy.Field()
+    tags=scrapy.Field()
+</code></pre></li>
+<li><p>5.在Terminal中运行爬虫<code>scrapy crawl quotes</code>;运行并且保存爬取数据为json格式<code>scrapy crawl quotes -o quotes.json</code> </p>
+</li>
+<li><p>6.保存数据到Mongodb中</p>
+<ul>
+<li><p>6.1在pipelines.py编写连接</p>
+<pre><code>from scrapy.exceptions import DropItem
+import pymongo
+class TextPipeline(object):
+    def __init__(self):
+        self.limit=50
+    def process_item(self, item, spider):
+        if item[&apos;text&apos;]:
+            if len(item[&apos;text&apos;])&gt;self.limit:
+                item[&apos;text&apos;]=item[&apos;text&apos;][0:self.limit].rstrip()+&apos;...&apos;
+            return item
+        else:
+            return DropItem(&apos;Missing Text&apos;)   #如果text不存在，则抛出异常
+class MongoPipeline(object):
+    def __init__(self,mongo_uri,mongo_db):
+        self.mongo_uri=mongo_uri
+        self.mongo_db=mongo_db
+    @classmethod
+    def from_crawler(cls,crawler):
+        return cls(
+            mongo_uri=crawler.settings.get(&apos;MONGO_URI&apos;),
+            mongo_db=crawler.settings.get(&apos;MONGO_DB&apos;)
+        )
+    def open_spider(self,spider):
+        self.client=pymongo.MongoClient(self.mongo_uri)
+        self.db=self.client[self.mongo_db]
+    def process_item(self,item,spider):
+        name=item.__class__.__name__
+        self.db[name].insert(dict(item))
+        return item
+    def close_spider(self,spider):
+        self.client.close()  
+</code></pre></li>
+<li><p>6.2在settings中设置</p>
+<pre><code>MONGO_URI=&apos;localhost:27017&apos;
+MONGO_DB=&apos;quotetutorial&apos;
+
+ITEM_PIPELINES = {
+   &apos;quotetutorial.pipelines.TextPipeline&apos;: 300,
+   &apos;quotetutorial.pipelines.MongoPipeline&apos;: 1000,
+}
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/29/scrapy基础了解/" data-id="ck6c0696o0051u8wvxtxlvlug" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-网络配置、系统查看" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/28/网络配置、系统查看/" class="article-date">
+  <time datetime="2018-03-28T15:00:41.000Z" itemprop="datePublished">2018-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/28/网络配置、系统查看/">网络配置、系统查看</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>网络配置、系统查看</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>网络配置</h6><p></p>
+<ul>
+<li>VMware的三种网络连接方式区别</li>
+<li>桥接模式<ul>
+<li>在局域网内，虚拟机和宿主机视为两台PC机；可以单独通过局域网网关或者路由访问外网</li>
+<li>利用相同的网关网段配置，Bridged可用来配置集群</li>
+</ul>
+</li>
+<li>NAT（网络地址转换）<ul>
+<li>NAT方式使虚拟机接入外网方便，不需要进行其他配置，只需要物理主机可以上网即可</li>
+<li>NAT模式下的虚拟系统的TCP/IP配置信息是由VMnet8(NAT)虚拟网络的DHCP服务器提供的，无法进行手工修改，因此虚拟系统也就无法和本局域网中的其他真实主机进行通讯</li>
+<li>不能用NAT配置集群</li>
+</ul>
+</li>
+<li>Host-Only（主机）<ul>
+<li>这种模式下，所有局域网内所有虚拟机互通，但虚拟机无法访问外网，与外网完全隔离</li>
+<li>此种模式同样可以配置集群，但是集群无法访问外网，比较适合公司内网</li>
+</ul>
+</li>
+</ul>
+<p></p><h6>linux系统ifconfig命令不显示IP地址或者只显示127.0.0.1</h6><p></p>
+<ul>
+<li>1.在Linux系统中输入命令:   vi  /etc/sysconfig/network-scripts/ifcfg-ens33</li>
+<li>2.修改文件中的ONBOOT=no,将no改为yes</li>
+<li>3.重启服务: service network restart</li>
+</ul>
+<p></p><h6>系统查看</h6><p></p>
+<ul>
+<li><p>查看进程</p>
+<pre><code>ps -A 显示所有程序
+ps -H 显示树状结构，表示程序间的相互关系
+ps u 以用户为主的格式来显示程序状况
+ps aux|less 查看所有运行中的进程
+</code></pre></li>
+<li><p>监控系统资源</p>
+<pre><code>top 查看整个系统运行状况；该命令功能十分强大，但是它的缺点是会消耗很多系统资源
+free -m 显示内存使用情况
+</code></pre></li>
+<li><p>查看硬盘占用</p>
+<pre><code>df -h  检查linux服务器的文件系统的磁盘空间占用情况
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/28/网络配置、系统查看/" data-id="ck6c069c20083u8wvgardqghm" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-vi-vim" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/28/vi-vim/" class="article-date">
+  <time datetime="2018-03-28T14:55:30.000Z" itemprop="datePublished">2018-03-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/28/vi-vim/">vi/vim</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>vi/vim</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>vi是一款用来创建编辑文件的文本编辑软件</li>
+<li>vi的三大模式：<ul>
+<li>命令模式：用户刚刚启动 vi，便进入了命令模式。此状态下敲击键盘动作会被Vim识别为命令，而非输入字符</li>
+<li>底线命令模式：在命令模式下按下:（英文冒号）就进入了底线命令模式，主要进行文件的保存和退出</li>
+<li>编辑模式：在命令模式下按下i就进入了编辑模式</li>
+</ul>
+</li>
+<li>模式之间的转化常用到Esc，Shift+：</li>
+</ul>
+<p></p><h6>命令模式</h6><p></p>
+<ul>
+<li><p>常用命令</p>
+<pre><code>i 切换到编辑模式，以输入字符；在当前光标处插入
+a 在当前光标处下一个字符插入
+o 在当前光标处下一行插入新的一行
+</code></pre></li>
+</ul>
+<p></p><h6>底线命令行模式</h6><p></p>
+<ul>
+<li><p>常用命令</p>
+<pre><code>:q       #表示不保存退出
+:q!         #强制退出
+:w         #保存修改内容
+:wq         #保存并退出
+:set nu  #显示行号
+:set nonu   #不显示行号
+:r 文件名    #在编辑的数据中，读入另一个档案的数据，将文件内容加到游标所在行后面
+:1,$s /word1/word2/g  #从第一行到最后一行寻找 word1 字符串，并将该字符串取代为 word2 
+:n1,n2s/word1/word2/g #n1 与 n2 为数字。在第 n1 与 n2 行之间寻找 word1 这个字符串，并将该字符串取代为 word2
+</code></pre></li>
+</ul>
+<p></p><h6>编辑模式</h6><p></p>
+<ul>
+<li><p>删除、复制、粘贴</p>
+<pre><code>gg  移到这个文件的第一行
+G   移到这个文件的最后一行
+ngg 移到这个文件的第几行
+
+yy     复制光标所在行
+nyy 复制光标所在的向下n行
+
+P  大写，粘贴在光标的上一行
+p  小写，粘贴在光标的下一行
+
+dd        删除光标所在一整行
+ndd        删除光标所在向下n行
+
+数字0    移到这一行的最前面
+$         移到这一行的最后面
+
+u        撤销上一次的操作
+Ctrl+r    恢复撤销
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/28/vi-vim/" data-id="ck6c0697d005hu8wvucncn6l5" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
     <article id="post-linux常用命令" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/28/linux常用命令/" class="article-date">
@@ -209,7 +558,7 @@ tail -n 数字 文件名      #规定显示最后几行
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="ck2ormwat004gi4wvwcsokpwf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/linux常用命令/" data-id="ck6c0695e004au8wvuwxn49xt" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -301,7 +650,7 @@ def login(request):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="ck2ormwcg0056i4wvr54e7dov" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/session会话/" data-id="ck6c0697g005ju8wve5mdgr3b" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -438,7 +787,7 @@ urlpatterns = [
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="ck2ormwkz008gi4wva7agyqzr" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/27/转发与重定向/" data-id="ck6c069dj0093u8wvc9g7900f" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -542,7 +891,7 @@ class Handler(BaseHandler):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="ck2ormwb7004mi4wvmyhe4i98" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/24/pyspider框架/" data-id="ck6c06965004qu8wv4bcxqwdd" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -650,7 +999,7 @@ print(logo.size)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="ck2ormwc70052i4wvvhairk7y" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/selenium模块/" data-id="ck6c0696x0057u8wvhc0nxcai" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -794,7 +1143,7 @@ print(ul.text())
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="ck2ormwao004ei4wv0xq6ln5y" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="ck6c0696i004yu8wvb24g66dy" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -957,489 +1306,7 @@ for li in soup.select(&apos;li&apos;):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="ck2ormw8e003fi4wvwi7qhcp4" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-mongodb排序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/22/mongodb排序/" class="article-date">
-  <time datetime="2018-03-22T10:47:37.000Z" itemprop="datePublished">2018-03-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/22/mongodb排序/">mongodb排序</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>mongodb排序</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>排序<h6><p></p>
-<ul>
-<li>sort()方法对数据进行排序，sort()方法可以通过参数指定排序的字段，并使用 1 和 -1 来指定排序的方式，其中 1 为升序排列，而-1是用于降序排列</li>
-<li><p>语法：db.COLLECTION_NAME.find().sort({KEY:1})</p>
-<pre><code># 插入数据库的数据如下：
-{
-    title: &quot;PHP 教程&quot;, 
-    description: &quot;PHP 是一种创建动态交互性站点的强有力的服务器端脚本语言。&quot;, 
-    by: &quot;菜鸟教程&quot;, 
-    url: &quot;http://www.runoob.com&quot;, 
-    tags: [ &quot;php&quot; ], 
-    likes: 200 
-}
-{  
-    title: &quot;Java 教程&quot;, 
-    description: &quot;Java 是由Sun Microsystems公司于1995年5月推出的高级程序设计语言。&quot;, 
-    by: &quot;菜鸟教程&quot;, 
-    url: &quot;http://www.runoob.com&quot;, 
-    tags: [ &quot;java&quot; ], 
-    likes: 150 
-}
-{   title: &quot;MongoDB 教程&quot;, 
-    description: &quot;MongoDB 是一个 Nosql 数据库&quot;, 
-    by: &quot;菜鸟教程&quot;, 
-    url: &quot;http://www.runoob.com&quot;, 
-    tags: [ &quot;mongodb&quot; ], 
-    likes : 100 
-}
-
-》》db.getCollection(&apos;teacher&apos;).find({},{&apos;title&apos;:1,_id:0}).sort({&apos;likes&apos;:1})
-/* 1 */
-{
-    &quot;title&quot; : &quot;MongoDB 教程&quot;
-}
-/* 2 */
-{
-    &quot;title&quot; : &quot;Java 教程&quot;
-}
-/* 3 */
-{
-    &quot;title&quot; : &quot;PHP 教程&quot;
-}
-</code></pre></li>
-</ul>
-<p></p><h6>Limit</h6><p></p>
-<ul>
-<li>需要在MongoDB中读取指定数量的数据记录，可以使用MongoDB的Limit方法</li>
-<li>limit()方法接受一个数字参数，该参数指定从MongoDB中读取的记录条数</li>
-<li><p>语法为：db.COLLECTION_NAME.find().limit(NUMBER)</p>
-<pre><code>》》db.getCollection(&apos;teacher&apos;).find({},{&apos;title&apos;:1,_id:0}).limit(2)
-/* 1 */
-{
-    &quot;title&quot; : &quot;PHP 教程&quot;
-}
-/* 2 */
-{
-    &quot;title&quot; : &quot;Java 教程&quot;
-}
-</code></pre></li>
-</ul>
-<p></p><h6>Skip</h6><p></p>
-<ul>
-<li>使用skip()方法来跳过指定数量的数据，skip方法同样接受一个数字参数作为跳过的记录条数</li>
-<li><p>语法：db.COLLECTION_NAME.find().limit(NUMBER).skip(NUMBER)</p>
-<pre><code>》》db.getCollection(&apos;teacher&apos;).find({},{&apos;title&apos;:1,_id:0}).limit(1).skip(1)
-/* 1 */
-{
-    &quot;title&quot; : &quot;Java 教程&quot;
-}
-</code></pre></li>
-<li><p>sort(), limilt(),skip() 三个放在一起执行的时候，执行的顺序是先 sort(), 然后是 skip()，最后是显示的 limit()</p>
-</li>
-</ul>
-</h6></h6>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="ck2ormw9s0042i4wvuq1j4tee" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-requests模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/22/requests模块/" class="article-date">
-  <time datetime="2018-03-22T07:28:23.000Z" itemprop="datePublished">2018-03-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/22/requests模块/">requests模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>requests模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li><p>Requests是用python语言基于urllib编写的，采用的是Apache2 Licensed开源协议的HTTP库，Requests它会比urllib更加方便，可以节约我们大量的工作</p>
-<pre><code>import requests
-res=requests.get(&apos;https://www.baidu.com&apos;)
-print(res.status_code)      #返回状态码
-print(res.headers)      #打印请求网址的headers所有信息
-print(res.cookies)      #打印请求网址的cookies信息
-for key,value in res.cookies.items():
-    print(key,&apos;==&apos;,value)
-print(res.text)          #res.text返回的是Unicode格式，通常需要转换为utf-8格式，否则就是乱码
-res.encoding=&apos;utf-8&apos;
-print(res.text)
-
-print(res.content)     #res.content是二进制模式，可下载视频之类的，如想看的话需要decode成utf-8格式
-print(res.content.decode(&apos;utf-8&apos;))
-
-#如果你想取文本，可以通过res.text;如果想取图片，文件，则可以通过res.content
-</code></pre></li>
-</ul>
-<p></p><h6>GET请求</h6><p></p>
-<ul>
-<li><p>带参数的GET请求,如果想查询<a href="http://httpbin.org/get页面的具体参数，需要在url里面加上" target="_blank" rel="noopener">http://httpbin.org/get页面的具体参数，需要在url里面加上</a></p>
-<pre><code>import requests
-url = &apos;http://httpbin.org/get&apos;
-data = {&apos;name&apos;:&apos;zhangsan&apos;,&apos;age&apos;:&apos;25&apos;}
-res=requests.get(url,params=data)
-print(res.url)                #result:http://httpbin.org/get?age=25&amp;name=zhangsan
-res.encoding=&apos;utf-8&apos;
-print(res.text)
-</code></pre></li>
-</ul>
-<p></p><h6>Json数据</h6><p></p>
-<ul>
-<li><p>requests中res.json()方法等同于json.loads（res.text）方法</p>
-<pre><code>import requests,json
-url = &apos;http://httpbin.org/get&apos;
-res=requests.get(url)
-print(res.json())
-print(json.loads(res.text))
-</code></pre></li>
-</ul>
-<p></p><h6>添加header</h6><p></p>
-<ul>
-<li><p>添加headers的目的是为了防止发生服务器内部错误，可以正常执行</p>
-<pre><code>import requests
-url=&apos;https://www.zhihu.com&apos;
-header={
-    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&quot;
-}
-res=requests.get(url,headers=header)
-res.encoding=&apos;utf-8&apos;
-print(res.status_code)
-print(res.text)
-</code></pre></li>
-</ul>
-<p></p><h6>post请求</h6><p></p>
-<ul>
-<li><p>通过post把数据提交到url地址，等同于一字典的形式提交form表单里面的数据</p>
-<pre><code>import requests
-url=&apos;http://httpbin.org/post&apos;
-data = {&apos;name&apos;:&apos;jack&apos;,&apos;age&apos;:&apos;23&apos;}
-header={
-    &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&quot;
-}
-res=requests.post(url,data=data,headers=header)
-res.encoding=&apos;utf-8&apos;
-print(res.status_code)
-print(res.text)
-</code></pre></li>
-</ul>
-<p></p><h6>高级操作</h6><p></p>
-<ul>
-<li><p>文件上传</p>
-<pre><code>import requests
-url=&quot;http://httpbin.org/post&quot;
-file={&apos;files&apos;:open(&apos;test.jpg&apos;,&apos;rb&apos;)}
-res=requests.post(url,files=file)
-res.encoding=&apos;utf-8&apos;
-print(res.text)
-</code></pre></li>
-<li><p>会话维持</p>
-<ul>
-<li><p>cookie的一个作用就是可以用于模拟登陆，做会话维持</p>
-<pre><code>import requests
-se = requests.session()     #声明session对象
-se.get(&apos;http://httpbin.org/cookies/set/number/12456&apos;) #在一个浏览器中浏览两个页面
-res= se.get(&apos;http://httpbin.org/cookies&apos;)
-print(res.text)
-</code></pre></li>
-</ul>
-</li>
-<li><p>证书验证</p>
-<ul>
-<li><p>在请求https时，request会进行证书的验证</p>
-<pre><code>import requests,urllib3
-url=&apos;https://www.12306.cn&apos;
-urllib3.disable_warnings()       #消除验证证书的警报
-res=requests.get(url,verify=False)
-#在请求https时，request会进行证书的验证，如果验证失败则会抛出异常,
-#为避免这种情况发生可通过verify=False，但是这样是可以访问到页面结果,也还有警报，可消除
-print(res.status_code)
-</code></pre></li>
-</ul>
-</li>
-<li><p>代理设置</p>
-<ul>
-<li><p>受限制网站需要使用代理服务器访问</p>
-<pre><code>import requests
-proxies = {
-    &quot;http&quot;: &quot;http://123.206.75.213:8080&quot;,
-}
-response = requests.get(&quot;https://www.taobao.com&quot;, proxies=proxies)
-print(response.status_code)
-</code></pre></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="ck2ormwbp004ui4wvo2j26n2m" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-urllib模块" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/22/urllib模块/" class="article-date">
-  <time datetime="2018-03-21T23:42:42.000Z" itemprop="datePublished">2018-03-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/22/urllib模块/">urllib模块</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>urllib模块</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>爬虫基本原理</h6><p></p>
-<ul>
-<li>爬虫是请求网站并提取数据的自动化程序</li>
-<li>爬虫的基本流程<ul>
-<li>1.发起请求<ul>
-<li>通过HTTP库向目标站点发起请求，即发送一个Request，请求可以包含额外的headers等信息，等待服务器响应</li>
-</ul>
-</li>
-<li>2.获取响应内容<ul>
-<li>如果服务器能正常响应，会得到一个Response，Response的内容便是所要获取的页面内容，类型可能有HTML，Json字符串，二进制数据（如图片视频）等类型</li>
-</ul>
-</li>
-<li>3.解析内容<ul>
-<li>得到的内容可能是HTML，可以用正则表达式、网页解析库进行解析。可能是Json，可以直接转为Json对象解析，可能是二进制数据，可以做保存或者进一步的处理</li>
-</ul>
-</li>
-<li>4.保存数据<ul>
-<li>保存形式多样，可以存为文本，也可以保存至数据库，或者保存特定格式的文件</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p></p><h6>urllib模块</h6><p></p>
-<ul>
-<li>Urllib库是Python中的一个功能强大、用于操作URL，并在做爬虫的时候经常要用到的库</li>
-<li><p>urllib.request.urlopen(url, data=None,[timeout])</p>
-<ul>
-<li>可以获取页面，获取页面内容的数据格式为bytes类型，需要进行decode()解码，转换成str类型</li>
-<li>url : 需要打开的网址</li>
-<li>data : 字典形式，默认为None时是GET方法，data不为空时, * urlopen()的提交方式为POST，注意POST提交时，data需要转换为字节</li>
-<li>timeout : 设置网站访问的超时时间</li>
-<li><p>urlopen返回对象提供的方法：</p>
-<ul>
-<li>read(),readline(): 对HTTPResponse类型数据进行操作</li>
-<li>info() : 返回HTTPMessage对象，表示远程服务器返回的头信息</li>
-<li>getcode() : 返回HTTP状态码</li>
-<li><p>geturl(): 返回请求的url</p>
-<pre><code>import urllib.request
-file=urllib.request.urlopen(&apos;http://www.baidu.com&apos;)
-data=file.read()
-with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
-    f.write(data)
-    f.close()
-</code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>urllib.request.Request(url,data=None,headers={},method=None)</p>
-<ul>
-<li>有些网页进行了一些反爬虫的设置,我们可以设置一些Headers信息（User-Agent），模拟成浏览器去访问这些网站</li>
-<li><p>该函数第一个参数传入url，第二个参数可以传入数据，默认是传入0数据，第三个参数是传入头部，该参数也是有默认值的，默认是不传任何头部；需要创建一个dict，将头部信息以键值对的形式存入到dict对象中，然后将该dict对象传入该函数第三个参数</p>
-<pre><code>import urllib.request
-url=&apos;http://www.baidu.com&apos;
-header={
-    &apos;User-Agent&apos;:r&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&apos;,
-    &apos;Connection&apos;: &apos;keep-alive&apos;
-}
-request=urllib.request.Request(url,headers=header)
-file=urllib.request.urlopen(request,timeout=10)
-data=file.read()
-with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
-    f.write(data)
-    f.close()
-</code></pre></li>
-</ul>
-</li>
-<li><p>urllib.parse.urlencode(query, doseq=False,safe=’’,encoding=None,errors=None)</p>
-<ul>
-<li>主要作用就是将url附上要提交的数据. 对data数据进行编码</li>
-<li><p>POST的数据必须是bytes或者iterable of bytes，不能是str，因此需要encode编码</p>
-<pre><code>示例一下如何使用爬虫通过POST表单传递信息
-测试网址为： http://www.iqianyue.com/mypost 
-from urllib import request,parse
-url=&apos;http://www.iqianyue.com/mypost&apos;
-header={
-    &apos;User-Agent&apos;:r&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&apos;,
-    &apos;Connection&apos;: &apos;keep-alive&apos;
-}
-data={&apos;name&apos;:&apos;liuyongqian&apos;,&apos;pass&apos;:&apos;123456&apos;}
-postdata=parse.urlencode(data).encode(&apos;utf-8&apos;)  #进行编码
-req=request.Request(url,postdata,headers=header)
-file=request.urlopen(req,timeout=10)
-res=file.read()
-with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
-    f.write(res)
-    f.close()
-</code></pre></li>
-</ul>
-</li>
-<li><p>request.ProxyHandler(proxies=None)</p>
-<ul>
-<li><p>当需要抓取的网站设置了访问限制，这时就需要用到代理来抓取数据；在对方的网站上，显示的不是我们真实的IP地址，而是代理服务器的IP地址</p>
-<pre><code>from urllib import request
-proxy_hander=request.ProxyHandler({&apos;http&apos;:&apos;5.22.195.215:80&apos;})
-opener=request.build_opener(proxy_hander)
-res=opener.open(&apos;http://www.baidu.com&apos;)
-data=res.read()
-with open(&apos;./1.html&apos;,&apos;wb&apos;) as f:
-    f.write(data)
-    f.close()
-</code></pre></li>
-</ul>
-</li>
-<li><p>Cookie的使用</p>
-<ul>
-<li>进行Cookie处理的一种常用思路如下：<ul>
-<li>导入Cookie处理模块http.cookiejar</li>
-<li>使用http.cookiejar.CookieJar()创建CookieJar对象</li>
-<li>使用HTTPCookieProcessor创建cookie处理器，并以其为参数构建opener对象</li>
-<li>创建全局默认的opener对象</li>
-</ul>
-</li>
-<li><p>拿ChinaUnix这个论坛网址就行实战测试一下</p>
-<pre><code>from urllib import request,parse,error
-import http
-from http import cookiejar
-
-url=&apos;http://bbs.chinaunix.net/member.php?mod=logging&amp;action=login&amp;loginsubmit=yes&amp;loginhash=LpozE&apos;
-data={
-    &apos;username&apos;:&apos;myspiders&apos;,
-    &apos;password&apos;:&apos;39a39b39c39#&apos;
-}
-postdata=parse.urlencode(data).encode(&apos;utf-8&apos;)
-header={
-    &apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&apos;,
-    &apos;Referer&apos;:&apos;http://bbs.chinaunix.net/member.php?mod=logging&amp;action=login&amp;logsubmit=yes&apos;
-}
-req=request.Request(url,postdata,headers=header)
-cjar=http.cookiejar.CookieJar()  #创建cookiejar对象
-cookie=request.HTTPCookieProcessor(cjar)  #创建cookie处理器，并以其为参数构建opener对象
-opener=request.build_opener(cookie)
-request.install_opener(opener)  #将opener安装为全局
-try:
-    res=request.urlopen(req)
-except error.HTTPError as e:
-    print(e.code)
-    print(e.reason)
-with open(&apos;./test1.html&apos;,&apos;wb&apos;) as f:  #保存登录后的页面到文件
-    f.write(res.read())
-    f.close()
-url2=&apos;http://bbs.chinaunix.net/forum-326-1.html&apos;  #再次访问该网站的其他的页面
-res2=request.urlopen(url2)
-with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
-    f2.write(res2.read())
-    f2.close()
-</code></pre></li>
-<li><p>参考<a href="http://blog.csdn.net/fengxinlinux/article/details/77340666" target="_blank" rel="noopener"> Python3爬虫代理服务器与cookie的使用</a></p>
-</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="ck2ormwcl0058i4wvw1okqkv3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="ck6c0696u0055u8wvvno73l5u" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -1471,7 +1338,7 @@ with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">16</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1481,7 +1348,7 @@ with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 17.78px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.89px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
     </div>
   </div>
 
@@ -1490,7 +1357,7 @@ with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
   <div class="widget-wrap">
     <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1503,23 +1370,23 @@ with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
       <ul>
         
           <li>
-            <a href="/2019/11/07/redis中hash基本操作（删改）/">redis中hash基本操作（删、改）</a>
+            <a href="/2020/02/07/centos7查看、打开和关闭防火墙/">centos7查看、打开和关闭防火墙</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/07/使用netstat、ss、lsof命令查询服务端口/">使用netstat、ss、lsof命令查询服务端口</a>
+          </li>
+        
+          <li>
+            <a href="/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/">已经安装nginx情况下添加http_ssl_module模块</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/07/redis中hash基本操作（查、删）/">redis中hash基本操作（查、删）</a>
           </li>
         
           <li>
             <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/06/配置MongoDB访问账号-密码/">配置MongoDB访问账号&amp;密码</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/28/读书乱纪01/">笔记01</a>
-          </li>
-        
-          <li>
-            <a href="/2019/05/11/mysql日志文件/">mysql日志文件</a>
           </li>
         
       </ul>
@@ -1549,7 +1416,7 @@ with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2019 刘永前<br>
+      &copy; 2020 刘永前<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
