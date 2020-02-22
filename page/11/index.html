@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,308 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-re模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/12/re模块/" class="article-date">
+  <time datetime="2018-03-12T03:40:14.000Z" itemprop="datePublished">2018-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/12/re模块/">re模块</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>re模块</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>常用匹配模式</h6><p></p>
+<ul>
+<li><p>正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑</p>
+<pre><code>\w     匹配字母数字及下划线
+\W     匹配非字母数字及下划线
+\s     匹配任意空白字符
+\S     匹配任意非空白字符
+\d     匹配任意数字，等价于[0-9]
+\D     匹配任意非数字
+^      匹配字符串开头
+$      匹配字符串结尾
+.      匹配除了换行符外的任意字符
+*      匹配0个或者多个的表达式
++      匹配至少一个表达式
+？     匹配最多一个表达式，非贪婪方式
+{n}    精准匹配n个前面的表达式
+{n,m}    匹配n到m次前面的表达式的片断
+a|b    匹配a或者b
+()     匹配括号内的表达式，也表示一个组
+</code></pre></li>
+</ul>
+<p></p><h6>re.match(表达式,内容,匹配模式)</h6><p></p>
+<ul>
+<li>尝试从字符串的起始位置匹配一个模式，如果不是起始位置匹配成功的话，返回none</li>
+<li><p>在Match对象上用group()方法提取子串</p>
+<pre><code>import re
+content=&apos;Hello 20180101 World_This is my festival year&apos;
+result=re.match(r&apos;^Hello.*?(\d+).*year$&apos;,content)  #使用Python的r前缀，就不用考虑转义的问题了
+print(result)
+print(result.group(0))    #group(0) 永远是原始字符串
+#想要获取content中的数字，如果不加问号，result为1，这是贪婪匹配；加了问号后，result为20180101，这是非贪婪匹配
+print(result.group(1))    #result:20180101
+</code></pre></li>
+<li><p>匹配模式</p>
+<pre><code>import re
+content=&apos;&apos;&apos;Hello 20180101 World_This
+        is my festival year&apos;&apos;&apos;
+result=re.match(r&apos;^Hello.*?(\d+).*year$&apos;,content,re.S)  #有换行符就用re.S
+print(result.group(1))     #result:20180101
+</code></pre></li>
+</ul>
+<p></p><h6>re.search()</h6><p></p>
+<ul>
+<li><p>扫描整个字符串并返回第一个成功的匹配</p>
+<pre><code>import re
+content=&apos;Liuyongqian Hello 20180101 World_This is my festival year&apos;
+result=re.search(r&apos;Hello.*year&apos;,content)
+print(result)          #为匹配方便，一般使用search
+</code></pre></li>
+</ul>
+<p></p><h6>re.findall()</h6><p></p>
+<ul>
+<li><p>搜索字符串，以列表形式返回全部能匹配的子串</p>
+<pre><code>import re
+html=&apos;&apos;&apos;
+    &lt;div&gt;
+        &lt;ul&gt;
+            &lt;li data-view=&apos;1&apos;&gt;
+                &lt;a href=&quot;/2.mp3&quot; singer=&quot;齐秦&quot;&gt;往事随风&lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;/3.mp3&quot; singer=&quot;邓丽君&quot;&gt;但愿人长久&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;/3.mp3&quot; singer=&quot;水木年华&quot;&gt;完美世界&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&apos;&apos;&apos;
+results=re.findall(r&apos;&lt;li.*?href=(.*?mp).*?singer=(.*?)&gt;(.*?)&lt;/a&gt;&apos;,html,re.S)
+for result in results:
+    print(result[0],result[1],result[2])
+</code></pre></li>
+</ul>
+<p></p><h6>re.sub()</h6><p></p>
+<ul>
+<li><p>替换字符串中每一个匹配的子串后返回替换后的字符串</p>
+<pre><code>import re
+result=re.sub(r&apos;\d+&apos;,&apos;2018&apos;,content)
+print(result)      #result:Hello 2018 World_This is my festival year
+</code></pre></li>
+</ul>
+<p></p><h6>re.compile()</h6><p></p>
+<ul>
+<li><p>将正则字符串编译成正则对象，以便于复用该匹配模式</p>
+<pre><code>import re
+content=&apos;&apos;&apos;Hello 20180101 World_
+        This is my festival year&apos;&apos;&apos;
+pattern=re.compile(r&apos;^He.*?(\d+).*?year$&apos;,re.S)
+result=re.match(pattern,content)
+print(result.group(1))       #result:20180101
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/12/re模块/" data-id="ck6x4ules0057f4wvafu4qr13" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Git入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/11/Git入门/" class="article-date">
+  <time datetime="2018-03-11T10:10:16.000Z" itemprop="datePublished">2018-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/11/Git入门/">Git入门</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Git入门</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>git是一款免费、开源的分布式版本控制系统，用于敏捷高效的处理任何或大或小的项目<br>github是一个面向开源及私有软件项目的托管平台，因为只支持git作为唯一的版本库格式进行托管，故名github</li>
+<li>Git和SVN的对比：<ul>
+<li>1）Git是分布式的，SVN是集中式</li>
+<li>2）Git可离线完成大部分操作，SVN则必须与中央服务器进行网络交互</li>
+<li>3）Git有着优雅的分支和合并功能</li>
+<li>4）Git有着更强的撤销修改和修改版本历史的能力</li>
+<li>5）Git速度更快，效率更好</li>
+</ul>
+</li>
+<li>git的三个区<ul>
+<li>工作区：编辑代码的地方</li>
+<li>暂存区：工作区与历史提交中间的缓存，代表的是要提交的工作状态</li>
+<li>历史仓库：commit指向的</li>
+</ul>
+</li>
+<li>Git管理的是修改，而不是文件</li>
+</ul>
+<p></p><h6>基本配置</h6><p></p>
+<ul>
+<li><p>目前git for window的版本是2.16.2</p>
+<pre><code>which -a git 查看git的安装位置
+git version     查看git的版本
+
+添加user.name和user.email
+git config --global user.name fyuan925
+git config --global user.email fyuan925@gmail.com
+
+添加一个新的user.name
+git config --global --add user.name kgc
+
+得到属性的值
+git config user.name
+git config --get user.name
+
+得到全局所有属性的值
+git config --list --global
+
+删除一个属性，并且是指定属性名进行删除
+git config --global --unset user.name kgc
+
+当只有一个属性值的时候，可以在删除时不指定值
+git config --global --unset user.name
+</code></pre></li>
+<li><p>关联github</p>
+<ul>
+<li><p>本地生成SSH KEYS</p>
+<pre><code>先生成ssh，命令如下：
+ssh-keygen -t rsa -C &apos;kgc@gmail.com&apos;
+进入ssh目录后将该目录下文件id_rsa.pub中的内容拷贝
+</code></pre></li>
+<li><p>在github上设置SSH公钥</p>
+<pre><code>进入github主页，点击右上角的setting，选择SSH and GPG keys;
+新建一个ssh key，将公钥粘贴后点击Add SSH key
+输入GitHub的密码进行验证，点击Confirm password
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<p></p><h6>本地库连接远程库</h6><p></p>
+<ul>
+<li><p>第一种方式：先有本地仓库，后有远程仓库</p>
+<pre><code>在本地仓库中执行以下命令，同步信息
+git remote add origin git@github.com:fangyuan925/kgc_git.git
+git push -u origin master
+第一次使用-u，后面不再使用
+</code></pre></li>
+<li><p>第二种方式：先有远程仓库，再clone到本地（最常见的，一般都是先在GitHub上创建仓库，可以选择初始化选项，然后开发人员再clone到本地）</p>
+<pre><code>git clone xxxxxx
+git push -u origin master
+第一次使用-u，后面不再使用
+</code></pre></li>
+</ul>
+<p></p><h6>基本命令</h6><p></p>
+<ul>
+<li><p>在本地新建仓库</p>
+<pre><code>git init      新建文件夹后用此命令初始化仓库
+vi readme.txt 添加一个readme.txt
+git status  查看当前版本库的状态
+git add filename    使用git add命令告诉git，把该文件添加到仓库
+git commit -m &apos;comment&apos;  使用git commit命令告诉git，把文件提交到仓库,可设置注释内容
+
+git add     可以反复添加多个
+git diff filename     查看修改的内容
+git log      可以查看所有的提交历史记录
+git log filename     仅查看指定文件名的提交历史记录
+git log --pretty=oneline filename
+d085ee8434392d2cf88b48592f29fbeefb0818f7  此为commit id（版本号） SHA-1 Hash计算出来一个16进制的值
+</code></pre></li>
+<li><p>版本回退</p>
+<pre><code>前提：知道当前版本是哪个， HEAD表示当前版本
+回退到上一个版本： HEAD^   一个^就表示前一个版本， 如果N个前版本可以用HEAD~N
+
+回退命令：git reset --hard HEAD^
+回退之后你后悔了又想回到后退之前的那个版本： git reset --hard xxxxxxxxx
+xxxxxxxxx  前面可以通过 git log filename
+
+3commit   &lt;== HEAD
+2commit
+1commit
+
+执行了git reset --hard HEAD^之后
+3commit   
+2commit  &lt;== HEAD
+1commit
+
+git reset：版本穿梭， 可以使用git log查看提交历史，以便确定回退/穿梭到哪个版本     
+git reflog：查看命令历史，以便确定要回到未来/过去的哪个版本
+</code></pre></li>
+<li><p>撤销修改</p>
+<pre><code>没有提交到暂存区时，其实就在工作区： git checkout – filename
+已经提交到暂存区了： 分两步：1）git reset HEAD file 2）git checkout -- filename
+</code></pre></li>
+<li><p>删除文件</p>
+<pre><code>手误删除，如何恢复： git checkout -- filename
+真删除版本库的文件： 
+    1) git rm filename
+    2) git commit -m &apos;xxx&apos;
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/11/Git入门/" data-id="ck6x4ul590015f4wvtniwwvmo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件工具/">软件工具</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-python之Excel操作" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -132,7 +434,7 @@ cell_value=sheet0.cell_value(0,0)  #通过坐标读取表格中的数据
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="ck6c0695z004mu8wv2gjv2iri" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/python之Excel操作/" data-id="ck6x4uleh0051f4wv0aj3en7r" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -238,7 +540,7 @@ print(os.listdir(r&apos;E:\selenium prt\0311&apos;))
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="ck6c0693d0035u8wv2jxbvi47" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之OS操作/" data-id="ck6x4ulgi006df4wvz1qu6viw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -367,7 +669,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="ck6c0692s002qu8wv4zyncyok" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/Python之IO操作/" data-id="ck6x4ulah002vf4wvjy8jy5u2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -494,7 +796,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="ck6c0693g0037u8wv7oak6kym" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/XSS注入/" data-id="ck6x4ulbt003kf4wv37lokiul" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -570,7 +872,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="ck6c0694i003wu8wvge1s2dpx" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/SQL注入/" data-id="ck6x4ulb60037f4wvajazu93d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -710,7 +1012,7 @@ f.close()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="ck6c0699i006lu8wvkk2aoa3g" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/10/基本安全测试/" data-id="ck6x4ulh4006rf4wvgwye1hm8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安全测试/">安全测试</a></li></ul>
@@ -861,7 +1163,7 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="ck6c0697k005lu8wv6qnb54sz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/09/事务视图索引备份/" data-id="ck6x4ulfn005tf4wva36rhb1v" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -960,218 +1262,10 @@ mysql -uroot -p123456 mybank &lt;D:\Python\0309.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="ck6c0693x003iu8wvn84nmokl" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/httpwatch/" data-id="ck6x4ulcn0041f4wv01lz7e3e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-chown" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/08/chown/" class="article-date">
-  <time datetime="2018-03-08T05:48:02.000Z" itemprop="datePublished">2018-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/chown/">chown</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>chown</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>简介</h6><p></p>
-<ul>
-<li>1.使用权限 : root</li>
-<li><p>2.使用方式</p>
-<pre><code>chown[-f][-h][-R] Owner [ :Group ] { File ... | Directory ... }
-chown -R [-f ][-H| -L| -P] Owner [ :Group ] { File ... | Directory ... }
-</code></pre></li>
-<li><p>3.说明：Linux/Unix 是多人多工作业系统，所有的档案皆有拥有者。利用 chown 可以将档案的拥<br>有者加以改变。一般来说，这个指令只有是由系统管理者(root)所使用，一般使用者没有权限可以<br>改变别人的档案拥有者，也没有权限可以自己的档案拥有者改设为别人。只有系统管理者(root)才<br>有这样的权限，一个字：更改与文件关联的所有者或组</p>
-</li>
-<li><p>4.描述：chown命令将 File 参数指定的文件的所有者更改为 Owner 参数指定的用户。Owner 参数的值可以是可在 /etc/passwd 文件中找到的用户标识或登录名。还可以选择性地指定组。Group 参数的值可以是可在 /etc/group 文件中找到的组标识或组名</p>
-<pre><code>-f
-禁止除用法消息之外的所有错误消息
--h
-更改遇到的符号链接的所有权，而非符号链接指向的文件或目录的所有权
-当遇到符号链接而您未指定 -h 标志时，chown 命令更改链接指向的文件或目录的所有权，而非链接本身的所有权
-如果指定 -R 标志，chown 命令递归地降序指定的目录
--H
-如果指定了 -R 选项，并且引用类型目录的文件的符号链接在命令行上指定，
-chown 变量会更改由符号引用的目录的用户标识（和组标识，如果已指定）和所有在该目录下的文件层次结构中的所有文件
--L
-如果指定了 -R 选项，并且引用类型目录的文件的符号在命令行上指定或在遍历文件层次结构期间遇到，
-chown 命令会更改由符号链接引用的目录的用户标识（和组标识，如果已指定）和在该目录之下的文件层次结构中的所有文件
--P
-如果指定了 -R 选项并且符号链接在命令行上指定或者在遍历文件层次结构期间遇到，则如果系统支持该操作，
-则chown 命令会更改符号链接的所有者标识（和组标识，如果已指定）。chown 命令不会执行至文件层次结构的任何其它部分的符号链接
--R
-递归地降序目录，更改每个文件的所有权。当遇到符号链接并且链接指向目录时，更改该目录的所有权，但不进一步遍历目录。
-不过 -h、-H、-L or -P 标志也未指定，则当遇到符号链接并且该链接指向到目录时，该目录的组所有权更改但不会进一步遍历目录
-</code></pre></li>
-</ul>
-<p></p><h6>示例</h6><p></p>
-<ul>
-<li><p>将档案 file1.txt 的拥有者设为 users 群体的使用者 tom : </p>
-<pre><code>chown tom:users file1.txt 
-</code></pre></li>
-<li><p>将目前目录下的所有档案与子目录的拥有者皆设为 users 群体的使用者 jerry : </p>
-<pre><code>chown -R lamport:users * 
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/chown/" data-id="ck6c06946003ou8wvh478l7wm" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Page Object" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/08/Page Object/" class="article-date">
-  <time datetime="2018-03-08T03:30:46.000Z" itemprop="datePublished">2018-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/Page Object/">Page Object</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Page Object</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>By元素定位</h6><p></p>
-<ul>
-<li><p>已经将By方法封装</p>
-<pre><code>from selenium import webdriver
-from selenium.webdriver.common.by import By
-
-driver=webdriver.Firefox()
-driver.get(&apos;http://www.baidu.com&apos;)
-driver.find_element(By.ID,&apos;kw&apos;).clear()
-driver.find_element(By.NAME,&apos;wd&apos;).send_keys(&apos;selenium&apos;)
-driver.find_element(By.CLASS_NAME,&apos;s_ip&apos;).send_keys(&apos;study&apos;)
-driver.find_element(By.CSS_SELECTOR,&apos;#kw&apos;).send_keys(&apos;Python&apos;)
-driver.find_element(By.TAG_NAME,&apos;input&apos;)....
-driver.find_element(By.LINK_TEXT,&apos;退出&apos;)...
-driver.find_element(By.PARTIAL_LINK_TEXT,&apos;退&apos;)...
-driver.find_element(By.XPATH,&apos;.//[@id=&quot;Title&quot;]&apos;)...
-</code></pre></li>
-</ul>
-<p></p><h6>Page Object</h6><p></p>
-<ul>
-<li><p>Page Object是Selenium自动化测试项目开发实践的最佳设计模式之一，通过对界面元素和功能模块的封装减少冗余代码，同时在后期维护中，若元素定位或功能模块发生变化，只需要调整页面元素或功能模块封装的代码，提高测试用例的可维护性</p>
-<pre><code>#basepage.py
-from time import sleep
-class Page:                         #页面基础类
-    def __init__(self,driver):      #初始化
-        self.driver=driver
-        self.base_url=&apos;http://localhost&apos;
-        self.timeout=10
-    def _open(self,url):            #打开不同的子页面
-        url_=self.base_url+url
-        print(&apos;Test page is %s&apos;%url_)
-        self.driver.maximize_window()
-        self.driver.get(url_)
-        sleep(3)
-        assert self.driver.current_url==url_,&apos;Did not land on %s&apos;%url_
-    def open(self):
-        self._open(self.url)
-    def find_element(self,*location): #元素定位方法封装
-        return self.driver.find_element(*location)
-
-#loginpage.py
-from basepage import *
-from selenium.webdriver.common.by import By
-class LoginPage(Page):
-    &apos;&apos;&apos;首页登录页面&apos;&apos;&apos;
-    url=&apos;/&apos;
-    username_loc=(By.NAME,&apos;username&apos;)         #定位器
-    password_loc=(By.NAME,&apos;password&apos;)
-    submit_loc=(By.NAME,&apos;Submit&apos;)
-    def type_username(self,username):         #用户名输入框元素
-        self.find_element(*self.username_loc).clear()
-        self.find_element(*self.username_loc).send_keys(username)
-    def type_password(self,password):         #密码输入框元素
-        self.find_element(*self.password_loc).send_keys(password)
-    def type_submit(self):                    #登录按钮元素
-        self.find_element(*self.submit_loc).click()
-
-def test_user_login(driver,username,password):#登录功能模块封装
-    &apos;&apos;&apos;测试用户名密码是否可以登录&apos;&apos;&apos;
-    login_page=LoginPage(driver)
-    login_page.open()
-    login_page.type_username(username)
-    login_page.type_password(password)
-    login_page.type_submit()
-
-# test_login.py
-from loginpage import *
-from selenium import webdriver
-driver=webdriver.Firefox()
-username=&apos;51zxw&apos;
-password=&apos;123456&apos;
-
-test_user_login(driver,username,password)
-sleep(3)
-driver.quit()
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/Page Object/" data-id="ck6c0692n002ou8wvo90t1nox" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
 
     </footer>
   </div>
@@ -1186,7 +1280,7 @@ driver.quit()
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/10/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/12/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1200,7 +1294,7 @@ driver.quit()
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1210,16 +1304,16 @@ driver.quit()
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 19.09px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.18px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10.91px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.36px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.55px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.45px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1227,9 +1321,17 @@ driver.quit()
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/02/22/centos7-4鲁班部署/">centos7.4鲁班部署</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/14/Centos7查看、新增和删除端口/">Centos7查看、新增和删除端口</a>
+          </li>
         
           <li>
             <a href="/2020/02/07/centos7查看、打开和关闭防火墙/">centos7查看、打开和关闭防火墙</a>
@@ -1241,14 +1343,6 @@ driver.quit()
         
           <li>
             <a href="/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/">已经安装nginx情况下添加http_ssl_module模块</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/07/redis中hash基本操作（查、删）/">redis中hash基本操作（查、删）</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
           </li>
         
       </ul>

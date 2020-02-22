@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,145 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-Nginx日志文件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/11/Nginx日志文件/" class="article-date">
+  <time datetime="2019-05-11T00:55:01.000Z" itemprop="datePublished">2019-05-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Nginx日志文件</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>1.1 通过访问日志access log，可以得到用户地域来源、跳转来源、使用终端、某个URL访问量等相关信息；通过错误日志error log，可以得到系统某个服务或server的性能瓶颈等</li>
+<li>1.2 如果配置日志部分，日志生成到Nginx根目录logs/access.log文件中，默认使用“main”日志格式，也可以自定义格式。</li>
+</ul>
+<p></p><h6>2.日志类型</h6><p></p>
+<ul>
+<li><p>2.1 access.log</p>
+<pre><code>$remote_addr    客户端的ip地址(代理服务器，显示代理服务ip)
+$remote_user    用于记录远程客户端的用户名称（一般为“-”）
+$time_local    用于记录访问时间和时区
+$request        用于记录请求的url以及请求方法
+$status        响应状态码，例如：200成功、404页面找不到等。
+$body_bytes_sent    给客户端发送的文件主体内容字节数
+$http_referer    可以记录用户是从哪个链接访问过来的
+$http_user_agent    用户所使用的代理（一般为浏览器）
+$http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记录客户端的ip地址
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/05/11/Nginx日志文件/" data-id="ck6x4ulad002tf4wvhs1u2d1q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Tomcat日志文件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/11/Tomcat日志文件/" class="article-date">
+  <time datetime="2019-05-11T00:48:30.000Z" itemprop="datePublished">2019-05-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/11/Tomcat日志文件/">Tomcat日志文件</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Tomcat日志文件</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 简介</h6><p></p>
+<ul>
+<li>1.1 Tomcat 默认的日志库对JDK自带的java.util.logging API 进行了重新实现，这些实现被称为  “JULI” ，里面包含了一个自定义的LogManager类，它能够区别出运行在 Tomcat 容器中的多个不同的Web应用以及它们的类加载器，从而可以支持不同的应用使用各自独立的日志配置。</li>
+<li>1.2 可以从 Tomcat 全局和 Web 应用两个层面对 Tomcat 默认的JULI进行日志配置：<ul>
+<li>全局配置通常使用 tomcat下/conf/logging.properties文件进行配置</li>
+<li>应用配置则是使用 WEB-INF/classes/logging.properties文件进行配置</li>
+</ul>
+</li>
+<li>1.3 处理器默认的日志级别是 INFO，可选的日志级别从高到低依次为：SEVERE &gt; WARNING &gt; INFO &gt; CONFIG &gt; FINE &gt; FINER &gt; FINEST &gt; ALL &gt; OFF。</li>
+</ul>
+<p></p><h6>2. 日志类型</h6><p></p>
+<ul>
+<li>2.1 catalina引擎的日志文件，文件名：catalina.日期.log，如 catalina.2019-04-26.log<ul>
+<li>主要是记录tomcat启动时候的信息，类似于我们在eclipse中启动服务的时候在控制台看到的信息。在里面可以看到启动的JVM参数以及操作系统等日志信息。如果没有使用log4j等日志机制，系统的的错误信息与打印语句也在这个日志文件中记录</li>
+</ul>
+</li>
+<li>2.2 Tomcat下内部代码丢出的日志，文件名：localhost.日期.log，如 localhost.2019-04-26.log<ul>
+<li>jsp页面内部错误的异常，org.apache.jasper.runtime.HttpJspBase.service类丢出的，日志信息就在该文件</li>
+</ul>
+</li>
+<li>2.3 Tomcat下默认manager项目专有的日志，文件名：manager.日期.log，如 manager.2019-04-26.log</li>
+<li>2.4 tomcat下默认manager项目的日志信息，文件名：host-manager.2019-04-26.log</li>
+<li>2.5 控制台输出的日志，Linux下默认重定向到catalina.out</li>
+<li>2.6 存放访问tomcat的请求信息，如 localhost_access_log.2019-04-26.txt<ul>
+<li>配置文件在 tomcat 的安装目录/conf/server.xml中</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/05/11/Tomcat日志文件/" data-id="ck6x4ulbl003gf4wva6ij9g8j" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-定时任务crontab命令" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -205,7 +344,7 @@ mysqldump -h$mysql_host -u$mysql_user -p$mysql_pwd $backup_database &gt; /root/t
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/05/定时任务crontab命令/" data-id="ck6c069bt007xu8wvluujh59v" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/05/05/定时任务crontab命令/" data-id="ck6x4ulhv0077f4wvzd2fuy2m" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -330,7 +469,7 @@ mysqldumpslow -s r -t 20 /mysql/mysql06-slow.log | more
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/04/MySQL慢日志查询/" data-id="ck6c0692h002ku8wvheyt6l2u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/05/04/MySQL慢日志查询/" data-id="ck6x4ul9v002jf4wvzb72ejpt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -482,7 +621,7 @@ TPS=(Com_commit + Com_rollback)/Uptime
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/04/MySQL监控与调优-初级/" data-id="ck6c06922002cu8wvp7iakeoy" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/05/04/MySQL监控与调优-初级/" data-id="ck6x4ula2002nf4wvslpl6d4b" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -581,7 +720,7 @@ mysqldump -u root -p test_oa userinfo workinfo&gt; /root/bat_test_oa_uw.sql
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/完全备份与还原-mysqldump备份/" data-id="ck6c069bn007tu8wv5ldw0zl1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/26/完全备份与还原-mysqldump备份/" data-id="ck6x4ulm2009cf4wvmdsj8ui3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -689,7 +828,7 @@ cnpm install -g appium --no-cache
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/Appium的部署安装/" data-id="ck6c068tu0003u8wvgncnm5zc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/26/Appium的部署安装/" data-id="ck6x4ul2q0000f4wvse61512n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -762,7 +901,7 @@ cnpm install -g appium --no-cache
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/26/使用JvisualVM远程监控JVM/" data-id="ck6c0699a006hu8wvt8uzjg7g" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/26/使用JvisualVM远程监控JVM/" data-id="ck6x4ulfp005vf4wvkltiny07" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
@@ -849,7 +988,7 @@ cnpm install -g appium --no-cache
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/11/robotframework-基于python27/" data-id="ck6c06979005fu8wvhf0eki0v" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/11/robotframework-基于python27/" data-id="ck6x4ulf1005df4wvxjstbwex" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/自动化测试/">自动化测试</a></li></ul>
@@ -957,208 +1096,7 @@ npm run build
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/04/jenkins自动化部署-远程部署前端vue项目/" data-id="ck6c0694m003yu8wvw1wpkzkf" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-jenkins自动化部署-部署war包到远程服务器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" class="article-date">
-  <time datetime="2019-04-03T13:40:36.000Z" itemprop="datePublished">2019-04-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/03/jenkins自动化部署-部署war包到远程服务器/">jenkins自动化部署--部署war包到远程服务器</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>jenkins自动化部署–部署war包到远程服务器</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>1. Jenkins插件安装</h6><p></p>
-<ul>
-<li>在系统管理—插件管理下，安装Publish over SSH插件</li>
-<li><p>在系统管理—系统设置下，配置SSH插件信息</p>
-<pre><code>#只填写必要信息
-SSH Server
-
-    Name       testing-yuancheng（随意一个名字即可）
-    Hostname   192.168.110.74（需要部署的远程服务器IP）
-    Username   root（登录远程服务器的用户名）
-    Remote Directory  /usr/tomcat/webapps/（远程服务器工作目录）
-    √ Use password authentication, or use a different key
-    Passphrase / Password  （输入远程服务器登录密码）
-    Port           22
-    Timeout (ms)   300000
-</code></pre></li>
-</ul>
-<p></p><h6>2. 构建项目</h6><p></p>
-<ul>
-<li>2.1 新建任务（输入一个任务名称，如testing001，选择“构建一个自由风格的软件项目”）</li>
-<li>2.2 源码管理（选择“Git”，输入仓库URL和git账号）</li>
-<li>2.3 构建<ul>
-<li>调用顶层Maven目标,目标：clean package -Dmaven.test.skip=true</li>
-</ul>
-</li>
-<li><p>2.4 构建后操作</p>
-<ul>
-<li><p>选择“Send build artifacts over SSH”</p>
-<pre><code>Transfer Set
-
-    Source files        target/*.war
-    Remove prefix         target/
-    Remote directory    #可不写，默认系统设置项/usr/tomcat/webapps/
-    Exec command        sudo sh /usr/deploy_cmp.sh
-</code></pre></li>
-<li><p>deploy_cmp.sh，执行远程部署war包的命令，shell内容可以参考如下：</p>
-<pre><code>#!/bin/bash
-export BUILD_ID=dontkillme
-TOMCATTHREAD=`ps aux | grep &apos;tomcat&apos; | grep -v grep`
-if test -z &quot;$TOMCATTHREAD&quot;
-then 
-    echo &quot;TOMCAT NOT START&quot;
-else  
-    THREADLIST=(${TOMCATTHREAD// / })
-    PID=${THREADLIST[1]}   
-    kill -9 $PID   
-    sleep 5s
-fi  
-    cd /usr/tomcat/webapps/   
-    rm -f cmp.war  
-    rm -rf cmp 
-    cd /usr/tomcat/bin
-    ./startup.sh
-    sleep 5s
-</code></pre></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/03/jenkins自动化部署-部署war包到远程服务器/" data-id="ck6c0694c003su8wvewx7zx8s" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-jenkins自动化部署-构建前端项目" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/02/jenkins自动化部署-构建前端项目/" class="article-date">
-  <time datetime="2019-04-02T14:11:04.000Z" itemprop="datePublished">2019-04-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/02/jenkins自动化部署-构建前端项目/">jenkins自动化部署--构建前端项目</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>jenkins自动化部署–构建前端项目</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>1. 构建前端项目准备</h6><p></p>
-<ul>
-<li>在jenkins中（系统设置—插件管理）安装NodeJS Plugin插件</li>
-<li>在jenkins所在服务器编译部署NodeJS，参考另一篇笔记<a href="">《编译部署NodeJS》</a></li>
-<li>在jenkins中（系统设置—全局属性）设置环境变量，所写变量值为Jenkins所在服务器<code>echo $PATH</code>的变量值</li>
-<li>Nginx服务需要开启，Nginx的安装部署，参考另一篇笔记<a href="">《安装部署Nginx》</a></li>
-</ul>
-<p></p><h6>2. 使用 jenkins构建前端项目</h6><p></p>
-<ul>
-<li>2.1 新建任务（输入一个任务名称，如qianduan001，选择“构建一个自由风格的软件项目”）</li>
-<li>2.2 源码管理（选择“Git”，输入仓库URL和git账号）</li>
-<li><p>2.3 构建—执行shell，命令框中输入以下内容：</p>
-<pre><code>node -v
-npm -v
-
-cd /var/lib/jenkins/workspace/qianduan001
-rm -rvf dist
-npm install
-npm run build
-
-sudo sh /usr/deploy_cmp-web.sh
-</code></pre></li>
-<li><p>2.4 deploy_cmp-web.sh，shell脚本可以参考如下所示：</p>
-<pre><code>#!/bin/bash
-
-rm -rvf /usr/local/nginx/cmp-web
-mkdir /usr/local/nginx/cmp-web
-cp -R /var/lib/jenkins/workspace/qianduan001/dist/* /usr/local/nginx/qianduan001/
-</code></pre></li>
-</ul>
-<p></p><h6>3. Nginx配置</h6><p></p>
-<ul>
-<li>前端项目建议放在Nginx服务器上，与后台项目分离部署</li>
-<li><p>Nginx配置文件具体配置部分如下所示</p>
-<pre><code>server {
-        listen       80;
-        server_name  localhost;
-        location / {
-            root   qianduan001;              #访问目录
-            index  index.html index.htm;
-            }
-        error_page   500 502 503 504  /50x.html;
-        location = /50x.html {
-            root   html;
-            }
-        location /api {
-            proxy_pass http://192.168.110.**:8080/cmp;  #后台接口
-            }
-        }
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/04/02/jenkins自动化部署-构建前端项目/" data-id="ck6c06940003ku8wvoy8x6vie" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/04/04/jenkins自动化部署-远程部署前端vue项目/" data-id="ck6x4uld00049f4wv49ysa40c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -1176,7 +1114,7 @@ cp -R /var/lib/jenkins/workspace/qianduan001/dist/* /usr/local/nginx/qianduan001
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1190,7 +1128,7 @@ cp -R /var/lib/jenkins/workspace/qianduan001/dist/* /usr/local/nginx/qianduan001
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1200,16 +1138,16 @@ cp -R /var/lib/jenkins/workspace/qianduan001/dist/* /usr/local/nginx/qianduan001
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 19.09px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.18px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10.91px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.36px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.55px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.45px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1217,9 +1155,17 @@ cp -R /var/lib/jenkins/workspace/qianduan001/dist/* /usr/local/nginx/qianduan001
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/02/22/centos7-4鲁班部署/">centos7.4鲁班部署</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/14/Centos7查看、新增和删除端口/">Centos7查看、新增和删除端口</a>
+          </li>
         
           <li>
             <a href="/2020/02/07/centos7查看、打开和关闭防火墙/">centos7查看、打开和关闭防火墙</a>
@@ -1231,14 +1177,6 @@ cp -R /var/lib/jenkins/workspace/qianduan001/dist/* /usr/local/nginx/qianduan001
         
           <li>
             <a href="/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/">已经安装nginx情况下添加http_ssl_module模块</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/07/redis中hash基本操作（查、删）/">redis中hash基本操作（查、删）</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
           </li>
         
       </ul>

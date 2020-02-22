@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,313 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-pyquery模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/23/pyquery模块/" class="article-date">
+  <time datetime="2018-03-23T15:15:27.000Z" itemprop="datePublished">2018-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/23/pyquery模块/">pyquery模块</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>pyquery模块</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>PyQuery库也是一个非常强大又灵活的网页解析库，是 Python 仿照 jQuery 的严格实现</li>
+<li><p>初始化<br>初始化的时候一般有三种传入方式：传入字符串，传入url,传入文件</p>
+<pre><code>from pyquery import PyQuery as pq
+html=&apos;&apos;&apos;
+    &lt;div id=&quot;container&quot;&gt;
+        &lt;ul class=&quot;list&quot;&gt;
+             &lt;li class=&quot;item-0&quot;&gt;first item&lt;/li&gt;
+             &lt;li class=&quot;item-1&quot;&gt;&lt;a href=&quot;link2.html&quot;&gt;second item&lt;/a&gt;&lt;/li&gt;
+             &lt;li class=&quot;item-0 active&quot;&gt;&lt;a href=&quot;link3.html&quot;&gt;&lt;span class=&quot;bold&quot;&gt;third item&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+             &lt;li class=&quot;item-1 active&quot;&gt;&lt;a href=&quot;link4.html&quot;&gt;fourth item&lt;/a&gt;&lt;/li&gt;
+             &lt;li class=&quot;item-0&quot;&gt;&lt;a href=&quot;link5.html&quot;&gt;fifth item&lt;/a&gt;&lt;/li&gt;
+             &lt;p&gt;This is a paragraph.&lt;/p&gt;        
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&apos;&apos;&apos;
+###字符串初始化
+doc=pq(html)      #doc其实就是一个pyquery对象
+print(doc(&apos;li&apos;))  #doc(标签名)就可以获取所有的该标签的内容
+print(doc(&apos;.item-0&apos;))  #doc(&apos;.class_name&apos;)，doc(&apos;#id_name&apos;)
+###URL初始化
+url=&apos;http://www.baidu.com&apos;
+doc=pq(url,encoding=&apos;utf-8&apos;)
+print(doc(&apos;head&apos;))
+###文件初始化
+在pq()这里可以传入url参数也可以传入文件参数，当然这里的文件通常是一个html文件，例如：pq(filename=&apos;index.html&apos;)
+</code></pre></li>
+</ul>
+<p></p><h6>查找元素</h6><p></p>
+<ul>
+<li><p>子元素（children,find）</p>
+<pre><code>doc=pq(html)
+items=doc(&apos;.list&apos;)
+lis=items.find(&apos;li&apos;)   #lis=items.children()可以实现同样的效果
+print(lis)
+</code></pre></li>
+<li><p>父元素（parent,parents）</p>
+<pre><code>doc=pq(html)
+items=doc(&apos;.list&apos;)
+cont=items.parent() #可以找到父元素的所有内容
+#cont=items.parents()返回两部分内容，一个是父节点信息，一个是父节点的父节点的信息即祖先节点的信息
+print(cont)
+</code></pre></li>
+<li><p>兄弟元素（siblings）</p>
+<pre><code>doc=pq(html)
+li=doc(&apos;.list .item-0.active&apos;)
+print(li.siblings())
+</code></pre></li>
+<li><p>遍历</p>
+<pre><code>doc=pq(html)
+lis=doc(&apos;li&apos;).items()
+print(type(lis))     #&lt;class &apos;generator&apos;&gt;
+for li in lis:
+    print(li)        #通过for循环得到的每个元素依然是一个pyquery对象
+</code></pre></li>
+</ul>
+<p></p><h6>获取信息</h6><p></p>
+<ul>
+<li><p>获取属性值–pyquery对象.attr(属性名)</p>
+<pre><code>doc=pq(html)
+a=doc(&apos;.list .item-1 a&apos;)
+print(a.attr(&apos;href&apos;))
+</code></pre></li>
+<li><p>获取文本–pyquery对象.text()</p>
+<pre><code>doc=pq(html)
+a=doc(&apos;.list .item-0.active a&apos;)
+print(a.text())
+</code></pre></li>
+<li><p>获取html–puquery对象.html()获取当前标签所包含的html信息</p>
+<pre><code>doc=pq(html)
+a=doc(&apos;.list .item-0.active a&apos;)
+print(a.html())
+</code></pre></li>
+</ul>
+<p></p><h6>DOM操作</h6><p></p>
+<ul>
+<li><p>addClass、removeClass添加和删除属性值</p>
+<pre><code>doc=pq(html)
+ul=doc(&apos;.list&apos;)
+ul.addClass(&apos;2018&apos;)
+ul.removeClass(&apos;2018&apos;)
+print(ul)
+</code></pre></li>
+<li><p>attr,css给标签添加和修改属性</p>
+<pre><code>doc=pq(html)
+ul=doc(&apos;.list&apos;)
+ul.attr(&apos;id&apos;,&apos;201803&apos;)
+ul.css(&apos;font-size&apos;,&apos;15px&apos;)
+print(ul)         #&lt;ul class=&quot;list&quot; id=&quot;201803&quot; style=&quot;font-size: 15px&quot;&gt;
+</code></pre></li>
+<li><p>remove将无用的或者干扰的标签直接删除</p>
+<pre><code>doc=pq(html)
+ul=doc(&apos;.list&apos;)
+ul.find(&apos;p&apos;).remove()
+print(ul.text())
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/23/pyquery模块/" data-id="ck6x4uleb004xf4wvee6aaulz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-beautifulsoup模块" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/23/beautifulsoup模块/" class="article-date">
+  <time datetime="2018-03-23T10:31:34.000Z" itemprop="datePublished">2018-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/23/beautifulsoup模块/">beautifulsoup模块</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>beautifulsoup模块</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>简介</h6><p></p>
+<ul>
+<li>BeautifulSoup是Python的一个库，最主要的功能就是从网页爬取我们需要的数据。BeautifulSoup将html解析为对象进行处理，全部页面转变为字典或者数组，相对于正则表达式的方式，可以大大简化处理过程</li>
+<li>Beautiful Soup支持Python标准库中的HTML解析器,还支持一些第三方的解析器，如果我们不安装它，则 Python 会使用 Python默认的解析器，lxml 解析器更加强大，速度更快，推荐安装</li>
+<li><p>以下是这两个库的比较：</p>
+<pre><code>1.Python标准库    BeautifulSoup(html,’html.parser’)    
+Python内置标准库；执行速度快     容错能力较差
+2.lxml HTML解析库    BeautifulSoup(html,’lxml’)    
+速度快；容错能力强    需要安装，需要C语言库
+</code></pre></li>
+</ul>
+<p></p><h6>标签选择器</h6><p></p>
+<ul>
+<li><p>soup.标签名，可以获得这个标签的内容；通过这种方式获取标签，如果文档中有多个这样的标签，返回的结果是第一个标签的内容</p>
+<pre><code>from bs4 import BeautifulSoup
+html=&apos;&apos;&apos;
+    &lt;html&gt;
+        &lt;head&gt;
+            &lt;title&gt;The Dormouse&apos;s story&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;p class=&quot;story&quot;&gt;
+                Once upon a time there were three little sisters; and their names were
+                &lt;a href=&quot;http://example.com/elsie&quot; class=&quot;sister&quot; id=&quot;link1&quot;&gt;
+                    &lt;span&gt;Elsie&lt;/span&gt;
+                &lt;/a&gt;
+                &lt;a href=&quot;http://example.com/lacie&quot; class=&quot;sister&quot; id=&quot;link2&quot;&gt;Lacie&lt;/a&gt;
+                and
+                &lt;a href=&quot;http://example.com/tillie&quot; class=&quot;sister&quot; id=&quot;link3&quot;&gt;Tillie&lt;/a&gt;
+                and they lived at the bottom of a well.
+            &lt;/p&gt;
+            &lt;p class=&quot;story&quot;&gt;...&lt;/p&gt;
+&apos;&apos;&apos;
+soup=BeautifulSoup(html,&apos;lxml&apos;)    #创建对象
+print(soup.head.title.string)
+</code></pre></li>
+<li><p>基本用法</p>
+<pre><code>soup.prettify()，自动补全缺失的标签
+soup.标签名，可以获得这个标签的内容
+soup.标签名.name，可以获得该标签的名称
+soup.标签名[&apos;name&apos;]，可以获得该标签的name属性值
+soup.标签名.string，可以获取第一个该标签的内容
+soup.标签名.内标签名.string，嵌套方式
+soup.标签名.contents，将该标签下的所有子标签存入到一个列表中
+soup.标签名.parent，可以获取父节点所有信息
+soup.标签名.next_sibling 获取下一个兄弟标签
+soup.标签名.next_siblings 获取后面的兄弟节点
+souo.标签名.previous_sinbling 获取上一个兄弟标签
+soup.标签名.previous_siblings 获取前面的兄弟节点
+</code></pre></li>
+</ul>
+<p></p><h6>标准选择器</h6><p></p>
+<ul>
+<li>soup.find_all(name,attrs,text)可根据标签名、属性、内容查找文档</li>
+<li><p>soup.find(name,attrs,text)返回匹配结果的第一个元素</p>
+<pre><code>from bs4 import BeautifulSoup
+html=&apos;&apos;&apos;
+    &lt;div class=&quot;panel&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+            &lt;h4&gt;Hello&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+            &lt;ul class=&quot;list&quot; id=&quot;list-1&quot;&gt;
+                &lt;li class=&quot;element&quot;&gt;Foo&lt;/li&gt;
+                &lt;li class=&quot;element&quot;&gt;Bar&lt;/li&gt;
+                &lt;li class=&quot;element&quot;&gt;Jay&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;ul class=&quot;list list-small&quot; id=&quot;list-2&quot;&gt;
+                &lt;li class=&quot;element&quot;&gt;Foo&lt;/li&gt;
+                &lt;li class=&quot;element&quot;&gt;Bar&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&apos;&apos;&apos;
+soup=BeautifulSoup(html,&apos;lxml&apos;)
+for li in soup.find_all(&apos;ul&apos;):    #以针对结果再次find_all,从而获取所有的li标签信息
+    print(li.find_all(&apos;li&apos;))
+print(soup.find_all(attrs={&apos;class_&apos;:&apos;element&apos;}))
+#attrs可以传入字典的方式来查找标签，但是这里有个特殊的就是class,因为class在python中是特殊的字段，所以如果想要查找class相关的可以更改attrs={&apos;class_&apos;:&apos;element&apos;}
+</code></pre></li>
+<li><p>基本用法：</p>
+<pre><code>soup.find_all(&apos;标签名&apos;)  结果返回的是一个列表的方式
+soup.finf_all(attrs={&apos;class_&apos;:&apos;element&apos;})
+soup.find_all(text=&apos;Foo&apos;) 返回的是查到的所有的text=&apos;Foo&apos;的文本
+</code></pre></li>
+</ul>
+<p></p><h6>CSS选择器</h6><p></p>
+<ul>
+<li>通过select()直接传入CSS选择器就可以完成选择</li>
+<li>通过get_text()可以获取文本内容</li>
+<li><p>通过 标签名[属性名] 或者 标签名.attrs[属性名]获取属性</p>
+<pre><code>from bs4 import BeautifulSoup
+html=&apos;&apos;&apos;
+    &lt;div class=&quot;panel&quot;&gt;
+        &lt;div class=&quot;panel-heading&quot;&gt;
+            &lt;h4&gt;Hello&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;panel-body&quot;&gt;
+            &lt;ul class=&quot;list&quot; id=&quot;list-1&quot;&gt;
+                &lt;li class=&quot;element&quot;&gt;Foo&lt;/li&gt;
+                &lt;li class=&quot;element&quot;&gt;Bar&lt;/li&gt;
+                &lt;li class=&quot;element&quot;&gt;Jay&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;ul class=&quot;list list-small&quot; id=&quot;list-2&quot;&gt;
+                &lt;li class=&quot;element&quot;&gt;Foo&lt;/li&gt;
+                &lt;li class=&quot;element&quot;&gt;Bar&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&apos;&apos;&apos;
+soup=BeautifulSoup(html,&apos;lxml&apos;)
+print(soup.select(&apos;#list-2 .element&apos;))
+print(soup.ul[&apos;id&apos;])
+for li in soup.select(&apos;li&apos;):
+    print(li.get_text())     #获得文本内容
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/23/beautifulsoup模块/" data-id="ck6x4ulc0003of4wvp869nart" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-mongodb排序" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -175,7 +482,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="ck6c0696c004vu8wvvr1gu6gd" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/mongodb排序/" data-id="ck6x4uldi004jf4wv9tip7g8e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -339,7 +646,7 @@ print(response.status_code)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="ck6c06968004su8wvsiut6s0i" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/requests模块/" data-id="ck6x4uleo0055f4wv9atouyxh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -538,7 +845,7 @@ with open(&apos;./test2.html&apos;,&apos;wb&apos;) as f2:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="ck6c0697q005pu8wvr44qzbp8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/urllib模块/" data-id="ck6x4ulfe005nf4wvbrvjt1j6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫学习/">爬虫学习</a></li></ul>
@@ -642,7 +949,7 @@ b/s--&gt;browser/server 浏览器与服务器交互
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="ck6c068vs0010u8wvh8a25h2n" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/22/Django基本概念/" data-id="ck6x4ul4d000kf4wvev53syo3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Django学习/">Django学习</a></li></ul>
@@ -825,7 +1132,7 @@ db.myinfo.find({$or:[{&apos;name&apos;:&apos;liuyongqian&apos;},{&apos;age&apos;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="ck6c06926002eu8wv8jczt662" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/MongoDB基本操作/" data-id="ck6x4ul9e002bf4wv1ja8hehr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -947,7 +1254,7 @@ while True:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="ck6c0692v002su8wvixdeyxqt" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/19/Python之socket/" data-id="ck6x4ulak002wf4wv6t22q8wl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python学习/">Python学习</a></li></ul>
@@ -1021,7 +1328,7 @@ zlexcount mykey [one [three #result:1
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="ck6c069390032u8wv36l8161p" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Zset类型操作/" data-id="ck6x4ulbw003mf4wv7d2neb0d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1120,211 +1427,7 @@ smembers key4      #result:a b c
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="ck6c0692y002uu8wv9w4kihlg" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-List类型操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/16/List类型操作/" class="article-date">
-  <time datetime="2018-03-16T09:21:37.000Z" itemprop="datePublished">2018-03-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/16/List类型操作/">List类型操作</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>List类型操作</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>01</h6><p></p>
-<ul>
-<li><p>lpush key_name value1 value2…将一个或多个值插入到列表头部。 如果 key 不存在，一个空列表会被创建并执行lpush操作</p>
-<pre><code>lpush mylist hello world
-</code></pre></li>
-<li><p>lpushx key_name value1 value2…将一个值插入到已存在的列表头部，列表不存在时操作无效</p>
-</li>
-<li>rpush key_name value1 value2…用于将一个或多个值插入到列表的尾部(最右边)</li>
-<li>rpushx key_name value1 value2…用于将一个值插入到已存在的列表尾部(最右边)。如果列表不存在，操作无效</li>
-<li>lpop key移出并获取列表的第一个元素</li>
-<li>rpop key移出并获取列表的最后一个元素</li>
-</ul>
-<p></p><h6>02</h6><p></p>
-<ul>
-<li>lrange key_name start stop将一个值插入到已存在的列表头部，列表不存在时操作无效</li>
-<li><p>lrem key_name count value根据参数 COUNT 的值，移除列表中与参数 VALUE 相等的元素</p>
-<ul>
-<li><p>count的值可以是以下几种：</p>
-<ul>
-<li>count &gt; 0 : 从表头开始向表尾搜索，移除与value相等的元素，数量为value</li>
-<li>count &lt; 0 : 从表尾开始向表头搜索，移除与value相等的元素，数量为value的绝对值</li>
-<li><p>count = 0 : 移除表中所有与value相等的值</p>
-<pre><code>lrem mylist -2 hell0
-</code></pre></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>rpoplpush用于移除列表的最后一个元素，并将该元素添加到另一个列表并返回</p>
-</li>
-<li><p>brpoplpush list1 another_list timeout从列表中弹出一个值，将弹出的元素插入到另外一个列表中并返回它； 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
-<pre><code>brpoplpush msg reciver 500 #如在指定时间内没有任何元素被弹出，则返回一个 nil 和等待时长。 反之，返回一个含有两个元素的列表，第一个元素是被弹出元素的值，第二个元素是等待时长
-</code></pre></li>
-<li><p>blpop list1 list2…timeout移出并获取列表的第一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
-<pre><code>blpop list1 100          #如果列表为空，返回一个 nil 。 
-                        否则，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，
-                        第二个元素是被弹出元素的值 
-</code></pre></li>
-<li><p>brpop list1 list2…timeout移出并获取列表的最后一个元素， 如果列表没有元素会阻塞列表直到等待超时或发现可弹出元素为止</p>
-<pre><code>brpop list 100           #假如在指定时间内没有任何元素被弹出，则返回一个 nil 和等待时长。         
-                        反之，返回一个含有两个元素的列表，第一个元素是被弹出元素所属的 key ，
-                            第二个元素是被弹出元素的值
-</code></pre></li>
-</ul>
-<p></p><h6>03</h6><p></p>
-<ul>
-<li>lset key_name index value过索引来设置元素的值</li>
-<li>ltrim key_name start stop 对一个列表进行修剪(trim)，让列表只保留指定区间内的元素</li>
-<li><p>lindex kye_name index用于通过索引获取列表中的元素</p>
-<pre><code>lpush mylist hello world
-lindex mylist 1        #列表中下标为指定索引值的元素
-</code></pre></li>
-<li><p>linsert key_name before exist_value new_value用于在列表的元素前或者后插入元素。 当指定元素不存在于列表中时，不执行任何操作</p>
-<pre><code>linsert mylist before hello 2018
-</code></pre></li>
-<li><p>llen key_name用于返回列表的长度</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/List类型操作/" data-id="ck6c0691f0024u8wvbrddokhj" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Hash类型操作" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/16/Hash类型操作/" class="article-date">
-  <time datetime="2018-03-16T09:21:20.000Z" itemprop="datePublished">2018-03-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/16/Hash类型操作/">Hash类型操作</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Hash类型操作</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>01</h6><p></p>
-<ul>
-<li><p>1.hdel key_name filed_name用于删除哈希表 key 中的一个或多个指定字段，不存在的字段将被忽略</p>
-<pre><code>hset myhash name liuyongqian
-hdel myhash name         #result:被成功删除字段的数量
-</code></pre></li>
-<li><p>2.hexists key_name filed_name用于查看哈希表的指定字段是否存在</p>
-<pre><code>hexists myhash name      #result:如果哈希表含有给定字段，返回 1 ;
-                    如果哈希表不含有给定字段，或 key 不存在，返回 0
-</code></pre></li>
-<li><p>3.hget key_name field_name用于返回哈希表中指定字段的值</p>
-<pre><code>hget myhash name         #result:返回给定字段的值。如果给定的字段或 key 不存在时，返回 nil 
-</code></pre></li>
-<li><p>4.hgetall key_name用于返回哈希表中，所有的字段和值</p>
-<pre><code>hgetall myhash          #resutl:在返回值里，紧跟每个字段名(field name)之后是字段的值(value)
-</code></pre></li>
-</ul>
-<p></p><h6>02</h6><p></p>
-<ul>
-<li><p>5.hincrby key_name field_name value 用于为哈希表中的字段值加上指定增量值<br>如果哈希表的 key 不存在，一个新的哈希表被创建并执行hincrby命令<br>如果指定的字段不存在，那么在执行命令前，字段的值被初始化为 0</p>
-<pre><code>hset myhash age 108
-hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
-</code></pre></li>
-<li><p>6.hincrbyfloat key_name field_name value用于为哈希表中的字段值加上指定浮点数增量值</p>
-<pre><code>hincrbyfloat myhash age 1.5  #result:返回命令执行后的字段值
-</code></pre></li>
-</ul>
-<p></p><h6>03</h6><p></p>
-<ul>
-<li><p>7.hkeys key_name用于获取哈希表中的所有域（field）</p>
-<pre><code>hkeys myhash             #result:包含哈希表中所有域（field）列表。 当 key 不存在时，返回一个空列表
-</code></pre></li>
-<li><p>8.hvals key_name返回哈希表所有域(field)的值</p>
-<pre><code>hvals myinfo          #result:一个包含哈希表中所有域(field)值的列表
-</code></pre></li>
-<li><p>9.hlen key_name用于获取哈希表中字段的数量</p>
-<pre><code>hlen myhash   #result:哈希表中字段的数量  
-</code></pre></li>
-</ul>
-<p></p><h6>04</h6>    <p></p>
-<ul>
-<li><p>10.hmget key_name field1 field2 …用于返回哈希表中，一个或多个给定字段的值</p>
-<pre><code>hmget myhash name age
-</code></pre></li>
-<li><p>11.hmset key_name field1 value1 field2 value2 …用于同时将多个 field-value (字段-值)对设置到哈希表中,<br>此命令会覆盖哈希表中已存在的字段</p>
-<pre><code>hmset myinfo name liuyongqian age 108 work engineer
-</code></pre></li>
-<li><p>12.hset key_name field_name用于为哈希表中的字段赋值<br>如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作<br>如果字段已经存在于哈希表中，旧值将被覆盖</p>
-<pre><code>hset myonfo age 54
-</code></pre></li>
-<li><p>13.hsetnx key_name field value用于为哈希表中不存在的的字段赋值 <br>如果哈希表不存在，一个新的哈希表被创建并进行 HSET 操作<br>如果字段已经存在于哈希表中，操作无效<br>如果 key 不存在，一个新哈希表被创建并执行 HSETNX 命令</p>
-<pre><code>hsetnx myinfo limit  no
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/16/Hash类型操作/" data-id="ck6c0690j001su8wvzt43lthy" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/16/Set类型操作/" data-id="ck6x4ulba0039f4wvwdrlmg3x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -1342,7 +1445,7 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/8/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/8/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1356,7 +1459,7 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1366,16 +1469,16 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 19.09px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.18px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10.91px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.36px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.55px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.45px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1383,9 +1486,17 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/02/22/centos7-4鲁班部署/">centos7.4鲁班部署</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/14/Centos7查看、新增和删除端口/">Centos7查看、新增和删除端口</a>
+          </li>
         
           <li>
             <a href="/2020/02/07/centos7查看、打开和关闭防火墙/">centos7查看、打开和关闭防火墙</a>
@@ -1397,14 +1508,6 @@ hincrby myhash age -54   #result:返回执行命令后哈希表中字段的值
         
           <li>
             <a href="/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/">已经安装nginx情况下添加http_ssl_module模块</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/07/redis中hash基本操作（查、删）/">redis中hash基本操作（查、删）</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
           </li>
         
       </ul>

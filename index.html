@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,187 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-centos7-4鲁班部署" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/22/centos7-4鲁班部署/" class="article-date">
+  <time datetime="2020-02-22T04:44:47.000Z" itemprop="datePublished">2020-02-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/22/centos7-4鲁班部署/">centos7.4鲁班部署</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>centos7.4鲁班部署</h5><p></p>
+<hr>
+<hr>
+<h6>前言</h6><br><em> luban-H5项目的部署，需要安装一些基础的软件包，如nodejs环境（node、npm）、依赖包管理工具yarn、管理node项目进程的pm2。
+</em> 本文以 Centos 7.4为例简单介绍该项目的部署。<br><br><h6>1. 部署nodejs环境</h6><br><em> 1.1将自行在官网下载的node包（node-v12.16.1-linux-x64.tar.xz）放在/usr/local/下，并解压重命名：<br><br>        tar -xvf node-v12.16.1-linux-x64.tar.xz<br>        mv node-v12.16.1-linux-x64 node
+
+</em> 1.2之后建立软连接：<br><br>        ln -s /usr/local/node/bin/node /usr/local/bin/node<br>        ln -s /usr/local/node/bin/npm /usr/local/bin/npm<br><br><em> 1.3配置node环境变量<br><br>        vi /etc/profile后添加如下：<br>        NODE_HOME=/usr/local/node<br>        export PATH=$PATH:$NODE_HOME/bin<br>        退出并刷新配置：source /etc/profile
+
+</em> 1.4检测是否安装成功<br><br>        node -v<br>        npm-v<br>        如果显示版本号，则安装node成功<br><br><h6>2. 安装yarn</h6><br><em> 2.1先在本地建库：<br><br>        curl –silent –location <a href="https://dl.yarnpkg.com/rpm/yarn.repo" target="_blank" rel="noopener">https://dl.yarnpkg.com/rpm/yarn.repo</a> | sudo tee /etc/yum.repos.d/yarn.repo<br>        如果没有安装 Node.js，可先配置 NodeSource 仓库：<br>        curl –silent –location <a href="https://rpm.nodesource.com/setup_6.x" target="_blank" rel="noopener">https://rpm.nodesource.com/setup_6.x</a> | bash -<br>        然后sudo yum install yarn
+
+</em> 2.2检测是否安装成功<br><br>        yarn -v<br>        如果显示版本号，则安装yarn成功<br>        注：可以通过npm安装yarn，执行 npm install yarn -g<br><br><h6>3. 安装管理node进程的pm2</h6>
+
+<ul>
+<li><p>3.1 安装执行</p>
+<pre><code>npm install pm2 -g
+</code></pre></li>
+<li><p>3.2检测是否安装成功</p>
+<pre><code>pm2 -v 
+如果显示版本号，则安装pm2成功
+</code></pre></li>
+</ul>
+<p></p><h6>4. 拉取代码luban-h5</h6><p></p>
+<ul>
+<li><p>拉取代码</p>
+<pre><code>git clone https://github.com/ly525/luban-h5.git
+</code></pre></li>
+<li><p>启动项目</p>
+<pre><code>cd luban-h5后
+chmod +x luban-h5.sh           赋予执行权限     
+./luban-h5.sh init             安装依赖环境     
+./luban-h5.sh start            启动项目            
+./luban-h5.sh stop             停止服务    
+</code></pre></li>
+</ul>
+<p></p><h6>5.配置防火墙安全组，添加 1337 端口</h6><p></p>
+<ul>
+<li><p>开启端口</p>
+<pre><code>/sbin/iptables -I INPUT -p tcp --dport 1337 -j ACCEPT
+firewall-cmd --zone=public --add-port=1337/tcp --permanent
+</code></pre></li>
+<li><p>访问</p>
+<ul>
+<li>访问前端页面：<a href="http://ip:1337" target="_blank" rel="noopener">http://ip:1337</a></li>
+<li>访问管理后台：<a href="http://ip:1337/admin" target="_blank" rel="noopener">http://ip:1337/admin</a></li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/02/22/centos7-4鲁班部署/" data-id="ck6x4ulbo003if4wvsyldlcus" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Centos7查看、新增和删除端口" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/14/Centos7查看、新增和删除端口/" class="article-date">
+  <time datetime="2020-02-14T12:57:34.000Z" itemprop="datePublished">2020-02-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/14/Centos7查看、新增和删除端口/">Centos7查看、新增和删除端口</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Centos7查看、新增和删除端口</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1. 查看端口</h6><p></p>
+<ul>
+<li><p>查看所有端口，执行：</p>
+<pre><code>firewall-cmd --list-ports
+</code></pre></li>
+<li><p>查看某个端口（以8021端口为例）占用情况，执行：</p>
+<pre><code>netstat -tlnp|grep 8021
+</code></pre></li>
+</ul>
+<p></p><h6>2. 新增端口</h6><p></p>
+<ul>
+<li><p>新增端口（以8021端口为例），执行：</p>
+<pre><code>firewall-cmd --zone=public --add-port=8021/tcp --permanent
+</code></pre></li>
+<li><p>重新载入，执行：</p>
+<pre><code>firewall-cmd --reload
+</code></pre></li>
+<li><p>查看是否生效，执行：</p>
+<pre><code>firewall-cmd --zone=public --query-port=8021/tcp
+</code></pre></li>
+<li><p>新增/删除操作需要重启防火墙服务，执行：</p>
+<pre><code>systemctl restart firewalld.service
+</code></pre></li>
+</ul>
+<p></p><h6>3. 删除端口</h6><p></p>
+<ul>
+<li><p>删除端口（以8021端口为例），执行：</p>
+<pre><code>firewall-cmd --zone=public --remove-port=80/tcp --permanent
+</code></pre></li>
+<li><p>重新载入，执行：</p>
+<pre><code>firewall-cmd --reload
+</code></pre></li>
+</ul>
+<p></p><h6>4. centos7之前的版本使用iptables</h6><p></p>
+<ul>
+<li><p>查看端口，执行：</p>
+<pre><code>iptables -L -n
+</code></pre></li>
+<li><p>添加端口，执行：</p>
+<pre><code>/sbin/iptables -I INPUT -p tcp --dport 8021 -j ACCEPT
+</code></pre></li>
+<li><p>删除端口，执行：</p>
+<pre><code>/sbin/iptables -D INPUT -p tcp --dport 8021 -j ACCEPT
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/02/14/Centos7查看、新增和删除端口/" data-id="ck6x4ul43000gf4wvf5rtgglo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-centos7查看、打开和关闭防火墙" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -135,7 +316,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/02/07/centos7查看、打开和关闭防火墙/" data-id="ck6c0693j0039u8wvttkaf8vg" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2020/02/07/centos7查看、打开和关闭防火墙/" data-id="ck6x4ulcb003vf4wvetx4ptmd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -225,7 +406,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/02/07/使用netstat、ss、lsof命令查询服务端口/" data-id="ck6c0697m005nu8wvozk07rym" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2020/02/07/使用netstat、ss、lsof命令查询服务端口/" data-id="ck6x4ulg10063f4wvgtqz56py" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -306,10 +487,10 @@ cp /usr/local/nginx-1.14.2/objs/nginx /usr/local/nginx/sbin/
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/" data-id="ck6c069av0079u8wvfqhp1ihm" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/" data-id="ck6x4uliq007rf4wvktv4fqdw" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
 
     </footer>
   </div>
@@ -421,7 +602,7 @@ hash
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/07/redis中hash基本操作（查、删）/" data-id="ck6c0696f004wu8wvnrgmcs0s" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/11/07/redis中hash基本操作（查、删）/" data-id="ck6x4ulev0059f4wvlat7poyy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -492,7 +673,7 @@ mount /dev/sdb1            挂载
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/06/磁盘挂载/" data-id="ck6c069c50085u8wvttl35cl8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/08/06/磁盘挂载/" data-id="ck6x4ulj80083f4wvpawy6fjx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -602,7 +783,7 @@ root：                    只在admin数据库中可用，超级账号，超级
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/08/06/配置MongoDB访问账号-密码/" data-id="ck6c069d2008ru8wvor9l0f4f" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/08/06/配置MongoDB访问账号-密码/" data-id="ck6x4ulkk008tf4wvuuhzw3im" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -668,7 +849,7 @@ root：                    只在admin数据库中可用，超级账号，超级
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/28/读书乱纪01/" data-id="ck6c069dg0091u8wvo4nsr7or" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/05/28/读书乱纪01/" data-id="ck6x4ulk1008jf4wvygsv5a03" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/网络基础知识/">网络基础知识</a></li></ul>
@@ -746,149 +927,10 @@ root：                    只在admin数据库中可用，超级账号，超级
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/11/mysql日志文件/" data-id="ck6c0695h004cu8wvse3hxx5m" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/05/11/mysql日志文件/" data-id="ck6x4uldx004tf4wv2l8ins1f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Nginx日志文件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/05/11/Nginx日志文件/" class="article-date">
-  <time datetime="2019-05-11T00:55:01.000Z" itemprop="datePublished">2019-05-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/11/Nginx日志文件/">Nginx日志文件</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Nginx日志文件</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>1. 简介</h6><p></p>
-<ul>
-<li>1.1 通过访问日志access log，可以得到用户地域来源、跳转来源、使用终端、某个URL访问量等相关信息；通过错误日志error log，可以得到系统某个服务或server的性能瓶颈等</li>
-<li>1.2 如果配置日志部分，日志生成到Nginx根目录logs/access.log文件中，默认使用“main”日志格式，也可以自定义格式。</li>
-</ul>
-<p></p><h6>2.日志类型</h6><p></p>
-<ul>
-<li><p>2.1 access.log</p>
-<pre><code>$remote_addr    客户端的ip地址(代理服务器，显示代理服务ip)
-$remote_user    用于记录远程客户端的用户名称（一般为“-”）
-$time_local    用于记录访问时间和时区
-$request        用于记录请求的url以及请求方法
-$status        响应状态码，例如：200成功、404页面找不到等。
-$body_bytes_sent    给客户端发送的文件主体内容字节数
-$http_referer    可以记录用户是从哪个链接访问过来的
-$http_user_agent    用户所使用的代理（一般为浏览器）
-$http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记录客户端的ip地址
-</code></pre></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/11/Nginx日志文件/" data-id="ck6c069360030u8wvvimreud2" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-Tomcat日志文件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/05/11/Tomcat日志文件/" class="article-date">
-  <time datetime="2019-05-11T00:48:30.000Z" itemprop="datePublished">2019-05-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/11/Tomcat日志文件/">Tomcat日志文件</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>Tomcat日志文件</h5><p></p>
-<hr>
-<hr>
-<p></p><h6>1. 简介</h6><p></p>
-<ul>
-<li>1.1 Tomcat 默认的日志库对JDK自带的java.util.logging API 进行了重新实现，这些实现被称为  “JULI” ，里面包含了一个自定义的LogManager类，它能够区别出运行在 Tomcat 容器中的多个不同的Web应用以及它们的类加载器，从而可以支持不同的应用使用各自独立的日志配置。</li>
-<li>1.2 可以从 Tomcat 全局和 Web 应用两个层面对 Tomcat 默认的JULI进行日志配置：<ul>
-<li>全局配置通常使用 tomcat下/conf/logging.properties文件进行配置</li>
-<li>应用配置则是使用 WEB-INF/classes/logging.properties文件进行配置</li>
-</ul>
-</li>
-<li>1.3 处理器默认的日志级别是 INFO，可选的日志级别从高到低依次为：SEVERE &gt; WARNING &gt; INFO &gt; CONFIG &gt; FINE &gt; FINER &gt; FINEST &gt; ALL &gt; OFF。</li>
-</ul>
-<p></p><h6>2. 日志类型</h6><p></p>
-<ul>
-<li>2.1 catalina引擎的日志文件，文件名：catalina.日期.log，如 catalina.2019-04-26.log<ul>
-<li>主要是记录tomcat启动时候的信息，类似于我们在eclipse中启动服务的时候在控制台看到的信息。在里面可以看到启动的JVM参数以及操作系统等日志信息。如果没有使用log4j等日志机制，系统的的错误信息与打印语句也在这个日志文件中记录</li>
-</ul>
-</li>
-<li>2.2 Tomcat下内部代码丢出的日志，文件名：localhost.日期.log，如 localhost.2019-04-26.log<ul>
-<li>jsp页面内部错误的异常，org.apache.jasper.runtime.HttpJspBase.service类丢出的，日志信息就在该文件</li>
-</ul>
-</li>
-<li>2.3 Tomcat下默认manager项目专有的日志，文件名：manager.日期.log，如 manager.2019-04-26.log</li>
-<li>2.4 tomcat下默认manager项目的日志信息，文件名：host-manager.2019-04-26.log</li>
-<li>2.5 控制台输出的日志，Linux下默认重定向到catalina.out</li>
-<li>2.6 存放访问tomcat的请求信息，如 localhost_access_log.2019-04-26.txt<ul>
-<li>配置文件在 tomcat 的安装目录/conf/server.xml中</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/05/11/Tomcat日志文件/" data-id="ck6c0694x0042u8wvjzhod1uf" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
 
     </footer>
   </div>
@@ -903,7 +945,7 @@ $http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记�
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -917,7 +959,7 @@ $http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记�
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -927,16 +969,16 @@ $http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记�
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 19.09px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.18px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10.91px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.36px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.55px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.45px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -944,9 +986,17 @@ $http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/02/22/centos7-4鲁班部署/">centos7.4鲁班部署</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/14/Centos7查看、新增和删除端口/">Centos7查看、新增和删除端口</a>
+          </li>
         
           <li>
             <a href="/2020/02/07/centos7查看、打开和关闭防火墙/">centos7查看、打开和关闭防火墙</a>
@@ -958,14 +1008,6 @@ $http_x_forwarded_for    可以记录客户端IP，通过代理服务器来记�
         
           <li>
             <a href="/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/">已经安装nginx情况下添加http_ssl_module模块</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/07/redis中hash基本操作（查、删）/">redis中hash基本操作（查、删）</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
           </li>
         
       </ul>

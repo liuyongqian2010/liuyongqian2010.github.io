@@ -59,7 +59,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -69,6 +69,175 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-批量添加用户，并设置sudo权限" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/12/批量添加用户，并设置sudo权限/" class="article-date">
+  <time datetime="2019-03-12T09:46:11.000Z" itemprop="datePublished">2019-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/12/批量添加用户，并设置sudo权限/">批量添加用户，并设置sudo权限</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>批量添加用户，并设置sudo权限</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>批量添加用户</h6><p></p>
+<ul>
+<li><p>1.首先创建一个名称为<code>users.list</code>的文件，将用户名写入进去。</p>
+<pre><code>vi user.list  后按照如下格式添加用户名称即可
+zhangsan  lisi wangwu zhaoliu zhangqi wangba chujiu genshi
+</code></pre></li>
+<li><p>2.编写批量增加用户的脚本，密码设置为用户名加123</p>
+<pre><code>#!/bin/bash
+#
+#add users with file called users.list
+#
+for username in $(more users.list)
+do
+if [ -n $username ]
+then
+    useradd -m $username
+    echo
+    echo $username&quot;123&quot;  | passwd --stdin $username
+    echo
+    echo &quot;User $username&apos;s password is changed!&quot;
+else
+    echo &quot;The username is null!&quot;
+fi
+done
+</code></pre></li>
+</ul>
+<p></p><h6>赋予普通用户sudo权限</h6><p></p>
+<ul>
+<li>1.root用户为sudo文件增加写权限，默认是读权限：<code>chmod u+w /etc/sudoers</code></li>
+<li><p>2.打开文件<code>vi /etc/sudoers</code>，在<code>root ALL=(ALL) ALL</code>这一行下面添加普通用户，如下所示</p>
+<pre><code>## Allow root to run any commands anywhere 
+root    ALL=(ALL)     ALL
+liuyongqian     ALL=(ALL)   ALL
+</code></pre></li>
+<li><p>3.再次取消sudo文件的写权限：<code>chmod u-w /etc/sudoers</code></p>
+</li>
+<li>4.普通用户sudo时输入的密码是普通用户自己的密码</li>
+<li>5.可能需要安装一下sudo，有的系统版本不需要：<code>yum install sudo</code></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/12/批量添加用户，并设置sudo权限/" data-id="ck6x4ulih007lf4wvwptmj870" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+  
+    <article id="post-Centos中同时部署两个以上的Tomcat" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/12/Centos中同时部署两个以上的Tomcat/" class="article-date">
+  <time datetime="2019-03-12T09:18:36.000Z" itemprop="datePublished">2019-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/12/Centos中同时部署两个以上的Tomcat/">Centos中同时部署两个以上的Tomcat</a>
+    </h1>
+  
+
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+	  
+	  
+        <p></p><h5>Centos中同时部署两个以上的Tomcat</h5><p></p>
+<hr>
+<hr>
+<p></p><h6>1.首先配置环境变量</h6><p></p>
+<ul>
+<li>1.1在<code>/usr/local</code>下解压复制两个tomcat，分别重命名为tomcat01、tomcat02.</li>
+<li><p>1.2编辑环境变量</p>
+<pre><code>vi  /etc/profile 在末尾加上以下内容：
+
+##########first tomcat###########
+CATALINA01_BASE=/usr/tomcat01
+CATALINA01_HOME=/usr/tomcat01
+TOMCAT01_HOME=/usr/tomcat01
+export CATALINA01_BASE CATALINA01_HOME TOMCAT01_HOME
+##########second tomcat##########
+CATALINA02_BASE=/usr/tomcat02
+CATALINA02_HOME=/usr/tomcat02
+TOMCAT02_HOME=/usr/tomcat02
+export CATALINA02_BASE CATALINA02_HOME TOMCAT02_HOME
+
+退出并保存，输入 source  /etc/profile  使环境变量起作用
+</code></pre></li>
+</ul>
+<p></p><h6>2.修改了另一个Tomcat的文件</h6><p></p>
+<ul>
+<li>2.1进入tomcat02/bin，打开catalina.sh，将所有的CATALINA_BASE改为 CATALINA02_BASE，将所有CATALINA_HOME改为CATALINA02_HOME，并保存。</li>
+<li>2.2使用chmod命令保证catalina.sh可执行：<code>chmod u+x catalina.sh</code></li>
+<li><p>2.3进入tomcat02/conf，打开server.xml，，一共修改三个端口即可</p>
+<pre><code>1.找到&lt;Server port=&quot;8005&quot; shutdown=&quot;SHUTDOWN&quot;&gt;，
+改8005为其他未被占用端口；
+2.找到&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;connectionTimeout=&quot;20000&quot;  redirectPort=&quot;8443&quot; /&gt; ，
+改8080为其他未被占用端口；
+3.找到&lt;Connector port=&quot;8009&quot; protocol=&quot;AJP/1.3&quot; redirectPort=&quot;8443&quot; /&gt;，
+改8009为其他未被占用端口。
+</code></pre></li>
+</ul>
+<p></p><h6>3.启动tomcat服务</h6><p></p>
+<ul>
+<li>进入tomcat01、tomcat02各自的bin目录，分别执行启动命令：<code>./startup.sh</code></li>
+<li>查看日志：<code>tail -f /usr/tomcat01/logs/catalina.out</code>、<br><code>tail -f /usr/tomcat02/logs/catalina.out</code></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/03/12/Centos中同时部署两个以上的Tomcat/" data-id="ck6x4ul4a000if4wvpovdnj6p" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
   
     <article id="post-安装部署Tomcat9" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -135,7 +304,7 @@ export PATH CLASSPATH CATALINA_HOME
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Tomcat9/" data-id="ck6c069a6006xu8wvzfu1u316" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Tomcat9/" data-id="ck6x4ulhn0073f4wvngqyog6f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -257,7 +426,7 @@ mongod -f mongodb.conf   或
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="ck6c0699t006ru8wv7p0vbtkn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Mongodb4/" data-id="ck6x4ull30095f4wvnvbvmtwe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a></li></ul>
@@ -335,7 +504,7 @@ cd /opt/zbox/auth
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署禅道11.2/" data-id="ck6c069aa006zu8wv6d9pyfau" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署禅道11.2/" data-id="ck6x4ulhg006zf4wvjp7q50pj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -436,7 +605,7 @@ make install
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署Nginx/" data-id="ck6c0699q006pu8wvtywgf7bs" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署Nginx/" data-id="ck6x4ullj009af4wvjyrrlvc3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx学习/">Nginx学习</a></li></ul>
@@ -611,7 +780,7 @@ export MYSQL_HOME PATH
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/安装部署mysql5.7/" data-id="ck6c069ad0071u8wvqm7hjqus" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/安装部署mysql5.7/" data-id="ck6x4ulhr0075f4wvifiv4ffv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
@@ -686,7 +855,7 @@ java -version
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/linux中部署JDK1.8/" data-id="ck6c069560046u8wvwg3pqhad" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/linux中部署JDK1.8/" data-id="ck6x4uld3004bf4wvzarq1nip" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a></li></ul>
@@ -755,7 +924,7 @@ ONBOOT=yes
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/03/01/linux网络ip配置/" data-id="ck6c069520044u8wv214qwbp0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/03/01/linux网络ip配置/" data-id="ck6x4uldb004ff4wvyjliuecq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
@@ -837,233 +1006,10 @@ date 061814162014.30（2014年6月18日14点16分30-MMDDhhmmYYYY.ss）
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/11/时间设置与配置查询/" data-id="ck6c069b7007hu8wveorz74qj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2019/01/11/时间设置与配置查询/" data-id="ck6x4ulik007nf4wvhx20mtfz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux学习/">Linux学习</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-linux系统常见优化配置01" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/01/11/linux系统常见优化配置01/" class="article-date">
-  <time datetime="2019-01-11T03:44:47.000Z" itemprop="datePublished">2019-01-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/01/11/linux系统常见优化配置01/">linux系统常见优化配置01</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>linux系统常见优化配置01</h5><p></p>
-<hr>
-<hr>
-<h6>永久关闭 selinux</h6><br><em> selinux提高系统安全性，但会造成很多麻烦，一般关闭<br><br>        vi /etc/selinux/config后，<br>        将SELINUX=enforcing改成SELINUX=disabled，保存后退出<br>        source /etc/selinux/config<br><br><h6>设定系统 runlevel</h6>
-</em> 节约系统资源，设定系统runlevel为3<br><br>        grep 3:initdefault /etc/inittab<br>        init 3<br>        runlevel  查看运行级别<br><br><h6>加大系统文件描述符最大值</h6>
-
-<pre><code>vi /etc/security/limits.conf后调整大小
-* soft nofile 65536
-* hard nofile 65536
-* soft nproc 65536
-* hard nproc 65536
-（* 代表针对所有用户   noproc 是代表最大进程数   nofile 是代表最大文件打开数）
-</code></pre><h6>调整内核参数</h6>
-
-<pre><code>vi /etc/syctl.conf后
-net.ipv4.tcp_syncookies = 1
-表示开启SYN Cookies。当出现SYN等待队列溢出时，启用cookies来处理，可防范少量SYN攻击，默认为0，表示关闭
-
-net.ipv4.tcp_tw_reuse = 1
-表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭
-
-net.ipv4.tcp_tw_recycle = 1
-表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭
-
-net.ipv4.tcp_fin_timeout = 30
-表示如果套接字由本端要求关闭，这个参数决定了它保持在FIN-WAIT-2状态的时间
-
-net.ipv4.tcp_keepalive_time = 1200 
-表示当keepalive起用的时候，TCP发送keepalive消息的频度。缺省是2小时，改为20分钟
-
-net.ipv4.ip_local_port_range = 1024 65000 
-表示用于向外连接的端口范围。缺省情况下很小：32768到61000，改为1024到65000
-
-net.ipv4.tcp_max_syn_backlog = 8192 
-表示SYN队列的长度，默认为1024，加大队列长度为8192，可以容纳更多等待连接的网络连接数
-
-net.nf_conntrack_max = 655360 
-在内核内存中netfilter可以同时处理的“任务”（连接跟踪条目）
-
-参数配置好之后，保存退出；使以上配置生效执行该命令：sysctl -p
-</code></pre><h6>网络链接最大值及超时配置</h6>
-
-<pre><code>vi /etc/syctl.conf后追加
-net.nf_conntrack_max = 25000000
-决定连接跟踪表的大小，默认值是65535，可以根据系统内存大小计算一个合理值：CONNTRACK_MAX = RAMSIZE(in bytes)/16384/(ARCH/32)，如32G内存可以设置1048576；
-
-nf_conntrack_buckets = ？
-决定存储conntrack条目的哈希表大小，默认值是nf_conntrack_max的1/4，延续这种计算方式：BUCKETS = CONNTRACK_MAX/4，如32G内存可以设置262144；
-
-net.netfilter.nf_conntrack_max = 25000000
-最大连接数
-
-net.netfilter.nf_conntrack_tcp_timeout_established = 180
-决定ESTABLISHED状态连接的超时时间，默认值是5天，可以缩短到1小时，即3600
-
-net.netfilter.nf_conntrack_tcp_timeout_time_wait = 120
-决定WAIT状态连接的超时等待时间
-
-net.netfilter.nf_conntrack_tcp_timeout_close_wait = 60
-决定关闭状态连接的超时等待时间
-
-net.netfilter.nf_conntrack_tcp_timeout_fin_wait = 120
-决定WAIT状态连接的超时等待时间
-
-参数配置好之后，保存退出；使以上配置生效执行该命令：sysctl -p
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/01/11/linux系统常见优化配置01/" data-id="ck6c0698q006bu8wve0foaupu" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能测试/">性能测试</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-  
-    <article id="post-mysql数据库安装" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/12/mysql数据库安装/" class="article-date">
-  <time datetime="2018-12-12T09:48:10.000Z" itemprop="datePublished">2018-12-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/12/mysql数据库安装/">mysql数据库安装</a>
-    </h1>
-  
-
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-	  
-	  
-        <p></p><h5>mysql数据库安装</h5><p></p>
-<hr>
-<hr>
-<ul>
-<li><p>0.目前安装的版本是mysql-5.6.39-linux-glibc2.12-x86_64.tar.gz</p>
-</li>
-<li><p>1.将安装包拷贝到<code>/usr/local</code>目录下并解压</p>
-<pre><code>tar -zvxf mysql-5.6.39-linux-glibc2.12-x86_64.tar.gz
-之后重命名
-mv mysql-5.6.39-linux-glibc2.12-x86_64 mysql
-</code></pre></li>
-<li><p>2.以下动作均在/usr/local目录下执行</p>
-<pre><code>添加mysql用户组，执行：groupadd mysql
-为mysql用户组添加mysql用户，执行：useradd -r -g mysql -s /bin/false mysql
-为mysql用户设置密码，执行：passwd mysql    密码可以是mysql
-将文件及其子文件的所有者设为mysql组的mysql用户，执行：chown -R mysql:mysql /usr/local/mysql
-</code></pre></li>
-<li><p>3.安装数据库</p>
-<pre><code>/usr/local/mysql/scripts/mysql_install_db --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
-</code></pre></li>
-<li><p>4.安装mysql数据库后回到/usr/local目录下</p>
-<pre><code>修改mysql目录拥有者为root用户，执行：chown -R root:root ./mysql
-修改mysql/data目录拥有者为mysql用户，执行：chown -R mysql:mysql ./mysql/data
-</code></pre></li>
-<li><p>5.设置mysql服务开机启动，依次执行如下</p>
-<pre><code>cd mysql/support-files后复制mysql配置文件到系统配置目录下执行
-cp my-default.cnf /etc/my.cnf
-cp mysql.server /etc/init.d/mysql后赋予可执行权限执行
-chmod +x /etc/init.d/mysql后添加服务执行
-chkconfig --add mysql后显示服务列表执行
-chkconfig --list或者chkconfig --list|grep mysql
-如果看到mysql的服务，并且3,4,5都是on的话则成功，如果是off，则执行
-chkconfig --level 345 mysql on
-</code></pre></li>
-<li><p>6.添加环境变量，<code>vi /etc/profile</code>追加如下内容后执行<code>source /etc/profile</code>，使其重新加载并生效</p>
-<pre><code>MYSQL_HOME=/usr/local/mysql
-PATH=$PATH:$MYSQL_HOME/bin
-export MYSQL_HOME PATH
-</code></pre></li>
-<li><p>7.修改mysql配置文件<code>vi /etc/my.cnf</code>，修改内容如下</p>
-<pre><code>#These are commonly set,remove the # and set as required
-basedir=/usr/local/mysql
-datadir=/usr/local/mysql/data
-port=3306
-server_id=1
-socket=/tmp/mysql.sock
-</code></pre></li>
-<li><p>8.保存退出后，启动mysql服务</p>
-<pre><code>启动mysql服务，执行service mysql start
-查看mysql服务，执行service mysql status
-</code></pre></li>
-<li><p>9.其他必须操作</p>
-<ul>
-<li><p>9.1 root初始密码均为空，修改mysql的root用户密码执行</p>
-<pre><code>cd /usr/local/mysql
-./bin/mysqladmin -u root password &apos;新的密码&apos;
-</code></pre></li>
-<li><p>9.2 去除匿名用户登录执行</p>
-<pre><code>delete from mysql.user where User=&apos;&apos;;
-flush privileges;
-</code></pre></li>
-<li><p>9.3 授权允许所有外部链接访问执行</p>
-<pre><code>mysql -uroot -p
-&gt;grant all privileges on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;登录密码&apos; with grant option;
-&gt;flush privileges;
-</code></pre></li>
-<li><p>9.4 添加需要监听的端口执行</p>
-<pre><code>/sbin/iptables -l INPUT -p tcp --dport 3306 -j ACCEPT
-</code></pre></li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/12/12/mysql数据库安装/" data-id="ck6c0695q004gu8wvjk7bp0g0" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL学习/">MySQL学习</a></li></ul>
 
     </footer>
   </div>
@@ -1078,7 +1024,7 @@ flush privileges;
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; zurück</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/5/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1092,7 +1038,7 @@ flush privileges;
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django学习/">Django学习</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JAVA项目部署/">JAVA项目部署</a><span class="tag-list-count">14</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux学习/">Linux学习</a><span class="tag-list-count">19</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MySQL学习/">MySQL学习</a><span class="tag-list-count">17</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx学习/">Nginx学习</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NoSQL学习/">NoSQL学习</a><span class="tag-list-count">13</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python学习/">Python学习</a><span class="tag-list-count">27</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web前端/">Web前端</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全测试/">安全测试</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/性能测试/">性能测试</a><span class="tag-list-count">11</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/爬虫学习/">爬虫学习</a><span class="tag-list-count">12</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络基础知识/">网络基础知识</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/自动化测试/">自动化测试</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软件工具/">软件工具</a><span class="tag-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -1102,16 +1048,16 @@ flush privileges;
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Django学习/" style="font-size: 11.11px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 16.67px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 18.89px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 17.78px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.67px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.44px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.22px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.44px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.56px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.33px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.22px;">软件工具</a>
+      <a href="/tags/Django学习/" style="font-size: 11.82px;">Django学习</a> <a href="/tags/JAVA项目部署/" style="font-size: 17.27px;">JAVA项目部署</a> <a href="/tags/Linux学习/" style="font-size: 19.09px;">Linux学习</a> <a href="/tags/MySQL学习/" style="font-size: 18.18px;">MySQL学习</a> <a href="/tags/Nginx学习/" style="font-size: 10.91px;">Nginx学习</a> <a href="/tags/NoSQL学习/" style="font-size: 16.36px;">NoSQL学习</a> <a href="/tags/Python学习/" style="font-size: 20px;">Python学习</a> <a href="/tags/Web前端/" style="font-size: 14.55px;">Web前端</a> <a href="/tags/大数据/" style="font-size: 12.73px;">大数据</a> <a href="/tags/安全测试/" style="font-size: 10px;">安全测试</a> <a href="/tags/性能测试/" style="font-size: 14.55px;">性能测试</a> <a href="/tags/爬虫学习/" style="font-size: 15.45px;">爬虫学习</a> <a href="/tags/网络基础知识/" style="font-size: 10px;">网络基础知识</a> <a href="/tags/自动化测试/" style="font-size: 13.64px;">自动化测试</a> <a href="/tags/软件工具/" style="font-size: 12.73px;">软件工具</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">September 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">18</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">46</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">8</span></li></ul>
     </div>
   </div>
 
@@ -1119,9 +1065,17 @@ flush privileges;
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/02/22/centos7-4鲁班部署/">centos7.4鲁班部署</a>
+          </li>
+        
+          <li>
+            <a href="/2020/02/14/Centos7查看、新增和删除端口/">Centos7查看、新增和删除端口</a>
+          </li>
         
           <li>
             <a href="/2020/02/07/centos7查看、打开和关闭防火墙/">centos7查看、打开和关闭防火墙</a>
@@ -1133,14 +1087,6 @@ flush privileges;
         
           <li>
             <a href="/2019/12/22/已经安装nginx情况下添加http-ssl-module模块/">已经安装nginx情况下添加http_ssl_module模块</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/07/redis中hash基本操作（查、删）/">redis中hash基本操作（查、删）</a>
-          </li>
-        
-          <li>
-            <a href="/2019/08/06/磁盘挂载/">磁盘挂载</a>
           </li>
         
       </ul>
